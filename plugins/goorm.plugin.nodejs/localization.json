@@ -1,0 +1,96 @@
+{
+	"kor": {
+		"name": {
+			"value": "Node.js 프로젝트"
+		},
+		"description": {
+			"value": "Node.js를 사용한 서버-사이드 자바스크립트 프로젝트"
+		},
+		"items": {
+			"nodejs_project": {
+				"name": {
+					"value": "Node.js 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Node.js 프로젝트를 생성합니다."
+				}
+			},
+			"express_project": {
+				"name": {
+					"value": "Express 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Express 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_main_name":{
+			"value": "기본 메인 이름"
+		},
+		"d_source_path":{
+			"value": "기본 소스 경로"
+		},
+		"d_debug_option":{
+			"value": "기본 디버그 옵션"
+		},
+		"main_name":{
+			"value": "메인 이름"
+		},
+		"source_path":{
+			"value": "소스 경로"
+		},
+		"debug_option":{
+			"value": "디버그 옵션"
+		},
+		"run_option":{
+			"value": "실행 옵션"	
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Node.js Project"
+		},
+		"description": {
+			"value": "Server-side javascript Project with node.js"
+		},
+		"items": {
+			"nodejs_project": {
+				"name": {
+					"value": "Node.js Project"
+				},
+				"description": {
+					"value": "Create New Project for Node.js"
+				}
+			},
+			"express_project": {
+				"name": {
+					"value": "Express Project"
+				},
+				"description": {
+					"value": "Create New Project for Express"
+				}
+			}
+		},
+		"d_main_name":{
+			"value": "Default Main Name"
+		},
+		"d_source_path":{
+			"value": "Default Source Path"
+		},
+		"d_debug_option":{
+			"value": "Default Debug Option"
+		},
+		"main_name":{
+			"value": "Main Name"
+		},
+		"source_path":{
+			"value": "Source Path"
+		},
+		"debug_option":{
+			"value": "Debug Option"
+		},
+		"run_option":{
+			"value": "Run Option"	
+		}
+	}
+}

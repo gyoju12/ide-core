@@ -1,0 +1,696 @@
+{
+	"common_target": {
+		"value": "Target: "
+	},
+	"common_filename": {
+		"value": "File Name"
+	},
+	"common_filetype": {
+		"value": "File Type"
+	},
+	"common_select_all": {
+		"value": "Select All"
+	},
+	"common_deselect_all": {
+		"value": "Deselect All"
+	},
+	"show_hide_all_cursor":{
+		"value" : "Show/Hide All Cursor"
+	},
+	"dialog_file_cloud_upload": {
+		"value": "File Cloud Upload",
+		"children": {
+			"dialog_file_cloud_upload_guide": {
+				"value": "Select file to upload."
+			},
+			"dialog_file_cloud_upload_file": {
+				"value": "Selected file  "
+			},
+			"dialog_file_cloud_upload_cloud_uploadtype": {
+				"value": "File Type"
+			}
+		}
+	},
+	"dialog_file_export": {
+		"value": "File Export",
+		"children": {
+			"dialog_file_export_guide": {
+				"value": "Select the file to export."
+			},
+			"dialog_file_export_file": {
+				"value": "Selected file"
+			},
+			"dialog_file_export_exporttype": {
+				"value": "File Type"
+			}
+		}
+	},
+	"dialog_file_import": {
+		"value": "File Import/Upload",
+		"children": {
+			"dialog_file_import_guide": {
+				"value": "Select the file to import."
+			},
+			"dialog_file_import_file": {
+				"value": "Upload the file to import."
+			}
+		}
+	},
+	"dialog_upload_folder": {
+		"value": "Upload Folder",
+		"children": {
+			"dialog_folder_import_guide": {
+				"value": "Select a folder to import."
+			},
+			"dialog_folder_import_folder": {
+				"value": "Upload the folder to import.<br/>Empty folders will not be uploaded."
+			}
+		}
+	},
+	"dialog_file_new_folder": {
+		"value": "New Folder",
+		"children": {
+			"dialog_file_new_folder_guide": {
+				"value": "Make a new folder."
+			},
+			"dialog_file_new_folder_foldername": {
+				"value": "Folder name"
+			}
+		}
+	},
+	"dialog_file_new_file": {
+		"value": "New File",
+		"children": {
+			"dialog_file_new_file_guide": {
+				"value": "Make a new file."
+			}
+		}
+	},
+	"dialog_file_new_other_file": {
+		"value": "New Other File",
+		"children": {
+			"dialog_file_new_other_file_guide": {
+				"value": "Select file type to create."
+			}
+		}
+	},
+	"dialog_file_new_untitled_textfile": {
+		"value": "New Untitled Text File",
+		"children": {
+			"dialog_file_new_untitled_textfile_guide": {
+				"value": "Make a new untitled text file."
+			}
+		}
+	},
+	"dialog_file_move_file": {
+		"value": "Move File",
+		"children": {
+			"dialog_file_move_file_guide": {
+				"value": "Select path to move the file."
+			}
+		}
+	},
+	"dialog_file_open_file": {
+		"value": "Open File",
+		"children": {
+			"dialog_file_open_file_guide": {
+				"value": "Select file to open."
+			}
+		}
+	},
+	"dialog_file_open_url": {
+		"value": "Open URL",
+		"children": {
+			"dialog_file_open_url_guide": {
+				"value": "Type an URL to open."
+			}
+		}
+	},
+	"dialog_file_properties": {
+		"value": "File Properties",
+		"children": {
+			"dialog_file_properties_file_location": {
+				"value": "File Location"
+			},
+			"dialog_file_properties_file_size": {
+				"value": "File Size"
+			},
+			"dialog_file_properties_last_access_time": {
+				"value": "Last Access"
+			},
+			"dialog_file_properties_Last_modification_time": {
+				"value": "Last Modification"
+			}
+		}
+	},
+	"dialog_file_rename": {
+		"value": "File Rename",
+		"children": {
+			"dialog_file_rename_new_name": {
+				"value": "New Name"
+			}
+		}
+	},
+	"dialog_file_save_as_file": {
+		"value": "Save As",
+		"children": {
+			"dialog_file_save_as_file_guide": {
+				"value": "Select the file to save."
+			}
+		}
+	},
+	"dialog_file_print": {
+		"value": "Print",
+		"children": {
+			"dialog_file_print_guide": {
+				"value": "You can print current file."
+			}
+		}
+	},
+	"dialog_help_bug_report": {
+		"value": "Bug Report",
+		"children": {
+			"dialog_help_bug_report_title": {
+				"value": "Title"
+			},
+			"dialog_help_bug_report_author": {
+				"value": "Author"
+			},
+			"dialog_help_bug_report_email": {
+				"value": "E-mail Address"
+			},
+			"dialog_help_bug_report_current_version": {
+				"value": "Current Version"
+			},
+			"dialog_help_bug_report_module": {
+				"value": "Module"
+			},
+			"dialog_help_bug_report_detailed": {
+				"value": "Detailed Explanation"
+			}
+		}
+	},
+	"dialog_new_project": {
+		"value": "New Project",
+		"children": {
+			"dialog_new_project_guide1": {
+				"value": "Select Project Type."
+			},
+			"dialog_new_project_description": {
+				"value": "Project Description"
+			},
+			"dialog_new_project_guide2": {
+				"value": "Add information for new project."
+			},
+			"dialog_new_project_author": {
+				"value": "Author ID"
+			},
+			"dialog_new_project_author_name": {
+				"value": "Author Name"
+			},
+			"dialog_new_project_name": {
+				"value": "Project Name"
+			},
+			"dialog_new_project_desc": {
+				"value": "Project Description"
+			},
+			"dialog_new_project_import_use": {
+				"value": "Import Project"
+			},
+			"dialog_new_project_import_message": {
+				"value": "Select zip or tar file to import."
+			},
+			"dialog_new_project_view_all": {
+				"value": "All"
+			},
+			"dialog_new_project_view_all_description": {
+				"value": "View all available project items."
+			}
+		}
+	},
+	"dialog_project_open": {
+		"value": "Open Project",
+		"children": {
+			"dialog_project_open_guide": {
+				"value": "Select Project Type."
+			}
+		}
+	},
+	"dialog_project_clean": {
+		"value": "Clean Project",
+		"children": {
+			"dialog_project_clean_guide": {
+				"value": "Select project to clean."
+			}
+		}
+	},
+	"dialog_project_build_all": {
+		"value": "Build All",
+		"children": {
+			"dialog_project_build_all_guide": {
+				"value": "Build all projects below."
+			}
+		}
+	},
+	"dialog_project_export": {
+		"value": "Export Project",
+		"children": {
+			"dialog_project_export_guide": {
+				"value": "Select the project to export."
+			},
+			"dialog_project_export_msg": {
+				"value": "Export Project Type"
+			}
+		}
+	},
+	"dialog_project_delete": {
+		"value": "Delete Project",
+		"children": {
+			"dialog_project_delete_guide": {
+				"value": "Select the project to delete."
+			}
+		}
+	},
+	"dialog_project_share": {
+		"value": "Share This Project",
+		"children": {
+			"dialog_project_share_send_email": {
+				"value": "Send invitation email"
+			},
+			"dialog_project_share_link": {
+				"value": "Share Link"
+			},
+			"dialog_project_share_copy": {
+				"value": "Share Copy"
+			},
+			"dialog_project_share_authority_setting": {
+				"value": "Share Authority Setting"
+			}
+		}
+	},
+	"dialog_project_go_to_line": {
+		"value": "Go to Line",
+		"children": {
+			"dialog_project_line_guide": {
+				"value": "Line :"
+			}
+		}
+	},
+	"dialog_project_find_and_replace": {
+		"value": "Find/Replace",
+		"children": {
+			"dialog_project_site_guide": {
+				"value": "Site"
+			},
+			"dialog_project_find_guide": {
+				"value": "Find"
+			},
+			"dialog_project_replace_guide": {
+				"value": "Replace"
+			},
+			"dialog_project_option_guide": {
+				"value": "Option"
+			},
+			"dialog_project_match_case_guide": {
+				"value": "Case Sensitive"
+			},
+			"dialog_project_ignore_whitespace_guide": {
+				"value": "Ignore Whitespace"
+			},
+			"dialog_project_use_regular_expression_guide": {
+				"value": "Use regular expression."
+			},
+			"dialog_project_find_on_workspace_guide": {
+				"value": "Find on Workspace"
+			}
+		}
+	},
+	"dialog_preferences_preference": {
+		"value": "",
+		"children": {
+			"dialog_preference_system_server_guide": {
+				"value": "Server Information"
+			},
+			"dialog_preference_libraries_goorm_guide": {
+				"value": "goorm Core"
+			},
+			"dialog_preference_libraries_external_guide": {
+				"value": "External Libraries"
+			},
+			"dialog_preference_editor_config_guide": {
+				"value": "Editor Configuration"
+			},
+			"dialog_preference_editor_font_family": {
+				"value": "Font"
+			},
+			"dialog_preference_editor_font_size": {
+				"value": "Font Size"
+			},
+			"dialog_preference_editor_line_spacing": {
+				"value": "Line Spacing"
+			},
+			"dialog_preference_editor_indent_unit": {
+				"value": "Indent Unit"
+			},
+			"dialog_preference_editor_first_line_number": {
+				"value": "First Line Number"
+			},
+			"dialog_preference_editor_first_undo_depth": {
+				"value": "Undo Depth"
+			},
+			"dialog_preference_editor_indent_with_tabs": {
+				"value": "Indent With Tabs"
+			},
+			"dialog_preference_editor_show_line_numbers": {
+				"value": "Show Line Numbers"
+			},
+			"dialog_preference_editor_highlight_current_cursor_line": {
+				"value": "Highlight Cursor Line"
+			},
+			"dialog_preference_editor_auto_close_brackets": {
+				"value": "autoClose(',\",(,[)"
+			},
+			"dialog_preference_editor_line_wrapping": {
+				"value": "Use Line Wrapping"
+			},
+			"dialog_preference_editor_rulers":{
+				"value": "Show Rulers"
+			},
+			"dialog_preference_theme_guide": {
+				"value": "Theme"
+			},
+			"dialog_preference_theme_select_guide": {
+				"value": "Select Theme"
+			},
+			"dialog_preference_terminal_font_family": {
+				"value": "Font"
+			},
+			"dialog_preference_terminal_font_size": {
+				"value": "Font Size"
+			},
+			"dialog_preference_terminal_line_spacing": {
+				"value": "Line Spacing"
+			},
+			"dialog_preference_terminal_font_color": {
+				"value": "Font Color"
+			},
+			"dialog_preference_filetype_guide": {
+				"value": "Change file types."
+			},
+			"dialog_preference_select_language_guide": {
+				"value": "Select language."
+			},
+			"dialog_preference_shortcut_file_guide": {
+				"value": "Change file menu shortcut."
+			},
+			"dialog_preference_shortcut_edit_guide": {
+				"value": "Change edit menu shortcut."
+			},
+			"dialog_preference_shortcut_project_guide": {
+				"value": "Change project menu shortcut."
+			},
+			"dialog_preference_shortcut_debug_guide": {
+				"value": "Change debug menu shortcut."
+			},
+			"dialog_preference_shortcut_scm_guide": {
+				"value": "Change SCM menu shortcut."
+			},
+			"dialog_preference_shortcut_cloud_guide": {
+				"value": "Change cloud menu shortcut."
+			},
+			"dialog_preference_shortcut_window_guide": {
+				"value": "Change window menu shortcut."
+			},
+			"dialog_preference_shortcut_help_guide": {
+				"value": "Change help menu shortcut."
+			},
+			"dialog_preference_system_api_key_guide": {
+				"value": "API Key Setting"
+			},
+			"dialog_preference_theme_keymap": {
+				"value": "Key Map"
+			}
+		}
+	},
+	"dialog_project_property": {
+		"value": "Project Properties",
+		"children": {
+			"dialog_project_property_project_type": {
+				"value": "Project Type"
+			},
+			"dialog_project_property_project_detail": {
+				"value": "Project Detail"
+			},
+			"dialog_project_property_project_author": {
+				"value": "Project Author"
+			},
+			"dialog_project_property_project_name": {
+				"value": "Project Name"
+			},
+			"dialog_project_property_project_date": {
+				"value": "Project Created Date"
+			},
+			"dialog_project_property_project_description": {
+				"value": "Project Description"
+			},
+			"dialog_project_property_scm_type": {
+				"value": "Type"
+			},
+			"dialog_project_property_repository_url": {
+				"value": "Repository URL"
+			},
+			"dialog_project_property_auth_guide": {
+				"value": "Authentication"
+			},
+			"dialog_project_property_auth_user": {
+				"value": "User"
+			},
+			"dialog_project_property_auth_password": {
+				"value": "Password"
+			},
+			"dialog_project_property_checkout": {
+				"value": "Checkout"
+			}
+		}
+	},
+	"dialog_goorm_profile": {
+		"value": "",
+		"children": {
+			"dialog_goorm_profile_header": {
+				"value": "User Profile"
+			},
+			"dialog_goorm_profile_id": {
+				"value": "ID"
+			},
+			"dialog_goorm_profile_name": {
+				"value": "Name"
+			},
+			"dialog_goorm_profile_password": {
+				"value": "PW"
+			},
+			"dialog_goorm_profile_password_confirm": {
+				"value": "Confirm PW"
+			},
+			"dialog_goorm_profile_nick": {
+				"value": "Nickname"
+			},
+			"dialog_goorm_profile_email": {
+				"value": "E-mail"
+			},
+			"dialog_goorm_profile_comment": {
+				"value": "Comment"
+			}
+		}
+	},
+	"dialog_scm_auth_guide": {
+		"value": "This is for determining whether you have write permission for the SCM repository."
+	},
+	"dialog_scm_cmd_log": {
+		"value": "Command Log"
+	},
+	"dialog_scm_status_guide": {
+		"value": "Check file's version control status and do works you need."
+	},
+	"dialog_scm_status": {
+		"value": "Status"
+	},
+	"dialog_scm_path": {
+		"value": "File Path"
+	},
+	"dilaog_scm_update_guide": {
+		"value": "Update to specific revision or specific date."
+	},
+	"dialog_scm_date": {
+		"value": "Date"
+	},
+	"dialog_scm_lock_guide": {
+		"value": "Lock or Unlock files."
+	},
+	"dialog_scm_resolve_guide": {
+		"value": "Resolve conflicts by accept option."
+	},
+	"dialog_svn_blame_guide": {
+		"value": "Blame with specific revision."
+	},
+	"dialog_svn_diff_guide": {
+		"value": "Show differences between specific revisions."
+	},
+	"dialog_svn_log_guide": {
+		"value": "Show logs for specific revision."
+	},
+	"dialog_scm_message": {
+		"value": "Message"
+	},
+	"dialog_svn_cmd_log_guide": {
+		"value": "Check Subversion command logs."
+	},
+	"dialog_scm_last_commit": {
+		"value": "Last Commit"
+	},
+	"dialog_scm_last_push": {
+		"value": "Last Push"
+	},
+	"dialog_scm_branch_guide": {
+		"value": "See branch list and manage branches."
+	},
+	"dialog_scm_branch": {
+		"value": "Branch"
+	},
+	"dialog_scm_current": {
+		"value": "Current"
+	},
+	"dialog_git_blame_guide": {
+		"value": "Blame with specific commit."
+	},
+	"dialog_git_diff_guide": {
+		"value": "Show differences between specific commits."
+	},
+	"dialog_git_log_guide": {
+		"value": "Show logs for specific commit."
+	},
+	"dialog_scm_email": {
+		"value": "Email"
+	},
+	"dialog_scm_commit_date": {
+		"value": "Commit Date"
+	},
+	"dialog_git_cmd_log_guide": {
+		"value": "Check Git command logs."
+	},
+	"dialog_push_guide": {
+		"value": "Commits that are not pushed yet."
+	},
+	"dialog_branch_create": {
+		"value": "Create Branch - Name"
+	},
+	"dialog_branch_create_guide": {
+		"value": "Input new branch name."
+	},
+	"dialog_merge": {
+		"value": "Merge - Select File"
+	},
+	"dialog_merge_guide": {
+		"value": "Select file that you want to merge with current opened file."
+	},
+	"dialog_help_private_url": {
+		"value": "",
+		"children": {
+			"help_about_private_url": {
+				"value": "About Private URL"
+			}
+		}
+	},
+	"dialog_scm_anonymous": {
+		"value": "Anonymous"
+	},
+	"dialog_scm_authorized_user": {
+		"value": "Authorized User"
+	},
+    "import_dialog_message" : {
+    		"value" : "Input information for import project."
+    },
+    "dialog_npm_title": {
+    		"value": "NPM"
+    },
+    "dialog_npm_install_guide": {
+    		"value": "Install package(global)."
+    },
+    "dialog_npm_pkg_name_guide": {
+    		"value": "Package Name"
+    },
+    "dialog_npm_pkg_version_guide": {
+    		"value": "Package Version"
+    },
+    "dialog_npm_pkg_version_latest_guide": {
+    		"value": "Latest"
+    },
+    "dialog_npm_pkg_version_specific_guide": {
+   	 	"value": "Specific Version"
+    },
+    "dialog_npm_pkg_version_name_guide": {
+    		"value": "Version Name"
+    },
+    "dialog_npm_pkg_list_guide": {
+    		"value": "User's NPM List"
+    },
+    "dialog_npm_pkg_list_name_guide": {
+    		"value": "Name"
+    },
+    "dialog_npm_pkg_list_version_guide": {
+    		"value": "Version"
+    },
+    "dialog_preference": {
+    		"value": "Preference"
+    },
+    "preference": {
+		"value": "Preference"
+	},
+	"property": {
+		"value": "Property"
+	},
+	"plugin": {
+		"value": "Plugins"
+	},
+	"dialog_open_project": {
+		"value": "Open Project"
+	},
+	"dialog_open_file": {
+		"value": "Open File"
+	},
+	"dialog_open_url": {
+		"value": "Open URL"
+	},
+	"dialog_save_as_file": {
+		"value": "Save as..."
+	},
+	"dialog_rename_file": {
+		"value": "Rename File"
+	},
+	"dialog_property": {
+		"value": "File Property"
+	},
+	"dialog_search": {
+		"value": "Search"
+	},
+	"dialog_build_project": {
+		"value": "Build Projects"
+	},
+	"dialog_build_all": {
+		"value": "Build All"
+	},
+	"dialog_build_clean": {
+		"value": "Build Clean"
+	},
+	"dialog_help_contents": {
+		"value": "Help Contents"
+	},
+	"dialog_help_shortcuts": {
+		"value": "goormIDE Shortcuts"
+	},
+	"dialog_help_about": {
+		"value": "About goormIDE"
+	},
+	"dialog_help_license": {
+		"value": "Open Source License"
+	}
+}

@@ -1,0 +1,114 @@
+<h1>project.goorm</h1>
+
+<p>구름[goorm]은 오픈 소스로 진행 중인 클라우드 통합 개발 환경 프로젝트입니다. 오직 자바스크립트로만 개발되었으며, 다양한 오픈 소스 라이브러리를 사용하고 있습니다. 현재 구름은 C/C++, Java, HTML, CSS, PHP, Javascript 등의 개발을 지원합니다. 새로운 언어들도 플러그인 형태로 추가될 예정입니다.</p>
+
+<ul>
+    <li><strong>구름은 현재 개발중이며, 현재 베타 버전으로 제공되고 있습니다.</strong>
+    </li>
+    <li><strong>원하는 기능이 있거나 버그를 발견하시면 연락주세요.</strong> (email: sungtae.ryu@goorm.io)</li>
+</ul>
+
+<!-- <div id="installation">
+    <h2>설치</h2>
+
+    <p>install using npm :</p>
+
+    <pre><code>      $ npm install goorm -g</code></pre>
+</div> -->
+<div id="official_site">
+    <h2>공식 사이트</h2>
+
+    <ul>
+        <li>http://goorm.io</li>
+    </ul>
+</div>
+<div id="features">
+    <h2>기능 소개</h2>
+
+    <ul>
+        <li><strong>자신만의 통합 개발 환경 구축</strong>
+        </li>
+        <li><strong>다양한 플러그인 지원</strong>
+        </li>
+        <li><strong>다른 개발자들과 실시간으로 협업</strong>
+        </li>
+        <li><strong>구문 강조 기능</strong>
+        </li>
+        <li><strong>강력한 검색 및 치환 기능</strong>
+        </li>
+        <li><strong>자신에게 맞는 환경으로 구름을 커스터마이징</strong>
+        </li>
+        <li><strong>Subversion/Git 을 이용한 프로젝트 관리</strong>
+        </li>
+        <li><strong>강력한 터미널 기능</strong>
+        </li>
+        <li><strong>기타 등등</strong>
+        </li>
+    </ul>
+</div>
+<div id="open_source">
+    <h2>오픈 소스 프로젝트</h2>
+    <p>구름은 오픈 소스로 진행 중인 프로젝트이므로 다음과 같은 과정을 통해 사용자의 시스에 직접 설치해서 사용할 수도 있습니다. 기본적인 기능은 동일합니다. 하지만 교육용/기업용 버전의 기능과 몇 가지 강력한 기능들은 서비스 버전을 통해서만 제공됩니다. 또한, 별도의 기술 지원은 되지 않습니다.</p>
+    <ul>
+        <li>
+            <p><strong>node.js 설치</strong>
+            </p>
+            <p>node.js 설치하기 :</p><pre><code>  $ wget http://nodejs.org/dist/v0.10.28/node-v0.10.28.tar.gz
+  $ tar -xvzf node-v0.10.28.tar.gz
+  $ cd node-v0.10.28
+  $ ./configure
+  $ make
+  $ sudo make install</code></pre>
+            <p>node.js가 정상적으로 설치되었는 지 확인하기 :</p><pre><code>  $ node -v</code></pre>
+            <p>노드가 정상적으로 설치되었다면 아래와 같이 버전이 뜹니다. :</p><pre><code>  $ v0.10.28</code></pre>
+            <p>npm 설치 (최신 버전의 node.js는 자동으로 npm을 설치하므로 이 과정은 무시하셔도 됩니다.) :</p><pre><code>  $ sudo chown -R $USER /usr/local
+  $ apt-get install curl
+  $ curl https://npmjs.org/install.sh &gt; install.sh
+  $ sudo sh install.sh</code></pre>
+        </li>
+        <li>
+            <p><strong>다운로드</strong>
+            </p>
+            <p>github로부터 소스 다운받기 :</p><pre><code>  $ git clone git://github.com/xenoz0718/goorm.git</code></pre>
+            <p>svn으로 체크아웃하기 :</p><pre><code>  $ svn checkout svn://svn.code.sf.net/p/goorm/code/trunk goorm </code></pre>
+            <p>npm으로 설치하기 :</p><pre><code>  $ npm install goorm -g</code></pre>
+        </li>
+        <li>
+            <p><strong>실행</strong>
+            </p>
+            <p>mongodb 실행하기 :</p><pre><code>  $ mongod</code></pre>
+            <p>mongodb가 정상적으로 실행되면 아래와 같은 화면이 뜹니다. :</p><pre><code>  ...
+  Thu Oct  4 23:26:15 [websvr] admin web console waiting for connections on port 28017
+  Thu Oct  4 23:26:15 [initandlisten] waiting for connections on port 27017
+  ...</code></pre>
+            <p>goorm 실행 :</p><pre><code>  $ node goorm.js start</code></pre>
+            <p>npm으로 설치했을 시 :</p><pre><code>  $ goorm start</code></pre>
+            <p>데몬으로 실행하고자 한다면 :</p><pre><code>  $ node goorm.js start -d
+  $ goorm start -d</code></pre>
+            <p>환경설정 (옵션) :</p><pre><code>  $ node goorm.js set --workspace ~/workspace/
+  $ goorm set -w ~/workspace/</code></pre>
+            <p>$ node goorm.js set --temp-directory ~/temp<em>files/
+      $ goorm set -t ~/temp</em>files/</p><pre><code>  $ node goorm.js set -x plugin_exclude_list
+  $ goorm set --plugin_exclude_list [plugin_exclude_list]</code></pre>
+            <p>$ node goorm.js set -u [user_id] $ goorm set --user [user_id]</p>
+            <p>구름 종료 :</p><pre><code>  $ node goorm.js stop
+  $ goorm stop</code></pre>
+            <p>성공적으로 실행되면 아래와 같은 메시지가 뜹니다.:</p><pre><code>  goormIDE:: loading config...
+  /--------------------------------------------------------
+  workspace_path: /Users/goormUser/workspace/
+  temp_dir_path: /Users/goormUser/temp_files/
+  goormIDE:: starting...
+  /--------------------------------------------------------
+  info  - socket.io started
+  goorm IDE server listening on port 9999 in development mode
+  Open your browser and connect to
+  &#39;http://localhost:9999&#39; or &#39;http://[YOUR IP/DOMAIN]:9999&#39;</code></pre>
+            <p>아래 주소로 웹브라우저를 이용해 접근하면 구름을 실행할 수 있습니다. :</p><pre><code>  http://localhost:9999</code></pre>
+        </li>
+    </ul>
+</div>
+<div id="license">
+    <h2>라이센스</h2>
+
+    <p>구름은 기본적으로 듀얼 라이센스를 가지고 있습니다. 현재 오픈 소스로 공개중인 버전은 AGPLv3을 따르는 오픈 소스 프로젝트이며, 소스 코드를 수정하셔서 사용하는 경우에는 반드시 동일한 라이센스로 소스 코드를 공개하여야 합니다. 만약 구름 IDE를 상업적으로 이용하실 경우에는 라이센스를 구매하여 사용하셔야 합니다. (contact@goorm.io)</p>
+</div>

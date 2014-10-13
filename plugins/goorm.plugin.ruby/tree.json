@@ -1,0 +1,21 @@
+{
+	"preference" :
+	{
+		"label" : "Ruby",
+		"tab" :	[
+			{	"label" : "ruby",
+				"html"	: "/goorm.plugin.ruby/ruby.preference.html"
+			}
+		]
+	},
+	
+	"property" : 
+	{
+		"label" : "Ruby",
+		"tab" :	[
+			{	"label" : "ruby",
+				"html"	: "/goorm.plugin.ruby/ruby.property.html"
+			}
+		]
+	}
+}

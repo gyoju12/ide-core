@@ -1,0 +1,127 @@
+{
+	"kor": {
+		"name": {
+			"value": "DART 프로젝트"
+		},
+		"description": {
+			"value": "Dart 프로젝트 (HTML5/Javascript)"
+		},
+		"items": {
+			"default_dart_project": {
+				"name": {
+					"value": "기본 Dart 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Dart 프로젝트를 생성합니다."
+				}
+			},
+			"clock_sample": {
+				"name": {
+					"value": "Clock 예제"
+				},
+				"description": {
+					"value": "새로운 Dart 프로젝트를 생성합니다."
+				}
+			},
+			"sunflower_sample": {
+				"name": {
+					"value": "Sunflower 예제"
+				},
+				"description": {
+					"value": "새로운 Dart 프로젝트를 생성합니다."
+				}
+			},
+			"swipe_sample": {
+				"name": {
+					"value": "Swipe 예제"
+				},
+				"description": {
+					"value": "새로운 Dart 프로젝트를 생성합니다."
+				}
+			},
+			"solar_sample": {
+				"name": {
+					"value": "Solar 예제"
+				},
+				"description": {
+					"value": "새로운 Dart 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_main_name": { 
+			"value": "기본 메인 이름"
+		},
+		"d_build_option": { 
+			"value": "기본 빌드 옵션"
+		},
+		"main_name": { 
+			"value": "메인 이름"
+		},
+		"build_option": { 
+			"value": "빌드 옵션"
+		}
+
+	},
+	"us": {
+		"name": {
+			"value": "DART Project"
+		},
+		"description": {
+			"value": "Dart Project (HTML5/Javascript)"
+		},
+		"items": {
+			"default_dart_project": {
+				"name": {
+					"value": "Default Dart project"
+				},
+				"description": {
+					"value": "Create New Project for Dart"
+				}
+			},
+			"clock_sample": {
+				"name": {
+					"value": "Clock sample"
+				},
+				"description": {
+					"value": "Create New Project for Dart"
+				}
+			},
+			"sunflower_sample": {
+				"name": {
+					"value": "Sunflower sample"
+				},
+				"description": {
+					"value": "Create New Project for Dart"
+				}
+			},
+			"swipe_sample": {
+				"name": {
+					"value": "Swipe sample"
+				},
+				"description": {
+					"value": "Create New Project for Dart"
+				}
+			},
+			"solar_sample": {
+				"name": {
+					"value": "Solar sample"
+				},
+				"description": {
+					"value": "Create New Project for Dart"
+				}
+			}
+		},
+		"d_main_name": { 
+			"value": "Default Main Name"
+		},
+		"d_build_option": { 
+			"value": "Default Build Option"
+		},
+		"main_name": { 
+			"value": "Main Name"
+		},
+		"build_option": { 
+			"value": "Build Option"
+		}
+	}
+}

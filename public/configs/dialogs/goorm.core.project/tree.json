@@ -1,0 +1,23 @@
+{
+	"core" : {
+		"label" : "<span localization_key='property'>Property</span>",
+		"expanded" : true,
+		"child" : [
+			{	"label" : "<span localization_key='information' tab_action='Information'>Information</span>",
+				"id" : "Information",
+				"tab" : [
+					{	"label" : "<span localization_key='information'>Information</span>",
+						"html"	: "configs/project/default/project.general.html"
+					}
+				]
+			
+			}
+			
+			
+		]
+	},
+	"plugin" : {
+		"label" : "<span localization_key='plugin'>Plugin</span>",
+		"child" : []
+	}
+}

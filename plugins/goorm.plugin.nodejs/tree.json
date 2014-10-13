@@ -1,0 +1,21 @@
+{
+	"preference" :
+	{
+		"label" : "Nodejs",
+		"tab" :	[
+			{	"label" : "nodejs",
+				"html"	: "/goorm.plugin.nodejs/nodejs.preference.html"
+			}
+		]
+	},
+	
+	"property" : 
+	{
+		"label" : "Nodejs",
+		"tab" :	[
+			{	"label" : "nodejs",
+				"html"	: "/goorm.plugin.nodejs/nodejs.property.html"
+			}
+		]
+	}
+}

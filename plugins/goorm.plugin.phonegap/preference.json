@@ -1,0 +1,7 @@
+{
+	"plugin.phonegap.remote_id" : 		"",
+	"plugin.phonegap.remote_password" : "",
+	"plugin.phonegap.build_platform" : "android",
+	"plugin.phonegap.run_index" : 		"www/index.html",
+	"plugin.phonegap.webview_type" : 	"tab"
+}

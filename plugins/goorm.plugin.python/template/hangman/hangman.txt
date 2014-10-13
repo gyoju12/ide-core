@@ -1,0 +1,88 @@
+HANGMAN  %s
+ _______
+|   |  \|
+        |
+        |
+        |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+        |
+        |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+    |   |
+        |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+   \|   |
+        |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+   \|/  |
+        |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+   \|/  |
+    |   |
+        |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+   \|/  |
+    |   |
+   /    |
+        |
+        |
+       ---
+%snextscene
+ HANGMAN  %s
+ _______
+|   |  \|
+    O   |
+   \|/  |
+    |   |
+   / \  |
+        |
+        |
+       ---
+%s

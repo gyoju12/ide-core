@@ -1,0 +1,21 @@
+{
+	"preference" :
+	{
+		"label" : "Phonegap",
+		"tab" :	[
+			{	"label" : "phonegap",
+				"html"	: "/goorm.plugin.phonegap/phonegap.preference.html"
+			}
+		]
+	},
+	
+	"property" : 
+	{
+		"label" : "Phonegap",
+		"tab" :	[
+			{	"label" : "phonegap",
+				"html"	: "/goorm.plugin.phonegap/phonegap.property.html"
+			}
+		]
+	}
+}

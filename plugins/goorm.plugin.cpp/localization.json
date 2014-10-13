@@ -1,0 +1,114 @@
+{
+	"kor": {
+		"name": {
+			"value": "C/C++ 프로젝트"
+		},
+		"description": {
+			"value": "GNU 컴파일러 모음을 사용하는 C/C++ 프로젝트"
+		},
+		"items": {
+			"c_console_project": {
+				"name": {
+					"value": "C 콘솔 프로젝트"
+				},
+				"description": {
+					"value": "새로운 C 프로젝트를 생성합니다."
+				}
+			},
+			"cpp_console_project": {
+				"name": {
+					"value": "C++ 콘솔 프로젝트"
+				},
+				"description": {
+					"value": "새로운 C++ 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_main_file_name": { 
+			"value": "기본 메인 파일 이름"
+		},
+		"d_source_path": { 
+			"value": "기본 소스 경로"
+		},
+		"d_build_path": { 
+			"value": "기본 빌드 경로"
+		},
+		"d_build_option": { 
+			"value": "기본 빌드 옵션"
+		},
+		"d_use_makefile": { 
+			"value": "기본 MakeFile 사용 여부"
+		},
+		"main_file_name": { 
+			"value": "메인 파일 이름"
+		},
+		"source_path": { 
+			"value": "소스 경로"
+		},
+		"build_path": { 
+			"value": "빌드 경로"
+		},
+		"build_option": { 
+			"value": "빌드 옵션"
+		},
+		"use_makefile": { 
+			"value": "MakeFile 사용 여부"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "C/C++ Project"
+		},
+		"description": {
+			"value": "C/C++ Project using GNU Compiler Collection"
+		},
+		"items": {
+			"c_console_project": {
+				"name": {
+					"value": "C Console Project"
+				},
+				"description": {
+					"value": "Create New Project for C"
+				}
+			},
+			"cpp_console_project": {
+				"name": {
+					"value": "C++ Console Project"
+				},
+				"description": {
+					"value": "Create New Project for C++"
+				}
+			}
+		},
+		"d_main_file_name": { 
+			"value": "Default Main File Name"
+		},
+		"d_source_path": { 
+			"value": "Default Source Path"
+		},
+		"d_build_path": { 
+			"value": "Default Build Path"
+		},
+		"d_build_option": { 
+			"value": "Default Build Option"
+		},
+		"d_use_makefile": { 
+			"value": "Default Use Makefile"
+		},
+		"main_file_name": { 
+			"value": "Main File Name"
+		},
+		"source_path": { 
+			"value": "Source Path"
+		},
+		"build_path": { 
+			"value": "Build Path"
+		},
+		"build_option": { 
+			"value": "Build Option"
+		},
+		"use_makefile": { 
+			"value": "Use Makefile"
+		}
+	}
+}

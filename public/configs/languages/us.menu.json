@@ -1,0 +1,592 @@
+{
+	"file": {
+		"value": "File",
+		"children": {
+			"file_new": {
+				"value": "New",
+				"children": {
+					"file_new_project": {
+						"value": "Project"
+					},
+					"file_new_file": {
+						"value": "New File"
+					},
+					"file_new_folder": {
+						"value": "Folder"
+					},
+					"file_new_untitled_text_file": {
+						"value": "Untitled Text File"
+					},
+					"file_new_other": {
+						"value": "Other"
+					}
+				}
+			},
+			"emoticon": {
+				"value": "Emoticon"
+			},
+			"code_highlight": {
+				"value": "Code Highlight"
+			},
+			"file_open_project": {
+				"value": "Open Project"
+			},
+			"file_open_file": {
+				"value": "Open File"
+			},
+			"open_recent_projects": {
+				"value": "Open Recent Projects"
+			},
+			"open_recent_files": {
+				"value": "Open Recent Files"
+			},
+			"file_open_url": {
+				"value": "Open Url"
+			},
+			"file_close": {
+				"value": "Close"
+			},
+			"file_close_all": {
+				"value": "Close All"
+			},
+			"file_save": {
+				"value": "Save"
+			},
+			"file_save_as": {
+				"value": "Save As"
+			},
+			"file_save_all": {
+				"value": "Save All"
+			},
+			"file_rename": {
+				"value": "Rename"
+			},
+			"file_delete": {
+				"value": "Delete"
+			},
+			"file_print": {
+				"value": "Print"
+			},
+			"file_restart": {
+				"value": "Restart"
+			},
+			"file_import": {
+				"value": "Import/Upload File"
+			},
+			"folder_upload": {
+				"value": "Upload Folder"
+			},
+			"file_export": {
+				"value": "Export File"
+			},
+			"file_properties": {
+				"value": "Properties"
+			}
+		}
+	},
+	"edit": {
+		"value": "Edit",
+		"children": {
+			"edit_undo": {
+				"value": "Undo"
+			},
+			"edit_redo": {
+				"value": "Redo"
+			},
+			"edit_cut": {
+				"value": "Cut"
+			},
+			"edit_copy": {
+				"value": "Copy"
+			},
+			"edit_paste": {
+				"value": "Paste"
+			},
+			"edit_delete": {
+				"value": "Delete"
+			},
+			"edit_select_all": {
+				"value": "Select All"
+			},
+			"edit_font": {
+				"value": "Font Size",
+				"children": {
+					"edit_magnify_font": {
+						"value": "Magnify Font Size"
+					},
+					"edit_minify_font": {
+						"value": "Minify Font Size"
+					},
+					"edit_default_font": {
+						"value": "Default Font Size"
+					}
+				}
+			},
+			"edit_go_to_line": {
+				"value": "Go to Line"
+			},
+			"edit_bookmark": {
+				"value": "Bookmarks",
+				"children": {
+					"edit_toggle_bookmark": {
+						"value": "Toggle Bookmark"
+					},
+					"edit_next_bookmark": {
+						"value": "Next Bookmark"
+					},
+					"edit_prev_bookmark": {
+						"value": "Previous Bookmark"
+					},
+					"edit_clear_bookmark": {
+						"value": "Clear Bookmarks"
+					}
+				}
+			},
+			"edit_find_and_replace": {
+				"value": "Find/Replace"
+			},
+			"edit_find_next": {
+				"value": "Find Next"
+			},
+			"edit_find_previous": {
+				"value": "Find Previous"
+			},
+			"edit_preference": {
+				"value": "Preference"
+			},
+			"edit_auto_formatting": {
+				"value": "Auto Formatting"
+			},
+			"edit_comment_selected": {
+				"value": "Toggle Comment Selected"
+			},
+			"edit_share_cursor": {
+				"value": "Toggle Cursor Sharing"
+			},
+			"edit_search": {
+				"value": "Search"
+			},
+			"edit_merge": {
+				"value": "Merge"
+			},
+			"edit_merge_view": {
+				"value": "Merge View"
+			},
+			"edit_next_diff": {
+				"value": "Next Diff"
+			},
+			"edit_prev_diff": {
+				"value": "Previous Diff"
+			},
+			"edit_merge_diff": {
+				"value": "Merge Diff"
+			},
+			"edit_refactor": {
+				"value": "Refactor"
+			},
+			"edit_safe_delete": {
+				"value": "Safe Delete"
+			},
+			"edit_extract_var": {
+				"value": "Extract Variable"
+			},
+			"edit_bookmark_delete_comment": {
+				"value": "Delete Comment"
+			}
+		}
+	},
+	"project": {
+		"value": "Project",
+		"children": {
+			"project_run": {
+				"value": "Run"
+			},
+			"project_stop": {
+				"value": "Stop"
+			},
+			"project_build_dialog": {
+				"value": "Build Projects"
+			},
+			"project_build_project": {
+				"value": "Build"
+			},
+			"project_build_all": {
+				"value": "Build All"
+			},
+			"project_clean": {
+				"value": "Clean"
+			},
+			"project_build_configuration": {
+				"value": "Build Configuration"
+			},
+			"project_import": {
+				"value": "Import Project"
+			},
+			"project_export": {
+				"value": "Export Project"
+			},
+			"project_delete": {
+				"value": "Delete Project"
+			},
+			"project_refresh": {
+				"value": "Refresh"
+			},
+			"project_share": {
+				"value": "Share the Project"
+			},
+			"project_properties": {
+				"value": "Properties"
+			}
+		}
+	},
+	"debug": {
+		"value": "Debug",
+		"children": {
+			"debug_start": {
+				"value": "Debug Start"
+			},
+			"debug_continue": {
+				"value": "Continue"
+			},
+			"debug_terminate": {
+				"value": "Terminate"
+			},
+			"debug_step_over": {
+				"value": "Step Over"
+			},
+			"debug_step_in": {
+				"value": "Step In"
+			},
+			"debug_step_out": {
+				"value": "Step Out"
+			}
+		}
+	},
+	"window": {
+		"value": "Window",
+		"children": {
+			"window_new_main_window": {
+				"value": "New Main Window"
+			},
+			"window_new_terminal_window": {
+				"value": "New Terminal Window"
+			},
+			"window_previous_window": {
+				"value": "Previous Window"
+			},
+			"window_next_window": {
+				"value": "Next Window"
+			},
+			"perspectives": {
+				"value": "Perspectives",
+				"children": {
+					"window_default_layout": {
+						"value": "Default Layout"
+					},
+					"window_left_layout_show_hide": {
+						"value": "Left Pane Show/Hide"
+					},
+					"window_left_layout_toggle_project_explorer": {
+						"value": "Show Project Explorer"
+					},
+					"window_left_layout_toggle_cloud_explorer": {
+						"value": "Show Cloud Explorer"
+					},
+					"window_right_layout_show_hide": {
+						"value": "Right Pane Show/Hide"
+					},
+					"window_right_layout_toggle_chat": {
+						"value": "Show Chat"
+					},
+					"window_right_layout_toggle_slide": {
+						"value": "Show Docs"
+					},
+					"window_right_layout_toggle_history": {
+						"value": "Show Histroy"
+					},
+					"window_right_layout_toggle_outline": {
+						"value": "Show Outline"
+					},
+					"window_bottom_layout_show_hide": {
+						"value": "Bottom Pane Show/Hide"
+					},
+					"window_bottom_layout_debug": {
+						"value": "Show Debug"
+					},
+					"window_bottom_layout_console": {
+						"value": "Show Terminal"
+					},
+					"window_bottom_layout_search": {
+						"value": "Show Search"
+					},
+					"window_bottom_layout_output": {
+						"value": "Show Output"
+					}
+				}
+			},
+			"window_toggle_full_workspace": {
+				"value": "Toggle Workspace"
+			},
+			"window_hide_all_window": {
+				"value": "Hide All Window"
+			},
+			"window_show_specific_window": {
+				"value": "Show Specific Window"
+			},
+			"window_show_all_window": {
+				"value": "Show All Window"
+			},
+			"window_cascade": {
+				"value": "Cascade"
+			},
+			"window_tile_vertically": {
+				"value": "Tile Vertically"
+			},
+			"window_tile_horizontally": {
+				"value": "Tile Horizontally"
+			},
+			"window_tile_left": {
+				"value": "Tile Left"
+			},
+			"window_tile_right": {
+				"value": "Tile Right"
+			}
+		}
+	},
+	"help": {
+		"value": "Help",
+		"children": {
+			"help_help_contents": {
+				"value": "Help Contents"
+			},
+			"help_view_all_shortcuts": {
+				"value": "View All Shortcuts"
+			},
+			"help_bug_report": {
+				"value": "Send Bug Report"
+			},
+			"help_facebook": {
+				"value": "Go to Facebook page"
+			},
+			"help_about_goorm": {
+				"value": "About goorm"
+			},
+			"help_license": {
+				"value": "Open Source License"
+			},
+			"help_tutorial": {
+				"value": "Tutorial"
+			},
+			"help_tutorial_basic_tour": {
+				"value": "Basic Tour"
+			},
+			"help_tutorial_new_project": {
+				"value": "New Project"
+			},
+			"help_tutorial_build_project": {
+				"value": "Build Project"
+			},
+			"help_tutorial_debug_project": {
+				"value": "Debug Project"
+			},
+			"help_tutorial_share_project": {
+				"value": "Share Project"
+			},
+			"help_tutorial_add_friends": {
+				"value": "Add Friends"
+			}
+		}
+	},
+	"account": {
+		"value": "Account",
+		"children": {
+			"account_profile": {
+				"value": "Profile"
+			},
+			"account_logout": {
+				"value": "Logout"
+			}
+		}
+	},
+	"file_open_context": {
+		"value": "Open"
+	},
+	"file_download_context": {
+		"value": "Download"
+	},
+	"file_open_as_context": {
+		"value": "Open As",
+		"children": {
+			"file_open_as_default_editor_context": {
+				"value": "Default Editor"
+			},
+			"file_open_as_text_editor_context": {
+				"value": "Text Editor"
+			},
+			"file_open_as_vim_editor_context": {
+				"value": "Vim Editor"
+			}
+		}
+	},
+	"open_terminal_here": {
+		"value": "Open Terminal Here"
+	},
+	"Copy_context": {
+		"value": "Copy"
+	},
+	"Paste_context": {
+		"value": "Paste"
+	},
+	"file_rename_context": {
+		"value": "Rename"
+	},
+	"file_move_context": {
+		"value": "Move"
+	},
+	"find_in_folder_context": {
+		"value": "Find in Folder"
+	},
+	"file_delete_context": {
+		"value": "Delete"
+	},
+	"delete_all_context": {
+		"value": "Delete All"
+	},
+	"file_property_context": {
+		"value": "Properties"
+	},
+	"file_new_project_context": {
+		"value": "New Project"
+	},
+	"file_open_project_context": {
+		"value": "Open Project"
+	},
+	"file_save_all_context": {
+		"value": "Save All"
+	},
+	"file_new_file_context": {
+		"value": "New File"
+	},
+	"file_new_folder_context": {
+		"value": "New Folder"
+	},
+	"file_new_untitled_text_file_context": {
+		"value": "New Untitled Text File"
+	},
+	"file_import_context": {
+		"value": "Import/Upload File"
+	},
+	"file_export_context": {
+		"value": "Export File"
+	},
+	"file_refresh_context": {
+		"value": "Refresh"
+	},
+	"file_new_context": {
+		"value": "New",
+		"children": {
+			"file_new_context_new_file": {
+				"value": "File"
+			},
+			"file_new_context_new_folder": {
+				"value": "Folder"
+			},
+			"file_new_context_untitled_text_file": {
+				"value": "Untitled Text File"
+			}
+		}
+	},
+	"folder_open_context": {
+		"value": "Open"
+	},
+	"cloud_upload_context": {
+		"value": "Upload"
+	},
+	"folder_close_context": {
+		"value": "Close"
+	},
+	"project_properties_context": {
+		"value": "Project Properties"
+	},
+	"file_open_file_context": {
+		"value": "Open File"
+	},
+	"file_close_all_context": {
+		"value": "Close All"
+	},
+	"window_toggle_full_workspace_context": {
+		"value": "Toggle Full Workspace"
+	},
+	"window_hide_all_window_context": {
+		"value": "Hide All Window"
+	},
+	"window_show_all_window_context": {
+		"value": "Show All Window"
+	},
+	"window_cascade_context": {
+		"value": "Cascade"
+	},
+	"window_tile_vertically_context": {
+		"value": "Tile Vertically"
+	},
+	"window_tile_horizontally_context": {
+		"value": "Tile Horizontally"
+	},
+	"window_previous_window_context": {
+		"value": "Previous Window"
+	},
+	"window_next_window_context": {
+		"value": "Next Window"
+	},
+	"maximize": {
+		"value": "Maximize"
+	},
+	"minimize": {
+		"value": "Minimize"
+	},
+	"show_and_hide": {
+		"value": "Show / Hide"
+	},
+	"open_recent_file": {
+		"value": "Open Recent File"
+	},
+	"close": {
+		"value": "Close"
+	},
+	"close_others": {
+		"value": "Close Others"
+	},
+	"edit_autocomplete_edit_context": {
+		"value": "Auto Complete"
+	},
+	"edit_definition_edit_context": {
+		"value": "Jump to Definition"
+	},
+	"eval_in_repl": {
+		"value": "EVAL in REPL"
+	},
+	"edit_find_replace_edit_context": {
+		"value": "Find/Replace"
+	},
+	"edit_search_edit_context": {
+		"value": "Search"
+	},
+	"chat_user_info_context": {
+		"value": "User Info"
+	},
+	"chat_user_whisper_context": {
+		"value": "Whisper"
+	},
+	"pdf": {
+		"value": "PDF"
+	},
+	"edit_no_bookmark": {
+		"value": "No Bookmarks"
+	},
+	"help_npm_list_guide": {
+		"value": "List..."
+	},
+	"open_goorm_edu_lecture": {
+		"value": "Open goormEDU Lectures"
+	}
+}

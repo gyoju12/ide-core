@@ -1,0 +1,92 @@
+{
+	"kor": {
+		"name": {
+			"value": "Phonegap 프로젝트"
+		},
+		"description": {
+			"value": "Phonegap 프로젝트"
+		},
+		"items": {
+			"phonegap_project": {
+				"name": {
+					"value": "Phonegap 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Phonegap 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"desc_1":{
+			"value": "어도비의 클라우드 빌드 시스템을 이용하기 위한 계정을 입력해주세요."
+		},
+		"account_setting":{
+			"value": "(계정 설정 : https://build.phonegap.com/apps)"
+		},
+		"id_label":{
+			"value": "어도비 아이디"
+		},
+		"d_build_platform":{
+			"value": "기본 빌드 플랫폼"
+		},
+		"d_index_file":{
+			"value": "기본 인덱스 파일"
+		},
+		"d_web_view_type":{
+			"value": "기본 웹뷰 타입"
+		},
+		"build_platform":{
+			"value": "빌드 플랫폼"
+		},
+		"index_file":{
+			"value": "인덱스 파일"
+		},
+		"web_view_type":{
+			"value": "웹뷰 타입"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Phonegap Project"
+		},
+		"description": {
+			"value": "Phonegap Project"
+		},
+		"items": {
+			"phonegap_project": {
+				"name": {
+					"value": "Phonegap Project"
+				},
+				"description": {
+					"value": "Create New Project for Phonegap"
+				}
+			}
+		},
+		"desc_1":{
+			"value": "Enter your Adobe account to use cloud build system on the Adobe."
+		},
+		"account_setting":{
+			"value": "(Account setup : https://build.phonegap.com/apps)"
+		},
+		"id_label":{
+			"value": "Email/Adobe ID"
+		},
+		"d_build_platform":{
+			"value": "Default Build Platform"
+		},
+		"d_index_file":{
+			"value": "Default Index File"
+		},
+		"d_web_view_type":{
+			"value": "Default Web View Type"
+		},
+		"build_platform":{
+			"value": "Build Platform"
+		},
+		"index_file":{
+			"value": "Index File"
+		},
+		"web_view_type":{
+			"value": "Web View Type"
+		}
+	}
+}

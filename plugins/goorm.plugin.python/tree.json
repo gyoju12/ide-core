@@ -1,0 +1,21 @@
+{
+	"preference" :
+	{
+		"label" : "Python",
+		"tab" :	[
+			{	"label" : "python",
+				"html"	: "/goorm.plugin.python/python.preference.html"
+			}
+		]
+	},
+	
+	"property" : 
+	{
+		"label" : "Python",
+		"tab" :	[
+			{	"label" : "python",
+				"html"	: "/goorm.plugin.python/python.property.html"
+			}
+		]
+	}
+}

@@ -1,0 +1,212 @@
+{
+    "title_basic": {
+        "value": "Basic tutorial"
+    },
+    "title_new_project": {
+        "value": "New project tutorial"
+    },
+    "title_build_project": {
+        "value": "Build project tutorial"
+    },
+    "title_debug_project": {
+        "value": "Debug project tutorial"
+    },
+    "title_share_project": {
+        "value": "Share project tutorial"
+    },
+    "title_add_friends": {
+        "value": "Add Friends"
+    },
+    "goorm_main_menu": {
+        "value": "This ia a main menu. You can see sub menu by hovering over menu."
+    }, 
+    "goorm_main_toolbar": {
+        "value": "This is main toolbar. Just click the button, you can many works."
+    },
+    "main_file_toolbar": {
+        "value": "This is file toolbar. You can make, remove, open projects and files."
+    },
+    "main_edit_toolbar": {
+        "value": "This is edit toolbar. You can do relative to code editor such as resizing font size or searching words."
+    },
+    "main_project_toolbar": {
+        "value": "This is project toolbar. You can build, run share project and so on."
+    },
+    "main_debug_toolbar": {
+        "value": "This is debug toolbar. You can debug project easily."
+    },
+    "main_window_toolbar": {
+        "value": "This is window toolbar. relative to window arrangment."
+    },
+    "main_help_toolbar": {
+        "value": "This is help toolbar. You can get information relative to Goorm IDE"
+    },
+    "bubble_file_toolbar": {
+        "value": "This is file toolbar."
+    },
+    "bubble_edit_toolbar": {
+        "value": "This is edit toolbar. You can do relative to code editor such as resizing font size or searching words."
+    },
+    "bubble_project_toolbar": {
+        "value": "This is project toolbar. You can build, run share project and so on."
+    },
+    "bubble_debug_toolbar": {
+        "value": "This is debug toolbar. You can debug project easily."
+    },
+    "bubble_window_toolbar": {
+        "value": "This is window toolbar. relative to window arrangment."
+    },
+    "bubble_help_toolbar": {
+        "value": "This is help toolbar. You can get information relative to Goorm IDE"
+    },
+    "project_table_tut": {
+        "value": "These are project table and file tree. You can manage file tree, project list and share project list."
+    },
+    "pacakage_tree": {
+        "value": "This is package tree."
+    },
+    "cloud_viewer": {
+        "value": "This is cloud viewer. You can access via Google Drive and Dropbox"
+    },
+    "workspace": {
+        "value": "This is your workspace. Your file editors are located in this space!"
+    },
+    "chat_tab": {
+        "value": "This is chat tab. You can communicate other people or your colleagues."
+    },
+    "document_viewer_tab": {
+        "value": "This is document viewer tab. You can view PDF file or slideshare.net slides."
+    },
+    "history_table_tab": {
+        "value": "This is history table tab. You can rollback your file data on this tab and identify who edit this file."
+    },
+    "outline_tab": {
+        "value": "This is outline tab. You can see outline of your editing file."
+    },
+    "quiz_tab": {
+        "value": "This is quiz tab. You can see quiz about subject you joined."
+    },
+    "debug_tab": {
+        "value": "This is debug tab. This shows debug state."
+    },
+    "terminal_tab": {
+        "value": "This is terminal tab. This shows build results, running program results and so on."
+    },
+    "search_tab": {
+        "value": "This is search tab. This shows search results."
+    },
+    "output_tab": {
+        "value": "This is output tab. You can see errors when save files."
+    },
+    "new_project": {
+        "value": "Click the New Project button. And start new project tutorial."
+    },
+    "new_project_wizard": {
+        "value": "This is the New Project wizard. This is dialog and you have to put information for making new project."
+    },
+    "project_type": {
+        "value": "Select the project type."
+    },
+    "project_dtype": {
+        "value": "Select the project detailed type."
+    },
+    "c_example": {
+        "value": "In this tutorial, we choose a C Basic Example project."
+    },
+    "nextbutton": {
+        "value": "Click the Next button."
+    },
+    "storage_field": {
+        "value": "Select storage your project will be saved. You can use goormIDE storage, Dropbox, and Google Drive."
+    },
+    "new_project_infomation": {
+        "value": "Enter project information."
+    },
+    "input_project_name": {
+        "value": "The project name is required."
+    },
+    "new_project_finish": {
+        "value": "Click the OK button to finish the New Project wizard."
+    },
+    "build_project_start": {
+        "value": "Click build project button and start project build."
+    },
+    "build_project_select_many": {
+        "value": "If you want to build many projects once, you can do that in 'Build Projects'."
+    },
+    "build_project_dialog": {
+        "value": "This is build project dialog."
+    },
+    "build_project_list": {
+        "value": "This is project list. You can choose the project which you want to build."
+    },
+    "build_project_finish": {
+        "value": "After choosing project, click OK button and Goorm IDE builds project."
+    },
+    "build_project_result": {
+        "value": "This is Terminal tab. You can see the result of build. If it successes, 'Build Success' will be shown. If it fails, 'Build Fail' wiil be shown."
+    },
+    "run_project": {
+        "value": "When build success, click 'Run' button. You can run project built and see result on terminal."
+    },
+    "debug_project_start": {
+        "value" : "Click debug project button and start debugging. Before debug project, <div><div class='toolbar-build' style='float: left; margin-right: 5px'></div>you have to check project build.</div> You can debug in C, C++ and Java project. If you start debug, Goorm IDE display terminal dialog."
+    },
+    "debug_project_continue": {
+        "value" : "Start project debug and continue to next break point."
+    },
+    "debug_project_terminate": {
+        "value" : "Stop project debug and close debug dialog."
+    },
+    "debug_project_step_over": {
+        "value" : "Continue to the next source line in the current stack frame. But 'Step Over' doesn't stop function call in line. It is like 'next' function in gdb."
+    },
+    "debug_project_step_in": {
+        "value" : "Continue running the program unitl reaches a different source line. It similar to 'Step Over' in Goorm IDE. It is like 'step' in gdb."
+    },
+    "debug_project_step_out": {
+        "value" : "Continue to the next source line in the current stack frame."
+    },
+    "share_project_start": {
+        "value": "Click share project button, and start share project."
+    },
+    "share_project_dialog": {
+        "value": "This is share project dialog."
+    },
+    "share_project_project_select": {
+        "value": "You can choose what you want to share."
+    },
+    "share_project_current_list": {
+        "value": "This is project list that shows sharing project currently. You can set options such as 'read-only', 'editable' etc."
+    },
+    "share_project_search_user": {
+        "value": "Search User who you want to share by ID, name or NickName."
+    },
+    "share_project_finish": {
+        "value": "Click the OK button, and finish sharing project."
+    },
+    "share_project_shared_tab": {
+        "value": "This is shared tab. You can see sharing, shared project information."
+    },
+    "share_project_shared_project_list": {
+        "value": "You can see sharing project list and message that others send to share."
+    },
+    "add_friends_start": {
+        "value": "Let's start add friends tutorial."
+    },
+    "add_friends_user_list": {
+        "value": "You can see user list here."
+    },
+    "add_friends_search_user": {
+        "value": "You can search user by name, ID, E-mail, NickName."
+    },
+    "add_friends_add_friend": {
+        "value": "If you click the 'Request' button on right side user list, Goorm IDE sends the request message to the user. After requesting, wait for respond."
+    },
+    "add_friends_friends_tab": {
+        "value": "After request add friends, you can see respond in Friends tab. And can manage friends list."
+    },
+    "add_friends_friend_list": {
+        "value": "You can see friends list or the message waiting accept by request "
+    }
+}

@@ -1,0 +1,53 @@
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+	<div localization_key="plugin.phonegap.desc_1">Enter your Adobe account to use cloud build system on the Adobe.</div>
+	<a href="https://build.phonegap.com/apps" target="_blank">
+		<div class="page-header">
+			<h6><small localization_key="plugin.phonegap.account_setting">(Account setup : https://build.phonegap.com/apps)</small></h6>
+		</div>
+	</a>
+	<div class="dialog_template_body_div">
+		<label for="phonegap_build_id" localization_key="plugin.phonegap.id_label" class="col-md-3 control-label dialog_template_body_span">Email / Adobe ID</label>
+		<div class="col-md-9">
+			<input type="text" name="plugin.phonegap.remote_id" id="phonegap_build_id" class="form-control dialog_template_text" placeholder="your@email.com"/>
+		</div>
+	</div>
+	<div class="dialog_template_body_div">
+		<label for="phonegap_build_password" localization_key="password" class="col-md-3 control-label dialog_template_body_span">Password</label>
+		<div class="col-md-9">
+			<input type="password" name="plugin.phonegap.remote_password" id="phonegap_build_password" class="form-control dialog_template_text" placeholder="password"/>
+		</div>
+	</div>
+</fieldset>
+<div class="dialog_template_body_div">
+	<label for="phonegap_build_platform" localization_key="plugin.phonegap.build_platform" class="col-md-3 control-label dialog_template_body_span">Build Platform</label>
+	<div class="col-md-9">
+		<select name="plugin.phonegap.build_platform" id="phonegap_build_platform" class="form-control">
+			<option value="android">Android</option>
+			<option value="ios">iOS</option>
+			<option value="blackberry">BlackBerry 6</option>
+			<option value="symbian">Symbian</option>
+			<option value="webos">WebOS</option>
+			<option value="wp7">Windows Phone 7</option>
+		</select>
+	</div>
+</div>
+<div class="dialog_template_body_div">
+	<label for="jquery_run_index" localization_key="plugin.phonegap.index_file" class="col-md-3 control-label dialog_template_body_span">Index File</label>
+	<div class="col-md-9">
+		<input type="text" name="plugin.jquery.run_index" id="jquery_run_index" class="form-control"/>
+	</div>
+</div>
+<div class="dialog_template_body_div">
+	<label localization_key="plugin.phonegap.web_view_type" class="col-md-3 control-label dialog_template_body_span">Web View Type</label>
+	<div class="col-md-9 web_view_type">
+		<input type="radio" name="plugin.jquery.webview_type" id="jquery_webview_type_tab" value="tab">
+		<label for="jquery_webview_type_tab">Tab</label>
+		<input type="radio" name="plugin.jquery.webview_type" id="jquery_webview_type_window" value="window">
+		<label for="jquery_webview_type_window">New Window</label>
+	</div>
+</div>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>	<!-- jeongmin: button should be button tag -->
+	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>

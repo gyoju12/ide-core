@@ -1,0 +1,21 @@
+{
+	"preference" :
+	{
+		"label" : "JAVA",
+		"tab" :	[
+			{	"label" : "java",
+				"html"	: "/goorm.plugin.java/java.preference.html"
+			}
+		]
+	},
+	
+	"property" : 
+	{
+		"label" : "JAVA",
+		"tab" :	[
+			{	"label" : "java",
+				"html"	: "/goorm.plugin.java/java.property.html"
+			}
+		]
+	}
+}

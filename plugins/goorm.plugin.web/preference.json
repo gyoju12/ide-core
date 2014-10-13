@@ -1,0 +1,4 @@
+{
+	"plugin.web.run_index" : 		"index.html",
+	"plugin.web.webview_type" : 	"tab"
+}

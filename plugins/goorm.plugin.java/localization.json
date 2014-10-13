@@ -1,0 +1,250 @@
+{
+	"kor": {
+		"name": {
+			"value": "Java 프로젝트"
+		},
+		"description": {
+			"value": "SNU Java 컴파일러를 사용하는 Java 프로젝트를 생성합니다."
+		},
+		"items": {
+			"java_console_project": {
+				"name": {
+					"value": "Java 콘솔 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Java 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"alert_cannot_template_folder": {
+			"value": "src 폴더에서 폴더를 만들어 주십시오."
+		},
+		"alert_type_is_empty": {
+			"value": "타입 이름이 비었습니다."
+		},
+		"alert_check_package_name": {
+			"value": "패키지 이름을 확인하여 주세요."
+		},
+		"alert_same_file_at_created_package": {
+			"value": "같은 이름의 파일이 이미 패키지에 존재합니다."
+		},
+		"alert_same_file_at_created_class": {
+			"value": "같은 이름의 파일이 이미 클래스에 존재합니다."
+		},
+		"alert_same_file_at_created_interface": {
+			"value": "같은 이름의 파일이 이미 인터페이에 존재합니다."
+		},
+		"alert_check_package": {
+			"value": "패키지 폴더가 존재하지 않습니다.<br>패키지를 먼저 확인하십시오."
+		},
+		"alert_plugin_check_terminal": {
+			"value": "터미널을 확인하세요."
+		},
+		"dictionary_package": {
+			"value": "패키지 생성"
+		},
+		"dictionary_class": {
+			"value": "클래스 생성"
+		},
+		"dictionary_interface": {
+			"value": "인터페이스 생성"
+		},
+		"dictionary_line": {
+			"value": "줄 번호"
+		},
+		"dictionary_content": {
+			"value": "내용"
+		},
+		"dictionary_file": {
+			"value": "파일 이름"
+		},
+		"template_source_folder": {
+			"value": "소스 폴더"
+		},
+		"template_package": {
+			"value": "패키지"
+		},
+		"template_name": {
+			"value": "이름"
+		},
+		"template_modifiers": {
+			"value": "제어자"
+		},
+		"select_modifiers": {
+			"value": "제어자 선택창"
+		},
+		"make_java_class": {
+			"value": "Class 생성"
+		},
+		"make_java_interface": {
+			"value": "Interface 생성"
+		},
+		"make_java_package": {
+			"value": "Package 생성"
+		},
+		"create_java_class": {
+			"value": "새로운 Class 파일 생성"
+		},
+		"create_java_interface": {
+			"value": "새로운 Interface 파일 생성"
+		},
+		"create_java_package": {
+			"value": "새로운 Package 파일 생성"
+		},
+		"template_create_option": {
+			"value": "어떠한 방법으로 생성하겠습니까?"
+		},
+		"template_create_option_check": {
+			"value": "Class의 생성자를 생성"
+		},
+		"d_main_class_name": {
+			"value" : "기본 메인클래스 이름"
+		},
+		"d_source_path": {
+			"value" : "기본 소스 경로"
+		},
+		"d_build_path": {
+			"value" : "기본 빌드 경로"
+		},
+		"d_build_option": {
+			"value" : "기본 빌드 옵션"
+		},
+		"main_class_name": {
+			"value" : "메인클래스 이름"
+		},
+		"source_path": {
+			"value" : "소스 경로"
+		},
+		"build_path": {
+			"value" : "빌드 경로"
+		},
+		"build_option": {
+			"value" : "빌드 옵션"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Java Project"
+		},
+		"description": {
+			"value": "Java Project using SUN Java Compiler Collection"
+		},
+		"items": {
+			"java_console_project": {
+				"name": {
+					"value": "Java Console Project"
+				},
+				"description": {
+					"value": "Create New Project for Java"
+				}
+			}
+
+		},
+
+		"alert_cannot_template_folder": {
+			"value": "Please create folder in src folder."
+		},
+		"alert_type_is_empty": {
+			"value": "Type name is empty."
+		},
+		"alert_check_package_name": {
+			"value": "Please check package name again."
+		},
+		"alert_same_file_at_created_package": {
+			"value": "Same name of file already exist at created package."
+		},
+		"alert_same_file_at_created_class": {
+			"value": "Same name of file already exist at created class."
+		},
+		"alert_same_file_at_created_interface": {
+			"value": "Same name of file already exist at created interface."
+		},
+		"alert_check_package": {
+			"value": "Package folder does not exist.<br>Please make package first."
+		},
+		"alert_plugin_check_terminal": {
+			"value": "Check terminal on screen."
+		},
+		"dictionary_package": {
+			"value": "Package"
+		},
+		"dictionary_class": {
+			"value": "Class"
+		},
+		"dictionary_interface": {
+			"value": "Interface"
+		},
+		"dictionary_line": {
+			"value": "Line"
+		},
+		"dictionary_content": {
+			"value": "Content"
+		},
+		"dictionary_file": {
+			"value": "File"
+		},
+		"template_source_folder": {
+			"value": "Source folder"
+		},
+		"template_package": {
+			"value": "Package"
+		},
+		"template_name": {
+			"value": "Name"
+		},
+		"template_modifiers": {
+			"value": "Modifiers"
+		},
+		"select_modifiers": {
+			"value": "Select Modifier"
+		},
+		"make_java_class": {
+			"value": "Make Java Class"
+		},
+		"make_java_interface": {
+			"value": "Make Java Interface"
+		},
+		"make_java_package": {
+			"value": "Make Java Package"
+		},
+		"create_java_class": {
+			"value": "Create a new Java Class."
+		},
+		"create_java_interface": {
+			"value": "Create a new Java Interface."
+		},
+		"create_java_package": {
+			"value": "Create a new Java Package."
+		},
+		"template_create_option": {
+			"value": "What method stubs would you like to create?"
+		},
+		"template_create_option_check": {
+			"value": "Constructors from superclass"
+		},
+		"d_main_class_name": {
+			"value" : "Default Main Class Name"
+		},
+		"d_source_path": {
+			"value" : "Default Source Path"
+		},
+		"d_build_path": {
+			"value" : "Default Build Path"
+		},
+		"d_build_option": {
+			"value" : "Default Build Option"
+		},
+		"main_class_name": {
+			"value" : "Main Class Name"
+		},
+		"source_path": {
+			"value" : "Source Path"
+		},
+		"build_path": {
+			"value" : "Build Path"
+		},
+		"build_option": {
+			"value" : "Build Option"
+		}
+	}
+}

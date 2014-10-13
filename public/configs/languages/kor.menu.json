@@ -1,0 +1,592 @@
+{
+	"file": {
+		"value": "파일",
+		"children": {
+			"file_new": {
+				"value": "새로 만들기",
+				"children": {
+					"file_new_project": {
+						"value": "새 프로젝트"
+					},
+					"file_new_file": {
+						"value": "새 파일"
+					},
+					"file_new_folder": {
+						"value": "폴더"
+					},
+					"file_new_untitled_text_file": {
+						"value": "텍스트 파일"
+					},
+					"file_new_other": {
+						"value": "기타"
+					}
+				}
+			},
+			"emoticon": {
+				"value": "이모티콘"
+			},
+			"code_highlight": {
+				"value": "코드 하이라이트"
+			},
+			"file_open_project": {
+				"value": "프로젝트 열기"
+			},
+			"file_open_file": {
+				"value": "파일 열기"
+			},
+			"open_recent_projects": {
+				"value": "최근 프로젝트 열기"
+			},
+			"open_recent_files": {
+				"value": "최근 파일 열기"
+			},
+			"file_open_url": {
+				"value": "URL 열기"
+			},
+			"file_close": {
+				"value": "닫기"
+			},
+			"file_close_all": {
+				"value": "모두 닫기"
+			},
+			"file_save": {
+				"value": "저장"
+			},
+			"file_save_as": {
+				"value": "다른 이름으로 저장"
+			},
+			"file_save_all": {
+				"value": "모두 저장"
+			},
+			"file_rename": {
+				"value": "이름 변경"
+			},
+			"file_delete": {
+				"value": "삭제"
+			},
+			"file_print": {
+				"value": "인쇄"
+			},
+			"file_restart": {
+				"value": "재시작"
+			},
+			"file_import": {
+				"value": "파일 가져오기/업로드"
+			},
+			"folder_upload": {
+				"value": "폴더 업로드"
+			},
+			"file_export": {
+				"value": "파일 내보내기"
+			},
+			"file_properties": {
+				"value": "속성"
+			}
+		}
+	},
+	"edit": {
+		"value": "편집",
+		"children": {
+			"edit_undo": {
+				"value": "되돌리기"
+			},
+			"edit_redo": {
+				"value": "다시 적용"
+			},
+			"edit_cut": {
+				"value": "잘라내기"
+			},
+			"edit_copy": {
+				"value": "복사"
+			},
+			"edit_paste": {
+				"value": "붙여넣기"
+			},
+			"edit_delete": {
+				"value": "삭제"
+			},
+			"edit_select_all": {
+				"value": "모두 선택"
+			},
+			"edit_font": {
+				"value": "글자 크기",
+				"children": {
+					"edit_magnify_font": {
+						"value": "글자 크기 확대"
+					},
+					"edit_minify_font": {
+						"value": "글자 크기 축소"
+					},
+					"edit_default_font": {
+						"value": "기본 글 크기"
+					}
+				}
+			},
+			"edit_go_to_line": {
+				"value": "라인으로 이동"
+			},
+			"edit_bookmark": {
+				"value": "북마크",
+				"children": {
+					"edit_toggle_bookmark": {
+						"value": "북마크 추가/제거"
+					},
+					"edit_next_bookmark": {
+						"value": "다음 북마크"
+					},
+					"edit_prev_bookmark": {
+						"value": "이전 북마크"
+					},
+					"edit_clear_bookmark": {
+						"value": "모든 북마크 제거"
+					}
+				}
+			},
+			"edit_find_and_replace": {
+				"value": "찾기/바꾸기"
+			},
+			"edit_find_next": {
+				"value": "다음 찾기"
+			},
+			"edit_find_previous": {
+				"value": "이전 찾기"
+			},
+			"edit_auto_formatting": {
+				"value": "오토 포맷팅"
+			},
+			"edit_comment_selected": {
+				"value": "선택 영역 주석 설정/해제"
+			},
+			"edit_preference": {
+				"value": "기본 설정"
+			},
+			"edit_share_cursor": {
+				"value": "커서 공유 토글"
+			},
+			"edit_search": {
+				"value": "검색"
+			},
+			"edit_merge": {
+				"value": "코드 병합"
+			},
+			"edit_merge_view": {
+				"value": "코드 병합 창 보기"
+			},
+			"edit_next_diff": {
+				"value": "다음 차이점"
+			},
+			"edit_prev_diff": {
+				"value": "이전 차이점"
+			},
+			"edit_merge_diff": {
+				"value": "차이점 병합"
+			},
+			"edit_refactor": {
+				"value": "리팩토링"
+			},
+			"edit_safe_delete": {
+				"value": "안전하게 삭제하기"
+			},
+			"edit_extract_var": {
+				"value": "변수 추출"
+			},
+			"edit_bookmark_delete_comment": {
+				"value": "코멘트 삭제"
+			}
+		}
+	},
+	"project": {
+		"value": "프로젝트",
+		"children": {
+			"project_run": {
+				"value": "실행"
+			},
+			"project_stop": {
+				"value": "정지"
+			},
+			"project_build_dialog": {
+				"value": "여러 프로젝트 빌드"
+			},
+			"project_build_project": {
+				"value": "빌드"
+			},
+			"project_build_all": {
+				"value": "모두 빌드"
+			},
+			"project_clean": {
+				"value": "프로젝트 클린"
+			},
+			"project_build_configuration": {
+				"value": "빌드 설정"
+			},
+			"project_import": {
+				"value": "프로젝트 가져오기"
+			},
+			"project_export": {
+				"value": "프로젝트 내보내기"
+			},
+			"project_delete": {
+				"value": "프로젝트 제거"
+			},
+			"project_refresh": {
+				"value": "새로 고침"
+			},
+			"project_share": {
+				"value": "프로젝트 공유"
+			},
+			"project_properties": {
+				"value": "속성"
+			}
+		}
+	},
+	"debug": {
+		"value": "디버그",
+		"children": {
+			"debug_start": {
+				"value": "디버그 시작"
+			},
+			"debug_continue": {
+				"value": "디버그 계속"
+			},
+			"debug_terminate": {
+				"value": "디버그 종료"
+			},
+			"debug_step_over": {
+				"value": "스텝 오버"
+			},
+			"debug_step_in": {
+				"value": "스텝 인"
+			},
+			"debug_step_out": {
+				"value": "스텝 아웃"
+			}
+		}
+	},
+	"window": {
+		"value": "창",
+		"children": {
+			"window_new_main_window": {
+				"value": "새 메인 창"
+			},
+			"window_new_terminal_window": {
+				"value": "새 터미널 윈도우"
+			},
+			"window_previous_window": {
+				"value": "이전 창"
+			},
+			"window_next_window": {
+				"value": "다음 창"
+			},
+			"perspectives": {
+				"value": "화면 구성",
+				"children": {
+					"window_default_layout": {
+						"value": "기본 레이아웃"
+					},
+					"window_left_layout_show_hide": {
+						"value": "보이기/숨기기"
+					},
+					"window_left_layout_toggle_project_explorer": {
+						"value": "프로젝트 탐색기 보기"
+					},
+					"window_left_layout_toggle_cloud_explorer": {
+						"value": "클라우드 탐색기 보기"
+					},
+					"window_right_layout_show_hide": {
+						"value": "보이기/숨기기"
+					},
+					"window_right_layout_toggle_chat": {
+						"value": "채팅 보기"
+					},
+					"window_right_layout_toggle_slide": {
+						"value": "문서 뷰어 보기"
+					},
+					"window_right_layout_toggle_history": {
+						"value": "히스토리 보기"
+					},
+					"window_right_layout_toggle_outline": {
+						"value": "아웃라인 보기"
+					},
+					"window_bottom_layout_show_hide": {
+						"value": "보이기/숨기기"
+					},
+					"window_bottom_layout_debug": {
+						"value": "디버그 보기"
+					},
+					"window_bottom_layout_console": {
+						"value": "터미널 보기"
+					},
+					"window_bottom_layout_search": {
+						"value": "검색 보기"
+					},
+					"window_bottom_layout_output": {
+						"value": "아웃풋 보기"
+					}
+				}
+			},
+			"window_toggle_full_workspace": {
+				"value": "작업 공간 전환"
+			},
+			"window_hide_all_window": {
+				"value": "모든 창 숨기기"
+			},
+			"window_show_specific_window": {
+				"value": "특정 창 보이기"
+			},
+			"window_show_all_window": {
+				"value": "모든 창 보이기"
+			},
+			"window_cascade": {
+				"value": "계단식 정렬"
+			},
+			"window_tile_vertically": {
+				"value": "세로 정렬"
+			},
+			"window_tile_left": {
+				"value": "왼쪽 정렬"
+			},
+			"window_tile_right": {
+				"value": "오른쪽 정렬"
+			},
+			"window_tile_horizontally": {
+				"value": "가로 정렬"
+			}
+		}
+	},
+	"help": {
+		"value": "도움말",
+		"children": {
+			"help_help_contents": {
+				"value": "도움말 컨텐츠"
+			},
+			"help_view_all_shortcuts": {
+				"value": "모든 단축키 보기"
+			},
+			"help_bug_report": {
+				"value": "버그 리포트 전송"
+			},
+			"help_facebook": {
+				"value": "Facebook 페이지로"
+			},
+			"help_about_goorm": {
+				"value": "goorm에 대하여"
+			},
+			"help_license": {
+				"value": "오픈 소스 라이센스"
+			},
+			"help_tutorial": {
+				"value": "튜토리얼"
+			},
+			"help_tutorial_basic_tour": {
+				"value": "화면 구성 알아보기"
+			},
+			"help_tutorial_new_project": {
+				"value": "새 프로젝트 만들기"
+			},
+			"help_tutorial_build_project": {
+				"value": "프로젝트 빌드하기"
+			},
+			"help_tutorial_debug_project": {
+				"value": "프로젝트 디버깅하기"
+			},
+			"help_tutorial_share_project": {
+				"value": "프로젝트 공유하기"
+			},
+			"help_tutorial_add_friends": {
+				"value": "친구 추가하기"
+			}
+		}
+	},
+	"account": {
+		"value": "계정",
+		"children": {
+			"account_profile": {
+				"value": "계정 정보"
+			},
+			"account_logout": {
+				"value": "로그아웃"
+			}
+		}
+	},
+	"file_open_context": {
+		"value": "열기"
+	},
+	"file_download_context": {
+		"value": "다운로드"
+	},
+	"file_open_as_context": {
+		"value": "다음으로 열기",
+		"children": {
+			"file_open_as_default_editor_context": {
+				"value": "기본 에디터"
+			},
+			"file_open_as_text_editor_context": {
+				"value": "텍스트 에디터"
+			},
+			"file_open_as_vim_editor_context": {
+				"value": "Vim 에디터"
+			}
+		}
+	},
+	"open_terminal_here": {
+		"value": "해당 위치에서 터미널 열기"
+	},
+	"Copy_context": {
+		"value": "복사"
+	},
+	"Paste_context": {
+		"value": "붙여넣기"
+	},
+	"file_rename_context": {
+		"value": "이름 변경"
+	},
+	"file_move_context": {
+		"value": "이동"
+	},
+	"find_in_folder_context": {
+		"value": "폴더에서 찾기"
+	},
+	"file_delete_context": {
+		"value": "삭제"
+	},
+	"delete_all_context": {
+		"value": "모두 삭제"
+	},
+	"file_property_context": {
+		"value": "속성"
+	},
+	"file_new_project_context": {
+		"value": "새 프로젝트"
+	},
+	"file_open_project_context": {
+		"value": "프로젝트 열기"
+	},
+	"file_save_all_context": {
+		"value": "모두 저장"
+	},
+	"file_new_file_context": {
+		"value": "새 파일"
+	},
+	"file_new_folder_context": {
+		"value": "새 폴더"
+	},
+	"file_new_untitled_text_file_context": {
+		"value": "새 텍스트 파일"
+	},
+	"file_import_context": {
+		"value": "파일 가져오기/업로드"
+	},
+	"file_export_context": {
+		"value": "파일 내보내기"
+	},
+	"file_refresh_context": {
+		"value": "새로 고침"
+	},
+	"file_new_context": {
+		"value": "새로 만들기",
+		"children": {
+			"file_new_context_new_file": {
+				"value": "파일"
+			},
+			"file_new_context_new_folder": {
+				"value": "폴더"
+			},
+			"file_new_context_untitled_text_file": {
+				"value": "텍스트 파일"
+			}
+		}
+	},
+	"folder_open_context": {
+		"value": "열기"
+	},
+	"cloud_upload_context": {
+		"value": "업로드"
+	},
+	"folder_close_context": {
+		"value": "닫기"
+	},
+	"project_properties_context": {
+		"value": "프로젝트 속성"
+	},
+	"file_open_file_context": {
+		"value": "파일 열기"
+	},
+	"file_close_all_context": {
+		"value": "모두 닫기"
+	},
+	"window_toggle_full_workspace_context": {
+		"value": "작업 공간 전환"
+	},
+	"window_hide_all_window_context": {
+		"value": "모든 창 숨기기"
+	},
+	"window_show_all_window_context": {
+		"value": "모든 창 보여주기"
+	},
+	"window_cascade_context": {
+		"value": "계단식 정렬"
+	},
+	"window_tile_vertically_context": {
+		"value": "세로 정렬"
+	},
+	"window_tile_horizontally_context": {
+		"value": "가로 정렬"
+	},
+	"window_previous_window_context": {
+		"value": "이전 창"
+	},
+	"window_next_window_context": {
+		"value": "다음 창"
+	},
+	"maximize": {
+		"value": "최대화"
+	},
+	"minimize": {
+		"value": "최소화"
+	},
+	"show_and_hide": {
+		"value": "보이기 / 숨기기"
+	},
+	"open_recent_file": {
+		"value": "최근 파일 열기"
+	},
+	"close": {
+		"value": "닫기"
+	},
+	"close_others": {
+		"value": "다른 탭 모두 닫기"
+	},
+	"edit_autocomplete_edit_context": {
+		"value": "자동 완성"
+	},
+	"edit_definition_edit_context": {
+		"value": "정의된 곳으로 이동하기"
+	},
+	"eval_in_repl": {
+		"value": "해당 영역을 쉘에서 실행하기"
+	},
+	"edit_find_replace_edit_context": {
+		"value": "찾기/바꾸기"
+	},
+	"edit_search_edit_context": {
+		"value": "검색"
+	},
+	"chat_user_info_context": {
+		"value": "유저 정보"
+	},
+	"chat_user_whisper_context": {
+		"value": "귓속말"
+	},
+	"pdf": {
+		"value": "PDF"
+	},
+	"edit_no_bookmark": {
+		"value": "북마크가 없습니다"
+	},
+	"help_npm_list_guide": {
+		"value": "리스트..."
+	},
+	"open_goorm_edu_lecture": {
+		"value": "goormEDU 강좌 열기"
+	}
+}

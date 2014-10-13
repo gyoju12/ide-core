@@ -1,0 +1,820 @@
+/**
+ * Copyright Sung-tae Ryu, goormDev Team. All rights reserved.
+ * Code licensed under the AGPL v3 License:
+ * http://www.goorm.io/intro/License
+ * email : contact@goorm.io
+ *       : sungtae.ryu@goorm.io
+ * project_name : goormIDE
+ * version: 2.0.0
+ **/
+
+goorm = function() {};
+
+
+goorm.core = function() {
+
+	this.user = {
+		first_name: null,
+		last_name: null,
+		email: null,
+		img: null
+	};
+
+	this.env = {
+		version: null,
+		browser: null,
+		browser_version: 0,
+		os: null,
+		device: null,
+		touchable: null,
+		websocket_support: null,
+		html5_support: null
+	};
+
+	this.module = {
+		plugin_manager: null,
+		plugin_linter: null,
+		debug: null,
+		preference: null,
+		project: null,
+		layout: null,
+		localization: null,
+		action: null,
+		shortcut_manager: null,
+		search: null,
+		browser: null,
+		device: null,
+		fn: null,
+		loading_bar: null,
+		toast: null,
+		auth: null,
+		
+		bookmark: null, //jeongmin: add bookmark to the module
+		
+	};
+
+	this.dialog = {
+		new_project: null,
+		open_project: null,
+		new_file: null,
+		new_other_file: null,
+		new_folder: null,
+		new_untitled_textfile: null,
+		open_file: null,
+		upload_file: null,
+		// go_to_line: null,	//jeongmin: go to line is not in dialog anymore
+		
+		save_as_file: null,
+		rename_file: null,
+		move_file: null,
+		import_file: null,
+		export_file: null,
+		export_project: null,
+		import_project: null,
+		delete_project: null,
+		build_all: null,
+		build_project: null,
+		build_clean: null,
+		build_configuration: null,
+		
+		find_and_replace: null,
+		search: null,
+		preference: null,
+		project_property: null,
+		help_contents: null,
+		help_shortcuts: null,
+		help_about: null,
+		help_license: null,
+		loaded_count: 0
+	};
+
+	this.status = {
+		is_login: false,
+		login_complete: false,
+		keydown: false,
+		focus_obj: "",
+		focus_on_editor: false,
+		foucs_on_dialog: false,
+		selected_file: "",
+		selected_dialog: "",
+		selected_dialog_container: "",
+		current_project_path: "",
+		current_project_name: "",
+		current_project_type: "",
+		current_opened_list: {}
+	};
+
+	this.socket = null;
+
+	this.dialog_loading_count = 0;
+	this.loading_count = 0;
+
+	this.filetypes = null;
+	this.preference = null;
+	this.property = null;
+	this.workspace = null;
+
+	
+};
+
+goorm.core.prototype = {
+	init: function(container) {
+		var self = this;
+
+		
+
+		
+
+		
+
+		this.start();
+
+		this.filetypes = [];
+		this.workspace = {};
+
+		var _this = $(this); //jeongmin: access object member less
+
+		_this.on("layout_loaded", function() {
+			console.log("layout load complete");
+
+			this.module.layout.resize_all();
+			this.module.plugin_manager.get();
+		});
+
+		_this.on("preference_load_complete", function() {
+			console.log("preference load complete");
+			goorm.core.terminal.dummy();
+		});
+
+		_this.on("plugin_loaded", function() {
+			console.log("plugin load complete");
+
+			this.module.plugin_manager.load(0, false); // jeongmin: load plugin first
+
+			// this.main();
+		});
+
+		_this.on("plugin_load_complete", function() {
+			console.log("plugin init complete");
+
+			this.main();
+		});
+
+		this.load_complete_flag = false;
+
+		//Loading Animation
+		_this.on("goorm_loading", function() {
+			if (self.loading_count < Object.keys(core.dialog).length - 9 + parseInt(core.module.plugin_manager.list.length, 10)) {
+				self.loading_count++;
+			} else {
+				if (!self.load_complete_flag) {
+					$(self).trigger("goorm_load_complete");
+					self.load_complete_flag = true;
+
+						
+					self.show_local_login_box();
+					
+
+					var core_mod_auth = core.module.auth; //jeongmin: access object module less ------ here
+
+					
+
+					
+				}
+			}
+		});
+
+		//Loading Ending
+		_this.on("goorm_load_complete", function() {
+			console.log("goormIDE load complete");
+
+			$("input[type=checkbox]").iCheck({
+				checkboxClass: 'icheckbox_minimal',
+				radioClass: 'iradio_minimal',
+				increaseArea: '20%' // optional
+			});
+			$("input[type=radio]").iCheck({
+				checkboxClass: 'icheckbox_minimal',
+				radioClass: 'iradio_minimal',
+				increaseArea: '20%' // optional
+			});
+			// core.module.tutorial.start('basic');
+
+			$(document).on("contextmenu", function(e) {
+				var target = $(e.target);
+
+				// terminal & chat & find/replace - open browser context menu
+				//
+				if (!(target.parent().attr('id') == 'terminal' || target.parent().hasClass('terminal') || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
+					e.preventDefault();
+				}
+			});
+
+			$(window).focus(function() {
+				$(self.focused).focus();
+			});
+
+			$(window).blur(function() {
+				self.focused = this;
+			});
+
+			self.module.action.init();
+
+			var goorm_loading_end_time = new Date().getTime();
+
+
+			//theme
+			// self.module.theme = goorm.core.theme;
+			// self.module.theme.init();
+		});
+
+		_this.on('goorm_login_complete', function() {
+			self.socket.emit('/project/valid_manifest', {}); // jeongmin: goorm.manifest validation
+			// if (parseInt(localStorage.left_tabview_index, 10) >= 0 && $('#goorm_left ul li a').length - 1 >= parseInt(localStorage.left_tabview_index, 10))
+			// 	core.module.layout.left_tabview.selectTab(parseInt(localStorage.left_tabview_index, 10));
+			// else
+			// 	core.module.layout.left_tabview.selectTab(0);
+			// if (parseInt(localStorage.inner_bottom_tabview_index, 10) >= 0 && $('#goorm_inner_layout_bottom ul li a').length - 1 >= parseInt(localStorage.inner_bottom_tabview_index, 10))
+			// 	core.module.layout.inner_bottom_tabview.selectTab(parseInt(localStorage.inner_bottom_tabview_index, 10));
+			// else
+			// 	core.module.layout.select('debug');
+
+			// if (parseInt(localStorage.inner_right_tabview_index, 10) >= 0 && $('#goorm_inner_layout_right ul li a').length - 1 >= parseInt(localStorage.inner_right_tabview_index, 10))
+			// 	core.module.layout.inner_right_tabview.selectTab(parseInt(localStorage.inner_right_tabview_index, 10));
+			// else
+			// 	core.module.layout.inner_right_tabview.selectTab(0);
+
+			$('#east_tab a:first').tab('show'); // Select first tab
+			$('#west_tab a:first').tab('show'); // Select first tab
+			$('#south_tab a:first').tab('show'); // Select first tab
+
+			core.status.login_complete = true;
+			core.module.toast.show(core.module.localization.msg.notice_welcome_goorm);
+
+			
+
+			$("#goorm").show();
+		});
+
+		$(window).on('unload', function() {
+			self.unload();
+		});
+
+		$(window).on('beforeunload', function() {
+
+			if (!self.is_login) return;
+			if (!self.force_disconnect) return;
+			if (self.module.auth.open_keep_session_dialog) return;
+			//1. logout
+			if (core.logout) {
+				return "core.logout";
+			}
+			//2. refresh, back button, close button 
+			var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
+			if (unsaved_file) {
+				return unsaved_file + core.module.localization.msg.confirmation_not_saved;
+			} else {
+				return "Goorm IDE close";
+			}
+		});
+
+		// window.onbeforeunload = function (e) {
+		// 	if (core.module.auth.open_keep_session_dialog) return;
+
+		// 	//1. logout
+		//     if(core.logout){
+		//     	return "core.logout";
+		//     }
+		//     //2. refresh, back button, close button 
+		//     var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
+		//     if(unsaved_file){
+		//     	return unsaved_file + core.module.localization.msg.confirmation_not_saved;
+		//     }else{
+		//     	return "Goorm IDE close";
+		//     }
+		// };
+
+		//Project
+		this.module.project = goorm.core.project;
+
+		//Plugin Loading Aspects
+		if (goorm.plugin.manager) {
+			this.module.plugin_manager = goorm.plugin.manager;
+			this.module.plugin_manager.init();
+		}
+
+		if (goorm.plugin.linter) { // jeongmin
+			this.module.plugin_linter = goorm.plugin.linter;
+		}
+
+		//Toolbar
+		if (goorm.core.toolbar) {
+			//this.module.toolbar = goorm.core.toolbar;
+			//this.module.toolbar.init();
+		}
+
+		//Search Tab
+		this.module.search = goorm.core.search.message;
+
+		//Preference
+		if (goorm.core.preference) {
+			this.module.preference = goorm.core.preference;
+			this.module.preference.init();
+		}
+
+		if (goorm.core.router) {
+			this.module.router = goorm.core.router;
+			this.module.router.init();
+		}
+
+		
+
+		//Menu Actions
+		this.module.action = goorm.core.menu.action;
+
+		if (goorm.core.browser) {
+			this.module.browser = goorm.core.browser;
+			this.module.browser.init();
+		}
+
+		if (goorm.core.device) {
+			this.module.device = goorm.core.device;
+			this.module.device.init();
+		}
+
+		if (goorm.core.fn) {
+			this.module.fn = goorm.core.fn;
+			this.module.fn.init();
+		}
+
+		this.env.touchable = this.is_touchable_device();
+		this.env.websocket_support = this.test_web_socket();
+		this.progressbar = goorm.core.utility.progressbar;
+
+		if (goorm.core.layout) {
+			this.module.layout = goorm.core.layout;
+			this.module.layout.init(container);
+		}
+
+		//Shortcuts
+		if (goorm.core.shortcut.manager) {
+			this.module.shortcut_manager = goorm.core.shortcut.manager;
+			this.module.shortcut_manager.init();
+		}
+
+		if (goorm.core.tutorial) {
+			// bootstrap tour
+			this.module.tutorial = goorm.core.tutorial_tour;
+		}
+
+		//Cloud
+		// if (goorm.core.cloud) {
+		// 	this.module.cloud = goorm.core.cloud;
+		// }
+
+		// if (goorm.core.cloud.google) {
+		// 	this.module.cloud.google = goorm.core.cloud.google;
+		// }
+	},
+
+	main: function() {
+
+		if (goorm.core.project._new) {
+			this.dialog.new_project = goorm.core.project._new;
+			this.dialog.new_project.init();
+		}
+
+		if (goorm.core.project.open) {
+			this.dialog.open_project = goorm.core.project.open;
+			this.dialog.open_project.init();
+		}
+
+		if (goorm.core.file._new) {
+			this.dialog.new_file = goorm.core.file._new;
+			this.dialog.new_file.init();
+		}
+
+		if (goorm.core.file._new.other) {
+			this.dialog.new_other_file = goorm.core.file._new.other;
+			this.dialog.new_other_file.init();
+		}
+
+		if (goorm.core.file._new.folder) {
+			this.dialog.new_folder = goorm.core.file._new.folder;
+			this.dialog.new_folder.init();
+		}
+
+		if (goorm.core.file._new.untitled_textfile) {
+			this.dialog.new_untitled_textfile = goorm.core.file._new.untitled_textfile;
+			this.dialog.new_untitled_textfile.init();
+		}
+
+		if (goorm.core.file.open) {
+			this.dialog.open_file = goorm.core.file.open;
+			this.dialog.open_file.init();
+		}
+		
+		if (goorm.core.file.save_as) {
+			this.dialog.save_as_file = goorm.core.file.save_as;
+			this.dialog.save_as_file.init();
+		}
+
+		if (goorm.core.file.rename) {
+			this.dialog.rename_file = goorm.core.file.rename;
+			this.dialog.rename_file.init();
+		}
+
+		if (goorm.core.file.move) {
+			this.dialog.move_file = goorm.core.file.move;
+			this.dialog.move_file.init();
+		}
+		
+		if (goorm.core.file._import) {
+			this.dialog.import_file = goorm.core.file._import;
+			this.dialog.import_file.init();
+		}
+
+		if (goorm.core.file._export) {
+			this.dialog.export_file = goorm.core.file._export;
+			this.dialog.export_file.init();
+		}
+
+		if (goorm.core.project._export) {
+			this.dialog.export_project = goorm.core.project._export;
+			this.dialog.export_project.init();
+		}
+
+		if (goorm.core.project._import) {
+			this.dialog.import_project = goorm.core.project._import;
+			this.dialog.import_project.init();
+		}
+
+		if (goorm.core.project._delete) {
+			this.dialog.delete_project = goorm.core.project._delete;
+			this.dialog.delete_project.init();
+		}
+
+		
+
+		if (goorm.core.project.build.all) {
+			this.dialog.build_all = goorm.core.project.build.all;
+			this.dialog.build_all.init();
+		}
+
+		if (goorm.core.project.build.project) {
+			this.dialog.build_project = goorm.core.project.build.project;
+			this.dialog.build_project.init();
+		}
+
+		if (goorm.core.project.build.clean) {
+			this.dialog.build_clean = goorm.core.project.build.clean;
+			this.dialog.build_clean.init();
+		}
+
+		if (goorm.core.project.build.configuration) {
+			this.dialog.build_configuration = goorm.core.project.build.configuration;
+			this.dialog.build_configuration.init();
+		}
+		
+		// if (goorm.core.edit.go_to_line) {	//jeongmin: go to line is not in dialog anymore
+		// 	// by pear
+		// 	this.dialog.go_to_line = goorm.core.edit.go_to_line;
+		// 	this.dialog.go_to_line.init();
+		// 	// by pear
+		// }
+
+		if (goorm.core.edit.find_and_replace) {
+			this.dialog.find_and_replace = goorm.core.edit.find_and_replace;
+			this.dialog.find_and_replace.init();
+		}
+
+		if (goorm.core.edit.bookmark) { //jeongmin: connect edit.bookmark and module.bookmark
+			this.module.bookmark = goorm.core.edit.bookmark;
+			this.module.bookmark.init(); //initialize bookmark
+		}
+
+		if (goorm.core.search) {
+			this.dialog.search = goorm.core.search;
+			this.dialog.search.init();
+		}
+		
+		if (goorm.core.project.property) {
+			this.dialog.project_property = goorm.core.project.property;
+			this.dialog.project_property.init();
+		}
+
+		if (goorm.core.help.contents) {
+			this.dialog.help_contents = goorm.core.help.contents;
+			this.dialog.help_contents.init();
+		}
+
+		if (goorm.core.help.shortcuts) {
+			this.dialog.help_shortcuts = goorm.core.help.shortcuts;
+			this.dialog.help_shortcuts.init();
+		}
+
+		if (goorm.core.help.about) {
+			this.dialog.help_about = goorm.core.help.about;
+			this.dialog.help_about.init();
+		}
+
+		if (goorm.core.help.license) {
+			this.dialog.help_license = goorm.core.help.license;
+			this.dialog.help_license.init();
+		}
+
+		
+
+		if (goorm.core.npm) {
+			this.module.npm = goorm.core.npm;
+			this.module.npm.init();
+		}
+
+		if (goorm.core.localization) {
+			this.module.localization = goorm.core.localization;
+			this.module.localization.init();
+		}
+
+		if (goorm.core.utility.loading_bar) {
+			this.module.loading_bar = goorm.core.utility.loading_bar;
+			this.module.loading_bar.init();
+		}
+
+		if (goorm.core.utility.toast) {
+			this.module.toast = goorm.core.utility.toast;
+			this.module.toast.init();
+		}
+
+		
+
+		if (this.module.preference) {
+			this.dialog.preference = this.module.preference;
+			this.dialog.preference.init_dialog();
+		}
+
+		
+
+		// for Selenium IDE
+		alert = __alert;
+		alert.init();
+		notice.init();
+	},
+
+	load: function() {
+
+	},
+
+	skin: function(skin_name) {
+		this.get_css(skin_name);
+	},
+
+	get_css: function(url) {
+		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel: "stylesheet",
+			type: "text/css",
+			href: url
+		});
+	},
+
+	start: function() {
+		var self = this;
+
+		// var goorm_dialog_container = $("#goorm_dialog_container");
+		// goorm_dialog_container_child = "";
+		// goorm_dialog_container_child += "<div id='loading_panel_container'></div>";
+		// goorm_dialog_container_child += "<div id='loading_background'></div>";
+		// goorm_dialog_container.append(goorm_dialog_container_child);
+
+		var loading_panel_container = $("#loading_panel_container");
+		// loading_panel_container_child = "";
+		// loading_panel_container_child += "<div id='main_loading_image'></div>";
+		// loading_panel_container_child += "<div id='loading_message'></div>";
+		// loading_panel_container_child += "<div id='login_box_bg'></div>";
+		// loading_panel_container_child += "<div id='login_box'></div>";
+		// loading_panel_container_child += "<div id='local_login_box'></div>";
+		// loading_panel_container.append(loading_panel_container_child);
+
+		
+
+			
+		// $('#local_login_box').append("<div id='local_login_user_box'><div id='local_user_area'><label id='local_user_label' for='local_user_input'>ID : </label><input id='local_user_input' /></div><div id='local_user_pw_area'><label id='local_user_pw_label' for='local_user_pw_input'>PW : </label><input id='local_user_pw_input' type='password' /></div></div>");
+		// $('#local_login_box').append("<input type='button' id='goorm_local_mode_button' localization_key='private_mode' value='Access Private Mode' />");
+		$('#login_box').remove();
+		
+
+		
+
+		$("#loading_panel_container").show();
+
+		var loading_background = $("#loading_background");
+		loading_background.css('position', "absolute").width($(window).width()).height($(window).height());
+		loading_background.css('left', 0).css('top', 0).css('z-index', 999);
+
+		$(window).resize(function(event) {
+			// jQuery-ui resizable triggers window.resize event.
+			if (!$(event.target).hasClass('ui-resizable')) {
+				loading_background.width($(window).width()).height($(window).height());
+			}
+		});
+
+		loading_panel_container.css('display', "none").width(640).height(480).css('position', "absolute").css('z-index', 1000).css('left', $(window).width() / 2 - 320).css('top', parseInt($(window).height() / 2) - 240).fadeIn(2000);
+	},
+
+	// manage socket connections. Jeong-Min Im.
+	socket_connect: function() {
+		var self = this;
+
+		this.module.router.connect();
+
+		this.socket = this.module.router.get_socket();
+		this._socket = new this.module.router._socket();
+
+		goorm.core.utility.ajax_loading.init(this.socket);
+
+		this.socket.on('user_access', function() {
+			$(core).trigger('goorm_login_complete');
+		});
+
+		
+
+		
+		self.socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
+			'channel': 'join',
+			'user': core.user.id
+		}));
+		
+	},
+
+	
+	
+	show_local_login_box: function() {
+		if (localStorage.user && localStorage.user != "undefined") {
+			var user = JSON.parse(localStorage.user);
+			$('#local_user_input').val(user.id);
+		}
+
+		$("#local_login_box").delay(1500).fadeIn(2000);
+
+		// setTimeout(function() {
+		var temp = $.debounce(function() {
+			$('#local_user_input').focus();
+
+			if ($('#local_user_input').val() !== "") {
+				$('#local_user_pw_input').focus();
+			}
+		}, 2000);
+	},
+
+	local_complete: function() {
+		$("#loading_background").delay(1000).fadeOut(1000);
+		$("#loading_panel_container").delay(1500).fadeOut(1000);
+
+		this.dialog.project_property.refresh_toolbox();
+
+		// $(core).trigger('goorm_login_complete');
+		this.socket_connect();
+	},
+
+	access_local_mode: function() {
+		var self = this;
+
+		var id = $('#local_user_input').val();
+		var pw = $('#local_user_pw_input').val();
+
+		$.post('/local_login', {
+			'id': id,
+			'pw': pw
+		}, function(data) {
+			if (data.result) {
+				self.user.id = id;
+				self.user.email = "";
+				self.user.name = id;
+				self.user.nick = id;
+				self.user.level = "Member";
+				self.user.type = "password";
+
+				localStorage.user = JSON.stringify(self.user);
+				self.local_complete();
+			} else {
+				alert.show('NOT VALID');
+			}
+		});
+	},
+	
+	new_main_window: function() {
+		window.open("./");
+	},
+
+	is_touchable_device: function() {
+		var el = document.createElement('div');
+		el.setAttribute('ongesturestart', 'return;');
+
+		if (typeof el.ongesturestart == "function") {
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	test_web_socket: function() {
+		if ("WebSocket" in window) {
+			return true;
+		} else {
+			// the browser doesn't support WebSockets
+			return false;
+		}
+	},
+
+	pause: function(millis) {
+		var date = new Date();
+		var curDate = null;
+		do {
+			curDate = new Date();
+		}
+		while (curDate - date < millis);
+	},
+
+	unload: function() {
+		if (core !== undefined && !core.local_mode && core.user !== undefined && core.user.id) {
+
+
+			// window unload event for user-preference. youseok.nam
+			//
+			core.module.preference.save_to_database();
+
+			var postdata = {
+				'id': core.user.id,
+				'type': core.user.type,
+				'path': core.status.current_project_path
+			};
+
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: '/user/unload',
+				data: postdata
+			});
+		}
+	},
+
+	cookie_manager: {
+		set: function(name, data, exdays, domain) {
+			var exdate = new Date();
+			exdate.setDate(exdate.getDate() + exdays);
+
+			if (domain) {
+				domain = 'domain=' + domain + ';';
+			} else {
+				domain = '';
+			}
+
+			var value = escape(data) + ((exdays === null) ? "" : "; expires=" + exdate.toGMTString() + ";" + domain + "path=/");
+
+			document.cookie = name + "=" + value;
+		},
+
+		del: function(name, domain) {
+			var expire_date = new Date();
+
+			if (domain) {
+				domain = 'domain=' + domain + ';';
+			} else {
+				domain = '';
+			}
+
+			expire_date.setDate(expire_date.getDate() - 10);
+			document.cookie = name + "=path=/;" + domain + "; expires=" + expire_date.toGMTString();
+		},
+
+		get: function(c_name) {
+			var c_value = document.cookie;
+			var c_start = c_value.indexOf(" " + c_name + "=");
+
+			if (c_start == -1) {
+				c_start = c_value.indexOf(c_name + "=");
+			}
+			if (c_start == -1) {
+				c_value = null;
+			} else {
+				c_start = c_value.indexOf("=", c_start) + 1;
+				var c_end = c_value.indexOf(";", c_start);
+
+				if (c_end == -1) {
+					c_end = c_value.length;
+				}
+
+				c_value = unescape(c_value.substring(c_start, c_end));
+			}
+
+			return c_value;
+		}
+	},
+
+	restore_prev_focus: function() {
+		if (this.status.focus_obj !== null && this.status.focus_obj !== undefined && this.status.focus_obj !== "") {
+			this.status.focus_obj.focus();
+		}
+	}
+};

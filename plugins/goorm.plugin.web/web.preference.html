@@ -1,0 +1,25 @@
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+	<div class="row">
+		<div class="dialog_template_body_div">
+			<label for="pref_web_run_index" localization_key="plugin.web.d_index_file" class="col-md-4 control-label dialog_template_body_span">Index File</label>
+			<div class="col-md-8">
+				<input type="text" name="plugin.web.run_index" id="pref_web_run_index" class="form-control"/>
+			</div>
+		</div>
+
+		<div class="dialog_template_body_div">
+			<label localization_key="plugin.web.d_web_view_type" class="col-md-4 control-label dialog_template_body_span">Web View Type</label>
+			<div class="col-md-8 web_view_type">
+				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_tab" value="tab">
+				<label for="pref_web_webview_type_tab">Tab</label>
+				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_window" value="window">
+				<label for="pref_web_webview_type_window">New Window</label>
+			</div>
+		</div>
+	</div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>

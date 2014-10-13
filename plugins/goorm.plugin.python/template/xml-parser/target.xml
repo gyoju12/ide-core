@@ -1,0 +1,20 @@
+<names> 
+	<person>
+		<name sex="male" mystate="T"> 
+			Michael
+		</name> 
+			<tel>010-1234-1234</tel>
+	</person>
+	<person>
+		<name sex="female"> 
+			Emily
+		</name> 
+		<tel>010-9876-5432</tel>
+	</person>
+	<person>
+		<name sex="male"> 
+			Jacob
+		</name> 
+		<tel>010-9865-6789</tel>
+	</person>
+</names>

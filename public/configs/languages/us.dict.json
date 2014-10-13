@@ -1,0 +1,299 @@
+{
+	"previous": {
+		"value": "Previous"
+	},
+	"next": {
+		"value": "Next"
+	},
+	"ok": {
+		"value": "OK"
+	},
+	"cancel": {
+		"value": "Cancel"
+	},
+	"find_info": {
+		"value": "Find ID/PW"
+	},
+	"forgot_id": {
+		"value": "Find ID"
+	},
+	"forgot_pw": {
+		"value": "Find PW"
+	},
+	"send": {
+		"value": "Send"
+	},
+	"close": {
+		"value": "Close"
+	},
+	"delete": {
+		"value": "Delete"
+	},
+	"slide": {
+		"value": "Slide"
+	},
+	"history":{
+		"value": "History"
+	},
+	"now":{
+		"value": "Now"
+	},
+	"history_speed_normal":{
+		"value": "Normal"
+	},
+	"speed":{
+		"value": "Speed"
+	},
+	"history_speed_fast":{
+		"value": "Fast"
+	},
+	"history_speed_veryfast":{
+		"value": "Very Fast"
+	},
+	"history_speed_slow":{
+		"value": "Slow"
+	},
+	"history_speed_veryslow":{
+		"value": "Very Slow"
+	},
+	"history_time":{
+		"value": "Save Time"
+	},
+	"history_delay":{
+		"value": "Delay(sec)"
+	},
+	"history_show_current":{
+		"value": "Show current state"
+	},
+	"terminal": {
+		"value": "Terminal"
+	},
+	"search": {
+		"value": "Search"
+	},
+	"chat": {
+		"value": "Chat"
+	},
+	"debug": {
+		"value": "Debug"
+	},
+	"outline": {
+		"value": "Outline"
+	},
+	"project": {
+		"value": "Project"
+	},
+	"yes": {
+		"value": "Yes"
+	},
+	"no": {
+		"value": "No"
+	},
+	"logout": {
+		"value": "Logout"
+	},
+	"account_modify": {
+		"value": "Modify Account"
+	},
+	"signup": {
+		"value": "Sign-up"
+	},
+	"modify": {
+		"value": "Modify"
+	},
+	"apply": {
+		"value": "Apply"
+	},
+	"restore":{
+		"value": "Restore"
+	},
+	"default": {
+		"value": "Default"
+	},
+	"login": {
+		"value": "Login"
+	},
+	"information": {
+		"value": "Information"
+	},
+	"scm": {
+		"value": "SCM"
+	},
+	"libraries": {
+		"value": "Libraries"
+	},
+	"setting": {
+		"value": "Setting"
+	},
+	"theme": {
+		"value": "Theme"
+	},
+	"filetype": {
+		"value": "File Type"
+	},
+	"language": {
+		"value": "Language"
+	},
+	"shortcut": {
+		"value": "Shortcut"
+	},
+	"scm_configuration": {
+		"value": "SCM Configuration"
+	},
+	"general": {
+		"value": "General"
+	},
+	"project_setting": {
+		"value": "Project Setting"
+	},
+	"cloud": {
+		"value": "Cloud"
+	},
+	"refresh": {
+		"value": "Refresh"
+	},
+	"upload": {
+		"value": "Upload"
+	},
+	"select": {
+		"value": "Select "
+	},
+	"private_mode": {
+		"value": "Access Private Mode"
+	},
+	"document_viewer": {
+		"value": "Docs"
+	},
+	"profile": {
+		"value": "Profile"
+	},
+	"toggle_selection": {
+		"value": "Toggle Selection"
+	},
+	"system":{
+		"value":"System"
+	},
+	"editor":{
+		"value":"Editor"
+	},
+	"save":{
+		"value":"Save"
+	},
+	"add":{
+		"value":"Add"
+	},
+	"number":{
+		"value":"No"
+	},
+	"thread":{
+		"value":"Thread"
+	},
+	"variable":{
+		"value":"Variable"
+	},
+	"value":{
+		"value":"Value"
+	},
+	"summary":{
+		"value":"Summary"
+	},
+	"code_highlight":{
+		"value":"Code Highlight"
+	},
+	"my_project": {
+		"value": "My Project"
+	},
+	"share_project": {
+		"value": "Share"
+	},
+	"project_table":{
+		"value": "Project Table"
+	},
+	"project_list":{
+		"value": "Project List"
+	},
+	"cloud_projects":{
+		"value": "Cloud Projects"
+	},
+	"chats": {
+		"value": "Chats"
+	},
+	"friends": {
+		"value": "Friends"
+	},
+	"add_friends": {
+		"value": "Add Friends"
+	},
+	"edit": {
+		"value": "Edit"
+	},
+	"crop": {
+		"value": "Crop"
+	},
+	"output": {
+		"value": "Output"
+	},
+	"study": {
+		"value": "Study"
+	},
+	"back": {
+		"value": "Back"
+	},
+	"id": {
+		"value": "ID"
+	},
+	"password": {
+		"value": "PASSWORD"
+	},
+	"type_message":{
+		"value": "Type your message..."
+	},
+	"repository_path":{
+		"value": "Repository Path"
+	},
+	"shortcut_edit":{
+		"value": "Edit"
+	},
+	"recent_empty":{
+		"value": "Empty"
+	},
+	"recent_clear":{
+		"value": "Clear"
+	},
+	"storage":{
+		"value": "Storage"
+	},
+	"hide":{
+		"value": "Hide"
+	},
+	"create":{
+		"value": "Create" 
+	},
+	"replace": {
+		"value": "Replace"
+	},
+	"replace_and_find": {
+		"value": "Replace/Find"
+	},
+	"replace_all": {
+		"value": "Replace All"
+	},
+	"installation": {
+		"value": "Installation"
+	},
+	"getting_started": {
+		"value": "Getting Started"
+	},
+	"official_site": {
+		"value": "Official Site"
+	},
+	"features": {
+		"value": "Features"
+	},
+	"license": {
+		"value": "License"
+	},
+	"open_source": {
+		"value": "Open Source Project"
+	},
+}

@@ -1,0 +1,14 @@
+{
+	"plugin.phonegap.desc_1": {
+		"value": "Enter your Adobe account to use cloud build system on the Adobe."
+	},
+	"plugin.phonegap.account_setting": {
+		"value": "(Account setting : https://build.phonegap.com/apps)"
+	},
+	"plugin.phonegap.enter_account": {
+		"value": "Enter your ID and Password."
+	},
+	"plugin.phonegap.build_error": {
+		"value": "Phonegap build error"
+	}
+}

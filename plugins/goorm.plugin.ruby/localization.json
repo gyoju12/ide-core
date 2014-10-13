@@ -1,0 +1,62 @@
+{
+	"kor": {
+		"name": {
+			"value": "Ruby 프로젝트"
+		},
+		"description": {
+			"value": "Ruby 프로젝트"
+		},
+		"items": {
+			"ruby_project": {
+				"name": {
+					"value": "Ruby 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Ruby 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_main":{
+			"value":"기본 메인"
+		},
+		"d_source_path":{
+			"value":"기본 소스 경로"
+		},
+		"main":{
+			"value":"메인"
+		},
+		"source_path":{
+			"value":"소스 경로"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Ruby Project"
+		},
+		"description": {
+			"value": "Ruby Project"
+		},
+		"items": {
+			"ruby_project": {
+				"name": {
+					"value": "Ruby Project"
+				},
+				"description": {
+					"value": "Create New Project for Ruby"
+				}
+			}
+		},
+		"d_main":{
+			"value":"Default Main"
+		},
+		"d_source_path":{
+			"value":"Default Source Path"
+		},
+		"main":{
+			"value":"Main"
+		},
+		"source_path":{
+			"value":"Source Path"
+		}
+	}
+}

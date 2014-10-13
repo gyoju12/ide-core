@@ -1,0 +1,1 @@
+{"type":"cpp","detailedtype":"C/C++ Console Project","author":"test","name":"test","about":"test","date":"2013/1/8 22:0:6","collaboration":"not checked","plugins":{"goorm.plugin.cpp":{"plugin.cpp.main":"main","plugin.cpp.source_path":"src/","plugin.cpp.build_path":"bin/","plugin.cpp.build_option":"-g"}},"scm_URL":"","scm_path":"","building_after_save_option":"yes"}

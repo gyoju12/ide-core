@@ -1,0 +1,37 @@
+             ,'''''',
+          ''''''''''''''
+        '''''        '''''''''''.
+       ''''            ''''''''''''
+      ''''              ;'      '''',
+      ''':                       :'''
+      '':.                       `.;'
+      '''''''';             ,''''''''
+    ''''''''''''';       .''''''''''''',
+  ,''''':   ''''''''   ,'''''''   .''''''
+  '''',        ,''''';''''''         '''',
+ :''''           `''''''';           ,''''
+ :''''            '''''''            ,''''
+  ::::`         ;::::::::::`         ::::.
+  ,;;;;;.   .;;;;;;;   ;;;;;;;:    ;;;;;;
+    ;;;;;;;;;;;;;;       :;;;;;;;;;;;;;:
+      ;;;;;;;;;             :;;;;;;;;` GOORM IDE
+
+
+README
+
+Basically we give you 3 ports of personal use.
+Since these port can be changed for its creating time, please use your port following the direction.
+
+Default port used by Node.js is automatically connected through this variable.
+process.env.PORT
+
+Examples)
+var app = express();
+var port = process.env.PORT || 3000;
+http.createServer(app).listen(port, function(){
+console.log("Express server listening on port " + port);
+});
+
+If you need additional port, you can use other variables below.
+process.env.PORT2
+process.env.PORT3

@@ -1,0 +1,5 @@
+{
+	"plugin.python.compiler_type" : "python2",
+	"plugin.python.main" : 	"index",
+	"plugin.python.source_path" : 	""
+}

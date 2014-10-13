@@ -1,0 +1,6 @@
+package {PACKAGENAME};
+
+interface {CLASSNAME} {
+
+
+}

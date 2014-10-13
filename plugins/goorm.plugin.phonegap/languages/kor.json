@@ -1,0 +1,14 @@
+{
+	"plugin.phonegap.desc_1": {
+		"value": "Adobe 클라우드 빌드 시스템을 사용하기 위해 Adebe 계쩡을 입력해주세요."
+	},
+	"plugin.phonegap.account_setting": {
+		"value": "(계정 설정 : https://build.phonegap.com/apps)"
+	},
+	"plugin.phonegap.enter_account": {
+		"value": "ID와 비밀번호를 입력하세요."
+	},
+	"plugin.phonegap.build_error": {
+		"value": "Phonegap 빌드 에러"
+	}
+}

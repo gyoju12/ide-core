@@ -1,0 +1,14 @@
+COMPILE_TYPE=$1
+SOURCE_PATH=$2
+BUILD_PATH=$3
+BUILD_OPTIONS=${*:4}
+LIST=`find $SOURCE_PATH -name "*.cpp" -o -name "*.c"`
+
+$COMPILE_TYPE $LIST -o $BUILD_PATH $BUILD_OPTIONS
+
+if [ $? -ne 0 ]
+then
+    echo "Build Fail"
+else
+    echo "Build Complete"
+fi

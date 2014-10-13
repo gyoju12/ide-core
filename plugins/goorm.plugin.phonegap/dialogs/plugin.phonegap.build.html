@@ -1,0 +1,40 @@
+<!--DIALOG-->
+<div class="modal fade" id="dlg_phonegap_plugin_build" tabindex="-1" role="dialog" aria-labelledby="modal_phonegap_plugin_build" aria-hidden="true">
+    <div class="modal-dialog" style="width: 460px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modal_phonegap_plugin_build" localization_key='dialog_phonegap_plugin_build'>Phonegap Build</h4>
+            </div>
+            <div class="modal-body" style="height:250px;">
+				<div class="content_header" style="border-bottom: 1px solid #ccc;margin-bottom: 10px;text-align: right;"><div localization_key="phonegap_build">Phonegap build</div></div>
+				<div localization_key="">Enter your Adobe account to use cloud build system on the Adobe.</div>
+				<fieldset style="padding:10px; border:1px solid #ccc;background: white;margin-top:10px;margin-left:5px;display:inline; width:400px;">
+						<div style="font-size:11px;text-align:right" localization_key="select_modifiers"><a href="https://build.phonegap.com/apps" target="_blank" style="color:#999">(https://build.phonegap.com/apps)</a></div>
+					<div class="dialog_template_body_div" style="margin-top:15px;">
+						<label class="dialog_template_body_span" style="float:left;width:100px" localization_key="template_source_folder" for="phonegap_build_id">Email / Adobe ID : </label><input type="text" class="dialog_template_text" id="phonegap_build_id" name="plugin.phonegap.remote_id" placeholder="your@email.com" style="width:230px">
+					</div>
+					<div class="dialog_template_body_div">
+						<label class="dialog_template_body_span" style="float:left;width:100px" localization_key="password" for="phonegap_build_password">Password : </label><input type="password" style="margin-left:10px; width:230px;" id="phonegap_build_password" name="plugin.phonegap.remote_password" placeholder="password">
+					</div>
+				</fieldset>
+				
+				<div class="dialog_template_body_div">
+					<label class="dialog_template_body_span" localization_key="build_target" for="phonegap_build_platform">Build platform : </label>
+					<select style="margin-left:10px; width:215px;" name="plugin.phonegap.build_platform" id="phonegap_build_platform">
+						<option value="android">Android</option>
+						<option value="ios">iOS</option>
+						<option value="blackberry">BlackBerry 6</option>
+						<option value="symbian">Symbian</option>
+						<option value="webos">WebOS</option>
+						<option value="wp7">Windows Phone 7</option>
+					</select>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="g_phonegap_plugin_build_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                <button type="button" id="g_phonegap_plugin_build_btn_build" class="btn btn-primary" data-dismiss="modal" localization_key='build'>Build</button>
+            </div>
+        </div>
+    </div>
+</div>

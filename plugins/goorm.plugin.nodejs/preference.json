@@ -1,0 +1,6 @@
+{
+	"plugin.nodejs.main": 			"main",
+	"plugin.nodejs.source_path": 	"./",
+	"plugin.nodejs.debug_option": 	"",
+	"plugin.nodejs.run_option": 	""
+} 

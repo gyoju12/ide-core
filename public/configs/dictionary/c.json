@@ -1,0 +1,58 @@
+[
+	{
+		"keyword": "int",
+		"type": "key",
+		"description": "int<br> Integer."
+	},
+	{
+		"keyword": "char",
+		"type": "key",
+		"description": "char<br> Character or small integer."
+	},
+	{
+		"keyword": "float",
+		"type": "key",
+		"description": "float<br> Floating point number."
+	},
+	{
+		"keyword": "double",
+		"type": "key",
+		"description": "double<br> Double precision floating point number."
+	},
+	{
+		"keyword": "#include",
+		"type": "key",
+		"description": "#include<br>Preprocessor including header file"
+	},
+	{
+		"keyword": "#define",
+		"type": "key",
+		"description": "#define<br>Preprocessor defining some..."
+	},
+	{
+		"keyword": "scanf",
+		"type": "func",
+		"description": "scanf<br>function<br>int scanf ( const char * format, ... );<br>Reads data from stdin and stores them according to the parameter format into the locations pointed by the additional arguments."
+	},
+	{
+		"keyword": "printf",
+		"type": "func",
+		"description": "printf<br>function<br>int printf ( const char * format, ... );<br>Writes the C string pointed by format to the standard output (stdout). If format includes format specifiers (subsequences beginning with %), the additional arguments following format are formatted and inserted in the resulting string replacing their respective specifiers. "
+	},
+	{
+		"keyword":"return",
+		"type":"key",
+		"description":"return<br>return some value or terminate function"
+	},
+	{
+		"keyword" : "<stdio.h>",
+		"type" : "file",
+		"description" : "stdio.h<br>header file <br>This library uses what are called streams to operate with physical devices such as keyboards, printers, terminals or with any other type of files supported by the system."
+	},
+	{
+		"keyword" : "<stdlib.h>",
+		"type" : "file",
+		"description" : "stdlib.h<br>header file <br>This header defines several general purpose functions, including dynamic memory management, random number generation, chat with the environment, integer arthmetics, searching, sorting and converting."
+	}
+
+]

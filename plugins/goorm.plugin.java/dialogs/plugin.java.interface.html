@@ -1,0 +1,43 @@
+<!--DIALOG-->
+<div class="modal fade" id="dlg_plugin_java_interface" tabindex="-1" role="dialog" aria-labelledby="modal_plugin_java_interface" aria-hidden="true">
+	<div class="modal-dialog" style="width: 440px;">
+		<div class="modal-content">
+			<div class="modal-header"> 
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="modal_plugin_java_interface" localization_key='plugin.create_java_interface'>Create a new Java Interface.</h4>
+			</div>
+			<div class="modal-body row">
+				<div class="well well-sm" localization_key="plugin.make_java_interface">Make Java Interface</div>
+				<div class="dialog_template_content">
+					<label for="java_interface_source_folder" class="col-md-3 dialog_template_label" localization_key="plugin.template_source_folder">Source folder</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control dialog_template_input" id="java_interface_source_folder">
+					</div>
+
+					<label for="java_interface_package" class="col-md-3 dialog_template_label" localization_key="plugin.template_package">Package</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control dialog_template_input" id="java_interface_package">
+					</div>
+
+					<label for="java_interface_name" class="col-md-3 dialog_template_label" localization_key="plugin.template_name">Name</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control dialog_template_input" id="java_interface_name">
+					</div>
+				</div>
+				<div class="dialog_template_content">
+					<label class="col-md-3" localization_key="plugin.template_modifiers">Modifiers</label>
+					<div class="form-control col-md-9">
+						<input id="java_interface_modifier_public" type="radio" name ="java_interface_modifier" value="public" checked="checked">
+						<label for="java_interface_modifier_public">public</label>
+						<input id="java_interface_modifier_default" type="radio" name ="java_interface_modifier" value="default">
+						<label for="java_interface_modifier_default">default</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="g_plg_jei_btn_close" class="btn btn-default" data-dismiss="modal" aria-hidden="true" localization_key='close'>Close</button>
+				<button type="button" id="g_plg_jei_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+			</div>
+		</div>
+	</div>
+</div>

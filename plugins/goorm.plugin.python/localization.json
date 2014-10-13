@@ -1,0 +1,122 @@
+{
+	"kor": {
+		"name": {
+			"value": "Python 프로젝트"
+		},
+		"description": {
+			"value": "Python 프로젝트"
+		},
+		"items": {
+			"python_project": {
+				"name": {
+					"value": "Python 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Python 프로젝트를 생성합니다."
+				}
+			},
+			"python_example_xml_parser_project": {
+				"name": {
+					"value": "Python 예제 - XML Parser"
+				},
+				"description": {
+					"value": "Python 예제 프로젝트로 간단한 XML Parser가 구현되어 있습니다."
+				}
+			},
+			"python_example_hangman_project": {
+				"name": {
+					"value": "Python 예제 - Hangman Game"
+				},
+				"description": {
+					"value": "Python 예제 프로젝트로 간단한 Hangman Game가 구현되어 있습니다."
+				}
+			},
+			"python_example_web_crawler_project": {
+				"name": {
+					"value": "Python 예제 - Web Crawler"
+				},
+				"description": {
+					"value": "Python 예제 프로젝트로 간단한 Web Crawler가 구현되어 있습니다."
+				}
+			}
+		},
+		"d_complier_type":{
+			"value":"기본 컴파일러 타입"
+		},
+		"d_main":{
+			"value":"기본 메인"
+		},
+		"d_source_path":{
+			"value":"기본 소스 경로"
+		},
+		"complier_type":{
+			"value":"컴파일러 타입"
+		},
+		"main":{
+			"value":"메인"
+		},
+		"source_path":{
+			"value":"소스 경로"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Python Project"
+		},
+		"description": {
+			"value": "Python Project"
+		},
+		"items": {
+			"python_project": {
+				"name": {
+					"value": "Python Project"
+				},
+				"description": {
+					"value": "Create New Project for Python"
+				}
+			},
+			"python_example_xml_parser_project": {
+				"name": {
+					"value": "Python Example - XML Parser"
+				},
+				"description": {
+					"value": "Create New Example Project about XML Parse for Python"
+				}
+			},
+			"python_example_hangman_project": {
+				"name": {
+					"value": "Python Example - Hangman Game"
+				},
+				"description": {
+					"value": "Create New Example Project about Hangman Game for Python"
+				}
+			},
+			"python_example_web_crawler_project": {
+				"name": {
+					"value": "Python Example - Web Crawler"
+				},
+				"description": {
+					"value": "Create New Example Project about Web Crawler for Python"
+				}
+			}
+		},
+		"d_complier_type":{
+			"value":"Default Compiler Type"
+		},
+		"d_main":{
+			"value":"Default Main"
+		},
+		"d_source_path":{
+			"value":"Default Source Path"
+		},
+		"complier_type":{
+			"value":"Compiler Type"
+		},
+		"main":{
+			"value":"Main"
+		},
+		"source_path":{
+			"value":"Source Path"
+		}
+	}
+}

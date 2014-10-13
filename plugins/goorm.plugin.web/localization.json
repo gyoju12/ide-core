@@ -1,0 +1,62 @@
+{
+	"kor": {
+		"name": {
+			"value": "Web 프로젝트"
+		},
+		"description": {
+			"value": "Web 프로젝트 (HTML5/Javascript)"
+		},
+		"items": {
+			"web_project": {
+				"name": {
+					"value": "Web 프로젝트"
+				},
+				"description": {
+					"value": "새로운 Web 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_index_file":{
+			"value":"기본 인덱스 파일"
+		},
+		"d_web_view_type":{
+			"value":"기본 웹뷰 타입"
+		},
+		"index_file":{
+			"value":"인덱스 파일"
+		},
+		"web_view_type":{
+			"value":"웹뷰 타입"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "Web Project"
+		},
+		"description": {
+			"value": "Web Project (HTML5/Javascript)"
+		},
+		"items": {
+			"web_project": {
+				"name": {
+					"value": "Web Project"
+				},
+				"description": {
+					"value": "Create New Project for Web"
+				}
+			}
+		},
+		"d_index_file":{
+			"value":"Default Index File"
+		},
+		"d_web_view_type":{
+			"value":"Default Web View Type"
+		},
+		"index_file":{
+			"value":"Index File"
+		},
+		"web_view_type":{
+			"value":"Web View Type"
+		}
+	}
+}

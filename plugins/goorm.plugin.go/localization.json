@@ -1,0 +1,118 @@
+{
+	"kor": {
+		"name": {
+			"value": "GO 프로젝트"
+		},
+		"description": {
+			"value": "GNU 컴파일러 모음을 사용하는 GO 프로젝트"
+		},
+		"items": {
+			"go_default_project": {
+				"name": {
+					"value": "GO 기본 프로젝트"
+				},
+				"description": {
+					"value": "새로운 GO 프로젝트를 생성합니다."
+				}
+			},
+			"go_fibonacci_sample": {
+				"name": {
+					"value": "GO 피보나치 예제"
+				},
+				"description": {
+					"value": "새로운 GO 프로젝트를 생성합니다."
+				}
+			},
+			"go_prime_sleve_sample": {
+				"name": {
+					"value": "GO 소수 계산 예제"
+				},
+				"description": {
+					"value": "새로운 GO 프로젝트를 생성합니다."
+				}
+			}
+		},
+		"d_main_class_name": {
+			"value": "기본 메인클래스 이름"
+		},
+		"d_source_path": {
+			"value": "기본 소스 경로"
+		},
+		"d_build_path": {
+			"value": "기본 빌드 경로"
+		},
+		"d_build_option": {
+			"value": "기본 빌드 옵션"
+		},
+		"main_class_name": {
+			"value": "메인클래스 이름"
+		},
+		"source_path": {
+			"value": "소스 경로"
+		},
+		"build_path": {
+			"value": "빌드 경로"
+		},
+		"build_option": {
+			"value": "빌드 옵션"
+		}
+	},
+	"us": {
+		"name": {
+			"value": "GO Project"
+		},
+		"description": {
+			"value": "GO Project using GNU Compiler Collection"
+		},
+		"items": {
+			"go_default_project": {
+				"name": {
+					"value": "GO default Project"
+				},
+				"description": {
+					"value": "Create New Project for GO"
+				}
+			},
+			"go_fibonacci_sample": {
+				"name": {
+					"value": "GO fibonacci sample"
+				},
+				"description": {
+					"value": "Create New Project for GO"
+				}
+			},
+			"go_prime_sleve_sample": {
+				"name": {
+					"value": "GO concurrent prime sleve sample"
+				},
+				"description": {
+					"value": "Create New Project for GO"
+				}
+			}
+		},
+		"d_main_class_name": {
+			"value": "Default Main Class Name"
+		},
+		"d_source_path": {
+			"value": "Default Source Path"
+		},
+		"d_build_path": {
+			"value": "Default Build Path"
+		},
+		"d_build_option": {
+			"value": "Default Build Option"
+		},
+		"main_class_name": {
+			"value": "Main Class Name"
+		},
+		"source_path": {
+			"value": "Source Path"
+		},
+		"build_path": {
+			"value": "Build Path"
+		},
+		"build_option": {
+			"value": "Build Option"
+		}
+	}
+}

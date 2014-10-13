@@ -1,0 +1,1402 @@
+{
+    "alert_refresh": {
+        "value": "재시작 하시겠습니까?"
+    },
+    "alert_file_name_illegal": {
+        "value": "파일명에 잘못된 값이 있습니다."
+    },
+    "alert_file_size_too_big": {
+        "value": "이런! 파일의 크기가 너무 큽니다!<br/>에디터는 10MB 이하 크기의 파일만 열 수 있습니다."
+    },
+    "alert_file_size_too_big_to_upload": {
+        "value": "이런! 파일의 크기가 너무 큽니다!<br/>총 크기가 20MB 이하여야 합니다."
+    },
+    "alert_folder_name_empty": {
+        "value": "폴더 이름이 비어 있습니다."
+    },
+    "alert_filename_empty": {
+        "value": "파일 이름이 비어 있습니다."
+    },
+    "alert_file_permission": {
+        "value": "파일을 수정할 권한이 없습니다."
+    },
+    "alert_scm_permission": {
+        "value": "SCM에 접근할 권한이 없습니다."
+    },
+    "alert_file_not_select": {
+        "value": "파일을 선택하지 않으셨습니다."
+    },
+    "alert_cannot_find_word": {
+        "value": "단어를 찾을 수 없습니다."
+    },
+    "alert_file_not_opened": {
+        "value": "해당 파일이 오픈되어 있지 않습니다."
+    },
+    "alert_find_id_notexist": {
+        "value": "해당 아이디가 존재 하지 않습니다."
+    },
+    "alert_find_id_exist": {
+        "value": "해당 아이디 정보는"
+    },
+    "alert_find_pw_notexist": {
+        "value": "해당 정보가 존재 하지 않습니다."
+    },
+    "alert_find_pw_exist": {
+        "value": "임시 비밀번호가 메일로 발송되었습니다."
+    },
+    "alert_title_msg_send": {
+        "value": "메세지 보내기"
+    },
+    "alert_project_not_selected": {
+        "value": "프로젝트를 선택해주세요."
+    },
+    "alert_print_file_error": {
+        "value": "열려있는 파일이 없습니다."
+    },
+    "alert_plugin_run_error": {
+        "value": "바이너리가 존재하지 않습니다.<br/>프로젝트를 빌드 하시거나 경로설정을 확인하시기 바랍니다.<br/>화면 하단의 터미널을 확인해주세요."
+    },
+    "alert_cannot_find_plugin_to_build": {
+        "value": "프로젝트를 빌드할 플러그인을 찾지 못하였습니다."
+    },
+    "alert_plugin_no_class_file": {
+        "value": "클래스 파일이 존재하지않거나 경로가 옳바르지 않습니다.<br/>프로젝트를 빌드 하시거나 경로설정을 확인하시기 바랍니다."
+    },
+    "alert_plugin_run_success": {
+        "value": "성공적으로 실행되었습니다.<br/>터미널을 확인하세요."
+    },
+    "alert_plugin_build_error": {
+        "value": "빌드 실패!<br/>터미널 메시지를 확인하세요."
+    },
+    "alert_plugin_build_success": {
+        "value": "성공적으로 빌드가 완료되었습니다!"
+    },
+    "alert_plugin_check_terminal": {
+        "value": "터미널을 확인하세요."
+    },
+    "alert_plugin_build_failed": {
+        "value": "빌드 실패! 오류를 확인하세요."
+    },
+    "alert_plugin_not_while_running": {
+        "value": "사용자가 만든 프로그램이 이미 실행 중입니다.<br/>프로그램의 실행을 끝내고 시도하세요."
+    },
+    "alert_plugin_no_selected": {
+        "value": "플러그인이 선택되지 않았습니다."
+    },
+    "alert_plugin_not_found": {
+        "value": "이 프로젝트를 빌드하기 위해 필요한 플러그인을 찾을 수 없습니다."
+    },
+    "alert_only_zip_allowed": {
+        "value": "ZIP형식의 압축파일만 지원합니다."
+    },
+    "alert_unsupported_file_type": {
+        "value": "지원하지 않는 파일 형식입니다."
+    },
+    "alert_project_not_opened": {
+        "value": "해당 프로젝트는 오픈되어 있지 않습니다."
+    },
+    "alert_collaboration_previous_chat": {
+        "value": "이전 메시지"
+    },
+    "alert_collaboration_chat_join": {
+        "value": "님이 현재 워크스페이스에 접속하셨습니다!"
+    },
+    "alert_collaboration_chat_leave": {
+        "value": "님이 현재 워크스페이스에서 나가셨습니다!"
+    },
+    "alert_collaboration_chat_unfriend": {
+        "value": "님과 친구가 아닙니다."
+    },
+    "alert_collaboration_chat_change": {
+        "value": "님이 닉네임을 "
+    },
+    "alert_collaboration_chat_change2": {
+        "value": "로 바꾸었습니다."
+    },
+    "alert_filetype_same_name": {
+        "value": "같은 확장자를 가진 파일 타입이 존재합니다."
+    },
+    "alert_forgot_id": {
+        "value": "아이디 찾기"
+    },
+    "alert_forgot_pw": {
+        "value": "비밀번호 찾기"
+    },
+    "alert_forgot_info": {
+        "value": "계정정보 찾기"
+    },
+    "alert_sign_up": {
+        "value": "회원 가입"
+    },
+    "alert_error": {
+        "value": "에러"
+    },
+    "alert_assistant_msg": {
+        "value": "조교님으로부터 온 메세지입니다."
+    },
+    "alert_assistant_msg_recipient_blank": {
+        "value": "받는 학생 아이디를 확인해주세요."
+    },
+    "alert_assistant_msg_send_to_blank": {
+        "value": "보내기 종류를 선택해 주세요."
+    },
+    "notice_assistant_msg_success": {
+        "value": "메세지 전송 완료"
+    },
+    "alert_deny_make_file_in_workspace_root": {
+        "value": "workspace의 root에선 새로운 파일을 만들 수 없습니다."
+    },
+    "alert_deny_make_folder_in_workspace_root": {
+        "value": "workspace의 root에선 새로운 폴더를 만들 수 없습니다."
+    },
+    "alert_deny_rename_folder_in_workspace_root": {
+        "value": "workspace의 root에선 폴더 이름을 변경할 수 없습니다."
+    },
+    "alert_merge_menu_for_editor": {
+        "value": "코드 병합 메뉴는 에디터를 위한 메뉴입니다."
+    },
+    "alert_open_editor_more_two": {
+        "value": "에디터 창을 2개 이상 열어주세요."
+    },
+    "confirmation_yes": {
+        "value": "네"
+    },
+    "yes": {
+        "value": "네"
+    },
+    "no": {
+        "value": "아니오"
+    },
+    "confirmation_cancel": {
+        "value": "취소"
+    },
+    "confirmation_exit_title": {
+        "value": "종료"
+    },
+    "confirmation_decompress_title": {
+        "value": "압축 해제"
+    },
+    "confirmation_delete_title": {
+        "value": "삭제"
+    },
+    "confirmation_title": {
+        "value": "확인"
+    },
+    "confirmation_no": {
+        "value": "아니오"
+    },
+    "confirmation_save": {
+        "value": "저장 여부"
+    },
+    "confirmation_build": {
+        "value": "빌드"
+    },
+    "confirmation_restore_unsaved_data": {
+        "value": "복구할 데이터들이 있습니다. 복구하시겠습니까?"
+    },
+    "confirmation_save_message": {
+        "value": " 는 수정되었습니다. 저장 하시겠습니까?"
+    },
+    "confirmation_build_message": {
+        "value": " 는 수정되었습니다. 저장 후 빌드 하시겠습니까?"
+    },
+    "confirmation_language_title": {
+        "value": "Language Automatic Change"
+    },
+    "confirmation_language_message": {
+        "value": "Are you sure you want to change the language setting to Korean?"
+    },
+    "confirmation_language_message_yes": {
+        "value": "Yes"
+    },
+    "confirmation_language_message_no": {
+        "value": "No"
+    },
+    "confirmation_logout": {
+        "value": "로그아웃"
+    },
+    "confirmation_not_saved": {
+        "value": " 파일이 저장되지 않았습니다."
+    },
+    "confirmation_stay": {
+        "value": "페이지에 머무르기"
+    },
+    "confirmation_auto_logout": {
+        "value": "자동 로그아웃"
+    },
+    "confirmation_auto_logout_keep_using": {
+        "value": "계속 사용하겠습니다."
+    },
+    "confirmation_auto_logout_warning": {
+        "value": "초 후에 자동 로그아웃됩니다."
+    },
+
+
+    "tutorial_guide": {
+        "value": "튜토리얼을 시작하시겠습니까?<br/>(키보드 방향키와 ESC로도 조작 가능합니다.)"
+    },
+    "alert_page_over_required": {
+        "value": " 너무 큽니다."
+    },
+    "alertValidateRequired": {
+        "value": "필수 사항"
+    },
+    "alert_validate_alpha": {
+        "value": "알파벳 영문자만 입력 가능합니다."
+    },
+    "alert_validate_alpha_num": {
+        "value": "알파벳 영문자 + 숫자 조합만 입력 가능합니다."
+    },
+    "alert_validate_digit": {
+        "value": "숫자만 입력 가능합니다."
+    },
+    "alert_validate_no_digit": {
+        "value": "숫자는 입력 불가능합니다."
+    },
+    "alert_validate_num": {
+        "value": "숫자만 입력 가능합니다."
+    },
+    "alert_validate_email": {
+        "value": "이메일 형식이 맞지 않습니다."
+    },
+    "alert_validate_url": {
+        "value": "URL 형식이 맞지 않습니다."
+    },
+    "alert_dialog_missing": {
+        "value": "선택하지 않거나, 입력되지 않은 항목이 있습니다."
+    },
+    "alert_project_type": {
+        "value": "프로젝트 유형을 선택해 주세요."
+    },
+    "alert_project_source": {
+        "value": "프로젝트 대상을 선택해 주세요."
+    },
+    "alert_project_detailed_type": {
+        "value": "프로젝트 세부 유형을 선택해 주세요."
+    },
+    "alert_project_author": {
+        "value": "프로젝트 작성자를 작성해 주세요."
+    },
+    "alert_project_name": {
+        "value": "프로젝트 이름을 작성해 주세요."
+    },
+    "alert_project_desc": {
+        "value": "프로젝트 설명을 작성해 주세요."
+    },
+    "alert_allow_character": {
+        "value": "알파벳과 숫자, _, -만 입력 가능합니다."
+    },
+    "alert_project_cannot_open": {
+        "value": "프로젝트를 열 수 없습니다."
+    },
+    "alert_project_cannot_delete": {
+        "value": "프로젝트 폴더는 삭제할 수 없습니다.<br/>메뉴 - 프로젝트 - 프로젝트 제거 메뉴를 이용하여 주십시오."
+    },
+    "alert_upload_fail": {
+        "value": "업로드에 실패하셨습니다. 다시 시도하여 주십시오."
+    },
+    "notice_refresh_goorm": {
+        "value": "정보 변경이 완료된 후 새로고침됩니다."
+    },
+    "notice_project_import_done": {
+        "value": "프로젝트 가져오기 완료"
+    },
+    "notice_file_import_done": {
+        "value": "파일 가져오기 완료"
+    },
+    "notice_file_upload_done": {
+        "value": "파일 업로드 완료"
+    },
+    "confirmation_new_title": {
+        "value": "새로 만들기"
+    },
+    "confirmation_exit": {
+        "value": "정말 종료하시겠습니까?"
+    },
+    "confirmation_theme": {
+        "value": "테마를 적용하시겠습니까?"
+    },
+    "confirmation_decompress_file": {
+        "value": "정말 이 파일의 압축을 해제하시겠습니까?"
+    },
+    "confirmation_delete_file": {
+        "value": "정말 이 파일을 지우시겠습니까?"
+    },
+    "confirmation_delete_project": {
+        "value": "정말로 이 프로젝트를 삭제하시겠습니까?"
+    },
+    "confirmation_delete_all": {
+        "value": "정말 이 파일들과 디렉터리들을 지우시겠습니까?"
+    },
+    "confirmation_new_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?<br/>(원래 파일(폴더)의 내용은 없어집니다.)"
+    },
+    "confirmation_rename_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?<br/>(만약 새 이름이 폴더와 같다면, 파일(폴더)은/는 그 폴더 안으로 이동하게 됩니다.)"
+    },
+    "confirmation_move_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
+    },
+    "confirmation_new_other_title": {
+        "value": "기타 파일 새로 만들기"
+    },
+    "confirmation_new_other_message": {
+        "value": "같은 이름의 파일이 이미 존재합니다. 그냥 진행하시겠습니까?"
+    },
+    "confirmation_save_as_title": {
+        "value": "다른 이름으로 저장"
+    },
+    "confirmation_save_as_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
+    },
+    "confirmation_copy_paste_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
+    },
+    "confirmation_upload_message": {
+        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
+    },
+    "alert_collaboration_select": {
+        "value": "협업할 프로젝트를 선택해주세요."
+    },
+    "alert_collaboration_save": {
+        "value": "다른 사용자와 동기화가 정상적으로 되지 않을 수 있습니다. 저장 하시겠습니까?"
+    },
+    "alert_collaboration_sync": {
+        "value": "동기화 오류. 파일을 다시 불러옵니다."
+    },
+    "alert_title_empty": {
+        "value": "타이틀을 입력해주세요."
+    },
+    "alert_author_empty": {
+        "value": "제작자를 입력해주세요."
+    },
+    "alert_email_empty": {
+        "value": "이메일을 입력해주세요."
+    },
+    "alert_version_empty": {
+        "value": "버전을 입력해주세요."
+    },
+    "alert_module_empty": {
+        "value": "모듈을 입력해주세요."
+    },
+    "alert_contents_empty": {
+        "value": "컨텐츠를 입력해주세요."
+    },
+    "alert_cannot_write": {
+        "value": "쓰기 작업을 수행할 수 없습니다."
+    },
+    "alert_cannot_project_delete": {
+        "value": "프로젝트의 삭제를 수행할 수 없습니다."
+    },
+    "alert_cannot_file_delete": {
+        "value": "파일의 삭제를 수행할 수 없습니다."
+    },
+    "notice_write_done": {
+        "value": "쓰기 작업을 완료했습니다."
+    },
+    "notice_file_import_done": {
+        "value": "파일 불러오기를 완료했습니다."
+    },
+    "notice_project_delete_done": {
+        "value": "프로젝트가 삭제되었습니다."
+    },
+    "alert_naming": {
+        "value": "영역 이름을 겹칠 수 없습니다."
+    },
+    "alert_value": {
+        "value": "영역 이름은 공백을 포함할 수 없습니다."
+    },
+    "alert_collaboration_server_notconnected": {
+        "value": "서버와의 연결이 끊겼습니다."
+    },
+    "alert_select_project_item": {
+        "value": "반드시 프로젝트를 1개 이상 선택하여야 합니다."
+    },
+    "alert_no_have_data": {
+        "value": "데이터가 없습니다."
+    },
+    "alert_no_have_project": {
+        "value": "프로젝트가 없습니다."
+    },
+    "alert_user_undefined_id": {
+        "value": "ID를 입력해주세요."
+    },
+    "alert_user_unfit_reg_id": {
+        "value": "ID의 형식이 올바르지 않습니다(4~15자리, 알파벳+숫자)."
+    },
+    "alert_user_duplicate_id": {
+        "value": "동일한 ID가 존재합니다."
+    },
+    "alert_user_duplicate_student_id": {
+        "value": "동일한 학번이 존재합니다."
+    },
+    "alert_user_not_fount_id": {
+        "value": "ID가 존재하지 않습니다."
+    },
+    "alert_user_unmatched_id": {
+        "value": "해당 회원이 아니십니다."
+    },
+    "alert_user_undefined_password": {
+        "value": "비밀번호를 입력해주세요."
+    },
+    "alert_user_undefined_re_password": {
+        "value": "비밀번호 재확인을 위해, 입력해주세요."
+    },
+    "alert_user_undefined_password_not_match": {
+        "value": "비밀번호를 다시 한번 확인해 주세요."
+    },
+    "alert_user_unfit_req_password": {
+        "value": "비밀번호의 형식이 올바르지 않습니다(8~15자리, 알파벳과 특수문자, 숫자의 조합)."
+    },
+    "alert_user_undefined_email": {
+        "value": "E-mail을 입력해주세요."
+    },
+    "alert_user_unfit_email": {
+        "value": "E-mail의 형식이 올바르지 않은 양식입니다. (예: goorm@goorm.io)"
+    },
+    "alert_user_undefined_name": {
+        "value": "이름을 입력해주세요."
+    },
+    "alert_user_unfit_name": {
+        "value": "이름의 형식이 올바르지 않습니다(3~15자리, 한글/알파벳/숫자/특수문자(-/_/./ /))."
+    },
+    "alert_user_undefined_nick": {
+        "value": "닉네임을 입력해주세요."
+    },
+    "alert_user_unfit_nick": {
+        "value": "닉네임의 형식이 올바르지 않습니다(3~20자리, 한글/알파벳/숫자/특수문자(-/_/./ /))."
+    },
+    "alert_user_undefined_student_id": {
+        "value": "학번을 입력해주세요."
+    },
+    "alert_user_unfit_student_id": {
+        "value": "학번의 형식이 올바르지 않습니다(10자리 숫자)."
+    },
+    "alert_confirm_logout": {
+        "value": "정말로 로그아웃을 하시겠습니까?"
+    },
+    "alert_login_not_match_password": {
+        "value": "비밀번호가 일치하지 않습니다."
+    },
+    "alert_login_no_id": {
+        "value": "존재하지 않는 회원입니다."
+    },
+    "alert_login_undefined_id_or_password": {
+        "value": "ID 또는 비밀번호가 입력되지 않았습니다."
+    },
+    "alert_npm_limit": {
+        "value": "NPM 라이브러리를 더 이상 설치하실 수 없습니다.<br/>제한: "
+    },
+    "alert_npm_version": {
+        "value": "해당 버젼이 존재하지 않습니다."
+    },
+    "notice_no_matched_fild": {
+        "value": "검색어와 일치하는 파일을 찾을 수 없습니다."
+    },
+    "notice_welcome_goorm": {
+        "value": "구름 IDE에 오신 걸 환영합니다."
+    },
+    "alert_cannot_connect_db": {
+        "value": "Database에 접근할 수 없습니다."
+    },
+    "confirmation_delete_item": {
+        "value": "삭제하시겠습니까?"
+    },
+    "confirmation_modify_profile": {
+        "value": "프로필 내용을 변경하시겠습니까?"
+    },
+    "notice_help_goorm_ide_current_version": {
+        "value": "구름 IDE 현재 버젼"
+    },
+    "notice_help_goorm_ide_official_version": {
+        "value": "공식 버젼"
+    },
+    "notice_help_goorm_ide_update": {
+        "value": "업데이트"
+    },
+    "notice_search_select_project": {
+        "value": "프로젝트를 선택하여 주십시오."
+    },
+    "confirmation_delete_filetype": {
+        "value": "정말 이 파일 유형을 삭제하시겠습니까?"
+    },
+    "toast_filetype_save_complete": {
+        "value": "파일 유형을 저장하였습니다."
+    },
+    "alert_too_many_editors": {
+        "value": "Workspace의 크기에 비해 Editor가 너무 많이 열려있습니다. Workspace의 크기를 조절해 주십시오."
+    },
+    "alert_cannot_project_run": {
+        "value": "프로젝트를 실행할 수 없습니다. 적절한 프로젝트를 선택하여 주십시오."
+    },
+    "alert_cannot_project_remote_run": {
+        "value": "프로젝트를 실행할 수 없습니다. 적절한 프로젝트를 선택하여 주십시오."
+    },
+    "alert_cannot_project_generate": {
+        "value": "프로젝트를 생성할 수 없습니다. 적절한 프로젝트를 선택하여 주십시오."
+    },
+    "alert_cannot_project_build": {
+        "value": "프로젝트를 빌드할 수 없습니다. 적절한 프로젝트를 선택하여 주십시오."
+    },
+    "alert_cannot_project_debug": {
+        "value": "디버그가 시작되지 않았거나, 디버그 할 수 없는 프로젝트입니다."
+    },
+    "confirmation_file_upload": {
+        "value": "파일을 올리시겠습니까?"
+    },
+    "alert_file_not_defined": {
+        "value": "파일을 선택하여 주세요."
+    },
+    "alert_google_drive_not_auth": {
+        "value": "로그인과 인증을 해주십시오."
+    },
+    "alert_google_drive_not_selected": {
+        "value": "적절한 파일을 선택하여 주십시오."
+    },
+    "alert_confirm_duplicate_login": {
+        "value": "중복 로그인이 발생하였습니다. 로그인 하시겠습니까?"
+    },
+    "alert_force_logout": {
+        "value": "로그아웃됩니다."
+    },
+    "alert_confirm_delete_co_developer": {
+        "value": "정말 프로젝트 공유를 취소하시겠습니까?"
+    },
+    "alert_confirm_invite_co_developer": {
+        "value": "정말 프로젝트 공유를 하시겠습니까?"
+    },
+    "alert_no_display_to_data": {
+        "value": "등록된 개발자가 없습니다."
+    },
+    "alert_select_project": {
+        "value": "프로젝트를 선택하여 주십시오."
+    },
+    "alert_select_file": {
+        "value": "왼편 프로젝트 탐색기에서 파일을 선택하여 주십시오."
+    },
+    "alert_not_compressed_file": {
+        "value": "왼편 프로젝트 탐색기에서 압축 파일을 선택하여 주십시오."
+    },
+    "collaboration_stop_message": {
+        "value": "협업 중지됨"
+    },
+    "alert_quiz_is_ended": {
+        "value": "퀴즈가 종료 또는 시작되지 않았습니다."
+    },
+    "alert_login_not_service_account": {
+        "value": "서비스 모드 계정이 아닙니다. 새로 회원가입을 해주십시오."
+    },
+    "dialog_survey": {
+        "value": "구름IDE에게 바라는 점"
+    },
+    "survey_title": {
+        "value": "사용자 의견"
+    },
+    "survey_message": {
+        "value": "구름을 사용하시는데 불편한 점은 없으셨나요? 불편하신 점이 있다면 의견을 보내주세요!"
+    },
+    "survey_send": {
+        "value": "전송"
+    },
+    "survey_not_send": {
+        "value": "전송 안함"
+    },
+    "alert_run_fail": {
+        "value": "실행에 실패하였습니다. 다시 시도해 주시기 바랍니다."
+    },
+    "alert_open_file_fail": {
+        "value": "읽을 수 없는 파일입니다."
+    },
+    "alert_save_file_fail": {
+        "value": "파일 저장 실패"
+    },
+    "dictionary_project_list": {
+        "value": "프로젝트 목록"
+    },
+    "dictionary_my_project": {
+        "value": "내 프로젝트"
+    },
+    "dictionary_collaboration_project": {
+        "value": "협업 프로젝트"
+    },
+    "dictionary_type": {
+        "value": "종류"
+    },
+    "dictionary_name": {
+        "value": "이름"
+    },
+    "dictionary_author": {
+        "value": "작성자"
+    },
+    "dictionary_executant": {
+        "value": "실행한 유저"
+    },
+    "dictionary_visitors": {
+        "value": "접속자"
+    },
+    "dictionary_co_server_access": {
+        "value": "접속"
+    },
+    "dictionary_co_server": {
+        "value": "실행 서버"
+    },
+    "dictionary_userid": {
+        "value": "아이디"
+    },
+    "dictionary_history_time": {
+        "value": "저장 시간"
+    },
+    "dictionary_history_delay": {
+        "value": "지연(초)"
+    },
+    "dictionary_time": {
+        "value": "시간"
+    },
+    "dictionary_event": {
+        "value": "이벤트"
+    },
+    "dictionary_delay": {
+        "value": "지연"
+    },
+    "dictionary_line": {
+        "value": "줄 번호"
+    },
+    "dictionary_content": {
+        "value": "내용"
+    },
+    "dictionary_file": {
+        "value": "파일 이름"
+    },
+    "dictionary_room": {
+        "value": "방"
+    },
+    "dictionary_lobby": {
+        "value": "로비"
+    },
+    "dictionary_chat": {
+        "value": "채팅하기"
+    },
+    "dictionary_add_friend": {
+        "value": "친구 추가"
+    },
+    "dictionary_unfriend": {
+        "value": "친구 삭제"
+    },
+    "dictionary_friend_request": {
+        "value": "친구 요청"
+    },
+    "dictionary_friend_cancel": {
+        "value": "요청 취소"
+    },
+    "dictionary_accept": {
+        "value": "수락"
+    },
+    "dictionary_reject": {
+        "value": "거절"
+    },
+    "dictionary_package": {
+        "value": "패키지 생성"
+    },
+    "dictionary_class": {
+        "value": "클래스 생성"
+    },
+    "dictionary_interface": {
+        "value": "인터페이스 생성"
+    },
+    "dictionary_output": {
+        "value": "아웃풋"
+    },
+    "dictionary_install": {
+        "value": "설치"
+    },
+    "dictionary_uninstall": {
+        "value": "제거"
+    },
+    "npm_no_libraries": {
+        "value": "설치된 라이브러리가 존재하지 않습니다."
+    },
+    "notice_nodejs_app_running": {
+        "value": "사용자의 애플리케이션이 정상적으로 실행되었습니다."
+    },
+    "notice_nodejs_db_access": {
+        "value": "goorm.io의 유저 DB 정보입니다."
+    },
+    "notice_nodejs_tutorial": {
+        "value": "node.js 실행 튜토리얼을 보시겠습니까?"
+    },
+    "mongo_error_auth": {
+        "value": "DB의 비밀번호를 확인하여 주십시오."
+    },
+    "notice_user_profile_change": {
+        "value": "사용자 정보가 변경되어<br/>구름을 새로 시작합니다."
+    },
+    "do_not_show_again": {
+        "value": "다시 열지 않기"
+    },
+    "alert_cannot_template_folder": {
+        "value": "소스 폴더에서 작업을 실행해 주십시오."
+    },
+    "alert_type_is_empty": {
+        "value": "유형 이름이 비었습니다."
+    },
+    "alert_check_package_name": {
+        "value": "패키지 이름을 확인하여 주세요."
+    },
+    "alert_same_file_at_created_package": {
+        "value": "같은 이름의 파일이 이미 패키지에 존재합니다."
+    },
+    "alert_check_package": {
+        "value": "패키지 폴더가 존재하지 않습니다.<br/>패키지를 먼저 확인하십시오."
+    },
+    "alert_cannot_paste_in_darwin": {
+        "value": "붙여넣기 작업은 '편집' 메뉴에서는 불가능하지만 ⌘V 키를 사용하면 가능합니다."
+    },
+    "alert_cannot_paste_in_not_darwin": {
+        "value": "붙여넣기 작업은 '편집' 메뉴에서는 불가능하지만 Ctrl+V 키를 사용하면 가능합니다."
+    },
+    "alert_cannot_exist_editor": {
+        "value": "사용 가능한 에디터가 존재하지 않습니다."
+    },
+    "alert_project_over_limit": {
+        "value": "프로젝트를 더 생성할 수 없습니다.<br/>제한: "
+    },
+    "alert_version_required": {
+        "value": "버전 이름이 필요합니다."
+    },
+    "alert_package_name_required": {
+        "value": "패키지 이름이 필요합니다."
+    },
+    "alert_project_exist": {
+        "value": "같은 이름의 프로젝트가 이미 존재합니다."
+    },
+    "notice_update_message": {
+        "value": "구름IDE 팀은 지속적으로 버그 수정 및 기능 추가를 하고 있습니다. <br/>(마지막 업데이트:"
+    },
+    "confirmation_replace_all_none": {
+        "value": "일치하는 단어가 존재하지 않습니다."
+    },
+    "confirmation_replace_all_front": {
+        "value": ""
+    },
+    "confirmation_replace_all_end": {
+        "value": "개의 단어를 바꾸시겠습니까?"
+    },
+    "title_replace_all": {
+        "value": "모두 바꾸기"
+    },
+    "confirmation_history_merge": {
+        "value": "앞의 스냅샷과 합쳐지며, 해당 스냅샷은 삭제됩니다.<br/>괜찮으시겠습니까?"
+    },
+    "confirmation_history_delete_all": {
+        "value": "모든 히스토리 내역을 삭제합니다."
+    },
+    "confirmation_not_latest_build": {
+        "value": "최신 빌드 상태가 아닙니다."
+    },
+    "confirmation_not_latest_build_run_msg": {
+        "value": "최신 빌드 상태가 아닙니다.<br/>[빌드 후 실행] 버튼을 눌러 빌드를 먼저 진행해 주십시오."
+    },
+    "confirmation_not_latest_build_debug": {
+        "value": "최신 빌드 상태가 아닙니다.<br/>빌드 후에 디버그를 해주십시오."
+    },
+    "confirmation_build": {
+        "value": "빌드 후 실행"
+    },
+    "confirmation_build_and_run": {
+        "value": "빌드 후 실행"
+    },
+    "confirmation_build_and_debug": {
+        "value": "빌드 후 디버그"
+    },
+    "confirmation_run": {
+        "value": "실행"
+    },
+    "server_is_end": {
+        "value": "서버가 종료되었습니다. 다시 연결해주시기 바랍니다."
+    },
+    "server_reconnect_fail": {
+        "value": "서버와의 연결이 끊겼습니다. 다시 연결해주시기 바랍니다."
+    },
+    "someone_typing_message": {
+        "value": " 님이 입력 중입니다..."
+    },
+    "confirmation_share_history_play": {
+        "value": "Play 이벤트를 다른 협업 개발자들과 공유하시겠습니까?"
+    },
+    "confirmation_history_play": {
+        "value": " 님이 Play 이벤트를 공유하고 싶어하십니다.<br/>실행하시겠습니까?"
+    },
+    "confirmation_reject_friend": {
+        "value": "친구 요청을 거부하시겠습니까?"
+    },
+    "confirmation_accept_friend": {
+        "value": "친구 요청을 수락하시겠습니까?"
+    },
+    "confirmation_del_friend": {
+        "value": "친구를 삭제하시겠습니까?"
+    },
+    "confirmation_add_friend": {
+        "value": "친구를 추가하시겠습니까?"
+    },
+    "confirmation_cancel_friend": {
+        "value": "친구 요청을 취소하시겠습니까?"
+    },
+    "confirmation_accept_project": {
+        "value": "프로젝트 공유를 수락하시겠습니까?"
+    },
+    "confirmation_reject_project": {
+        "value": "프로젝트 공유를 거절하시겠습니까?"
+    },
+    "confirmation_leave_project": {
+        "value": "프로젝트 공유를 취소하시겠습니까?"
+    },
+    "notice_invite_project": {
+        "value": " 님이 프로젝트에 초대하셨습니다."
+    },
+    "confirmation_shortcut_conflict": {
+        "value": "입력한 단축키가 이미 존재합니다.<br/>덮어쓰시겠습니까?"
+    },
+    "confirmation_open_file": {
+        "value": "파일(들)을 여시겠습니까?"
+    },
+    "confirmation_do_you_want_to_add": {
+        "value": "추가하시겠습니까?"
+    },
+    "confirmation_do_you_want_to_remove_svn": {
+        "value": "제거하시겠습니까?"
+    },
+    "confirmation_do_you_want_to_remove_git": {
+        "value": "제거하시겠습니까?<br/>이 파일은 파일 시스템에서도 지워질 것이며, 되돌릴 수 없습니다."
+    },
+    "confirmation_do_you_want_to_commit": {
+        "value": "커밋하시겠습니까?"
+    },
+    "confirmation_commit_failed_1": {
+        "value": "커밋이 실패했습니다.<br/>원인: '"
+    },
+    "confirmation_commit_failed_2": {
+        "value": "' 는 최신 파일이 아닙니다.<br/>이 파일을 업데이트 하시겠습니까?"
+    },
+    "confirmation_revert_to_head": {
+        "value": "HEAD 리비전으로 되돌리시겠습니까?"
+    },
+    "confirmation_do_you_want_to_update": {
+        "value": "업데이트 하시겠습니까?"
+    },
+    "confirmation_update_is_suspended_1": {
+        "value": "업데이트가 멈추었습니다.<br/>원인: 다음의 위치에서 충돌 발생 - "
+    },
+    "confirmation_update_is_suspended_2": {
+        "value": "<br/>이 충돌을 해결하는 단계로 들어갈까요?"
+    },
+    "confirmation_do_you_want_to_lock": {
+        "value": "이 파일에 락을 걸까요?"
+    },
+    "confirmation_do_you_want_to_unlock": {
+        "value": "이 파일의 락을 풀까요?"
+    },
+    "confirmation_do_you_want_to_cleanup": {
+        "value": "클린업 하시겠습니까?"
+    },
+    "confirmation_do_you_want_to_resolve_conflict": {
+        "value": "이 충돌을 해결하시겠습니까?"
+    },
+    "confirmation_do_you_want_to_push": {
+        "value": "푸시 하시겠습니까?"
+    },
+    "confirmation_do_you_want_to_project_update": {
+        "value": "다른 구름IDE에 같은 이름의 프로젝트 정보가 존재합니다. 덮어씌우시겠습니까?"
+    },
+    "confirmation_del_profile_image": {
+        "value": "프로필 이미지를 지우시겠습니까?"
+    },
+    "del_profile_image": {
+        "value": "프로필 이미지 삭제"
+    },
+    "there_is_not_repository": {
+        "value": "정상적인 Git/Subversion 저장소가 아닙니다."
+    },
+    "del_friend_title": {
+        "value": "친구 삭제"
+    },
+    "reject_friend": {
+        "value": "친구 요청 거부"
+    },
+    "accept_friend": {
+        "value": "친구 요청"
+    },
+    "add_friend": {
+        "value": "친구 추가"
+    },
+    "accept_project": {
+        "value": "프로젝트 공유 수락"
+    },
+    "reject_project": {
+        "value": "프로젝트 공유 거절"
+    },
+    "leave_project": {
+        "value": "프로젝트 공유 취소"
+    },
+    "tutorial": {
+        "value": "튜토리얼"
+    },
+    "project_empty": {
+        "value": "프로젝트가 존재하지 않습니다."
+    },
+    "project_share_none": {
+        "value": "이 유저는 프로젝트로 접근할 수 없습니다."
+    },
+    "project_share_readonly": {
+        "value": "이 유저는 파일 읽기만 가능합니다."
+    },
+    "project_share_editable": {
+        "value": "이 유저는 파일, 프로젝트에 대해서 수정이 가능합니다."
+    },
+    "project_share_manager": {
+        "value": "이 유저는 파일, 프로젝트에 대해서 수정이 가능하며, 프로젝트 공유 권한도 가능합니다."
+    },
+    "editor_saving": {
+        "value": "저장 중..."
+    },
+    "editor_saved": {
+        "value": "변경 사항이 저장 완료 됨"
+    },
+    "connect_state": {
+        "value": "연결됨"
+    },
+    "disconnect_state": {
+        "value": "연결 끊김"
+    },
+    "shared_project_open": {
+        "value": "열기"
+    },
+    "shared_project_leave": {
+        "value": "떠나기"
+    },
+    "sharing_project_manage": {
+        "value": "관리"
+    },
+    "invitation_waiting": {
+        "value": "응답 대기중..."
+    },
+    "invitation_accept": {
+        "value": "수락"
+    },
+    "invitation_reject": {
+        "value": "거절"
+    },
+    "invitation_accept_open": {
+        "value": "수락 후 열기"
+    },
+    "alert_type_is_empty": {
+        "value": "유형 이름이 비었습니다."
+    },
+    "alert_check_package_name": {
+        "value": "패키지 이름을 확인하여 주세요."
+    },
+    "alert_same_file_at_created_package": {
+        "value": "같은 이름의 파일이 이미 패키지에 존재합니다."
+    },
+    "alert_check_package": {
+        "value": "패키지 폴더가 존재하지 않습니다.<br/>패키지를 먼저 확인하십시오."
+    },
+    "profile_comment": {
+        "value": "코멘트..."
+    },
+    "profile_password": {
+        "value": "(8~15), 알파벳+숫자+특수문자"
+    },
+    "profile_password_confirm": {
+        "value": "확인을 위해 비밀번호를 다시 입력해주세요."
+    },
+    "signup_id": {
+        "value": "아이디를 입력해주세요."
+    },
+    "signup_name": {
+        "value": "2~15자리, 한글/알파벳/숫자/( -/_/ . / /)"
+    },
+    "signup_nick": {
+        "value": "2~20자리, 한글/알파벳/숫자/( -/_/ . / /)"
+    },
+    "tutorial_prev": {
+        "value": "&laquo; 이전"
+    },
+    "tutorial_next": {
+        "value": "다음 &raquo;"
+    },
+    "tutorial_end": {
+        "value": "마치기"
+    },
+    "window_bottom_layout_output": {
+        "value": "아웃풋 보기"
+    },
+    "output": {
+        "value": "아웃풋"
+    },
+    "server": {
+        "value": "서버"
+    },
+    "webview": {
+        "value": "웹뷰"
+    },
+    "window_right_layout_quiz": {
+        "value": "퀴즈 보기"
+    },
+    "quiz": {
+        "value": "퀴즈"
+    },
+    "alert_wrong_tab": {
+        "value": "잘못된 탭입니다."
+    },
+    "alert_select_scm_type": {
+        "value": "SCM 유형을 선택해주세요!"
+    },
+    "alert_input_repo_url": {
+        "value": "저장소 URL을 입력해주세요!"
+    },
+    "alert_scm_test_fail": {
+        "value": "URL이 유효하지 않거나 인증에 실패했습니다."
+    },
+    "alert_scm_checkout_fail": {
+        "value": "체크아웃에 실패했습니다. 다시 시도해주세요."
+    },
+    "alert_nothing_checked": {
+        "value": "아무것도 선택되지 않았습니다."
+    },
+    "alert_scm_add_fail": {
+        "value": "어떤 파일(들)은 추가되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_remove_fail": {
+        "value": "어떤 파일(들)은 제거되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_comment_required": {
+        "value": "메세지는 꼭 작성해야 합니다."
+    },
+    "alert_scm_commit_fail": {
+        "value": "어떤 파일(들)은 Commit되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_push_fail": {
+        "value": "어떤 파일(들)은 Push되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_input_right_date": {
+        "value": "알맞은 날짜를 입력하세요."
+    },
+    "alert_input_right_revision": {
+        "value": "알맞은 리비전을 입력하세요."
+    },
+    "alert_nothing_selected": {
+        "value": "아무것도 선택되지 않았습니다."
+    },
+    "alert_scm_update_fail": {
+        "value": "업데이트에 실패했습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_lock_fail": {
+        "value": "어떤 파일(들)은 잠기지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_unlock_fail": {
+        "value": "어떤 파일(들)은 잠금이 풀리지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_cleanup_fail": {
+        "value": "어떤 파일(들)은 Clean Up되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_only_for_file": {
+        "value": " 은 오직 파일을 위한 명령입니다."
+    },
+    "alert_auth_fail": {
+        "value": "인증에 실패했습니다."
+    },
+    "alert_undo_fail": {
+        "value": "어떤 파일(들)은 취소되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_pull_fail": {
+        "value": "어떤 파일(들)은 Pull되지 않았습니다.<br/>’명령어 로그’ 탭을 확인하세요."
+    },
+    "alert_input_branch_name": {
+        "value": "브랜치 이름을 입력하세요."
+    },
+    "alert_scm_branch_delete_fail": {
+        "value": " 은 삭제되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_branch_merge_fail": {
+        "value": " 은 병합되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_branch_publish_fail": {
+        "value": " 은 Publish되지 않았습니다.<br/>원인:<br/>"
+    },
+    "alert_scm_branch_move_fail": {
+        "value": "이동되지 않았습니다.<br/>"
+    },
+    "alert_scm_select_branch": {
+        "value": "브랜치를 선택해 주세요."
+    },
+    "alert_scm_input_right_value": {
+        "value": "올바른 값을 입력해 주세요.<br/>올바르지 않은 값: "
+    },
+    "alert_not_version_control": {
+        "value": "이 파일/폴더는 버전 컨트롤 대상이 아닙니다."
+    },
+    "confirmation_scm_commit_fail_out_date": {
+        "value": "<br/>Commit에 실패했습니다.<br/>원인: 최신 버전이 아닙니다.<br/>이 파일을 업데이트 하시겠습니까?<br/>추가 설명:<br/>"
+    },
+    "confirmation_scm_want_to_push": {
+        "value": "Commit된 파일을 Push하시겠습니까?"
+    },
+    "confirmation_scm_want_to_undo_change": {
+        "value": "이 수정된 로컬 파일을 원래대로 복구하시겠습니까? 당신은 모든 수정사항을 잃어버리게 될 것이고, 이는 되돌릴 수 없습니다."
+    },
+    "confirmation_scm_want_to_undo_add": {
+        "value": "추가한 것을 취소하시겠습니까?"
+    },
+    "confirmation_scm_want_to_undo_commit": {
+        "value": "마지막 Commit을 취소하시겠습니까?"
+    },
+    "confirmation_scm_want_to_undo_push": {
+        "value": "마지막 Push를 취소하시겠습니까?"
+    },
+    "confirmation_scm_want_to_pull": {
+        "value": "HEAD로부터 Pull 하시겠습니까?"
+    },
+    "confirmation_scm_want_to_create_branch": {
+        "value": "새 브랜치를 생성하시겠습니까?"
+    },
+    "confirmation_scm_want_to_delete_branch": {
+        "value": "브랜치를 삭제하시겠습니까?"
+    },
+    "confirmation_scm_want_to_merge_branch": {
+        "value": "Master와 브랜치를 병합하시겠습니까?"
+    },
+    "confirmation_scm_want_to_publish_branch": {
+        "value": "원격 저장소에 브랜치를 Publish 하시겠습니까?"
+    },
+    "confirmation_scm_want_to_move_branch": {
+        "value": "브랜치를 이동하시겠습니까?"
+    },
+    "please_wait": {
+        "value": "잠시만 기다려주십시오."
+    },
+    "new_project_scm_dialog": {
+        "value": "새 프로젝트의 scm 저장소를 입력해주세요"
+    },
+    "more_friends": {
+        "value": "더보기..."
+    },
+    "checkout_in_progress": {
+        "value": "체크아웃 진행중"
+    },
+    "checkout_done": {
+        "value": "체크아웃 완료"
+    },
+    "status_loading": {
+        "value": "상태 로딩중..."
+    },
+    "log_loading": {
+        "value": "로그 로딩중..."
+    },
+    "property_loading": {
+        "value": "프로젝트 속성 로딩중..."
+    },
+    "placeholder_editor": {
+        "value": "여기에 코드를 작성하세요..."
+    },
+    "study": {
+        "value": "학습"
+    },
+    "alert_eval_not_supported": {
+        "value": "해당 파일에서 지원되지 않는 기능입니다."
+    },
+    "send_error_chat": {
+        "value": "해당 에러를 워크스페이스 채팅방에 보내기"
+    },
+    "error_chat_msg_occur": {
+        "value": "님이 에러메시지를 보냈습니다."
+    },
+    "alert_select_string": {
+        "value": "문자열을 선택해주세요."
+    },
+    "confirmation_refactor_want_to_safe_delete": {
+        "value": "선택된 문자열을 안전하게 삭제하시겠습니까?"
+    },
+    "safe_delete": {
+        "value": "안전하게 삭제하기"
+    },
+    "safe_delete_search_result": {
+        "value": "안전하게 삭제하기 – 검색 결과"
+    },
+    "places": {
+        "value": "곳"
+    },
+    "not_friend_title": {
+        "value": "친구가 아닙니다"
+    },
+    "not_friend_message": {
+        "value": "친구가 아닙니다.<br/>친구 요청을 하시겠습니까?"
+    },
+    "check_search_tab": {
+        "value": "아래 검색 탭을 확인해 주세요."
+    },
+    "dev_log_empty": {
+        "value": "기록이 존재하지 않습니다."
+    },
+    "history_empty": {
+        "value": "기록이 존재하지 않습니다."
+    },
+    "shared_project_empty": {
+        "value": "공유 중인 프로젝트가 없습니다."
+    },
+    "friend_empty": {
+        "value": "친구 목록이 존재하지 않습니다."
+    },
+    "sharing_project_unshare": {
+        "value": "공유 취소"
+    },
+    "import_in_progress": {
+        "value": "프로젝트 업로드 진행"
+    },
+    "import_sync_to_file_system": {
+        "value": "파일 시스템 동기화 중..."
+    },
+    "alert_project_rename": {
+        "value": "프로젝트 명은 바꿀 수 없습니다."
+    },
+    "confirmation_server_running": {
+        "value": "서버가 실행중입니다."
+    },
+    "confirmation_server_running_msg": {
+        "value": "서버가 실행중입니다.<br/>서버 종료 후 프로젝트를 변경할 수 있습니다."
+    },
+    "confirmation_stop_server": {
+        "value": "서버 종료"
+    },
+    "edit_no_bookmark": {
+        "value": "북마크가 없습니다"
+    },
+    "title_open_file": {
+        "value": "파일 열기"
+    },
+    "user_plg_cleaned": {
+        "value": "개의 유저 플러그인이 삭제되었습니다!\n툴바와 메뉴, 다이얼로그는 새로고침 후\n완전히 삭제됩니다."
+    },
+    "dialog_storage": {
+        "value": "저장소"
+    },
+    "imported_file_exist_single": {
+        "value": "파일이 이미 존재합니다.<br/>덮어씌우시겠습니까?"
+    },
+    "imported_file_exist_multiple": {
+        "value": "파일이 이미 존재합니다.<br/>덮어씌우시겠습니까?"
+    },
+    "alert_invalide_query": {
+        "value": "유효하지 않은 명령입니다."
+    },
+    "alert_permission_denied": {
+        "value": "권한이 없습니다."
+    },
+    "processing": {
+        "value": "파일을 가져오는 중..."
+    },
+    "alert_duplicate_dir": {
+        "value": "같은 이름의 디렉토리가 존재합니다"
+    },
+    "alert_invalid_folder_name": {
+        "value": "알파벳과 숫자, _, -, /만 입력 가능합니다."
+    },
+    "alert_cannot_export_file": {
+        "value": "파일을 내보낼 수 없습니다"
+    },
+    "alert_cannot_make_directory": {
+        "value": "디렉토리를 만들 수 없습니다"
+    },
+    "notice_process_done": {
+        "value": "완료하였습니다."
+    },
+    "alert_not_directory": {
+        "value": "디렉토리가 아닙니다."
+    },
+    "alert_delete_shared_file": {
+        "value": "파일을 삭제할 수 없습니다. 이 파일은 현재 협업중입니다."
+    },
+    "alert_same_name_folder": {
+        "value": "같은 이름을 가진 폴더가 존재합니다."
+    },
+    "msg_project_find_guide": {
+        "value": "찾기"
+    },
+    "msg_project_replace_guide": {
+        "value": "바꾸기"
+    },
+    "msg_project_match_case_guide": {
+        "value": "대/소문자 일치"
+    },
+    "msg_project_ignore_whitespace_guide": {
+        "value": "공백 무시하기"
+    },
+    "msg_project_use_regular_expression_guide": {
+        "value": "정규식 표현 사용하기"
+    },
+    "msg_find_next": {
+        "value": "다음 찾기"
+    },
+    "msg_find_previous": {
+        "value": "이전 찾기"
+    },
+    "check_property_main": {
+        "value": "프로젝트 속성에서 main 파일의 위치를 확인해주세요."
+    },
+    "check_property_source": {
+        "value": "프로젝트 속성에서 소스 디렉토리의 위치를 확인해주세요."
+    },
+    "alert_invalid_zip_file": {
+        "value": "유효하지 않은 zip 파일입니다."
+    },
+    "alert_invalid_tar_file": {
+        "value": "유효하지 않은 tar 파일입니다."
+    },
+    "scm_check_repository": {
+        "value": "SCM 저장소 Test를 먼저 수행해주시기 바랍니다."
+    },
+    "search_user_placeholder": {
+        "value": "Id나 이름, 또는 닉네임으로 사용자를 찾을 수 있습니다."
+    },
+    "output_tab_no_error": {
+        "value": "오류가 존재하지 않습니다."
+    },
+    "alert_project_permission_denied": {
+        "value": "프로젝트에 접근할 권한이 없습니다."
+    },
+    "alert_positive_value_only": {
+        "value": "양수만 입력가능합니다."
+    },
+    "select_project": {
+        "value": "프로젝트 선택"
+    },
+    "readonly": {
+        "value": "읽기 전용"
+    },
+    "editable": {
+        "value": "수정 가능"
+    },
+    "editable_sharable": {
+        "value": "수정 및 공유 가능"
+    },
+    "alert_drop_on_editor": {
+        "value": "에디터 위에 파일을 올릴 수 없습니다."
+    },
+    "alert_too_many_files_limit_20": {
+        "value": "파일이 너무 많습니다(20개 이하)."
+    },
+    "alert_input_search_keyword": {
+        "value": "검색어를 입력해 주세요."
+    },
+    "same_folder_exist_title": {
+        "value": "동일한 폴더 존재"
+    },
+    "same_folder_exist": {
+        "value": "동일한 폴더명이 존재합니다. 해당 폴더와 업로드 폴더의 내용을 합치시겠습니까?"
+    },
+    "confirmation_save_deleted_file": {
+        "value": "이 파일은 삭제되었습니다. 새롭게 파일을 만드시겠습니까?"
+    },
+    "alert_folder_upload_is_not_allowed": {
+        "value": "폴더는 업로드 할 수 없습니다. 파일만 가능 합니다."
+    }
+}
