@@ -605,7 +605,11 @@ goorm.core.prototype = {
 		
 
 		
-
+		
+		$('#goorm_local_mode_button').click(function() {
+			self.access_local_mode();
+		});
+		
 		$("#loading_panel_container").show();
 
 		var loading_background = $("#loading_background");
