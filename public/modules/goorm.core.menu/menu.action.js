@@ -118,44 +118,11 @@ goorm.core.menu.action = {
 
 		$("[action=exit]").off("click").tooltip();
 		$("[action=exit]").click(function() {
-			confirmation.init({
-				title: core.module.localization.msg.confirmation_exit_title,
-				message: core.module.localization.msg.confirmation_exit,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
-				yes: function() {
-					survey.init(function() {
-
-						
-
-						window.open('', '_self');
-						window.close();
-					});
-					survey.show();
-					if (core !== undefined && core.user !== undefined) {
-
-						if (core !== undefined && core.user !== undefined) {
-							var postdata = {
-								// 'id': core.user.id,
-								// 'type': core.user.type,
-								'path': core.status.current_project_absolute_path
-							};
-
-							$.ajax({
-								type: 'POST',
-								async: false,
-								url: '/user/unload',
-								data: postdata
-							});
-						}
-					}
-				},
-				no: function() {
-
-				}
-			});
-
-			confirmation.show();
+			
+			
+			window.open('', '_self');
+			window.close();
+			
 		});
 		
 		$("[action=close_file]").off("click").tooltip();
@@ -741,11 +708,12 @@ goorm.core.menu.action = {
 
 					yes: function() {},
 					no: function() {
-						survey.init(function() {
-							core.module.auth.logout();
-
-						});
-						survey.show();
+						
+						
+						core.unload();
+						core.logout = true;
+						location.href = '/';
+						
 					}
 				});
 
@@ -758,11 +726,12 @@ goorm.core.menu.action = {
 				no_text: core.module.localization.msg.confirmation_no,
 				title: core.module.localization.msg.confirmation_title,
 				yes: function() {
-					survey.init(function() {
-						core.module.auth.logout();
-
-					});
-					survey.show();
+					
+					
+					core.unload();
+					core.logout = true;
+					location.href = '/';
+					
 				},
 				no: function() {}
 			});

@@ -1529,60 +1529,7 @@ module.exports = {
 	get_guest_expire_date: function() {
 		return expire_date;
 	},
-
-	unload_handle: function(query) {
-		var self = this;
-		var id = query.id;
-		//0. check valid id
-		var ps = ['root', 'haproxy', 'redis', 'www-data', 'mysql', 'daemon', 'syslog'];
-		if (id && check_form.regular_expression_id.test(id) && ps.indexOf(id) === -1) {
-			//1.leave socket
-			self.leave_socket(query);
-
-			//2.kill  every user's process 
-			if (global.__service_mode) {
-				//guranteed valid id
-				// exec("ps -u  "+ id +"  |  awk '{print $1, $4}' | grep -v PID ", function(err, stdout, stderr){
-				// 	if(err || stderr) return;
-				// 	var pid_arr=stdout.split('\n');
-				// 	pid_arr.sort(function(a,b){
-				// 		return a.indexOf('bash')-b.indexOf('bash');
-				// 	});
-
-				// 	for(var i=0;i<pid_arr.length;i++){
-				// 		var target_pid=pid_arr[i].split(' ')[0];
-
-				// 		if(target_pid && target_pid!==""){
-				// 			try{
-				// 				process.kill(target_pid, 'SIGKILL');
-				// 			}catch(e){
-
-				// 			}
-				// 		}
-				// 	}
-				// });
-
-				id = g_secure.command_filter(id);
-
-				exec('killall ' + id);
-			}
-
-		}
-	},
-	leave_socket: function(query, callback) {
-		var io = this.g_collaboration.get_io();
-		var user_list = [{
-			'id': query.id
-		}];
-		var is_connect = function(data) {
-			if (data.client.id && io.sockets.sockets[data.client.id]) {
-				io.sockets.sockets[data.client.id].emit("leave");
-			}
-		};
-		var is_not_connect = function(data) {};
-
-		this.g_collaboration_chat.is_connected(io, user_list, is_connect, is_not_connect);
-	},
+	
 	start: function(io) {
 		var self = this;
 		self.__io = io;

@@ -445,6 +445,9 @@ goorm.routing = function() {
 
 		res.json(response);
 	});
+	goorm.post('/local_logout', function(req, res) {
+		
+	});
 	
 
 	

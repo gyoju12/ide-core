@@ -747,19 +747,7 @@ goorm.core.prototype = {
 			// window unload event for user-preference. youseok.nam
 			//
 			core.module.preference.save_to_database();
-
-			var postdata = {
-				'id': core.user.id,
-				'type': core.user.type,
-				'path': core.status.current_project_path
-			};
-
-			$.ajax({
-				type: 'POST',
-				async: false,
-				url: '/user/unload',
-				data: postdata
-			});
+			
 		}
 	},
 
