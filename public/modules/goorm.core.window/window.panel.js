@@ -57,9 +57,11 @@ goorm.core.window.panel.prototype = {
 
 		// this.container = container;
 		this.workspace = $("#workspace");
-
+		
 		if (filetype === "" || filetype == "etc") {
 			filetype = "txt";
+		} else if(filetype == "merge") {
+			core.module.layout.outline.clear();	
 		}
 
 		////////////////////////
@@ -816,19 +818,19 @@ goorm.core.window.panel.prototype = {
 			if (core.module.layout.history)
 				core.module.layout.history.deactivated();
 
-			var new_window = window_manager.window.length - 1;
-			if (new_window !== -1 && window_manager.window[new_window]) {
-				window_manager.activate(new_window);
-			}
-			// } else {
-			// 	if (self.editor && self.editor.collaboration) {
-			// 		self.editor.collaboration.update_editor({
-			// 			filename: ""
-			// 		});
-			// 	}
-			// 	$(".tab_max_buttons").hide();
+			// var new_window = window_manager.window.length - 1;
+			// if (new_window !== -1 && window_manager.window[new_window]) {
+			// 	window_manager.activate(new_window);
 			// }
-			window_manager.active_window = new_window;
+			// // } else {
+			// // 	if (self.editor && self.editor.collaboration) {
+			// // 		self.editor.collaboration.update_editor({
+			// // 			filename: ""
+			// // 		});
+			// // 	}
+			// // 	$(".tab_max_buttons").hide();
+			// // }
+			// window_manager.active_window = new_window;
 
 			for (var i = 0; i < window_manager.index; i++) {
 				if (window_manager.window[i].type == "Editor" || window_manager.window[i].type == "Merge") {
@@ -925,6 +927,10 @@ goorm.core.window.panel.prototype = {
 			$(core).trigger('contextmenu_all_hide');
 
 			this.activated = true;
+
+			if(this.filetype == "merge") {
+				core.module.layout.outline.clear();	
+			}
 		},
 
 		init_title: function() {

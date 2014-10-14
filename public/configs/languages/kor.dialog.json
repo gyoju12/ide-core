@@ -692,5 +692,14 @@
 	},
 	"dialog_help_license": {
 		"value": "오픈 소스 라이센스"
+	},
+	"dialog_new_file": {
+		"value": "새 파일"
+	},
+	"dialog_new_folder": {
+		"value": "새 폴더"
+	},
+	"dialog_new_untitled_textfile": {
+		"value": "새 텍스트 파일"
 	}
 }

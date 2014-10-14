@@ -322,14 +322,14 @@ goorm.core.edit.prototype = {
         });
         // cancel undefined change (e.g. undo, redo). -> codemirror's undo, redo shortcut doesn't work properly! So, cancel it. Jeong-Min Im.
         cm_editor.on('beforeChange', function(cm, change) {
-            if (!change.origin && self.special_pressed) { // jeongmin: only if special key is pressed
-                //console.log("false operation occured");
-                self.collaboration.cmAdapter.ignoreNextChange = true;
-                change.cancel();
-                self.collaboration.cmAdapter.ignoreNextChange = false;
-            }
+            // if (!change.origin && self.special_pressed) { // jeongmin: only if special key is pressed
+            //     //console.log("false operation occured");
+            //     self.collaboration.cmAdapter.ignoreNextChange = true;
+            //     change.cancel();
+            //     self.collaboration.cmAdapter.ignoreNextChange = false;
+            // }
 
-            self.special_pressed = false; // jeongmin: initialize
+            // self.special_pressed = false; // jeongmin: initialize
         });
 
         cm_editor.on("cursorActivity", function() {

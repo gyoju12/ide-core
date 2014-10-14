@@ -692,5 +692,15 @@
 	},
 	"dialog_help_license": {
 		"value": "Open Source License"
+	},
+	"dialog_new_file": {
+		"value": "New File"
+	},
+	"dialog_new_folder": {
+		"value": "New Folder"
+	},
+	"dialog_new_untitled_textfile": {
+		"value": "New Untitled Textfile"
 	}
 }
+

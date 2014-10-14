@@ -381,10 +381,7 @@ goorm.core.project = {
 			path: core.status.current_project_path,
 			property: core.property.plugins["goorm.plugin." + core.status.current_project_type]
 		}, function(){
-			this.is_running = false;
-			$('button[action="stop"]').addClass('debug_not_active');
-			$('button[action="stop"]').attr('isdisabled','disabled');
-			$('a[action="stop"]').parent().addClass('disabled')
+			
 		});
 	},
 	send_build_cmd: function(callback) {

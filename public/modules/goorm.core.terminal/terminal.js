@@ -233,7 +233,15 @@ goorm.core.terminal.prototype = {
 
 			// result write
 			self.socket.on("pty_command_result", function(msg) {
-				// console.log(msg);
+
+				//build stop fix --heeje
+				if(core.module.project.is_running && msg.stdout.indexOf('[01;32m') > 0 && msg.stdout.indexOf('[H[2J') < 0) {
+					this.is_running = false;
+					$('button[action="stop"]').addClass('debug_not_active');
+					$('button[action="stop"]').attr('isdisabled','disabled');
+					$('a[action="stop"]').parent().addClass('disabled')
+				}
+
 				
 
 					

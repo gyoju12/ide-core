@@ -427,6 +427,8 @@ module.exports = {
 			var crypto = require('crypto');
 			var sha_pw = crypto.createHash('sha1');
 			var temp_pw = sha_pw.update(user.pw).digest('hex');
+
+			sha_pw = crypto.createHash('sha1'); // jeongmin: hash object isn't reusable, so re-create
 			user.pw = sha_pw.update(temp_pw).digest('hex');
 		}
 		self.set(user, req, function(set_result) {

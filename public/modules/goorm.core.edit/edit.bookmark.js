@@ -268,7 +268,7 @@ goorm.core.edit.bookmark = {
 			self = this;
 
 		////// making //////
-		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window].editor) {
+		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) {
 			var active_editor = this.window_manager.window[this.window_manager.active_window].editor,
 				target = active_editor.target, //active window's id
 				cm = active_editor.editor;

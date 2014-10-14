@@ -93,7 +93,7 @@ goorm.core.project.explorer.prototype = {
 			//$.get("project/get_list", postdata, function (data) {
 			
 				
-				core.socket.once("/project/get_list/owner", function(data) {
+			core.socket.once("/project/get_list/owner", function(data) {
 				
 				self.project_data = data;
 				self.make_project_selectbox();

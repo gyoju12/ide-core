@@ -262,9 +262,12 @@ goorm.core.project.property = {
 
 						$(this).iCheck("update");
 					} else if ($(this).attr("type") == "radio") {
-						if (key[$(this).attr("name")] == $(this).val())
-						// $(this).prop("checked", true);
+						if (key[$(this).attr("name")] == $(this).val()) {
+							// $(this).prop("checked", true);
 							$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
+						} else { // jeongmin: check or uncheck must be selected
+							$(this).iCheck("uncheck");
+						}
 					} else {
 						
 
@@ -272,6 +275,8 @@ goorm.core.project.property = {
 					}
 				} else if ($(this).attr("type") == "text") { //jeongmin: if null property -> set blank (only text)
 					$(this).val("");
+				} else { // jeongmin: radio or checkbox are needed to uncheck
+					$(this).iCheck("uncheck");
 				}
 			});
 			target_index.find("textarea").each(function() {
@@ -346,37 +351,43 @@ goorm.core.project.property = {
 
 		return data;
 	},
+	// hidden by jeongmin: this function is same as fill_dialog
+	// set_before: function() {
+	// 	var self = this;
 
-	set_before: function() {
-		var self = this;
-
-		$("#property_tabview").find("input").each(function() {
-			if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
-				if ($(this).attr("type") === "checkbox") {
-					if (self.property[$(this).attr("name")].toString() === "true") {
-						// $(this).prop("checked", true);
-						$(this).iCheck("check");
-					} else {
-						// $(this).prop("checked", false);
-						$(this).iCheck("uncheck");
-					}
-				} else {
-					$(this).val(self.property[$(this).attr("name")]);
-				}
-			}
-		});
-		$("#property_tabview").find("textarea").each(function() {
-			if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
-				$(this).val(self.property[$(this).attr("name")]);
-			}
-		});
-		$("#property_tabview").find("select").each(function() {
-			if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
-				$(this).children("option[value = " + self.property[$(this).attr("name")] + "]").attr("selected", "true");
-				$(this).val(self.property[$(this).attr("name")]);
-			}
-		});
-	},
+	// 	$("#property_tabview").find("input").each(function() {
+	// 		if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
+	// 			if ($(this).attr("type") === "checkbox") {
+	// 				if (self.property[$(this).attr("name")].toString() === "true") {
+	// 					// $(this).prop("checked", true);
+	// 					$(this).iCheck("check");
+	// 				} else {
+	// 					// $(this).prop("checked", false);
+	// 					$(this).iCheck("uncheck");
+	// 				}
+	// 			} else if ($(this).attr("type") === "radio") { // jeongmin: radio also must be checked!
+	// 				if (self.property[$(this).attr("name")] === $(this).val()) {
+	// 					$(this).iCheck("check");
+	// 				} else {
+	// 					$(this).iCheck("uncheck");
+	// 				}
+	// 			} else {
+	// 				$(this).val(self.property[$(this).attr("name")]);
+	// 			}
+	// 		}
+	// 	});
+	// 	$("#property_tabview").find("textarea").each(function() {
+	// 		if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
+	// 			$(this).val(self.property[$(this).attr("name")]);
+	// 		}
+	// 	});
+	// 	$("#property_tabview").find("select").each(function() {
+	// 		if (self.property[$(this).attr("name")] !== undefined && self.property[$(this).attr("name")] !== null) {
+	// 			$(this).children("option[value = " + self.property[$(this).attr("name")] + "]").attr("selected", "true");
+	// 			$(this).val(self.property[$(this).attr("name")]);
+	// 		}
+	// 	});
+	// },
 
 	init_dialog: function() {
 		var self = this;
@@ -397,7 +408,8 @@ goorm.core.project.property = {
 		};
 
 		var handle_cancel = function() {
-			self.set_before();
+			// self.set_before();
+			self.fill_dialog(self.property); // jeongmin: set_before is same as fill_dialog and fill_dialog is right
 
 			self.panel.modal('hide');
 		};

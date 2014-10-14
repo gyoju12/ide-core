@@ -792,6 +792,9 @@ goorm.core.menu.action = {
 				core.module.layout.terminal.command_ready = true;
 				core.module.layout.terminal.send_command(cmd);
 				core.module.project.is_running = false;
+				$('button[action="stop"]').addClass('debug_not_active');
+				$('button[action="stop"]').attr('isdisabled','disabled');
+				$('a[action="stop"]').parent().addClass('disabled')
 			}
 		});
 

@@ -109,7 +109,7 @@ goorm.core.window.manager = {
 							// current_window = self.window[self.index - 1];
 
 							// when the editor was set to vim mode, open the editor as it was
-							if(__file.vim_mode){
+							if (__file.vim_mode) {
 								var editor = __window.editor;
 								editor.set_option({
 									"vim_mode": true,
@@ -138,14 +138,14 @@ goorm.core.window.manager = {
 					}, function() {
 						if (active_window) {
 							active_window.activate();
-						}else if(self.window.length > 0) {
+						} else if (self.window.length > 0) {
 							self.window[self.window.length - 1].activate();
 						}
 						if (maximized) {
 							self.maximize_all();
 						}
 
-						if(!editor_exist){
+						if (!editor_exist) {
 
 							$("a[action=do_undo").parent().addClass("disabled");
 							$("a[action=do_redo").parent().addClass("disabled");
@@ -498,7 +498,7 @@ goorm.core.window.manager = {
 					return this.window[this.window.length - 1];
 				}
 			},
-			
+
 			find_by_filename: function(filepath, filename) {
 				var result = null;
 
@@ -584,7 +584,7 @@ goorm.core.window.manager = {
 				for (var i = 0; i < this.window.length; i++) {
 					this.window[i].activated = false;
 				}
-
+				core.module.layout.workspace.window_manager.active_window = index;
 				this.window[index].activate();
 			},
 
@@ -1271,7 +1271,15 @@ goorm.core.window.manager = {
 						//confirm
 						//  fix needed...
 						// if(window_list[window_target_idx].is_saved && tab_list[tab_target_idx].is_saved){
+
 						if (window_list[window_target_idx].is_saved) {
+							if (self.active_window != window_target_idx) { // jeongmin: this should be first
+								if (self.active_window > window_target_idx) self.active_window--;
+								this.activate(self.active_window);
+							} else {
+								this.activate(0);
+							}
+
 							if (tab_target_idx != -1) {
 								//tab_list[tab_target_idx].is_saved=true;
 								tab_list[tab_target_idx].close();
@@ -1289,6 +1297,13 @@ goorm.core.window.manager = {
 								title: "Close...",
 
 								yes: function() {
+									if (self.active_window != window_target_idx) {
+										if (self.active_window > window_target_idx) self.active_window--;
+										this.activate(self.active_window);
+									} else {
+										this.activate(0);
+									}
+
 									window_list[window_target_idx].editor.save("close");
 								},
 								cancel: function() {},
@@ -1315,13 +1330,13 @@ goorm.core.window.manager = {
 
 						var is_maxmized = this.maximized;
 
-						$(this.window).each(function (i) {
+						$(this.window).each(function(i) {
 							// move window when workspace too small
 							// window relocation
 							if (is_maxmized) {
 								// this.move(workspace_top + (20*i), workspace_left + (20*i));
-								var top = workspace_top + (20*i);
-								var left = workspace_left + (20*i);
+								var top = workspace_top + (20 * i);
+								var left = workspace_left + (20 * i);
 								$(this.panel).parent().css('top', workspace_top, 'left', workspace_left);
 								this.top = top;
 								this.left = left;
