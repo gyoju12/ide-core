@@ -225,17 +225,7 @@ goorm.core.layout = {
 		$('#goorm-mainmenu .dropdown').on('show.bs.dropdown', function() {
 			$(core).trigger('contextmenu_all_hide');
 		});
-
-		$("#main-menu-file.dropdown").on('show.bs.dropdown', function(){
-			var current_file = core.module.layout.project_explorer.get_tree_selected_path().files;
-
-			if (goorm.core.file.decompress.check_type(current_file)) {
-				$("#main-menu-file a[action=decompress_file]").parent().removeClass('disabled');
-			}else{
-				$("#main-menu-file a[action=decompress_file]").parent().addClass('disabled');
-			}
-		})
-
+		
 		// when mainmenu dropdown, hover can open dropdown menu
 		$('#goorm-mainmenu .dropdown').hover(function(e) {
 			menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');

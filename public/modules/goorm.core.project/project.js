@@ -384,6 +384,7 @@ goorm.core.project = {
 			
 		});
 	},
+
 	send_build_cmd: function(callback) {
 		var project_path = core.status.current_project_path;
 		var project_type = core.status.current_project_type;
@@ -393,8 +394,6 @@ goorm.core.project = {
 			'project_type': project_type
 		}, callback);
 	},
-
-
 
 	// 2.0버전 API (정경욱)
 	create: function(options, callback) {
