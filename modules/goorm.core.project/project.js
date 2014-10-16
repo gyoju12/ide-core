@@ -55,7 +55,7 @@ module.exports = {
 					if (files.hasObject(project_dir)) {
 						data.err_code = 20;
 						data.message = "Same project name is exist.";
-						fs.readFile(global.__workspace + "/" + project_dir + "/goorm.manifest", 'utf-8', function(err, goorm_manifest_file) {
+						fs.readFile(global.__workspace + "/" + project_dir + "/goorm.manifest", 'utf-8', function(err, goorm_manifest_json) {
 							data.prev_project_type = JSON.parse(goorm_manifest_json).type;
 							evt.emit("project_do_new", data);
 						});
