@@ -14,6 +14,7 @@ goorm.core.debug = function() {
 	this.table_thread = null;
 	this.table_variable = null;
 	this.debug_current_project = null;
+	this.debug_current_project_type = null;
 	this.debug_terminal = null;
 	this.debug_prompt = null;
 	this.debug_endstr = null;
@@ -208,19 +209,21 @@ goorm.core.debug.prototype = {
 	},
 
 	debug_terminate: function() {
-		var plugin_manager = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type];
+		var project_type = this.debug_current_project_type;
+		var project_path = this.debug_current_project;
+		var plugin_manager = core.module.plugin_manager.plugins["goorm.plugin." + project_type];
 		this.button_inactive();
 
 		if (plugin_manager !== undefined && $("#g_window_debug").length != 0) {
 			core.module.layout.select('debug');
 			var cmd = {
 				mode: "terminate",
-				project_path: core.status.current_project_path
+				project_path: project_path
 			};
 
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+				'property': core.preference.plugins["goorm.plugin."+project_type]
 			}, function() {
 				var w = core.module.layout.workspace.window_manager.get_window('/', 'debug');
 				
@@ -368,6 +371,7 @@ goorm.core.debug.prototype = {
 		var prompt = options.prompt;
 		var endstr = options.endstr;
 		var path = core.status.current_project_path;
+		var type = core.status.current_project_type;
 		
 		if (prompt) {
 			this.debug_prompt = prompt;
@@ -377,6 +381,9 @@ goorm.core.debug.prototype = {
 		}
 		if (path) {
 			this.debug_current_project = path;
+		}
+		if (type) {
+			this.debug_current_project_type = type;
 		}
 	},
 
