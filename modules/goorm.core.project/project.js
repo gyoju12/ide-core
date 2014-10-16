@@ -22,6 +22,7 @@ var g_auth_project = require('../goorm.core.auth/auth.project');
 
 
 
+
 var check_valid_path = function(str) {
 	if (!str) return false;
 	return !(/\.\.|~|;|&|\|/.test(str));
@@ -41,7 +42,7 @@ module.exports = {
 		data.message = "Process Done";
 
 		if (query.project_type && query.project_detailed_type && query.project_author && query.project_name) { //jeongmin: remove collaboration comparison (collaboration is disappered)
-
+			
 			fs.readdir(global.__workspace + '/', function(err, files) {
 				if (err) {
 					data.err_code = 10;
@@ -123,9 +124,11 @@ module.exports = {
 					}
 				}
 			});
+			
 
+			
 
-
+			
 		} else {
 			data.err_code = 10;
 			data.message = "Invalid query";
@@ -145,23 +148,22 @@ module.exports = {
 			'project_path': query.project_path
 		}
 
+		
 
+		
 
+		
 		if (query.project_path) {
-			g_auth_project.get({
-				'project_path': query.project_path
-			}, function(prj_data) {
-				rimraf(global.__workspace + '/' + query.project_path, function(err) {
-					if (err) {
-						data.err_code = 20;
-						data.message = "Can not delete project";
-					}
+			rimraf(global.__workspace + '/' + query.project_path, function(err) {
+				if (err) {
+					data.err_code = 20;
+					data.message = "Can not delete project";
+				}
 
-					//success
-					if (evt) {
-						evt.emit("project_do_delete", data);
-					}
-				});
+				//success
+				if (evt) {
+					evt.emit("project_do_delete", data);
+				}
 			});
 		} else {
 			data.err_code = 10;
@@ -171,7 +173,7 @@ module.exports = {
 				evt.emit("project_do_delete", data);
 			}
 		}
-
+		
 	},
 
 	do_import_check: function(query, file, evt) {
@@ -315,10 +317,11 @@ module.exports = {
 										// exec(mv_command, function(err, stdout) {
 										// 	if (err) console.log(err);
 
+										
 
-
+										
 										delete_macosx();
-
+										
 
 										var revert_manifest = function() {
 											fs.writeFile(project_abs_path + "/goorm.manifest", JSON.stringify(save_project_json), {
@@ -355,7 +358,7 @@ module.exports = {
 								});
 							} else {
 
-
+								
 
 								data.err_code = 20;
 								data.message = "Cannot extract zip file";
@@ -551,7 +554,7 @@ module.exports = {
 
 		var is_empty = true;
 
-
+			
 		fs.readdir(global.__workspace + '/', function(err, files) {
 			if (!err) {
 				var evt_get_project = new EventEmitter();
@@ -606,12 +609,12 @@ module.exports = {
 				evt.emit("project_get_list", projects);
 			}
 		});
+		
 
-
-
+		
 	},
 
-
+	
 
 	set_property: function(query, evt) {
 		var data = {};
@@ -1060,7 +1063,10 @@ module.exports = {
 				if (exist_project) {
 					evt.emit('project_exist');
 				} else {
+					
+					
 					evt.emit('project_valid_success');
+					
 				}
 			} else {
 				// over limit
