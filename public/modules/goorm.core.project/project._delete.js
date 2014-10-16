@@ -20,62 +20,7 @@ goorm.core.project._delete = {
 		var self = this;
 
 		this.panel = $("#dlg_delete_project");
-
-		this.__delete_recent_project = function(delete_project_path) { // Donguk Kim : Delete Recent Project List
-			var recent_project = core.dialog.open_project.recent_project;
-			for (var i = 0; i < recent_project.length; i++) {
-				if (recent_project[i].current_project_path == delete_project_path) {
-					recent_project.remove(i);
-				}
-			}
-
-			for (var i = 0; i < recent_project.length; i++) {
-				$(".menu-open-recent-project[data=" + i + "]").css('display', 'list-item');
-				$(".menu-open-recent-project[data=" + i + "]").text(recent_project[i].current_project_path);
-			}
-
-			for (var i = recent_project.length; i < 5; i++) {
-				$(".menu-open-recent-project[data=" + i + "]").css('display', 'none');
-			}
-
-			if (recent_project.length == 0) {
-				$(".menu-open-recent-project").css('display', 'none');
-				$(".menu-open-recent-project.recent_project_empty").css('display', 'list-item');
-				$(".menu-open-recent-project.recent_project_clear").css('display', 'none');
-			} else {
-				$(".menu-open-recent-project.recent_project_empty").css('display', 'none');
-				$(".menu-open-recent-project.recent_project_clear").css('display', 'list-item');
-			}
-		}
-
-		this.__delete_recent_file = function(delete_project_path) { // Donguk Kim : Delete Recent file List
-			var recent_window = core.module.layout.workspace.window_manager.recent_window;
-			for (var i = 0; i < recent_window.length; i++) {
-				var temp_path = recent_window[i].filepath.split('/')[0];
-				
-				if (temp_path == delete_project_path) {
-					recent_window.remove(i);
-				}
-			}
-
-			for (i = 0; i < recent_window.length; i++) {
-				$(".menu-open-recent-file[data=" + i + "]").css('display', 'list-item');
-				$(".menu-open-recent-file[data=" + i + "]").text(recent_window[i].filepath + recent_window[i].filename);
-			}
-			for (i = recent_window.length; i < 5; i++) {
-				$(".menu-open-recent-file[data=" + i + "]").css('display', 'none');
-			}
-
-			if (recent_window.length === 0) {
-				$(".menu-open-recent-file").css('display', 'none');
-				$(".menu-open-recent-file.recent_file_empty").css('display', 'list-item');
-				$(".menu-open-recent-file.recent_file_clear").css('display', 'none');
-			} else {
-				$(".menu-open-recent-file.recent_file_empty").css('display', 'none');
-				$(".menu-open-recent-file.recent_file_clear").css('display', 'list-item');
-			}
-		}
-
+		
 		this.__handle_delete = function(panel) {
 			self.processing = true;
 			$(core).trigger('on_project_before_delete');
@@ -96,10 +41,7 @@ goorm.core.project._delete = {
 					
 					var received_data = data;
 					if (received_data.err_code === 0) {
-
-						self.__delete_recent_project(delete_project_path);
-						self.__delete_recent_file(delete_project_path);
-
+						
 						// var window_manager = core.module.layout.workspace.window_manager;
 						// $(window_manager.window).each(function (i) {
 						// 	if (postdata.project_path == this.project && this.storage == "goormIDE_Storage") {
