@@ -150,27 +150,6 @@ module.exports = {
 
 				});
 				
-				evt.on("project_add_db", function(project_permission_data, data, result_data) {
-					self.get_user_data(socket.id, function(user_data) {
-						data.author_id = user_data.id;
-						
-						data.use_terminal = true;
-						g_auth_project.add(data, function() {
-							
-							evt.emit("project_do_new", result_data);
-						});
-					})
-				});
-
-				//set scm config to goorm.manifest. Jeong-Min Im.
-				// evt.on('project_new_scm_setting', function(data) {
-				// 	g_scm.scm_config_set(msg, function (_data) {	//go to scm.js
-				// 		data.err_code = _data.err_code;	//give error code that occurs while set scm config to original data
-
-				// 		socket.emit("/project/new", data);	//scm config setting is done
-				// 	});
-				// });
-
 				self.get_user_data(socket.id, function(user_data) {
 					msg.user_id = user_data.id;
 					g_project.do_new(msg, evt);

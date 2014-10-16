@@ -39,18 +39,14 @@ goorm.core.project.property = {
 						case 'python':
 						case 'web':
 						case 'nodejs':
-						case 'php':
+						
 						case 'go':
 						case 'ruby':
 							$('[action="build_project"]').css('display', 'none');
 							$('[action="build_clean"]').css('display', 'none');
 							$('[action="help_about_private_url"]').show();
 							break;
-						case 'dev':
-							$('[action="build_project"]').css('display', 'none');
-							$('[action="build_clean"]').css('display', 'none');
-							$('[action="help_about_private_url"]').hide();
-							break;
+						
 						default:
 							$('[action="build_project"]').css('display', '');
 							$('[action="build_clean"]').css('display', '');

@@ -144,22 +144,7 @@ var os = {
 };
 
 module.exports = {
-	add: function(project, callback) {
-		var self = this;
-		var doc = new db.project();
-
-		for (var attr in project_fields) {
-			doc[attr] = project[attr];
-		}
-		
-		this.__remove_from_db({
-			'project_path': project.project_path
-		}, function() {
-			
-
-			
-		});
-	},
+	
 	
 	
 	
@@ -213,159 +198,16 @@ module.exports = {
 		evt.emit('del_user', evt, 0);
 	},
 	
-	get: function(option, callback) {
-		var project_path = option.project_path;
-		var author_id = option.author_id;
-		var project_name = option.project_name;
-
-		var q = {};
-
-		if (project_path) q.project_path = project_path;
-		if (author_id) q.author_id = author_id;
-		if (project_name) q.project_name = project_name;
-
-		db.project.findOne(q, function(err, data) {
-			if (err) {
-				console.log(err);
-			}
-
-			callback(data);
-		});
-	},
-
 	get_project_gid: function(option, callback) {
 		var self = this;
-
-		this.get(option, function(project_data) {
-			if (project_data) {
-				if (project_data.gid) {
-					callback(project_data.gid);
-				} else if (project_data.group_name) {
-					self.g_exec(os.get_gid(project_data.group_name), function(gid_stdout) {
-						if (gid_stdout) {
-							var gid = parseInt(gid_stdout.split(':')[2], 10);
-							callback(gid);
-						} else {
-							callback(false);
-						}
-					});
-				} else {
-					callback(false);
-				}
-			} else {
-				callback(false);
-			}
-		});
-	},
-
-	// All List
-	get_all_list: function(option, callback) {
-		db.project.find({}, function(err, data) {
-			callback(data);
-		});
-	},
-
-	// option
-	get_no_co_developers_list: function(option, callback) {
-		var user_list = option.user_list;
-		var is_in = function(list, user) {
-			var exist = false;
-
-			if (list && list.length > 0) {
-				exist = list.some(function(o) {
-					return (o.user == user);
-				});
-			}
-
-			return exist;
-		};
-
-		this.get({
-			'project_path': option.project_path
-		}, function(project_data) {
-			if (project_data && user_list) {
-				user_list = user_list.filter(function(o) {
-					var user_id_type = o.id;
-					var collaboration_list = project_data.collaboration_list;
-
-					if (is_in(collaboration_list, user_id_type)) {
-						return false;
-					} else {
-						return true;
-					}
-				});
-				callback(user_list);
-			} else {
-				callback([]);
-			}
-		});
-	},
-
-	// Owner List
-	get_owner_list: function(option, callback) {
-		var prj_data = {
-			author_id: option.author_id
-		};
-
-		db.project.find(prj_data, function(err, data) {
-			callback(data);
-		});
+		
+		
+		
 	},
 	
-	get_export_list: function(option, callback) {
-		var author_id = option.author_id;
-		var project_path = option.project_path;
-
-		if (!project_path) {
-			db.project.find({
-				'collaboration_list.user': {
-					$in: [author_id]
-				}
-			}, function(err, data) {
-				callback(data);
-			});
-		} else {
-			db.project.find({
-				'collaboration_list.user': {
-					$in: [author_id]
-				},
-				'project_path': project_path
-			}, function(err, data) {
-				callback(data);
-			});
-		}
-	},
 	
-	remove: function(option, callback) {
-		var self = this;
-		var project_path = option.project_path;
-
-		self.get({
-			'project_path': project_path
-		}, function(prj_data) {
-			if (prj_data) {
-
-				
-
-				
-
-				self.__remove_from_db({
-					'project_path': project_path
-				}, callback);
-			}
-		});
-	},
-
-	__remove_from_db: function(option, callback) {
-		db.project.remove(option, function(err) {
-			if (!err && callback) callback(true);
-			else {
-				console.log(err);
-				if (callback) callback(false);
-			}
-		});
-	},
-
+	
+	
 	add_group: function(option, callback) {
 		var self = this;
 
@@ -381,40 +223,9 @@ module.exports = {
 			// 3. user add
 
 		});
-
-		// 2-2. add group to db 
-		var set_group_data = {
-			'project_path': project_path,
-			'new_group': new_group
-		};
-
-		this.set_group(set_group_data);
+		
 	},
-
-	set_group: function(option, callback) {
-		var project_path = option.project_path;
-		var new_group = option.new_group;
-
-		db.project.update({
-			'project_path': project_path
-		}, {
-			$set: {
-				'group_name': new_group
-			}
-		}, function(err) {
-			if (err) {
-				console.log(err);
-				if (callback) callback(false);
-			} else {
-				if (callback) callback(true);
-			}
-		});
-	},
-
-	get_project_doc: function() {
-		return db.project;
-	},
-
+	
 	g_exec: function(command, callback) {
 
 		exec(command, function(err, stdout, stderr) {
@@ -498,54 +309,9 @@ module.exports = {
 		// validate manifest and fix it. Jeong-Min Im.
 		function fix_manifest() {
 			if (cur_manifest.author + '_' + cur_manifest.name != project_path) { // wrong goorm.manifest -> fix it!
-				self.get({
-					project_path: project_path
-				}, function(data) {
-					if (data) {
-						fs.readFile(global.__path + '/plugins/goorm.plugin.' + data.project_type + '/preference.json', {
-							encoding: 'utf8'
-						}, function(_err, plugins_data) {
-							if (_err) {
-								console.log('preference.json reading error in valid_manifest:', _err);
-
-								self.manifest_setting(project_path, callback);
-							} else {
-								try {
-									plugins_data = JSON.parse(plugins_data);
-
-									cur_manifest.author = data.project_author;
-									cur_manifest.type = data.project_type;
-									cur_manifest.name = data.project_name;
-									cur_manifest.date = date_string;
-									cur_manifest.plugins = {};
-									cur_manifest.plugins['goorm.plugin.' + data.project_type] = plugins_data;
-
-									fs.writeFile(global.__workspace + project_path + '/goorm.manifest', JSON.stringify(cur_manifest), {
-										encoding: 'utf8',
-										mode: 0700
-									}, function(__err) {
-										self.manifest_setting(project_path, function() {
-											if (__err) {
-												console.log('goorm.manifest writing error in valid_manifest:', __err);
-												callback();
-											} else {
-												callback(JSON.stringify(cur_manifest));
-											}
-										});
-									});
-								} catch (_e) {
-									console.log('plugin data parsing error in valid_manifest:', _e);
-
-									self.manifest_setting(project_path, callback);
-								}
-							}
-						});
-					} else {
-						console.log('get project db error');
-
-						self.manifest_setting(project_path, callback);
-					}
-				});
+				
+				
+				
 			} else { // right goorm.manifest
 				self.manifest_setting(project_path, function() {
 					callback(JSON.stringify(cur_manifest));

@@ -18,6 +18,7 @@ var spawn = require('child_process').spawn;
 
 
 var g_secure = require('../goorm.core.secure/secure.js');
+var g_auth_project = require('../goorm.core.auth/auth.project');
 
 
 
@@ -42,7 +43,7 @@ module.exports = {
 
 		if (query.project_type && query.project_detailed_type && query.project_author && query.project_name) { //jeongmin: remove collaboration comparison (collaboration is disappered)
 			
-			fs.readdir(global.__workspace + '/', function (err, files) {
+			fs.readdir(global.__workspace + '/', function(err, files) {
 				if (err) {
 					data.err_code = 10;
 					data.message = "Server can not response";
@@ -54,7 +55,7 @@ module.exports = {
 					if (files.hasObject(project_dir)) {
 						data.err_code = 20;
 						data.message = "Same project name is exist.";
-						fs.readFile(global.__workspace + "/" + project_dir + "/goorm.manifest", 'utf-8', function (err, goorm_manifest_file) {
+						fs.readFile(global.__workspace + "/" + project_dir + "/goorm.manifest", 'utf-8', function(err, goorm_manifest_file) {
 							data.prev_project_type = JSON.parse(goorm_manifest_json).type;
 							evt.emit("project_do_new", data);
 						});
@@ -160,24 +161,11 @@ module.exports = {
 					if (err) {
 						data.err_code = 20;
 						data.message = "Can not delete project";
+					}
 
-						if (evt) {
-							evt.emit("project_do_delete", data);
-						}
-					} else {
-						//success
-						g_auth_project.remove(query, function() {
-							// if (evt) {
-							// 	evt.emit("project_do_refresh_message", {
-							// 		'user_list': user_list,
-							// 		'me': me
-							// 	});
-							// }
-
-							if (evt) {
-								evt.emit("project_do_delete", data);
-							}
-						});
+					//success
+					if (evt) {
+						evt.emit("project_do_delete", data);
 					}
 				});
 			});
@@ -879,7 +867,7 @@ module.exports = {
 		//1. make file check (if not then copy it!)
 		g_auth_project.get_project_gid({
 			'project_path': query.project_path
-		}, function(gid){
+		}, function(gid) {
 			fs.exists(makefile, function(exist) {
 				if (!exist) {
 					if (query.project_type == "java" || query.project_type == "java_examples") {
@@ -892,7 +880,7 @@ module.exports = {
 				};
 			});
 		})
-		
+
 		//2. directory and main file check
 		switch (query.project_type) {
 			case "c_examples":

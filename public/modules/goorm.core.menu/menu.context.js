@@ -96,7 +96,7 @@ goorm.core.menu.context.prototype = {
 	show: function(e) {
 		var max_height = 500;
 		if (this.menu) {
-			var current_file = core.status.selected_file;
+			var current_file = $(e.target).parent().attr('path');
 			
 			$(core).trigger('contextmenu_all_hide');
 			height = this.menu.css("height") || this.menu.height();

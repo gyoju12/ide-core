@@ -248,7 +248,7 @@ module.exports = {
 				
 			});
 
-			socket.on('change_project_dir', function(msg) {
+			socket.on('change_project_dir', function(msg) {console.log('msg:', msg);
 				try { // jeongmin: try catching
 					msg = JSON.parse(msg);
 
@@ -258,9 +258,9 @@ module.exports = {
 
 					
 
-						
-					if (self.term[msg.index] && self.term[msg.index].pty) {
-						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + "\r");
+						console.log('term:', self.term[msg.index]);
+					if (self.term[msg.index] && self.term[msg.index].pty) {console.log('cmd:', "cd " + global.__workspace + msg.project_path + "\r");
+						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + "\r");console.log('emit:', "on_change_project_dir."+name);
 						socket.to().emit("on_change_project_dir."+name, msg);
 					}
 					

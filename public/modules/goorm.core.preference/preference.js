@@ -202,7 +202,6 @@ goorm.core.preference = {
 	apply: function (id) {
 		// core.module.theme.load_css();
 		this.read_dialog(core.preference);
-
 		switch (id) {
 			case 'line_wrapping':
 			case 'rulers':
@@ -214,7 +213,7 @@ goorm.core.preference = {
 		}
 
 		this.update_ui();
-
+		$(core).trigger('renew_stack');
 		core.module.layout.workspace.window_manager.resize_all();
 	},
 

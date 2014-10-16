@@ -105,58 +105,8 @@ module.exports = {
 
 		
 		var owner_roots = [];
+				
 		
-		
-		g_auth_project.get_owner_list(author, function(owner_project_data) {
-		
-			for (var i = 0; i < owner_project_data.length; i++) {
-				owner_roots.push('/' + owner_project_data[i].project_path);
-			}
-
-			if (project_path === "" && owner_roots.length != 0) {
-				var all_matched_files_list = [];
-				var count = 0;
-
-				for (var i = 0; i < owner_roots.length; i++) {
-					(function(index) {
-						var __project_path = owner_roots[index];
-						self.get_data_from_project({
-							'find_query': find_query,
-							'project_path': __project_path,
-							'folder_path': folder_path,
-							'grep_option': grep_option
-						}, function(res) {
-							count++;
-							var matched_files_list = res.data;
-
-							all_matched_files_list = all_matched_files_list.concat(matched_files_list);
-
-							if (count === owner_roots.length) {
-								nodes = parser(all_matched_files_list);
-								res.data = nodes;
-								evt.emit('file_do_search_on_project', res);
-							}
-						});
-					})(i);
-				}
-			} else if (owner_roots.indexOf(project_path) > -1) {
-				self.get_data_from_project({
-					'find_query': find_query,
-					'project_path': project_path,
-					'folder_path': folder_path,
-					'grep_option': grep_option
-				}, function(res) {
-					var matched_files_list = res.data;
-					nodes = parser(matched_files_list);
-					res.data = nodes;
-					evt.emit('file_do_search_on_project', res);
-				});
-			} else {
-				evt.emit('file_do_search_on_project', nodes);
-			}
-		});
-		
-
 		
 	},
 
