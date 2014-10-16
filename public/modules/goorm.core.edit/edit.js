@@ -120,8 +120,7 @@ goorm.core.edit.prototype = {
         });
 
         //cannot edit codeMirror before successfully loaded --heeje
-        this.editor.setOption('readOnly', true);
-
+        
         self.font_manager.init(this);
 
         //for assistant authentic, also filepath
@@ -308,8 +307,15 @@ goorm.core.edit.prototype = {
             var window_manager = core.module.layout.workspace.window_manager;
             var my_idx = self.get_editor_idx(self.filepath + self.filename);
             if (self.init_change && my_idx != -1) {
-                window_manager.window[my_idx].set_modified();
-                window_manager.tab[my_idx].set_modified();
+                if (e.origin || self.special_pressed) { // jeongmin: no problem
+                    window_manager.window[my_idx].set_modified();
+                    window_manager.tab[my_idx].set_modified();
+                } else { // jeongmin: change event is occurred before keydown, so wait for coming keydown event
+                    $(core).one('undo_redo_pressed', function(e, data) { // data: undo or redo
+                        window_manager.window[my_idx].set_modified(data);
+                        window_manager.tab[my_idx].set_modified();
+                    });
+                }
             } else {
                 self.init_change = true;
             }
@@ -319,17 +325,6 @@ goorm.core.edit.prototype = {
             // jeongmin: remove searching highlight
             if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) // jeongmin: if doing find and replace, don't remove
                 CodeMirror.commands.clearSearch(self.editor);
-        });
-        // cancel undefined change (e.g. undo, redo). -> codemirror's undo, redo shortcut doesn't work properly! So, cancel it. Jeong-Min Im.
-        cm_editor.on('beforeChange', function(cm, change) {
-            // if (!change.origin && self.special_pressed) { // jeongmin: only if special key is pressed
-            //     //console.log("false operation occured");
-            //     self.collaboration.cmAdapter.ignoreNextChange = true;
-            //     change.cancel();
-            //     self.collaboration.cmAdapter.ignoreNextChange = false;
-            // }
-
-            // self.special_pressed = false; // jeongmin: initialize
         });
 
         cm_editor.on("cursorActivity", function() {
@@ -414,6 +409,8 @@ goorm.core.edit.prototype = {
         __target.on('keydown', function(e) {
             var only = !self.editor.somethingSelected();
             var comment_shortcut = $('[id="preference.shortcut.edit.comment_selected"]').attr('value'); // jeongmin: in case of custom shortcut
+            var undo_shortcut = $('[id="preference.shortcut.edit.undo"]').attr('value'); // jeongmin: in case of custom shortcut
+            var redo_shortcut = $('[id="preference.shortcut.edit.redo"]').attr('value'); // jeongmin: in case of custom shortcut
             var shortcut_manager = core.module.shortcut_manager;
             var key_string = shortcut_manager.make_shortcut_input(e); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
 
@@ -430,10 +427,23 @@ goorm.core.edit.prototype = {
             }
 
             if (key_string == comment_shortcut) { // jeongmin: comment_shortcut must not be canceled at beforeChange even if it has special key
-                self.special_pressed = false;
-            } else if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) { // jeongmin: used at beforeChange event
-                //console.log("ctrl pressed");
                 self.special_pressed = true;
+            } else if (key_string == undo_shortcut) { // jeongmin: used at beforeChange event
+                //console.log("ctrl pressed");
+                self.special_pressed = false;
+
+                $(core).trigger('undo_redo_pressed', { // jeongmin: got at change event
+                    undo: true,
+                    redo: false
+                });
+            } else if (key_string == redo_shortcut) { // jeongmin: used at beforeChange event
+                //console.log("ctrl pressed");
+                self.special_pressed = false;
+
+                $(core).trigger('undo_redo_pressed', { // jeongmin: got at change event
+                    undo: false,
+                    redo: true
+                });
             } else {
                 //console.log("press false");
                 self.special_pressed = false;
@@ -1169,20 +1179,16 @@ goorm.core.edit.prototype = {
     //     }
     // },
 
-    undo: function() {
-        this.collaboration.cmAdapter.ignoreNextChange = true;
-        //console.log("mungmung");
-        this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
-        this.editor.focus();
-        this.collaboration.cmAdapter.ignoreNextChange = false;
-    },
+    // undo: function() {
+    //     //console.log("mungmung");
+    //     this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
+    //     this.editor.focus();
+    // },
 
-    redo: function() {
-        this.collaboration.cmAdapter.ignoreNextChange = true;
-        this.editor.doc.redo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually redo.
-        this.editor.focus();
-        this.collaboration.cmAdapter.ignoreNextChange = false;
-    },
+    // redo: function() {
+    //     this.editor.doc.redo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually redo.
+    //     this.editor.focus();
+    // },
 
     cut: function() {
         // this.copy();
