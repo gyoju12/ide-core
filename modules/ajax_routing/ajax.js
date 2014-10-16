@@ -240,7 +240,12 @@ module.exports = {
 			socket.on('/project/get_property', function(msg) {
 				var evt = new EventEmitter();
 				evt.on("get_property", function(data) {
-					
+					if (data.contents) {
+						
+						
+						socket.emit("/project/get_property", data);
+						
+					} else {}
 					// socket.emit("/project/get_property", data);  :emit twice, so removed
 				});
 
@@ -872,20 +877,20 @@ module.exports = {
 			
 
 			//context ...
-			socket.on('/file/get_property', function (msg) {
+			socket.on('/file/get_property', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_get_property", function (data) {
+				evt.on("file_get_property", function(data) {
 					socket.emit("/file/get_property", data);
 				});
 
 				g_file.get_property(msg, evt);
 			});
 
-			socket.on('/file/search_on_project', function (msg) {
+			socket.on('/file/search_on_project', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_search_on_project", function (data) {
+				evt.on("file_do_search_on_project", function(data) {
 					socket.emit("/file/search_on_project", data);
 				});
 
@@ -897,10 +902,10 @@ module.exports = {
 			});
 
 			// check file or folder exists. Jeong-Min Im.
-			socket.on('/file/exist', function (msg) {
+			socket.on('/file/exist', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on('file_check_exist', function (data) {
+				evt.on('file_check_exist', function(data) {
 					socket.emit('/file/exist', data);
 				});
 
@@ -908,11 +913,11 @@ module.exports = {
 			});
 
 			//cannot
-			socket.on('/file/copy_file_paste', function (msg) {});
+			socket.on('/file/copy_file_paste', function(msg) {});
 			//cannot
-			socket.on('/file/get_file', function (msg) {});
+			socket.on('/file/get_file', function(msg) {});
 			//cannot
-			socket.on('/file/import', function (msg) {});
+			socket.on('/file/import', function(msg) {});
 			//cannot
 			socket.on('/file/export', function(msg) {});
 
@@ -1441,12 +1446,14 @@ module.exports = {
 			} else {
 				store.get(sessionID, function(err, user) {
 					try {
-						var user_data = user.auth.password.user;
+						var user_data = null;
 
+						if (user && user.auth && user.auth.password) {
+							user_data = user.auth.password.user;
+						}
 						if (user_data) {
 							user_data.result = true;
 							callback(user_data);
-
 						} else {
 							callback({
 								'result': false
