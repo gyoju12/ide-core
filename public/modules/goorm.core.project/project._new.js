@@ -74,19 +74,18 @@ goorm.core.project._new = {
 					$ok_btn.hide();
 					$("#g_np_btn_ok_import").show();
 
-					if($("#new_project_import.active.in").length>0){
+					if ($("#new_project_import.active.in").length > 0) {
 						// clear user input
 						$("#new_project_import .input_import_project_name").val("");
 						$("#new_project_import .input_import_project_desc").val("");
 						$("#new_project_import .project_import_file").val("");
-					}
-					else{
+					} else {
 						////// after shown import tab, make project type list. Jeong-Min Im. //////
 						$(this).one('shown.bs.tab', function() {
 							_import.show(self.panel);
-						});	
+						});
 					}
-					
+
 				});
 
 				//three tabs' common works. Value validation check and communication with server. Jeong-Min Im.
@@ -431,7 +430,7 @@ goorm.core.project._new = {
 
 	},
 
-	show: function(callback) { //jeongmin: this callback is setting scrollTop
+	show: function(option, callback) { //jeongmin: this callback is setting scrollTop
 		var self = this;
 		//for init
 		this.callback = callback; //jeongmin: update callback variable
@@ -458,7 +457,7 @@ goorm.core.project._new = {
 		$("#g_np_btn_ok_template").hide();
 		// $("#project_new_import_div").hide();
 
-		this.dialog.set_start();
+		this.dialog.set_start(option);
 
 		$("#dlg_new_project").modal('show');
 		this.set_keydown_event();
@@ -468,33 +467,33 @@ goorm.core.project._new = {
 
 	},
 
-	set_keydown_event: function() {				
+	set_keydown_event: function() {
 		var project_types = $("#project_new").find("div[class='wizard_step'] .project_types");
 		var project_items = $("#project_new").find("div[class='wizard_step'] .project_items");
 
-		$("#dlg_new_project").on('shown.bs.modal', function (e){
+		$("#dlg_new_project").on('shown.bs.modal', function(e) {
 			$("#project_new").find("div[class='wizard_step'] .project_types").find(".active").click().trigger('focus');
 		});
-		
-		
+
+
 		$("#project_new").find(".nav").off("keydown");
 		$("#project_new").find(".nav").keydown(function(e) {
-			var current_selected_tab_anchor = $(":focus");			
+			var current_selected_tab_anchor = $(":focus");
 			var project_last_tab_anchor = $('#project_new div[class="wizard_step"] .dialog_tabview .nav-tabs li:last a');
 			var current_selected_types = project_types.find(".active");
 
-			if(current_selected_tab_anchor == null) return;
+			if (current_selected_tab_anchor == null) return;
 
 			switch (e.which) {
 				case 9: // tab key
 					// when press tab key, focusing move to project types										
-					if(current_selected_tab_anchor.is(project_last_tab_anchor)) {
+					if (current_selected_tab_anchor.is(project_last_tab_anchor)) {
 						current_selected_types.click();
 						e.preventDefault();
 					}
 					break;
-			}			
-		});	
+			}
+		});
 
 		//$("#project_new").find(".dialog_left_inner").bind("click mousedown", function(e){
 		// $(project_types).bind("click", function(e){
@@ -512,21 +511,20 @@ goorm.core.project._new = {
 				case 9: // tab key
 					// when press tab key, focusing move to project items
 					var project_type_name_class = "." + current_selected_types.attr("project_type");
-					if(current_selected_item.is(project_type_name_class)) {
+					if (current_selected_item.is(project_type_name_class)) {
 						current_selected_item.click();
-					}
-					else {
+					} else {
 						// if (current_selected_types.next().length) {
 						// 	current_selected_types.next().click().focus();
 						// } else{
 						// 	$(".project_types").children().first().click().focus();
 						// }
 						// } else {
-							project_items.find(project_type_name_class)[0].click();
-							$("#project_new").find(".project_items").focus();	
+						project_items.find(project_type_name_class)[0].click();
+						$("#project_new").find(".project_items").focus();
 						// }				
-						
-					}					
+
+					}
 					break;
 				case 38: // up key
 					if (current_selected_types.length) {

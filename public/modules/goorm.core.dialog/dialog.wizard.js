@@ -8,12 +8,12 @@
  * version: 2.0.0
  **/
 
-goorm.core.dialog.wizard = function () {
+goorm.core.dialog.wizard = function() {
 
 };
 
 goorm.core.dialog.wizard.prototype = {
-	init: function (option) {
+	init: function(option) {
 		var self = this;
 
 		this.step = 1;
@@ -21,19 +21,19 @@ goorm.core.dialog.wizard.prototype = {
 		this.id = option.id;
 		this.previous = option.previous;
 		this.next = option.next;
-		this.show = option.show;	//jeongmin: define show function
-		this.success = option.success;	//jeongmin: forward success function
+		this.show = option.show; //jeongmin: define show function
+		this.success = option.success; //jeongmin: forward success function
 
-		var goorm_dialog_container = $("#"+self.id);
+		var goorm_dialog_container = $("#" + self.id);
 
 
-		var handle_next = function () {
+		var handle_next = function() {
 			if (!self.next()) {
 				return false;
 			}
 
 
-			if (self.step < self.total_step) {				
+			if (self.step < self.total_step) {
 				self.show_previous_button(true);
 
 				goorm_dialog_container.find(".wizard_step[step='" + self.step + "']").hide();
@@ -47,8 +47,8 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		};
 
-		var handle_prev = function () {
-			if(self.previous)
+		var handle_prev = function() {
+			if (self.previous)
 				self.previous();
 
 			if (1 < self.step) {
@@ -64,7 +64,7 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		};
 
-		goorm_dialog_container.on("shown.bs.modal", this.show);	//jeongmin: when the modal has been made visible to the user, specify this (go to project._new.js)
+		goorm_dialog_container.on("shown.bs.modal", this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._new.js)
 
 		// move to Center 	//jeongmin: done at dialog.js
 		//
@@ -86,7 +86,7 @@ goorm.core.dialog.wizard.prototype = {
 		// 	}, 200); // fade animation: 0.15s -> 150
 		// });
 
-		$(document).on('keydown', 'return', function (e) {
+		$(document).on('keydown', 'return', function(e) {
 			if (confirmation.panel === null || confirmation.panel === undefined) {
 				confirmation.panel = {};
 				confirmation.panel.cfg = {};
@@ -96,9 +96,9 @@ goorm.core.dialog.wizard.prototype = {
 			}
 
 			if (self.buttons && self.panel.cfg.config.visible.value && !core.status.keydown && !alert.panel.cfg.config.visible.value && !notice.panel.cfg.config.visible.value && !confirmation.panel.cfg.config.visible.value) {
-				$(self.buttons).each(function (i) {
+				$(self.buttons).each(function(i) {
 					if (this.isDefault) {
-						this.hide = function () {};
+						this.hide = function() {};
 						this.handler();
 
 						core.status.keydown = true;
@@ -109,17 +109,17 @@ goorm.core.dialog.wizard.prototype = {
 
 
 
-			if (typeof self.success == "function")
-				self.success();
+		if (typeof self.success == "function")
+			self.success();
 
 
-			var __buttons = $("#" + this.id).find('.modal-footer button');
-			__buttons[0].onclick = handle_prev;
-			__buttons[1].onclick = handle_next;
-			__buttons[2].onclick = option.handle_cancel;
-			__buttons[3].onclick = option.handle_ok;
+		var __buttons = $("#" + this.id).find('.modal-footer button');
+		__buttons[0].onclick = handle_prev;
+		__buttons[1].onclick = handle_next;
+		__buttons[2].onclick = option.handle_cancel;
+		__buttons[3].onclick = option.handle_ok;
 
-			core.dialog.loaded_count++;
+		core.dialog.loaded_count++;
 
 
 		self.show_previous_button(false);
@@ -127,34 +127,37 @@ goorm.core.dialog.wizard.prototype = {
 		return this;
 	},
 
-	show_previous_button: function (show) {
+	show_previous_button: function(show) {
 		/* TODO : this part need to be changed way for modifying class */
 		if (show) {
-			$("#g_np_btn_previous").show();	//jeongmin: show previous button
+			$("#g_np_btn_previous").show(); //jeongmin: show previous button
 		} else {
-			$("#g_np_btn_previous").hide();	//jeongmin: hide previous button
+			$("#g_np_btn_previous").hide(); //jeongmin: hide previous button
 		}
 	},
 
-	show_next_button: function (show) {
+	show_next_button: function(show) {
 		if (show) {
-			$("#g_np_btn_next").show();	//jeongmin: show next button
+			$("#g_np_btn_next").show(); //jeongmin: show next button
 		} else {
-			$("#g_np_btn_next").hide();	//jeongmin: hide next button
+			$("#g_np_btn_next").hide(); //jeongmin: hide next button
 		}
 	},
 
-	set_start: function () {
+	set_start: function(option) { // option: showing buttons or not
 		var self = this;
 		self.step = 1;
-		$("#" + self.id).find(".wizard_step").each(function (i) {
+		$("#" + self.id).find(".wizard_step").each(function(i) {
 			$(this).hide();
 			if (i === 0) {
 				$(this).show();
 			}
 		});
+
+		var next_button = option ? ((option.next_button != undefined) ? option.next_button : true) : true;
+
 		self.show_previous_button(false);
-		self.show_next_button(true);
+		self.show_next_button(next_button);
 	}
 
 };

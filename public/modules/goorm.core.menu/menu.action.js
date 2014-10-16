@@ -38,7 +38,9 @@ goorm.core.menu.action = {
 		$("[action=new_project_import]").click(function() {
 			$("a[href='#new_project_import']").click();
 
-			core.dialog.new_project.show();
+			core.dialog.new_project.show({
+				next_button: false
+			});
 			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
@@ -793,7 +795,7 @@ goorm.core.menu.action = {
 				core.module.layout.terminal.send_command(cmd);
 				core.module.project.is_running = false;
 				$('button[action="stop"]').addClass('debug_not_active');
-				$('button[action="stop"]').attr('isdisabled','disabled');
+				$('button[action="stop"]').attr('isdisabled', 'disabled');
 				$('a[action="stop"]').parent().addClass('disabled')
 			}
 		});
