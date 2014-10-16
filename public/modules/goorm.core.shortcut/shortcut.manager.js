@@ -940,38 +940,38 @@ goorm.core.shortcut.manager = {
 		//Main Menu : Edit
 
 		//Undo (Ctrl+Z)
-		if (this.hotkeys.do_undo) {
-			// this.hotkeys_fn.do_undo = function(e) {
-			// 	if (self.prevent($('a[action="do_undo"]').get(0))) {
-			// 		return false;
-			// 	}
+		// if (this.hotkeys.do_undo) {
+		// 	this.hotkeys_fn.do_undo = function(e) {
+		// 		if (self.prevent($('a[action="do_undo"]').get(0))) {
+		// 			return false;
+		// 		}
 
-			// 	$("a[action=do_undo]").click();
+		// 		$("a[action=do_undo]").click();
 
-			// 	e.stopPropagation();
-			// 	e.preventDefault();
-			// 	return false;
-			// };
+		// 		e.stopPropagation();
+		// 		e.preventDefault();
+		// 		return false;
+		// 	};
 
-			// doc_obj.bind('keydown.' + this.make_namespace('do_undo', this.hotkeys.do_undo), this.hotkeys.do_undo, this.hotkeys_fn.do_undo);
-		}
+		// 	doc_obj.bind('keydown.' + this.make_namespace('do_undo', this.hotkeys.do_undo), this.hotkeys.do_undo, this.hotkeys_fn.do_undo);
+		// }
 
-		//Redo (CTRL+Y)
-		if (this.hotkeys.do_redo) {
-			// this.hotkeys_fn.do_redo = function(e) {
-			// 	if (self.prevent($('a[action="do_redo"]').get(0))) {
-			// 		return false;
-			// 	}
+		// //Redo (CTRL+Y)
+		// if (this.hotkeys.do_redo) {
+		// 	this.hotkeys_fn.do_redo = function(e) {
+		// 		if (self.prevent($('a[action="do_redo"]').get(0))) {
+		// 			return false;
+		// 		}
 
-			// 	$("a[action=do_redo]").click();
+		// 		$("a[action=do_redo]").click();
 
-			// 	e.stopPropagation();
-			// 	e.preventDefault();
-			// 	return false;
-			// };
+		// 		e.stopPropagation();
+		// 		e.preventDefault();
+		// 		return false;
+		// 	};
 
-			// doc_obj.bind('keydown.' + this.make_namespace('do_redo', this.hotkeys.do_redo), this.hotkeys.do_redo, this.hotkeys_fn.do_redo);
-		}
+		// 	doc_obj.bind('keydown.' + this.make_namespace('do_redo', this.hotkeys.do_redo), this.hotkeys.do_redo, this.hotkeys_fn.do_redo);
+		// }
 
 		//jeongmin: these keys will be handled by browser
 		//Cut (CTRL+X)

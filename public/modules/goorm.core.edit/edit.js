@@ -1179,16 +1179,18 @@ goorm.core.edit.prototype = {
     //     }
     // },
 
-    // undo: function() {
-    //     //console.log("mungmung");
-    //     this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
-    //     this.editor.focus();
-    // },
+    undo: function() {
+        //console.log("mungmung");
+        // this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
+        this.editor.undo(); // jeongmin: just do codemirror undo
+        this.editor.focus();
+    },
 
-    // redo: function() {
-    //     this.editor.doc.redo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually redo.
-    //     this.editor.focus();
-    // },
+    redo: function() {
+        // this.editor.doc.redo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually redo.
+        this.editor.redo(); // jeongmin: just do codemirror redo
+        this.editor.focus();
+    },
 
     cut: function() {
         // this.copy();

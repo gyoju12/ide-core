@@ -38,6 +38,12 @@ goorm.core.window.panel = function() {
 	this.undo_depth = 0; // to remember undo. remove '*' sign when save and modify.
 	this.done = null;
 	this.options = null;
+
+	this.history_edit = {
+		undo: 0,
+		redo: 0,
+		undone: 0
+	};
 };
 
 goorm.core.window.panel.prototype = {
@@ -57,11 +63,11 @@ goorm.core.window.panel.prototype = {
 
 		// this.container = container;
 		this.workspace = $("#workspace");
-		
+
 		if (filetype === "" || filetype == "etc") {
 			filetype = "txt";
-		} else if(filetype == "merge") {
-			core.module.layout.outline.clear();	
+		} else if (filetype == "merge") {
+			core.module.layout.outline.clear();
 		}
 
 		////////////////////////
@@ -99,8 +105,8 @@ goorm.core.window.panel.prototype = {
 		var y = 10;
 
 		//var previous_window = window_manager.window[target_active_window];
-		
-		var previous_window = window_manager.window[window_manager.window.length-1];
+
+		var previous_window = window_manager.window[window_manager.window.length - 1];
 
 
 		if (options.left !== undefined) {
@@ -111,20 +117,22 @@ goorm.core.window.panel.prototype = {
 
 			//		x = previous_window.parent().offset().left - workspace_offset.left + 30;
 			//		y = previous_window.parent().offset().top - workspace_offset.top + 30;
-			var flag=1, cnt=0;
-			var temp_x=x;
-			while(flag) {
-				flag=0; cnt++;
+			var flag = 1,
+				cnt = 0;
+			var temp_x = x;
+			while (flag) {
+				flag = 0;
+				cnt++;
 				$.each(window_manager.window, function(index, value) {
-					if(value.left==temp_x) {
-						flag=1;
+					if (value.left == temp_x) {
+						flag = 1;
 						return false;
 					}
 				});
-				if(flag) temp_x+=20;
-				if(cnt>window_manager.window.length) break;
+				if (flag) temp_x += 20;
+				if (cnt > window_manager.window.length) break;
 			}
-			x=temp_x;
+			x = temp_x;
 			// if (options.maximized == true)
 
 			// 	//x = previous_window.left;
@@ -142,20 +150,22 @@ goorm.core.window.panel.prototype = {
 
 			//		x = previous_window.parent().offset().left - workspace_offset.left + 30;
 			//		y = previous_window.parent().offset().top - workspace_offset.top + 30;
-			var flag=1, cnt=0;
-			var temp_y=y;
-			while(flag) {
-				flag=0; cnt++;
+			var flag = 1,
+				cnt = 0;
+			var temp_y = y;
+			while (flag) {
+				flag = 0;
+				cnt++;
 				$.each(window_manager.window, function(index, value) {
-					if(value.top==temp_y) {
-						flag=1;
+					if (value.top == temp_y) {
+						flag = 1;
 						return false;
 					}
 				});
-				if(flag) temp_y+=20;
-				if(cnt>window_manager.window.length) break;
+				if (flag) temp_y += 20;
+				if (cnt > window_manager.window.length) break;
 			}
-			y=temp_y;
+			y = temp_y;
 			// if (options.maximized == true)
 			// 	//y = previous_window.top;
 			// 	y=temp_y;
@@ -389,6 +399,10 @@ goorm.core.window.panel.prototype = {
 					menu_undo.addClass('disabled');
 					$("<table class='disconnected'><tr><td><img src='images/goorm.core.window/disconnected.png' /><br />Goorm is trying to reconnect the server.<br />But we recommend you to refresh this page.</td></tr></table>").appendTo(self.panel.parent()).css('display', 'none');
 					self.is_loaded = true;
+
+					self.history_edit.undo = 0;
+					self.history_edit.redo = 0;
+					self.history_edit.undone = 0;
 				},
 				beforeClose: function(evnet, ui) {
 					if (self.is_saved) {
@@ -630,18 +644,62 @@ goorm.core.window.panel.prototype = {
 			$('.disconnected').css('display', 'table');
 		},
 
-		set_modified: function() {
+		set_modified: function(data) {
 			var self = this;
 			var titlebar = this.panel.dialog("option", "title");
 
 			// when all modified undo, remove '*'
 			if (this.editor) {
-				if (this.undo_depth != null && this.editor.editor.doc.historySize().undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
-					if (this.editor.editor.doc.historySize().redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
+				if (data) { // jeongmin: undo and redo event are occurred, so set history
+					if (data.undo) { // jeongmin: undo occurs
+						this.history_edit.redo++; // jeongmin: now, can redo
+						this.history_edit.undone += 2;
+
+						if (this.history_edit.undo != 0) { // jeongmin: prevent to be minus
+							this.history_edit.undo--;
+						}
+					} else { // jeongmin: redo occurs
+						if (this.history_edit.redo != 0) { // jeongmin: prevent to be minus
+							this.history_edit.redo--;
+						}
+
+						if (this.history_edit.undone != 0) { // jeongmin: prevent to be minus
+							this.history_edit.undone--;
+						}
+
+						this.history_edit.undo++; // jeongmin: now, can undo
+					}
+				} else { // jeongmin: just modified
+					this.history_edit.undo++;
+					this.history_edit.redo = 0;
+					this.history_edit.undone = 0;
+				}
+
+				var menu_undo = $(".menu-undo[action=do_undo]").parent();
+				var menu_redo = $(".menu-redo[action=do_redo]").parent();
+
+				if (this.history_edit.redo > 0) {
+					menu_redo.removeClass('disabled');
+				} else if (this.history_edit.redo <= 0) {
+					menu_redo.addClass('disabled');
+				}
+
+				if (this.history_edit.undo > 0) {
+					menu_undo.removeClass('disabled');
+				} else if (this.history_edit.undo <= 0) {
+					menu_undo.addClass('disabled');
+				}
+
+				if (this.undo_depth != null && this.history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
+					if (this.history_edit.redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
 						this.set_saved();
+						this.tab.set_saved();
+						this.tab.saved = true; // jeongmin: let tab know saved
 						return;
-					} else if (this.editor.editor.doc.history.undone.length != 0) { // jeongmin: modified by redo -> undone array is not 0 because if redo is possible, there is undone text
+					} else if (this.history_edit.undone != 0) { // jeongmin: modified by redo -> undone array is not 0 because if redo is possible, there is undone text
 						this.set_saved();
+						this.tab.set_saved();
+						this.tab.saved = true; // jeongmin: let tab know saved
 						return;
 					} else
 						this.undo_depth = null; // jeongmin: if not in above any conditions, modified by new text -> undo_depth must be initialized. It means saved status no longer exists.
@@ -669,7 +727,7 @@ goorm.core.window.panel.prototype = {
 
 			// when user modified editor and saved, it removes '*' sign window, tab.
 			if (this.editor)
-				this.undo_depth = this.editor.editor.doc.historySize().undo;
+				this.undo_depth = this.history_edit.undo || this.undo_depth; // jeongmin: getStack can be undefined at first
 
 			this.panel.siblings('.ui-dialog-titlebar').find('.title_option').remove(); // jeongmin: remove title_option
 
@@ -928,8 +986,8 @@ goorm.core.window.panel.prototype = {
 
 			this.activated = true;
 
-			if(this.filetype == "merge") {
-				core.module.layout.outline.clear();	
+			if (this.filetype == "merge") {
+				core.module.layout.outline.clear();
 			}
 		},
 

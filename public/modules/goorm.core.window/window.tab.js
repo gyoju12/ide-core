@@ -221,40 +221,13 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_modified: function() {
+		if(this.saved) {	// jeongmin: it is saved by panel, so don't modify
+			return;
+		}
+		
 		var self = this;
 
 		var morphed_title = this.title.split("/").join("_").split(".").join("_");
-
-		var menu_undo = $(".menu-undo[action=do_undo]").parent();
-		var menu_redo = $(".menu-redo[action=do_redo]").parent();
-
-		if (this.window.editor) {
-			var history_edit = this.window.editor.editor.doc.historySize();
-
-			if (history_edit.redo > 0) {
-				menu_redo.removeClass('disabled');
-			} else if (history_edit.redo <= 0) {
-				menu_redo.addClass('disabled');
-			}
-
-			if (history_edit.undo > 0) {
-				menu_undo.removeClass('disabled');
-			} else if (history_edit.undo <= 0) {
-				menu_undo.addClass('disabled');
-			}
-
-			if (this.undo_depth != null && history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
-				if (history_edit.redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
-					this.set_saved();
-					return;
-				} else if (this.window.editor.editor.doc.history.undone.length != 0) { // jeongmin: modified by redo -> undone array is not 0 because if redo is possible, there is undone text
-					this.set_saved();
-					return;
-				} else {
-					this.undo_depth = null; // jeongmin: if not in above any conditions, modified by new text -> undo_depth must be initialized. It means saved status no longer exists.
-				}
-			}
-		}
 
 		$("#" + this.tab_list_id).find('.tab_option').html("✶");
 
@@ -295,10 +268,6 @@ goorm.core.window.tab.prototype = {
 		// this.resize_title();
 
 		this.is_saved = true;
-
-		// when user modified editor and saved, it removes '*' sign window, tab.
-		if (this.window.editor)
-			this.undo_depth = this.window.editor.editor.doc.historySize().undo;
 	},
 
 	connect: function(window) {
