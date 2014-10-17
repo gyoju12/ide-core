@@ -2449,11 +2449,11 @@ Terminal.prototype.resize = function(x, y) {
   this.cols = x;
 
   // resize rows
-  while(this.lines[this.lines.length - 1].getLength() <= 0 && this.lines.length > 0) {
+  while(this.lines.length > 0 && this.lines[this.lines.length - 1].getLength() <= 0 ) {
     this.lines.pop();
   }
  
-  while (this.lines.length < y + this.ybase) {
+  while (this.lines.length < y + this.y + this.ybase) {
     this.lines.push(this.blankLine());
   }
 
@@ -2757,8 +2757,14 @@ Terminal.prototype.eraseInDisplay = function(params) {
       }
       break;
     case 2:
+      while(this.lines.length > this.rows)
+        this.lines.pop();
+      this.ybase = 0;
+      this.ydisp = 0;
+
       j = this.rows;
       while (j--) this.eraseLine(j);
+
       break;
     case 3:
       ; // no saved lines
