@@ -676,7 +676,7 @@ module.exports = {
 							
 							
 							exec('chmod 770 ' + global.__workspace + '/' + path);
-							
+
 							evt.emit("file_do_save_as", data);
 							
 						}

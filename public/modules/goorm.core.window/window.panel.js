@@ -648,15 +648,23 @@ goorm.core.window.panel.prototype = {
 			var self = this;
 			var titlebar = this.panel.dialog("option", "title");
 
+			var ot_stack = this.editor.collaboration.getStack();
+
 			// when all modified undo, remove '*'
 			if (this.editor) {
 				if (data) { // jeongmin: undo and redo event are occurred, so set history
 					if (data.undo) { // jeongmin: undo occurs
-						this.history_edit.redo++; // jeongmin: now, can redo
-						this.history_edit.undone += 2;
+						if (ot_stack.undo == this.undo_depth) { // jeongmin: sync with real ot's history
+							this.history_edit.undo = ot_stack.undo;
+							this.history_edit.redo = ot_stack.redo;
+							this.history_edit.undone = ot_stack.redo * 2;
+						} else { // jeongmin: no need to sync
+							this.history_edit.redo++; // jeongmin: now, can redo
+							this.history_edit.undone += 2;
 
-						if (this.history_edit.undo != 0) { // jeongmin: prevent to be minus
-							this.history_edit.undo--;
+							if (this.history_edit.undo != 0) { // jeongmin: prevent to be minus
+								this.history_edit.undo--;
+							}
 						}
 					} else { // jeongmin: redo occurs
 						if (this.history_edit.redo != 0) { // jeongmin: prevent to be minus

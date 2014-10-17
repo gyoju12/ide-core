@@ -16,12 +16,12 @@ goorm.core.file.save_as = {
 	is_save_anyway: false,
 	contents_data: null,
 
-	init: function () {
+	init: function() {
 		var self = this;
 
 		this.panel = $("#dlg_save_as_file");
 
-		self.handle_save = function () {
+		self.handle_save = function() {
 			var file_data = self.dialog_explorer.get_data();
 			if (file_data.path === "" || file_data.name === "") {
 				alert.show(core.module.localization.msg.alert_filename_empty);
@@ -38,8 +38,8 @@ goorm.core.file.save_as = {
 			};
 
 			//$.get("file/save_as", postdata, function (data) {
-			core.socket.once("/file/save_as", function(data){
-				var w_save = core.module.layout.workspace.window_manager.find_by_filename(file_data.path+'/', file_data.name);
+			core.socket.once("/file/save_as", function(data) {
+				var w_save = core.module.layout.workspace.window_manager.find_by_filename(file_data.path + '/', file_data.name);
 
 				if (data.err_code == 99) {
 					confirmation.init({
@@ -47,7 +47,7 @@ goorm.core.file.save_as = {
 						yes_text: core.module.localization.msg.confirmation_yes,
 						no_text: core.module.localization.msg.confirmation_no,
 						title: "Confirmation",
-						yes: function () {
+						yes: function() {
 							self.is_save_anyway = true;
 							self.handle_save();
 						},
@@ -57,7 +57,7 @@ goorm.core.file.save_as = {
 					confirmation.show();
 				} else if (data.err_code === 0) {
 
-					if(w_save){
+					if (w_save) {
 						w_save.close();
 						w_save.tab.close();
 					}
@@ -83,17 +83,17 @@ goorm.core.file.save_as = {
 		this.dialog.init({
 			// localization_key: "title_save_as",
 			id: "dlg_save_as_file",
-			handle_ok : self.handle_save,
+			handle_ok: self.handle_save,
 			success: null,
 			show: $.proxy(this.after_show, this)
 		});
-		
+
 
 		this.dialog_explorer = new goorm.core.dialog.explorer("#file_save_as", this);
 		this.bind();
 	},
 
-	show: function () {
+	show: function() {
 		this.contents_data = "";
 		this.is_save_anyway = false;
 
@@ -113,49 +113,49 @@ goorm.core.file.save_as = {
 		$("#file_save_as_target_name").val(window_manager.window[window_manager.active_window].filename);
 	},
 
-	after_show: function(){
+	after_show: function() {
 
 		//fix of duplicating problem --heeje
 		var window_manager = core.module.layout.workspace.window_manager;
-		var path_arr=window_manager.window[window_manager.active_window].title.split("/");
+		var path_arr = window_manager.window[window_manager.active_window].title.split("/");
 		path_arr.pop();
-		console.log($('#file_save_as_dir_tree li[path="'+path_arr.join("/").trim()+'"]').attr('id'));
-		$('#file_save_as_dir_tree').jstree("select_node", $('#file_save_as_dir_tree li[path="'+path_arr.join("/").trim()+'"]').attr('id'));
+		console.log($('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
+		$('#file_save_as_dir_tree').jstree("select_node", $('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
 	},
 
-	bind: function(){
+	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
 
 		// when enter 'enter' key, dialog OK.
-		this.panel.keydown(function (e) {
+		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
-				case 13: 	// 'enter' key
+				case 13: // 'enter' key
 					$("#g_saf_btn_ok").click();
 					break;
 			}
 		});
 
 		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_save_as_dir_tree").keydown(function (e) {
+		$("#file_save_as_dir_tree").keydown(function(e) {
 			switch (e.keyCode) {
-				case 9: 	// 'tab' key
+				case 9: // 'tab' key
 					$(files).find("div")[0].click();
 					return false;
 			}
 		});
 
-		$(files).on("click", "div.file_item", function(){
+		$(files).on("click", "div.file_item", function() {
 			$("#file_save_as_target_name").val($(this).attr("filename"));
 			self.filename = $(this).attr("filename");
 			self.filetype = $(this).attr("filetype");
 			self.filepath = $(this).attr("filepath");
-		}).on("dblclick", "div.file_item", function(){
+		}).on("dblclick", "div.file_item", function() {
 			self.handle_save();
 			core.dialog.open_file.panel.modal('hide');
 		});;
 
-		$(files).on("click", "div.folder_item", function(){
+		$(files).on("click", "div.folder_item", function() {
 			$("#file_save_as_target_name").val("");
 			self.filename = "";
 			self.filetype = "";
