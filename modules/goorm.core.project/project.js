@@ -859,24 +859,20 @@ module.exports = {
 		var source_file = g_secure.command_filter(source_path + query.class_name);
 		var makefile = g_secure.command_filter(__workspace + query.project_path + "/make");
 		var uid = query.uid;
+		
+		
+		fs.exists(makefile, function(exist) {
+			if (!exist) {
+				if (query.project_type == "java" || query.project_type == "java_examples") {
+					exec("cp " + global.__path + '/plugins/goorm.plugin.java/template/make ' + __workspace + query.project_path);
+				} else if (query.project_type == "c_examples" || query.project_type == "cpp") {
+					exec("cp " + global.__path + '/plugins/goorm.plugin.cpp/template/cpp/make ' + __workspace + query.project_path);
+				}
 
-		//1. make file check (if not then copy it!)
-		g_auth_project.get_project_gid({
-			'project_path': query.project_path
-		}, function(gid) {
-			fs.exists(makefile, function(exist) {
-				if (!exist) {
-					if (query.project_type == "java" || query.project_type == "java_examples") {
-						exec("cp " + global.__path + '/plugins/goorm.plugin.java/template/make ' + __workspace + query.project_path);
-					} else if (query.project_type == "c_examples" || query.project_type == "cpp") {
-						exec("cp " + global.__path + '/plugins/goorm.plugin.cpp/template/cpp/make ' + __workspace + query.project_path);
-					}
-
-					exec('chown ' + uid + ':' + gid + ' ' + __workspace + query.project_path + '/make;' + 'chmod 770 ' + __workspace + query.project_path + '/make');
-				};
-			});
-		})
-
+				exec('chmod 770 ' + __workspace + query.project_path + '/make');
+			};
+		});
+		
 		//2. directory and main file check
 		switch (query.project_type) {
 			case "c_examples":

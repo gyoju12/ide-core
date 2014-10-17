@@ -198,13 +198,6 @@ module.exports = {
 		evt.emit('del_user', evt, 0);
 	},
 	
-	get_project_gid: function(option, callback) {
-		var self = this;
-		
-		
-		
-	},
-	
 	
 	
 	

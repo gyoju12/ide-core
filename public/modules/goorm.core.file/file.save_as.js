@@ -32,6 +32,7 @@ goorm.core.file.save_as = {
 			var postdata = {
 				save_anyway: self.is_save_anyway,
 				path: file_data.path + '/' + file_data.name,
+				
 				type: file_data.type,
 				data: self.contents_data
 			};

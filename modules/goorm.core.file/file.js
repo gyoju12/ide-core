@@ -673,10 +673,12 @@ module.exports = {
 
 							evt.emit("file_do_save_as", data);
 						} else {
-							g_auth_project.get_project_gid(query.project_path, function(gid) {
-								exec('chmod 770 ' + global.__workspace + '/' + path + '; chown ' + query.uid + ':' + gid + ' ' + global.__workspace + '/' + path);
-								evt.emit("file_do_save_as", data);
-							})
+							
+							
+							exec('chmod 770 ' + global.__workspace + '/' + path);
+							
+							evt.emit("file_do_save_as", data);
+							
 						}
 					});
 				}
