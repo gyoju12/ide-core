@@ -2449,10 +2449,8 @@ Terminal.prototype.resize = function(x, y) {
   this.cols = x;
 
   // resize rows
-  if(this.lines.length > 0){ 
-    while(this.lines[this.lines.length - 1].getLength() <= 0) {
-      this.lines.pop();
-   }
+  while(this.lines[this.lines.length - 1].getLength() <= 0 && this.lines.length > 0) {
+    this.lines.pop();
   }
  
   while (this.lines.length < y + this.ybase) {

@@ -25,7 +25,7 @@ goorm.core.edit.bookmark = {
 		$(core).on("bookmark_hover", function() {
 			self.remove(); //first, remove all bookmarks from main menu
 
-			if (self.window_manager.active_window != -1 && self.window_manager.window[self.window_manager.active_window].editor) { //only when current active window and its editor is valid
+			if (self.window_manager.active_window != -1 && self.window_manager.window[self.window_manager.active_window] && self.window_manager.window[self.window_manager.active_window].editor) { //only when current active window and its editor is valid
 				self.active_editor = self.window_manager.window[self.window_manager.active_window].editor; //current active window's editor
 				self.target = self.active_editor.target; //active window's id
 
@@ -101,7 +101,7 @@ goorm.core.edit.bookmark = {
 
 	//toggle bookmark. Jeong-Min Im.
 	toggle: function(new_bookmark_line) { // line that we want to set bookmark
-		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window].editor) { //only when current active window and its editor is valid
+		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) { //only when current active window and its editor is valid
 			var is_added = true; // jeongmin: whether bookmark will be added or not
 
 			this.active_editor = this.window_manager.window[this.window_manager.active_window].editor; //get current active window's editor

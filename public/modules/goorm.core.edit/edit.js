@@ -102,6 +102,11 @@ goorm.core.edit.prototype = {
 
         //this.fold_func = CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder);
         
+        //add new ruler option for codemirror
+        CodeMirror.defineOption("rulers", false, function() {
+
+        });
+        
         this.editor = CodeMirror.fromTextArea($(target).find(".code_editor")[0], {
             /* CODEMIRROR 3.x IMPLEMENT */
             gutters: ["exception_error", "breakpoint", "bookmark", "CodeMirror-linenumbers", "fold"],
@@ -292,6 +297,7 @@ goorm.core.edit.prototype = {
 
             self.scroll_top = scroll_top;
             
+            self.resize_rulers();
 
         }, 200));
 
@@ -643,6 +649,44 @@ goorm.core.edit.prototype = {
         }
     },
     
+    clear_rulers: function() {
+        $(this.target).find(".CodeMirror-ruler").remove();
+    },
+
+    make_rulers: function() {
+        var char_width = this.editor.defaultCharWidth();
+        var tab_size = this.editor.options.tabSize;
+        var tab_width = char_width * tab_size;
+        var code_width = $(this.target).find(".CodeMirror-code").width();
+        var left = this.editor.charCoords(CodeMirror.Pos(this.editor.firstLine(), 0), "div").left;
+
+        for (var i = 0; i < code_width / tab_width; i++) {
+            var elt = document.createElement("div");
+
+            elt.className = "CodeMirror-ruler";
+            elt.style.cssText = "left: " + (left + i * tab_width) + "px; top: -5px;";
+            this.editor.display.lineSpace.insertBefore(elt, this.editor.display.cursorDiv);
+        }
+        this.resize_rulers();
+    },
+
+    refresh_rulers: function() {
+        this.clear_rulers();
+        this.make_rulers();
+    },
+
+    resize_rulers: function() {
+        var code_height = $(this.target).find(".CodeMirror-code").height() + 3;
+        var window_height = $(this.target).height() - 2;
+        var ruler = $(this.target).find(".CodeMirror-ruler");
+
+        if (code_height > window_height) {
+            ruler.height(parseInt(code_height));
+        } else {
+            ruler.height(parseInt(window_height));
+        }
+    },
+    
     set_option: function(options) {
         var self = this;
         options = options || {};
@@ -658,7 +702,7 @@ goorm.core.edit.prototype = {
         this.theme = (options.theme) ? options.theme : this.preference["preference.editor.theme"];
         this.vim_mode = (options.vim_mode) ? options.vim_mode : false;
         this.line_wrapping = (options.line_wrapping) ? options.line_wrapping : this.preference["preference.editor.line_wrapping"];
-        
+        this.rulers = (options.rulers) ? options.rulers : this.preference["preference.editor.rulers"];
         this.scroll_top = (options.scroll_top) ? options.scroll_top : this.scroll_top; // jeongmin: if scroll_top is null, just maintain it. Don't set as 0.
         this.shortcut_theme = (options.shortcut_theme) ? options.shortcut_theme : this.preference["preference.shortcut.theme"]; // jeongmin: set codemirror keymap as theme
         this.readonly = (options.readonly) ? options.readonly : false;
@@ -1361,6 +1405,12 @@ goorm.core.edit.prototype = {
 
         if (self.highlighted_line)
             this.highlight_line(self.highlighted_line);
+        
+        if (this.preference["preference.editor.rulers"] === "true" || this.preference["preference.editor.rulers"] === true) {
+            this.refresh_rulers();
+        } else {
+            this.clear_rulers();
+        }
         
         //editor cursor and effect sync
         this.editor.refresh();

@@ -67,6 +67,19 @@ goorm.core.preference = {
 			$('#use_line_wrapping').css('visibility', 'hidden');
 		}
 		
+		var v = core.preference['preference.editor.rulers'];
+
+		if (v === true || v === 'true') {
+			v = true;
+		} else {
+			v = false;
+		}
+
+		if (v) {
+			$('#use_rulers').css('visibility', 'visible');
+		} else {
+			$('#use_rulers').css('visibility', 'hidden');
+		}
 		// } else {
 		// this.manager.get_default_file("configs/preferences/default.json", function (json) {
 		// 	self.preference = json;
@@ -183,6 +196,11 @@ goorm.core.preference = {
 			if (key === "share") {
 
 			} else {
+				if (key === "preference.editor.rulers") {
+					if (value === true || value === 'true')
+						$('#use_rulers').css('visibility', 'visible');
+					else $('#use_rulers').css('visibility', 'hidden');
+				}
 				
 				if (key === "preference.editor.line_wrapping") {
 					if (value == true || value === 'true')
