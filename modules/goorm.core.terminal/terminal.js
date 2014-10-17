@@ -83,7 +83,7 @@ module.exports = {
 					};
 
 					term_index = randomStringfunc(27) + (new Date()).getTime(); //index++; jeongmin: new terminal is created, list++
-	
+
 						
 
 					var bashrc = global.__path + 'configs/bash.bashrc'
@@ -103,7 +103,9 @@ module.exports = {
 					};
 
 					self.term[term_index].pty.on('exit', function() {
-						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited."+msg.terminal_name, {index:msg.index});
+						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+							index: msg.index
+						});
 					});
 
 
@@ -125,8 +127,8 @@ module.exports = {
 					self.exec(self.term[term_index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
 
 					socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
-					socket.to().emit("terminal_index."+name, JSON.stringify(data));
-					socket.to().emit("platform."+name, JSON.stringify({
+					socket.to().emit("terminal_index." + name, JSON.stringify(data));
+					socket.to().emit("platform." + name, JSON.stringify({
 						"platform": platform
 					}));
 					
@@ -178,7 +180,7 @@ module.exports = {
 						var export_path = global.__temp_dir + 'bin/';
 
 						self.term[msg.index] = {
-							pty: pty.spawn('bash', split(' '), {
+							pty: pty.spawn('bash', command.split(' '), {
 								name: 'xterm-color',
 								cols: parseInt(msg.cols, 10),
 								rows: 30,
@@ -189,7 +191,9 @@ module.exports = {
 							terminal_name: msg.terminal_name
 						};
 						self.term[msg.index].pty.on('exit', function() {
-							io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited."+msg.terminal_name, {index:msg.index});
+							io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+								index: msg.index
+							});
 						});
 
 
@@ -205,7 +209,9 @@ module.exports = {
 						self.exec(self.term[msg.index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
 
 						socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
-						socket.to().emit('terminal_refresh_complete.'+name, {index:msg.index});
+						socket.to().emit('terminal_refresh_complete.' + name, {
+							index: msg.index
+						});
 					}
 					
 				} catch (e) {
@@ -248,7 +254,7 @@ module.exports = {
 				
 			});
 
-			socket.on('change_project_dir', function(msg) {console.log('msg:', msg);
+			socket.on('change_project_dir', function(msg) {
 				try { // jeongmin: try catching
 					msg = JSON.parse(msg);
 
@@ -258,10 +264,10 @@ module.exports = {
 
 					
 
-						console.log('term:', self.term[msg.index]);
-					if (self.term[msg.index] && self.term[msg.index].pty) {console.log('cmd:', "cd " + global.__workspace + msg.project_path + "\r");
-						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + "\r");console.log('emit:', "on_change_project_dir."+name);
-						socket.to().emit("on_change_project_dir."+name, msg);
+						
+					if (self.term[msg.index] && self.term[msg.index].pty) {
+						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + ";clear\r");
+						socket.to().emit("on_change_project_dir." + name, msg);
 					}
 					
 				} catch (e) {
@@ -288,14 +294,14 @@ module.exports = {
 	
 
 	
-	
+
 	_cpu_limit: function(pid, percent) {
-		if(!pid) return ;
-		if(!percent) percent = 5;
+		if (!pid) return;
+		if (!percent) percent = 5;
 		var child = spawn('cpulimit', ['-l', percent, '-i', '-p', pid]);
-		child.on('error', function (data) {
-		    console.log('Failed to start cpulimit.');
+		child.on('error', function(data) {
+			console.log('Failed to start cpulimit.');
 		});
 	}
-	
+
 };

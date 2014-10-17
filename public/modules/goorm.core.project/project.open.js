@@ -130,11 +130,13 @@ goorm.core.project.open = {
 			core.module.layout.project_explorer.refresh_project_selectbox();
 
 			
-/*			if(use_terminal !== false){
+			
+			if (use_terminal !== false) {
 				core.module.terminal.terminal.refresh_terminal();
 				core.module.layout.terminal.refresh_terminal();
 			}
-*/			core.module.layout.workspace.window_manager.refresh_all_title();
+			
+			core.module.layout.workspace.window_manager.refresh_all_title();
 
 			$(core).trigger("on_project_open", {
 				'project_path': current_project_path,
