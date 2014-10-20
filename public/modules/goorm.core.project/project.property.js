@@ -39,14 +39,14 @@ goorm.core.project.property = {
 						case 'python':
 						case 'web':
 						case 'nodejs':
-						
+							
 						case 'go':
 						case 'ruby':
 							$('[action="build_project"]').css('display', 'none');
 							$('[action="build_clean"]').css('display', 'none');
 							$('[action="help_about_private_url"]').show();
 							break;
-						
+							
 						default:
 							$('[action="build_project"]').css('display', '');
 							$('[action="build_clean"]').css('display', '');
@@ -274,6 +274,7 @@ goorm.core.project.property = {
 				} else { // jeongmin: radio or checkbox are needed to uncheck
 					$(this).iCheck("uncheck");
 				}
+				
 			});
 			target_index.find("textarea").each(function() {
 				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {

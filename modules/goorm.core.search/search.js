@@ -31,9 +31,9 @@ module.exports = {
 
 		var nodes = {};
 
-		var make_grep_option = function (options) {
+		var make_grep_option = function(options) {
 			var grep = ["-r", "-n", "-R"];
-			var is_true = function (str) {
+			var is_true = function(str) {
 				var r = false;
 				if (str && (str === true || str === 'true')) r = true;
 
@@ -47,17 +47,17 @@ module.exports = {
 			if (!is_true(options.match_case))
 				grep.push("-i");
 
-			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']);	// jeongmin: in spawn, exclude item should be separated
+			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']); // jeongmin: in spawn, exclude item should be separated
 
 			return grep;
 		}
 
-		var parser = function (matched_files_list) {
+		var parser = function(matched_files_list) {
 			var nodes = {};
 			if (matched_files_list.length != 0) {
 				var idx = 0;
 				var node = {};
-				nodes.total_match=0;
+				nodes.total_match = 0;
 				for (idx = 0; idx < matched_files_list.length; idx++) {
 					if (matched_files_list[idx].split(":").length > 1) {
 						node = {};
@@ -103,11 +103,11 @@ module.exports = {
 		//
 		grep_option = make_grep_option(grep_option);
 
-		
+
 		var owner_roots = [];
 				
 		
-		g_project.get_list(null, null, function (owner_project_data) {
+		g_project.get_list(null, null, function(owner_project_data) {
 			for (var i = 0; i < owner_project_data.length; i++) {
 				owner_roots.push('/' + owner_project_data[i].name);
 			}
@@ -135,7 +135,8 @@ module.exports = {
 								res.data = nodes;
 								evt.emit('file_do_search_on_project', res);
 							}
-						});F.auth_add_user()
+						});
+						F.auth_add_user()
 					})(i);
 				}
 			} else if (owner_roots.indexOf(project_path) > -1) {
@@ -184,7 +185,7 @@ module.exports = {
 
 		// grep_option = g_secure.command_filter(grep_option);
 
-		var get_matched_files_list = function (stdout) {
+		var get_matched_files_list = function(stdout) {
 			var matched_files_list = [];
 
 			if (stdout) {
@@ -206,13 +207,13 @@ module.exports = {
 					_stdout = '',
 					_stderr = '';
 
-				command.stdout.on('data', function (data) {
+				command.stdout.on('data', function(data) {
 					_stdout += data;
 				});
-				command.stderr.on('data', function (data) {
+				command.stderr.on('data', function(data) {
 					_stderr += data;
 				});
-				command.on('close', function (code) {
+				command.on('close', function(code) {
 					var res = {};
 					var matched_files_list = [];
 
@@ -228,8 +229,7 @@ module.exports = {
 
 						if (matched_files_list && matched_files_list.length > 0) {
 							res.error = "Max buffer exceeded.";
-						}
-						else {
+						} else {
 							res.error = "Cannot find a word";
 						}
 

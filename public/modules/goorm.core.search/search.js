@@ -180,12 +180,9 @@ goorm.core.search = {
 		this.match_case = $("#search_match_case").hasClass("active");
 		this.use_regexp = $("#search_use_regexp").hasClass("active");
 		this.ignore_whitespace = $("#search_ignore_whitespace").hasClass("active");
-
-		if (options) {
-			search_path = options.search_path;
-			keyword = options.keyword;
-		} else {
-			if ($("#search_path_input").css('display') != 'none') {
+		
+		
+		if ($("#search_path_input").css('display') != 'none') {
 				search_path = $("#search_path_input").text();
 			} else {
 				search_path = $("#search_project_selectbox option:selected").attr("value");
@@ -197,9 +194,8 @@ goorm.core.search = {
 			if (!keyword) {
 				alert.show(core.module.localization.msg.alert_input_search_keyword);
 				return;
-			}				
-		}
-
+			}
+		
 		this.current_options = {
 			keyword: keyword,
 			search_path: search_path,
