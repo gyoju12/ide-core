@@ -14,12 +14,7 @@ goorm.core.project.build = function(cmd, options, callback) {
 		callback = options;
 		options = null;
 	}
-
-	//check history and alter it to current status --heeje
-	if(core.module.layout.history.selected_snapshot){
-		$("#history .history_header").click();
-	}
-
+	
 	//save current project files before save --heeje
 	var wm = core.module.layout.workspace.window_manager;
 	var current = core.status.current_project_path;
@@ -35,9 +30,9 @@ goorm.core.project.build = function(cmd, options, callback) {
 	}
 
 	if (project_window && project_window.length > 0) {
-		for(var i = 0; i < project_window.length; i++) {
-			
-			if(i === project_window.length - 1) {
+		for (var i = 0; i < project_window.length; i++) {
+
+			if (i === project_window.length - 1) {
 				//send a build message and call the callback of building project --heeje
 				project_window[i].editor.save("build", function() {
 					core.module.layout.terminal.send_command(cmd + '\r', options, function(result) {
@@ -45,22 +40,20 @@ goorm.core.project.build = function(cmd, options, callback) {
 						if (callback && typeof(callback) === 'function') {
 							callback(result);
 						}
-						
+
 					});
-				}); 
-			}
-			else project_window[i].editor.save();
+				});
+			} else project_window[i].editor.save();
 
 			// project_window[i].set_saved();
 		}
-	}
-	else {
-		core.module.layout.terminal.send_command(cmd + '\r', options, function (result) {
+	} else {
+		core.module.layout.terminal.send_command(cmd + '\r', options, function(result) {
 			core.module.layout.terminal.flush_command_queue();
 			if (callback && typeof(callback) === 'function') {
 				callback(result);
 			}
-		
+
 		});
 	}
 };

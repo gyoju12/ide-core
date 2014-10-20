@@ -14,8 +14,8 @@ goorm.core.project = {
 	is_running: false,
 
 	load_build: function(options, callback) {
-		
-		if(this.is_building) return;
+
+		if (this.is_building) return;
 		else {
 			this.is_building = true;
 		}
@@ -38,111 +38,102 @@ goorm.core.project = {
 		if (!check) check = null;
 
 		//define is_latest_build if not being --heeje
-		if(typeof(project_data.is_latest_build) === "undefined")
+		if (typeof(project_data.is_latest_build) === "undefined")
 			project_data.is_latest_build = false;
 
 		if (check) {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + project_type] !== undefined) {
-				$.get("/project/check_running_project", {},
-					function(data) {
-						var build = null;
-						var query = null;
+				
+				
+				var build = null;
+				var query = null;
 
-						if (data && data.result === 0) {
-							if (property) {
-								if(project_type != 'edu'){
-									property = property["goorm.plugin." + project_type];
+				if (property) {
+					if (project_type != 'edu') {
+						property = property["goorm.plugin." + project_type];
 
-									//query: project_path, project_type, class_name, source_path --heeje
-									query = {
-										project_path: options.project_path,
-										project_type: options.project_type,
-										class_name: property["plugin." + options.project_type + ".main"],
-										source_path: property["plugin." + options.project_type + ".source_path"],
-										sid: core.socket.socket.sessionid
-									};
-								}else{
-									query = {
-										project_path: options.project_path,
-										project_type: options.project_type,
-										sid: core.socket.socket.sessionid
-									};
-								}
-								//build
-								build = function() {
-									if (core.module.plugin_manager.plugins["goorm.plugin." + project_type].build) {
-										core.module.plugin_manager.plugins["goorm.plugin." + project_type].build({
-											'project_path': project_path,
-											'property': property,
-											'detailed_type': project_data.detailedtype
-										}, function(build_result) {
-											$.get('project/set_bin', { // jeongmin: change bin's group permission
-												project_path: project_path
-											}, function(build_result) {
-												if(build_result){
-													//save latest build status on the goorm.manifest --heeje
-													project_data.is_latest_build = true;
-													core.module.project.property.save_property(project_path, project_data, callback);
-
-												} else {
-													if (callback && typeof(callback) == "function")
-														callback();
-												}
-
-												self.is_building = false;
-											});
-										});
-									}	
-								};
-
-								switch(options.project_type) {
-									case "java":
-									case "java_examples":
-									case "c_examples":
-									case "cpp":
-										// $.get("project/check_valid_property", query, function(data){
-										// 	if(data && data.result) {
-										// 		build();
-										// 	} else {
-										// 		//error
-										// 		if (data.code == 1) {
-										// 			alert.show(core.module.localization.msg.check_property_source);
-										// 		} else if (data.code == 2) {
-										// 			alert.show(core.module.localization.msg.check_property_main);
-										// 		}
-										// 	}
-										// });
-										socket.once('/project/check_valid_property', function (data) {
-											if(data && data.result) {
-												build();
-											} else {
-												//error
-												if (data.code == 1) {
-													alert.show(core.module.localization.msg.check_property_source);
-												} else if (data.code == 2) {
-													alert.show(core.module.localization.msg.check_property_main);
-												}
-
-												self.is_building = false;
-											}
-										});
-										socket.emit('/project/check_valid_property', query);
-
-										break;
-									default:
-										build();
-										break;
-								}
-							}
-						} else {
-							var result = {
-								result: false,
-								code: 7
-							};
-							core.module.project.display_error_message(result, 'alert');
-						}
+						//query: project_path, project_type, class_name, source_path --heeje
+						query = {
+							project_path: options.project_path,
+							project_type: options.project_type,
+							class_name: property["plugin." + options.project_type + ".main"],
+							source_path: property["plugin." + options.project_type + ".source_path"],
+							sid: core.socket.socket.sessionid
+						};
+					} else {
+						query = {
+							project_path: options.project_path,
+							project_type: options.project_type,
+							sid: core.socket.socket.sessionid
+						};
 					}
-				);
+					//build
+					build = function() {
+						if (core.module.plugin_manager.plugins["goorm.plugin." + project_type].build) {
+							core.module.plugin_manager.plugins["goorm.plugin." + project_type].build({
+								'project_path': project_path,
+								'property': property,
+								'detailed_type': project_data.detailedtype
+							}, function(build_result) {
+								$.get('project/set_bin', { // jeongmin: change bin's group permission
+									project_path: project_path
+								}, function(build_result) {
+									if (build_result) {
+										//save latest build status on the goorm.manifest --heeje
+										project_data.is_latest_build = true;
+										core.module.project.property.save_property(project_path, project_data, callback);
+
+									} else {
+										if (callback && typeof(callback) == "function")
+											callback();
+									}
+
+									self.is_building = false;
+								});
+							});
+						}
+					};
+
+					switch (options.project_type) {
+						case "java":
+						case "java_examples":
+						case "c_examples":
+						case "cpp":
+							// $.get("project/check_valid_property", query, function(data){
+							// 	if(data && data.result) {
+							// 		build();
+							// 	} else {
+							// 		//error
+							// 		if (data.code == 1) {
+							// 			alert.show(core.module.localization.msg.check_property_source);
+							// 		} else if (data.code == 2) {
+							// 			alert.show(core.module.localization.msg.check_property_main);
+							// 		}
+							// 	}
+							// });
+							socket.once('/project/check_valid_property', function(data) {
+								if (data && data.result) {
+									build();
+								} else {
+									//error
+									if (data.code == 1) {
+										alert.show(core.module.localization.msg.check_property_source);
+									} else if (data.code == 2) {
+										alert.show(core.module.localization.msg.check_property_main);
+									}
+
+									self.is_building = false;
+								}
+							});
+							socket.emit('/project/check_valid_property', query);
+
+							break;
+						default:
+							build();
+							break;
+					}
+				}
+				
 			}
 		} else {
 
@@ -150,7 +141,7 @@ goorm.core.project = {
 				property = property["goorm.plugin." + project_type];
 
 				//build
-				if(core.module.plugin_manager.plugins["goorm.plugin." + project_type].build) {
+				if (core.module.plugin_manager.plugins["goorm.plugin." + project_type].build) {
 					core.module.plugin_manager.plugins["goorm.plugin." + project_type].build({
 						'project_path': project_path,
 						'property': property,
@@ -159,7 +150,7 @@ goorm.core.project = {
 						$.get('project/set_bin', { // jeongmin: change bin's group permission
 							project_path: project_path
 						}, function(build_result) {
-							if(build_result){
+							if (build_result) {
 								//save latest build status on the goorm.manifest --heeje
 								project_data.is_latest_build = true;
 								core.module.project.property.save_property(project_path, project_data, callback);
@@ -229,10 +220,9 @@ goorm.core.project = {
 				
 
 				
-			} else if(core.status.current_project_type == 'edu'){
+			} else if (core.status.current_project_type == 'edu') {
 				self.send_run_cmd();
-			}
-			else {
+			} else {
 				var result = {
 					result: false,
 					code: 0
@@ -325,9 +315,9 @@ goorm.core.project = {
 		var build_main = p["plugin." + core.status.current_project_type + ".main"];
 
 		//language fix -- java -will have to be changed to switch-case if languages using this function are bigger --heeje
-		if(type && (type == "java" || type == "java_examples"))
+		if (type && (type == "java" || type == "java_examples"))
 			build_main += ".class";
-		
+
 		is_build_fail = is_build_fail || false;
 
 		$.get("project/check_latest_build", {
@@ -337,7 +327,7 @@ goorm.core.project = {
 			if (data) {
 				//depreciated function --heeje
 				//if (data.result && (latest || (data.path.indexOf(build_path + p["plugin." + core.status.current_project_type + ".main"]) > -1))) {
-				if(data.result && latest) {
+				if (data.result && latest) {
 					self.send_run_cmd();
 				} else {
 					if (is_build_fail)
@@ -371,17 +361,14 @@ goorm.core.project = {
 		//for stop button
 		this.is_running = true;
 		$('button[action="stop"]').removeClass('debug_not_active');
-		$('button[action="stop"]').removeAttr('isdisabled','disabled');
-		$('a[action="stop"]').parent().removeClass('disabled')
-		//check history and alter it to current status --heeje
-		if (core.module.layout.history.selected_snapshot)
-			$("#history .history_header").click();
-
+		$('button[action="stop"]').removeAttr('isdisabled', 'disabled');
+		$('a[action="stop"]').parent().removeClass('disabled');
+		
 		core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type].run({
 			path: core.status.current_project_path,
 			property: core.property.plugins["goorm.plugin." + core.status.current_project_type]
-		}, function(){
-			
+		}, function() {
+
 		});
 	},
 
@@ -449,7 +436,7 @@ goorm.core.project = {
 			$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + options.type + "'><img src='" + options.img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + options.name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + options.description + "</p></a>");
 
 			// Project New 오른쪽에 새 Project Button 추가
-			for (var i = 0; i < options.items.length; i++){
+			for (var i = 0; i < options.items.length; i++) {
 				options.items[i].name = options.items[i].name || "";
 				options.items[i].description = options.items[i].description || "";
 				$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + options.type + " thumbnail' description='" + options.items[i].description + "' localization_key='" + localization + options.items[i].key + ".description'  project_type='" + options.type + "' plugin_name='goorm.plugin." + options.type + "' detail_type='" + options.items[i].detail_type + "'><img src='" + options.items[i].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + options.items[i].key + ".name'>" + options.items[i].name + "</p></div></div>");

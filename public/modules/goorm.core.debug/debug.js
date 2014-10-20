@@ -4,7 +4,7 @@
  * http://www.goorm.io/intro/License
  * email : contact@goorm.io
  *       : sungtae.ryu@goorm.io
- * project_name : goormIDE 
+ * project_name : goormIDE
  * version: 2.0.0
  **/
 
@@ -33,7 +33,7 @@ goorm.core.debug.prototype = {
 		this.table_thread = $('#debug_left_table').dataTable({
 			"aaData": [],
 			"aoColumns": [{
-				"sTitle":'<span localization_key="number">No</span>' 
+				"sTitle": '<span localization_key="number">No</span>'
 			}, {
 				"sTitle": '<span localization_key="thread">Thread</span>'
 			}],
@@ -84,9 +84,9 @@ goorm.core.debug.prototype = {
 
 		this.resize();
 
-		$(core).one('goorm_login_complete',function(){
-			core.module.localization.local_apply('#debug_left span','dict');
-			core.module.localization.local_apply('#debug_tab_center span','dict');
+		$(core).one('goorm_login_complete', function() {
+			core.module.localization.local_apply('#debug_left span', 'dict');
+			core.module.localization.local_apply('#debug_tab_center span', 'dict');
 		});
 	},
 
@@ -123,7 +123,7 @@ goorm.core.debug.prototype = {
 	debug_start: function(is_build_fail) {
 
 		//check whether project is open --heeje
-		if(!core.property || !core.status.current_project_type || core.status.current_project_type == "") {
+		if (!core.property || !core.status.current_project_type || core.status.current_project_type == "") {
 			alert.show(core.module.localization.msg.alert_cannot_project_run);
 			return false;
 		}
@@ -137,7 +137,7 @@ goorm.core.debug.prototype = {
 		var build_main = p["plugin." + core.status.current_project_type + ".main"];
 		var latest = core.workspace[core.status.current_project_path].is_latest_build;
 
-		if(project_type && (project_type == "java" || project_type == "java_examples"))
+		if (project_type && (project_type == "java" || project_type == "java_examples"))
 			build_main += ".class";
 
 		switch (project_type) {
@@ -148,17 +148,17 @@ goorm.core.debug.prototype = {
 			case 'java_examples': // jeongmin
 			case 'jsp':
 				break;
-			default: 
+			default:
 				this.button_active();
 				core.module.layout.select('debug');
 				core.module.layout.terminal.status = 'debug';
 				plugin_manager.debug({
 					'path': project_path,
-					'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+					'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 				});
 				return;
 		}
-		
+
 		//latest build checking --heeje
 		is_build_fail = is_build_fail || false;
 		if (plugin_manager && plugin_manager.debug) {
@@ -169,28 +169,31 @@ goorm.core.debug.prototype = {
 				if (data) {
 					if (data.result && latest) {
 						self.button_active();
+						//useonly(mode=dev,edu-on-promise,book,edu,product)
 						//check history and alter it to current status --heeje
-						if(core.module.layout.history.selected_snapshot)
+						if (core.module.layout.history.selected_snapshot)
 							$("#history .history_header").click();
-		
+						//useonlyend
 						core.module.layout.select('debug');
 						core.module.layout.terminal.status = 'debug';
 						plugin_manager.debug({
 							'path': project_path,
-							'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+							'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 						});
-					} else{
+					} else {
 
 						self.button_inactive();
-						if(is_build_fail)
+						if (is_build_fail)
 							return;
 						confirmation.init({
 							title: core.module.localization.msg.confirmation_not_latest_build,
 							message: core.module.localization.msg.confirmation_not_latest_build_debug,
 							yes_text: core.module.localization.msg.confirmation_build_and_debug,
-							no_text: core.module.localization.msg.confirmation_cancel, 
+							no_text: core.module.localization.msg.confirmation_cancel,
 							yes: function() {
-								goorm.core.project.send_build_cmd(function(){self.debug_start(true);});
+								goorm.core.project.send_build_cmd(function() {
+									self.debug_start(true);
+								});
 							},
 							no: function() {}
 						});
@@ -198,7 +201,7 @@ goorm.core.debug.prototype = {
 					}
 				}
 			});
-			
+
 		} else {
 			var result = {
 				result: false,
@@ -223,12 +226,12 @@ goorm.core.debug.prototype = {
 
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.preference.plugins["goorm.plugin."+project_type]
+				'property': core.preference.plugins["goorm.plugin." + project_type]
 			}, function() {
 				var w = core.module.layout.workspace.window_manager.get_window('/', 'debug');
-				
+
 				//prevent error when close debug tab clicking 'X' button on window
-				if(w && w.index > -1) {
+				if (w && w.index > -1) {
 					var idx = w.index;
 					core.module.layout.workspace.window_manager.close_by_index(idx, idx);
 				}
@@ -254,7 +257,7 @@ goorm.core.debug.prototype = {
 			};
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+				'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 			});
 		} else {
 			var result = {
@@ -277,7 +280,7 @@ goorm.core.debug.prototype = {
 			};
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+				'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 			});
 		} else {
 			var result = {
@@ -299,7 +302,7 @@ goorm.core.debug.prototype = {
 			};
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+				'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 			});
 		} else {
 			var result = {
@@ -320,7 +323,7 @@ goorm.core.debug.prototype = {
 			};
 			plugin_manager.debug_cmd({
 				'cmd': cmd,
-				'property': core.property.plugins["goorm.plugin."+core.status.current_project_type]
+				'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
 			});
 		} else {
 			var result = {
@@ -343,7 +346,7 @@ goorm.core.debug.prototype = {
 		none_debug_state_btn2.addClass('debug_not_active');
 
 		debug_state_btn1.parent().parent().removeAttr("isdisabled");
-		none_debug_state_btn1.parent().parent().attr("isdisabled","disabled");
+		none_debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
 	},
 
 	button_inactive: function() {
@@ -357,22 +360,22 @@ goorm.core.debug.prototype = {
 		debug_state_btn2.addClass('debug_not_active');
 		none_debug_state_btn2.removeClass('debug_not_active');
 
-		debug_state_btn1.parent().parent().attr("isdisabled","disabled");
+		debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
 		none_debug_state_btn1.parent().parent().removeAttr("isdisabled");
 	},
 
 
 	/* Debug Table API */
-	debug_terminal_open: function () {
+	debug_terminal_open: function() {
 		this.debug_terminal = core.module.layout.workspace.window_manager.open("/", "debug", "terminal", "Terminal").terminal;
 	},
 
-	debug_setting: function (options) {
+	debug_setting: function(options) {
 		var prompt = options.prompt;
 		var endstr = options.endstr;
 		var path = core.status.current_project_path;
 		var type = core.status.current_project_type;
-		
+
 		if (prompt) {
 			this.debug_prompt = prompt;
 		}
@@ -387,78 +390,79 @@ goorm.core.debug.prototype = {
 		}
 	},
 
-	add_data_table: function (variable, value, summary) {
-		var t1 = Number(variable.indexOf("key='"))+5;
+	add_data_table: function(variable, value, summary) {
+		var t1 = Number(variable.indexOf("key='")) + 5;
 		var t2 = Number(variable.indexOf("' show="));
-		var id=variable.slice(t1,t2);
-		var sendData={}, ev={};
-		ev.keyDown=13;
+		var id = variable.slice(t1, t2);
+		var sendData = {},
+			ev = {};
+		ev.keyDown = 13;
 
-		value = '<div id="'+id+'" class="edit_ready" style="width:100%;height:100%;">'+value + '</div>';
+		value = '<div id="' + id + '" class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
 
 		if (this.table_variable) {
 			if (variable && value && summary)
-			this.table_variable.fnAddData([
-				variable,
-				value,
-				summary
-			]);
+				this.table_variable.fnAddData([
+					variable,
+					value,
+					summary
+				]);
 		}
-		var project_type=core.status.current_project_type;
-		if(project_type==='c_examples' || project_type === 'cpp') {
+		var project_type = core.status.current_project_type;
+		if (project_type === 'c_examples' || project_type === 'cpp') {
 
-			var edit_box=$('#'+id);
+			var edit_box = $('#' + id);
 			edit_box.parent().click(function() {
-				var data=edit_box.html();
-				if(edit_box.hasClass('edit_ready')) {
+				var data = edit_box.html();
+				if (edit_box.hasClass('edit_ready')) {
 					core.module.terminal.terminal.Terminal.keyDown(ev);
 					edit_box.removeClass('edit_ready');
 					edit_box.addClass('editing');
-					edit_box.html("<input type='text' value='"+data+"' class='edit_box' style='width:100%;height:100%'>");	
-					
+					edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
+
 					core.status.focus_obj = edit_box;
-				}			
+				}
 			});
 
 			$(document).on('click', function(e) {
-				var edit_box=$('#'+$('.editing').attr("id"));
-				if(!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
-					var data=edit_box.children().val();
-					edit_box.html(data);	
+				var edit_box = $('#' + $('.editing').attr("id"));
+				if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
+					var data = edit_box.children().val();
+					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable=edit_box.attr("id");
-					sendData.value=data;
-					if(typeof sendData.value!="undefined") {
-						$(core.module.debug).trigger('value_changed', sendData);	
+					sendData.variable = edit_box.attr("id");
+					sendData.value = data;
+					if (typeof sendData.value != "undefined") {
+						$(core.module.debug).trigger('value_changed', sendData);
 					}
-				} else if(edit_box.hasClass('edit_ready')) {
+				} else if (edit_box.hasClass('edit_ready')) {
 					core.module.terminal.terminal.Terminal.keyDown(ev);
 					edit_box.removeClass('edit_ready');
 					edit_box.addClass('editing');
-					edit_box.html("<input type='text' value='"+data+"' style='width:100%;height:100%'>");	
+					edit_box.html("<input type='text' value='" + data + "' style='width:100%;height:100%'>");
 					core.status.focus_obj = edit_box;
-				}	
+				}
 			});
-			edit_box.on('keyup','.edit_box', function(e) {
-			    if (e.keyCode == 13) {
-			    	var data=$(this).val();
-					edit_box.html(data);	
+			edit_box.on('keyup', '.edit_box', function(e) {
+				if (e.keyCode == 13) {
+					var data = $(this).val();
+					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable=edit_box.attr("id");
-					sendData.value=data;
-					if(typeof sendData.value!="undefined") {
-						$(core.module.debug).trigger('value_changed', sendData);	
+					sendData.variable = edit_box.attr("id");
+					sendData.value = data;
+					if (typeof sendData.value != "undefined") {
+						$(core.module.debug).trigger('value_changed', sendData);
 					}
-			    }  else {
-			    	core.status.focus_obj = $(this);
-			    }       
+				} else {
+					core.status.focus_obj = $(this);
+				}
 			});
 		}
 	},
 
-	delete_data_table: function (row) {
+	delete_data_table: function(row) {
 		if (this.table_variable) {
 			this.table_variable.fnDeleteRow(row);
 		}

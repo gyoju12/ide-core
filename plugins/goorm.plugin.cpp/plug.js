@@ -114,7 +114,7 @@ goorm.plugin.cpp = {
 			return;
 		}
 		
-		core.module.project.run({'cmd': '\n\rclear;'+absolute_path}, function(result){
+		core.module.project.run({'cmd': 'clear;'+absolute_path}, function(result){
 			core.module.layout.select('terminal'); // jeongmin: show terminal tab
 			core.module.toast.show(core.module.localization.msg['alert_plugin_check_terminal']);
 			callback();
