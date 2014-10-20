@@ -146,7 +146,7 @@ goorm.core.layout = {
 		this.attach_debug(this.inner_bottom_tabview);
 
 		//Terminal Tab
-		if(use_terminal !== false){
+		if (use_terminal !== false) {
 			this.attach_terminal(this.inner_bottom_tabview);
 		}
 		//Outputtab
@@ -357,10 +357,10 @@ goorm.core.layout = {
 					});
 				}
 			});
-			
+
 			//width and height fix
 			$('#bubble_toolbar').height($('#bubble_toolbar_sub').outerHeight());
-			if($('#bubble_toolbar').width() <= 610) {
+			if ($('#bubble_toolbar').width() <= 610) {
 				$('#bubble_toolbar').css('right', 0);
 			}
 		});
@@ -369,8 +369,8 @@ goorm.core.layout = {
 
 		//stop button disabled
 		$('button[action="stop"]').addClass('debug_not_active');
-		$('button[action="stop"]').attr('isdisabled','disabled');
-		$('a[action="stop"]').parent().addClass('disabled');	
+		$('button[action="stop"]').attr('isdisabled', 'disabled');
+		$('a[action="stop"]').parent().addClass('disabled');
 		// console.log("layout.js:init();");
 		// this.refresh();
 
@@ -532,7 +532,7 @@ goorm.core.layout = {
 		var goorm_left = $("#goorm_left");
 
 		var layout_left_height = $("div.ui-layout-west").height() - 22;
-		goorm_left.find("#project_explorer").height(layout_left_height - 6);
+		goorm_left.find("#project_explorer").height(goorm_left.height() - $('#west_tab').outerHeight() - goorm_left.find('.nav').outerHeight() - 6 - $('#project_selector').outerHeight() - 4 - parseInt($("#project_explorer").css('padding-top')));
 		goorm_left.find("#project_treeview").height(layout_left_height - 35 - 60); // minus top, bottom layout
 
 
@@ -691,7 +691,7 @@ goorm.core.layout = {
 					break;
 
 					/* east */
-				
+					
 				case 'outline':
 					id = 'gLayoutTab_Outline';
 					pane = 'east';
@@ -714,7 +714,7 @@ goorm.core.layout = {
 
 		if (id && $parent && pane) {
 			var tab = $parent.find('#' + id);
-			if(tab.length){
+			if (tab.length) {
 				tab.click();
 				this.expand(pane);
 			}
@@ -1059,7 +1059,7 @@ goorm.core.layout = {
 			toolbar_right_margin = 25;
 		}
 
-		if($('#bubble_toolbar').width() <= 610) {
+		if ($('#bubble_toolbar').width() <= 610) {
 			$('#bubble_toolbar').css('right', 0);
 		} else {
 			$('#bubble_toolbar').css('right', toolbar_right_margin);

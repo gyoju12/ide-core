@@ -141,6 +141,8 @@ goorm.core.project.explorer.prototype = {
 				self.make_project_list_table();
 			}
 			
+
+			$('#project_list_jquery_table_wrapper').css('max-height', $('#project_explorer').height());	// jeongmin: reset project table's height
 		});
 
 		// when click treeview div, hide context menu
