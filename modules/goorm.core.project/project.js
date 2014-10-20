@@ -540,13 +540,9 @@ module.exports = {
 		}
 	},
 
-	get_list: function(project_option, evt) {
+	get_list: function(project_option, evt, callback) {
 
 		var projects = [];
-
-		var author = project_option.author;
-		var user_id = author.author_id;
-		var get_list_type = project_option.get_list_type;
 
 		var options = {
 			followLinks: false
@@ -600,13 +596,23 @@ module.exports = {
 							if (a.name < b.name) return -1;
 							return 1;
 						});
-						evt.emit("project_get_list", projects);
+
+						if (evt) {
+							evt.emit("project_get_list", projects);
+						} else if (callback) {
+							callback(projects);
+						}
 					}
 				});
 				evt_get_project.emit('get_project_list', evt_get_project, 0);
 			} else {
 				console.log('Directory Error : ', err);
-				evt.emit("project_get_list", projects);
+
+				if (evt) {
+					evt.emit("project_get_list", projects);
+				} else if (callback) {
+					callback(projects);
+				}
 			}
 		});
 		

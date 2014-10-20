@@ -13,8 +13,8 @@ var fs = require('fs');
 var spawn = require('child_process').spawn;
 
 
-g_auth_project = require('../goorm.core.auth/auth.project');
-
+var g_auth_project = require('../goorm.core.auth/auth.project');
+var g_project = require('../goorm.core.project/project');
 
 var g_secure = require('../goorm.core.secure/secure.js');
 
@@ -107,6 +107,53 @@ module.exports = {
 		var owner_roots = [];
 				
 		
+		g_project.get_list(null, null, function (owner_project_data) {
+			for (var i = 0; i < owner_project_data.length; i++) {
+				owner_roots.push('/' + owner_project_data[i].name);
+			}
+
+			if (project_path === "" && owner_roots.length != 0) {
+				var all_matched_files_list = [];
+				var count = 0;
+
+				for (var i = 0; i < owner_roots.length; i++) {
+					(function(index) {
+						var __project_path = owner_roots[index];
+						self.get_data_from_project({
+							'find_query': find_query,
+							'project_path': __project_path,
+							'folder_path': folder_path,
+							'grep_option': grep_option
+						}, function(res) {
+							count++;
+							var matched_files_list = res.data;
+
+							all_matched_files_list = all_matched_files_list.concat(matched_files_list);
+
+							if (count === owner_roots.length) {
+								nodes = parser(all_matched_files_list);
+								res.data = nodes;
+								evt.emit('file_do_search_on_project', res);
+							}
+						});F.auth_add_user()
+					})(i);
+				}
+			} else if (owner_roots.indexOf(project_path) > -1) {
+				self.get_data_from_project({
+					'find_query': find_query,
+					'project_path': project_path,
+					'folder_path': folder_path,
+					'grep_option': grep_option
+				}, function(res) {
+					var matched_files_list = res.data;
+					nodes = parser(matched_files_list);
+					res.data = nodes;
+					evt.emit('file_do_search_on_project', res);
+				});
+			} else {
+				evt.emit('file_do_search_on_project', nodes);
+			}
+		})
 		
 	},
 
