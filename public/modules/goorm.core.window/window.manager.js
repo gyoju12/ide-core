@@ -1273,13 +1273,6 @@ goorm.core.window.manager = {
 						// if(window_list[window_target_idx].is_saved && tab_list[tab_target_idx].is_saved){
 
 						if (window_list[window_target_idx].is_saved) {
-							if (self.active_window != window_target_idx) { // jeongmin: this should be first
-								if (self.active_window > window_target_idx) self.active_window--;
-								this.activate(self.active_window);
-							} else {
-								this.activate(0);
-							}
-
 							if (tab_target_idx != -1) {
 								//tab_list[tab_target_idx].is_saved=true;
 								tab_list[tab_target_idx].close();
@@ -1297,13 +1290,6 @@ goorm.core.window.manager = {
 								title: "Close...",
 
 								yes: function() {
-									if (self.active_window != window_target_idx) {
-										if (self.active_window > window_target_idx) self.active_window--;
-										this.activate(self.active_window);
-									} else {
-										this.activate(0);
-									}
-
 									window_list[window_target_idx].editor.save("close");
 								},
 								cancel: function() {},

@@ -844,10 +844,10 @@ goorm.core.window.panel.prototype = {
 
 			var window_manager = core.module.layout.workspace.window_manager;
 
-			core.module.layout.workspace.window_manager.history_window = {};
-			core.module.layout.workspace.window_manager.history_window.filename = this.filename;
-			core.module.layout.workspace.window_manager.history_window.filetype = this.filetype;
-			core.module.layout.workspace.window_manager.history_window.filepath = this.filepath;
+			window_manager.history_window = {};
+			window_manager.history_window.filename = this.filename;
+			window_manager.history_window.filetype = this.filetype;
+			window_manager.history_window.filepath = this.filepath;
 
 			// clear highlight
 			if (this.type === 'Terminal') {
@@ -914,6 +914,16 @@ goorm.core.window.panel.prototype = {
 				$("a[action=comment_selected").parent().addClass("disabled");
 				$("a#parent_merge_menu").parent().addClass("disabled");
 				$("a#parent_refactor_menu").parent().addClass("disabled");
+			} else {	// jeongmin: reset active_window
+				if (window_manager.active_window != this.index) {
+					if (window_manager.active_window > this.index)  {
+						window_manager.active_window--;
+					}
+
+					window_manager.activate(window_manager.active_window);
+				} else {
+					window_manager.activate(0);
+				}
 			}
 
 			$(core).trigger("bookmark_table_refresh"); //jeongmin
