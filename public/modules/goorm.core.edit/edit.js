@@ -711,6 +711,8 @@ goorm.core.edit.prototype = {
         this.highlight_current_cursor_line = self.get_editor_preference('highlight_current_cursor_line');
         this.editor.setOption("styleActiveLine", this.highlight_current_cursor_line);
         this.editor.setOption('autoCloseBrackets', this.auto_close_brackets);
+        this.editor.setOption("lineWrapping", this.line_wrapping);  // jeongmin: even if these value are false, option must be set
+        this.editor.setOption("lineNumbers", this.show_line_numbers);
 
         if (this.vim_mode) {
             this.editor.setOption("vimMode", true);
@@ -761,8 +763,6 @@ goorm.core.edit.prototype = {
         }
 
         if (this.show_line_numbers) {
-            this.editor.setOption("lineNumbers", this.show_line_numbers);
-
             ////// jeongmin: set line numbers inside of gutters //////
             var gutters = this.editor.options.gutters;
             if (gutters[gutters.length - 1] == "CodeMirror-linenumbers") {
@@ -800,14 +800,14 @@ goorm.core.edit.prototype = {
             this.editor.setOption("theme", this.theme);
         }
 
-        if (this.line_wrapping) {
-            this.editor.setOption("lineWrapping", this.line_wrapping);
+        // if (this.line_wrapping) {
+            
 
             // var line = (options.cursor) ? options.cursor.line : this.editor.getCursor();    // jeongmin: get line
 
             // this.editor.scrollIntoView(line);    // jeongmin: go to original cursor
             // this.scroll_top = this.editor.getScrollInfo().top;  // jeongmin: refresh scroll
-        }
+        // }
 
         if (this.readonly) {
             if (this.readonly === "true") this.readonly = true;
