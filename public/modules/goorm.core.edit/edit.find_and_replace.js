@@ -27,13 +27,13 @@ goorm.core.edit.find_and_replace = {
 		var self = this;
 
 		this.panel = $("#dlg_find_and_replace");
-		$(core).one('localization_init_complete',function(){
-			$("#find_query_inputbox").attr("placeholder",core.module.localization.msg.msg_project_find_guide);
-			$("#replace_query_inputbox").attr("placeholder",core.module.localization.msg.msg_project_replace_guide);
+		$(core).one('localization_init_complete', function() {
+			$("#find_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_find_guide);
+			$("#replace_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_replace_guide);
 		});
-		$(core).on('language_loaded',function(){
-			$("#find_query_inputbox").attr("placeholder",core.module.localization.msg.msg_project_find_guide);
-			$("#replace_query_inputbox").attr("placeholder",core.module.localization.msg.msg_project_replace_guide);
+		$(core).on('language_loaded', function() {
+			$("#find_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_find_guide);
+			$("#replace_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_replace_guide);
 		});
 
 		this.dialog = new goorm.core.dialog();
@@ -141,8 +141,8 @@ goorm.core.edit.find_and_replace = {
 				self.panel.on('shown.bs.modal', function() {
 					var window_manager = core.module.layout.workspace.window_manager;
 
-					if(window_manager.window[window_manager.active_window].searching)	// jeongmin: only when searching
-						core.dialog.search.unmark();	// jeongmin: remove search highlight
+					if (window_manager.window[window_manager.active_window].searching) // jeongmin: only when searching
+						core.dialog.search.unmark(); // jeongmin: remove search highlight
 
 					$("#find_query_inputbox").focus();
 					// 	var window_manager = core.module.layout.workspace.window_manager;  // this part remove Donguk Kim
@@ -223,7 +223,7 @@ goorm.core.edit.find_and_replace = {
 	},
 
 	find_all: function() {
-		core.module.loading_bar.start("Searching......");
+		core.module.loading_bar.start(core.module.localization.msg.loading_bar_search);
 		var window_manager = core.module.layout.workspace.window_manager;
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window].editor) {

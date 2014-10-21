@@ -10,7 +10,7 @@
     },
     "title_debug_project": {
         "value": "프로젝트 디버깅하기"
-    }, 
+    },
     "title_share_project": {
         "value": "프로젝트 공유하기"
     },
@@ -150,22 +150,22 @@
         "value": "'Build Success'인 경우에 Run 버튼을 누르면 빌드한 프로젝트를 실행할 수 있습니다. 실행 결과는 터미널에 출력됩니다."
     },
     "debug_project_start": {
-        "value" : "디버그 버튼을 클릭하여 디버깅을 시작합니다. <div><div class='toolbar-build' style='float: left; margin-right: 5px;'></div>프로젝트 빌드를 했는지 브레이크 포인트를 찍었는지 확인 후 디버깅을 시작합니다.</div> 디버깅은 C, C++, Java 프로젝트에서 가능합니다."
+        "value": "디버그 버튼을 클릭하여 디버깅을 시작합니다. <div><div class='toolbar-build' style='float: left; margin-right: 5px;'></div>프로젝트 빌드를 했는지 브레이크 포인트를 찍었는지 확인 후 디버깅을 시작합니다.</div> 디버깅은 C, C++, Java 프로젝트에서 가능합니다."
     },
     "debug_project_continue": {
-        "value" : "프로젝트 디버그가 시작되고 다음 브레이크 포인트로 넘어갑니다."
+        "value": "프로젝트 디버그가 시작되고 다음 브레이크 포인트로 넘어갑니다."
     },
     "debug_project_terminate": {
-        "value" : "프로젝트 디버그를 종료합니다."
+        "value": "프로젝트 디버그를 종료합니다."
     },
     "debug_project_step_over": {
-        "value" : "현재 진행 중인 함수 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. Step In 과 비슷한 기능이지만 Step Over은 라인내의 Function Call을 멈추지 않습니다. gdb에서 next 기능과 같습니다."
+        "value": "현재 진행 중인 함수 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. Step In 과 비슷한 기능이지만 Step Over은 라인내의 Function Call을 멈추지 않습니다. gdb에서 next 기능과 같습니다."
     },
     "debug_project_step_in": {
-        "value" : "현재 진행 중인 소스 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. step over 과 비슷한 기능입니다. gdb에서 step 기능과 같습니다. "
+        "value": "현재 진행 중인 소스 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. step over 과 비슷한 기능입니다. gdb에서 step 기능과 같습니다. "
     },
     "debug_project_step_out": {
-        "value" : "선택된 스택이 리턴할 때까지 진행합니다. 리턴 값이 출력됩니다. gdb에서 finish 기능과 같습니다."
+        "value": "선택된 스택이 리턴할 때까지 진행합니다. 리턴 값이 출력됩니다. gdb에서 finish 기능과 같습니다."
     },
     "share_project_start": {
         "value": "버튼을 클릭하여 프로젝트 공유를 시작합니다."
@@ -208,5 +208,8 @@
     },
     "add_friends_friend_list": {
         "value": "현재 친구 목록, 친구 수락 메시지 등을 표시해줍니다."
+    },
+    "alert_select_project_can_build": {
+        "value": "빌드할 수 있는 프로젝트를 선택해야 합니다."
     }
 }

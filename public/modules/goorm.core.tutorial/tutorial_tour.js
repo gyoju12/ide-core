@@ -149,7 +149,7 @@ goorm.core.tutorial_tour = {
 				} else if (chapter == "build_project") {
 					if ($('#main_project_toolbar button[action="build_project"]').css('display') == "none") {
 						// alert
-						alert.show("You have to select project can be build.");
+						alert.show(core.module.localization.tutorial.alert_select_project_can_build);
 						return;
 					}
 

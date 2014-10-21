@@ -14,16 +14,17 @@ goorm.core.file._export = {
 	tabview: null,
 	dialog_explorer: null,
 
-	init: function () {
+	init: function() {
 		var self = this;
+		var localization_msg = core.module.localization.msg;
 
 		this.panel = $("#dlg_export_file");
 
-		var handle_ok = function () {
+		var handle_ok = function() {
 			var data = self.dialog_explorer.get_data();
 
 			if (data.path === "" || data.name === "") {
-				alert.show(core.module.localization.msg.alert_filename_empty);
+				alert.show(localization_msg.alert_filename_empty);
 				// alert.show("Not Selected.");
 				return false;
 			}
@@ -36,8 +37,8 @@ goorm.core.file._export = {
 				file: data.name
 			};
 
-			core.module.loading_bar.start("Export processing...");
-			$.get("file/export", postdata, function (data) {
+			core.module.loading_bar.start(localization_msg.loading_bar_export);
+			$.get("file/export", postdata, function(data) {
 				core.module.loading_bar.stop();
 
 				if (data.err_code === 0) {
@@ -45,19 +46,19 @@ goorm.core.file._export = {
 
 					//location.href = "download/?file=" + data.path;
 					//var _iframe_download=$('<iframe id="download_frame"/>').attr('src',"download/?file=" + data.path).hide().appendTo
-					$("#download_frame").css('display','none');
+					$("#download_frame").css('display', 'none');
 					$("#download_frame").attr('src', "download/?file=" + data.path);
 
 				} else {
 					switch (data.err_code) {
 						case 10:
-							alert.show(core.module.localization.msg.alert_invalide_query);
+							alert.show(localization_msg.alert_invalide_query);
 							break;
 						case 20:
-							alert.show(core.module.localization.msg.alert_cannot_export_file);
+							alert.show(localization_msg.alert_cannot_export_file);
 							break;
 						case 30:
-							alert.show(core.module.localization.msg.alert_cannot_make_directory);
+							alert.show(localization_msg.alert_cannot_make_directory);
 					}
 				}
 			});
@@ -71,7 +72,7 @@ goorm.core.file._export = {
 			success: null,
 			show: $.proxy(this.after_show, this)
 		});
-		
+
 
 		this.dialog_explorer = new goorm.core.dialog.explorer("#file_export", this);
 		this.bind();
@@ -79,32 +80,32 @@ goorm.core.file._export = {
 		//this.dialog.panel.setBody("AA");
 	},
 
-	show: function () {
+	show: function() {
 		this.is_shown = false;
 		this.dialog_explorer.init(true, true, false);
 		this.panel.modal('show');
 	},
 
-	after_show: function(){
+	after_show: function() {
 
 		$("#file_export_dir_tree").find(".jstree-clicked").click();
-	
-		 var files = this.dialog_explorer.files;
-		 var file_item = $(files).find("div.file_item");
 
-		
-		 if (core.status.selected_file) {
-		 	var target = core.status.selected_file;
+		var files = this.dialog_explorer.files;
+		var file_item = $(files).find("div.file_item");
 
-		 	file_item.each(function(){
-		 		if ($(this).attr("filepath") == target) {
-		 			$(this).click();
-		 		}
-		 	});
-		 }
+
+		if (core.status.selected_file) {
+			var target = core.status.selected_file;
+
+			file_item.each(function() {
+				if ($(this).attr("filepath") == target) {
+					$(this).click();
+				}
+			});
+		}
 	},
 
-	bind: function(){
+	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
 
@@ -118,23 +119,23 @@ goorm.core.file._export = {
 		// });
 
 		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_export_dir_tree").keydown(function (e) {
+		$("#file_export_dir_tree").keydown(function(e) {
 			switch (e.keyCode) {
-				case 9: 	// 'tab' key
+				case 9: // 'tab' key
 					$(files).find("div")[0].click();
 					return false;
 			}
 		});
 
 		// on selecting file view
-		$(files).on("click", "div.file_item", function(){
+		$(files).on("click", "div.file_item", function() {
 			$(self.dialog_explorer.input_file_name).val($(this).attr("filename"));
 
 			self.filename = $(this).attr("filename");
 			self.filetype = $(this).attr("filetype");
 			self.filepath = $(this).attr("filepath");
 		});
-		$(files).on("click", "div.folder_item", function(){
+		$(files).on("click", "div.folder_item", function() {
 			$(self.dialog_explorer.input_file_name).val("");
 			self.filename = "";
 			self.filetype = "";

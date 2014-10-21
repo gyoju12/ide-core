@@ -614,6 +614,8 @@ goorm.core.project.explorer.prototype = {
 
 	upload_to_project: function (_files, _target, callback) {
 		var self = this;
+		var localization_msg = core.module.localization.msg;
+
 		var files = Array.prototype.slice.call(_files, 0);
 		//var items = _items;
 		var target = _target;
@@ -629,7 +631,7 @@ goorm.core.project.explorer.prototype = {
 		var total_size = 0;
 
 		if(files.length > file_count_limit) {
-			alert.show(core.module.localization.msg.alert_too_many_files_limit_20);
+			alert.show(localization_msg.alert_too_many_files_limit_20);
 			return false;
 		}
 		
@@ -651,7 +653,7 @@ goorm.core.project.explorer.prototype = {
 
 				if(total_size >= total_filesize_limit) {
 				//if(file.size >= filesize_limit) {
-					alert.show(core.module.localization.msg.alert_file_size_too_big_to_upload);
+					alert.show(localization_msg.alert_file_size_too_big_to_upload);
 					return false;
 				}
 
@@ -676,7 +678,7 @@ goorm.core.project.explorer.prototype = {
 			  		// TODO : we have to handle failure more smartly.		  	
 			  		// TODO : handle if the same file exist.
 			  		//alert.show('Upload Fail');
-			  		alert.show(core.module.localization.msg.alert_upload_fail);
+			  		alert.show(localization_msg.alert_upload_fail);
 					console.log('Something went terribly wrong...');
 			  	}
 			  	core.module.loading_bar.stop();
@@ -693,7 +695,7 @@ goorm.core.project.explorer.prototype = {
 
 				  	filelist.join('\n');
 
-				  	alert.show(core.module.localization.msg.alert_allow_character + '\n' + filelist);
+				  	alert.show(localization_msg.alert_allow_character + '\n' + filelist);
 				 }
 
 				 callback();
@@ -701,11 +703,13 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		// TODO : localization
-		core.module.loading_bar.start("Folder upload processing...");
+		core.module.loading_bar.start(localization_msg.loading_bar_folder_upload);
 	},
 
 	drag_n_drop: function() {
 		var self = this;
+		var localization_msg = core.module.localization.msg;
+		
 		var treeview = $('#project_treeview');
 
 		var isWholerow = true;
@@ -736,16 +740,16 @@ goorm.core.project.explorer.prototype = {
 				var entry = items[i].getAsEntry ? items[i].getAsEntry() : items[i].webkitGetAsEntry();
 
 				if(entry && entry.isDirectory) {
-					alert.show(core.module.localization.msg.alert_folder_upload_is_not_allowed);
+					alert.show(localization_msg.alert_folder_upload_is_not_allowed);
 					return false;
 				}
 			}
 
 			confirmation.init({
-				title: 'Upload File',
-				message: core.module.localization.msg.confirmation_file_upload,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
+				title: localization_msg.import_file,
+				message: localization_msg.confirmation_file_upload,
+				yes_text: localization_msg.confirmation_yes,
+				no_text: localization_msg.confirmation_no,
 				//yes_localization: 'confirmation_auto_logout_keep_using',
 				//no_localization: 'confirmation_logout',
 				yes: function() {

@@ -18,6 +18,7 @@ goorm.core.project._new = {
 
 	init: function() {
 		var self = this;
+		var localization_msg = core.module.localization.msg;
 
 		this.panel = $("#dlg_new_project");
 		this.panel.draggable();
@@ -103,13 +104,13 @@ goorm.core.project._new = {
 
 					////// value validation check //////
 					if ($("#input_project_author").val() === "") {
-						alert.show(core.module.localization.msg.alert_project_author);
+						alert.show(localization_msg.alert_project_author);
 						return false;
 					} else if ($("#input_project_author_name").val() === "") {
-						alert.show(core.module.localization.msg.alert_project_author_name);
+						alert.show(localization_msg.alert_project_author_name);
 						return false;
 					} else if ($("#input_project_name").val() === "") {
-						alert.show(core.module.localization.msg.alert_project_name);
+						alert.show(localization_msg.alert_project_name);
 						return false;
 						// } else if ($("#input_project_desc").val() === "") {	//jeongmin: no need to check this -> if check this, below condition will never be checked
 						// alert.show(core.module.localization.msg.alert_project_desc);
@@ -121,10 +122,10 @@ goorm.core.project._new = {
 						// }
 						// 	
 					} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test($("#input_project_author_name").val())) {
-						alert.show(core.module.localization.msg.alert_allow_character);
+						alert.show(localization_msg.alert_allow_character);
 						return false;
 					} else if (!/^[\w-_]*$/.test($("#input_project_name").val())) {
-						alert.show(core.module.localization.msg.alert_allow_character);
+						alert.show(localization_msg.alert_allow_character);
 						return false;
 					}
 					// else if (use_scm && !/^[\w-_]*$/.test($("#new_project_scm_config .scm_path").val())) {	//jeongmin: check if repository path has unavailable character
@@ -210,24 +211,24 @@ goorm.core.project._new = {
 								// Over Limit...
 								//
 								case 1:
-									alert.show(core.module.localization.msg.alert_project_over_limit + valid.limit);
+									alert.show(localization_msg.alert_project_over_limit + valid.limit);
 									break;
 
 									// Project Exist...
 									//
 								case 2:
-									alert.show(core.module.localization.msg.alert_project_exist);
+									alert.show(localization_msg.alert_project_exist);
 									break;
 
 									// Duplicated Name Exists...
 									//
 								case 3:
 									confirmation.init({
-										title: 'logout',
-										message: core.module.localization.msg.confirmation_do_you_want_to_project_update,
-										yes_text: core.module.localization.msg.confirmation_yes,
-										no_text: core.module.localization.msg.confirmation_no,
-										title: core.module.localization.msg.confirmation_title,
+										title: localization_msg.project_duplicate,
+										message: localization_msg.confirmation_do_you_want_to_project_update,
+										yes_text: localization_msg.confirmation_yes,
+										no_text: localization_msg.confirmation_no,
+										title: localization_msg.confirmation_title,
 										yes: function() {
 											core._socket.once("/project/new", cb, true);
 											core._socket.emit("/project/new", senddata);
@@ -253,10 +254,10 @@ goorm.core.project._new = {
 				$("#g_np_btn_ok_template").click(function() {
 					////// value validation check //////
 					if ($("#input_project_type").attr("value") === "") {
-						alert.show(core.module.localization.msg.alert_project_detailed_type);
+						alert.show(localization_msg.alert_project_detailed_type);
 						return false;
 					} else if ($("#input_project_detailed_type").attr("value") === "") {
-						alert.show(core.module.localization.msg.alert_project_detailed_type);
+						alert.show(localization_msg.alert_project_detailed_type);
 						return false;
 					}
 
@@ -329,7 +330,7 @@ goorm.core.project._new = {
 				
 				
 				if ($("#project_new .project_items .selected_button").length != 1) {
-					alert.show(core.module.localization.msg.alert_project_detailed_type);
+					alert.show(localization_msg.alert_project_detailed_type);
 					return false;
 				} else {
 					// if ($("#project_new .project_items .selected_button").attr('project_type').indexOf('examples') >= 0) {	//jeongmin: import is changed to tab page

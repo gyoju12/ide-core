@@ -702,7 +702,7 @@ goorm.core.prototype = {
 				localStorage.user = JSON.stringify(self.user);
 				self.local_complete();
 			} else {
-				alert.show('NOT VALID');
+				alert.show(core.module.localization.msg.alert_not_valid_user);
 			}
 		});
 	},

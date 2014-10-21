@@ -107,7 +107,7 @@ goorm.core.file.move = {
 		self.is_alive_window = false;
 		if (context) {
 			if (core.status.current_project_path === core.status.selected_file) {
-				alert.show("Cannot move!");
+				alert.show(core.module.localization.msg.alert_move_error);
 				return;
 			}
 			var filename = (core.status.selected_file.split("/")).pop();
@@ -174,18 +174,18 @@ goorm.core.file.move = {
 
 
 		// when enter 'enter' key, dialog OK.
-		this.panel.keydown(function (e) {
+		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
-				case 13: 	// 'enter' key
+				case 13: // 'enter' key
 					$("#g_mf_btn_ok").click();
 					break;
 			}
 		});
 
 		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_move_dir_tree").keydown(function (e) {
+		$("#file_move_dir_tree").keydown(function(e) {
 			switch (e.keyCode) {
-				case 9: 	// 'tab' key
+				case 9: // 'tab' key
 					$(files).find("div")[0].click();
 					return false;
 			}

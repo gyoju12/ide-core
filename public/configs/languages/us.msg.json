@@ -1399,5 +1399,47 @@
     },
     "alert_folder_upload_is_not_allowed": {
         "value": "Uploading Folder is not allowed. File is only allowed."
+    },
+    "loading_bar_decompress": {
+        "value": "File decompressing..."
+    },
+    "loading_bar_folder_upload": {
+        "value": "Folder upload processing..."
+    },
+    "loading_bar_search": {
+        "value": "Searching..."
+    },
+    "loading_bar_export": {
+        "value": "Export processing..."
+    },
+    "alert_unknown_error": {
+        "value": "UNKNOWN ERROR!"
+    },
+    "alert_move_error": {
+        "value": "Cannot move!"
+    },
+    "alert_dialog_id_used": {
+        "value": "Dialog ID is already used!"
+    },
+    "alert_no_html_file": {
+        "value": "Can not find HTML File!"
+    },
+    "alert_wrong_command": {
+        "value": "Wrong command."
+    },
+    "alert_not_valid_user": {
+        "value": "ID/PW are not valid"
+    },
+    "upload_folder": {
+        "value": "Upload Folder"
+    },
+    "project_duplicate": {
+        "value": "Duplicate Project"
+    },
+    "import_file": {
+        "value": "Upload File"
+    },
+    "shortcut_conflict": {
+        "value": "Shortcut Conflict"
     }
 }

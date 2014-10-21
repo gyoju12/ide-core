@@ -39,7 +39,7 @@ goorm.core.project._export = {
 				export_type: type.toLowerCase()
 			};
 
-			core.module.loading_bar.start("Export processing...");
+			core.module.loading_bar.start(core.module.localization.msg.loading_bar_export);
 			$.get("project/export", postdata, function(data) {
 				core.module.loading_bar.stop();
 

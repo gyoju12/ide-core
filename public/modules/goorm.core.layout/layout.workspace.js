@@ -16,7 +16,7 @@ goorm.core.layout.workspace = {
 	ready_files: [],
 	files: [],
 
-	init: function (target) {
+	init: function(target) {
 
 		
 
@@ -25,24 +25,24 @@ goorm.core.layout.workspace = {
 		this.attach_event();
 	},
 
-	attach_window_manager: function (target) {
+	attach_window_manager: function(target) {
 		//attaching window manager
 		this.window_manager = goorm.core.window.manager;
 		this.window_manager.init(target);
 	},
 
-	attach_event: function () {
+	attach_event: function() {
 		var self = this;
 
 		// Drag & Drop --> Upload
 		//
 		var ws = $(this.context);
-		ws.on('dragenter', function (e) {
+		ws.on('dragenter', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 		});
 
-		ws.on('dragover', function (e) {
+		ws.on('dragover', function(e) {
 			ws.css('border', '3px dashed #aaa');
 			self.window_manager.tab_resize_window_relocation();
 
@@ -50,10 +50,10 @@ goorm.core.layout.workspace = {
 			e.preventDefault();
 		});
 
-		ws.on('drop', function (e) {
+		ws.on('drop', function(e) {
 			ws.css('border', '1px solid #aaa');
 			self.window_manager.tab_resize_window_relocation();
-			
+
 			var files = e.originalEvent.dataTransfer.files;
 			e.stopPropagation();
 			e.preventDefault();
@@ -62,12 +62,12 @@ goorm.core.layout.workspace = {
 			//
 			if (files && files.length > 0) {
 				for (var i = 0; i < files.length; i++) {
-					self.upload_to_project(files[i]);					
+					self.upload_to_project(files[i]);
 				}
 			}
 		});
 
-		ws.on('dragleave', $.debounce(function (e) {
+		ws.on('dragleave', $.debounce(function(e) {
 			ws.css('border', '1px solid #aaa');
 			self.window_manager.tab_resize_window_relocation();
 
@@ -76,30 +76,32 @@ goorm.core.layout.workspace = {
 			return false; // added by ryu
 		}, 100));
 
-		ws.on('dragend', function (e) {
+		ws.on('dragend', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			return false; // added by ryu
 		});
 
-		ws.click(function (e) {
+		ws.click(function(e) {
 			$('#editor_status').hide();
 			$(core).trigger('contextmenu_all_hide');
 			return false;
 		});
 	},
 
-	upload_to_project: function (file, force) {
+	upload_to_project: function(file, force) {
 		var self = this;
+		var localization_msg = core.module.localization.msg;
+
 		var current_project = core.status.current_project_path;
 
-		if(/[^.0-9A-Za-z_-]/g.test(file.name)) {
-			alert.show(core.module.localization.msg.alert_allow_character + "\n" + file.name);
+		if (/[^.0-9A-Za-z_-]/g.test(file.name)) {
+			alert.show(localization_msg.alert_allow_character + "\n" + file.name);
 			return false;
 		}
 
 		if (!current_project) {
-			alert.show(core.module.localization.msg.alert_select_project);
+			alert.show(localization_msg.alert_select_project);
 			return false;
 		}
 		if (!force) force = false;
@@ -112,11 +114,11 @@ goorm.core.layout.workspace = {
 		fd.append('force', force);
 
 		var jq_xhr = $.ajax({
-			xhr: function () {
+			xhr: function() {
 				var xhr_o = $.ajaxSettings.xhr();
 
 				if (xhr_o.upload) {
-					xhr_o.upload.addEventListener('progress', function () {
+					xhr_o.upload.addEventListener('progress', function() {
 						var percent = 0;
 						var position = event.loaded || event.position;
 						var total = event.total;
@@ -136,20 +138,20 @@ goorm.core.layout.workspace = {
 			processData: false,
 			cache: false,
 			data: fd,
-			success: function (data) {
+			success: function(data) {
 				if (data.result) {
 					self.files.push(data.path);
 
 					confirmation.init({
-						title: core.module.localization.msg.title_open_file,
-						message: core.module.localization.msg.confirmation_open_file,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
-						yes: function () {
+						title: localization_msg.title_open_file,
+						message: localization_msg.confirmation_open_file,
+						yes_text: localization_msg.confirmation_yes,
+						no_text: localization_msg.confirmation_no,
+						yes: function() {
 							confirmation.set('reculsive', false);
 
 							if (self.files && self.files.length > 0) {
-								for(var i=0; i<self.files.length; i++) {
+								for (var i = 0; i < self.files.length; i++) {
 									var path = self.files[i];
 
 									var filepath = current_project + '/';
@@ -163,32 +165,31 @@ goorm.core.layout.workspace = {
 
 							self.files = [];
 						},
-						no: function () {
+						no: function() {
 							self.files = [];
 						}
 					});
 					confirmation.show();
 
 					core.module.layout.project_explorer.refresh();
-				}
-				else {
+				} else {
 					switch (data.err_code) {
 						case 1:
-							alert.show(core.module.localization.msg.alert_upload_fail);
+							alert.show(localization_msg.alert_upload_fail);
 							break;
 						case 2:
 							self.ready_files.push(file);
 
-							var m = self.ready_files.map(function (obj) {
+							var m = self.ready_files.map(function(obj) {
 								return obj.name
 							}).join(', ');
 
 							confirmation.init({
-								title: 'Upload File',
-								message: m + '<br />' + core.module.localization.msg.confirmation_upload_message,
-								yes_text: core.module.localization.msg.confirmation_yes,
-								no_text: core.module.localization.msg.confirmation_no,
-								yes: function () {
+								title: localization_msg.upload_folder,
+								message: m + '<br />' + localization_msg.confirmation_upload_message,
+								yes_text: localization_msg.confirmation_yes,
+								no_text: localization_msg.confirmation_no,
+								yes: function() {
 									confirmation.set('reculsive', true);
 
 									for (var i = 0; i < self.ready_files.length; i++) {
@@ -197,14 +198,14 @@ goorm.core.layout.workspace = {
 
 									self.ready_files = [];
 								},
-								no: function () {
+								no: function() {
 									self.ready_files = [];
 								}
-							});	
+							});
 							confirmation.show();
 							break;
 						case 3:
-							alert.show(core.module.localization.msg.alert_upload_fail);
+							alert.show(localization_msg.alert_upload_fail);
 							break;
 					}
 				}

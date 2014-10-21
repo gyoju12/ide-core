@@ -1398,5 +1398,50 @@
     },
     "alert_folder_upload_is_not_allowed": {
         "value": "폴더는 업로드 할 수 없습니다. 파일만 가능 합니다."
+    },
+    "loading_bar_decompress": {
+        "value": "압축 해제중..."
+    },
+    "loading_bar_folder_upload": {
+        "value": "폴더 불러오는중..."
+    },
+    "loading_bar_search": {
+        "value": "검색중..."
+    },
+    "loading_bar_export": {
+        "value": "내보내기중..."
+    },
+    "loading_bar_import": {
+        "value": "가져오기중..."
+    },
+    "alert_unknown_error": {
+        "value": "알 수 없는 에러가 발생했습니다!"
+    },
+    "alert_move_error": {
+        "value": "이동할 수 없습니다!"
+    },
+    "alert_dialog_id_used": {
+        "value": "이미 이 다이얼로그 ID를 이용하고 있습니다!"
+    },
+    "alert_no_html_file": {
+        "value": "HTML 파일을 찾지 못했습니다!"
+    },
+    "alert_wrong_command": {
+        "value": "잘못된 명령입니다."
+    },
+    "alert_not_valid_user": {
+        "value": "ID/PW가 올바르지 않습니다."
+    },
+    "upload_folder": {
+        "value": "폴더 불러오기"
+    },
+    "project_duplicate": {
+        "value": "중복된 프로젝트"
+    },
+    "import_file": {
+        "value": "파일 불러오기"
+    },
+    "shortcut_conflict": {
+        "value": "단축키 충돌"
     }
 }

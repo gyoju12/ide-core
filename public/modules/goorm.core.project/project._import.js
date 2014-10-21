@@ -42,6 +42,8 @@ goorm.core.project._import = {
 
 	//check validation of project information and submit the import form. Jeong-Min Im.
 	handle_ok: function(where) { //where(jQuery Object or jQuery Event): new project or import project -> in import project dialog, ok button click event comes in.
+		var localization_msg = core.module.localization.msg;
+
 		var self = core.module.project._import; // handle_ok is passed to dialog, so scope isn't in goorm.core.project._import
 
 		////// determine where user imports project. Handle_ok is occurred by ok button. //////
@@ -57,29 +59,29 @@ goorm.core.project._import = {
 		// project_import_file
 		if (where.find(".input_import_project_author").val() === "") {
 
-			alert.show(core.module.localization.msg.alert_project_author);
+			alert.show(localization_msg.alert_project_author);
 			return false;
 		} else if (where.find(".input_import_project_author_name").val() === "") {
-			alert.show(core.module.localization.msg.alert_project_author);
+			alert.show(localization_msg.alert_project_author);
 			return false;
 		} else if (where.find(".select_import_project_detail_type").val() === "") {
-			alert.show(core.module.localization.msg.alert_project_detailed_type);
+			alert.show(localization_msg.alert_project_detailed_type);
 			return false;
 		} else if (where.find(".input_import_project_name").val() === "") {
-			alert.show(core.module.localization.msg.alert_project_name);
+			alert.show(localization_msg.alert_project_name);
 			return false;
 		} else if (!/^[\w-_]*$/.test(where.find(".input_import_project_name").val())) {
-			alert.show(core.module.localization.msg.alert_allow_character);
+			alert.show(localization_msg.alert_allow_character);
 			return false;
 
 
 
 			//}else if(!self.target_zip_file || (self.target_zip_file.type!=='application/x-zip-compressed'  && self.target_zip_file.type!=='application/zip') ){
 		} else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
-			alert.show(core.module.localization.msg.alert_unsupported_file_type);
+			alert.show(localization_msg.alert_unsupported_file_type);
 			return false;
 		} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test(where.find(".input_import_project_author").val())) {
-			alert.show(core.module.localization.msg.alert_allow_character);
+			alert.show(localization_msg.alert_allow_character);
 			return false;
 		}
 		//check end
@@ -209,24 +211,24 @@ goorm.core.project._import = {
 					// Over Limit...
 					//
 					case 1:
-						alert.show(core.module.localization.msg.alert_project_over_limit + valid.limit);
+						alert.show(localization_msg.alert_project_over_limit + valid.limit);
 						break;
 
 						// Project Exist...
 						//
 					case 2:
-						alert.show(core.module.localization.msg.alert_project_exist);
+						alert.show(localization_msg.alert_project_exist);
 						break;
 
 						// Duplicated Name Exists...
 						//
 					case 3:
 						confirmation.init({
-							title: 'logout',
-							message: core.module.localization.msg.confirmation_do_you_want_to_project_update,
-							yes_text: core.module.localization.msg.confirmation_yes,
-							no_text: core.module.localization.msg.confirmation_no,
-							title: core.module.localization.msg.confirmation_title,
+							title: localization_msg.project_duplicate,
+							message: localization_msg.confirmation_do_you_want_to_project_update,
+							yes_text: localization_msg.confirmation_yes,
+							no_text: localization_msg.confirmation_no,
+							title: localization_msg.confirmation_title,
 							yes: function() {
 								core.socket.once("/project/new", cb);
 								core.socket.emit("/project/new", senddata);

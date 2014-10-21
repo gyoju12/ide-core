@@ -910,7 +910,7 @@ goorm.core.layout = {
 		if (!(options.id && $('#' + options.id).length === 0)) {
 			// ALERT...
 			//
-			alert.show('Dialog ID is already used!');
+			alert.show(core.module.localization.msg.alert_dialog_id_used);
 		} else {
 
 
@@ -1028,7 +1028,7 @@ goorm.core.layout = {
 			} else {
 				// ALERT (NO HTML)
 				//
-				alert.show('Can not find HTML File!');
+				alert.show(core.module.localization.msg.alert_no_html_file);
 			}
 		}
 	},

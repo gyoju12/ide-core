@@ -45,7 +45,7 @@ goorm.core.terminal.background.prototype = {
 		if (!this.terminal) return;
 		if (!callback) callback = function() {};
 
-		this.terminal.send_command(cmd + "\r", options, function (data) {
+		this.terminal.send_command(cmd + "\r", options, function(data) {
 			callback(data);
 		}, callback_prompt);
 	},

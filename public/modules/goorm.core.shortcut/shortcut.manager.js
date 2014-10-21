@@ -374,7 +374,7 @@ goorm.core.shortcut.manager = {
 		////// check duplicate shortcut //////
 		if (new_shortcut != "None" && (this.shortcuts.indexOf(new_shortcut) > -1 || duplicate_in_temp)) { //None can be duplicated
 			confirmation.init({
-				title: 'Shortcut Conflict',
+				title: core.module.localization.msg.shortcut_conflict,
 				message: new_shortcut + "<br/>" + core.module.localization.msg.confirmation_shortcut_conflict,
 				//set this shortcut to this menu and remove other menu's shortcut. Jeong-Min Im.
 				yes: function() {
