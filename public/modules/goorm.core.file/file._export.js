@@ -16,7 +16,6 @@ goorm.core.file._export = {
 
 	init: function() {
 		var self = this;
-		var localization_msg = core.module.localization.msg;
 
 		this.panel = $("#dlg_export_file");
 
@@ -24,7 +23,7 @@ goorm.core.file._export = {
 			var data = self.dialog_explorer.get_data();
 
 			if (data.path === "" || data.name === "") {
-				alert.show(localization_msg.alert_filename_empty);
+				alert.show(core.module.localization.msg.alert_filename_empty);
 				// alert.show("Not Selected.");
 				return false;
 			}
@@ -37,7 +36,7 @@ goorm.core.file._export = {
 				file: data.name
 			};
 
-			core.module.loading_bar.start(localization_msg.loading_bar_export);
+			core.module.loading_bar.start(core.module.localization.msg.loading_bar_export);
 			$.get("file/export", postdata, function(data) {
 				core.module.loading_bar.stop();
 
@@ -52,13 +51,13 @@ goorm.core.file._export = {
 				} else {
 					switch (data.err_code) {
 						case 10:
-							alert.show(localization_msg.alert_invalide_query);
+							alert.show(core.module.localization.msg.alert_invalide_query);
 							break;
 						case 20:
-							alert.show(localization_msg.alert_cannot_export_file);
+							alert.show(core.module.localization.msg.alert_cannot_export_file);
 							break;
 						case 30:
-							alert.show(localization_msg.alert_cannot_make_directory);
+							alert.show(core.module.localization.msg.alert_cannot_make_directory);
 					}
 				}
 			});

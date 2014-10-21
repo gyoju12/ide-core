@@ -707,9 +707,7 @@ goorm.core.project.explorer.prototype = {
 	},
 
 	drag_n_drop: function() {
-		var self = this;
-		var localization_msg = core.module.localization.msg;
-		
+		var self = this;		
 		var treeview = $('#project_treeview');
 
 		var isWholerow = true;
@@ -740,16 +738,16 @@ goorm.core.project.explorer.prototype = {
 				var entry = items[i].getAsEntry ? items[i].getAsEntry() : items[i].webkitGetAsEntry();
 
 				if(entry && entry.isDirectory) {
-					alert.show(localization_msg.alert_folder_upload_is_not_allowed);
+					alert.show(core.module.localization.msg.alert_folder_upload_is_not_allowed);
 					return false;
 				}
 			}
 
 			confirmation.init({
-				title: localization_msg.import_file,
-				message: localization_msg.confirmation_file_upload,
-				yes_text: localization_msg.confirmation_yes,
-				no_text: localization_msg.confirmation_no,
+				title: core.module.localization.msg.import_file,
+				message: core.module.localization.msg.confirmation_file_upload,
+				yes_text: core.module.localization.msg.confirmation_yes,
+				no_text: core.module.localization.msg.confirmation_no,
 				//yes_localization: 'confirmation_auto_logout_keep_using',
 				//no_localization: 'confirmation_logout',
 				yes: function() {

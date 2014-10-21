@@ -15,19 +15,18 @@ goorm.core.file._import = {
 
 	init: function() {
 		var self = this;
-		var localization_msg = core.module.localization.msg;
 
 		self.panel = $("#dlg_import_file");
 		self.input = $('#file_import_file');
 
 		var handle_ok = function() {
 			if (self.input.val() === '') {
-				alert.show(localization_msg.alert_file_not_select);
+				alert.show(core.module.localization.msg.alert_file_not_select);
 				return false;
 			}
 
 			var data = self.dialog_explorer.get_data();
-			core.module.loading_bar.start(localization_msg.processing);
+			core.module.loading_bar.start(core.module.localization.msg.processing);
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 		};
@@ -52,21 +51,21 @@ goorm.core.file._import = {
 						if (data.err_code === 0) {
 							self.panel.modal('hide');
 
-							notice.show(localization_msg.notice_file_import_done);
+							notice.show(core.module.localization.msg.notice_file_import_done);
 							core.module.layout.project_explorer.refresh();
 						} else {
 							switch (data.err_code) {
 								case 21:
 									confirmation.init({
-										message: (data.file.length == 1) ? "[" + data.file[0] + "] " + localization_msg.imported_file_exist_single : "[" + data.file.join(", ") + "] " + localization_msg.imported_file_exist_multiple,
-										yes_text: localization_msg.confirmation_yes,
-										no_text: localization_msg.confirmation_no,
+										message: (data.file.length == 1) ? "[" + data.file[0] + "] " + core.module.localization.msg.imported_file_exist_single : "[" + data.file.join(", ") + "] " + core.module.localization.msg.imported_file_exist_multiple,
+										yes_text: core.module.localization.msg.confirmation_yes,
+										no_text: core.module.localization.msg.confirmation_no,
 										title: "Confirmation",
 										zIndex: 1001,
 
 										yes: function() {
 											$('#myForm').attr('action', 'file/import?is_overwrite=true');
-											core.module.loading_bar.start(localization_msg.import_in_progress);
+											core.module.loading_bar.start(core.module.localization.msg.import_in_progress);
 											$('#myForm').submit();
 											self.panel.modal('hide');
 											$('#myForm').attr('action', 'file/import');
@@ -88,15 +87,15 @@ goorm.core.file._import = {
 									break;
 								case 20:
 									self.panel.modal('hide');
-									alert.show(localization_msg.alert_permission_denied);
+									alert.show(core.module.localization.msg.alert_permission_denied);
 									break;
 								case 30:
-									alert.show("[" + data.file.join(", ") + "]<br/>" + localization_msg.alert_duplicate_dir);
+									alert.show("[" + data.file.join(", ") + "]<br/>" + core.module.localization.msg.alert_duplicate_dir);
 									break;
 								default:
 									self.panel.modal('hide');
 
-									alert.show(localization_msg.alert_invalide_query);
+									alert.show(core.module.localization.msg.alert_invalide_query);
 									break;
 							}
 						}
