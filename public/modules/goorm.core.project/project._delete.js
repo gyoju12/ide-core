@@ -21,12 +21,12 @@ goorm.core.project._delete = {
 
 		this.panel = $("#dlg_delete_project");
 		
-		this.__handle_delete = function(panel) {
+		this.__handle_delete = $.debounce(function(panel) { // jeongmin: prevent multiple export
 			self.processing = true;
 			$(core).trigger('on_project_before_delete');
 
 			var data = self.project_list.get_data();
-			var delete_project_path=data.path;
+			var delete_project_path = data.path;
 
 			var postdata = {
 				project_path: data.path
@@ -38,7 +38,7 @@ goorm.core.project._delete = {
 				core.socket.once("/project/delete", function(data) {
 					$("#project_delete_list").empty();
 					$("#project_delete_information").empty();
-					
+
 					var received_data = data;
 					if (received_data.err_code === 0) {
 						
@@ -48,7 +48,7 @@ goorm.core.project._delete = {
 						// 		window_manager.close_by_index(i, i);
 						// 	}
 						// });
-			
+
 						var wm = core.module.layout.workspace.window_manager;
 
 						for (var i = wm.window.length - 1; i >= 0; i--) {
@@ -112,7 +112,9 @@ goorm.core.project._delete = {
 						self.processing = false;
 					});
 
-				}, true, true); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
+				}, true, {
+					lock: true
+				}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
 				core.socket.emit("/project/delete", postdata);
 			}
 			// else if (storage == "Google Drive") {
@@ -175,7 +177,7 @@ goorm.core.project._delete = {
 			// 	}, true);
 			// 	core.socket.emit("/cloud/dropbox_delete", data.path);
 			// }
-		};
+		}, 400, true); // jeongmin: true means invokeAsap
 
 		this.project_list = new goorm.core.project.list();
 		this.dialog = new goorm.core.dialog();
@@ -183,7 +185,7 @@ goorm.core.project._delete = {
 			// localization_key: "title_delete_project",
 			id: "dlg_delete_project",
 			handle_ok: function() {
-				if(!self.processing) {
+				if (!self.processing) {
 					var data = self.project_list.get_data();
 
 					if (data.path == "") {
@@ -202,7 +204,7 @@ goorm.core.project._delete = {
 								$("#project_delete_list").focus();
 							}
 						});
-						
+
 						confirmation.show();
 					}
 				}
@@ -245,7 +247,7 @@ goorm.core.project._delete = {
 
 		this.project_list.set_keydown_event({
 			'handler': function() {
-				if(!self.processing) {
+				if (!self.processing) {
 					var data = self.project_list.get_data();
 					if (data.path == "") {
 						alert.show(core.module.localization.msg.alert_project_not_selected);

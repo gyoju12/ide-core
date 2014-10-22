@@ -681,7 +681,7 @@ goorm.core.project.explorer.prototype = {
 			  		alert.show(localization_msg.alert_upload_fail);
 					console.log('Something went terribly wrong...');
 			  	}
-			  	core.module.loading_bar.stop();
+			  	core.module.loading_bar.done();
 			  	self.refresh();			  	
 			  	self.treeview.open_node(target);			  	
 
@@ -703,7 +703,9 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		// TODO : localization
-		core.module.loading_bar.start(localization_msg.loading_bar_folder_upload);
+		core.module.loading_bar.start({
+			str: localization_msg.loading_bar_folder_upload
+		});
 	},
 
 	drag_n_drop: function() {

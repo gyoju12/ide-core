@@ -20,7 +20,9 @@ var express = require('express'),
 	http = require('http'),
 	colors = require('colors'),
 	
-	redis = require('socket.io/node_modules/redis');
+	redis = require('socket.io/node_modules/redis'),
+	connect = require('express/node_modules/connect'),
+	cookie = require('express/node_modules/connect/node_modules/cookie');
 
 // External Variables
 //
@@ -31,6 +33,8 @@ Schema = null;
 ObjectId = null;
 g_cluster = require("./modules/goorm.core.utility/utility.cluster");
 RedisStore = null;
+
+
 
 
 
@@ -161,6 +165,8 @@ goorm.init = function() {
 			
 
 			
+
+			
 		}
 
 		// Update Workspace Path 
@@ -234,6 +240,8 @@ goorm.config = function() {
 	// Configuration
 	goorm.configure(function() {
 		goorm.set('views', __dirname + '/views');
+		goorm.set("jsonp callback", true);
+
 		goorm.engine('html', require('ejs').renderFile);
 		goorm.use(express.bodyParser({
 			keepExtensions: true,
@@ -247,14 +255,13 @@ goorm.config = function() {
 			limit: '50mb'
 		}));
 
-		
-
-		
 		goorm.use(express.cookieParser());
 		goorm.use(express.session({
 			secret: 'rnfmadlek',
+			key: 'express.sid',
 			store: store
 		}));
+
 		
 
 		
@@ -363,11 +370,10 @@ goorm.routing = function() {
 
 	
 
+	
+
 	//for plugin
 	goorm.get('/plugin/get_list', routes.plugin.get_list);
-	//goorm.get('/plugin/install',  routes.plugin.install);
-	goorm.get('/plugin/new', goorm.check_session, routes.plugin.do_new);
-	goorm.post('/plugin/create', goorm.check_session, routes.plugin.do_create);
 	goorm.post('/plugin/get_dialog', goorm.check_session, routes.plugin.get_dialog);
 	goorm.post('/plugin/check_css', routes.plugin.check_css);
 	goorm.get('/plugin/make_template', goorm.check_session, routes.plugin.make_template);
@@ -595,6 +601,21 @@ goorm.load = function() {
 							'redisSub': global.__redis.sub,
 							'redisClient': global.__redis.store
 						}));
+
+						io.set('authorization', function (handshakeData, accept) {
+							if (handshakeData.headers.cookie) {
+							    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+							    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+
+							    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+									return accept('Cookie is invalid.', false);
+							    }
+							} else {
+								return accept('No cookie transmitted.', false);
+							} 
+
+							accept(null, true);
+						});
 					})
 				}
 

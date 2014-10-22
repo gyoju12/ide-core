@@ -202,7 +202,7 @@ goorm.core.project._import = {
 		};
 
 		////// check imported project is valid. Jeong-Min Im. -> same as new project //////
-		core.socket.once("/project/valid", function(valid) {
+		core._socket.once("/project/valid", function(valid) {
 			if (valid.result) {
 				core.socket.once("/project/new", cb);
 				core.socket.emit("/project/new", senddata);
@@ -240,7 +240,7 @@ goorm.core.project._import = {
 				}
 			}
 		});
-		core.socket.emit("/project/valid", senddata);
+		core._socket.emit("/project/valid", senddata);
 
 		// if (where.attr("id") == "dlg_import_project") {
 		// 	if (typeof(this.hide) !== 'function' && self.panel) {
@@ -270,7 +270,9 @@ goorm.core.project._import = {
 			beforeSubmit: function() {
 				// core.progressbar.set(10);
 				if (where.find('.project_import_form').attr('action') == 'project/import') // jeongmin: only when import is really in progress
-					core.module.loading_bar.start(core.module.localization.msg.import_in_progress);
+					core.module.loading_bar.start({
+						str: core.module.localization.msg.import_in_progress
+					});
 			},
 
 			success: function(data) {
@@ -309,7 +311,7 @@ goorm.core.project._import = {
 
 					}
 				} else {
-					core.module.loading_bar.stop(); // jeongmin: 'import is in progress' loading bar
+					core.module.loading_bar.done(); // jeongmin: 'import is in progress' loading bar
 					where.modal('hide'); // jeongmin: import project dialog
 					
 					if (data.err_code === 0) {
@@ -328,7 +330,7 @@ goorm.core.project._import = {
 
 			error: function() {
 				// core.progressbar.set(100);
-				core.module.loading_bar.stop();
+				core.module.loading_bar.done();
 			}
 		};
 

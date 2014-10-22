@@ -229,7 +229,7 @@ goorm.core.prototype = {
 		});
 
 		_this.on('goorm_login_complete', function() {
-			self.socket.emit('/project/valid_manifest', {}); // jeongmin: goorm.manifest validation
+			self._socket.emit('/project/valid_manifest', {}); // jeongmin: goorm.manifest validation
 			// if (parseInt(localStorage.left_tabview_index, 10) >= 0 && $('#goorm_left ul li a').length - 1 >= parseInt(localStorage.left_tabview_index, 10))
 			// 	core.module.layout.left_tabview.selectTab(parseInt(localStorage.left_tabview_index, 10));
 			// else
@@ -645,8 +645,7 @@ goorm.core.prototype = {
 
 		
 		self.socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
-			'channel': 'join',
-			'user': core.user.id
+			'channel': 'join'
 		}));
 		
 	},

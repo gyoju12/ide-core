@@ -62,16 +62,29 @@ module.exports = {
 					}
 
 					if (channel == "join") {
-						
+						if (socket && socket.handshake && socket.handshake.sessionID) {
+							var sessionID = socket.handshake.sessionID;
+							store.client.set('socket_'+sessionID, socket.id);
+						}
 
-						socket.set('id_type', JSON.stringify({
-							'id': msg_obj.user
-						}));
-
-						
-
-						if (!msg_obj.refresh) {
+						if (!msg_obj.reconnect) {
 							socket.to().emit('user_access');
+						}
+
+						if (msg_obj.fs_socket_id) {
+							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
+
+							self.get_user_data(socket, function (user_data) {
+								if (user_data.result) {
+									var id = user_data.id;
+
+									fs_socket.set('id_type', JSON.stringify({
+										'id': id
+									}));
+								}
+
+								socket.to().emit('fs_access', user_data.result);
+							});
 						}
 					}
 				} catch (e) {
@@ -121,7 +134,7 @@ module.exports = {
 					socket.emit("/project/valid", valid);
 				});
 
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg['author'] = {
 						author_id: user_data.id
 					}
@@ -150,7 +163,7 @@ module.exports = {
 
 				});
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_project.do_new(msg, evt);
 				});
@@ -164,7 +177,7 @@ module.exports = {
 				});
 
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					
 					
 					g_project.do_delete(msg, evt, user_data);
@@ -189,7 +202,7 @@ module.exports = {
 				});
 
 
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg['author'] = {
 						author_id: user_data.id
 					}
@@ -261,7 +274,7 @@ module.exports = {
 					socket.emit("/project/check_valid_property", data);
 				});
 
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.uid = user_data.uid;
 					msg.gid = user_data.gid;
 					g_project.check_valid_property(msg, evt);
@@ -283,13 +296,94 @@ module.exports = {
 				});
 
 				// get user's project list. Jeong-Min Im.
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg['author'] = {
 						author_id: user_data.id
 					};
 					msg.get_list_type = 'collaboration_list';
 
 					g_project.get_list(msg, evt);
+				});
+			});
+
+			socket.on('/plugin/create', function (msg) {
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						var uid = null;
+						var gid = null;
+
+						var copy = function() {
+							var plugin_name = msg.plugin;
+							var project_data = msg.data;
+
+							var workspace = global.__workspace + "/" + project_data.project_dir;
+							var template_path = global.__path + 'temp_files/' + user_data.id + '/plugins/' + plugin_name;
+
+							// Default Plugin
+							//
+							if (global.plugins_list && global.plugins_list.length > 0) {
+								var is_default_plg = global.plugins_list.some(function(o) {
+									if (o && o.name === plugin_name) return true;
+								});
+
+								if (is_default_plg) {
+									template_path = global.__path + 'plugins/' + plugin_name;
+								}
+							}
+
+							var template = template_path + "/template";
+
+							if (project_data.project_detailed_type) {
+								try {
+									var syncStat = fs.statSync(template + "/" + project_data.project_detailed_type.replace(/\s/g, "\ "));
+									if (!syncStat || !syncStat.isDirectory()) {
+
+									} else {
+										template += "/" + project_data.project_detailed_type.replace(/\s/g, "\\ ");
+									}
+								} catch (e) {
+
+								}
+							}
+
+							exec('cp -r ' + template + '/* ' + workspace, function(__err) {
+								if (__err) {
+									console.log("do_create error!:", __err);
+								}
+								fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+									var contents = JSON.parse(file_data);
+
+									contents.plugins = project_data.plugins;
+									contents.detailedtype = project_data.project_detailed_type;
+
+									fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+										encoding: 'utf-8',
+										mode: 0700
+									}, function(err) {
+										if (err) {
+											console.log(err);
+										}
+										
+
+										
+
+										
+										socket.to().emit('/plugin/create', {
+											code: 200,
+											message: "success"
+										});
+										
+									});
+								});
+							});
+						};
+
+						
+						copy();
+						
+
+						
+					}
 				});
 			});
 
@@ -302,7 +396,7 @@ module.exports = {
 				});
 
 				// for edu (ver 1.5)
-				// self.get_user_data(socket.id, function(user_data) {
+				// self.get_user_data(socket, function(user_data) {
 				// 	var msg_path = msg.path.split("/");
 
 				// 	var project_path = msg_path[0];
@@ -348,7 +442,7 @@ module.exports = {
 				
 
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_file.do_new(msg, evt);
 				});
@@ -362,7 +456,7 @@ module.exports = {
 				});
 
 				// for edu (ver 1.5)
-				// self.get_user_data(socket.id, function(user_data) {
+				// self.get_user_data(socket, function(user_data) {
 				// 	var msg_current_path = msg.current_path.split("/");
 
 				// 	var project_path = msg_current_path[0];
@@ -409,7 +503,7 @@ module.exports = {
 				
 
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_file.do_new_folder(msg, evt);
 
@@ -424,7 +518,7 @@ module.exports = {
 				});
 
 				// for edu (ver 1.5)
-				// self.get_user_data(socket.id, function(user_data) {
+				// self.get_user_data(socket, function(user_data) {
 				// 	var msg_current_path = msg.current_path.split("/");
 
 				// 	var project_path = msg_current_path[0];
@@ -472,7 +566,7 @@ module.exports = {
 				
 
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_file.do_new_untitled_text_file(msg, evt);
 				});
@@ -487,7 +581,7 @@ module.exports = {
 				});
 
 				//for edu(ver 1.5)
-				// self.get_user_data(socket.id, function(user_data) {
+				// self.get_user_data(socket, function(user_data) {
 				// 	var msg_current_path = msg.current_path.split("/");
 
 				// 	var project_path = msg_current_path[0];
@@ -535,7 +629,7 @@ module.exports = {
 				
 
 				
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_file.do_new_other(msg, evt);
 				});
@@ -567,7 +661,7 @@ module.exports = {
 				});
 
 				//for edu(ver 1.5)
-				// self.get_user_data(socket.id, function(user_data) {
+				// self.get_user_data(socket, function(user_data) {
 				// 	var msg_filename = msg.filename.split("/");
 
 				// 	var project_path = msg_filename[0];
@@ -802,7 +896,7 @@ module.exports = {
 					socket.emit("/file/rename", res_data);
 				} else {
 					//for edu (ver 1.5)
-					// self.get_user_data(socket.id, function(user_data) {
+					// self.get_user_data(socket, function(user_data) {
 					// 	var msg_ori_path = msg.ori_path;
 					// 	var msg_ori_path_split = msg_ori_path.split("/");
 
@@ -971,7 +1065,7 @@ module.exports = {
 			//API : dropbox
 			// dropbox app authorized
 			// socket.on('/cloud/dropbox_login', function() {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			var access_token = {};
 
@@ -997,7 +1091,7 @@ module.exports = {
 
 			// // dropbox app authorized out
 			// socket.on('/cloud/dropbox_logout', function() {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		g_cloud_dropbox.logout(user_data, function(user) {
 			// 			self.get_session_id(socket.id, function(session_id) {
 			// 				console.log("dropbox: logout access_token is { null } ");
@@ -1010,14 +1104,14 @@ module.exports = {
 
 			// // change UI state (login or logout)
 			// socket.on('/cloud/dropbox_islogin', function() {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		g_cloud_dropbox.check_login(socket.id, user_data);
 			// 	});
 			// });
 
 			// // dropbox make directory
 			// socket.on('/cloud/dropbox_mkdir', function(dir_name) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1040,7 +1134,7 @@ module.exports = {
 
 			// // dropbox make file
 			// socket.on('/cloud/dropbox_mkfile', function(file_name, file_text) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1063,7 +1157,7 @@ module.exports = {
 
 			// // dropbox copy file
 			// socket.on('/cloud/dropbox_cpfile', function(from_path, to_path) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1086,7 +1180,7 @@ module.exports = {
 
 			// // dropbox move file
 			// socket.on('/cloud/dropbox_mvfile', function(from_path, to_path) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1109,7 +1203,7 @@ module.exports = {
 
 			// // delete file or directory
 			// socket.on('/cloud/dropbox_delete', function(file_name) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1130,7 +1224,7 @@ module.exports = {
 			// });
 
 			// socket.on('/cloud/dropbox_upload_files', function(from_path, to_path, is_dir) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1150,7 +1244,7 @@ module.exports = {
 
 			// // make new project (in dropbox)
 			// socket.on('/cloud/dropbox_make_new_project', function(data, plugin_name) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1170,7 +1264,7 @@ module.exports = {
 
 			// // get file information (type)
 			// socket.on('/cloud/dropbox_get_metadata', function(path) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1194,7 +1288,7 @@ module.exports = {
 			// // get file contents 
 			// socket.on('/cloud/dropbox_get_file_contents', function(filepath, filename, filetype) {
 			// 	var path = filepath + filename;
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1224,7 +1318,7 @@ module.exports = {
 			// // open new window (media file)
 			// socket.on('/cloud/dropbox_get_media_url', function(filepath, filename, filetype) {
 			// 	var path = filepath + filename;
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1246,7 +1340,7 @@ module.exports = {
 
 			// // get projects (directory that have goorm.manifest)
 			// socket.on('/cloud/dropbox_get_project_list', function() {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1268,7 +1362,7 @@ module.exports = {
 
 			// // read directory and file
 			// socket.on('/cloud/dropbox_get_file_list', function(path, recursive, details) {
-			// 	self.get_user_data(socket.id, function(user_data) {
+			// 	self.get_user_data(socket, function(user_data) {
 			// 		if (user_data.result) {
 			// 			try { // jeongmin: try catching
 			// 				var preference = JSON.parse(user_data.preference);
@@ -1340,7 +1434,7 @@ module.exports = {
 					});
 				};
 
-				self.get_user_data(socket.id, function(user_data) {
+				self.get_user_data(socket, function(user_data) {
 					if (user_data && user_data.id) {
 						var user_id = user_data.id;
 
@@ -1399,55 +1493,82 @@ module.exports = {
 		});
 	},
 
-	get_user_data: function(socket_id, callback) {
-		this.get_session_id(socket_id, function(sessionID) {
-			if (global.__redis_mode) {
-				store.client.get(sessionID, function(err, user_data) {
-					if (user_data) {
-						try { // jeongmin: try catching
-							user_data = JSON.parse(user_data);
+	get_user_data: function(socket, callback) {
+		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
+			var sessionID = socket.handshake.sessionID;
 
-							user_data.result = true;
-							callback(user_data);
-						} catch (e) {
-							console.log('get user data error:', e);
-							callback({
-								'result': false
-							});
-						}
-					} else {
+			store.client.get(sessionID, function (err, user_data) {
+				if (user_data) {
+					try { // jeongmin: try catching
+						user_data = JSON.parse(user_data);
 
-						callback({
-							'result': false
-						});
-					}
-				});
-			} else {
-				store.get(sessionID, function(err, user) {
-					try {
-						var user_data = null;
-
-						if (user && user.auth && user.auth.password) {
-							user_data = user.auth.password.user;
-						}
-						if (user_data) {
-							user_data.result = true;
-							callback(user_data);
-						} else {
-							callback({
-								'result': false
-							});
-						}
+						user_data.result = true;
+						callback(user_data);
 					} catch (e) {
-						console.log('get_user_data error:', err, e);
-
+						console.log('collaboration client store error:', e);
 						callback({
 							'result': false
 						});
 					}
-				});
-			}
-		});
+				} else {
+					callback({
+						'result': false
+					});
+				}
+			});
+		}
+		else {
+			var socket_id = socket.id;
+						
+			this.get_session_id(socket_id, function(sessionID) {
+				if (global.__redis_mode) {
+					store.client.get(sessionID, function(err, user_data) {
+						if (user_data) {
+							try { // jeongmin: try catching
+								user_data = JSON.parse(user_data);
+
+								user_data.result = true;
+								callback(user_data);
+							} catch (e) {
+								console.log('get user data error:', e);
+								callback({
+									'result': false
+								});
+							}
+						} else {
+
+							callback({
+								'result': false
+							});
+						}
+					});
+				} else {
+					store.get(sessionID, function(err, user) {
+						try {
+							var user_data = null;
+
+							if (user && user.auth && user.auth.password) {
+								user_data = user.auth.password.user;
+							}
+							if (user_data) {
+								user_data.result = true;
+								callback(user_data);
+							} else {
+								callback({
+									'result': false
+								});
+							}
+						} catch (e) {
+							console.log('get_user_data error:', err, e);
+
+							callback({
+								'result': false
+							});
+						}
+					});
+				}
+			});
+		}
 	}
 
 	// update_session: function(sessionID, user) {

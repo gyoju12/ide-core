@@ -129,6 +129,9 @@ module.exports = {
 			
 
 			
+
+
+			
 		} else {
 			data.err_code = 10;
 			data.message = "Invalid query";
@@ -147,6 +150,8 @@ module.exports = {
 			'user': user_data.id,
 			'project_path': query.project_path
 		}
+
+		
 
 		
 
@@ -864,7 +869,7 @@ module.exports = {
 		var source_path = g_secure.command_filter(__workspace + query.project_path + "/" + query.source_path);
 		var source_file = g_secure.command_filter(source_path + query.class_name);
 		var makefile = g_secure.command_filter(__workspace + query.project_path + "/make");
-		var uid = query.uid;
+		
 		
 		
 		fs.exists(makefile, function(exist) {

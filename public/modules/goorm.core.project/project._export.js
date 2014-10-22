@@ -39,9 +39,11 @@ goorm.core.project._export = {
 				export_type: type.toLowerCase()
 			};
 
-			core.module.loading_bar.start(core.module.localization.msg.loading_bar_export);
+			core.module.loading_bar.start({
+				str: core.module.localization.msg.loading_bar_export
+			});
 			$.get("project/export", postdata, function(data) {
-				core.module.loading_bar.stop();
+				core.module.loading_bar.done();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');

@@ -212,8 +212,6 @@ goorm.core.layout = {
 		// 	}, menu_time);
 		// });
 
-		// main-menu for submenu event by youseok.nam
-		//
 		var $last_child_menu = null;
 		var hover_timer = null;
 		var is_hover = false;
@@ -345,8 +343,6 @@ goorm.core.layout = {
 				$(".ui-layout-resizer-east").removeClass("ui-layout-resizer-temp");
 			});
 		
-		// bubble (more) button for main-toolbar by youseok.nam
-		//
 		$('#toolbar_more_button').click(function(e) {
 			goorm.core.layout.reposition_bubble_toolbar();
 			$('#bubble_toolbar').fadeToggle('fast', function() {
@@ -691,7 +687,7 @@ goorm.core.layout = {
 					break;
 
 					/* east */
-					
+				
 				case 'outline':
 					id = 'gLayoutTab_Outline';
 					pane = 'east';

@@ -558,105 +558,105 @@ goorm.core.edit.dictionary.prototype = {
 	},
 	get_dictionary: function(keyword_object, callback) {
 		var self = this;
-		var reg_exp = new RegExp('^' + keyword_object.keyword, '');
+		// var reg_exp = new RegExp('^' + keyword_object.keyword, '');
 
-		var get_description = function(type, item) {
-			var description_html = "";
-			description_html += "<div>";
-			description_html += "<div style='padding:2px;'><b>Type</b> : " + type + "</div>";
-			description_html += "</div>";
+		// var get_description = function(type, item) {
+		// 	var description_html = "";
+		// 	description_html += "<div>";
+		// 	description_html += "<div style='padding:2px;'><b>Type</b> : " + type + "</div>";
+		// 	description_html += "</div>";
 
-			return description_html;
-		};
+		// 	return description_html;
+		// };
 
-		$.get('/edit/get_dictionary', {
-			workspace: core.module.layout.workspace.window_manager.active_filename.split('/')[0],
-			selected_file_path: core.module.layout.workspace.window_manager.active_filename,
-			line_content: keyword_object.line_content
+		// $.get('/edit/get_dictionary', {
+		// 	workspace: core.module.layout.workspace.window_manager.active_filename.split('/')[0],
+		// 	selected_file_path: core.module.layout.workspace.window_manager.active_filename,
+		// 	line_content: keyword_object.line_content
 
-		}, function(data) {
-			if (data.v !== undefined) {
-				data.v = data.v.unique();
+		// }, function(data) {
+		// 	if (data.v !== undefined) {
+		// 		data.v = data.v.unique();
 
-				for (var i = 0; i < data.v.length; i++) {
-					if (reg_exp.test(data.v[i])) {
-						self.result.push({
-							'description': get_description('Global Variable', data.v[i]),
-							'keyword': data.v[i],
-							'type': 'global'
-						});
-					}
-				}
-			} //global var end
-			if (data.l !== undefined) {
-				data.l = data.l.unique();
+		// 		for (var i = 0; i < data.v.length; i++) {
+		// 			if (reg_exp.test(data.v[i])) {
+		// 				self.result.push({
+		// 					'description': get_description('Global Variable', data.v[i]),
+		// 					'keyword': data.v[i],
+		// 					'type': 'global'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //global var end
+		// 	if (data.l !== undefined) {
+		// 		data.l = data.l.unique();
 
-				for (var i = 0; i < data.l.length; i++) {
-					if (reg_exp.test(data.l[i])) {
-						self.result.push({
-							'description': get_description('Local Variable', data.l[i]),
-							'keyword': data.l[i],
-							'type': 'local'
-						});
-					}
-				}
-			} //local var end				
-			if (data.f !== undefined) {
-				data.f = data.f.unique();
+		// 		for (var i = 0; i < data.l.length; i++) {
+		// 			if (reg_exp.test(data.l[i])) {
+		// 				self.result.push({
+		// 					'description': get_description('Local Variable', data.l[i]),
+		// 					'keyword': data.l[i],
+		// 					'type': 'local'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //local var end				
+		// 	if (data.f !== undefined) {
+		// 		data.f = data.f.unique();
 
-				for (var i = 0; i < data.f.length; i++) {
-					if (reg_exp.test(data.f[i])) {
-						self.result.push({
-							'description': get_description("Function", data.f[i]),
-							'keyword': data.f[i],
-							'type': 'func'
-						});
-					}
-				}
-			} //function end
-			if (data.m !== undefined) {
-				data.m = data.m.unique();
+		// 		for (var i = 0; i < data.f.length; i++) {
+		// 			if (reg_exp.test(data.f[i])) {
+		// 				self.result.push({
+		// 					'description': get_description("Function", data.f[i]),
+		// 					'keyword': data.f[i],
+		// 					'type': 'func'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //function end
+		// 	if (data.m !== undefined) {
+		// 		data.m = data.m.unique();
 
-				for (var i = 0; i < data.m.length; i++) {
-					if (reg_exp.test(data.m[i])) {
-						self.result.push({
-							'description': get_description("Method", data.m[i]),
-							'keyword': data.m[i],
-							'type': 'method'
-						});
-					}
-				}
-			} //method end
-			if (data.c !== undefined) {
-				data.c = data.c.unique();
+		// 		for (var i = 0; i < data.m.length; i++) {
+		// 			if (reg_exp.test(data.m[i])) {
+		// 				self.result.push({
+		// 					'description': get_description("Method", data.m[i]),
+		// 					'keyword': data.m[i],
+		// 					'type': 'method'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //method end
+		// 	if (data.c !== undefined) {
+		// 		data.c = data.c.unique();
 
-				for (var i = 0; i < data.c.length; i++) {
-					if (reg_exp.test(data.c[i])) {
-						self.result.push({
-							'description': get_description("Class", data.c[i]),
-							'keyword': data.c[i],
-							'type': 'class'
-						});
-					}
-				}
-			} //class
-			if (data.p !== undefined) {
-				data.p = data.p.unique();
+		// 		for (var i = 0; i < data.c.length; i++) {
+		// 			if (reg_exp.test(data.c[i])) {
+		// 				self.result.push({
+		// 					'description': get_description("Class", data.c[i]),
+		// 					'keyword': data.c[i],
+		// 					'type': 'class'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //class
+		// 	if (data.p !== undefined) {
+		// 		data.p = data.p.unique();
 
-				for (var i = 0; i < data.p.length; i++) {
-					if (reg_exp.test(data.p[i])) {
-						self.result.push({
-							'description': get_description("package", data.p[i]),
-							'keyword': data.p[i],
-							'type': 'package'
-						});
-					}
-				}
-			} //package
-			if (typeof callback === "function") {
+		// 		for (var i = 0; i < data.p.length; i++) {
+		// 			if (reg_exp.test(data.p[i])) {
+		// 				self.result.push({
+		// 					'description': get_description("package", data.p[i]),
+		// 					'keyword': data.p[i],
+		// 					'type': 'package'
+		// 				});
+		// 			}
+		// 		}
+		// 	} //package
+		// 	if (typeof callback === "function") {
 				callback();
-			}
-		});
+		// 	}
+		// });
 	},
 
 	get_dictionary_java: function(query, callback) {

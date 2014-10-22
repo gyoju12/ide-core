@@ -197,6 +197,11 @@ exports.project.move_file = function(req, res) {
 
 
 
+
+
+
+
+
 /*
  * API : Plugin
  */
@@ -213,16 +218,6 @@ exports.plugin.get_list = function(req, res) {
 	});
 
 	g_plugin.get_list(evt);
-};
-
-exports.plugin.do_new = function(req, res) {
-
-	
-
-		
-	g_plugin.do_new(req.query, res);
-	
-
 };
 
 
@@ -1250,7 +1245,7 @@ exports.edit.load_tags = function(req, res) {
 
 
 
-//useonly(mode=dev,edu-on-promise,book,edu,product)
+//useonly(mode=dev,edu-on-promise,book,edu,product,product-l2-ide,product-l2-fs)
 exports.load_userplugin = function(req, res) {
 	g_plugin.load_userplugin(req, res, function(has_user_plugin, list) {
 		if (has_user_plugin)

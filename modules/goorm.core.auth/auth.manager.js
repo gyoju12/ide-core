@@ -168,7 +168,7 @@ module.exports = {
 			store.client.set(req.sessionID, JSON.stringify(user_data));
 		} else {
 			session.auth = {
-				loggedIn: true
+				loggedIn: true,
 			};
 
 			//jeongmin: literal is faster

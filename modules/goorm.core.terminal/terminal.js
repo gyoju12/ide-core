@@ -16,7 +16,7 @@ var g_auth_p = require("../goorm.core.auth/auth.project");
 
 
 
-	
+
 if (/v0.10/.test(process.version)) {
 	pty = require('../../libs/core/pty/ver_0.10/pty.js');
 } else {
@@ -38,6 +38,8 @@ var spawn = require('child_process').spawn;
 module.exports = {
 	term: {},
 	io: null,
+
+	
 
 	
 
@@ -85,7 +87,6 @@ module.exports = {
 					term_index = randomStringfunc(27) + (new Date()).getTime(); //index++; jeongmin: new terminal is created, list++
 
 						
-
 					var bashrc = global.__path + 'configs/bash.bashrc'
 					var command = '--rcfile ' + bashrc;
 					var export_path = global.__temp_dir + 'bin/';
@@ -135,6 +136,10 @@ module.exports = {
 
 					
 
+
+					
+
+
 					
 				} catch (e) {
 					console.log('terminal start error:', e);
@@ -164,6 +169,8 @@ module.exports = {
 					msg = JSON.parse(msg);
 
 					var name = msg.name;
+
+					
 
 					
 
@@ -222,6 +229,8 @@ module.exports = {
 			socket.on('terminal_leave', function(msg) {
 				
 
+				
+
 					
 				if (self.term[msg.index] && self.term[msg.index].pty) {
 					self.term[msg.index].pty.destroy();
@@ -237,7 +246,9 @@ module.exports = {
 
 				
 
-					
+				
+
+				
 				try { // jeongmin: try catching
 					msg = JSON.parse(msg);
 					var do_exec = function(msg) {
@@ -259,6 +270,8 @@ module.exports = {
 					msg = JSON.parse(msg);
 
 					var name = msg.name;
+
+					
 
 					
 

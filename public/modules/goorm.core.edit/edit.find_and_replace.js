@@ -223,7 +223,9 @@ goorm.core.edit.find_and_replace = {
 	},
 
 	find_all: function() {
-		core.module.loading_bar.start(core.module.localization.msg.loading_bar_search);
+		core.module.loading_bar.start({
+			str: core.module.localization.msg.loading_bar_search
+		});
 		var window_manager = core.module.layout.workspace.window_manager;
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window].editor) {
@@ -403,7 +405,7 @@ goorm.core.edit.find_and_replace = {
 	/* 트리뷰 만들어줘야됌 */
 	search_all: function(keyword, editor) {
 		if (!keyword) {
-			core.module.loading_bar.stop();
+			core.module.loading_bar.done();
 			return;
 		}
 		var text = keyword;
@@ -502,7 +504,7 @@ goorm.core.edit.find_and_replace = {
 			var cursor = editor.getSearchCursor(text, null, caseFold);
 			if (!cursor.findNext()) {
 				core.dialog.search.set_search_treeview(null);
-				core.module.loading_bar.stop();
+				core.module.loading_bar.done();
 				return;
 			}
 			// search all matched words and set background of them yellow
@@ -566,7 +568,7 @@ goorm.core.edit.find_and_replace = {
 		});
 		window_manager.window[firstActive].activate();
 		window_manager.window[firstActive].refresh();
-		core.module.loading_bar.stop();
+		core.module.loading_bar.done();
 
 	},
 

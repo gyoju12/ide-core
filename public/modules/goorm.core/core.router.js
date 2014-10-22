@@ -24,14 +24,19 @@ goorm.core.router = {
 			// this.fs_load = goorm.core.router.fs_load;
 			// this.fs_ready = goorm.core.router.fs_ready;
 
+			
+
+			
 			this.fs_url = [];
+			
+
 			this.queue = [];
 
-			this.wait_time = 3000;
-			this.work_time = 1000;
+			this.wait_time = 30;
+			this.work_time = 10;
 
 			this.request_time = 0;
-			this.request_limit = 10; // 3000 * 10 = 30s
+			this.request_limit = 1000; // 30 * 1000 = 30s
 
 			this.worker = setInterval(function() {
 				self.work();
@@ -40,6 +45,18 @@ goorm.core.router = {
 
 		this._socket.prototype = {
 			router: goorm.core.router,
+			set_url: function (url) {
+				if (typeof(url) === 'string') {
+					if (this.fs_url && this.fs_url.indexOf(url) === -1) {
+						this.fs_url.push(url);
+					}
+				}
+				else if (Array.isArray(url)) {
+					this.fs_url = this.fs_url.concat(url);
+					$.unique(this.fs_url);
+				}
+			},
+
 			once: function(url, fn, loading) {
 				var s = this.get(url);
 
@@ -47,6 +64,16 @@ goorm.core.router = {
 					s.once(url, fn, loading);
 				} else {
 					this.push('once', [url, fn, loading]);
+				}
+			},
+
+			on: function(url, fn) {
+				var s = this.get(url);
+
+				if (s && s.socket && s.socket.connected) {
+					s.on(url, fn);
+				} else {
+					this.push('on', [url, fn]);
 				}
 			},
 
@@ -61,8 +88,8 @@ goorm.core.router = {
 			},
 
 			get: function(url) {
-				if (this.router.fs_load && this.fs_url.indexOf(url) > -1) {
-					if (this.router.fs_ready) {
+				if (this.fs_url.indexOf(url) > -1) {
+					if (this.router.fs_load && this.router.fs_ready) {
 						return this.router.socket_fs;
 					} else {
 						return null;
@@ -87,26 +114,108 @@ goorm.core.router = {
 						var q = this.queue.shift();
 						var s = this.router.socket;
 
-						s[q.method].apply(self, q.params);
+						s[q.method].apply(s, q.params);
 					} else {
-						var q = this.queue[0];
-						var url = q.params[0];
-
 						setTimeout(function() {
-							var s = self.get(url);
+							var q = self.queue[0];
 
-							if (s && s.socket && s.socket.connected) {
-								self.request_time = 0;
-								s[q.method].apply(self, q.params);
+							if (q) {
+								var url = q.params[0];
 
-								this.queue.shift();
-							} else {
-								self.request_time++;
-								self.work();
+								var s = self.get(url);
+
+								if (s && s.socket && s.socket.connected) {
+									self.request_time = 0;
+									q = self.queue.shift();
+
+									s[q.method].apply(s, q.params);
+								} else {
+									self.request_time++;
+									self.work();
+								}
 							}
-
 						}, this.wait_time);
 					}
+				}
+			}
+		}
+
+		this._$ = function () {
+			var self = this;
+
+			
+
+			
+			this.fs_url = [];
+			
+		};
+
+		this._$.prototype = {
+			router: goorm.core.router,
+			set_option: function (host, port) {
+				this.host = host;
+				this.port = port;
+			},
+			set_url: function (url) {
+				if (typeof(url) === 'string') {
+					if (this.fs_url && this.fs_url.indexOf(url) === -1) {
+						this.fs_url.push(url);
+					}
+				}
+				else if (Array.isArray(url)) {
+					this.fs_url = this.fs_url.concat(url);
+					$.unique(this.fs_url);
+				}
+			},
+
+			post: function(url, data, fn) {
+				if (data && typeof (data) === 'function') {
+					fn = data;
+					data = null;
+				}
+
+				if (url && this.__get(url)) {
+					if (url[0] === '/') url = url.substr(1);
+
+					$.post('http://'+this.host+":"+this.port+'/'+url, data, fn, 'jsonp');
+				}
+				else {
+					$.post(url, data, fn);
+				}
+			},
+
+			get: function(url, data, fn) {
+				if (data && typeof (data) === 'function') {
+					fn = data;
+					data = null;
+				}
+
+				if (url && this.__get(url)) {
+					if (url[0] === '/') url = url.substr(1);
+
+					$.ajax({
+						url: 'http://'+this.host+":"+this.port+'/'+url,
+						data: data,
+						dataType: "jsonp",
+						jsonp: 'callback',
+						success: fn
+					});
+				}
+				else {
+					$.get(url, data, fn);
+				}
+			},
+
+			__get: function(url) {
+				if (this.fs_url.indexOf(url) > -1) {
+					if (this.router.fs_load && this.router.fs_ready) {
+						return true;
+					} else {
+						console.log('goormFS Fail', url);
+						return false;
+					}
+				} else {
+					return false;
 				}
 			}
 		}
@@ -157,8 +266,7 @@ goorm.core.router = {
 				//
 				self.socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
 					'channel': 'join',
-					'user': core.user.id,
-					'refresh': true
+					'reconnect': true
 				}));
 
 				// set Project Data...
@@ -216,6 +324,12 @@ goorm.core.router = {
 			alert.show(msg);
 		});
 
+		this.socket.on('/get_lxc_data_failed', function () {
+			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
+
+			alert.show(msg);
+		});
+
 		window.addEventListener('offline', function(e) {
 			disconnect();
 		});
@@ -227,5 +341,5 @@ goorm.core.router = {
 
 	get_socket: function() {
 		return this.socket;
-	},
+	}
 };

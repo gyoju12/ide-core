@@ -70,6 +70,9 @@ module.exports = {
 		else if (method === "multi-threading") {
 			return this.ip + ":" + process.threadId;
 		}
+		else {
+			return this.ip;
+		}
 	},
 
 	is_main: function () {

@@ -382,15 +382,15 @@ goorm.core.project = {
 		}, callback);
 	},
 
-	// 2.0버전 API (정경욱)
 	create: function(options, callback) {
-		$.post('/plugin/create', options, function(result) {
+		core._socket.once('/plugin/create', function(result) {
 			
 
 			
 			callback(result);
 			
 		});
+		core._socket.emit('/plugin/create', options);
 	},
 
 	clean: function(options, callback) {

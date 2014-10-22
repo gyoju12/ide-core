@@ -169,7 +169,7 @@ goorm.core.debug.prototype = {
 				if (data) {
 					if (data.result && latest) {
 						self.button_active();
-						//useonly(mode=dev,edu-on-promise,book,edu,product)
+						//useonly(mode=dev,edu-on-promise,book,edu,product,product-l2-ide,product-l2-fs)
 						//check history and alter it to current status --heeje
 						if (core.module.layout.history.selected_snapshot)
 							$("#history .history_header").click();

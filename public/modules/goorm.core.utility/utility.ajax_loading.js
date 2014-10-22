@@ -9,14 +9,14 @@
  **/
 
 goorm.core.utility.ajax_loading = {
-	init: function(socket){
-		if(!socket) return;
+	init: function(socket) {
+		if (!socket) return;
 
 		this.queue = [];
 		var _this = this;
 
 		socket.once = socket._once;
-		socket.once = function(name, fn, loading_bar, lock) {	// jeongmin: 'lock' forbids hiding loading bar
+		socket.once = function(name, fn, loading_bar, loading_option) {
 			// original once
 			/*
 			var self = this;
@@ -34,27 +34,27 @@ goorm.core.utility.ajax_loading = {
 
 			var self = this;
 
-		    function on () {
-		      self.removeListener(name, on);
-		      fn.apply(this, arguments);
-		      if(loading_bar === true) {
-		      	var i = _this.queue.indexOf(name);
-		      	_this.queue.splice(i, 1);
-		      	if(_this.queue.length === 0) {
-		      		core.module.loading_bar.stop();
-		      	}
-		      }
-		    };
+			function on() {
+				self.removeListener(name, on);
+				fn.apply(this, arguments);
+				if (loading_bar === true) {
+					var i = _this.queue.indexOf(name);
+					_this.queue.splice(i, 1);
+					if (_this.queue.length === 0) {
+						core.module.loading_bar.done();
+					}
+				}
+			};
 
-		    on.listener = fn;
-		    this.on(name, on);
+			on.listener = fn;
+			this.on(name, on);
 
-		    if(loading_bar === true) {
-		    	core.module.loading_bar.show(core.module.localization.msg.please_wait, 99.9, lock);
-		    	_this.queue.push(name);
-		    }
+			if (loading_bar === true) {
+				core.module.loading_bar.start(loading_option);
+				_this.queue.push(name);
+			}
 
-		    return this;
+			return this;
 		}.bind(socket);
 	}
 }

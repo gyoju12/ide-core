@@ -26,7 +26,9 @@ goorm.core.file._import = {
 			}
 
 			var data = self.dialog_explorer.get_data();
-			core.module.loading_bar.start(core.module.localization.msg.processing);
+			core.module.loading_bar.start({
+				str: core.module.localization.msg.processing
+			});
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 		};
@@ -46,7 +48,7 @@ goorm.core.file._import = {
 				var form_options = {
 					target: "#upload_output",
 					success: function(data) {
-						core.module.loading_bar.stop();
+						core.module.loading_bar.done();
 
 						if (data.err_code === 0) {
 							self.panel.modal('hide');
@@ -65,7 +67,9 @@ goorm.core.file._import = {
 
 										yes: function() {
 											$('#myForm').attr('action', 'file/import?is_overwrite=true');
-											core.module.loading_bar.start(core.module.localization.msg.import_in_progress);
+											core.module.loading_bar.start({
+												str: core.module.localization.msg.import_in_progress
+											});
 											$('#myForm').submit();
 											self.panel.modal('hide');
 											$('#myForm').attr('action', 'file/import');

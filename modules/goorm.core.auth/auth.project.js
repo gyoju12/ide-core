@@ -46,6 +46,7 @@ var fs = require('fs');
 var g_auth_manager = require('./auth.manager.js');
 var g_secure = require('../goorm.core.secure/secure');
 var platform = require('os');
+var __bucket = 'grm-project-bucket';
 
 var os = {
 
@@ -145,12 +146,24 @@ var os = {
 
 module.exports = {
 	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
 	
 	
+
 	
-	
-	
-	
+
 	
 	
 	
@@ -199,6 +212,9 @@ module.exports = {
 	},
 	
 	
+
+	
+
 	
 	
 	add_group: function(option, callback) {
@@ -238,6 +254,9 @@ module.exports = {
 	
 	
 	
+
+	
+
 	
 	
 	
@@ -341,5 +360,7 @@ module.exports = {
 		} else {
 			fix_manifest();
 		}
-	}
+	},
+
+		
 };

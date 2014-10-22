@@ -12,10 +12,10 @@ var list = ["google", "github", "facebook", "twitter", "password"];
 
 var http = require('http');
 var querystring = require('querystring')
-// var fs = require('fs');
+	// var fs = require('fs');
 
 module.exports = {
-	connect: function (__guest) {
+	connect: function(__guest) {
 		this.g_auth_g = __guest;
 	},
 
@@ -31,11 +31,11 @@ module.exports = {
 		var is_ret = true;
 
 		if (global.__redis_mode) {
-			store.client.get(session_id, function (err, data) {
+			store.client.get(session_id, function(err, data) {
 				if (!err && data) {
 					try { // jeongmin: try catching
 						var redis_session = JSON.parse(data);
-						store.client.get("session_" + redis_session.id, function (err, data) {
+						store.client.get("session_" + redis_session.id, function(err, data) {
 							// compare ID: session ID 
 							if (data === session_id) {
 								callback(redis_session);
@@ -92,7 +92,7 @@ module.exports = {
 		});
 	},
 
-	get_lxc: function (auth_data, callback) {
+	get_lxc: function(auth_data, callback) {
 		var self = this;
 
 		var user_id = auth_data.user_id;
@@ -100,11 +100,15 @@ module.exports = {
 
 		auth_data.user_id = req_id;
 
+		
+
+		
+
 		// GET LXC
 		//
 		var lxc_post_data = querystring.stringify(auth_data);
 		var lxc_post_options = {
-			host: '127.0.0.1',
+			host: host,
 			port: '5000',
 			path: '/vm/join_person/lxc',
 			method: 'POST',
@@ -132,19 +136,17 @@ module.exports = {
 							'host': auth_data.host,
 							"lxc_data": lxc_data,
 							'lxc_loaded': true
-						}, function () {
+						}, function() {
 							if (callback && typeof(callback) === 'function') {
 								callback(lxc_data);
 							}
 						});
-					}
-					else {
+					} else {
 						if (callback && typeof(callback) === 'function') {
 							callback(false);
 						}
 					}
-				}
-				catch (e) {
+				} catch (e) {
 					console.log('get_lxc error:', e);
 				}
 			});
@@ -157,6 +159,9 @@ module.exports = {
 		lxc_post_req.write(lxc_post_data);
 		lxc_post_req.end();
 	},
-
 	
+
+
+
+
 };
