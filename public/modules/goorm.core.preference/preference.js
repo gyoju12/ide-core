@@ -66,7 +66,7 @@ goorm.core.preference = {
 		} else {
 			$('#use_line_wrapping').css('visibility', 'hidden');
 		}
-		
+
 		var v = core.preference['preference.editor.rulers'];
 
 		if (v === true || v === 'true') {
@@ -191,7 +191,7 @@ goorm.core.preference = {
 
 	},
 	update_ui: function() {
-		$.each(core.preference, function (key, value) { //jeongmin: make apply button can save preference to localStorage(originally save function)
+		$.each(core.preference, function(key, value) { //jeongmin: make apply button can save preference to localStorage(originally save function)
 
 			if (key === "share") {
 
@@ -201,7 +201,7 @@ goorm.core.preference = {
 						$('#use_rulers').css('visibility', 'visible');
 					else $('#use_rulers').css('visibility', 'hidden');
 				}
-				
+
 				if (key === "preference.editor.line_wrapping") {
 					if (value == true || value === 'true')
 						$('#use_line_wrapping').css('visibility', 'visible');
@@ -217,7 +217,7 @@ goorm.core.preference = {
 		});
 
 	},
-	apply: function (id) {
+	apply: function(id) {
 		// core.module.theme.load_css();
 		this.read_dialog(core.preference);
 		switch (id) {
@@ -235,25 +235,25 @@ goorm.core.preference = {
 		core.module.layout.workspace.window_manager.resize_all();
 	},
 
-	restore_default: function (tabName) {
+	restore_default: function(tabName) {
 		this.fill_dialog(this.preference_default, tabName);
 		$(core).trigger("on_preference_restored"); //jeongmin: for shortcut -> empty temporary modified shortcut
 	},
 
-	read_dialog: function (preference) {
+	read_dialog: function(preference) {
 		var target = "#preference_tabview";
 
 		var targets = $(target).children('div').children();
 
 		var key = null;
-		$.each(targets, function (index, div) {
+		$.each(targets, function(index, div) {
 			if ($(targets[index]).attr('plugin') == 'null') {
 				key = preference;
 			} else {
 				key = preference.plugins[$(targets[index]).attr('plugin')];
 			}
 			if (key) {
-				$(targets[index]).find("input").each(function () {
+				$(targets[index]).find("input").each(function() {
 					var value;
 
 					if ($(this).attr("type") === "checkbox") {
@@ -282,10 +282,10 @@ goorm.core.preference = {
 		});
 	},
 
-	fill_dialog: function (preference, tabName) {
+	fill_dialog: function(preference, tabName) {
 		var targets = tabName ? $('#' + tabName) : $('#preference_tabview').children('div').children();
 		var key = null;
-		$.each(targets, function (index, div) {
+		$.each(targets, function(index, div) {
 			var target_index = $(targets[index]);
 
 			var plugin_name = target_index.attr('plugin');
@@ -356,14 +356,13 @@ goorm.core.preference = {
 		var self = this;
 		var handle_ok = function(panel) {
 			var check_input_string = check_input();
-			if(check_input_string.length==0){
+			if (check_input_string.length == 0) {
 				self.apply();
 				// self.save();	//jeongmin: this function is merged with apply function 
 
 				self.is_saved = true;
 				self.panel.modal('hide');
-			}
-			else{
+			} else {
 				alert.show("[" + check_input_string.join(", ") + "]<br/>" + core.module.localization.msg.alert_positive_value_only);
 			}
 		};
@@ -385,30 +384,23 @@ goorm.core.preference = {
 		var check_input = function() {
 			var return_string = [];
 
-			if(!/^[0-9]*$/.test($("#preference\\.editor\\.indent_unit").val())){
+			if (!/^[0-9]*$/.test($("#preference\\.editor\\.indent_unit").val())) {
 				return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
-			}else{
-				if($("#preference\\.editor\\.indent_unit").val()<1){
+			} else {
+				if ($("#preference\\.editor\\.indent_unit").val() < 1) {
 					return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
 				}
 			}
-			if(!/^[0-9]*$/.test($("#preference\\.editor\\.first_line_number").val())){
-				return_string.push($("label[for=preference\\.editor\\.first_line_number]").text());
-			}else{
-				if($("#preference\\.editor\\.first_line_number").val()<1){
-					return_string.push($("label[for=preference\\.editor\\.first_line_number]").text());
-				}
-			}
-			if(!/^[0-9]*$/.test($("#preference\\.editor\\.undo_depth").val())){
+			if (!/^[0-9]*$/.test($("#preference\\.editor\\.undo_depth").val())) {
 				return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
-			}else{
-				if($("#preference\\.editor\\.undo_depth").val()<1){
+			} else {
+				if ($("#preference\\.editor\\.undo_depth").val() < 1) {
 					return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
 				}
 			}
 
 			return return_string;
-			
+
 		};
 
 		var set_dialog_button = function() {
@@ -419,7 +411,7 @@ goorm.core.preference = {
 				$(this).attr("id", "preference_applyBt_" + i);
 			});
 
-			$("#preference_tabview").find(".restore_default").click(function (e) {
+			$("#preference_tabview").find(".restore_default").click(function(e) {
 				var tabName = $(this).parents(".tab-pane").attr("id");
 				self.restore_default(tabName);
 			}).each(function(i) {
@@ -493,7 +485,7 @@ goorm.core.preference = {
 				$.get('/preference/workspace_path', function(data) {
 					self.preference.workspace_path = data.path;
 				});
-				$(core).on("language_loaded", function(event, change){
+				$(core).on("language_loaded", function(event, change) {
 					self.manager.create_treeview(json[core.module.localization.language], change);
 				});
 				$(core).trigger("preference_load_complete");

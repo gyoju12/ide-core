@@ -352,9 +352,6 @@
 			"dialog_preference_editor_indent_unit": {
 				"value": "인덴트 단위"
 			},
-			"dialog_preference_editor_first_line_number": {
-				"value": "첫번째 줄 번호"
-			},
 			"dialog_preference_editor_first_undo_depth": {
 				"value": "되돌리기 깊이"
 			},

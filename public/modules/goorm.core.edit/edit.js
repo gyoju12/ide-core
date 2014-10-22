@@ -29,7 +29,6 @@ goorm.core.edit = function(parent) {
     this.indent_unit = 2;
     this.indent_with_tabs = true;
     this.show_line_numbers = true;
-    this.first_line_number = 1;
     this.undo_depth = 40;
     this.scroll_top = 0;
     this.highlight_current_cursor_line = true;
@@ -101,12 +100,12 @@ goorm.core.edit.prototype = {
 
 
         //this.fold_func = CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder);
-        
+
         //add new ruler option for codemirror
         CodeMirror.defineOption("rulers", false, function() {
 
         });
-        
+
         this.editor = CodeMirror.fromTextArea($(target).find(".code_editor")[0], {
             /* CODEMIRROR 3.x IMPLEMENT */
             gutters: ["exception_error", "breakpoint", "bookmark", "CodeMirror-linenumbers", "fold"],
@@ -296,7 +295,7 @@ goorm.core.edit.prototype = {
             }
 
             self.scroll_top = scroll_top;
-            
+
             self.resize_rulers();
 
         }, 200));
@@ -648,7 +647,7 @@ goorm.core.edit.prototype = {
             this.editor.setCursor(c.line, c.ch);
         }
     },
-    
+
     clear_rulers: function() {
         $(this.target).find(".CodeMirror-ruler").remove();
     },
@@ -686,7 +685,7 @@ goorm.core.edit.prototype = {
             ruler.height(parseInt(window_height));
         }
     },
-    
+
     set_option: function(options) {
         var self = this;
         options = options || {};
@@ -696,7 +695,6 @@ goorm.core.edit.prototype = {
         this.indent_unit = (options.indent_unit) ? options.indent_unit : parseInt(this.preference["preference.editor.indent_unit"], 10);
         this.indent_with_tabs = (options.indent_with_tabs) ? options.indent_with_tabs : this.preference["preference.editor.indent_with_tabs"];
         this.show_line_numbers = (options.show_line_numbers) ? options.show_line_numbers : this.preference["preference.editor.show_line_numbers"];
-        this.first_line_number = (options.first_line_number) ? options.first_line_number : parseInt(this.preference["preference.editor.first_line_number"], 10);
         this.undo_depth = (options.undo_depth) ? options.undo_depth : parseInt(this.preference["preference.editor.undo_depth"], 10);
         this.highlight_current_cursor_line = (options.highlight_current_cursor_line) ? options.highlight_current_cursor_line : this.preference["preference.editor.highlight_current_cursor_line"];
         this.theme = (options.theme) ? options.theme : this.preference["preference.editor.theme"];
@@ -711,7 +709,7 @@ goorm.core.edit.prototype = {
         this.highlight_current_cursor_line = self.get_editor_preference('highlight_current_cursor_line');
         this.editor.setOption("styleActiveLine", this.highlight_current_cursor_line);
         this.editor.setOption('autoCloseBrackets', this.auto_close_brackets);
-        this.editor.setOption("lineWrapping", this.line_wrapping);  // jeongmin: even if these value are false, option must be set
+        this.editor.setOption("lineWrapping", this.line_wrapping); // jeongmin: even if these value are false, option must be set
         this.editor.setOption("lineNumbers", this.show_line_numbers);
 
         if (this.vim_mode) {
@@ -772,9 +770,6 @@ goorm.core.edit.prototype = {
                 });
             }
         }
-        if (this.first_line_number && !isNaN(this.first_line_number)) {
-            this.editor.setOption("firstLineNumber", this.first_line_number);
-        }
         if (this.undo_depth && !isNaN(this.undo_depth)) {
             this.editor.setOption("undoDepth", this.undo_depth);
         }
@@ -801,12 +796,12 @@ goorm.core.edit.prototype = {
         }
 
         // if (this.line_wrapping) {
-            
 
-            // var line = (options.cursor) ? options.cursor.line : this.editor.getCursor();    // jeongmin: get line
 
-            // this.editor.scrollIntoView(line);    // jeongmin: go to original cursor
-            // this.scroll_top = this.editor.getScrollInfo().top;  // jeongmin: refresh scroll
+        // var line = (options.cursor) ? options.cursor.line : this.editor.getCursor();    // jeongmin: get line
+
+        // this.editor.scrollIntoView(line);    // jeongmin: go to original cursor
+        // this.scroll_top = this.editor.getScrollInfo().top;  // jeongmin: refresh scroll
         // }
 
         if (this.readonly) {
@@ -1405,13 +1400,13 @@ goorm.core.edit.prototype = {
 
         if (self.highlighted_line)
             this.highlight_line(self.highlighted_line);
-        
+
         if (this.preference["preference.editor.rulers"] === "true" || this.preference["preference.editor.rulers"] === true) {
             this.refresh_rulers();
         } else {
             this.clear_rulers();
         }
-        
+
         //editor cursor and effect sync
         this.editor.refresh();
         this.resize_gutter_height();

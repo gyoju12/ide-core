@@ -14,8 +14,8 @@
 	"common_deselect_all": {
 		"value": "Deselect All"
 	},
-	"show_hide_all_cursor":{
-		"value" : "Show/Hide All Cursor"
+	"show_hide_all_cursor": {
+		"value": "Show/Hide All Cursor"
 	},
 	"dialog_file_cloud_upload": {
 		"value": "File Cloud Upload",
@@ -352,9 +352,6 @@
 			"dialog_preference_editor_indent_unit": {
 				"value": "Indent Unit"
 			},
-			"dialog_preference_editor_first_line_number": {
-				"value": "First Line Number"
-			},
 			"dialog_preference_editor_first_undo_depth": {
 				"value": "Undo Depth"
 			},
@@ -373,7 +370,7 @@
 			"dialog_preference_editor_line_wrapping": {
 				"value": "Use Line Wrapping"
 			},
-			"dialog_preference_editor_rulers":{
+			"dialog_preference_editor_rulers": {
 				"value": "Show Rulers"
 			},
 			"dialog_preference_theme_guide": {
@@ -606,43 +603,43 @@
 	"dialog_scm_authorized_user": {
 		"value": "Authorized User"
 	},
-    "import_dialog_message" : {
-    		"value" : "Input information for import project."
-    },
-    "dialog_npm_title": {
-    		"value": "NPM"
-    },
-    "dialog_npm_install_guide": {
-    		"value": "Install package(global)."
-    },
-    "dialog_npm_pkg_name_guide": {
-    		"value": "Package Name"
-    },
-    "dialog_npm_pkg_version_guide": {
-    		"value": "Package Version"
-    },
-    "dialog_npm_pkg_version_latest_guide": {
-    		"value": "Latest"
-    },
-    "dialog_npm_pkg_version_specific_guide": {
-   	 	"value": "Specific Version"
-    },
-    "dialog_npm_pkg_version_name_guide": {
-    		"value": "Version Name"
-    },
-    "dialog_npm_pkg_list_guide": {
-    		"value": "User's NPM List"
-    },
-    "dialog_npm_pkg_list_name_guide": {
-    		"value": "Name"
-    },
-    "dialog_npm_pkg_list_version_guide": {
-    		"value": "Version"
-    },
-    "dialog_preference": {
-    		"value": "Preference"
-    },
-    "preference": {
+	"import_dialog_message": {
+		"value": "Input information for import project."
+	},
+	"dialog_npm_title": {
+		"value": "NPM"
+	},
+	"dialog_npm_install_guide": {
+		"value": "Install package(global)."
+	},
+	"dialog_npm_pkg_name_guide": {
+		"value": "Package Name"
+	},
+	"dialog_npm_pkg_version_guide": {
+		"value": "Package Version"
+	},
+	"dialog_npm_pkg_version_latest_guide": {
+		"value": "Latest"
+	},
+	"dialog_npm_pkg_version_specific_guide": {
+		"value": "Specific Version"
+	},
+	"dialog_npm_pkg_version_name_guide": {
+		"value": "Version Name"
+	},
+	"dialog_npm_pkg_list_guide": {
+		"value": "User's NPM List"
+	},
+	"dialog_npm_pkg_list_name_guide": {
+		"value": "Name"
+	},
+	"dialog_npm_pkg_list_version_guide": {
+		"value": "Version"
+	},
+	"dialog_preference": {
+		"value": "Preference"
+	},
+	"preference": {
 		"value": "Preference"
 	},
 	"property": {
@@ -703,4 +700,3 @@
 		"value": "New Untitled Textfile"
 	}
 }
-
