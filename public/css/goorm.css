@@ -2462,6 +2462,7 @@ fieldset {
 }
 
 #project_explorer {
+	overflow: auto;
 	padding-top: 5px;
 }
 
@@ -7027,9 +7028,9 @@ div.goorm_menu_item:hover {
 	font-size: 90%;
 	padding: 0px;
 }
-#project_treeview{
+/*#project_treeview{	// hidden by jeongmin. project explorer has overflow
 	overflow-x:auto !important;
-}
+}*/
 #chat_user_container {
 	height: 30%;
 	overflow-y: auto;
@@ -8662,7 +8663,7 @@ label {
 	height: 100% !important;
 }
 
-.dataTables_wrapper {	/* jeongmin. output tab */
+.output_tab .dataTables_wrapper {	/* jeongmin. output tab */
 	height: inherit;
 	overflow: auto;
 }

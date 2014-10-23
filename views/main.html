@@ -105,7 +105,7 @@
             <div class="tab-pane fade in active" id="project_explorer_tab">
                 
                 <div class="tab-content">
-                    <div class="tab-pane active in" id="my_project">
+                    <div class="tab-pane fade active in" id="my_project">
                         <div id="project_selector" class='btn-group'>
                             <div class="btn-group">
                                 <button id="project_selectbox" class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
@@ -138,18 +138,18 @@
                                     <div class='project-toolbar-refresh'></div>
                                 </div>
                             </div> -->
-                            <div id='project_treeview' style='overflow-x:hidden;display:none'></div>
-                            <div id='project_list_table' style='overflow-x:hidden; display:none'>
+                            <div id='project_treeview' style='display:none'></div>
+                            <div id='project_list_table' style='display:none'>
                                 <div id='my_project_list'>
                                     <div class='table_list_title' localization_key='dictionary_my_project'></div>
                                     <div id='my_project_list_table'></div>
                                 </div>
                                 
                             </div>
-                            <div id='cloud_project_list_table' style='overflow-x:hidden;'>
+                            <div id='cloud_project_list_table'>
 
                             </div>
-                            <div id='project_loading_div' style='overflow-x:hidden;'>
+                            <div id='project_loading_div'>
                                 <img id='project_loading_gif' src='./images/goorm.core.project/loading.gif' />
                             </div>
                         </div>
@@ -6524,6 +6524,9 @@
         var __alert = new goorm.core.dialog.alert();
         var notice = new goorm.core.dialog.notice();
         
+
+        
+
         $(document).ready(function() {
             
 

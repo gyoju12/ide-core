@@ -524,21 +524,12 @@ goorm.core.layout = {
 	resize_all: function() {
 
 		// -- left --
-
-		var goorm_left = $("#goorm_left");
-
-		var layout_left_height = $("div.ui-layout-west").height() - 22;
-		goorm_left.find("#project_explorer").height(goorm_left.height() - $('#west_tab').outerHeight() - goorm_left.find('.nav').outerHeight() - 6 - $('#project_selector').outerHeight() - 4 - parseInt($("#project_explorer").css('padding-top')));
-		goorm_left.find("#project_treeview").height(layout_left_height - 35 - 60); // minus top, bottom layout
-
+		$('#project_explorer').height($("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - $('#project_selector').outerHeight() - parseInt($('#project_explorer').css('padding-top')) * 2);
 
 		var project_selector_width = $("#project_explorer_tab").width() - 11;
-
 		if (project_selector_width < 190) project_selector_width = 190;
 
-		var project_selectbox = goorm_left.find("#project_selectbox");
-		project_selectbox.css('width', (project_selector_width - 38)); // for margin & refresh tool
-
+		$('#project_selectbox').css('width', (project_selector_width - 38)); // for margin & refresh tool
 
 		var layout_right_height = $("div.ui-layout-east").height() - $("#east_tab").height();
 		var goorm_inner_layout_right = $("#goorm_inner_layout_right");
@@ -687,7 +678,7 @@ goorm.core.layout = {
 					break;
 
 					/* east */
-				
+					
 				case 'outline':
 					id = 'gLayoutTab_Outline';
 					pane = 'east';

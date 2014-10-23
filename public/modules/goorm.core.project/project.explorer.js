@@ -23,6 +23,7 @@ goorm.core.project.explorer = function() {
 	this.project_idx_data = {};
 	this.table = null;
 	this.project_init = false;
+ 	this.check_callbacks = [];
 };
 
 goorm.core.project.explorer.prototype = {
@@ -141,8 +142,6 @@ goorm.core.project.explorer.prototype = {
 				self.make_project_list_table();
 			}
 			
-
-			$('#project_list_jquery_table_wrapper').css('max-height', $('#project_explorer').height());	// jeongmin: reset project table's height
 		});
 
 		// when click treeview div, hide context menu
@@ -764,8 +763,6 @@ goorm.core.project.explorer.prototype = {
 				}
 			});
 			confirmation.show();
-
-			e.preventDefault();
 			return false; 
 		})
 		.on('dragenter', 'li:not([file_type])', function(e) {
@@ -831,6 +828,201 @@ goorm.core.project.explorer.prototype = {
 
 			return false; 
 		});
+
+		// drag n drop file move
+		var path_info = {};
+		/*
+		var handle_callback = $.throttle(function(op, node, parent, pos, more) {
+			if(op === 'move_node' && more.ref && !more.ref.li_attr.file_type) {
+				path_info.target_path = more.ref.li_attr.path;
+				path_info.id = more.ref.id;
+				console.log('path : ' + path_info.target_path);
+		      }
+		      else {
+		      	path_info = {};
+		      }
+		  }, 100, true);
+		*/
+		self.check_callbacks.push(function(op, node, parent, pos, more) {
+					//handle_callback.apply(this, arguments);
+					return false;
+				});
+		
+		$(document)
+		.off('dnd_start.vakata').on('dnd_start.vakata', function(e, data, helper, more) {    
+			$('head').append('<style id="dnd_custom_style">.jstree-er {display:none !important;}</style>');
+		})
+		.off('dnd_move.vakata').on('dnd_move.vakata', $.throttle(function(e, data) {
+			var target_node = $(data.event.target);
+		  	var tag_name = target_node.prop('tagName');
+
+		  	if(tag_name === 'A' || tag_name === 'I') { 
+	    		target_node = target_node.parent();
+		    	tag_name = target_node.prop('tagName');
+		  	}
+		  	
+		  	var id = target_node.attr('id');
+		  	var path = target_node.attr('path');      
+		  	var is_folder = !target_node.is('[file_type]');
+		  	
+		  	if(tag_name === 'LI' && is_folder) {
+		  		path_info.target_path = path;
+		    	path_info.id = id;
+		  	}
+		  	else {
+		    	path_info = {};
+		  	}
+		}, 250, true))
+		.off('dnd_stop.vakata').on('dnd_stop.vakata', function(e, data) {
+			//console.log('dnd_stop');
+			var target_path = path_info.target_path;
+			var target_id = path_info.id;
+			var target_folder_children = [];
+			var info = { filename : '', exist: false };
+			var info_list = [];
+
+			var msg = core.module.localization.msg;
+			$("#dnd_custom_style").remove();
+
+			if(target_path === undefined || target_id === undefined) return false;
+			var nodes = data.data.nodes;
+			nodes.sort().reverse();
+
+			var children = treeview.jstree('get_children_dom', target_id);
+
+			if(children) {
+				children.each(function(index, child) {
+					//console.log(child);
+					var name = $(child).attr('id').split('/').slice(-1)[0];
+					target_folder_children.push(name);
+				});
+			}
+
+			nodes.forEach(function(id, index) {
+				var node = $('#' + id.replace(/[\/|\.]/g, '\\$&'));
+				var is_folder = !node.is('[file_type]');
+				var name = id.split('/').slice(-1)[0];
+				var path = node.attr('path');
+
+				var i = target_folder_children.indexOf(name);
+				var info = {};
+
+				if(i > -1 && node.parent()) {
+					var parent = node.parent().parent();
+					if(parent && parent.attr('path').split('/').slice(-1)[0] === name) {
+						info.cannot_move = true;
+						// TODO : localization
+						info.error_msg = msg.alert_cannot_overwrite_parent_folder + '<br/>"' + name +'"'; //'annot overwrite to a parent folder has the same name.';		
+					}
+					else if(target_path + '/' + target_folder_children[i] === path) {
+						info.cannot_move = true;
+						info.error_msg = msg.alert_cannot_overwrite_itself + '<br/>"' + name + '"'; //' cannot overwrite to itself.';
+					}
+				}
+				else if(path.split('/').length === 1) {
+					info.cannot_move = true;
+					info.error_msg = msg.alert_root_folder_cannot_be_moved; //'Root folder cannot be moved';
+				}
+				else if(is_folder && target_path.match(path)) {
+					info.cannot_move = true;
+					info.error_msg = msg.alert_parent_folder_cannot_be_moved_to_its_child_folder; //'Root folder cannot be moved';
+				}
+
+				$.extend(info, { path: path, exist: ((i > -1) ? true : false)});
+				info_list.push(info);
+			});
+
+			//console.log(file_list);
+
+			var index = info_list.length - 1;
+			info_list.sort(function(a, b) {
+				return a > b;
+			});
+
+			var _trigger = function(query, timeout) {
+				//console.log(query);
+
+				timeout === undefined ? 0 : timeout;
+				
+				setTimeout( function() {
+					$(self).trigger(query);
+				}, timeout);
+				
+			}
+
+			$(self).off('confirm_move_file').on('confirm_move_file', function() {
+				confirmation.init({
+					message: msg.confirmation_do_you_want_move, //'Do you want move?', //core.module.localization.msg.alert_confirm_invite_co_developer,
+					yes_text: msg.confirmation_yes,
+					no_text: msg.confirmation_no,
+					title: msg.confirmation_title,					
+
+					yes: function() {
+						//confirmation.hide();
+						_trigger('check_restriction', 500);
+						//setTimeout(_trigger('name_exist_check'), 250);							
+					},
+					no: function() {
+						//confirmation.hide();
+					}
+				});
+
+				confirmation.show();
+			});
+
+			$(self).off('check_restriction').on('check_restriction', function() {
+				//confirmation.hide();
+
+				if(index < 0) {
+					self.move_file(target_id, target_path, info_list);
+					return;
+				}
+
+				var exist = info_list[index].exist;
+				var name = info_list[index].path.split('/').slice(-1)[0];
+
+				if(info_list[index].cannot_move) {
+					alert.show(info_list[index].error_msg, function() {
+						info_list.splice(index--, 1);
+						_trigger('check_restriction', 250);
+					});
+				}
+				else if(exist) {
+					confirmation.init({
+						message: msg.confirmation_do_you_want_overwrite, //'Already exists, do you want overwrite? : ' + name, //core.module.localization.msg.alert_confirm_invite_co_developer,
+						yes_text: msg.confirmation_yes,
+						no_text: msg.confirmation_no,
+						title: msg.confirmation_title,
+
+						yes: function() {
+							//console.log(name + ' will be moved forcely');
+							index--;							
+							//confirmation.hide();
+							_trigger('check_restriction', 250);
+
+						},
+						no: function() {
+							//console.log(name + ' will be ignored');
+							info_list.splice(index--, 1);		
+							//confirmation.hide();
+							_trigger('check_restriction', 250);
+
+						}
+					});
+
+					confirmation.show();					
+				}
+				else {
+					//console.log(name + ' will be moved');
+					index--;
+					_trigger('check_restriction');					
+				}
+			});
+
+			_trigger('confirm_move_file');
+
+		});
+
 		// var colne;
 		// var self = this;
 		// var drag_mode = false;
@@ -1049,6 +1241,38 @@ goorm.core.project.explorer.prototype = {
 
 	},
 
+	move_file: function(target_id, target_path, info_list) {
+		var self = this;
+		var current_path = [];
+		var $target = $('#' + target_id.replace(/[\/|\.]/g, '\\$&'));
+		info_list.forEach(function(info, index) {
+			current_path.push(info.path);
+		});
+
+		var getdata = {	
+			after_path: target_path,
+			current_path: current_path
+		//	force: true
+		};
+		//$.get('project/move_file', getdata, function (data) {
+
+		core.socket.once('/project/move_file', function(data){
+			self.refresh(true);
+			setTimeout(function() {
+				self.treeview.open_node($target);
+			}, 250);
+			
+			//getdata.change = "drag_n_drop";
+			core.module.layout.workspace.window_manager.synch_with_fs(getdata);
+
+		});
+
+		//console.log(getdata);
+
+		core.socket.emit('/project/move_file',getdata);
+		// TODO : add processing UI
+	},
+
 	fill_tree_data: function(path, state) {
 		if (path === "") {
 			return false;
@@ -1068,7 +1292,7 @@ goorm.core.project.explorer.prototype = {
 			self.selected_type = node.li_attr.file_type;
 
 			if (e.which == 3) {
-
+				self.treeview.select_node(node);
 				if (core.status.selected_file_type === "file") {
 					// core.module.localization.local_apply("div[id='project.explorer.file_context']", 'menu');	// hidden by jeongmin: causes delay of showing context menu
 					self.context_menu_file.show(e);
@@ -1128,7 +1352,16 @@ goorm.core.project.explorer.prototype = {
 			dnd: true,
 			on_click: on_click,
 			on_dblclick: on_dblclick,
-			on_ready: on_ready
+			on_ready: on_ready,
+			check_callback: function(op, node, parent, pos, more) {
+					var args = arguments;
+					var return_value = true;
+					self.check_callbacks.forEach(function(handle_callback, index) {
+						return_value = return_value && handle_callback.apply(this, args);
+					});
+
+					return return_value;
+				}
 		};
 
 		if (state) option.state = state;
