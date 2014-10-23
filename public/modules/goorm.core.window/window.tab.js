@@ -57,10 +57,10 @@ goorm.core.window.tab.prototype = {
 		this.tab_list_id = "g_window_tab_" + morphed_title;
 		this.tab_content_id = "g_wndw_tab_ctnt_" + morphed_title;
 		if (typeof core.status.current_opened_list[this.filename] === "undefined") {
-			$("#g_window_tab_list").append("<li id='g_windowns_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + this.title + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name	
+			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + this.title + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name	
 			core.status.current_opened_list[this.filename] = 1;
 		} else {
-			$("#g_window_tab_list").append("<li id='g_windowns_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + this.title + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name		
+			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + this.title + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name		
 			core.status.current_opened_list[this.filename]++;
 		}
 
@@ -160,24 +160,36 @@ goorm.core.window.tab.prototype = {
 				old_tab_list = window_manager.tab, // original tab list
 				window_list = window_manager.window;
 
-			for (var i = new_tab_list.length - 1; 0 <= i; i--)
-				if ($(new_tab_list[i]).attr('id') != old_tab_list[i].tab_list_id) // true: need to arrange
-					for (var j = i - 1; 0 <= j; j--) // find right tab
+			for (var i = new_tab_list.length - 1; 0 <= i; i--) {
+				if ($(new_tab_list[i]).attr('id') != old_tab_list[i].tab_list_id) { // true: need to arrange
+					for (var j = i - 1; 0 <= j; j--) { // find right tab
 						if ($(new_tab_list[i]).attr('id') == old_tab_list[j].tab_list_id) { // true: right tab is found!
-						// move tab to right place
-						var temp = old_tab_list[i];
-						old_tab_list[i] = old_tab_list[j];
-						old_tab_list[j] = temp;
+							// move tab to right place
+							var temp = old_tab_list[i];
+							old_tab_list[i] = old_tab_list[j];
+							old_tab_list[j] = temp;
 
-						// move window to right place, too
-						temp = window_list[i];
-						window_list[i] = window_list[j];
-						window_list[i].index = i;
-						window_list[j] = temp;
-						window_list[j].index = j;
+							// move window to right place, too
+							temp = window_list[i];
+							window_list[i] = window_list[j];
+							window_list[i].index = i;
+							window_list[j] = temp;
+							window_list[j].index = j;
 
-						break; // end of finding
+							break; // end of finding
+						}
 					}
+				}
+			}
+
+			// jeongmin: update active window
+			$(this).children().each(function(i) { // $(this).children() == tab li items
+				if ($(this).hasClass('active')) {
+					window_manager.active_window = i;
+
+					return false; // end of finding active tab
+				}
+			});
 		});
 	},
 
@@ -221,10 +233,10 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_modified: function() {
-		if(this.saved) {	// jeongmin: it is saved by panel, so don't modify
+		if (this.saved) { // jeongmin: it is saved by panel, so don't modify
 			return;
 		}
-		
+
 		var self = this;
 
 		var morphed_title = this.title.split("/").join("_").split(".").join("_");
