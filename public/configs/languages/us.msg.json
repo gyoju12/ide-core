@@ -1441,5 +1441,23 @@
     },
     "shortcut_conflict": {
         "value": "Shortcut Conflict"
+    },
+    "alert_cannot_overwrite_parent_folder": {
+        "value": "Cannot overwrite a parent folder has the same name."
+    },
+    "alert_cannot_overwrite_itself": {
+        "value": "Cannot overwrite itself."
+    },
+    "alert_root_folder_cannot_be_moved": {
+        "value": "Root folder cannot be moved."
+    },
+    "alert_parent_folder_cannot_be_moved_to_its_child_folder": {
+        "value": "Parent folder cannot be moved to its child folder"
+    },
+    "confirmation_do_you_want_move": {
+        "value": "Do you want to move?"
+    },
+    "confirmation_do_you_want_overwrite": {
+        "value": "Do you want to overwrite?"
     }
 }

@@ -10,6 +10,7 @@
 
 var fs = require('fs');
 var os = require('os');
+var path = require('path');
 var rimraf = require('rimraf');
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
@@ -19,6 +20,7 @@ var spawn = require('child_process').spawn;
 
 var g_secure = require('../goorm.core.secure/secure.js');
 var g_auth_project = require('../goorm.core.auth/auth.project');
+var g_aws = require('../goorm.core.aws/aws.js');
 
 
 
@@ -130,7 +132,6 @@ module.exports = {
 
 			
 
-
 			
 		} else {
 			data.err_code = 10;
@@ -140,14 +141,14 @@ module.exports = {
 		}
 	},
 
-	do_delete: function(query, evt, user_data) {
+	do_delete: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
 		data.message = "Process Done";
 
 		var user_list = [];
 		var me = {
-			'user': user_data.id,
+			'user': query.id,
 			'project_path': query.project_path
 		}
 
@@ -546,7 +547,6 @@ module.exports = {
 	},
 
 	get_list: function(project_option, evt, callback) {
-
 		var projects = [];
 
 		var options = {
@@ -620,6 +620,8 @@ module.exports = {
 				}
 			}
 		});
+		
+
 		
 
 		
@@ -790,11 +792,9 @@ module.exports = {
 
 	move_file: function(data, evt) {
 		var length = data.current_path.length;
-		for (var i = 0; i < length; i++) {
-			data.current_path[i] = g_secure.command_filter(data.current_path[i]);
-			data.after_path = g_secure.command_filter(data.after_path);
+		//var force = data.force ? '-f' : '';
 
-			exec('mv ' + global.__workspace + data.current_path[i] + " " + global.__workspace + data.after_path, function(err, stdout, stderr) {
+		var callback = function(err, stdout, stderr) {
 				if (err) {
 					console.log(err, stdout, stderr);
 
@@ -808,7 +808,29 @@ module.exports = {
 						flag: true
 					});
 				}
-			});
+			};
+
+		var move = function(current_path, target_path) {
+			exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
+		}
+
+		//console.log('move_file');
+		for (var i = 0; i < length; i++) {
+			data.current_path[i] = g_secure.command_filter(data.current_path[i]);
+			data.after_path = g_secure.command_filter(data.after_path);
+			var filename = data.current_path[i].split('/').slice(-1)[0];
+			var exist_check_path = path.join(global.__workspace, data.after_path, filename);
+
+
+			//console.log(exist_check_path, data.current_path[i], data.after_path);
+			if(fs.existsSync(exist_check_path)) {
+				exec('rm -rf ' + exist_check_path + ' | ' 
+					+ 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+			}
+			else {
+				exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+				//move(data.current_path[i], data.after_path);
+			}
 		}
 	},
 
@@ -1032,6 +1054,8 @@ module.exports = {
 
 
 	count_project_by_id: function(author_id, evt) {
+
+
 		var __evt = new EventEmitter();
 		__evt.on('project_get_list', function(projects) {
 			if (!projects) projects = [];

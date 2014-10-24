@@ -104,6 +104,40 @@ goorm.core.project.open = {
 		}
 	},
 
+	mount: function (path, callback) {
+		if (typeof(path) === 'function') {
+			path = null;
+			callback = path;
+		}
+
+		var project_path = path || core.status.current_project_path;
+
+		core._socket.once('/project/mount', function (result) {
+			callback(result);
+		});
+
+		core._socket.emit('/project/mount', {
+			'project_path': project_path
+		});
+	},
+
+	unmount: function (path, callback) {
+		if (typeof(path) === 'function') {
+			path = null;
+			callback = path;
+		}
+
+		var project_path = path || core.status.current_project_path;
+
+		core._socket.once('/project/unmount', function (result) {
+			callback(result);
+		});
+
+		core._socket.emit('/project/unmount', {
+			'project_path': project_path
+		});
+	},
+
 	open: function(current_project_path, current_project_name, current_project_type) {
 		var self = this;
 
@@ -113,6 +147,9 @@ goorm.core.project.open = {
 		$(core).one('do_open', function() {
 			
 
+			
+
+			
 			core.status.current_project_storage = "goormIDE_Storage";
 			core.status.current_project_path = current_project_path;
 			core.status.current_project_name = current_project_name;
@@ -129,13 +166,11 @@ goorm.core.project.open = {
 			core.module.layout.project_explorer.refresh();
 			core.module.layout.project_explorer.refresh_project_selectbox();
 
-			
-			
 			if (use_terminal !== false) {
 				core.module.terminal.terminal.refresh_terminal();
 				core.module.layout.terminal.refresh_terminal();
 			}
-			
+
 			core.module.layout.workspace.window_manager.refresh_all_title();
 
 			$(core).trigger("on_project_open", {
@@ -143,6 +178,7 @@ goorm.core.project.open = {
 				'project_name': current_project_name,
 				'project_type': current_project_type
 			});
+			
 		})
 
 		if (this.handler && this.handler.before) {

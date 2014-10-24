@@ -1443,5 +1443,23 @@
     },
     "shortcut_conflict": {
         "value": "단축키 충돌"
-    }
+    },
+    "alert_cannot_overwrite_parent_folder": {
+        "value": "같은 이름을 가진 부모 폴더를 덮어쓰기 할 수 없습니다."
+    },
+    "alert_cannot_overwrite_itself": {
+        "value": "자신을 덮어쓰기 할 수 없습니다."
+    },
+    "alert_root_folder_cannot_be_moved": {
+        "value": "루트폴더는 이동할 수 없습니다."
+    },
+    "alert_parent_folder_cannot_be_moved_to_its_child_folder": {
+        "value": "부모폴더가 자식 폴더로는 이동할 수 없습니다."
+    },
+    "confirmation_do_you_want_move": {
+        "value": "이동시키겠습니까?"
+    },
+    "confirmation_do_you_want_overwrite": {
+        "value": "덮어쓰기 하시겠습니까?"
+    }    
 }

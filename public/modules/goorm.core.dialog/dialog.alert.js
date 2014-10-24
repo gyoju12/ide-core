@@ -38,6 +38,9 @@ goorm.core.dialog.alert.prototype = {
 			//fix deleting project
 			if($('#dlg_delete_project').attr('class').indexOf('in') >= 0)
 				$("#project_delete_list").focus();
+
+			if(self.callback) self.callback();
+
 		});
 
 		// move to Center	//jeongmin: done at dialog.js
@@ -61,11 +64,12 @@ goorm.core.dialog.alert.prototype = {
 		// });
 	},
 
-	show: function(message) {
+	show: function(message, callback) {
 		var filtered_msg = message || '';
 		filtered_msg = core.module.bookmark.filtering(filtered_msg.replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
 
 		this.message = filtered_msg;
+		this.callback = callback;
 
 		var panelContainer_bd = this.panel.find("#alert_content_container");
 

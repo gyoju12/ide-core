@@ -35,7 +35,7 @@ goorm.core.project._delete = {
 			var storage = $("#project_delete_storage").find("span").html().toString();
 
 			if (storage == "goormIDE Storage") {
-				core.socket.once("/project/delete", function(data) {
+				core._socket.once("/project/delete", function(data) {
 					$("#project_delete_list").empty();
 					$("#project_delete_information").empty();
 
@@ -115,68 +115,8 @@ goorm.core.project._delete = {
 				}, true, {
 					lock: true
 				}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
-				core.socket.emit("/project/delete", postdata);
+				core._socket.emit("/project/delete", postdata);
 			}
-			// else if (storage == "Google Drive") {
-
-			// } else if (storage == "Dropbox") {
-
-			// 	core.socket.once("dropbox_delete_file", function() {
-			// 		// var window_manager = core.module.layout.workspace.window_manager;
-			// 		// $(window_manager.window).each(function (i) {
-			// 		// 	if (data.path == this.project && this.storage == "Dropbox") {
-			// 		// 		window_manager.close_by_index(i, i);
-			// 		// 	}
-			// 		// });
-			// 		$("#project_delete_list").empty();
-			// 		$("#project_delete_information").empty();
-			// 		var wm = core.module.layout.workspace.window_manager;
-
-			// 		for (var i = wm.window.length - 1; i >= 0; i--) {
-			// 			var w = wm.window[i];
-
-			// 			if (postdata.project_path == w.project && w.storage == "Dropbox") {
-			// 				w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
-
-			// 				wm.close_by_index(i, i);
-			// 			}
-			// 		}
-
-			// 		if (core.status.current_project_path == data.path && core.status.current_project_storage == "Dropbox") {
-
-			// 			core.module.layout.chat.user.leave();
-
-			// 			core.status.current_project_path = "";
-			// 			core.status.current_project_name = "";
-			// 			core.status.current_project_type = "";
-			// 			goorm.core.cloud.dropbox.project.open("", "", "");
-			// 		}
-
-			// 		if (core.status.current_project_path === "" || core.status.current_project_path == data.path) {
-			// 			goorm.core.cloud.dropbox.project_explorer.refresh();
-			// 			//			core.module.layout.project_explorer.refresh();
-			// 			//			core.dialog.project_property.refresh_toolbox();
-			// 		} else {
-			// 			//			core.module.layout.project_explorer.refresh_project_selectbox();
-			// 		}
-			// 		notice.show(core.module.localization.msg.notice_project_delete_done);
-
-			// 		// project list focusing is needed for enable key event. Jeong-Min Im.
-			// 		// notice.panel.one('hidden.bs.modal', function() {
-			// 		// 	$('#project_delete_list').focus();
-			// 		// });
-
-			// 		self.project_list = new goorm.core.cloud.dropbox.project.list();
-			// 		self.project_list.init("#project_delete", function() {
-			// 			self.project_list.init_project(); //let's set first project
-			// 			$("#project_delete_list").focus();
-			// 			var data = self.project_list.get_data();
-			// 			if (data.path == "") $("#project_delete_location").hide();
-			// 			else $("#project_delete_location").show();
-			// 		});
-			// 	}, true);
-			// 	core.socket.emit("/cloud/dropbox_delete", data.path);
-			// }
 		}, 400, true); // jeongmin: true means invokeAsap
 
 		this.project_list = new goorm.core.project.list();

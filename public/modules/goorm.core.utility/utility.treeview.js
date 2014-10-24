@@ -45,7 +45,8 @@ goorm.core.utility.treeview.prototype = {
 			dnd: false,
 			wholerow: true,
 			sort: true,
-			folder_only: false
+			folder_only: false,
+			check_callback: true
 		}, opts);
 
 		this.project_path = this.options.project_path;
@@ -108,7 +109,7 @@ goorm.core.utility.treeview.prototype = {
 			}
 		}).on('mousedown.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
-			_this.tree.jstree("deselect_all");
+			//_this.tree.jstree("deselect_all");
 
 			if (node.id !== "#") {
 				if (typeof _this.options.on_click === "function") {
@@ -193,8 +194,7 @@ goorm.core.utility.treeview.prototype = {
 
 		_this.tree.jstree({
 			// the `plugins` array allows you to configure the active plugins on this instance
-			"plugins": plugins,
-			"check_callback": true,
+			"plugins": plugins,			
 			"themes": {
 				"stripes": true
 			},
@@ -281,7 +281,8 @@ goorm.core.utility.treeview.prototype = {
 						// console.log("load file", obj);
 						callback.call(self, "");
 					}
-				}
+				},
+				"check_callback": _this.options.check_callback
 			},
 			"types": {
 				"#": {

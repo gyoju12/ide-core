@@ -44,6 +44,7 @@ var check_valid_path = function(str) {
 
 
 
+
 module.exports = {
 	start: function(io) {
 		var self = this;
@@ -64,7 +65,7 @@ module.exports = {
 					if (channel == "join") {
 						if (socket && socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
-							store.client.set('socket_'+sessionID, socket.id);
+							store.client.set('socket_' + sessionID, socket.id);
 						}
 
 						if (!msg_obj.reconnect) {
@@ -74,7 +75,7 @@ module.exports = {
 						if (msg_obj.fs_socket_id) {
 							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
 
-							self.get_user_data(socket, function (user_data) {
+							self.get_user_data(socket, function(user_data) {
 								if (user_data.result) {
 									var id = user_data.id;
 
@@ -152,17 +153,11 @@ module.exports = {
 					g_auth_project.manifest_setting(data.project_dir, function() {
 						socket.emit("/project/new", data);
 					});
-					// if (msg.use_scm)
-					// 	g_auth_project.set_scm_property(data.project_author, data.project_name, msg.scm_info, function(success) {
-					// 		if (success)
-					// 			socket.emit("/project/new", !success); //scm config setting is done
-					// 		else
-					// 			socket.emit("/project/new", data); //scm config setting is done
-					// 	}); // evt.emit('project_new_scm_setting', data)
-					// else
-
 				});
 				
+
+				
+
 				self.get_user_data(socket, function(user_data) {
 					msg.user_id = user_data.id;
 					g_project.do_new(msg, evt);
@@ -177,10 +172,13 @@ module.exports = {
 				});
 
 				
+
 				self.get_user_data(socket, function(user_data) {
+					msg.id = user_data.id;
+
 					
 					
-					g_project.do_delete(msg, evt, user_data);
+					g_project.do_delete(msg, evt);
 					
 				});
 			});
@@ -281,6 +279,15 @@ module.exports = {
 				});
 			});
 
+			socket.on('/project/move_file', function(msg) {
+				var evt = new EventEmitter();
+				evt.on('move_file', function(data) {
+					socket.emit('/project/move_file', data);
+				});
+
+				g_project.move_file(msg, evt);
+			});
+
 
 			// goorm.manifest validation when login. Jeong-Min Im.
 			socket.on('/project/valid_manifest', function(msg) {
@@ -305,6 +312,8 @@ module.exports = {
 					g_project.get_list(msg, evt);
 				});
 			});
+
+			
 
 			socket.on('/plugin/create', function (msg) {
 				self.get_user_data(socket, function(user_data) {
@@ -1497,7 +1506,7 @@ module.exports = {
 		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
 			var sessionID = socket.handshake.sessionID;
 
-			store.client.get(sessionID, function (err, user_data) {
+			store.client.get(sessionID, function(err, user_data) {
 				if (user_data) {
 					try { // jeongmin: try catching
 						user_data = JSON.parse(user_data);
@@ -1516,10 +1525,9 @@ module.exports = {
 					});
 				}
 			});
-		}
-		else {
+		} else {
 			var socket_id = socket.id;
-						
+
 			this.get_session_id(socket_id, function(sessionID) {
 				if (global.__redis_mode) {
 					store.client.get(sessionID, function(err, user_data) {

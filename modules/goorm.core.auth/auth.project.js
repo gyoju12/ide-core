@@ -33,8 +33,28 @@ var project_fields = {
 	use_terminal: Boolean
 };
 
+var duration = 60 * 60 * 36 // seconds
+
+var security_token_fields = {
+	name: String,
+	effect: String, // Allow or Deny
+	arn: String, // arn:aws:sts::879684891358:federated-user/TestUser17
+	project_path: String,
+	aws_access_key_id: String,
+	aws_secret_access_key: String,
+	aws_access_token: String,
+	expiration: Date,
+	createdAt: {
+		type: Date,
+		default: Date.now,
+		expires: (duration - 600)
+	}
+};
+var security_token_schema = new Schema(security_token_fields);
+
 var db = {
 	project: mongoose.model('project', new Schema(project_fields)),
+	security_token: mongoose.model('security_token', security_token_schema)
 };
 
 var EventEmitter = require("events").EventEmitter;
@@ -45,7 +65,9 @@ var fs = require('fs');
 
 var g_auth_manager = require('./auth.manager.js');
 var g_secure = require('../goorm.core.secure/secure');
+var g_aws = require('../goorm.core.aws/aws.js');
 var platform = require('os');
+
 var __bucket = 'grm-project-bucket';
 
 var os = {
