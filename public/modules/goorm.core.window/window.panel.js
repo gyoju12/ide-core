@@ -914,16 +914,16 @@ goorm.core.window.panel.prototype = {
 				$("a[action=comment_selected").parent().addClass("disabled");
 				$("a#parent_merge_menu").parent().addClass("disabled");
 				$("a#parent_refactor_menu").parent().addClass("disabled");
-			} else { // jeongmin: reset active_window
-				if (window_manager.active_window != this.index) {
-					if (window_manager.active_window > this.index) {
-						window_manager.active_window--;
-					}
+			}
 
-					window_manager.activate(window_manager.active_window);
-				} else {
-					window_manager.activate(0);
+			if (window_manager.active_window != this.index) { // jeongmin: reset active_window
+				if (window_manager.active_window > this.index) {
+					window_manager.active_window--;
 				}
+
+				window_manager.activate(window_manager.active_window);
+			} else if (window_manager.window.length > 0) { // jeongmin: only if window exists
+				window_manager.activate(0);
 			}
 
 			$(core).trigger("bookmark_table_refresh"); //jeongmin
@@ -961,31 +961,31 @@ goorm.core.window.panel.prototype = {
 					$('#editor_status').show();
 
 					$("a[action=do_delete]").parent().removeClass("disabled");
-					$("a[action=select_all").parent().removeClass("disabled");
-					$("a[action=do_go_to_line").parent().removeClass("disabled");
+					$("a[action=select_all]").parent().removeClass("disabled");
+					$("a[action=do_go_to_line]").parent().removeClass("disabled");
 					$("a#parent_bookmark_menu").parent().removeClass("disabled");
-					$("a[action=do_find").parent().removeClass("disabled");
-					$("a[action=do_find_next").parent().removeClass("disabled");
-					$("a[action=do_find_previous").parent().removeClass("disabled");
-					$("a[action=auto_formatting").parent().removeClass("disabled");
-					$("a[action=comment_selected").parent().removeClass("disabled");
+					$("a[action=do_find]").parent().removeClass("disabled");
+					$("a[action=do_find_next]").parent().removeClass("disabled");
+					$("a[action=do_find_previous]").parent().removeClass("disabled");
+					$("a[action=auto_formatting]").parent().removeClass("disabled");
+					$("a[action=comment_selected]").parent().removeClass("disabled");
 					$("a#parent_merge_menu").parent().removeClass("disabled");
 					$("a#parent_refactor_menu").parent().removeClass("disabled");
 				} else {
 					$('#editor_status').hide();
 
 					if (this.type !== "Merge") {
-						$("a[action=do_undo").parent().addClass("disabled");
-						$("a[action=do_redo").parent().addClass("disabled");
+						$("a[action=do_undo]").parent().addClass("disabled");
+						$("a[action=do_redo]").parent().addClass("disabled");
 						$("a[action=do_delete]").parent().addClass("disabled");
-						$("a[action=select_all").parent().addClass("disabled");
-						$("a[action=do_go_to_line").parent().addClass("disabled");
+						$("a[action=select_all]").parent().addClass("disabled");
+						$("a[action=do_go_to_line]").parent().addClass("disabled");
 						$("a#parent_bookmark_menu").parent().addClass("disabled");
-						$("a[action=do_find").parent().addClass("disabled");
-						$("a[action=do_find_next").parent().addClass("disabled");
-						$("a[action=do_find_previous").parent().addClass("disabled");
-						$("a[action=auto_formatting").parent().addClass("disabled");
-						$("a[action=comment_selected").parent().addClass("disabled");
+						$("a[action=do_find]").parent().addClass("disabled");
+						$("a[action=do_find_next]").parent().addClass("disabled");
+						$("a[action=do_find_previous]").parent().addClass("disabled");
+						$("a[action=auto_formatting]").parent().addClass("disabled");
+						$("a[action=comment_selected]").parent().addClass("disabled");
 						$("a#parent_merge_menu").parent().addClass("disabled");
 						$("a#parent_refactor_menu").parent().addClass("disabled");
 					}

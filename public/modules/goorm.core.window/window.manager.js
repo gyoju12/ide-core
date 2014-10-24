@@ -147,17 +147,17 @@ goorm.core.window.manager = {
 
 						if (!editor_exist) {
 
-							$("a[action=do_undo").parent().addClass("disabled");
-							$("a[action=do_redo").parent().addClass("disabled");
+							$("a[action=do_undo]").parent().addClass("disabled");
+							$("a[action=do_redo]").parent().addClass("disabled");
 							$("a[action=do_delete]").parent().addClass("disabled");
-							$("a[action=select_all").parent().addClass("disabled");
-							$("a[action=do_go_to_line").parent().addClass("disabled");
+							$("a[action=select_all]").parent().addClass("disabled");
+							$("a[action=do_go_to_line]").parent().addClass("disabled");
 							$("a#parent_bookmark_menu").parent().addClass("disabled");
-							$("a[action=do_find").parent().addClass("disabled");
-							$("a[action=do_find_next").parent().addClass("disabled");
-							$("a[action=do_find_previous").parent().addClass("disabled");
-							$("a[action=auto_formatting").parent().addClass("disabled");
-							$("a[action=comment_selected").parent().addClass("disabled");
+							$("a[action=do_find]").parent().addClass("disabled");
+							$("a[action=do_find_next]").parent().addClass("disabled");
+							$("a[action=do_find_previous]").parent().addClass("disabled");
+							$("a[action=auto_formatting]").parent().addClass("disabled");
+							$("a[action=comment_selected]").parent().addClass("disabled");
 							$("a#parent_merge_menu").parent().addClass("disabled");
 							$("a#parent_refactor_menu").parent().addClass("disabled");
 						}
@@ -584,7 +584,7 @@ goorm.core.window.manager = {
 				for (var i = 0; i < this.window.length; i++) {
 					this.window[i].activated = false;
 				}
-				core.module.layout.workspace.window_manager.active_window = index;
+				// core.module.layout.workspace.window_manager.active_window = index;	// jeongmin: active_window is updated at panel.activate()
 				this.window[index].activate();
 			},
 
