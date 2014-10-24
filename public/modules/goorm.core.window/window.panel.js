@@ -914,9 +914,9 @@ goorm.core.window.panel.prototype = {
 				$("a[action=comment_selected").parent().addClass("disabled");
 				$("a#parent_merge_menu").parent().addClass("disabled");
 				$("a#parent_refactor_menu").parent().addClass("disabled");
-			} else {	// jeongmin: reset active_window
+			} else { // jeongmin: reset active_window
 				if (window_manager.active_window != this.index) {
-					if (window_manager.active_window > this.index)  {
+					if (window_manager.active_window > this.index) {
 						window_manager.active_window--;
 					}
 
@@ -940,16 +940,18 @@ goorm.core.window.panel.prototype = {
 
 		activate: function() {
 			var window_manager = core.module.layout.workspace.window_manager;
-			// var old_window = window_manager.active_window;
 
 			window_manager.active_window = this.index;
 
 			if (this.editor && this.editor.filename) {
 				if (window_manager.active_filename !== (this.editor.filepath + this.editor.filename)) {
+					window_manager.active_filename = this.editor.filepath + this.editor.filename; // jeongmin: need active filename update before on_activated
+
 					this.editor.on_activated();
 					this.editor.focus(); // jeongmin: when window is focused, focus codemirror, too.
-					window_manager.active_filename = this.editor.filepath + this.editor.filename;
 				}
+			} else { // jeongmin: other windows(terminal...)
+				window_manager.active_filename = '';
 			}
 
 			if (this.panel) {
@@ -987,6 +989,10 @@ goorm.core.window.panel.prototype = {
 						$("a#parent_merge_menu").parent().addClass("disabled");
 						$("a#parent_refactor_menu").parent().addClass("disabled");
 					}
+				}
+
+				if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
+					core.module.layout.outline.clear();
 				}
 			}
 

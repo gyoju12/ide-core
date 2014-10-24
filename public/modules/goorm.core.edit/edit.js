@@ -971,10 +971,11 @@ goorm.core.edit.prototype = {
         };
 
         var post_url = url + postdata.path.replace(/\:/g, '');
+        core._socket.set_url(post_url);
 
         if (!options.restore) {
-            core.socket.once(post_url, callback_wrapper(false, null));
-            core.socket.emit(url, postdata);
+            core._socket.once(post_url, callback_wrapper(false, null));
+            core._socket.emit(url, postdata);
         } else {
             var unsaved_data = '';
             for (i = 0; i < goorm.core.edit.prototype.unsaved_data.length; i++) {
@@ -984,8 +985,8 @@ goorm.core.edit.prototype = {
                 }
             }
 
-            core.socket.once(post_url, callback_wrapper(true, unsaved_data));
-            core.socket.emit(url, postdata);
+            core._socket.once(post_url, callback_wrapper(true, unsaved_data));
+            core._socket.emit(url, postdata);
 
         }
     },
@@ -1020,12 +1021,12 @@ goorm.core.edit.prototype = {
 
         var linter_timer = null;
         //$.post('file/check_valid_edit',send_data,function(res){
-        core.socket.once("/file/check_valid_edit", function(res) {
+        core._socket.once("/file/check_valid_edit", function(res) {
             var localization_msg = core.module.localization.msg;
 
             function put_contents() {
                 //$.post(url, send_data, function (data) {
-                core.socket.once(url, function(data) {
+                core._socket.once(url, function(data) {
 
                     
 
@@ -1081,7 +1082,7 @@ goorm.core.edit.prototype = {
 
                     
                 });
-                core.socket.emit(url, send_data);
+                core._socket.emit(url, send_data);
             }
 
             if (!res || !res.result) {
@@ -1105,7 +1106,7 @@ goorm.core.edit.prototype = {
                 put_contents();
             }
         });
-        core.socket.emit("/file/check_valid_edit", send_data);
+        core._socket.emit("/file/check_valid_edit", send_data);
     },
 
     get_contents: function() {
@@ -1429,27 +1430,10 @@ goorm.core.edit.prototype = {
     on_activated: function() {
         var self = this;
 
-        if (this.editor_loaded)
+        if (this.editor_loaded) {
             $(core).trigger("bookmark_table_refresh"); //jeongmin: refresh bookmark table in outline tab
-
-        if (self.history) {
-            //check duplication of activation, invalid activation, etc.
-            if (self.history.wait_for_loading === true) return;
-            if ((self.filepath + self.filename) == self.history.last_init_load) self.history.activated = true;
-            if (self.history.activated === false) return;
-            if (self.history.filename == "/" + self.filepath + self.filename) return;
-
-            // valid activation! manipulation start!
-            self.history.deactivated();
-            self.history.init_history(self);
         }
         
-
-        // $(window_manager).trigger('window_open', {
-        //     "filepath": self.filepath,
-        //     "filename": self.filename
-        // });
-
     },
 
     find_unsaved_file: function() {
