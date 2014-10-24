@@ -324,10 +324,7 @@ goorm.core.project = {
 
 		is_build_fail = is_build_fail || false;
 
-		_$.get("project/check_latest_build", {
-			"project_path": core.status.current_project_path,
-			"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
-		}, function(data) {
+		core._socket.once("/project/check_latest_build", function(data) {
 			if (data) {
 				//depreciated function --heeje
 				//if (data.result && (latest || (data.path.indexOf(build_path + p["plugin." + core.status.current_project_type + ".main"]) > -1))) {
@@ -358,6 +355,10 @@ goorm.core.project = {
 				// if check_lastest_build failed...
 				self.send_run_cmd();
 			}
+		});
+		core._socket.emit('/project/check_latest_build', {
+			"project_path": core.status.current_project_path,
+			"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
 		});
 	},
 

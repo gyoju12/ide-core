@@ -126,7 +126,7 @@ goorm.core.project.explorer.prototype = {
 
 		$(core).on('language_loaded', function() {
 			if (core.status.current_project_path === "") {
-				$('#selected_project_name').html($("#project_selector .dropdown-menu li[localization_key=project_list").text());
+				$('#selected_project_name').html($("#project_selector .dropdown-menu li[localization_key=project_list]").text());
 			}
 		});
 
@@ -184,6 +184,8 @@ goorm.core.project.explorer.prototype = {
 				$("#project_treeview").hide();
 				self.make_project_list_table();
 			} else {
+				core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], core.property);
+
 				var temp_project_path = core.status.current_project_path;
 				$("#project_treeview").css("background-color", "#FFF");
 
@@ -258,7 +260,7 @@ goorm.core.project.explorer.prototype = {
 		
 		if (core.status.current_project_path === "") {
 			// core.module.localization.local_apply("#project_selector", "dict");
-			this.select_project_name($("#project_selector .dropdown-menu li[localization_key=project_list").text());
+			this.select_project_name($("#project_selector .dropdown-menu li[localization_key=project_list]").text());
 		}
 
 
@@ -525,21 +527,25 @@ goorm.core.project.explorer.prototype = {
 
 		var project_list_table = $("#project_list_table");
 
-		var my_project_list_arr = [];
-		var others_project_list_arr = [];
+		var my_project_list = [];
+		var shared_project_list = [];
 
 		for (var p in core.workspace) {
-			if (core.workspace[p].author == core.user.id) {
-				my_project_list_arr.push([core.workspace[p].type, core.workspace[p].name, core.workspace[p].author]);
-			} else {
-				others_project_list_arr.push([core.workspace[p].type, core.workspace[p].name, core.workspace[p].author]);
+			var project_data = core.workspace[p];
+
+			if (project_data && project_data.type && project_data.name && project_data.author) {
+				if (project_data.author == core.user.id) {
+					my_project_list.push([project_data.type, project_data.name, project_data.author]);
+				} else {
+					shared_project_list.push([project_data.type, project_data.name, project_data.author]);
+				}
 			}
 		}
 
 		$('#project_list_table').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered table-striped" id="project_list_jquery_table" ></table>');
 
 		this.table = $('#project_list_jquery_table').dataTable({
-			"aaData": my_project_list_arr.concat(others_project_list_arr),
+			"aaData": my_project_list.concat(shared_project_list),
 			"aoColumns": [{
 					"sTitle": '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>'
 				}, {

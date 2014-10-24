@@ -76,9 +76,14 @@ module.exports = {
 
 						if (msg_obj.fs_socket_id) {
 							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
+							var fs_access = false;
 
 							self.get_user_data(socket, function(user_data) {
-								if (user_data.result) {
+								if (user_data.result) {	
+									fs_access = true;
+
+									user_data = user_data.data;
+
 									var id = user_data.id;
 
 									fs_socket.set('id_type', JSON.stringify({
@@ -86,7 +91,7 @@ module.exports = {
 									}));
 								}
 
-								socket.to().emit('fs_access', user_data.result);
+								socket.to().emit('fs_access', fs_access);
 							});
 						}
 					}
@@ -138,8 +143,12 @@ module.exports = {
 				});
 
 				self.get_user_data(socket, function(user_data) {
-					msg['author'] = {
-						author_id: user_data.id
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg['author'] = {
+							author_id: user_data.id
+						}
 					}
 
 					g_project.valid(msg, evt);
@@ -161,8 +170,12 @@ module.exports = {
 				
 
 				self.get_user_data(socket, function(user_data) {
-					msg.user_id = user_data.id;
-					g_project.do_new(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.user_id = user_data.id;
+						g_project.do_new(msg, evt);
+					}
 				});
 			});
 
@@ -176,12 +189,16 @@ module.exports = {
 				
 
 				self.get_user_data(socket, function(user_data) {
-					msg.id = user_data.id;
+					if (user_data.result) {
+						user_data = user_data.data;
 
-					
-					
-					g_project.do_delete(msg, evt);
-					
+						msg.id = user_data.id;
+
+						
+						
+						g_project.do_delete(msg, evt);
+						
+					}
 				});
 			});
 
@@ -203,11 +220,15 @@ module.exports = {
 
 
 				self.get_user_data(socket, function(user_data) {
-					msg['author'] = {
-						author_id: user_data.id
-					}
+					if (user_data.result) {
+						user_data = user_data.data;
 
-					g_project.get_list(msg, evt);
+						msg['author'] = {
+							author_id: user_data.id
+						}
+
+						g_project.get_list(msg, evt);
+					}
 				});
 
 			});
@@ -275,9 +296,13 @@ module.exports = {
 				});
 
 				self.get_user_data(socket, function(user_data) {
-					msg.uid = user_data.uid;
-					msg.gid = user_data.gid;
-					g_project.check_valid_property(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.uid = user_data.uid;
+						msg.gid = user_data.gid;
+						g_project.check_valid_property(msg, evt);
+					}
 				});
 			});
 
@@ -306,12 +331,16 @@ module.exports = {
 
 				// get user's project list. Jeong-Min Im.
 				self.get_user_data(socket, function(user_data) {
-					msg['author'] = {
-						author_id: user_data.id
-					};
-					msg.get_list_type = 'collaboration_list';
+					if (user_data.result) {
+						user_data = user_data.data;
 
-					g_project.get_list(msg, evt);
+						msg['author'] = {
+							author_id: user_data.id
+						};
+						msg.get_list_type = 'collaboration_list';
+
+						g_project.get_list(msg, evt);
+					}
 				});
 			});
 
@@ -320,6 +349,8 @@ module.exports = {
 			socket.on('/plugin/create', function (msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
+						user_data = user_data.data;
+
 						var uid = null;
 						var gid = null;
 
@@ -454,8 +485,12 @@ module.exports = {
 
 				
 				self.get_user_data(socket, function(user_data) {
-					msg.user_id = user_data.id;
-					g_file.do_new(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.user_id = user_data.id;
+						g_file.do_new(msg, evt);
+					}
 				});
 				
 			});
@@ -515,9 +550,12 @@ module.exports = {
 
 				
 				self.get_user_data(socket, function(user_data) {
-					msg.user_id = user_data.id;
-					g_file.do_new_folder(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
 
+						msg.user_id = user_data.id;
+						g_file.do_new_folder(msg, evt);
+					}
 				});
 				
 			});
@@ -578,8 +616,12 @@ module.exports = {
 
 				
 				self.get_user_data(socket, function(user_data) {
-					msg.user_id = user_data.id;
-					g_file.do_new_untitled_text_file(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.user_id = user_data.id;
+						g_file.do_new_untitled_text_file(msg, evt);
+					}
 				});
 				
 			});
@@ -641,8 +683,12 @@ module.exports = {
 
 				
 				self.get_user_data(socket, function(user_data) {
-					msg.user_id = user_data.id;
-					g_file.do_new_other(msg, evt);
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.user_id = user_data.id;
+						g_file.do_new_other(msg, evt);
+					}
 				});
 				
 			}); //context ...
@@ -1544,7 +1590,14 @@ module.exports = {
 					callback(load);
 				}
 				else {
-					load_from_socket_id(callback);
+					load_from_socket_id(function (load) {
+						if (load.result) {
+							callback(load);
+						}
+						else {
+							
+						}
+					});
 				}
 			});
 		} else {

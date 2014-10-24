@@ -147,7 +147,7 @@ goorm.core.project.open = {
 			core._socket.once('/project/unmount', function (result) {
 				setTimeout(function () {
 					self.loading = false;
-				}, 1500);
+				}, 500);
 
 				callback(result);
 			});

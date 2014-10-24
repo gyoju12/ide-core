@@ -1639,27 +1639,7 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('left_packages_show', this.hotkeys.left_packages_show), this.hotkeys.left_packages_show, this.hotkeys_fn.left_packages_show);
 		}
 		*/
-		//Show Cloud (Alt+Shift+3)
-		// if (this.hotkeys.left_cloud_explorer_show) {
-		// 	this.hotkeys_fn.left_cloud_explorer_show = function(e) {
-		// 		if (!core.status.keydown) {
-		// 			// if (core.module.layout.layout.getUnitByPosition("left")._collapsed) {
-		// 			// 	core.module.layout.layout.getUnitByPosition("left").expand();
-		// 			// }
-		// 			// core.module.layout.left_tabview.selectTab(1);
-		// 			core.module.layout.select('cloud');
-		// 		}
-
-
-
-		// 		e.stopPropagation();
-		// 		e.preventDefault();
-		// 		return false;
-		// 	};
-
-		// 	doc_obj.bind('keydown.' + this.make_namespace('left_cloud_explorer_show', this.hotkeys.left_cloud_explorer_show), this.hotkeys.left_cloud_explorer_show, this.hotkeys_fn.left_cloud_explorer_show);
-		// }
-
+		
 		//Right Layout Show/Hide (Alt+Shift+R)
 		if (this.hotkeys.right_layout_toggle) {
 			this.hotkeys_fn.right_layout_toggle = function(e) {

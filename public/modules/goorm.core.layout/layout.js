@@ -30,7 +30,7 @@ goorm.core.layout = {
 	tab_toolbox: null,
 	project_explorer: null,
 	tab_cloud: null,
-	// cloud_explorer: null,
+	
 	outline: null,
 
 	more_toolbar_timer: null,
