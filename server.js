@@ -301,7 +301,8 @@ goorm.config = function() {
 		}
 
 		console.log('Caught exception: ' + err + err.stack + "\n" + "saved at " + './error_log/' + date_now + ".log");
-		process.exit(1);
+
+		
 	});
 
 	g_cluster.init();
@@ -562,6 +563,10 @@ goorm.load = function() {
 
 		
 
+		
+
+		
+
 		if (g_cluster.is_main()) {
 			var cluster = g_cluster.get_cluster();
 
@@ -610,9 +615,7 @@ goorm.load = function() {
 							    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
 									return accept('Cookie is invalid.', false);
 							    }
-							} else {
-								return accept('No cookie transmitted.', false);
-							} 
+							}
 
 							accept(null, true);
 						});
@@ -650,6 +653,11 @@ goorm.load = function() {
 		global.__redis.sub = redis.createClient(RedisPort, RedisHost);
 		global.__redis.store = redis.createClient(RedisPort, RedisHost);
 		
+
+		
+
+		
+
 		
 
 		

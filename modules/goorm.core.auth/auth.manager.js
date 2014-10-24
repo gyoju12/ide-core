@@ -10,33 +10,8 @@
 
 var expire_date = 60 * 60 * 2; // 2h
 // var expire_date = 180; // 3m
-var user_schema = {
-	id: String,
-	pw: String,
-	name: String,
-	nick: String,
-	email: String,
-	deleted: Boolean,
-	type: String,
-	
-	
 
-	
 
-	last_access_time: Date,
-	uid: Number,
-	gid: Array,
-	group: String,
-	preference: String,
-	service_type: String,
-	comment: String,
-	image: String,
-	workspace: String,
-	expires_at: {
-		'type': Date,
-		expires: expire_date
-	}
-};
 
 var EventEmitter = require("events").EventEmitter;
 var async = require('async');

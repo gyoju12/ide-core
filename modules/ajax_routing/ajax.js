@@ -31,6 +31,8 @@ var g_auth_project = require("../goorm.core.auth/auth.project");
 
 
 
+
+
 var check_special_characters = function(str) {
 	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
 	return str;
@@ -1051,6 +1053,7 @@ module.exports = {
 			
 			
 			
+			
 			socket.on('/edit/save_tags', function(msg) {
 				var option = msg;
 
@@ -1058,16 +1061,6 @@ module.exports = {
 				socket.emit("/edit/save_tags", true);
 			});
 			
-			
-			
-			//not used???
-			socket.on('/edit/load_tags', function(msg) {
-				var option = msg;
-
-				g_edit.load_tags_data(option, function(response) {
-					socket.emit("/edit/load_tags", response);
-				});
-			});
 			
 			
 			
@@ -1401,56 +1394,9 @@ module.exports = {
 			// 	});
 			// });
 
+			
 
-			socket.on('/get_lxc_data', function(msg) {
-				var __name = msg.name;
-				var send = function(user_id, name, i, last) {
-					console.log("Send: " + i);
-
-					// SEND & WAITING
-					//
-					g_auth.load_auth_data(user_id, function(auth_data) {
-						if (auth_data.lxc_loaded) {
-							socket.to().emit('/get_lxc_data.' + name, {
-								'data': {
-									'host': auth_data.host,
-									'user_ports': auth_data.lxc_data.user_ports
-								}
-							});
-						} else {
-							if (i < 5) {
-								console.log("ReSend: " + i);
-
-								// RESEND
-								//
-								setTimeout(function() {
-									send(user_id, name, ++i, last);
-								}, 10 * 1000);
-							} else {
-								console.log("CANNOT GET " + user_id + " LXC - TIMEOVER");
-
-								if (!last) {
-									console.log("RECONNECT TO VM: " + user_id);
-
-									g_auth.connect_vm({
-										'id': user_id
-									}, function() {
-										send(user_id, __name, 0, true);
-									});
-								}
-							}
-						}
-					});
-				};
-
-				self.get_user_data(socket, function(user_data) {
-					if (user_data && user_data.id) {
-						var user_id = user_data.id;
-
-						send(user_id, __name, 1);
-					}
-				});
-			});
+			
 
 			
 
@@ -1458,6 +1404,10 @@ module.exports = {
 			
 			
 			
+
+			
+
+
 			///////
 			//API end
 			////////////
@@ -1503,49 +1453,31 @@ module.exports = {
 	},
 
 	get_user_data: function(socket, callback) {
-		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
-			var sessionID = socket.handshake.sessionID;
+		var self = this;
 
-			store.client.get(sessionID, function(err, user_data) {
-				if (user_data) {
-					try { // jeongmin: try catching
-						user_data = JSON.parse(user_data);
-
-						user_data.result = true;
-						callback(user_data);
-					} catch (e) {
-						console.log('collaboration client store error:', e);
-						callback({
-							'result': false
-						});
-					}
-				} else {
-					callback({
-						'result': false
-					});
-				}
-			});
-		} else {
+		var load_from_socket_id = function (cb) {
 			var socket_id = socket.id;
 
-			this.get_session_id(socket_id, function(sessionID) {
+			self.get_session_id(socket_id, function(sessionID) {
 				if (global.__redis_mode) {
 					store.client.get(sessionID, function(err, user_data) {
 						if (user_data) {
 							try { // jeongmin: try catching
 								user_data = JSON.parse(user_data);
 
-								user_data.result = true;
-								callback(user_data);
+								cb({
+									'result': true,
+									'data': user_data
+								});
 							} catch (e) {
 								console.log('get user data error:', e);
-								callback({
+								cb({
 									'result': false
 								});
 							}
 						} else {
 
-							callback({
+							cb({
 								'result': false
 							});
 						}
@@ -1559,23 +1491,64 @@ module.exports = {
 								user_data = user.auth.password.user;
 							}
 							if (user_data) {
-								user_data.result = true;
-								callback(user_data);
+								cb({
+									'result': true,
+									'data': user_data
+								});
 							} else {
-								callback({
+								cb({
 									'result': false
 								});
 							}
 						} catch (e) {
 							console.log('get_user_data error:', err, e);
 
-							callback({
+							cb({
 								'result': false
 							});
 						}
 					});
 				}
 			});
+		};
+
+		var load_from_session_id = function (cb) {
+			var sessionID = socket.handshake.sessionID;
+
+			store.client.get(sessionID, function(err, user_data) {
+				if (user_data) {
+					try { // jeongmin: try catching
+						user_data = JSON.parse(user_data);
+
+						cb({
+							'result': true,
+							'data': user_data
+						});
+					} catch (e) {
+						console.log('collaboration client store error:', e);
+						cb({
+							'result': false
+						});
+					}
+				} else {
+					cb({
+						'result': false
+					});
+				}
+			});
+		};
+
+		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
+			load_from_session_id(function (load) {
+				if (load.result) {
+					callback(load);
+				}
+				else {
+					load_from_socket_id(callback);
+				}
+			});
+		} else {
+			load_from_socket_id(callback);
 		}
 	}
 

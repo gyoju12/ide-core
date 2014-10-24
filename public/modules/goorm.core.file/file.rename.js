@@ -37,10 +37,10 @@ goorm.core.file.rename = {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				return false;
 			} else if (dst_name.indexOf(" ") != -1) {
-				alert.show(core.module.localization.msg.alert_allow_character);
+				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
 				return false;
 			} else if (!dst_name_check(dst_name)) {
-				alert.show(core.module.localization.msg.alert_allow_character);
+				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
 				return false;
 			}
 
@@ -84,7 +84,7 @@ goorm.core.file.rename = {
 						self.panel.modal('hide');
 					});
 				} else {
-					core.socket.once("/file/rename", function(data) {
+					core._socket.once("/file/rename", function(data) {
 						var received_data = data;
 
 						if (received_data.err_code === 0) {
@@ -123,7 +123,7 @@ goorm.core.file.rename = {
 							alert.show(received_data.message);
 						}
 					});
-					core.socket.emit("/file/rename", postdata);
+					core._socket.emit("/file/rename", postdata);
 					self.panel.modal('hide');
 				}
 			}
@@ -226,7 +226,7 @@ goorm.core.file.rename = {
 	check_exist: function(postdata, confirm_msg, callback) {
 		var localization = core.module.localization.msg;
 
-		core.socket.once('/file/exist', function(data) {
+		core._socket.once('/file/exist', function(data) {
 			if (data.err_code == 0) {
 				if (data.exist) {
 					confirmation.init({
@@ -251,6 +251,6 @@ goorm.core.file.rename = {
 				alert.show(localization[data.message]);
 			}
 		});
-		core.socket.emit('/file/exist', postdata);
+		core._socket.emit('/file/exist', postdata);
 	}
 };

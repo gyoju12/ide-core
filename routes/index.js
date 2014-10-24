@@ -202,6 +202,8 @@ exports.project.move_file = function(req, res) {
 
 
 
+
+
 /*
  * API : Plugin
  */
@@ -1222,6 +1224,8 @@ exports.edit.save_tags = function(req, res) {
 	
 
 	
+
+	
 	g_edit.save_tags_data(option, function() {
 		res.json(true);
 	});
@@ -1239,6 +1243,7 @@ exports.edit.load_tags = function(req, res) {
 	});
 	
 }
+
 
 
 

@@ -635,6 +635,8 @@ goorm.core.prototype = {
 		this.socket = this.module.router.get_socket();
 		this._socket = new this.module.router._socket();
 
+		_$ = new this.module.router._$();
+
 		goorm.core.utility.ajax_loading.init(this.socket);
 
 		this.socket.on('user_access', function() {

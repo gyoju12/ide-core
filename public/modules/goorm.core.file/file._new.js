@@ -50,7 +50,7 @@ goorm.core.file._new = {
 				type: data.type
 			};
 			//$.get("file/new", postdata, function (data) {
-			core.socket.once("/file/new", function(data) {
+			core._socket.once("/file/new", function(data) {
 				if (data.err_code == 99) {
 					confirmation.init({
 						message: localization.confirmation_new_message,
@@ -99,7 +99,7 @@ goorm.core.file._new = {
 					alert.show(msg);
 				}
 			});
-			core.socket.emit("/file/new", postdata);
+			core._socket.emit("/file/new", postdata);
 		};
 
 		this.dialog = new goorm.core.dialog();

@@ -49,7 +49,7 @@ goorm.core.file.move = {
 					
 				});
 			} else {
-				core.socket.once("/file/move", function(data) {
+				core._socket.once("/file/move", function(data) {
 					if (data.err_code === 0) {
 						postdata.change = 'dialog_mv';
 						postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
@@ -66,7 +66,7 @@ goorm.core.file.move = {
 						alert.show(data.message);
 					}
 				});
-				core.socket.emit("/file/move", postdata);
+				core._socket.emit("/file/move", postdata);
 
 				self.panel.modal('hide');
 			}

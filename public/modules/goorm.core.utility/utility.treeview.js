@@ -185,10 +185,12 @@ goorm.core.utility.treeview.prototype = {
 				// _this._refresh = false;
 				// console.log("load folder", postdata);
 
-				core.socket.once("/file/get_result_ls" + path, function(data) {
+				core._socket.set_url("/file/get_result_ls" + path);
+
+				core._socket.once("/file/get_result_ls" + path, function(data) {
 					callback(data);
 				});
-				core.socket.emit("/file/get_result_ls", postdata);
+				core._socket.emit("/file/get_result_ls", postdata);
 			};
 		}
 

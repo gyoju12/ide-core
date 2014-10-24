@@ -15,6 +15,7 @@ goorm.core.project.open = {
 	project_list: null,
 	
 	handler: {},
+	loading: false,
 
 	init: function() {
 
@@ -106,36 +107,60 @@ goorm.core.project.open = {
 
 	mount: function (path, callback) {
 		if (typeof(path) === 'function') {
-			path = null;
 			callback = path;
+			path = null;
 		}
 
 		var project_path = path || core.status.current_project_path;
 
-		core._socket.once('/project/mount', function (result) {
-			callback(result);
-		});
+		if (project_path !== "") {
+			core._socket.once('/project/mount', function (result) {
+				callback(result);
+			});
 
-		core._socket.emit('/project/mount', {
-			'project_path': project_path
-		});
+			core._socket.emit('/project/mount', {
+				'project_path': project_path
+			});
+		}
+		else {
+			callback({
+				'result': true
+			});
+		}
 	},
 
 	unmount: function (path, callback) {
+		var self = this;
+
+		if (this.loading) return;
+
 		if (typeof(path) === 'function') {
-			path = null;
 			callback = path;
+			path = null;
 		}
 
 		var project_path = path || core.status.current_project_path;
 
-		core._socket.once('/project/unmount', function (result) {
-			callback(result);
-		});
+		if (project_path !== "") {
+			this.loading = true;
 
-		core._socket.emit('/project/unmount', {
-			'project_path': project_path
-		});
+			core._socket.once('/project/unmount', function (result) {
+				setTimeout(function () {
+					self.loading = false;
+				}, 1500);
+
+				callback(result);
+			});
+
+			core._socket.emit('/project/unmount', {
+				'project_path': project_path
+			});
+		}
+		else {
+			callback({
+				'result': true
+			});
+		}
 	},
 
 	open: function(current_project_path, current_project_name, current_project_type) {

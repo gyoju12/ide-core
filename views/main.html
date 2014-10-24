@@ -95,9 +95,7 @@
                 <a id='gLayoutTab_Packages' href="#packages" data-toggle="tab">Packages</a>
             </li>
             -->
-            <!-- <li>
-                <a href="#cloud_explorer" data-toggle="tab" id='gLayoutTab_Cloud' localization_key='cloud'>Cloud</a>
-            </li> -->
+            
         </ul>
 
         <!-- Tab panes -->
@@ -160,26 +158,7 @@
             <!--
             <div class="tab-pane fade" id="packages"></div>
             -->
-            <!-- <div class="tab-pane fade" id="cloud_explorer">
-                <ul class="nav nav-pills nav-justified">
-                    <li class="active">
-                        <a id="li_google_drive" href="#google_drive" data-toggle="tab">Google Drive</a>
-                    </li>
-                    <li>
-                        <a id="li_dropbox" href="#dropbox" data-toggle="tab">Dropbox</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="google_drive"></div>
-                    <div class="tab-pane fade" id="dropbox"></div>
-                </div>
-
-                <iframe name='google_logout_frame' id='google_logout_frame' style='display:none;'></iframe>
-                <span id="authorize_span" style="display:none; padding-left:10px;">
-                    <button id="authorize_button" style="left:10px; padding-right:4px; padding-left:4px;">Login</button>
-                </span>
-                <div id='cloud_treeview' style='overflow-x:hidden'></div>
-            </div> -->
+            
         </div>
 
     </div>
@@ -789,6 +768,71 @@
                                 </a>
                             </li>
 
+                            
+                                    <li class="divider goorm_perspectives_menu_end" position="left"></li>
+                                    <li class="goorm_perspectives_menu" position="right">
+                                        <a href="#" action="right_layout_toggle" name="preference.shortcut.window.right_layout_show_hide" localization_key="window_right_layout_show_hide" class="menu-toggle-right">
+                                            Show/Hide
+                                            <em class="helptext">Alt + Shift + R</em>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="right" action="right_chat_show" name="preference.shortcut.window.right_layout_toggle_chat" localization_key="window_right_layout_toggle_chat">
+                                            Show Chat
+                                            <em class="helptext">Alt + Shift + 3</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="right" action="right_slide_show" name="preference.shortcut.window.right_layout_toggle_slide" localization_key="window_right_layout_toggle_slide">
+                                            Show Slide
+                                            <em class="helptext">Alt + Shift + 4</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="right" action="right_history_show" name="preference.shortcut.window.right_layout_toggle_history" localization_key="window_right_layout_toggle_history">
+                                            Show History
+                                            <em class="helptext">Alt + Shift + 5</em>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="right" action="right_outline_show" name="preference.shortcut.window.right_layout_toggle_outline" localization_key="window_right_layout_toggle_outline">
+                                            Show Outline
+                                            <em class="helptext">Alt + Shift + 6</em>
+                                        </a>
+                                    </li>
+                                    <li class="divider goorm_perspectives_menu_end" position="right"></li>
+                                    <li class="goorm_perspectives_menu" position="bottom">
+                                        <a href="#" action="bottom_layout_toggle" name="preference.shortcut.window.bottom_layout_show_hide" localization_key="window_bottom_layout_show_hide" class="menu-toggle-bottom">
+                                            Show/Hide
+                                            <em class="helptext">Alt + Shift + B</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="bottom" action="bottom_debug_show" name="preference.shortcut.window.bottom_layout_debug" localization_key="window_bottom_layout_debug">
+                                            Show Debug
+                                            <em class="helptext">Alt + Shift + 7</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="bottom" action="bottom_console_show" name="preference.shortcut.window.bottom_layout_console" localization_key="window_bottom_layout_console">
+                                            Show Terminal
+                                            <em class="helptext">Alt + Shift + 8</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="goorm_tab_menu" position="bottom" action="bottom_search_show" name="preference.shortcut.window.bottom_layout_search" localization_key="window_bottom_layout_search">
+                                            Show Search
+                                            <em class="helptext">Alt + Shift + 9</em>
+                                        </a>
+                                    </li>
+                                    <li class="divider goorm_perspectives_menu_end" position="bottom"></li>
+                                    <li>
+                                        <a href="#" action="layout_default" localization_key="window_default_layout">Default Layout</a>
+                                    </li>
+                                </ul>
+                            </li>
                             
                             <li class="divider"></li>
                             <li>
@@ -4853,11 +4897,7 @@
                                                     <input class="shortcut_input form-control" name="preference.shortcut.window.left_layout_toggle_packages" id="preference.shortcut.window.left_layout_toggle_packages" value="Alt+Shift+2"/>
                                                 </div>
                                                 -->
-                                                <!-- <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.window.left_layout_toggle_cloud_explorer" localization_key="window_left_layout_toggle_cloud_explorer">Show Cloud Explorer</label>
-                                                <div class="col-md-8">
-                                                    <input class="shortcut_input form-control" name="preference.shortcut.window.left_layout_toggle_cloud_explorer" id="preference.shortcut.window.left_layout_toggle_cloud_explorer" value="Alt+Shift+3"/>
-                                                </div> -->
-
+                                                
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.window.right_layout_show_hide" localization_key="window_right_layout_show_hide">Right Pane Show/Hide</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.window.right_layout_show_hide" id="preference.shortcut.window.right_layout_show_hide" value="Alt+Shift+R"/>
@@ -6005,10 +6045,7 @@
                                     <em class="helptext">Alt + Shift + 2</em>
                                 </span>
                             -->
-                            <!-- <span name="preference.shortcut.window.left_layout_toggle_cloud_explorer" localization_key="window_left_layout_toggle_cloud_explorer">
-                                Show Cloud Explorer
-                                <em class="helptext">Alt + Shift + 3</em>
-                            </span> -->
+                            
                             <span style="display:none;" class="goorm_perspectives_menu_end" position="left"></span>
                             <span name="preference.shortcut.window.right_layout_show_hide" localization_key="window_right_layout_show_hide">
                                 Right Pane Show/Hide
@@ -6480,6 +6517,35 @@
     <script type="text/javascript" src="/modules/goorm.core.shortcut/shortcut.manager.js"></script>
 
     <script type="text/javascript" src="/modules/goorm.core.localization/localization.js"></script>
+    
+    
+    <script type='text/javascript' src='/modules/goorm.core.scm/scm.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.scm/scm.svn.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.scm/scm.git.js'></script>
+
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.push.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.chat.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.chat.message.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.chat.user.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.chat.user.friend.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.chat.history.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.project.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.project.list.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.project.message.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.workspace.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.slideshare.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.slideshare.canvas.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.history.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.editing.js'></script>
+
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.signup.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.profile.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.profile.image.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.find_info.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.find_info.id.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.auth/auth.find_info.pw.js'></script>
     
     <script type='text/javascript' src='/modules/goorm.core.tutorial/tutorial.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.tutorial/tutorial_tour.js'></script>

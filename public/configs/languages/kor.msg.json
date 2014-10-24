@@ -1461,5 +1461,8 @@
     },
     "confirmation_do_you_want_overwrite": {
         "value": "덮어쓰기 하시겠습니까?"
-    }    
+    },
+     "alert_allow_file_has_valid_name": {
+        "value": "파일/폴더 이름은 알파벳과 숫자, _, - 만 가능합니다."
+    }
 }

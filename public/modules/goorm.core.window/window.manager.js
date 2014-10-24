@@ -434,7 +434,7 @@ goorm.core.window.manager = {
 						var postdata = {
 							path: filepath + filename
 						};
-						core.socket.once("/file/get_property", function(data) {
+						core._socket.once("/file/get_property", function(data) {
 							if (data.err_code === 0) {
 								if (data.size >= 10000000) { // 1MB = 1,000,000Bytes, 10MB = 10,000,000Bytes
 									var mega_size = Math.round((data.size / 1000000) * 100) / 100; // making megabytes and rounding to 2 decimal places
@@ -454,7 +454,7 @@ goorm.core.window.manager = {
 							}
 						});
 
-						core.socket.emit("/file/get_property", postdata);
+						core._socket.emit("/file/get_property", postdata);
 					} else // no need to check file size
 						return do_open();
 				}

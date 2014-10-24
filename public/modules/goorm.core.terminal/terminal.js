@@ -196,7 +196,12 @@ goorm.core.terminal.prototype = {
 		};
 
 		var init_socket = function() {
+			
 			self.socket = io.connect();
+			
+
+			
+
 			self.socket.on("on_change_project_dir."+self.terminal_name, function(data) {
 				$(self).trigger("terminal_ready."+self.terminal_name);
 			});
@@ -326,6 +331,7 @@ goorm.core.terminal.prototype = {
 		var data = options.data;
 		var stringify = options.stringify;
 
+		
 		if (this.socket && this.socket.socket && this.socket.socket.connected) {
 			data.name = this.terminal_name
 
@@ -335,6 +341,9 @@ goorm.core.terminal.prototype = {
 
 			this.socket.emit(namespace, data);
 		}
+		
+
+		
 	},
 
 	set_environment: function() {
@@ -349,9 +358,7 @@ goorm.core.terminal.prototype = {
 		// 	this.send_command("export PATH=${PATH}:" + this.export_path + "\r");
 		// }
 
-		// for local test
 		if (!core.user.user_ports) core.user.user_ports = [1234];
-
 		if (core.user.user_ports) {
 			var port = core.user.user_ports[0];
 

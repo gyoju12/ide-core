@@ -282,14 +282,14 @@ goorm.core.menu.action = {
 									close_window();
 								});
 							} else {
-								core.socket.once("/file/delete", function(data) {
+								core._socket.once("/file/delete", function(data) {
 									// m.s("delete: " + core.status.selected_file);
 
 									core.module.layout.project_explorer.refresh();
 
 									close_window();
 								}, true);
-								core.socket.emit("/file/delete", postdata);
+								core._socket.emit("/file/delete", postdata);
 							}
 						},
 						no: null
@@ -1181,7 +1181,7 @@ goorm.core.menu.action = {
 								close_window();
 							});
 						} else {
-							core.socket.once("/file/delete", function(data) {
+							core._socket.once("/file/delete", function(data) {
 								if (data.err_code == 20) {
 									alert.show(localization[data.message]);
 								}
@@ -1191,7 +1191,7 @@ goorm.core.menu.action = {
 
 								close_window();
 							});
-							core.socket.emit("/file/delete", postdata);
+							core._socket.emit("/file/delete", postdata);
 						}
 					},
 					no: null
@@ -1227,7 +1227,7 @@ goorm.core.menu.action = {
 							};
 
 							//$.get("file/delete_all", postdata, function (data) {
-							core.socket.once("/file/delete_all", function(data) {
+							core._socket.once("/file/delete_all", function(data) {
 								if (data.err_code == 20) {
 									alert.show(core.module.localization.msg[data.message]);
 								}
@@ -1235,7 +1235,7 @@ goorm.core.menu.action = {
 								core.status.selected_file_type = "";
 								core.module.layout.project_explorer.refresh();
 							});
-							core.socket.emit("/file/delete_all", postdata);
+							core._socket.emit("/file/delete_all", postdata);
 						},
 						no: null
 					});

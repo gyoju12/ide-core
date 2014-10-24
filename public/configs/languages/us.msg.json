@@ -1459,5 +1459,8 @@
     },
     "confirmation_do_you_want_overwrite": {
         "value": "Do you want to overwrite?"
+    },
+    "alert_allow_file_has_valid_name": {
+        "value": "File/folder's name should have only alphabets, numbers and _, -."
     }
 }

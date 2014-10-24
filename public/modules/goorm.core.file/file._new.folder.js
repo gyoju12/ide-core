@@ -99,7 +99,7 @@ goorm.core.file._new.folder = {
 						// actual making new folder. Jeong-Min Im.
 						function do_file_new_folder() {
 							//$.get("file/new_folder", postdata, function (data) {
-							core.socket.once("/file/new_folder", function(data) {
+							core._socket.once("/file/new_folder", function(data) {
 								if (data.err_code === 0) {
 									core.module.layout.project_explorer.refresh();
 								} else if (data.err_code == 20) {
@@ -110,7 +110,7 @@ goorm.core.file._new.folder = {
 								}
 							});
 
-							core.socket.emit("/file/new_folder", _postdata);
+							core._socket.emit("/file/new_folder", _postdata);
 						}
 
 						if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
@@ -118,7 +118,7 @@ goorm.core.file._new.folder = {
 								filename: data.path + "/" + data.name
 							};
 
-							core.socket.once("/file/delete", function(data) {
+							core._socket.once("/file/delete", function(data) {
 								// m.s("delete: " + core.status.selected_file);
 
 								core.module.layout.project_explorer.refresh();
@@ -144,7 +144,7 @@ goorm.core.file._new.folder = {
 								do_file_new_folder();
 							}, true);
 
-							core.socket.emit("/file/delete", _postdata);
+							core._socket.emit("/file/delete", _postdata);
 						} else { // jeongmin: not exists, new folder
 							do_file_new_folder();
 						}

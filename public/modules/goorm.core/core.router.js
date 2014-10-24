@@ -46,15 +46,7 @@ goorm.core.router = {
 		this._socket.prototype = {
 			router: goorm.core.router,
 			set_url: function (url) {
-				if (typeof(url) === 'string') {
-					if (this.fs_url && this.fs_url.indexOf(url) === -1) {
-						this.fs_url.push(url);
-					}
-				}
-				else if (Array.isArray(url)) {
-					this.fs_url = this.fs_url.concat(url);
-					$.unique(this.fs_url);
-				}
+				
 			},
 
 			once: function(url, fn, loading) {

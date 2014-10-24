@@ -92,76 +92,9 @@ module.exports = {
 		});
 	},
 
-	get_lxc: function(auth_data, callback) {
-		var self = this;
-
-		var user_id = auth_data.user_id;
-		var req_id = (auth_data.req_id) ? auth_data.req_id : user_id; // for guest
-
-		auth_data.user_id = req_id;
-
-		
-
-		
-
-		// GET LXC
-		//
-		var lxc_post_data = querystring.stringify(auth_data);
-		var lxc_post_options = {
-			host: host,
-			port: '5000',
-			path: '/vm/join_person/lxc',
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Length': lxc_post_data.length
-			}
-		}
-
-		var lxc_post_req = http.request(lxc_post_options, function(lxc_res) {
-			lxc_res.setEncoding('utf8');
-
-			var lxc_response = "";
-			lxc_res.on('data', function(chunk) {
-				lxc_response += chunk;
-			});
-
-			lxc_res.on('end', function() {
-				try {
-					var lxc_data = JSON.parse(lxc_response);
-
-					if (lxc_data && lxc_data.ssh_port) {
-						self.save_auth_data(user_id, {
-							'id_rsa_path': auth_data.id_rsa_path,
-							'host': auth_data.host,
-							"lxc_data": lxc_data,
-							'lxc_loaded': true
-						}, function() {
-							if (callback && typeof(callback) === 'function') {
-								callback(lxc_data);
-							}
-						});
-					} else {
-						if (callback && typeof(callback) === 'function') {
-							callback(false);
-						}
-					}
-				} catch (e) {
-					console.log('get_lxc error:', e);
-				}
-			});
-		});
-
-		lxc_post_req.on('error', function(e) {
-			console.log(e);
-		});
-
-		lxc_post_req.write(lxc_post_data);
-		lxc_post_req.end();
-	},
+	
+	
 	
 
-
-
-
+	
 };

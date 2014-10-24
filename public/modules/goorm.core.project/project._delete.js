@@ -247,10 +247,10 @@ goorm.core.project._delete = {
 		for (o in core.workspace) {
 			if (!o) continue;
 
-			core.socket.once("/project/delete", function(data) {
+			core._socket.once("/project/delete", function(data) {
 				core.module.layout.project_explorer.refresh();
 			}, true);
-			core.socket.emit("/project/delete", {
+			core._socket.emit("/project/delete", {
 				project_path: o + ''
 			});
 		}

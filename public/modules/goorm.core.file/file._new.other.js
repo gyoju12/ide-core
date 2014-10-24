@@ -43,7 +43,7 @@ goorm.core.file._new.other = {
 			}
 
 			//$.get("file/new_other", postdata, function (data) {
-			core.socket.once("/file/new_other", function(data){
+			core._socket.once("/file/new_other", function(data){
 				if (data.err_code === 0) {
 					core.module.layout.project_explorer.refresh();
 					self.panel.modal('hide');
@@ -54,7 +54,7 @@ goorm.core.file._new.other = {
 					alert.show(data.message);
 				}
 			});
-			core.socket.emit("/file/new_other", postdata);
+			core._socket.emit("/file/new_other", postdata);
 		};
 
 

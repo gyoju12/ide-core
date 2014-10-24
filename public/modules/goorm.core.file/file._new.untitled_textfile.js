@@ -36,7 +36,7 @@ goorm.core.file._new.untitled_textfile = {
 				current_path: data.path
 			};
 			//$.get("file/new_untitled_text_file", postdata, function (data) {
-			core.socket.once("/file/new_untitled_text_file", function(data){
+			core._socket.once("/file/new_untitled_text_file", function(data){
 				if (data.err_code === 0) {
 					core.module.layout.project_explorer.refresh();
 				} else if (data.err_code == 20) {
@@ -47,7 +47,7 @@ goorm.core.file._new.untitled_textfile = {
 				}
 
 			});
-			core.socket.emit("/file/new_untitled_text_file", postdata);
+			core._socket.emit("/file/new_untitled_text_file", postdata);
 
 			if (typeof(this.hide) !== 'function' && panel) {
 				

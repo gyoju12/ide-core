@@ -57,6 +57,8 @@ goorm.core.project.property = {
 
 				self.property.plugins || (self.property.plugins = {});
 				if (contents) {
+					core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], contents);
+
 					var plugin_name = contents.type.toLowerCase();
 					var plugins = [];
 					self.manager.plugin_data.map(function(plugin) {
@@ -132,7 +134,7 @@ goorm.core.project.property = {
 		});
 		property.description = property.description.replace(/<\/?[^>]+(>|$)/g, "");
 
-		core.socket.once("/project/set_property", function(data) {
+		core._socket.once("/project/set_property", function(data) {
 			if (data.err_code === 0) {
 				$.extend(true, core.workspace[path], property);
 				callback && callback();
@@ -141,7 +143,7 @@ goorm.core.project.property = {
 			}
 		});
 
-		core.socket.emit("/project/set_property", {
+		core._socket.emit("/project/set_property", {
 			project_path: path,
 			data: JSON.stringify(property)
 		});
@@ -293,7 +295,7 @@ goorm.core.project.property = {
 	load_property: function(path, callback) {
 		var self = this;
 
-		core.socket.once("/project/get_property", function(data) {
+		core._socket.once("/project/get_property", function(data) {
 			if (data.err_code === 0) {
 				////// get scm property //////
 				// if (data.contents) {
@@ -326,7 +328,7 @@ goorm.core.project.property = {
 			}
 		});
 
-		core.socket.emit("/project/get_property", {
+		core._socket.emit("/project/get_property", {
 			project_path: path
 		});
 	},

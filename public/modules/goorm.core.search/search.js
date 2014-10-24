@@ -406,7 +406,7 @@ goorm.core.search = {
 		// core.module.loading_bar.start("Searching......");
 		core.progressbar.set(0);
 
-		core.socket.once("/file/search_on_project", function(res) {
+		core._socket.once("/file/search_on_project", function(res) {
 			core.progressbar.set(80);
 
 			// var length = 0;
@@ -449,7 +449,7 @@ goorm.core.search = {
 
 			core.progressbar.set(100);
 		}, true); // jeongmin: show loading bar
-		core.socket.emit("/file/search_on_project", postdata);
+		core._socket.emit("/file/search_on_project", postdata);
 
 	},
 

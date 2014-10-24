@@ -20,7 +20,6 @@ var spawn = require('child_process').spawn;
 
 var g_secure = require('../goorm.core.secure/secure.js');
 var g_auth_project = require('../goorm.core.auth/auth.project');
-var g_aws = require('../goorm.core.aws/aws.js');
 
 
 
