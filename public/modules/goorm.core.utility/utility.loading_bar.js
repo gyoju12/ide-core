@@ -110,7 +110,7 @@ goorm.core.utility.loading_bar = {
 	},
 
 	// loading bar should be stopped by this function. Jeong-Min Im.
-	done: function() {
+	stop: function() {
 		this.queue.shift();
 
 		if (this.queue.length > 0) { // still queue remains

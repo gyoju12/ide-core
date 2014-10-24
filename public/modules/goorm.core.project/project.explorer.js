@@ -680,7 +680,7 @@ goorm.core.project.explorer.prototype = {
 			  		alert.show(localization_msg.alert_upload_fail);
 					console.log('Something went terribly wrong...');
 			  	}
-			  	core.module.loading_bar.done();
+			  	core.module.loading_bar.stop();
 			  	self.refresh();			  	
 			  	self.treeview.open_node(target);			  	
 
@@ -1257,10 +1257,11 @@ goorm.core.project.explorer.prototype = {
 		//$.get('project/move_file', getdata, function (data) {
 
 		core.socket.once('/project/move_file', function(data){
-			self.refresh(true);
-			setTimeout(function() {
-				self.treeview.open_node($target);
-			}, 250);
+			self.refresh(function() {
+				setTimeout(function() { 
+					self.treeview.open_node($target);
+				}, 250);
+			});
 			
 			//getdata.change = "drag_n_drop";
 			core.module.layout.workspace.window_manager.synch_with_fs(getdata);

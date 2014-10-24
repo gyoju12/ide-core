@@ -40,7 +40,7 @@ goorm.core.file._export = {
 				str: core.module.localization.msg.loading_bar_export
 			});
 			$.get("file/export", postdata, function(data) {
-				core.module.loading_bar.done();
+				core.module.loading_bar.stop();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');

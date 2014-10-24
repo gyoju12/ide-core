@@ -204,8 +204,8 @@ goorm.core.project._import = {
 		////// check imported project is valid. Jeong-Min Im. -> same as new project //////
 		core._socket.once("/project/valid", function(valid) {
 			if (valid.result) {
-				core.socket.once("/project/new", cb);
-				core.socket.emit("/project/new", senddata);
+				core._socket.once("/project/new", cb);
+				core._socket.emit("/project/new", senddata);
 			} else {
 				switch (valid.err_code) {
 					// Over Limit...
@@ -230,8 +230,8 @@ goorm.core.project._import = {
 							no_text: localization_msg.confirmation_no,
 							title: localization_msg.confirmation_title,
 							yes: function() {
-								core.socket.once("/project/new", cb);
-								core.socket.emit("/project/new", senddata);
+								core._socket.once("/project/new", cb);
+								core._socket.emit("/project/new", senddata);
 							},
 							no: null
 						});
@@ -311,7 +311,7 @@ goorm.core.project._import = {
 
 					}
 				} else {
-					core.module.loading_bar.done(); // jeongmin: 'import is in progress' loading bar
+					core.module.loading_bar.stop(); // jeongmin: 'import is in progress' loading bar
 					where.modal('hide'); // jeongmin: import project dialog
 					
 					if (data.err_code === 0) {
@@ -330,7 +330,7 @@ goorm.core.project._import = {
 
 			error: function() {
 				// core.progressbar.set(100);
-				core.module.loading_bar.done();
+				core.module.loading_bar.stop();
 			}
 		};
 

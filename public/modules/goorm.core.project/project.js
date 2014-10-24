@@ -26,7 +26,12 @@ goorm.core.project = {
 		var project_data = core.workspace[project_path];
 		var property = project_data.plugins;
 		var check = options.check;
+
+		
+
+		
 		var socket = io.connect();
+		
 
 		// Delete unnecessary Project_data
 		delete project_data.hash;
@@ -45,6 +50,7 @@ goorm.core.project = {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + project_type] !== undefined) {
 				
 				
+				
 				var build = null;
 				var query = null;
 
@@ -57,14 +63,12 @@ goorm.core.project = {
 							project_path: options.project_path,
 							project_type: options.project_type,
 							class_name: property["plugin." + options.project_type + ".main"],
-							source_path: property["plugin." + options.project_type + ".source_path"],
-							sid: core.socket.socket.sessionid
+							source_path: property["plugin." + options.project_type + ".source_path"]
 						};
 					} else {
 						query = {
 							project_path: options.project_path,
-							project_type: options.project_type,
-							sid: core.socket.socket.sessionid
+							project_type: options.project_type
 						};
 					}
 					//build
@@ -320,7 +324,7 @@ goorm.core.project = {
 
 		is_build_fail = is_build_fail || false;
 
-		$.get("project/check_latest_build", {
+		_$.get("project/check_latest_build", {
 			"project_path": core.status.current_project_path,
 			"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
 		}, function(data) {

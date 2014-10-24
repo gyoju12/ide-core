@@ -48,7 +48,7 @@ goorm.core.file._import = {
 				var form_options = {
 					target: "#upload_output",
 					success: function(data) {
-						core.module.loading_bar.done();
+						core.module.loading_bar.stop();
 
 						if (data.err_code === 0) {
 							self.panel.modal('hide');
@@ -179,7 +179,7 @@ goorm.core.file._import = {
 			for (var i = 0; i < file_list.length; i++) {
 				//if (!/^[\w가-힣0-9a-zA-Z._-]*$/.test(file_list[i].name)) { // jeongmin: remove space
 				if (filename_check_regexp.test(file_list[i].name)) {
-					alert.show(core.module.localization.msg.alert_allow_character);
+					alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
 					self.input.val('');
 					return false;
 				}

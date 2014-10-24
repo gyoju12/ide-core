@@ -41,7 +41,7 @@ goorm.core.utility.ajax_loading = {
 					var i = _this.queue.indexOf(name);
 					_this.queue.splice(i, 1);
 					if (_this.queue.length === 0) {
-						core.module.loading_bar.done();
+						core.module.loading_bar.stop();
 					}
 				}
 			};
