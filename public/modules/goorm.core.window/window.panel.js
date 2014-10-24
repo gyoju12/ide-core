@@ -371,7 +371,9 @@ goorm.core.window.panel.prototype = {
 				height: this.height,
 				position: [this.left, this.top],
 				focus: function() {
-					self.activate();
+					if (options.activated) { // jeongmin: only if this window was activated
+						self.activate();
+					}
 				},
 				create: function(event, ui) {
 					// $(core).trigger("panel_create" + self.index);	// jeongmin: move to open function for sync

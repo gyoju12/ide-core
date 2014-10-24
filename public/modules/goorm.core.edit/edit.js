@@ -957,7 +957,9 @@ goorm.core.edit.prototype = {
                     } catch (e) {}
                 }
 
-                self.on_activated();
+                if (options.activated) { // jeongmin: only if this window was activated
+                    self.on_activated();
+                }
 
                 $(core).trigger("editor_loaded", {
                     filepath: filepath,
