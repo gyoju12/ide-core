@@ -21,6 +21,9 @@ var g_auth_manager = require('./auth.manager.js');
 var g_secure = require('../goorm.core.secure/secure');
 var platform = require('os');
 
+
+
+
 var os = {
 
 	// Group Add

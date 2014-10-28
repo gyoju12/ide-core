@@ -50,28 +50,6 @@ goorm.core.window.manager = {
 				self.context_menu[0].show(e);
 		});
 
-		$(core).on("edit_file_open", function(evt, data) {
-			var postdata = {
-				workspace: data.workspace
-			};
-
-			$.post("/file/update_data", postdata, function(logs) {
-				var index = -1;
-				var i = 0;
-				if (logs.length > 0) {
-					for (i = 0; i < self.window.length; i++) {
-						var filepath = self.window[i].filepath + self.window[i].filename;
-						if (filepath == logs[0].filepath) {
-							index = i;
-							break;
-						}
-					}
-
-					
-				}
-			});
-		});
-
 		$(core).on("goorm_login_complete", function() {
 			if (!$.isEmptyObject(localStorage.workspace_window)) {
 				var saved_workspace_window = $.parseJSON(localStorage.workspace_window);
@@ -414,7 +392,7 @@ goorm.core.window.manager = {
 				};
 
 				if (!options.storage) {
-					$.get("file/get_file", query, function() {
+					_$.get("file/get_file", query, function() {
 						window.open("files/" + filepath + filename);
 					});
 				}
@@ -475,7 +453,7 @@ goorm.core.window.manager = {
 						filename: filename
 					};
 
-					$.get("file/get_file", query, function() {
+					_$.get("file/get_file", query, function() {
 						window.open("files/" + filepath + filename);
 					});
 				} else {

@@ -74,7 +74,7 @@ module.exports = {
 							socket.to().emit('user_access');
 						}
 
-						if (msg_obj.fs_socket_id) {
+						if (msg_obj.fs_express_id && msg_obj.fs_socket_id) {
 							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
 							var fs_access = false;
 
@@ -89,6 +89,8 @@ module.exports = {
 									fs_socket.set('id_type', JSON.stringify({
 										'id': id
 									}));
+
+									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
 								}
 
 								socket.to().emit('fs_access', fs_access);
@@ -429,6 +431,50 @@ module.exports = {
 				});
 			});
 
+			socket.on('/plugin/do_web_run', function (msg) {
+				var uid = null;
+				var gid = null;
+				var copy = function() {
+					var workspace = global.__workspace + "/" + msg.project_path;
+
+					var target_path = __temp_dir + "plugins/web/" + msg.project_path;
+
+					var run_path = target_path.split("temp_files").pop();
+
+					if (!fs.existsSync(__temp_dir)) {
+						fs.mkdirSync(__temp_dir);
+					}
+					if (!fs.existsSync(__temp_dir + "/plugins")) {
+						fs.mkdirSync(__temp_dir + "/plugins");
+					}
+					if (!fs.existsSync(__temp_dir + "/plugins/web")) {
+						fs.mkdirSync(__temp_dir + "/plugins/web");
+					}
+					if (!fs.existsSync(target_path)) {
+						fs.mkdirSync(target_path);
+					}
+
+					exec('cp -r ' + workspace + '/* ' + target_path, function(__err) {
+						if (__err) {
+							console.log('do_web_run Err:', __err);
+						} else {
+
+							
+
+							res.json({
+								code: 200,
+								message: "success",
+								run_path: run_path
+							});
+						}
+					});
+				};
+				
+				
+				copy();
+				
+			});
+
 			//API : FS
 			socket.on('/file/new', function(msg) {
 				var evt = new EventEmitter();
@@ -698,6 +744,8 @@ module.exports = {
 				evt.on("file_do_save_as", function(data) {
 					socket.emit("/file/save_as", data);
 				});
+
+				
 
 				
 
@@ -1110,335 +1158,8 @@ module.exports = {
 			
 			
 			
-			//API : dropbox
-			// dropbox app authorized
-			// socket.on('/cloud/dropbox_login', function() {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			var access_token = {};
 
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				if (preference.api) {
-			// 					if (preference.api.dropbox && preference.api.dropbox.access_token) {
-			// 						access_token = preference.api.dropbox.access_token;
-			// 					}
-			// 				}
-			// 				g_cloud_dropbox.login(user_data, access_token, socket, function(user) {
-			// 					self.get_session_id(socket.id, function(session_id) {
-			// 						self.update_session(session_id, user);
-			// 					});
-			// 				});
-			// 			} catch (e) {
-			// 				console.log('dropbox login error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // dropbox app authorized out
-			// socket.on('/cloud/dropbox_logout', function() {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		g_cloud_dropbox.logout(user_data, function(user) {
-			// 			self.get_session_id(socket.id, function(session_id) {
-			// 				console.log("dropbox: logout access_token is { null } ");
-			// 				self.update_session(session_id, user);
-			// 				g_cloud_dropbox.check_login(socket.id, user);
-			// 			});
-			// 		});
-			// 	});
-			// });
-
-			// // change UI state (login or logout)
-			// socket.on('/cloud/dropbox_islogin', function() {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		g_cloud_dropbox.check_login(socket.id, user_data);
-			// 	});
-			// });
-
-			// // dropbox make directory
-			// socket.on('/cloud/dropbox_mkdir', function(dir_name) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.make_dir(dir_name, access_token, function(reply) {
-			// 					console.log("dropbox: make directory");
-			// 					console.log(reply);
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('making dropbox directory error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // dropbox make file
-			// socket.on('/cloud/dropbox_mkfile', function(file_name, file_text) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.make_file(file_name, file_text, access_token, function(reply) {
-			// 					console.log("dropbox: make file");
-			// 					console.log(reply);
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('making dropbox file error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // dropbox copy file
-			// socket.on('/cloud/dropbox_cpfile', function(from_path, to_path) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.copy_file(from_path, to_path, access_token, function(reply) {
-			// 					console.log("dropbox: copy file from " + from_path + "  to " + to_path);
-			// 					console.log(reply);
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('copying dropbox file error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // dropbox move file
-			// socket.on('/cloud/dropbox_mvfile', function(from_path, to_path) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.move_file(from_path, to_path, access_token, function(reply) {
-			// 					console.log("dropbox: move file from " + from_path + "  to " + to_path);
-			// 					console.log(reply);
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('moving dropbox file error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // delete file or directory
-			// socket.on('/cloud/dropbox_delete', function(file_name) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.delete_file(file_name, access_token, function(reply) {
-			// 					socket.emit("dropbox_delete_file");
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('deleting dropbox error(can\'t cat user preference):', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// socket.on('/cloud/dropbox_upload_files', function(from_path, to_path, is_dir) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.upload_files(from_path, to_path, is_dir, access_token, function() {});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('uploading dropbox files error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // make new project (in dropbox)
-			// socket.on('/cloud/dropbox_make_new_project', function(data, plugin_name) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.make_new_project(data, plugin_name, socket.id, access_token, function() {});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('making new dropbox project error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // get file information (type)
-			// socket.on('/cloud/dropbox_get_metadata', function(path) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				//		if(preference.api){
-			// 				//			if(preference.api.dropbox){
-			// 				var access_token = preference.api.dropbox.access_token;
-			// 				g_cloud_dropbox.get_metadata(path, access_token, function(reply) {
-			// 					console.log("dropbox: get directory or file metadata");
-			// 					console.log(reply);
-			// 				});
-			// 				//			}
-			// 				//		}
-			// 			} catch (e) {
-			// 				console.log('getting dropbox metadata error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // get file contents 
-			// socket.on('/cloud/dropbox_get_file_contents', function(filepath, filename, filetype) {
-			// 	var path = filepath + filename;
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				if (preference.api) {
-			// 					if (preference.api.dropbox) {
-			// 						var access_token = preference.api.dropbox.access_token;
-			// 						g_cloud_dropbox.get_file_contents(path, access_token, function(status, contents) {
-			// 							// show editor
-			// 							var data = "";
-			// 							if (status == 200) {
-			// 								data = contents;
-			// 							} else {
-			// 								data = status + " : " + contents;
-			// 							}
-			// 							socket.emit("dropbox_get_contents" + filepath + filename, data);
-			// 						});
-			// 					}
-			// 				}
-			// 			} catch (e) {
-			// 				console.log('getting dropbox file contents error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // open new window (media file)
-			// socket.on('/cloud/dropbox_get_media_url', function(filepath, filename, filetype) {
-			// 	var path = filepath + filename;
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				if (preference.api) {
-			// 					if (preference.api.dropbox) {
-			// 						var access_token = preference.api.dropbox.access_token;
-			// 						g_cloud_dropbox.get_media_url(path, access_token, function(media) {
-			// 							socket.emit("dropbox_get_media_url" + filepath + filename, media.url);
-			// 						});
-			// 					}
-			// 				}
-			// 			} catch (e) {
-			// 				console.log('getting dropbox media url error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // get projects (directory that have goorm.manifest)
-			// socket.on('/cloud/dropbox_get_project_list', function() {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				if (preference.api) {
-			// 					if (preference.api.dropbox) {
-			// 						var access_token = preference.api.dropbox.access_token;
-			// 						g_cloud_dropbox.get_project_list(access_token, function(list) {
-			// 							socket.emit("dropbox_get_project_list", list);
-			// 						});
-			// 					}
-			// 				}
-			// 			} catch (e) {
-			// 				console.log('getting dropbox project list error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
-
-			// // read directory and file
-			// socket.on('/cloud/dropbox_get_file_list', function(path, recursive, details) {
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			try { // jeongmin: try catching
-			// 				var preference = JSON.parse(user_data.preference);
-
-			// 				if (preference.api) {
-			// 					if (preference.api.dropbox) {
-			// 						var access_token = preference.api.dropbox.access_token;
-			// 						var options = {
-			// 							recursive: recursive,
-			// 							details: details
-			// 						}
-
-			// 						var evt = new EventEmitter();
-			// 						evt.on("dropbox_got_result_ls", function(data) {
-			// 							socket.emit("/cloud/dropbox_get_file_list" + path, data);
-			// 						});
-
-			// 						g_cloud_dropbox.read_dir(path, options, access_token, function(reply) {
-			// 							socket.emit("dropbox_get_file_list" + path, reply);
-			// 						});
-			// 					}
-			// 				}
-			// 			} catch (e) {
-			// 				console.log('getting dropbox file list error:', e);
-			// 			}
-			// 		}
-			// 	});
-			// });
+			
 
 			
 
@@ -1453,6 +1174,37 @@ module.exports = {
 
 			
 
+			socket.on('/upload/dir_skeleton', function(msg) {
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						var evt = new EventEmitter();
+
+						var path = msg.target_path.split('/');
+						var project_path = (path[0] !== "") ? path[0] : path[1];
+
+						evt.on("upload_dir_skeleton", function(data) {
+							res.json(data);
+						});
+
+						// validate permission
+						// 
+						g_auth_p.can_edit_project(user_data.id, project_path, function(can_edit) {
+							if (can_edit) {
+								msg.user_id = user_data.id;
+
+								g_file.upload_dir_skeleton(msg, evt);
+							} else {
+								res.json({
+									err_code: 20,
+									message: "Permission denied"
+								});
+							}
+						});
+					}
+				});
+			});
 
 			///////
 			//API end

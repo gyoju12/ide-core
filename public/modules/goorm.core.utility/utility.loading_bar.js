@@ -100,7 +100,9 @@ goorm.core.utility.loading_bar = {
 
 		if (this.panel.css('display') == 'block') { // wait
 			var temp = $.debounce(function() { // jeongmin: delay following loading bar
-				self.show(self.queue[0]); // go on next
+				if (self.queue[0]) {
+					self.show(self.queue[0]); // go on next
+				}
 			}, 300);
 
 			temp();

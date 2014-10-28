@@ -47,7 +47,7 @@ goorm.core.project.explorer.prototype = {
 		self.current_project = {};
 
 		// drag & drop file upload
-		self.drag_n_drop();
+		//self.drag_n_drop(); disable until all issues are fixed.
 
 		$(core).on('project_get_list_complete', function() {
 			if (!$.isEmptyObject(localStorage.current_project) && localStorage.current_project != "") {
@@ -447,7 +447,7 @@ goorm.core.project.explorer.prototype = {
 				source: self.clipboard,
 				target: core.status.selected_file
 			};
-			$.get("file/copy_file_paste", postdata, function(data) {
+			_$.get("file/copy_file_paste", postdata, function(data) {
 				if (data.result) {
 					console.log(data.result);
 				}
@@ -1355,8 +1355,8 @@ goorm.core.project.explorer.prototype = {
 
 		var option = {
 			project_path: path,
-			multiple: true,
-			dnd: true,
+			//multiple: true,
+			//dnd: true,
 			on_click: on_click,
 			on_dblclick: on_dblclick,
 			on_ready: on_ready,

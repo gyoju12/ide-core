@@ -13,6 +13,11 @@ goorm.core.router = {
 	socket_fs: null,
 	fs_load: false,
 	fs_ready: false,
+	fs_info: {
+		'protocol': 'http',
+		'host': null,
+		'port': null
+	},
 
 	init: function() {
 		this._socket = function() {
@@ -76,6 +81,16 @@ goorm.core.router = {
 					s.emit(url, data);
 				} else {
 					this.push('emit', [url, data]);
+				}
+			},
+
+			removeListener: function (url, fn) {
+				var s = this.get(url);
+
+				if (s && s.socket && s.socket.connected) {
+					s.removeListener(url, fn);
+				} else {
+					this.push('removeListener', [url, fn]);
 				}
 			},
 
@@ -200,7 +215,10 @@ goorm.core.router = {
 
 			__get: function(url) {
 				if (this.fs_url.indexOf(url) > -1) {
-					if (this.router.fs_load && this.router.fs_ready) {
+					if (url === '/get_session_id') {
+						return true;
+					}
+					else if (this.router.fs_load && this.router.fs_ready) {
 						return true;
 					} else {
 						console.log('goormFS Fail', url);
@@ -211,6 +229,10 @@ goorm.core.router = {
 				}
 			}
 		}
+	},
+
+	get_fs_info: function () {
+		return this.fs_info;
 	},
 
 	// manage socket connections. Jeong-Min Im.

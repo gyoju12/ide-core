@@ -1469,7 +1469,7 @@ goorm.core.shortcut.manager = {
 						postdata.selected_file_path = core.module.layout.workspace.window_manager.active_filename;
 
 						if (!postdata.missing_symbol || postdata.missing_symbol.length === 0) break;
-						$.get('/edit/get_auto_import_java', postdata, function(data) {
+						_$.get('/edit/get_auto_import_java', postdata, function(data) {
 							if (data.last_package_def_sentence != -1) {
 
 								var start = data.last_package_def_sentence - 1;

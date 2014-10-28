@@ -162,7 +162,7 @@ goorm.core.debug.prototype = {
 		//latest build checking --heeje
 		is_build_fail = is_build_fail || false;
 		if (plugin_manager && plugin_manager.debug) {
-			$.get("project/check_latest_build", {
+			_$.get("project/check_latest_build", {
 				"project_path": project_path,
 				"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
 			}, function(data) {

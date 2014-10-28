@@ -932,7 +932,7 @@ module.exports = {
 			'err_code': 0
 		}
 
-		var file = req.files.file;
+		var file = (req.files && req.files.file) ? req.files.file : req.body.file;
 		var project_path = req.body.project_path;
 		var force = (req.body.force == 'false' || req.body.force == false) ? false : ((req.body.force == 'true' || req.body.force == true) ? true : false);
 
@@ -948,13 +948,7 @@ module.exports = {
 		}
 
 		fs.exists(abs_file_path, function(exists) {
-			var uid = parseInt(req.__user.uid, 10);
-			var gid = parseInt(((Array.isArray(req.__user.gid) === true) ? req.__user.gid[0] : req.__user.gid), 10);
-
-			if (global.__dev_mode) {
-				uid = 501;
-				gid = 501;
-			}
+			
 
 			if (!exists) {
 				var is = fs.createReadStream(file.path);
@@ -967,7 +961,7 @@ module.exports = {
 						if (err) console.log(err);
 					});
 
-					exec('chmod 770 ' + abs_file_path + '; chown ' + uid + ':' + gid + ' ' + abs_file_path);
+					
 
 					data.path = file.name;
 					evt.emit("upload_finish", data);
@@ -984,7 +978,7 @@ module.exports = {
 							if (err) console.log(err);
 						});
 
-						exec('chmod 770 ' + abs_file_path + '; chown ' + uid + ':' + gid + ' ' + abs_file_path);
+						
 
 						data.path = file.name;
 						evt.emit("upload_finish", data);
@@ -1002,6 +996,7 @@ module.exports = {
 			}
 		});
 	},
+
 	
 
 	/**

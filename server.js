@@ -323,6 +323,8 @@ goorm.check_session = function(req, res, next) {
 	
 
 	
+
+	
 }
 
 goorm.set_expires_date = function(req, res, next) {
@@ -347,6 +349,8 @@ goorm.routing = function() {
 	// Routes
 	
 	goorm.get('/', routes.index);
+	
+
 	
 
 	

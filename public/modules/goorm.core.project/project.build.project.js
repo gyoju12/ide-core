@@ -129,17 +129,10 @@ goorm.core.project.build.project = {
 	},
 
 	show: function() {
-		
-
-
-			
 		this.project_list();
 		this.is_onclick = false;
 
 		this.panel.modal('show');
-		
-
-		
 	},
 
 	select_all: function() {

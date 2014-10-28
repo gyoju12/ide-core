@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
 <!--  -->
-<head> 
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="google" value="notranslate" /> 
+    <meta name="google" value="notranslate" />
 
     
-    <title>goormIDE</title> 
+    <title>goormIDE</title>
     
 
     
-    <!--appcache--> 
-    <!--Favicon - Retina Display--> 
+    <!--appcache-->
+    <!--Favicon - Retina Display-->
     <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/icon_32x32.ico" />
     <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/icon_64x64.ico" />
     <link rel="icon" sizes="32x32" href="/icon_32x32.ico" />
     <link rel="icon" sizes="64x64" href="/icon_64x64.ico" />
     
     <!--CSS : goorm-->
-    <link href="/css/font/font.css" rel="stylesheet" type="text/css" /> 
+    <link href="/css/font/font.css" rel="stylesheet" type="text/css" />
     <!--CSS : CodeMirror-->
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.0/lib/codemirror.css" />
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.0/addon/hint/show-hint.css" />
@@ -38,14 +38,14 @@
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/jquery.Jcrop.css" />
     <link rel="stylesheet" type="text/css" href="/css/goorm.css" />
     <link rel="stylesheet" type="text/css" href="/css/default.css" kind="theme" />
-     
+    
 
     
 
 
     <style id="custom_style" type="text/css"></style>
 </head>
- 
+
 <body id="goorm">
     <div id='loading_background'></div>
 
@@ -63,7 +63,7 @@
                     <input type='password' id='local_user_pw_input' name='local_user_pw_input' placeholder='PASSWORD' class="form-control common_pw_input" localization_key='password'/>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" id="goorm_local_mode_button" class="btn btn-default" localization_key='login'>Login</button>         
+                    <button type="button" id="goorm_local_mode_button" class="btn btn-default" localization_key='login'>Login</button>
                 </div>
             </div>
             <!-- <div id='local_login_user_box'>
@@ -162,12 +162,12 @@
         </div>
 
     </div>
- 
+
     <div id="goorm_center_inner_layout" class="ui-layout-center goorm_layout">
         <div id="goorm_inner_layout_center" class="ui-inner-layout-center">
             <ul class="nav nav-tabs" id="g_window_tab_list"></ul>
             <div id='workspace' class="tab-content">
-                <div class="input-group hidden pull-right" id="edit_toolbar">  <!-- jeongmin: edit toolbar 
+                <div class="input-group hidden pull-right" id="edit_toolbar">  <!-- jeongmin: edit toolbar
                     <span class="input-group-addon">
                         <select class="form-control">
                             <option>Go to Line</option>
@@ -210,7 +210,7 @@
                                         <a href="#" localization_key="edit_bookmark">
                                             Bookmarks
                                         </a>
-                                        <span class="caret caret_reverse"></span> 
+                                        <span class="caret caret_reverse"></span>
                                     </h6>
                                 </div>
                                 <div id="bookmark_contents">
@@ -227,7 +227,7 @@
                             </div>
                         </div>
                         
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
@@ -499,7 +499,7 @@
                                     </span>
                                 </a>
                             </li>
-                                                
+                            
                             <li class="divider"></li>   <!-- jeongmin: add divider -->
                             <li>
                                 <a href="#" action="do_go_to_line" name="preference.shortcut.edit.go_to_line" localization_key="edit_go_to_line" class="menu-go-to-line">
@@ -642,7 +642,7 @@
                             <li>
                                 <a id="project_property_open" href="#" action="show_properties" localization_key="project_properties">Properties</a>
                             </li>
-                            
+
                         </ul>
                     </li>
 
@@ -720,7 +720,7 @@
                                         <a href="#" action="google_drive_delete" localization_key="delete">Delete</a>
                                     </li>
                                 </ul>
-                                
+
                             </li>
                             <li class="dropdown-submenu disabled">
                                 <a id="parent_dropbox_menu" child="child_dropbox_menu" href="#" class="menu-dropbox">Dropbox</a>
@@ -747,7 +747,7 @@
                         </ul>
                     </li> -->
                     
-                    
+
                     <li id="main-menu-window" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown" localization_key="window">
                             Window
@@ -1012,7 +1012,7 @@
                             <div class="toolbar_button">
                                 <div class="toolbar-search"></div>
                             </div>
-                        </button>                   
+                        </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
                             <div class="toolbar_button">
                                 <div class="toolbar-preference"></div>
@@ -1046,7 +1046,7 @@
                             </div>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_project" tooltip="project_export">
-                            <div class="toolbar_button"> 
+                            <div class="toolbar_button">
                                 <div class="toolbar-export-project"></div>
                             </div>
                         </button>
@@ -1314,7 +1314,7 @@
 
     <div id="goorm_menu_container" class="goorm_layout">
 
-        <!-- 
+        <!--
          CONTEXT_MENU : google_drive.file_context
         -->
         <!-- <div id="google_drive.explorer.file_context" class="goorm_menu_item dropdown clearfix">
@@ -1332,7 +1332,7 @@
             </ul>
         </div> -->
 
-        <!-- 
+        <!--
          CONTEXT_MENU : google_drive.folder_context
         -->
         <!-- <div id="google_drive.explorer.folder_context" class="goorm_menu_item dropdown clearfix">
@@ -1389,7 +1389,7 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : project.explorer.file_context
         -->
         <div id="project.explorer.file_context" class="goorm_menu_item dropdown clearfix">
@@ -1397,7 +1397,7 @@
                 <li>
                     <a action="open_context" localization_key='file_open_context'>Open</a>
                 </li>
-                
+
                 <li class="dropdown-submenu">
                     <a localization_key='file_open_as_context'>Open As...</a>
                     <ul class="dropdown-menu">
@@ -1443,9 +1443,9 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : project.explorer.folder_context
-        --> 
+        -->
         <div id="project.explorer.folder_context" class="goorm_menu_item dropdown clearfix">
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                 <li class="dropdown-submenu">
@@ -1506,7 +1506,7 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : project.explorer.context
         -->
         <div id="project.explorer_context" class="goorm_menu_item dropdown clearfix">
@@ -1548,7 +1548,7 @@
             </ul>
         </div>
         
-        <!-- 
+        <!--
          CONTEXT_MENU : window.manager_context
         -->
         <div id="window.manager_context" class="goorm_menu_item dropdown clearfix">
@@ -1580,7 +1580,7 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : window.manager.tabview_context
         -->
         <div id="window.manager.tabview_context" class="goorm_menu_item dropdown clearfix">
@@ -1610,7 +1610,7 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : window.manager.titlebar
         -->
         <div id="window.panel.titlebar_[{@FINGERPRINT}]" class="goorm_menu_item dropdown clearfix">
@@ -1628,15 +1628,15 @@
             </ul>
         </div>
 
-        <!-- 
+        <!--
          CONTEXT_MENU : window.manager.tab
         -->
         <div id="window.tab_[{@FINGERPRINT}]" class="goorm_menu_item dropdown clearfix">
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                 <li>
                     <a action="show_hide_window" class="show_and_hide" href="#" localization_key="show_and_hide">Show / Hide</a>
-                </li>                
-                <li class="divider"></li>                
+                </li>
+                <li class="divider"></li>
                 <li>
                     <a action="close_window" href="#" localization_key="close">Close</a> <!-- jeongmin: remove close class. Look weird -->
                 </li>
@@ -1648,7 +1648,7 @@
 
         
 
-        <!-- 
+        <!--
          CONTEXT_MENU : bookmark.context
         -->
         <div id="bookmark.context" class="goorm_menu_item dropdown clearfix">
@@ -1663,7 +1663,7 @@
 
     <div id="goorm_dialog_container">
 
-        <!-- 
+        <!--
          DIALOG : Alert
         -->
         <div class="modal fade" id="dlg_alert" tabindex="-1" role="dialog" aria-labelledby="modal_alert" aria-hidden="true">
@@ -1681,7 +1681,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
          DIALOG : Notice
         -->
         <div class="modal fade" id="dlg_notice" tabindex="-1" role="dialog" aria-labelledby="modal_notice" aria-hidden="true">
@@ -1699,7 +1699,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : Confirmation
     -->
         <div class="modal fade" id="dlg_confirmation" tabindex="-1" role="dialog" aria-labelledby="modal_confirmation" aria-hidden="true">
@@ -1718,7 +1718,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : Confirmation.save
     -->
         <div class="modal fade" id="dlg_confirmation_save" tabindex="-1" role="dialog" aria-labelledby="modal_confirmation_save" aria-hidden="true">
@@ -1738,7 +1738,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : Survey
     -->
         <div class="modal fade" id="dlg_survey" tabindex="-1" role="dialog" aria-labelledby="modal_survey" aria-hidden="true">
@@ -1760,7 +1760,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : Loading bar
     -->
         <div class="modal fade" id="dlg_loading_bar" tabindex="-1" role="dialog" aria-labelledby="modal_loading_bar" aria-hidden="true" data-backdrop="false" data-keyboard="false">
@@ -1786,7 +1786,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : Toast
     -->
         <div class="modal fade" id="dlg_toast" tabindex="-1" role="dialog" aria-labelledby="modal_toast" aria-hidden="true" data-backdrop="false" data-keyboard="true">
@@ -1802,8 +1802,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : new_project 
+        <!--
+     DIALOG : new_project
     -->
         <div class="modal fade" id="dlg_new_project" tabindex="-1" role="dialog" aria-labelledby="modal_new_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 900px;">
@@ -1818,7 +1818,7 @@
                                     <ul class="nav nav-tabs">   <!-- jeongmin -->
                                         <li class="active"><a href="#new_project_template" data-toggle="tab">Template</a></li>
                                         
-                                        <li><a href="#new_project_import" data-toggle="tab">Import</a></li>                                        
+                                        <li><a href="#new_project_import" data-toggle="tab">Import</a></li>
                                     </ul>
 
                                     <div class="tab-content">
@@ -1999,8 +1999,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : open_project 
+        <!--
+     DIALOG : open_project
     -->
         <div class="modal fade" id="dlg_open_project" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2069,7 +2069,7 @@
         
 
         <!--
-         DIALOG : new_file 
+         DIALOG : new_file
         -->
         <div class="modal fade" id="dlg_new_file" tabindex="-1" role="dialog" aria-labelledby="modal_new_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2093,7 +2093,7 @@
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
-                                                Target: 
+                                                Target:
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
@@ -2143,8 +2143,8 @@
             </div>
         </div>
 
-        <!-- 
-         DIALOG : new_other_file 
+        <!--
+         DIALOG : new_other_file
         -->
         <div class="modal fade" id="dlg_new_other_file" tabindex="-1" role="dialog" aria-labelledby="modal_new_other_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 500px;">
@@ -2156,7 +2156,7 @@
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_file_new_other_file_guide'>Select a file type to Create</div>
 
-                        <div id="new_other_file">                            
+                        <div id="new_other_file">
                             <div id="new_other_file_list" class="well well-sm">
                                 <div id='selector_txt' value='txt' class='select_div' url=''>
                                         <label class='filetype-wrap filetype-txt'></label>
@@ -2207,7 +2207,7 @@
                                         <span>GO File</span>
                                 </div>
                             </div>
-                            
+
                             <label localization_key='common_filename'>File Name</label>
                             <div class="row">
                                 <div class="col-md-8">
@@ -2232,8 +2232,8 @@
             </div>
         </div>
 
-        <!-- 
-             DIALOG : new_folder 
+        <!--
+             DIALOG : new_folder
             -->
         <div class="modal fade" id="dlg_new_folder" tabindex="-1" role="dialog" aria-labelledby="modal_new_folder" aria-hidden="true">
             <div class="modal-dialog" style="width: 500px;">
@@ -2255,7 +2255,7 @@
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
-                                                Target: 
+                                                Target:
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
@@ -2300,8 +2300,8 @@
             </div>
         </div>
 
-        <!-- 
-         DIALOG : new_untitled_textfile 
+        <!--
+         DIALOG : new_untitled_textfile
         -->
         <div class="modal fade" id="dlg_new_untitled_textfile" tabindex="-1" role="dialog" aria-labelledby="modal_new_untitled_textfile" aria-hidden="true">
             <div class="modal-dialog" style="width: 500px;">
@@ -2324,7 +2324,7 @@
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
-                                                Target: 
+                                                Target:
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
@@ -2363,8 +2363,8 @@
             </div>
         </div>
 
-        <!-- 
-         DIALOG : open_file 
+        <!--
+         DIALOG : open_file
         -->
         <div class="modal fade" id="dlg_open_file" tabindex="-1" role="dialog" aria-labelledby="modal_open_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2386,7 +2386,7 @@
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
-                                                Target: 
+                                                Target:
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
@@ -2435,8 +2435,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : upload_file 
+        <!--
+     DIALOG : upload_file
     -->
         <div class="modal fade" id="dlg_upload_file" tabindex="-1" role="dialog" aria-labelledby="modal_upload_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2521,8 +2521,8 @@
             </div>
         </div>
         
-        <!-- 
-     DIALOG : save_as_file 
+        <!--
+     DIALOG : save_as_file
     -->
         <div class="modal fade" id="dlg_save_as_file" tabindex="-1" role="dialog" aria-labelledby="modal_save_as_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2598,8 +2598,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : rename_file 
+        <!--
+     DIALOG : rename_file
     -->
         <div class="modal fade" id="dlg_rename_file" tabindex="-1" role="dialog" aria-labelledby="modal_rename_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
@@ -2623,8 +2623,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : move_file 
+        <!--
+     DIALOG : move_file
     -->
         <div class="modal fade" id="dlg_move_file" tabindex="-1" role="dialog" aria-labelledby="modal_move_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2697,9 +2697,9 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : print 
-   
+        <!--
+     DIALOG : print
+
         <div class="modal fade" id="dlg_print" tabindex="-1" role="dialog" aria-labelledby="modal_print" aria-hidden="true">
             <div class="modal-dialog" style="width: 300px;">
                 <div class="modal-content">
@@ -2718,8 +2718,8 @@
             </div>
         </div>
 -->
-        <!-- 
-     DIALOG : import_file 
+        <!--
+     DIALOG : import_file
     -->
         <div class="modal fade" id="dlg_import_file" tabindex="-1" role="dialog" aria-labelledby="modal_import_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2729,7 +2729,7 @@
                         <h4 class="modal-title" id="modal_import_file" localization_key="file_import">Import File</h4>
                     </div>
                     <div class="modal-body" style="min-min-height:400px;">  <!-- jeongmin: height -> min-height for growing modal height -->
-                        
+
                         <div class="well well-sm" localization_key='dialog_file_import_guide'>Select a file to import</div>
 
                         <div id="file_import">
@@ -2772,7 +2772,7 @@
                                         </ul>
                                     </nav>
 
-                                    <div id="import_dialog_middle" class="row"> 
+                                    <div id="import_dialog_middle" class="row">
                                         <div id="file_import_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
                                         <div id="file_import_files" class="col-md-8 dialog_center"></div>   <!-- jeongmin: center -> left_inner for layout -->
 
@@ -2797,8 +2797,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : export_file 
+        <!--
+     DIALOG : export_file
     -->
         <div class="modal fade" id="dlg_export_file" tabindex="-1" role="dialog" aria-labelledby="modal_export_file" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2855,11 +2855,11 @@
                                 <div id="file_export_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
                                 <div id="file_export_files" class="col-md-8 dialog_center"></div>   <!-- jeongmin: center -> left_inner for layout -->
                                 <label for="file_export_target_name" class="col-md-2 control-label" localization_key='dialog_file_export_file'>Selected File :</label>
-                                <div class="col-md-10"> 
+                                <div class="col-md-10">
                                     <input type="text" id="file_export_target_name" class="form-control" />    <!-- jeongmin: remove useless div -->
                                 </div>
                                 <label for="file_export_file_type" class="col-md-2 control-label" localization_key='dialog_file_export_exporttype'>Selected File :</label>
-                                <div class="col-md-10"> 
+                                <div class="col-md-10">
                                     <select id='file_export_file_type' class="form-control col-md-10"></select>    <!-- jeongmin: remove useless div -->
                                 </div>
                             </div>
@@ -2873,8 +2873,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : export_project 
+        <!--
+     DIALOG : export_project
     -->
         <div class="modal fade" id="dlg_export_project" tabindex="-1" role="dialog" aria-labelledby="modal_export_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -2961,8 +2961,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : import_project 
+        <!--
+     DIALOG : import_project
     -->
         <div class="modal fade" id="dlg_import_project" tabindex="-1" role="dialog" aria-labelledby="modal_import_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -3067,9 +3067,9 @@
                 </div>
             </div>
         </div>
- 
-        <!-- 
-     DIALOG : delete_project 
+
+        <!--
+     DIALOG : delete_project
     -->
         <div class="modal fade" id="dlg_delete_project" tabindex="-1" role="dialog" aria-labelledby="modal_delete_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -3140,8 +3140,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : build_all 
+        <!--
+     DIALOG : build_all
     -->
         <div class="modal fade" id="dlg_build_all" tabindex="-1" role="dialog" aria-labelledby="modal_build_all" aria-hidden="true">
             <div class="modal-dialog" style="width: 430px;">
@@ -3165,8 +3165,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : build_project 
+        <!--
+     DIALOG : build_project
     -->
         <div class="modal fade" id="dlg_build_project" tabindex="-1" role="dialog" aria-labelledby="modal_build_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 430px;">
@@ -3195,8 +3195,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : build_clean 
+        <!--
+     DIALOG : build_clean
     -->
         <div class="modal fade" id="dlg_build_clean" tabindex="-1" role="dialog" aria-labelledby="modal_build_clean" aria-hidden="true">
             <div class="modal-dialog" style="width: 430px;">
@@ -3220,8 +3220,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : build_configuration 
+        <!--
+     DIALOG : build_configuration
     -->
         <div class="modal fade" id="dlg_build_configuration" tabindex="-1" role="dialog" aria-labelledby="modal_build_configuration" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -3241,8 +3241,8 @@
             </div>
         </div>
         
-        <!-- 
-     DIALOG : go_to_line 
+        <!--
+     DIALOG : go_to_line
     --> <!-- jeongmin: go to line is not shown as modal anymore -->
         <!-- <div class="modal fade" id="dlg_go_to_line" tabindex="-1" role="dialog" aria-labelledby="modal_go_to_line" aria-hidden="true">
             <div class="modal-dialog" style="width: 300px;">
@@ -3279,12 +3279,12 @@
         </div> -->
 
 
-        
 
 
 
-        <!-- 
-     DIALOG : find_and_replace 
+
+        <!--
+     DIALOG : find_and_replace
     -->
         <div class="modal fade" id="dlg_find_and_replace" tabindex="-1" role="dialog" aria-labelledby="modal_find_and_replace" aria-hidden="true" data-backdrop="false">
             <div class="modal-dialog" style="width: 400px;">
@@ -3302,9 +3302,9 @@
                                 </div>
                                 <div>
                                     <input class="form-control" id="replace_query_inputbox" type="text" class="form-control" placeholder="Replace" />
-                                </div>    
+                                </div>
                             </div>
-                            
+
                             <div class="col-xs-4">
                                 <div class="btn-group btn-group-sm" style="margin-bottom: 13px; width: 100%">
                                     <button type="button" id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
@@ -3318,8 +3318,8 @@
                                     <button id="g_far_btn_find" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
                                         <div class="find_replace_next" style="margin: 0px 5px 0px 10px"></div>
                                     </button>
-                                </div>    
-                                
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -3327,15 +3327,15 @@
                         <button type="button" id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a>
                         <button type="button" id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
                         <button type="button" id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
-                        <button type="button" id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>  
+                        <button type="button" id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 
+        <!--
 	seongho.cha: prior to developing, IDE bug fix is first. It will be restarted after than.
-     DIALOG : go to anything 
+     DIALOG : go to anything
 
         <div class="modal fade" id="dlg_go_to_anything" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true" data-backdrop="true" data-keyboard="true">
             <div class="modal-dialog" style="width: 400px;">
@@ -3360,8 +3360,8 @@
         </div>
 	-->
 
-        <!-- 
-     DIALOG : search 
+        <!--
+     DIALOG : search
     -->
         <div class="modal fade" id="dlg_search" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true" data-backdrop="false" data-keyboard="true">
             <div class="modal-dialog" style="width: 400px;">
@@ -3388,7 +3388,7 @@
                                 </div>
                             </div>
                         </div>
-                            
+
                         <!--
                         <div id="search_project_explorer" class="row">
                             <label class="col-md-3 control-label" localization_key='dialog_project_site_guide'>Site</label>
@@ -3398,7 +3398,7 @@
                             <div class="col-md-9">
                                 <textarea class="form-control" id="search_query_inputbox" type="text" class="form-control"></textarea>
                             </div>
-       
+
                             <label class="col-md-3 control-label" localization_key='dialog_project_option_guide'>Option</label>
 
                             <div class="col-md-9">
@@ -3428,8 +3428,8 @@
             </div>
         </div>
         
-        <!-- 
-     DIALOG : project_property 
+        <!--
+     DIALOG : project_property
     -->
         <div class="modal fade" id="dlg_project_property" tabindex="-1" role="dialog" aria-labelledby="modal_project_property" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -3512,11 +3512,11 @@
                                                 <!-- depreciated option - save and build -heeje -->
                                                 <!-- <div class="row">
                                                     <input name="building_after_save_option" id="building_after_save_option" type="checkbox" />
-                                                    <label for="building_after_save_option" localization_key="auto_build_after_save">auto build after save</label> 
+                                                    <label for="building_after_save_option" localization_key="auto_build_after_save">auto build after save</label>
                                                 </div>
                                                 <div class="row">
                                                     <input name="always_latest_build_run" id="always_latest_build_run_option" type="checkbox" />
-                                                    <label for="always_latest_build_run_option" localization_key="always_latest_build_run_option">always latest build version run</label>  
+                                                    <label for="always_latest_build_run_option" localization_key="always_latest_build_run_option">always latest build version run</label>
                                                 </div> -->
                                             </fieldset>
                                         </div>
@@ -3814,10 +3814,10 @@
                 </div>
             </div>
         </div>
-        
 
-        <!-- 
-     DIALOG : help_contents 
+
+        <!--
+     DIALOG : help_contents
     -->
         <div class="modal fade" id="dlg_help_contents" tabindex="-1" role="dialog" aria-labelledby="modal_help_contents" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -3834,7 +3834,7 @@
                                         <!-- <li class="active list-group-item">
                                             <a href="#installation">Installation</a>
                                         </li> -->
-                                        <!-- 
+                                        <!--
                                         <li class="active list-group-item">
                                             <a href="#installation" localization_key="installation">Installation</a>
                                         </li>
@@ -3845,7 +3845,7 @@
                                         <li class="list-group-item">
                                             <a href="#features" localization_key="features">Features</a>
                                         </li>
-                                        <!-- 
+                                        <!--
                                         <li class="list-group-item">
                                             <a href="#getting_started" localization_key="getting_started">Getting Started</a>
                                         </li>
@@ -3858,7 +3858,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>  
+                            </div>
                             <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9"></div> <!-- jeongmin: get along with #help_contents_left's col-md-3 -->
                         </div>
                     </div>
@@ -3869,8 +3869,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : help_about 
+        <!--
+     DIALOG : help_about
     -->
         <div class="modal fade" id="dlg_help_about" tabindex="-1" role="dialog" aria-labelledby="modal_help_about" aria-hidden="true">
             <div class="modal-dialog" style="width: 500px;">
@@ -3906,8 +3906,8 @@
             </div>
         </div>
 
-        <!-- 
-     DIALOG : help_license 
+        <!--
+     DIALOG : help_license
     -->
         <div class="modal fade" id="dlg_help_license" tabindex="-1" role="dialog" aria-labelledby="modal_help_license" aria-hidden="true">
             <div class="modal-dialog" style="width: 600px;">
@@ -3980,7 +3980,7 @@
                                         <li>License: new BSD and MIT(<a href='https://github.com/jrburke/requirejs/blob/master/LICENSE' target='_blank'>https://github.com/jrburke/requirejs/blob/master/LICENSE</a>)</li>
                                     </ul>
                                 </li>
-                            </ul>                            
+                            </ul>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3990,7 +3990,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : help.bug_report
     -->
         <div class="modal fade" id="dlg_help_bug_report" tabindex="-1" role="dialog" aria-labelledby="modal_help_bug_report" aria-hidden="true">
@@ -4049,7 +4049,7 @@
         </div>
 
 
-        <!-- 
+        <!--
      DIALOG : help.about_private_url
     -->
         <div class="modal fade" id="dlg_about_private_url" tabindex="-1" role="dialog" aria-labelledby="modal_about_private_url" aria-hidden="true">
@@ -4072,7 +4072,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>  
+                            </div>
                             <div id="help_about_private_url_middle" data-spy="scroll" data-target="#nav" class="col-md-9">
                                 <h1>Private URL & Private Ports</h1>
 
@@ -4110,8 +4110,8 @@
         </div>
 
 
-        <!-- 
-     DIALOG : preference 
+        <!--
+     DIALOG : preference
     -->
         <div class="modal fade" id="dlg_preference" tabindex="-1" role="dialog" aria-labelledby="modal_preference" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
@@ -4162,7 +4162,7 @@
                                         <a href="#shortcut_debug_tab" data-toggle="tab" localization_key="debug" id='shortcut_debug'>Debug</a>
                                     </li>
                                     <!--
-                                    <li target="Shortcut" style="display:none;">    jeongmin: add shortcut tabview 
+                                    <li target="Shortcut" style="display:none;">    jeongmin: add shortcut tabview
                                         <a href="#shortcut_scm_tab" data-toggle="tab" localization_key="scm" id='shortcut_scm'>SCM</a>
                                     </li>
                                     -->
@@ -4180,7 +4180,7 @@
                                     <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_theme_tab" data-toggle="tab" localization_key="theme" id='shortcut_theme'>Theme</a>
                                     </li>
-     
+
                                     
 
 <li target='cpp' style='display:none;'>
@@ -4248,7 +4248,7 @@
                                                 <div id="gcc_version" style="display: none;"><b>GCC</b> : </div>
                                                 <div id="gdb_version" style="display: none;"><b>GDB</b> : </div>
                                                 <div id="node_version_preference" style="display: none;"><b>Node</b> : </div>
-                                                <div id="java_version" style="display: none;"><b>Java</b> : </div>    
+                                                <div id="java_version" style="display: none;"><b>Java</b> : </div>
                                                 <div id="python_version" style="display: none;"><b>Python</b> : </div>
                                             </fieldset>
                                     </div>  <!-- hidden by jeongmin: file type is deprecated -->
@@ -4375,7 +4375,7 @@
                                                     <input name="preference.editor.rulers" type="checkbox" id="preference.editor.rulers" />
                                                     <label for="preference.editor.rulers" localization_key="dialog_preference_editor_rulers">Show Rulers</label>
                                                 </div>
-                                                
+
                                             </div>
 
                                         </fieldset>
@@ -4383,7 +4383,7 @@
                                             <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="tab-pane fade" id="editor_theme_tab" plugin="null">
                                             <fieldset>
                                                 <div class="row">
@@ -4496,7 +4496,7 @@
                                             <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <!-- <div class="tab-pane fade" id="filetype_tab" plugin="null"> --><!-- hidden by jeongmin: file type is deprecated -->
                                         <!-- <div class="filetype_contents row">
                                             <div class="filetype_list col-md-3" style="height:290px; overflow-y:scroll; border:1px solid #CCC; background-color:#FFF;">
@@ -4525,7 +4525,7 @@
                                                 <div class="row">
                                                     <label class="col-md-4 control-label">Extention Name</label>
                                                     <div class="col-md-8">
-                                                        <input id="preference.file_type.extension_name_hidden" name="preference.file_type.extension_name_hidden" class="file_extension_hidden" type="hidden" value="" /> 
+                                                        <input id="preference.file_type.extension_name_hidden" name="preference.file_type.extension_name_hidden" class="file_extension_hidden" type="hidden" value="" />
                                                         <input id="preference.file_type.extension_name" name="preference.file_type.extension_name" class="file_extension form-control" value="" readonly="readonly" />
                                                      </div>
 
@@ -4608,7 +4608,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="shortcut_file_tab" class="shortcut_tab" plugin="null">    <!-- jeongmin: add shortcut tab panes -->
-                                        <fieldset class="shortcut_tab">                                            
+                                        <fieldset class="shortcut_tab">
                                             <div class="row">
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.new_project" localization_key="file_new_project">Project</label>
                                                 <div class="col-md-8">
@@ -4842,7 +4842,7 @@
                                                 <input class="shortcut_input" name="preference.shortcut.??" id="preference.shortcut.??" value="??"/>
                                             </div>
                                         </fieldset>
-                                        <div class="text-right"> 
+                                        <div class="text-right">
                                             <button type="button" class="btn btn-default restore_default">Restore</button>
                                             <button type="button" class="btn btn-default apply">Apply</button>
                                         </div>
@@ -4858,7 +4858,7 @@
                                                 <input class="shortcut_input" name="preference.shortcut.??" id="preference.shortcut.??" value="??"/>
                                             </div>
                                         </fieldset>
-                                        <div class="text-right"> 
+                                        <div class="text-right">
                                             <button type="button" class="btn btn-default restore_default">Restore</button>
                                             <button type="button" class="btn btn-default apply">Apply</button>
                                         </div>
@@ -5310,8 +5310,8 @@
                 </div>
             </div>
         </div>
- 
-        <!-- 
+
+        <!--
      DIALOG : auth.find_info
     -->
         <div class="modal fade" id="dlg_auth_find_info" tabindex="-1" role="dialog" aria-labelledby="modal_auth_find_info" aria-hidden="true">
@@ -5335,9 +5335,9 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
-        <!-- 
+        <!--
      DIALOG : auth.find_info.id
     -->
         <div class="modal fade" id="dlg_auth_find_info_id" tabindex="-1" role="dialog" aria-labelledby="modal_auth_find_info_id" aria-hidden="true">
@@ -5372,7 +5372,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : auth.find_info.pw
     -->
         <div class="modal fade" id="dlg_auth_find_info_pw" tabindex="-1" role="dialog" aria-labelledby="modal_auth_find_info_pw" aria-hidden="true">
@@ -5407,7 +5407,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : auth.profile
     -->
         <div class="modal fade" id="dlg_auth_profile" tabindex="-1" role="dialog" aria-labelledby="modal_auth_profile" aria-hidden="true">
@@ -5477,7 +5477,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : auth.profile.image
     -->
         <div class="modal fade" id="dlg_auth_profile_image" tabindex="-1" role="dialog" aria-labelledby="modal_auth_profile_image" aria-hidden="true">
@@ -5524,7 +5524,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
      DIALOG : auth.signup
     -->
         <div class="modal fade" id="dlg_auth_signup" tabindex="-1" role="dialog" aria-labelledby="modal_auth_signup" aria-hidden="true">
@@ -5590,9 +5590,9 @@
 
         
 
-        <!-- 
+        <!--
      DIALOG : scm.update
-    --> 
+    -->
         <!-- <div class="modal fade" id="dlg_scm_update" tabindex="-1" role="dialog" aria-labelledby="modal_scm_update" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
@@ -5636,7 +5636,7 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : scm.resolve
     -->
         <!-- <div class="modal fade" id="dlg_scm_resolve" tabindex="-1" role="dialog" aria-labelledby="modal_scm_resolve" aria-hidden="true">
@@ -5693,9 +5693,9 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : scm.log
-    --> 
+    -->
         <!-- <div class="modal fade" id="dlg_scm_log" tabindex="-1" role="dialog" aria-labelledby="modal_scm_log" aria-hidden="true">
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
@@ -5725,7 +5725,7 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : scm.add
     -->
         <!-- <div class="modal fade" id="dlg_scm_add" tabindex="-1" role="dialog" aria-labelledby="modal_scm_add" aria-hidden="true">
@@ -5761,7 +5761,7 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : scm.blame
     -->
         <!-- <div class="modal fade" id="dlg_scm_blame" tabindex="-1" role="dialog" aria-labelledby="modal_scm_blame" aria-hidden="true">
@@ -5798,7 +5798,7 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : scm.diff
     -->
         <!-- <div class="modal fade" id="dlg_scm_diff" tabindex="-1" role="dialog" aria-labelledby="modal_scm_diff" aria-hidden="true">
@@ -5836,15 +5836,15 @@
             </div>
         </div> -->
 
-        <!-- 
+        <!--
      DIALOG : npm.install
     -->
     
 
     </div>
 
-    <!-- 
-     DIALOG : help_shortcuts 
+    <!--
+     DIALOG : help_shortcuts
  -->
  <div class="modal fade" id="dlg_help_shortcuts" tabindex="-1" role="dialog" aria-labelledby="modal_help_shortcuts" aria-hidden="true">
     <div class="modal-dialog" style="width: 800px;">
@@ -6136,7 +6136,7 @@
         </ul>
     </div>
 
-    
+
 
     
 <!--DIALOG-->
@@ -6518,7 +6518,7 @@
 
     <script type="text/javascript" src="/modules/goorm.core.localization/localization.js"></script>
     
-    
+
     <script type='text/javascript' src='/modules/goorm.core.scm/scm.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.scm/scm.svn.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.scm/scm.git.js'></script>
@@ -6566,7 +6566,7 @@
     <script type="text/javascript" src="/goorm.plugin.blockly/libs/blockly/msg/js/en.js"></script>
         -->
 
-     
+    
     
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
@@ -6594,10 +6594,10 @@
         
 
         $(document).ready(function() {
-            
+
 
             
-                
+
                 if (navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/Android/i))
                     core.is_mobile = true;
                 else
@@ -6620,7 +6620,7 @@
                 //         increaseArea: '20%' // optional
                 //     });
                 //     // core.module.tutorial.start('basic');
-                // }); 
+                // });
 
                 // $(core).on('goorm_login_complete', function () {
 
@@ -6670,8 +6670,8 @@
     </script>
 <div id="dummy" style="display:none"></div>
 <div id="terminal_dummy" style="position:absolute;z-index:-1;font-family: Source Code Pro;visibility:hidden">1</div>
-<!-- 
-seongho.cha: terminal_dummy is used for get real width of string (dicated by font-size). 1 character must be inside because of Firefox browser. If it is not in, Firefox does not load font file. 
+<!--
+seongho.cha: terminal_dummy is used for get real width of string (dicated by font-size). 1 character must be inside because of Firefox browser. If it is not in, Firefox does not load font file.
 -->
 
 </body>

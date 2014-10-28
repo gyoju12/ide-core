@@ -109,7 +109,9 @@ goorm.core.utility.treeview.prototype = {
 			}
 		}).on('mousedown.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
-			//_this.tree.jstree("deselect_all");
+			if(!_this.options.multiple) {
+				_this.tree.jstree("deselect_all");
+			}
 
 			if (node.id !== "#") {
 				if (typeof _this.options.on_click === "function") {

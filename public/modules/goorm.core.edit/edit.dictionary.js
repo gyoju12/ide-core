@@ -662,7 +662,7 @@ goorm.core.edit.dictionary.prototype = {
 	get_dictionary_java: function(query, callback) {
 		var self = this;
 		self.result = [];
-		$.get('/edit/get_proposal_java', {
+		_$.get('/edit/get_proposal_java', {
 			selected_file_path: core.module.layout.workspace.window_manager.active_filename,
 			line: query
 		}, function(data) {

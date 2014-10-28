@@ -79,7 +79,7 @@ goorm.core.project = {
 								'property': property,
 								'detailed_type': project_data.detailedtype
 							}, function(build_result) {
-								$.get('project/set_bin', { // jeongmin: change bin's group permission
+								_$.get('project/set_bin', { // jeongmin: change bin's group permission
 									project_path: project_path
 								}, function(build_result) {
 									if (build_result) {
@@ -151,7 +151,7 @@ goorm.core.project = {
 						'property': property,
 						'detailed_type': project_data.detailedtype
 					}, function(data) {
-						$.get('project/set_bin', { // jeongmin: change bin's group permission
+						_$.get('project/set_bin', { // jeongmin: change bin's group permission
 							project_path: project_path
 						}, function(build_result) {
 							if (build_result) {
@@ -249,7 +249,8 @@ goorm.core.project = {
 		} else if (options.type == 'Web') {
 			options.project_path = core.status.current_project_path;
 			options.project_dir = core.status.current_project_path;
-			$.post('/plugin/do_web_run', options, function(result) {
+
+			core._socket.once('/plugin/do_web_run', function(result) {
 				if (result.code == 200) {
 					if (callback && typeof(callback)) {
 						callback(result);
@@ -260,6 +261,7 @@ goorm.core.project = {
 					}
 				}
 			});
+			core._socket.emit('/plugin/do_web_run', options);
 
 		} else if (options.cmd) {
 			core.module.layout.terminal.send_command(options.cmd + '\r', function(result) {

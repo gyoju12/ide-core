@@ -462,68 +462,10 @@ module.exports = {
 		if (query.user && query.project_path && query.project_name) {
 
 			fs.mkdir(__temp_dir + '/' + query.user, '0777', function(err) {
-
 				if (!err || err.errno === 47) { //errno 47 is exist folder error
 
-					// Below code is changed by jeongmin: exec is for small buffer, and zipping is big buffer. So, spawn is more suitable.
-
-					//$tar cvzf filename.tar.gz file1
-					// var export_terminal_command;
-					var export_file_extension;
-
-					var _stderr = '',
-						_stdout = '',
-						command = null;
-
-					var temp_path = __temp_dir + '/' + query.user + '/' + query.project_path;
-					temp_path = g_secure.command_filter(temp_path);
-
-					var callback = function(code, stdout, stderr) {
-						if (code == 0) {
-							data.path = query.user + '/' + query.project_path + export_file_extension; // jeongmin: exported project's zip file name is project path
-							evt.emit("project_do_export", data);
-						} else {
-							data.err_code = 20;
-							data.message = "Cannot make export file";
-
-							console.log(stderr);
-
-							evt.emit("project_do_export", data);
-						}
-					};
-
-					if (query.export_type == "zip") {
-						// export_terminal_command = "zip -r ";
-						export_file_extension = ".zip";
-
-						command = spawn('zip', ['-r', temp_path + export_file_extension, './' + query.project_path], {
-							cwd: global.__workspace
-						});
-					} else if (query.export_type == "tar") {
-						// export_terminal_command = "tar cvzf ";
-						export_file_extension = ".tar";
-
-						command = spawn('tar', ['cvzf', temp_path + export_file_extension, './' + query.project_path], {
-							cwd: global.__workspace
-						});
-					} else if (query.export_type == "rar") {
-						// export_terminal_command = "rar a ";
-						export_file_extension = ".rar";
-
-						command = spawn('rar', ['a', temp_path + export_file_extension, './' + query.project_path], {
-							cwd: global.__workspace
-						});
-					}
-
-					command.stdout.on('data', function(data) {
-						_stdout += data;
-					});
-					command.stderr.on('data', function(data) {
-						_stderr += data;
-					});
-					command.on('close', function(code) {
-						callback(code, _stdout, _stderr);
-					});
+					
+					
 
 					// export_terminal_command = g_secure.command_filter(export_terminal_command);
 					// export_file_extension = g_secure.command_filter(export_file_extension);

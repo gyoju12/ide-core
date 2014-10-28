@@ -38,7 +38,7 @@ goorm.core.file.save_as = {
 			};
 
 			//$.get("file/save_as", postdata, function (data) {
-			core.socket.once("/file/save_as", function(data) {
+			core._socket.once("/file/save_as", function(data) {
 				var w_save = core.module.layout.workspace.window_manager.find_by_filename(file_data.path + '/', file_data.name);
 
 				if (data.err_code == 99) {
@@ -75,7 +75,7 @@ goorm.core.file.save_as = {
 					alert.show(data.message);
 				}
 			});
-			core.socket.emit("/file/save_as", postdata);
+			core._socket.emit("/file/save_as", postdata);
 		};
 
 

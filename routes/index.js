@@ -68,6 +68,8 @@ exports.index = function(req, res, options) {
 
 
 
+
+
 /*
  * API : Project
  */
@@ -125,17 +127,24 @@ exports.project.get_list = function(req, res) {
 	
 };
 
+
+
+
+
+
+
+
 exports.project.do_import = function(req, res) {
 	var evt = new EventEmitter();
+
 	evt.on("project_do_import", function(data) {
-		
-		
 		res.json(data);
-		
 	});
-	
+
 	g_project.do_import(req.body, req.files.file, evt);
 };
+
+
 exports.project.do_import_check = function(req, res) {
 	var evt = new EventEmitter();
 	evt.on("project_do_import_check", function(data) {
@@ -149,9 +158,15 @@ exports.project.do_import_check = function(req, res) {
 exports.project.do_export = function(req, res) {
 	var evt = new EventEmitter();
 	var data = {};
+
+	
 	evt.on("project_do_export", function(data) {
 		res.json(data);
 	});
+	
+
+	
+
 	req.query.user = req.__user.id;
 	
 	
@@ -524,6 +539,8 @@ exports.file.do_copy_file_paste = function(req, res) {
 
 	
 
+	
+
 		
 	g_file.do_copy_file_paste(req, function(result) {
 		res.json(result);
@@ -693,27 +710,31 @@ exports.file.get_file = function(req, res) {
 	var evt = new EventEmitter();
 	var filepath = req.query.filepath;
 	var filename = req.query.filename;
-	if (filepath)
+
+	
+	if (filepath) {
 		filepath = filepath.replace(/\/\//g, "/");
+
+		evt.on("got_file", function(data) {
+			try {
+				//console.log(JSON.stringify(data));
+				res.json(data);
+
+				//res.send(JSON.stringify(data));
+				//res.end();
+			} catch (exception) {
+				throw exception;
+			}
+		});
+
+		g_file.get_file(filepath, filename, evt);
+	}
 	else {
 		res.json({});
-		return;
 	}
-	//res.setHeader("Content-Type", "application/json");
+	
 
-	evt.on("got_file", function(data) {
-		try {
-			//console.log(JSON.stringify(data));
-			res.json(data);
-
-			//res.send(JSON.stringify(data));
-			//res.end();
-		} catch (exception) {
-			throw exception;
-		}
-	});
-
-	g_file.get_file(filepath, filename, evt);
+	
 };
 
 exports.file.check_valid_edit = function(req, res) {
@@ -805,9 +826,13 @@ exports.file.do_export = function(req, res) {
 	var path = req.query.path.split('/');
 	var project_path = (path[0] !== "") ? path[0] : path[1];
 
+	
 	evt.on("file_do_export", function(data) {
 		res.json(data);
 	});
+	
+
+	
 
 	req.query.user = req.__user.id;
 
@@ -815,9 +840,18 @@ exports.file.do_export = function(req, res) {
 	
 
 	
+
+	
 	g_file.do_export(req.query, evt);
 	
 };
+
+
+
+
+
+
+
 
 exports.file.do_import = function(req, res) {
 	var evt = new EventEmitter();
@@ -826,20 +860,15 @@ exports.file.do_import = function(req, res) {
 	var project_path = (path[0] !== "") ? path[0] : path[1];
 
 	evt.on("file_do_import", function(data) {
-		
-
 		res.json(data);
 	});
 
 	if (req.query.is_overwrite)
 		req.body.is_overwrite = req.query.is_overwrite;
 
-	
-
-	
 	g_file.do_import(req.body, req.files.file, evt);
-	
 };
+
 
 exports.file.do_search_on_project = function(req, res) {
 	var evt = new EventEmitter();
@@ -1143,6 +1172,14 @@ exports.download.exe_file = function(req, res) {
 	});
 };
 
+
+
+
+
+
+
+
+
 exports.upload_file_dd = function(req, res) {
 	var evt = new EventEmitter();
 	var project_path = req.body.project_path;
@@ -1150,11 +1187,16 @@ exports.upload_file_dd = function(req, res) {
 	evt.on('upload_finish', function(data) {
 		res.json(data);
 	});
-	
-	
 	g_file.upload_file_dd(req, evt);
-	
 };
+
+
+
+
+
+
+
+
 
 
 
@@ -1181,7 +1223,6 @@ exports.edit.get_dictionary = function(req, res) {
 };
 
 
-
 exports.edit.get_proposal_java = function(req, res) {
 	var evt = new EventEmitter();
 
@@ -1191,6 +1232,8 @@ exports.edit.get_proposal_java = function(req, res) {
 
 	g_edit.get_proposal_java(req.query, evt);
 };
+
+
 
 
 exports.edit.get_auto_import_java = function(req, res) {
@@ -1214,6 +1257,7 @@ exports.edit.get_object_explorer = function(req, res) {
 	
 	g_edit.get_object_explorer(req.query, evt);
 };
+
 
 
 

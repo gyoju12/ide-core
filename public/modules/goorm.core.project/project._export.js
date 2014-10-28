@@ -42,14 +42,24 @@ goorm.core.project._export = {
 			core.module.loading_bar.start({
 				str: core.module.localization.msg.loading_bar_export
 			});
-			$.get("project/export", postdata, function(data) {
+			_$.get("project/export", postdata, function(data) {
 				core.module.loading_bar.stop();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');
 
 					$("#download_frame").css('display', 'none');
+					
+					//useonly(mode=dev,edu-on-promise,book,edu,product,oss)
 					$("#download_frame").attr('src', "download/?file=" + data.path);
+					//useonlyend
+
+					//useonly(mode=product-l2-ide)
+					var fs_info = core.module.router.get_fs_info();
+					var url = fs_info.protocol + '://' + fs_info.host + ':' + fs_info.port;
+
+					$("#download_frame").attr('src', url+"/download/?file=" + data.path);
+					//useonlyend
 				} else {
 					alert.show(data.message);
 				}
