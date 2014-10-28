@@ -45,7 +45,7 @@ goorm.core.layout = {
 
 		var self = this;
 
-		this.layout = $('body').layout({
+		this.layout = $('body#goorm').layout({
 			west__size: 250,
 			north__size: 80,
 			north__resizable: false,
@@ -286,12 +286,12 @@ goorm.core.layout = {
 						var submenu = $('#submenu_container>.dropdown-menu');
 						var pageY = e.pageY;
 						submenu.css("overflow-y", "auto");
-						submenu.css("max-height", $("body").height() - pageY - 5);
+						submenu.css("max-height", $("body#goorm").height() - pageY - 5);
 
 						//submenu position move -- Donguk Kim
 						var submenu_width = submenu.width();
 						var pageX = parseInt(submenu.css("left"));
-						if ($("body").width() < pageX + submenu_width) {
+						if ($("body#goorm").width() < pageX + submenu_width) {
 							var opened_menu_width = parseInt($('.open >.dropdown-menu>li:first').css("width"));
 							submenu.css("left", pageX - opened_menu_width - submenu_width);
 						}

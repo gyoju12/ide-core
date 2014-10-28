@@ -707,14 +707,14 @@ goorm.core.tutorial_tour = {
 		this.restore_layout_state = current_layout.readState();
 		this.restore_layout_state.north.size = current_layout.north.state.layoutHeight;
 		this.restore_layout_state.west.west_tab = {
-			tab: $("#goorm_left #west_tab").find("li.active a").attr('id'),
-			detail_tab: $("#goorm_left").find(".tab-pane.active li.active a").attr('id')
+			tab: $("#goorm_left #west_tab").find("li.active a[data-toggle=tab]").attr('id'),
+			detail_tab: $("#goorm_left").find(".tab-pane.active li.active a[data-toggle=tab]").attr('id')
 		};
 		this.restore_layout_state.center.children.layout1.east.east_tab = {
-			tab: $("#goorm_inner_layout_right #east_tab").find(".active a").attr("id"),
-			detail_tab: $("#goorm_inner_layout_right").find(".tab-pane.active li.active a").attr('id')
+			tab: $("#goorm_inner_layout_right #east_tab").find(".active a[data-toggle=tab]").attr("id"),
+			detail_tab: $("#goorm_inner_layout_right").find(".tab-pane.active li.active a[data-toggle=tab]").attr('id')
 		};
-		this.restore_layout_state.center.children.layout1.south.south_tab = $("#goorm_inner_layout_bottom").find("#south_tab .active a").attr("id");
+		this.restore_layout_state.center.children.layout1.south.south_tab = $("#goorm_inner_layout_bottom").find("#south_tab .active a[data-toggle=tab]").attr("id");
 	},
 
 	// restore layout state before tutorial start

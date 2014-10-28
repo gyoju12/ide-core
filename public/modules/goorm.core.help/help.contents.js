@@ -73,8 +73,8 @@ goorm.core.help.contents = {
 				var scroll_height = $(this).prop('scrollHeight') - $(this).outerHeight(); // 2441
 
 				if ( current_scroll >= scroll_height ) {
-					$('#help_contents_left li').removeClass('active');
-					$('#help_contents_left li').last().addClass('active');
+					$('#help_contents_left li.list-group-item').removeClass('active');
+					$('#help_contents_left li.list-group-item').last().addClass('active');
 				}
 			});
 		});

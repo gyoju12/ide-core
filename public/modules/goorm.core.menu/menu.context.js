@@ -100,7 +100,7 @@ goorm.core.menu.context.prototype = {
 			
 			$(core).trigger('contextmenu_all_hide');
 			height = this.menu.css("height") || this.menu.height();
-			body_height = $("body").css("height");
+			body_height = $("body#goorm").css("height");
 			// height = parseInt(height.substring(0, height.length - 2)) + e.pageY;
 			height = parseInt(height) + e.pageY; // jeongmin: parseInt('227px') == 227
 			body_height = parseInt(body_height.substring(0, body_height.length - 2));

@@ -325,7 +325,7 @@ goorm.core.project.list.prototype = {
 					// 	.replace(/\[PROJECT_NAME\]/, data[idx].contents.name)
 					// 	.replace(/\[PROJECT_DESCRIPT\]/, description)
 					// 	.replace(/\[PROJECT_DATE\]/, data[idx].contents.date)
-					var detailed = self.information_script.replace(/\[PROJECT_TYPE\]/, $(".project_wizard_first_button[project_type=" + data[idx].contents.type + "] h4").text())
+					var detailed = self.information_script.replace(/\[PROJECT_TYPE\]/, $(".project_wizard_first_button[project_type=" + data[idx].contents.type + "] h4.list-group-item-heading").text())
 						.replace(/\[PROJECT_DETAIL\]/, $(".project_wizard_second_button[project_type=" + data[idx].contents.type + "][detail_type=" + data[idx].contents.detailedtype + "] .caption p").text())
 						.replace(/\[PROJECT_AUTHOR\]/, data[idx].contents.author)
 						.replace(/\[PROJECT_NAME\]/, data[idx].contents.name)

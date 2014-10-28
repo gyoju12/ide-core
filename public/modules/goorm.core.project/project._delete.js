@@ -20,6 +20,7 @@ goorm.core.project._delete = {
 		var self = this;
 
 		this.panel = $("#dlg_delete_project");
+
 		
 		this.__handle_delete = $.debounce(function(panel) { // jeongmin: prevent multiple export
 			self.processing = true;
@@ -41,6 +42,7 @@ goorm.core.project._delete = {
 
 					var received_data = data;
 					if (received_data.err_code === 0) {
+
 						
 						// var window_manager = core.module.layout.workspace.window_manager;
 						// $(window_manager.window).each(function (i) {

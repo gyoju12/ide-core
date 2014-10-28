@@ -479,7 +479,7 @@ goorm.core.project._new = {
 		$("#project_new").find(".nav").off("keydown");
 		$("#project_new").find(".nav").keydown(function(e) {
 			var current_selected_tab_anchor = $(":focus");
-			var project_last_tab_anchor = $('#project_new div[class="wizard_step"] .dialog_tabview .nav-tabs li:last a');
+			var project_last_tab_anchor = $('#project_new div[class="wizard_step"] .dialog_tabview .nav-tabs li:last a[data-toggle=tab]');
 			var current_selected_types = project_types.find(".active");
 
 			if (current_selected_tab_anchor == null) return;

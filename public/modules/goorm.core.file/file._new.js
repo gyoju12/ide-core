@@ -35,7 +35,7 @@ goorm.core.file._new = {
 				return false;
 			}
 
-			if (!dst_name_check(data.name)) {
+			if (data === false || !dst_name_check(data.name)) {
 				alert.show(localization.alert_allow_character);
 				return false;
 			}

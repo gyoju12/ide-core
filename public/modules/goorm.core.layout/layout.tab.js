@@ -445,7 +445,7 @@ goorm.core.layout.tab = {
 
 			this.output_manager.init(tab_content_id);
 
-			if ($('#south_tab .active>a').attr('localization_key') == 'output' || $('#goorm_inner_layout_bottom>.tab-content .active').length <= 0)
+			if ($('#south_tab .active>a[data-toggle=tab]').attr('localization_key') == 'output' || $('#goorm_inner_layout_bottom>.tab-content .active').length <= 0)
 				core.module.layout.select(tab_id);
 		}
 

@@ -113,7 +113,7 @@ goorm.core.dialog.wizard.prototype = {
 			self.success();
 
 
-		var __buttons = $("#" + this.id).find('.modal-footer button');
+		var __buttons = $("#" + this.id).find('.modal-footer button.btn');
 		__buttons[0].onclick = handle_prev;
 		__buttons[1].onclick = handle_next;
 		__buttons[2].onclick = option.handle_cancel;

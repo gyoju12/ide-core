@@ -183,7 +183,7 @@ goorm.core.project.property = {
 	read_dialog: function(property) {
 		var target = "#property_tabview";
 
-		var targets = $(target).children('div').children();
+		var targets = $(target).children('div.tab-content').children();
 
 		var key = null;
 		$.each(targets, function(index) {
@@ -197,7 +197,7 @@ goorm.core.project.property = {
 				if (key === undefined) return;
 			}
 
-			target_index.find("input").each(function() {
+			target_index.find("input.form-control").each(function() {
 				if ($(this).attr("name") !== undefined) {
 					
 
@@ -221,7 +221,7 @@ goorm.core.project.property = {
 				}
 			});
 
-			target_index.find("select").each(function() {
+			target_index.find("select.form-control").each(function() {
 				if ($(this).attr("name") !== undefined) {
 					key[$(this).attr("name")] = $(this).children("option:selected").val();
 				}
@@ -232,7 +232,7 @@ goorm.core.project.property = {
 	fill_dialog: function(property) {
 		var target = "#property_tabview";
 
-		var targets = $(target).children('div').children();
+		var targets = $(target).children('div.tab-content').children();
 
 		var key = null;
 
@@ -247,7 +247,7 @@ goorm.core.project.property = {
 				if (key === undefined) return;
 			}
 
-			target_index.find("input").each(function() {
+			target_index.find("input.form-control").each(function() {
 				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
 					
 
@@ -283,7 +283,7 @@ goorm.core.project.property = {
 					$(this).val(key[$(this).attr("name")]);
 				}
 			});
-			target_index.find("select").each(function() {
+			target_index.find("select.form-control").each(function() {
 				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
 					$(this).children("option[value='" + key[$(this).attr("name")] + "']").attr("selected", "true");
 					$(this).val(key[$(this).attr("name")]);

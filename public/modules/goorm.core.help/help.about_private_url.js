@@ -50,11 +50,11 @@ goorm.core.help.about_private_url = {
 					// var scroll_height = $(this).prop('scrollHeight') - $(this).outerHeight(); // 2441
 
 					if (current_scroll >= 25) {
-						$('#help_about_private_url_left li').removeClass('active');
-						$('#help_about_private_url_left li').last().addClass('active');
+						$('#help_about_private_url_left li.list-group-item').removeClass('active');
+						$('#help_about_private_url_left li.list-group-item').last().addClass('active');
 					} else {
-						$('#help_about_private_url_left li').removeClass('active');
-						$('#help_about_private_url_left li').first().addClass('active');
+						$('#help_about_private_url_left li.list-group-item').removeClass('active');
+						$('#help_about_private_url_left li.list-group-item').first().addClass('active');
 					}
 				});
 

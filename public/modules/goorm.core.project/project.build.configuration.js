@@ -45,7 +45,7 @@ goorm.core.project.build.configuration = {
 			// check treeview...
 			//
 			if (plugin && $('#property_tabview .tab-content > div[plugin="goorm.plugin.'+core.property.type+'"]').length > 0) {
-				$('#property_treeview').find("li[path='Plugin/"+plugin.text+"'] > a").first().click();
+				$('#property_treeview').find("li[path='Plugin/"+plugin.text+"'] > a.jstree-anchor").first().click();
 			}
 
 			this.panel.show();

@@ -243,7 +243,7 @@ goorm.core.preference = {
 	read_dialog: function(preference) {
 		var target = "#preference_tabview";
 
-		var targets = $(target).children('div').children();
+		var targets = $(target).children('div.tab-content').children();
 
 		var key = null;
 		$.each(targets, function(index, div) {
@@ -253,7 +253,7 @@ goorm.core.preference = {
 				key = preference.plugins[$(targets[index]).attr('plugin')];
 			}
 			if (key) {
-				$(targets[index]).find("input").each(function() {
+				$(targets[index]).find("input.form-control").each(function() {
 					var value;
 
 					if ($(this).attr("type") === "checkbox") {
@@ -274,7 +274,7 @@ goorm.core.preference = {
 					key[$(this).attr("name")] = $(this).val();
 				});
 
-				$(targets[index]).find("select").each(function() {
+				$(targets[index]).find("select.form-control").each(function() {
 					key[$(this).attr("name")] = $(this).children("option:selected").val();
 				});
 			}
@@ -283,7 +283,7 @@ goorm.core.preference = {
 	},
 
 	fill_dialog: function(preference, tabName) {
-		var targets = tabName ? $('#' + tabName) : $('#preference_tabview').children('div').children();
+		var targets = tabName ? $('#' + tabName) : $('#preference_tabview').children('div.tab-content').children();
 		var key = null;
 		$.each(targets, function(index, div) {
 			var target_index = $(targets[index]);
@@ -297,7 +297,7 @@ goorm.core.preference = {
 			}
 
 			if (key[$(this).attr("name")] !== "undefined" || key[$(this).attr("name")] !== undefined) {
-				$(targets[index]).find("input").each(function() {
+				$(targets[index]).find("input.form-control").each(function() {
 					var name = $(this).attr("name");
 					var type = $(this).attr("type");
 
@@ -326,7 +326,7 @@ goorm.core.preference = {
 						$(this).val(key[$(this).attr("name")]);
 					}
 				});
-				$(target_index).find("select").each(function() {
+				$(target_index).find("select.form-control").each(function() {
 					if ($(this).attr("name") && $(this).attr("name") !== 'undefined' && key[$(this).attr("name")]) {
 						$(this).children("option[value='" + key[$(this).attr("name")] + "']").attr("selected", "true");
 						$(this).val(key[$(this).attr("name")]);

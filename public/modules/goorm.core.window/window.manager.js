@@ -383,6 +383,8 @@ goorm.core.window.manager = {
 
 		}
 		
+		
+		
 			
 			if (filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx") {
 				
