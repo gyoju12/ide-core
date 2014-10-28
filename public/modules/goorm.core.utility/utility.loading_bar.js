@@ -30,7 +30,7 @@ goorm.core.utility.loading_bar = {
 		$("#g_lb_btn_cancel").click(function() {
 			self.queue[0].kill();
 
-			self.done();
+			self.stop();
 		});
 
 		// process is done and hide loading bar. Jeong-Min Im.
