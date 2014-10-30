@@ -31,7 +31,12 @@ goorm.core.file._new.folder = {
 		var handle_ok = function(panel) {
 			var localization = core.module.localization.msg;
 			var data = self.dialog_explorer.get_data();
-
+			
+			if (data == false) {
+				// when folder name has space(' '), get_data returns false
+				alert.show(localization.alert_invalid_folder_name);
+				return false;
+			}
 			if (data.path == "/") {
 				alert.show(localization.alert_deny_make_folder_in_workspace_root);
 				return;
