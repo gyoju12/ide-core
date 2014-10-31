@@ -736,20 +736,20 @@ module.exports = {
 		//var force = data.force ? '-f' : '';
 
 		var callback = function(err, stdout, stderr) {
-				if (err) {
-					console.log(err, stdout, stderr);
+			if (err) {
+				console.log(err, stdout, stderr);
 
-					evt.emit('move_file', {
-						flag: false
-					});
-				}
-				if (i == length - 1 || i == length) {
+				evt.emit('move_file', {
+					flag: false
+				});
+			}
+			if (i == length - 1 || i == length) {
 
-					evt.emit('move_file', {
-						flag: true
-					});
-				}
-			};
+				evt.emit('move_file', {
+					flag: true
+				});
+			}
+		};
 
 		var move = function(current_path, target_path) {
 			exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
@@ -764,11 +764,9 @@ module.exports = {
 
 
 			//console.log(exist_check_path, data.current_path[i], data.after_path);
-			if(fs.existsSync(exist_check_path)) {
-				exec('rm -rf ' + exist_check_path + ' | ' 
-					+ 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-			}
-			else {
+			if (fs.existsSync(exist_check_path)) {
+				exec('rm -rf ' + exist_check_path + ' | ' + 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+			} else {
 				exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
 				//move(data.current_path[i], data.after_path);
 			}
@@ -859,7 +857,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file = (query.project_type == "cpp") ? source_file+".cpp" : source_file+".c";
+						source_file = (query.project_type == "cpp") ? source_file + ".cpp" : source_file + ".c";
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {
