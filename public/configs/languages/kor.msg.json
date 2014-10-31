@@ -1157,19 +1157,19 @@
         "value": "HEAD로부터 Pull 하시겠습니까?"
     },
     "confirmation_scm_want_to_create_branch": {
-        "value": "새 브랜치를 생성하시겠습니까?"
+        "value": "새 브랜치를 생성하시겠습니까?<br/>"
     },
     "confirmation_scm_want_to_delete_branch": {
-        "value": "브랜치를 삭제하시겠습니까?"
+        "value": "브랜치를 삭제하시겠습니까?<br/>"
     },
     "confirmation_scm_want_to_merge_branch": {
-        "value": "Master와 브랜치를 병합하시겠습니까?"
+        "value": "Master와 브랜치를 병합하시겠습니까?<br/>"
     },
     "confirmation_scm_want_to_publish_branch": {
-        "value": "원격 저장소에 브랜치를 Publish 하시겠습니까?"
+        "value": "원격 저장소에 브랜치를 Publish 하시겠습니까?<br/>"
     },
     "confirmation_scm_want_to_move_branch": {
-        "value": "브랜치를 이동하시겠습니까?"
+        "value": "브랜치를 이동하시겠습니까?<br/>"
     },
     "please_wait": {
         "value": "잠시만 기다려주십시오."
@@ -1464,5 +1464,11 @@
     },
      "alert_allow_file_has_valid_name": {
         "value": "파일/폴더 이름은 알파벳과 숫자, _, - 만 가능합니다."
+    },
+    "confirmation_project_clean_title": {
+        "value": "프로젝트 클린"
+    },
+    "confirmation_project_clean_message": {
+        "value": "현재 프로젝트의 클린을 진행합니다."
     }
 }
