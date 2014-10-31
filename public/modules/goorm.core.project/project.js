@@ -406,6 +406,11 @@ goorm.core.project = {
 	},
 
 	create: function(options, callback) {
+
+		core.module.loading_bar.start({
+			str: core.module.localization.msg.import_sync_to_file_system
+		});
+		
 		core._socket.once('/plugin/create', function(result) {
 			
 

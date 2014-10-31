@@ -253,7 +253,7 @@ goorm.core.preference = {
 				key = preference.plugins[$(targets[index]).attr('plugin')];
 			}
 			if (key) {
-				$(targets[index]).find("input.form-control").each(function() {
+				$(targets[index]).find("input").each(function() {
 					var value;
 
 					if ($(this).attr("type") === "checkbox") {

@@ -926,7 +926,6 @@ goorm.core.shortcut.manager = {
 		//Refresh (Ctrl+R)
 		if (this.hotkeys.refresh_project_directory) {
 			this.hotkeys_fn.refresh_project_directory = function(e) {
-
 				core.module.layout.project_explorer.refresh();
 
 				e.stopPropagation();

@@ -164,6 +164,12 @@
 	"document_viewer": {
 		"value": "문서 뷰어"
 	},
+	"slideshare_Viewer": {
+		"value": "Slideshare.net 뷰어"
+	},
+	"pdf_Viewer": {
+		"value": "PDF 뷰어"
+	},
 	"profile": {
 		"value": "프로필"
 	},

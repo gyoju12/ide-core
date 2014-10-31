@@ -1388,10 +1388,10 @@
         "value": "검색어를 입력해 주세요."
     },
     "same_folder_exist_title": {
-        "value": "동일한 폴더 존재"
+        "value": "동일한 파일/폴더 존재"
     },
     "same_folder_exist": {
-        "value": "동일한 폴더명이 존재합니다. 해당 폴더와 업로드 폴더의 내용을 합치시겠습니까?"
+        "value": "동일한 파일/폴더명이 존재합니다. 파일이면 해당 파일은 삭제되고, 폴더이면 합쳐지게 됩니다. 진행하시겠습니까?"
     },
     "confirmation_save_deleted_file": {
         "value": "이 파일은 삭제되었습니다. 새롭게 파일을 만드시겠습니까?"
@@ -1462,7 +1462,7 @@
     "confirmation_do_you_want_overwrite": {
         "value": "덮어쓰기 하시겠습니까?"
     },
-     "alert_allow_file_has_valid_name": {
+    "alert_allow_file_has_valid_name": {
         "value": "파일/폴더 이름은 알파벳과 숫자, _, - 만 가능합니다."
     },
     "confirmation_project_clean_title": {

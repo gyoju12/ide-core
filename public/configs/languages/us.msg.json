@@ -1389,10 +1389,10 @@
         "value": "Input search keyword."
     },
     "same_folder_exist_title": {
-        "value": "Same Directory Exists"
+        "value": "Same File/Directory Exists"
     },
     "same_folder_exist": {
-        "value": "Same directory exists. Do you want to merge original directory with the new one?"
+        "value": "Same file/directory exists. If it is file, this file will be deleted and if it is directory, original directory will be merged with the new one. Do you want to go on?"
     },
     "confirmation_save_deleted_file": {
         "value": "This file was deleted. Do you want to re-create this file?"

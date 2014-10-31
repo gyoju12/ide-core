@@ -33,6 +33,12 @@ goorm.core.file.rename = {
 			var ori_name = $("#input_rename_old_filename").val();
 			var dst_name = $("#input_rename_new_filename").val();
 
+			if(ori_name == dst_name){
+				return false;
+			}
+
+			$("#input_rename_new_filename").blur();
+	
 			if (dst_name === "") {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				return false;
@@ -88,7 +94,6 @@ goorm.core.file.rename = {
 						var received_data = data;
 
 						if (received_data.err_code === 0) {
-
 							var window_manager = core.module.layout.workspace.window_manager;
 							var window_list = window_manager.window;
 
@@ -225,7 +230,6 @@ goorm.core.file.rename = {
 	// check file exists. Jeong-Min Im.
 	check_exist: function(postdata, confirm_msg, callback) {
 		var localization = core.module.localization.msg;
-
 		core._socket.once('/file/exist', function(data) {
 			if (data.err_code == 0) {
 				if (data.exist) {
