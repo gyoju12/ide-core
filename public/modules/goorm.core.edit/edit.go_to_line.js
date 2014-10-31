@@ -69,6 +69,9 @@ goorm.core.edit.go_to_line = {
 			var keyword = $("#edit_toolbar_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor			
 			
+			//editor error fix --heeje
+			if(isNaN(keyword) || keyword <= 0) return;
+
 			this.editor.setCursor(parseInt(keyword, 10) - 1, 0);
 
 			//scroll location calculate

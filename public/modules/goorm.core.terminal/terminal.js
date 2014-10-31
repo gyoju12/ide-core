@@ -127,6 +127,12 @@ goorm.core.terminal.prototype = {
 				self.resize_all("layout");
 			});
 
+			$(core).on("on_project_open", function () {
+				if (core.status.current_project_path === "") {
+					self.change_project_dir();
+				}
+			});
+
 			$(document).on(self.terminal_name + "_resized", function() {
 				if (self.index >= 0) {
 					self.resize();
@@ -288,6 +294,8 @@ goorm.core.terminal.prototype = {
 					console.log(self.terminal_name+"_terminal_refresh_complete");
 					self.change_project_dir();
 				}
+
+				
 			});
 
 			self.socket.on("terminal_exited."+self.terminal_name, function(data) {
@@ -373,6 +381,7 @@ goorm.core.terminal.prototype = {
 		}
 
 		this.send_command("complete;clear;\r");
+		
   	},
 
 	focus: function() {

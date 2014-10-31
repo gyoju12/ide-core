@@ -378,6 +378,7 @@ goorm.routing = function() {
 	
 
 	//for plugin
+	goorm.get('/plugin/new', goorm.check_session, routes.plugin.do_new);
 	goorm.get('/plugin/get_list', routes.plugin.get_list);
 	goorm.post('/plugin/get_dialog', goorm.check_session, routes.plugin.get_dialog);
 	goorm.post('/plugin/check_css', routes.plugin.check_css);
@@ -680,7 +681,20 @@ goorm.load = function() {
 						'redisSub': global.__redis.sub,
 						'redisClient': global.__redis.store
 					}));
-				})
+				});
+
+				io.set('authorization', function (handshakeData, accept) {
+					if (handshakeData.headers.cookie) {
+					    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+					    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+
+					    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+							return accept('Cookie is invalid.', false);
+					    }
+					}
+
+					accept(null, true);
+				});
 			}
 
 			g_terminal.start(io);

@@ -79,7 +79,7 @@ module.exports = {
 							var fs_access = false;
 
 							self.get_user_data(socket, function(user_data) {
-								if (user_data.result) {	
+								if (user_data.result) {
 									fs_access = true;
 
 									user_data = user_data.data;
@@ -348,7 +348,7 @@ module.exports = {
 
 			
 
-			socket.on('/plugin/create', function (msg) {
+			socket.on('/plugin/create', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -431,7 +431,7 @@ module.exports = {
 				});
 			});
 
-			socket.on('/plugin/do_web_run', function (msg) {
+			socket.on('/plugin/do_web_run', function(msg) {
 				var uid = null;
 				var gid = null;
 				var copy = function() {
@@ -457,11 +457,15 @@ module.exports = {
 					exec('cp -r ' + workspace + '/* ' + target_path, function(__err) {
 						if (__err) {
 							console.log('do_web_run Err:', __err);
+							socket.to().emit('/plugin/do_web_run', {
+								code: 500,
+								message: "Copy Error",
+							});
 						} else {
 
 							
 
-							res.json({
+							socket.to().emit('/plugin/do_web_run', {
 								code: 200,
 								message: "success",
 								run_path: run_path
@@ -1185,18 +1189,18 @@ module.exports = {
 						var project_path = (path[0] !== "") ? path[0] : path[1];
 
 						evt.on("upload_dir_skeleton", function(data) {
-							res.json(data);
+							socket.emit('/upload/dir_skeleton', data);
 						});
 
 						// validate permission
 						// 
-						g_auth_p.can_edit_project(user_data.id, project_path, function(can_edit) {
+						g_auth_project.can_edit_project(user_data.id, project_path, function(can_edit) {
 							if (can_edit) {
 								msg.user_id = user_data.id;
 
 								g_file.upload_dir_skeleton(msg, evt);
 							} else {
-								res.json({
+								socket.emit('/upload/dir_skeleton', {
 									err_code: 20,
 									message: "Permission denied"
 								});
@@ -1253,7 +1257,7 @@ module.exports = {
 	get_user_data: function(socket, callback) {
 		var self = this;
 
-		var load_from_socket_id = function (cb) {
+		var load_from_socket_id = function(cb) {
 			var socket_id = socket.id;
 
 			self.get_session_id(socket_id, function(sessionID) {
@@ -1310,7 +1314,7 @@ module.exports = {
 			});
 		};
 
-		var load_from_session_id = function (cb) {
+		var load_from_session_id = function(cb) {
 			var sessionID = socket.handshake.sessionID;
 
 			store.client.get(sessionID, function(err, user_data) {
@@ -1337,17 +1341,15 @@ module.exports = {
 		};
 
 		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
-			load_from_session_id(function (load) {
+			load_from_session_id(function(load) {
 				if (load.result) {
 					callback(load);
-				}
-				else {
-					load_from_socket_id(function (load) {
+				} else {
+					load_from_socket_id(function(load) {
 						if (load.result) {
 							callback(load);
-						}
-						else {
-							
+						} else {
+
 						}
 					});
 				}

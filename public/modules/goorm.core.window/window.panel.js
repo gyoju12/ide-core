@@ -283,6 +283,8 @@ goorm.core.window.panel.prototype = {
 						self.type = "WebView";
 						var title = (options.title) ? options.title : self.title;
 
+						
+
 						var iframe = $("<iframe src='" + self.filepath + "/" + self.filename + "' style='width:100%;height:100%;border:0;background:white'>");
 						$(self.panel).css("overflow", "hidden").html(iframe);
 						// .end().find(".ui-dialog-title").text("[Web view] "+title);
@@ -397,6 +399,10 @@ goorm.core.window.panel.prototype = {
 					}
 					var menu_undo = $(".menu-undo[action=do_undo]").parent();
 					var menu_redo = $(".menu-redo[action=do_redo]").parent();
+					var button_redo = $("button[action=do_redo]");
+					var button_undo = $("button[action=do_undo]");
+					button_undo.addClass('disabled');
+					button_redo.addClass('disabled');
 					menu_redo.addClass('disabled');
 					menu_undo.addClass('disabled');
 					$("<table class='disconnected'><tr><td><img src='images/goorm.core.window/disconnected.png' /><br />Goorm is trying to reconnect the server.<br />But we recommend you to refresh this page.</td></tr></table>").appendTo(self.panel.parent()).css('display', 'none');
@@ -432,6 +438,10 @@ goorm.core.window.panel.prototype = {
 								self.tab.is_saved = true;
 								var menu_undo = $(".menu-undo[action=do_undo]").parent();
 								var menu_redo = $(".menu-redo[action=do_redo]").parent();
+								var button_redo = $("button[action=do_redo]");
+								var button_undo = $("button[action=do_undo]");
+								button_undo.addClass('disabled');
+								button_redo.addClass('disabled');
 								menu_redo.addClass('disabled');
 								menu_undo.addClass('disabled');
 								window_manager.close_by_title(self.title);
@@ -682,17 +692,23 @@ goorm.core.window.panel.prototype = {
 
 				var menu_undo = $(".menu-undo[action=do_undo]").parent();
 				var menu_redo = $(".menu-redo[action=do_redo]").parent();
+				var button_redo = $("button[action=do_redo]");
+				var button_undo = $("button[action=do_undo]");
 
 				if (this.history_edit.redo > 0) {
 					menu_redo.removeClass('disabled');
+					button_redo.removeClass('disabled');
 				} else if (this.history_edit.redo <= 0) {
 					menu_redo.addClass('disabled');
+					button_redo.addClass('disabled');
 				}
 
 				if (this.history_edit.undo > 0) {
 					menu_undo.removeClass('disabled');
+					button_undo.removeClass('disabled');
 				} else if (this.history_edit.undo <= 0) {
 					menu_undo.addClass('disabled');
+					button_undo.addClass('disabled');
 				}
 
 				if (this.undo_depth != null && this.history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
@@ -973,12 +989,16 @@ goorm.core.window.panel.prototype = {
 					$("a[action=comment_selected]").parent().removeClass("disabled");
 					$("a#parent_merge_menu").parent().removeClass("disabled");
 					$("a#parent_refactor_menu").parent().removeClass("disabled");
+
+					
 				} else {
 					$('#editor_status').hide();
 
 					if (this.type !== "Merge") {
 						$("a[action=do_undo]").parent().addClass("disabled");
 						$("a[action=do_redo]").parent().addClass("disabled");
+						$("button[action=do_redo]").addClass("disabled");
+						$("button[action=do_undo]").addClass("disabled");
 						$("a[action=do_delete]").parent().addClass("disabled");
 						$("a[action=select_all]").parent().addClass("disabled");
 						$("a[action=do_go_to_line]").parent().addClass("disabled");
@@ -995,6 +1015,25 @@ goorm.core.window.panel.prototype = {
 
 				if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
 					core.module.layout.outline.clear();
+				}
+
+				if( this.type == 'Editor') { //editor undo/redo fix --heeje
+					var stack = this.editor.collaboration.getStack();
+					if(stack.undo > 0) {
+						$("a[action=do_undo]").parent().removeClass("disabled");
+						$("button[action=do_undo]").removeClass("disabled");
+					} else {
+						$("a[action=do_undo]").parent().addClass("disabled");
+						$("button[action=do_undo]").addClass("disabled");
+					}
+					
+					if (stack.redo > 0) {
+						$("a[action=do_redo]").parent().removeClass("disabled");
+						$("button[action=do_redo]").removeClass("disabled");
+					} else {
+						$("a[action=do_redo]").parent().addClass("disabled");
+						$("button[action=do_redo]").addClass("disabled");
+					}
 				}
 			}
 

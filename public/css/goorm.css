@@ -9585,6 +9585,7 @@ a.bg-danger:hover {
 
 .CodeMirror-sizer {
 	padding-right: 12px;	/* jeongmin. for showing full code width */
+	border-right: 0;
 }
 
 .disconnected {

@@ -53,7 +53,7 @@
 		"editor": "Editor",
 		"description": "dart file",
 		"type": "Code",
-		"mode": "text/x-dart"
+		"mode": "text/dart"
 	},
 	{
 		"file_extension": "asp",

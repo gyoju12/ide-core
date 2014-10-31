@@ -1167,10 +1167,10 @@
         "value": "Do you want to merge branch with master?<br/>"
     },
     "confirmation_scm_want_to_publish_branch": {
-        "value": "Do you want to publish branch to remote?"
+        "value": "Do you want to publish branch to remote?<br/>"
     },
     "confirmation_scm_want_to_move_branch": {
-        "value": "Do you want to move to branch?"
+        "value": "Do you want to move to branch?<br/>"
     },
     "please_wait": {
         "value": "Please Wait..."
@@ -1462,5 +1462,11 @@
     },
     "alert_allow_file_has_valid_name": {
         "value": "File/folder's name should have only alphabets, numbers and _, -."
+    },
+    "confirmation_project_clean_title": {
+        "value": "Project Clean"
+    },
+    "confirmation_project_clean_message": {
+        "value": "This project will be cleaned."
     }
 }

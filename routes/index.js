@@ -356,6 +356,12 @@ exports.plugin.do_create = function(req, res) {
 	
 };
 
+exports.plugin.do_new = function(req, res) {
+	req.query.user = req.__user;
+
+	g_plugin.do_new(req.query, res);
+};
+
 exports.plugin.do_web_run = function(req, res) {
 	var self = this;
 	var uid = null;
@@ -728,8 +734,7 @@ exports.file.get_file = function(req, res) {
 		});
 
 		g_file.get_file(filepath, filename, evt);
-	}
-	else {
+	} else {
 		res.json({});
 	}
 	

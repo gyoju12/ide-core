@@ -124,9 +124,6 @@ goorm.core.project.property = {
 		}
 	},
 
-	refresh_toolbox: function() {
-
-	},
 	save_property: function(path, property, callback) {
 
 		property.description = property.description.replace(/&(lt|gt);/g, function(strMatch, p1) {

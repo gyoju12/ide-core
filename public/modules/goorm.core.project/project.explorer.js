@@ -184,8 +184,6 @@ goorm.core.project.explorer.prototype = {
 				$("#project_treeview").hide();
 				self.make_project_list_table();
 			} else {
-				core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], core.property);
-
 				var temp_project_path = core.status.current_project_path;
 				$("#project_treeview").css("background-color", "#FFF");
 
@@ -356,10 +354,6 @@ goorm.core.project.explorer.prototype = {
 			self.current_project.current_project_type = self.project_data[project_idx].contents.type;
 			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
 		} else {
-
-			core.current_project_name = "";
-			//core.status.current_project_path = "";
-			core.current_project_type = "";
 			self.current_project.current_project_path = "";
 			self.current_project.current_project_name = "";
 			self.current_project.current_project_type = "";
@@ -422,7 +416,7 @@ goorm.core.project.explorer.prototype = {
 		this.context_menu_folder.init("configs/menu/goorm.core.project/project.explorer.folder.html", "project.explorer.folder_context", $("#project_treeview"), "", null, null, true);
 
 		this.context_menu_project = new goorm.core.menu.context();
-		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_treeview"), "", null, null, false);
+		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_explorer"), "", null, null, false);
 
 		$(core).on('contextmenu_all_hide', function() {
 			self.hide_all_context_menu();
@@ -585,12 +579,12 @@ goorm.core.project.explorer.prototype = {
 
 			self.on_project_selectbox_change(idx);
 
-			$('#project_selectbox').find('option').each(function(i, item) {
-				if ($(item).html() == selected_project_name) {
-					$('#project_selectbox').val($(item).val());
-					self.on_project_selectbox_change($(item).val());
-				}
-			});
+			// $('#project_selectbox').find('option').each(function(i, item) {
+			// 	if ($(item).html() == selected_project_name) {
+			// 		$('#project_selectbox').val($(item).val());
+			// 		self.on_project_selectbox_change($(item).val());
+			// 	}
+			// });
 		});
 
 		this.styling_search();
@@ -1291,6 +1285,7 @@ goorm.core.project.explorer.prototype = {
 
 
 		var on_click = function(e, node) {
+			e.stopPropagation();
 			$(core).trigger('contextmenu_all_hide');
 
 			core.status.selected_node = e.target;

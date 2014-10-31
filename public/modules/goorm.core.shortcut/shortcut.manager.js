@@ -1179,13 +1179,14 @@ goorm.core.shortcut.manager = {
 
 		if (this.hotkeys.do_find_next) {
 			this.hotkeys_fn.do_find_next = function(e) {
+				
 				var window_manager = core.module.layout.workspace.window_manager;
 				var editor = window_manager.window[window_manager.active_window].editor;
 
-				if (editor && !core.status.keydown) {
+				if (editor) {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
-					if (editor.editor && !editor.editor.state.search.query) {
+					if (editor.editor) {
 						core.dialog.find_and_replace.find();
 					}
 					core.status.keydown = true;
@@ -1206,7 +1207,7 @@ goorm.core.shortcut.manager = {
 				var window_manager = core.module.layout.workspace.window_manager;
 				var editor = window_manager.window[window_manager.active_window].editor;
 
-				if (editor && !core.status.keydown) {
+				if (editor) {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
 					if (editor.editor && !editor.editor.state.search.query) {

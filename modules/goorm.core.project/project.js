@@ -859,7 +859,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file += ".c";
+						source_file = (query.project_type == "cpp") ? source_file+".cpp" : source_file+".c";
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {

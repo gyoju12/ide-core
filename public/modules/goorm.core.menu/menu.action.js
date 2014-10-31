@@ -385,6 +385,11 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.undo();
+					//window_manager.window[window_manager.active_window].set_modified();
+					$(core).trigger('undo_redo_pressed', { // make event --heeje
+                    	undo: true,
+                    	redo: false
+                	});
 				}
 			}
 		});
@@ -400,6 +405,11 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.redo();
+					$(core).trigger('undo_redo_pressed', { // make event --heeje
+                    	undo: false,
+                    	redo: true
+                	});
+					//window_manager.window[window_manager.active_window].set_modified();
 				}
 			}
 		});
@@ -788,11 +798,21 @@ goorm.core.menu.action = {
 
 		$("[action=stop]").off("click").tooltip();
 		$("[action=stop]").click(function() {
-			var cmd = "\x03\n"
+			var cmd = "";
+			var terminal = null;
+
+			if (core.module.project.process_name) {
+				cmd = "ps -ef | grep " + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
+				terminal = core.module.terminal.terminal;
+			}
+			else {
+				cmd = "\x03\n";
+				terminal = core.module.layout.terminal;
+			}
 
 			if (core.module.project.is_running && !$('button[action="stop"]').hasClass('debug_not_active')) {
-				core.module.layout.terminal.command_ready = true;
-				core.module.layout.terminal.send_command(cmd);
+				terminal.command_ready = true;
+				terminal.send_command(cmd);
 				core.module.project.is_running = false;
 				$('button[action="stop"]').addClass('debug_not_active');
 				$('button[action="stop"]').attr('isdisabled', 'disabled');

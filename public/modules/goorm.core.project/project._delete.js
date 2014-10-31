@@ -96,7 +96,6 @@ goorm.core.project._delete = {
 
 					if (core.status.current_project_path === "" || core.status.current_project_path == data.path) {
 						core.module.layout.project_explorer.refresh();
-						core.dialog.project_property.refresh_toolbox();
 					} else {
 						core.module.layout.project_explorer.refresh_project_selectbox();
 					}

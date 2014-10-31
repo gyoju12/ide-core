@@ -25,8 +25,8 @@ goorm.core.edit.bookmark = {
 		$(core).on("bookmark_hover", function() {
 			self.remove(); //first, remove all bookmarks from main menu
 
-			if (self.window_manager.active_window != -1 && self.window_manager.window[self.window_manager.active_window] && self.window_manager.window[self.window_manager.active_window].editor) { //only when current active window and its editor is valid
-				self.active_editor = self.window_manager.window[self.window_manager.active_window].editor; //current active window's editor
+			if (self.get_active_editor()) {  //only when current active window and its editor is valid
+				self.active_editor = self.get_active_editor(); //current active window's editor
 				self.target = self.active_editor.target; //active window's id
 
 				if (self.list[self.target]) { //only current bookmark list is not undefined
@@ -99,13 +99,24 @@ goorm.core.edit.bookmark = {
 		});
 	},
 
+	get_active_editor: function () {
+		var w = null;
+
+		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) {
+			w = this.window_manager.window[this.window_manager.active_window].editor;
+
+			this.active_editor = w; //get current active window's editor
+			this.editor = w.editor;
+			this.target = w.target; //get active window's id
+		}
+
+		return w;
+	},
+
 	//toggle bookmark. Jeong-Min Im.
 	toggle: function(new_bookmark_line) { // line that we want to set bookmark
-		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) { //only when current active window and its editor is valid
+		if (this.get_active_editor()) { //only when current active window and its editor is valid
 			var is_added = true; // jeongmin: whether bookmark will be added or not
-
-			this.active_editor = this.window_manager.window[this.window_manager.active_window].editor; //get current active window's editor
-			this.target = this.active_editor.target; //get active window's id
 
 			var line = this.active_editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
 
@@ -138,80 +149,80 @@ goorm.core.edit.bookmark = {
 
 	//find next bookmark. Jeong-Min Im.
 	next: function() {
-		this.editor = this.active_editor.editor; //get active window's editor(codemirror)
+		if (this.get_active_editor()) {
+			var current_line = this.editor.getCursor().line + 1; //get current cursor line
 
-		var current_line = this.editor.getCursor().line + 1; //get current cursor line
+			if (this.list[this.target]) { //only current bookmark list is not undefined
+				////// extract only line from list //////
+				var lines = [];
+				for (var key in this.list[this.target])
+					lines.push(key);
 
-		if (this.list[this.target]) { //only current bookmark list is not undefined
-			////// extract only line from list //////
-			var lines = [];
-			for (var key in this.list[this.target])
-				lines.push(key);
+				////// move to next line //////
+				var index = lines.indexOf(current_line); //current line is in the list or not
+				var length = lines.length; //number of active window's bookmarks
 
-			////// move to next line //////
-			var index = lines.indexOf(current_line); //current line is in the list or not
-			var length = lines.length; //number of active window's bookmarks
+				if (index < 0) { //if current line is not in the list
+					for (var i = 0; i < length; i++) { //find next bookmark from current line
+						if (lines[i] > current_line) { //if there is bookmark that is bigger than current line
+							this.move(lines[i]); //move to that bookmark
 
-			if (index < 0) { //if current line is not in the list
-				for (var i = 0; i < length; i++) { //find next bookmark from current line
-					if (lines[i] > current_line) { //if there is bookmark that is bigger than current line
-						this.move(lines[i]); //move to that bookmark
-
-						return; //return this function
+							return; //return this function
+						}
 					}
-				}
 
-				this.move(lines[0]); //if can't find bigger line than current line, just move to first bookmark
-			} else if (index == length - 1) { //current line is in the list, but this line is last index of the list
-				this.move(lines[0]); //move to first bookmark
-			} else { //current line is in the list and not the last index
-				this.move(lines[index + 1]); //move to next index of the list
+					this.move(lines[0]); //if can't find bigger line than current line, just move to first bookmark
+				} else if (index == length - 1) { //current line is in the list, but this line is last index of the list
+					this.move(lines[0]); //move to first bookmark
+				} else { //current line is in the list and not the last index
+					this.move(lines[index + 1]); //move to next index of the list
+				}
 			}
 		}
 	},
 
 	//find previous bookmark. Jeong-Min Im.
 	prev: function() {
-		this.editor = this.active_editor.editor; //get active window's editor(codemirror)
+		if (this.get_active_editor()) {
+			var current_line = this.editor.getCursor().line + 1; //get current cursor line
 
-		var current_line = this.editor.getCursor().line + 1; //get current cursor line
+			if (this.list[this.target]) { //only current bookmark list is not undefined
+				////// extract only line from list //////
+				var lines = [];
+				for (var key in this.list[this.target])
+					lines.push(key);
 
-		if (this.list[this.target]) { //only current bookmark list is not undefined
-			////// extract only line from list //////
-			var lines = [];
-			for (var key in this.list[this.target])
-				lines.push(key);
+				////// move to next line //////
+				var index = lines.indexOf(current_line); //current line is in the list or not
+				var length = lines.length; //number of active window's bookmarks
 
-			////// move to next line //////
-			var index = lines.indexOf(current_line); //current line is in the list or not
-			var length = lines.length; //number of active window's bookmarks
+				if (index < 0) { //if current line is not in the list
+					for (var i = length; 0 <= i; i--) { //find next bookmark from current line
+						if (lines[i] < current_line) { //if there is bookmark that is smaller than current line
+							this.move(lines[i]); //move to that bookmark
 
-			if (index < 0) { //if current line is not in the list
-				for (var i = length; 0 <= i; i--) { //find next bookmark from current line
-					if (lines[i] < current_line) { //if there is bookmark that is smaller than current line
-						this.move(lines[i]); //move to that bookmark
-
-						return; //return this function
+							return; //return this function
+						}
 					}
-				}
 
-				this.move(lines[length - 1]); //if can't find smaller line than current line, just move to last bookmark
-			} else if (index == 0) { //current line is in the list, but this line is first index of the list
-				this.move(lines[length - 1]); //move to last bookmark
-			} else { //current line is in the list and not the first index
-				this.move(lines[index - 1]); //move to previous index of the list
+					this.move(lines[length - 1]); //if can't find smaller line than current line, just move to last bookmark
+				} else if (index == 0) { //current line is in the list, but this line is first index of the list
+					this.move(lines[length - 1]); //move to last bookmark
+				} else { //current line is in the list and not the first index
+					this.move(lines[index - 1]); //move to previous index of the list
+				}
 			}
 		}
 	},
 
 	//clear all bookmarks. Jeong-Min Im.
 	clear: function() {
-		this.target = this.active_editor.target; //get active window's id
+		if (this.get_active_editor()) {
+			if (this.list[this.target]) { //only current bookmark list is not undefined
+				this.active_editor.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
 
-		if (this.list[this.target]) { //only current bookmark list is not undefined
-			this.active_editor.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
-
-			delete(this.list[this.target]); //delete this window from the list
+				delete(this.list[this.target]); //delete this window from the list
+			}
 		}
 
 		this.store_json();
@@ -268,10 +279,9 @@ goorm.core.edit.bookmark = {
 			self = this;
 
 		////// making //////
-		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) {
-			var active_editor = this.window_manager.window[this.window_manager.active_window].editor,
-				target = active_editor.target, //active window's id
-				cm = active_editor.editor;
+		if (this.get_active_editor()) {
+			var cm = this.active_editor.editor;
+			var target = this.target;
 
 			if (this.list[target]) {
 				is_there = false; //initialize 'No bookmark' flag

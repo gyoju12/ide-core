@@ -3324,7 +3324,8 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="padding:13px 13px 13px;">
-                        <button type="button" id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a>
+                        <!-- depreciated -heeje -->
+                        <!-- <button type="button" id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a> -->
                         <button type="button" id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
                         <button type="button" id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
                         <button type="button" id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
@@ -4082,12 +4083,12 @@
                                     <h2>Private URL</h2>
 
                                     <p><Private URL은 다음과 같은 구조를 갖습니다.</p>
-                                    <p><strong>http://[USER_ID].run.goorm.org/</strong></p>
+                                    <p><strong>http://[USER_ID].run.goorm.codes/</strong></p>
 
                                     <p>Private URL은 자신의 홈과 연결되어 있으며, 80은 Apache가 8080은 Tomcat이 붙어있습니다.</p>
                                     <p>예를 들어, goorm_jsp_project 밑에 index.jsp의 내용을 띄우고 싶다면,</p>
 
-                                    <p>http://[USER_ID].run.goorm.org:8080/goorm_jsp_project/index.php와 같이 접근할 수 있습니다.</p>
+                                    <p>http://[USER_ID].run.goorm.codes:8080/goorm_jsp_project/index.php와 같이 접근할 수 있습니다.</p>
                                 </div>
 
                                 <div id="private_ports">
@@ -4097,7 +4098,7 @@
                                     <p>유저의 Private Ports는 <strong id="private_ports_1" class="private_ports">12345</strong> / <strong id="private_ports_2" class="private_ports">4223</strong> / <strong id="private_ports_3" class="private_ports">5555</strong>입니다.</p>
 
                                     <p>예를 들어, Node.js을 통하여 웹 서버를 구축하고 Port 12345를 주어 실행하였다면,</p>
-                                    <p>[USER_ID].run.goorm.org:12345로 접근하시면 됩니다.</p>
+                                    <p>[USER_ID].run.goorm.codes:12345로 접근하시면 됩니다.</p>
                                 </div>
                             </div> <!-- jeongmin: get along with #help_contents_left's col-md-3 -->
                         </div>
@@ -6406,6 +6407,8 @@
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/stex/stex.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/xml/xml.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/yaml/yaml.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.0/mode/go/go.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.0/mode/dart/dart.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/keymap/vim.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/keymap/sublime.js"></script>
     <!--JS : tty.js-->

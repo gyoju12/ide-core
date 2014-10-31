@@ -29,6 +29,9 @@ goorm.core.file._import = {
 			core.module.loading_bar.start({
 				str: core.module.localization.msg.processing
 			});
+
+			self.upload_file_path = data.path + '/'; // jeongmin: for reopening windows
+
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 		};
@@ -53,6 +56,21 @@ goorm.core.file._import = {
 						if (data.err_code === 0) {
 							self.panel.modal('hide');
 
+							// jeongmin: close opened windows and reopen these windows
+							var window_manager = core.module.layout.workspace.window_manager;
+							var opening_window = [];
+
+							for (var i = window_manager.window.length - 1; 0 <= i; i--) {
+								for (var j = self.upload_file_name.length - 1; 0 <= j; j--) {
+									if (window_manager.window[i].title == self.upload_file_path + self.upload_file_name[j]) {
+										window_manager.close_by_index(i, i);
+										window_manager.open(self.upload_file_path, self.upload_file_name[j], self.upload_file_name[j].split('.')[1]);
+
+										break; // jeongmin: we found
+									}
+								}
+							}
+
 							notice.show(core.module.localization.msg.notice_file_import_done);
 							core.module.layout.project_explorer.refresh();
 						} else {
@@ -70,6 +88,9 @@ goorm.core.file._import = {
 											core.module.loading_bar.start({
 												str: core.module.localization.msg.import_in_progress
 											});
+
+											self.upload_file_name = data.file; // jeongmin: for reopening windows
+
 											$('#myForm').submit();
 											self.panel.modal('hide');
 											$('#myForm').attr('action', 'file/import');

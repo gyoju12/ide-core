@@ -676,8 +676,6 @@ goorm.core.prototype = {
 		$("#loading_background").delay(1000).fadeOut(1000);
 		$("#loading_panel_container").delay(1500).fadeOut(1000);
 
-		this.dialog.project_property.refresh_toolbox();
-
 		// $(core).trigger('goorm_login_complete');
 		this.socket_connect();
 	},

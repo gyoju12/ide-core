@@ -60,16 +60,17 @@ goorm.core.edit.find_and_replace = {
 				//	self.find_all();
 				//});
 
-				// Find/Replace
+				// Find/Replace -- depreciated
 				//
-				$('#g_far_btn_far').click(function() {
-					self.handle_replace_and_find();
-				});
+				// $('#g_far_btn_far').click(function() {
+				// 	self.handle_replace_and_find();
+				// });
 
 				// Replace
-				//
+				// aggregated find and replace on this function --heeje
 				$('#g_far_btn_replace').click(function() {
-					self.handle_replace();
+					//self.handle_replace();
+					self.handle_replace_and_find();
 				});
 				$('#far_use_regexp').click(function() {
 					if (!$('#far_ignore_whitespace').hasClass('disabled')) {
@@ -257,10 +258,14 @@ goorm.core.edit.find_and_replace = {
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 			if (editor.getSelection() == "") {
 				this.search(keyword1, editor);
+				this.replace(keyword1, keyword2, editor);
+				return;
+			} else {
+				this.replace(keyword1, keyword2, editor);
+				this.search(keyword1, editor);
 				return;
 			}
-			this.replace(keyword1, keyword2, editor);
-			this.search(keyword1, editor);
+
 			//this.replace_search(keyword1, keyword2, editor);
 		}
 	},
@@ -305,7 +310,9 @@ goorm.core.edit.find_and_replace = {
 
 		if (this.use_regexp === true)
 			try {
+				keyword = keyword.replace('/','');
 				text = RegExp(keyword, "g");
+				console.log(text);
 			} catch (e) {
 				return;
 			} else {

@@ -123,6 +123,34 @@ goorm.core.edit.prototype = {
             matchBrackets: true,
         });
 
+        //unbind CodeMirror key & shaping searching area --heeje
+        this.editor.setOption("extraKeys", {
+            "Ctrl-G" : function(){
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Cmd-G" : function(){
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Ctrl-Shift-G" : function(){
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Cmd-Shift-G" : function(){
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            }
+        });
+
         //cannot edit codeMirror before successfully loaded --heeje
         
         self.font_manager.init(this);
