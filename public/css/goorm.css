@@ -2451,7 +2451,7 @@ fieldset {
 	float: right;
 }
 
-.debug_not_active,.history_toolbar_not_activated {
+.run_not_active,.debug_not_active,.history_toolbar_not_activated {
 	opacity: 0.5;
 }
 

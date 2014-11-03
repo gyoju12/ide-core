@@ -246,7 +246,7 @@ goorm.core.terminal.prototype = {
 			self.socket.on("pty_command_result", function(msg) {
 
 				//build stop fix --heeje
-				if(core.module.project.is_running && msg.stdout.indexOf('[01;32m') > 0 && msg.stdout.indexOf('[H[2J') < 0) {
+				if(core.module.project.is_running && msg.stdout.indexOf('[01;32m') > 0 && msg.stdout.indexOf('^C') == 0 && msg.stdout.indexOf('[H[2J') < 0) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
 					$('button[action="stop"]').attr('isdisabled','disabled');
@@ -514,6 +514,7 @@ goorm.core.terminal.prototype = {
 	// },
 
 	load_pwd: function(stdout) {
+		var prom = '$';
 		var del_enter = function(str) {
 			var t = "";
 
@@ -533,14 +534,18 @@ goorm.core.terminal.prototype = {
 			return t;
 		}
 
-		var idx = stdout.indexOf('$');
+		
+
+
+		var idx = stdout.indexOf(prom);
+		
 		var dir = "";
 
-		if (idx > -1 && stdout !== '$') {
+		if (idx > -1 && stdout !== prom) {
 			this.test_stdout = stdout;
 
 			dir = stdout.split('/').pop().trim()
-			dir = dir.substring(0, dir.indexOf('$'));
+			dir = dir.substring(0, dir.indexOf(prom));
 			dir = dir.split('\n').pop();
 
 			if (/\\[H\\[2J/.test(dir)) dir = dir.replace(/\\[H\\[2J/, '');
@@ -548,7 +553,7 @@ goorm.core.terminal.prototype = {
 
 			dir = del_enter(dir);
 		}
-
+		
 		if (dir && dir !== "") {
 			$("#g_window_tab_list").find('.tab_title[id$="tab_title__' + this.terminal_name + '"]').attr("filename", dir);
 			this.set_title(dir);

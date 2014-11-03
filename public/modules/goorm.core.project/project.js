@@ -62,6 +62,7 @@ goorm.core.project = {
 						query = {
 							project_path: options.project_path,
 							project_type: options.project_type,
+							detail_type: project_data.detailedtype,
 							class_name: property["plugin." + options.project_type + ".main"],
 							source_path: property["plugin." + options.project_type + ".source_path"]
 						};
@@ -410,7 +411,7 @@ goorm.core.project = {
 		core.module.loading_bar.start({
 			str: core.module.localization.msg.import_sync_to_file_system
 		});
-		
+
 		core._socket.once('/plugin/create', function(result) {
 			
 

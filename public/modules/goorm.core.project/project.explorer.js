@@ -184,6 +184,8 @@ goorm.core.project.explorer.prototype = {
 				$("#project_treeview").hide();
 				self.make_project_list_table();
 			} else {
+				
+
 				var temp_project_path = core.status.current_project_path;
 				$("#project_treeview").css("background-color", "#FFF");
 

@@ -842,11 +842,16 @@ goorm.core.menu.action = {
 		$("[action=build_project]").click(function() {
 			var project_path = core.status.current_project_path;
 			var project_type = core.status.current_project_type;
-
+			$("[action=run]").data('disable', true);
+			$("[action=run]").addClass('run_not_active');
 			core.module.project.load_build({
 				'project_path': project_path,
 				'project_type': project_type,
 				'check': true
+			}, function(){
+				$("[action=run").data('disable', false);
+				$("[action=run]").removeClass("run_not_active");
+
 			});
 		});
 

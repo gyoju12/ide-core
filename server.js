@@ -592,6 +592,9 @@ goorm.load = function() {
 			});
 
 			cluster.on('listening', function(worker, address) {
+
+				
+
 				// console.log("worker %s listening %s:%s", worker.id, address.address, address.port);
 			});
 
@@ -657,6 +660,10 @@ goorm.load = function() {
 		global.__redis.pub = redis.createClient(RedisPort, RedisHost);
 		global.__redis.sub = redis.createClient(RedisPort, RedisHost);
 		global.__redis.store = redis.createClient(RedisPort, RedisHost);
+		
+
+		
+
 		
 
 		

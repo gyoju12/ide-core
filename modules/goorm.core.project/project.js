@@ -848,6 +848,33 @@ module.exports = {
 		//2. directory and main file check
 		switch (query.project_type) {
 			case "c_examples":
+				fs.exists(source_path, function(exist) {
+					if (!exist) {
+						evt.emit('check_valid_property', {
+							result: false,
+							code: 1
+						});
+						return false;
+					} else {
+						source_file = source_file + ".c";
+
+						fs.exists(source_file, function(exist) {
+							if (!exist) {
+								evt.emit('check_valid_property', {
+									result: false,
+									code: 2
+								});
+								return false;
+							} else {
+								evt.emit('check_valid_property', {
+									result: true
+								});
+								return true;
+							}
+						});
+					}
+				});
+				break;
 			case "cpp":
 				fs.exists(source_path, function(exist) {
 					if (!exist) {
@@ -857,7 +884,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file = (query.project_type == "cpp") ? source_file + ".cpp" : source_file + ".c";
+						source_file = (query.detail_type == "cpp") ? source_file + ".cpp" : source_file + ".c";
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {

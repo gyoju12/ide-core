@@ -785,6 +785,7 @@ goorm.core.edit.prototype = {
             this.editor.setOption("tabSize", this.indent_unit);
         }
         if (this.indent_with_tabs) {
+            if (this.indent_with_tabs === "false") this.indent_with_tabs = false;
             this.editor.setOption("indentWithTabs", this.indent_with_tabs);
         }
 

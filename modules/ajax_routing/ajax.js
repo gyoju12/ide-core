@@ -390,7 +390,7 @@ module.exports = {
 								}
 							}
 
-							exec('cp -r ' + template + '/* ' + workspace, function(__err) {
+							exec('cp -rf ' + template + '/* ' + workspace, function(__err) {
 								if (__err) {
 									console.log("do_create error!:", __err);
 								}
@@ -407,6 +407,8 @@ module.exports = {
 										if (err) {
 											console.log(err);
 										}
+										
+
 										
 
 										
