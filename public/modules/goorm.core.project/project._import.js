@@ -288,7 +288,9 @@ goorm.core.project._import = {
 
 						// do it after list is set. Jeong-Min Im.
 						$(core).one('change_done', function() {
-							where.find('.select_import_project_detail_type').val(detailed_type);
+							if (where.find('.select_import_project_detail_type [value="' + detailed_type + '"]').length > 0) { // jeongmin: only if this detailedtype exists
+								where.find('.select_import_project_detail_type').val(detailed_type);
+							}
 						});
 
 						where.find('.select_import_project_type').val(data.result.type);
