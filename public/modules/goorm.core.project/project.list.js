@@ -48,12 +48,12 @@ goorm.core.project.list.prototype = {
 		$(this.location).val("");
 		$(this.list).empty();
 		$(this.information).empty();
-		if(context == "#project_export") {
-			this.add_project_list("export_list",list_callback);	
+		if (context == "#project_export") {
+			this.add_project_list("export_list", list_callback);
 		} else {
-			this.add_project_list("",list_callback);	
+			this.add_project_list("", list_callback);
 		}
-		
+
 		this.add_project_item();
 	},
 
@@ -128,7 +128,7 @@ goorm.core.project.list.prototype = {
 	add_data: function(data) { // for datatable method
 		if (this.table && data && data.length > 0) {
 			for (var i = 0; i < data.length; i++) {
-				if (data[i].is_check) {	// jeongmin: if it is checkbox
+				if (data[i].is_check) { // jeongmin: if it is checkbox
 					data[i].check = '<input type="checkbox" class="project_checkbox" />'
 				}
 
@@ -160,7 +160,7 @@ goorm.core.project.list.prototype = {
 			var $data2 = this.table.find('.project_list_author');
 
 			var author = user.split('_')[0];
-			
+
 			if ($data && $data.length > 0) {
 				$data.each(function(i, e) {
 					var table_value = $(e).html();
@@ -281,11 +281,11 @@ goorm.core.project.list.prototype = {
 			'get_list_type': 'owner_list'
 		};
 		var url = "/project/get_list/";
-		if(type == "export_list") {
+		if (type == "export_list") {
 			postdata = {
 				'get_list_type': type
-			};	
-			url += "export";			
+			};
+			url += "export";
 		} else {
 			url += "owner";
 		}
@@ -294,11 +294,11 @@ goorm.core.project.list.prototype = {
 			if (data && data.length) {
 				$(data).each(function(i) {
 					var icon_str = "";
-					var img_src =  (this.contents.is_user_plugin ? "/"+core.user.id+"/plugins":"")+"/goorm.plugin." + this.contents.type + "/images/" + this.contents.type + ".png";
+					var img_src = (this.contents.is_user_plugin ? "/" + core.user.id + "/plugins" : "") + "/goorm.plugin." + this.contents.type + "/images/" + this.contents.type + ".png";
 					icon_str += "<div id='selector_" + this.contents.name + "' value='" + i + "' class='selector_project media' type='" + this.contents.type + "'>";
-					icon_str += "<a class='pull-left project_list_img' href='#'><img class='media-object project_list_img' alt='" + this.contents.type + "' src="+img_src+"></a>"
+					icon_str += "<a class='pull-left project_list_img' href='#'><img class='media-object project_list_img' alt='" + this.contents.type + "' src=" + img_src + "></a>"
 					icon_str += "<div style='white-space:nowrap; overflow:hidden; text-overflow:ellipsis'>";
-					icon_str += "<h5>" + $(".project_wizard_second_button[project_type=" + this.contents.type + "][detail_type=" + this.contents.detailedtype + "] .caption p").text() + "</h5>"
+					icon_str += "<h5>" + $(".project_wizard_second_button[project_type=" + this.contents.type + "][detail_type=" + this.contents.detailedtype.replace(' ', '_') + "] .caption p").text() + "</h5>" // jeongmin; remove blank in detailedtype
 					icon_str += "<p>" + this.contents.name + "</p>";
 					icon_str += "</div>";
 
@@ -326,7 +326,7 @@ goorm.core.project.list.prototype = {
 					// 	.replace(/\[PROJECT_DESCRIPT\]/, description)
 					// 	.replace(/\[PROJECT_DATE\]/, data[idx].contents.date)
 					var detailed = self.information_script.replace(/\[PROJECT_TYPE\]/, $(".project_wizard_first_button[project_type=" + data[idx].contents.type + "] h4.list-group-item-heading").text())
-						.replace(/\[PROJECT_DETAIL\]/, $(".project_wizard_second_button[project_type=" + data[idx].contents.type + "][detail_type=" + data[idx].contents.detailedtype + "] .caption p").text())
+						.replace(/\[PROJECT_DETAIL\]/, $(".project_wizard_second_button[project_type=" + data[idx].contents.type + "][detail_type=" + data[idx].contents.detailedtype.replace(' ', '_') + "] .caption p").text()) // jeongmin; remove blank in detailedtype
 						.replace(/\[PROJECT_AUTHOR\]/, data[idx].contents.author)
 						.replace(/\[PROJECT_NAME\]/, data[idx].contents.name)
 						.replace(/\[PROJECT_DESCRIPT\]/, description)
@@ -341,8 +341,8 @@ goorm.core.project.list.prototype = {
 					$(self.list).parents('.modal-content').find('button:last').click(); // jeongmin: we should click button of this list's dialog!
 				});
 				var project_list_children = $(self.list).children();
-				
-				if(core.status.current_project_name != ""){
+
+				if (core.status.current_project_name != "") {
 					for (var i = 0; i < project_list_children.length; i++) {
 						if ($(project_list_children[i]).find('p').text() == core.status.current_project_name) {
 							$(project_list_children[i]).prependTo($(self.list));
@@ -350,7 +350,7 @@ goorm.core.project.list.prototype = {
 							break;
 						}
 					}
-				}else{
+				} else {
 					$(project_list_children[0]).click();
 				}
 			} else {
@@ -362,7 +362,7 @@ goorm.core.project.list.prototype = {
 				list_callback();
 			}
 		});
-		
+
 
 		//$.getJSON("project/get_list", postdata, function (data) {
 		core.socket.emit("/project/get_list", postdata);
@@ -425,9 +425,9 @@ goorm.core.project.list.prototype = {
 			}
 			switch (e.which) {
 				case 9: // tab key
-					if(self.list=="#project_delete_list"){
+					if (self.list == "#project_delete_list") {
 						$("#g_dp_btn_cancel").focus();
-					}else if(self.list=="#project_export_list"){
+					} else if (self.list == "#project_export_list") {
 						$("#g_ep_btn_cancel").focus();
 					}
 					break;
@@ -439,16 +439,16 @@ goorm.core.project.list.prototype = {
 					break;
 				case 38: // up key
 					if (project_list.length) {
-						if (target > 0){
+						if (target > 0) {
 							project_list[target - 1].click();
-						} 
+						}
 					}
 					break;
 				case 40: // down key
 					if (project_list.length) {
-						if (target < project_list.length - 1){
+						if (target < project_list.length - 1) {
 							project_list[target + 1].click();
-						} 
+						}
 					}
 					break;
 			}
