@@ -41,7 +41,7 @@ goorm.core.window.tab.prototype = {
 		// this.tabview = tabview;
 		// this.list_menu = list_menu;
 		this.title = options.title || "";
-		this.filename = options.filename;
+		this.filename = options.filename || options.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 		this.filepath = options.filepath;
 
 

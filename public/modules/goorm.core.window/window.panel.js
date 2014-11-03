@@ -990,7 +990,7 @@ goorm.core.window.panel.prototype = {
 					$("a#parent_merge_menu").parent().removeClass("disabled");
 					$("a#parent_refactor_menu").parent().removeClass("disabled");
 
-					
+
 				} else {
 					$('#editor_status').hide();
 
@@ -1017,16 +1017,16 @@ goorm.core.window.panel.prototype = {
 					core.module.layout.outline.clear();
 				}
 
-				if( this.type == 'Editor') { //editor undo/redo fix --heeje
+				if (this.type == 'Editor') { //editor undo/redo fix --heeje
 					var stack = this.editor.collaboration.getStack();
-					if(stack.undo > 0) {
+					if (stack.undo > 0) {
 						$("a[action=do_undo]").parent().removeClass("disabled");
 						$("button[action=do_undo]").removeClass("disabled");
 					} else {
 						$("a[action=do_undo]").parent().addClass("disabled");
 						$("button[action=do_undo]").addClass("disabled");
 					}
-					
+
 					if (stack.redo > 0) {
 						$("a[action=do_redo]").parent().removeClass("disabled");
 						$("button[action=do_redo]").removeClass("disabled");
@@ -1056,7 +1056,7 @@ goorm.core.window.panel.prototype = {
 
 			var project = this.filepath.split("/").shift();
 			// var title = (this.options.title) ? this.options.title : this.title; //annotation - Donguk Kim
-			var title = (this.options.filename); //Panel display name change - Donguk Kim
+			var title = (this.options.filename) ? this.options.filename : this.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 
 			this.panel.dialog("option", "title", title);
 
