@@ -125,25 +125,25 @@ goorm.core.edit.prototype = {
 
         //unbind CodeMirror key & shaping searching area --heeje
         this.editor.setOption("extraKeys", {
-            "Ctrl-G" : function(){
+            "Ctrl-G": function() {
                 if (self.editor.getSelection() !== "") {
                     $("#find_query_inputbox").val(self.editor.getSelection());
                     if (true) return CodeMirror.PASS;
                 }
             },
-            "Cmd-G" : function(){
+            "Cmd-G": function() {
                 if (self.editor.getSelection() !== "") {
                     $("#find_query_inputbox").val(self.editor.getSelection());
                     if (true) return CodeMirror.PASS;
                 }
             },
-            "Ctrl-Shift-G" : function(){
+            "Ctrl-Shift-G": function() {
                 if (self.editor.getSelection() !== "") {
                     $("#find_query_inputbox").val(self.editor.getSelection());
                     if (true) return CodeMirror.PASS;
                 }
             },
-            "Cmd-Shift-G" : function(){
+            "Cmd-Shift-G": function() {
                 if (self.editor.getSelection() !== "") {
                     $("#find_query_inputbox").val(self.editor.getSelection());
                     if (true) return CodeMirror.PASS;
@@ -1078,8 +1078,8 @@ goorm.core.edit.prototype = {
                     $("#goorm_bottom").find(".breadcrumb #editor_saved").show();
 
                     if (option == "close") {
+                        __window.tab.close(); // jeongmin: tab should be closed before window close. Because tab accesses window.
                         __window.close();
-                        __window.tab.close();
                     }
 
                     linter_timer = $.debounce(function() {
