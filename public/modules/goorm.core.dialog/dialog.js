@@ -29,7 +29,7 @@ goorm.core.dialog.prototype = {
 		// modal centering optimized - heeje
 
 
-		$(".modal").on("show.bs.modal", function() {
+		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
 			var $dialog = $(this).find(".modal-dialog");

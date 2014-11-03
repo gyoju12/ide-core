@@ -49,6 +49,15 @@ goorm.core.dialog.confirmation.save.prototype = {
 		this.title_id = this.title.replace('?', "");
 		// this.timestamp = new Date().getTime();
 
+		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var offset_width = (($(window).width() - $dialog.width()) / 2);
+			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
+
 		var goorm_dialog_container = this.panel.find('#confirmation_save_content_container');
 		goorm_dialog_container.empty().append(this.message);
 
