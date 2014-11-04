@@ -357,8 +357,14 @@ goorm.core.project._import = {
 		}
 
 		where.find('.project_import_file').change(function() {
-			__check();
-			__load();
+			if(where.find('.project_import_file').val() != ""){
+				__check();
+				__load();
+			}else{
+				where.find(".input_import_project_name").val("");
+				where.find(".input_import_project_desc").val("");
+				where.find(".project_import_file").val("");
+			}
 		});
 	},
 

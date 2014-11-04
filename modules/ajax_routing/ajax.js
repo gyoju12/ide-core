@@ -87,7 +87,7 @@ module.exports = {
 
 									var id = user_data.id;
 
-									fs_socket.set('id_type', JSON.stringify({
+									fs_socket.set('fs_id', JSON.stringify({
 										'id': id
 									}));
 
@@ -1224,8 +1224,11 @@ module.exports = {
 
 	get_session_id: function(socket_id, callback) {
 		var client = this.io.sockets.socket(socket_id);
+		var url = 'id_type';
 
-		client.get('id_type', function(err, data) {
+		
+
+		client.get(url, function(err, data) {
 			if (data) {
 				try { // jeongmin: try catching
 					data = JSON.parse(data);

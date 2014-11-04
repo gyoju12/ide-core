@@ -63,42 +63,8 @@ goorm.core.file.rename = {
 
 			function do_rename(data) {
 				if (core.module.terminal.terminal) {
-					core.module.terminal.fs_move(postdata.ori_path + "/" + postdata.ori_name, postdata.ori_path + "/" + postdata.dst_name, function on_move(data) {
-						var window_manager = core.module.layout.workspace.window_manager;
-						var window_list = window_manager.window;
-
-						for (var i = window_list.length - 1; i >= 0; i--) {
-							if ((window_list[i].title).indexOf(ori_path + ori_name) > -1) {
-								window_list[i].is_saved = true;
-								window_list[i].tab.is_saved = true;
-
-								var old_path = window_list[i].title;
-
-								var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
-
-								var filename = new_path.split('/').pop();
-								var filepath = new_path.substring(0, new_path.length - filename.length);
-								var filetype = postdata.dst_name.slice(postdata.dst_name.lastIndexOf('.') + 1); // jeongmin: extract dst file name's filetype (filetype can be changed)
-
-								// window_list[i].close();
-								window_manager.close_by_index(i, i); // panel idx, tab idx
-
-								if (data.type == 'file') { // jeongmin: only file can be opened
-									core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
-
-									
-								}
-							}
-						}
-
-						core.module.layout.project_explorer.refresh();
-						self.panel.modal('hide');
-					});
-				} else {
-					core._socket.once("/file/rename", function(data) {
-						var received_data = data;
-
-						if (received_data.err_code === 0) {
+					function do_fs_rename(){
+						core.module.terminal.fs_move(postdata.ori_path + "/" + postdata.ori_name, postdata.ori_path + "/" + postdata.dst_name, function on_move(data) {
 							var window_manager = core.module.layout.workspace.window_manager;
 							var window_list = window_manager.window;
 
@@ -113,7 +79,7 @@ goorm.core.file.rename = {
 
 									var filename = new_path.split('/').pop();
 									var filepath = new_path.substring(0, new_path.length - filename.length);
-									var filetype = window_list[i].filetype;
+									var filetype = postdata.dst_name.slice(postdata.dst_name.lastIndexOf('.') + 1); // jeongmin: extract dst file name's filetype (filetype can be changed)
 
 									// window_list[i].close();
 									window_manager.close_by_index(i, i); // panel idx, tab idx
@@ -127,14 +93,71 @@ goorm.core.file.rename = {
 							}
 
 							core.module.layout.project_explorer.refresh();
-						} else if (received_data.err_code == 20) {
-							alert.show(core.module.localization.msg[received_data.message]);
-						} else {
-							alert.show(received_data.message);
-						}
-					});
-					core._socket.emit("/file/rename", postdata);
-					self.panel.modal('hide');
+							self.panel.modal('hide');
+						});
+					}
+					if (data && data.exist && data.type == 'file') {
+						core.module.terminal.fs_rm(ori_path + "/" + dst_name, function on_delete_file() {
+							do_fs_rename();
+						});
+					}else{
+						do_fs_rename();
+					}
+				} else {
+					function do_file_rename(){
+						core._socket.once("/file/rename", function(data) {
+							var received_data = data;
+
+							if (received_data.err_code === 0) {
+								var window_manager = core.module.layout.workspace.window_manager;
+								var window_list = window_manager.window;
+
+								for (var i = window_list.length - 1; i >= 0; i--) {
+									if ((window_list[i].title).indexOf(ori_path + ori_name) > -1) {
+										window_list[i].is_saved = true;
+										window_list[i].tab.is_saved = true;
+
+										var old_path = window_list[i].title;
+
+										var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
+
+										var filename = new_path.split('/').pop();
+										var filepath = new_path.substring(0, new_path.length - filename.length);
+										var filetype = window_list[i].filetype;
+
+										// window_list[i].close();
+										window_manager.close_by_index(i, i); // panel idx, tab idx
+
+										if (data.type == 'file') { // jeongmin: only file can be opened
+											core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
+
+											
+										}
+									}
+								}
+
+								core.module.layout.project_explorer.refresh();
+							} else if (received_data.err_code == 20) {
+								alert.show(core.module.localization.msg[received_data.message]);
+							} else {
+								alert.show(received_data.message);
+							}
+						});
+						core._socket.emit("/file/rename", postdata);
+						self.panel.modal('hide');
+					}
+					if (data && data.exist && data.type == 'file') {
+						var _postdata = {
+							filename: ori_path + "/" + dst_name
+						};
+						core._socket.once("/file/delete", function(data) {
+							do_file_rename();
+						}, true);
+						core._socket.emit("/file/delete", _postdata);
+					}else{
+						do_file_rename();
+					}
+
 				}
 			}
 

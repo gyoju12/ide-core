@@ -1311,14 +1311,14 @@ goorm.core.window.manager = {
 									if (workspace_height > this.height) {
 										this.move((workspace_height - (this.height + 12)), this.left);
 									} else {
-										// this.move(0, this.left);
+										this.move(0, this.left); //if this make bug, then call to chw
 									}
 								}
 								if (workspace_width < (this.left + this.width)) {
 									if (workspace_width > this.width) {
 										this.move(this.top, (workspace_width - (this.width + 12)));
 									} else {
-										// this.move(this.top, 0);
+										this.move(this.top, 0); //if this make bug, then call to chw
 									}
 								}
 							}

@@ -35,6 +35,10 @@ if (/darwin/.test(os.platform())) {
 
 var spawn = require('child_process').spawn;
 
+
+
+
+
 module.exports = {
 	term: {},
 	io: null,

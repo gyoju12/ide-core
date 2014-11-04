@@ -182,6 +182,11 @@ module.exports = {
 	},
 
 	do_import_check: function(query, file, evt) {
+
+		if(file == null){
+			return false;
+		}
+
 		var data = {};
 		data.err_code = 0;
 		data.type = 'check';
