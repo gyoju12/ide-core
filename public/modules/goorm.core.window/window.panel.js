@@ -220,7 +220,7 @@ goorm.core.window.panel.prototype = {
 			var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
 
 			if (editor == "Editor") {
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
+				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add filepath
 				core.module.localization.apply({
 					'placeholder_editor': {
 						'value': core.module.localization.msg.placeholder_editor

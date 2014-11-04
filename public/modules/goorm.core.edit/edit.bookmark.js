@@ -25,10 +25,7 @@ goorm.core.edit.bookmark = {
 		$(core).on("bookmark_hover", function() {
 			self.remove(); //first, remove all bookmarks from main menu
 
-			if (self.get_active_editor()) {  //only when current active window and its editor is valid
-				self.active_editor = self.get_active_editor(); //current active window's editor
-				self.target = self.active_editor.target; //active window's id
-
+			if (self.get_active_editor()) { //only when current active window and its editor is valid
 				if (self.list[self.target]) { //only current bookmark list is not undefined
 					$("#child_bookmark_menu li[class=disabled]").remove(); //remove default bookmark list
 
@@ -58,7 +55,7 @@ goorm.core.edit.bookmark = {
 			var _window = self.window_manager.get_window(file.filepath, file.filename);
 			if (_window && _window.editor) {
 				self.active_editor = self.window_manager.get_window(file.filepath, file.filename).editor; //current active window's editor
-				self.target = self.active_editor.target; //active window's id
+				self.target = self.active_editor.title; //active window's filepath
 
 				if (self.list[self.target]) //only current bookmark list is not undefined
 					self.active_editor.set_bookmark(self.list[self.target]); //send loaded bookmark list and set those
@@ -99,7 +96,7 @@ goorm.core.edit.bookmark = {
 		});
 	},
 
-	get_active_editor: function () {
+	get_active_editor: function() {
 		var w = null;
 
 		if (this.window_manager.active_window != -1 && this.window_manager.window[this.window_manager.active_window] && this.window_manager.window[this.window_manager.active_window].editor) {
@@ -107,7 +104,7 @@ goorm.core.edit.bookmark = {
 
 			this.active_editor = w; //get current active window's editor
 			this.editor = w.editor;
-			this.target = w.target; //get active window's id
+			this.target = w.title; //get active window's path
 		}
 
 		return w;
@@ -219,7 +216,7 @@ goorm.core.edit.bookmark = {
 	clear: function() {
 		if (this.get_active_editor()) {
 			if (this.list[this.target]) { //only current bookmark list is not undefined
-				this.active_editor.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
+				this.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
 
 				delete(this.list[this.target]); //delete this window from the list
 			}
@@ -280,7 +277,7 @@ goorm.core.edit.bookmark = {
 
 		////// making //////
 		if (this.get_active_editor()) {
-			var cm = this.active_editor.editor;
+			var cm = this.editor;
 			var target = this.target;
 
 			if (this.list[target]) {
@@ -332,7 +329,7 @@ goorm.core.edit.bookmark = {
 						add_bookmark_to_outline(target_line);
 
 						////// make it prettier //////
-						var font = $(target + " .CodeMirror").css("font-family");
+						var font = $("[path='" + target + "'] .CodeMirror").css("font-family");
 						$(".bookmark_text").css("font-family", font);
 					} else { // delete bookmark
 						$('#delete_bookmark_' + target_line).off('click'); // unbind delete bookmark button handler
@@ -353,7 +350,7 @@ goorm.core.edit.bookmark = {
 					}
 
 					////// make it prettier //////
-					var font = $(target + " .CodeMirror").css("font-family");
+					var font = $("[path='" + target + "'] .CodeMirror").css("font-family");
 					$(".bookmark_text").css("font-family", font);
 				}
 			} else if (!is_there) { //if there is no bookmarks and no sign of it
