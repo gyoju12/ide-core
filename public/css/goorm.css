@@ -9527,7 +9527,7 @@ a.bg-danger:hover {
 	top: 1px !important;
 }
 
-#svn_checkout_progress {
+#scm_checkout_progress {
 	height: 300px;
 	overflow: auto;
 	width: inherit;

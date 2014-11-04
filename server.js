@@ -427,7 +427,7 @@ goorm.routing = function() {
 
 	//for help
 	goorm.get('/help/get_readme_markdown', routes.help.get_readme_markdown);
-	goorm.get('/help/get_private_url_markdown', routes.help.get_private_url_markdown);
+	
 	goorm.get('/help/send_to_bug_report', routes.help.send_to_bug_report);
 
 		
