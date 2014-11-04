@@ -9,6 +9,7 @@
  **/
 
 var fs = require("fs");
+var fse = require("fs-extra");
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
@@ -390,7 +391,7 @@ module.exports = {
 								}
 							}
 
-							exec('cp -rf ' + template + '/* ' + workspace, function(__err) {
+							fse.copy(template, workspace, function (__err) {
 								if (__err) {
 									console.log("do_create error!:", __err);
 								}
@@ -456,7 +457,7 @@ module.exports = {
 						fs.mkdirSync(target_path);
 					}
 
-					exec('cp -r ' + workspace + '/* ' + target_path, function(__err) {
+					fse.copy(workspace, target_path, function (__err) {
 						if (__err) {
 							console.log('do_web_run Err:', __err);
 							socket.to().emit('/plugin/do_web_run', {

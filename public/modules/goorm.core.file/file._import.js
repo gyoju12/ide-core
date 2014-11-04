@@ -94,7 +94,6 @@ goorm.core.file._import = {
 											$('#myForm').submit();
 											self.panel.modal('hide');
 											$('#myForm').attr('action', 'file/import');
-
 										},
 										no: function() {
 											self.dialog_explorer.init(true, true);
@@ -163,8 +162,14 @@ goorm.core.file._import = {
 		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
 				case 13: // 'enter' key
-					$("#g_if_btn_ok").click();
-					break;
+					if (self.input.val() === '') {
+						self.input.click();
+						$('.modal-body').click();
+						break;
+					} else {
+						$("#g_if_btn_ok").click();
+						break;
+					}
 			}
 		});
 

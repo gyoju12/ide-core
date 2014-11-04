@@ -428,6 +428,9 @@
 			}
 		}
 	},
+	"decompress_file": {
+		"value": "Unzip / Untar "
+	},
 	"open_terminal_here": {
 		"value": "Open Terminal Here"
 	},

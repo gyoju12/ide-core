@@ -1006,6 +1006,12 @@ exports.help.get_readme_markdown = function(req, res) {
 	res.json(data);
 };
 
+exports.help.get_private_url_markdown = function(req, res) {
+	var data = g_help.get_private_url_markdown(req.query.language, req.query.filename, req.query.filepath);
+
+	res.json(data);
+};
+
 exports.help.send_to_bug_report = function(req, res) {
 	var evt = new EventEmitter();
 

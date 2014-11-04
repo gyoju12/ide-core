@@ -9585,7 +9585,11 @@ a.bg-danger:hover {
 
 .CodeMirror-sizer {
 	padding-right: 12px;	/* jeongmin. for showing full code width */
-	border-right: 0;
+}
+
+.CodeMirror-merge .CodeMirror-sizer {
+	padding-right: 12px;	/* jeongmin. for showing full code width */
+	border-right: 18px solid transparent;
 }
 
 .disconnected {

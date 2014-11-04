@@ -300,9 +300,10 @@ goorm.core.preference = {
 				$(targets[index]).find("input.form-control").each(function() {
 					var name = $(this).attr("name");
 					var type = $(this).attr("type");
-
+					
 					if (key[name] !== "undefined") {
 						if (type == "checkbox") {
+							
 							if (key[name] == "true" || key[name] === true) {
 								$(this).iCheck("check"); //jeongmin: change to iCheck
 							} else {

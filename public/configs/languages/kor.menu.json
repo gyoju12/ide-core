@@ -428,6 +428,9 @@
 			}
 		}
 	},
+	"decompress_file": {
+		"value": "ZIP/TAR 압축 풀기"
+	},
 	"open_terminal_here": {
 		"value": "해당 위치에서 터미널 열기"
 	},
