@@ -46,8 +46,6 @@ var check_valid_path = function(str) {
 
 
 
-
-
 module.exports = {
 	start: function(io) {
 		var self = this;
@@ -391,10 +389,22 @@ module.exports = {
 								}
 							}
 
-							fse.copy(template, workspace, function (__err) {
-								if (__err) {
-									console.log("do_create error!:", __err);
-								}
+							// jeongmin: show copy progress
+							var copy_progress = spawn('rsync', ['-ah', '--progress', template + '/', workspace]);
+
+							copy_progress.stderr.on('data', function(data) {
+								var buf = new Buffer(data);
+
+								console.log('copy error in do_create:', buf.toString());
+							});
+
+							copy_progress.stdout.on('data', function(data) {
+								var buf = new Buffer(data);
+
+								socket.to().emit('/plugin/create/progress', buf.toString());
+							});
+
+							copy_progress.on('close', function(code, signal) {
 								fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
 									var contents = JSON.parse(file_data);
 
@@ -406,7 +416,7 @@ module.exports = {
 										mode: 0700
 									}, function(err) {
 										if (err) {
-											console.log(err);
+											console.log('goorm.manifest write err in do_create:', err);
 										}
 										
 
@@ -423,6 +433,39 @@ module.exports = {
 									});
 								});
 							});
+
+							// fse.copy(template, workspace, function (__err) {
+							// 	if (__err) {
+							// 		console.log("do_create error!:", __err);
+							// 	}
+							// 	fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+							// 		var contents = JSON.parse(file_data);
+
+							// 		contents.plugins = project_data.plugins;
+							// 		contents.detailedtype = project_data.project_detailed_type;
+
+							// 		fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+							// 			encoding: 'utf-8',
+							// 			mode: 0700
+							// 		}, function(err) {
+							// 			if (err) {
+							// 				console.log(err);
+							// 			}
+							// 			
+
+							// 			
+
+							// 			
+
+							// 			
+							// 			socket.to().emit('/plugin/create', {
+							// 				code: 200,
+							// 				message: "success"
+							// 			});
+							// 			
+							// 		});
+							// 	});
+							// });
 						};
 
 						
@@ -440,40 +483,29 @@ module.exports = {
 				var copy = function() {
 					var workspace = global.__workspace + "/" + msg.project_path;
 
-					var target_path = __temp_dir + "plugins/web/" + msg.project_path;
+					var target_path = msg.deploy_path + '/' + msg.project_path || __temp_dir + "plugins/web/" + msg.project_path;
 
 					var run_path = target_path.split("temp_files").pop();
 
-					if (!fs.existsSync(__temp_dir)) {
-						fs.mkdirSync(__temp_dir);
-					}
-					if (!fs.existsSync(__temp_dir + "/plugins")) {
-						fs.mkdirSync(__temp_dir + "/plugins");
-					}
-					if (!fs.existsSync(__temp_dir + "/plugins/web")) {
-						fs.mkdirSync(__temp_dir + "/plugins/web");
-					}
-					if (!fs.existsSync(target_path)) {
-						fs.mkdirSync(target_path);
-					}
+					fse.ensureDir(target_path, function(__err1) {
+						fse.copy(workspace, target_path, function(__err2) {
+							if (__err1 || __err2) {
+								console.log('do_web_run Err:', __err1, __err2);
+								socket.to().emit('/plugin/do_web_run', {
+									code: 500,
+									message: "Copy Error",
+								});
+							} else {
 
-					fse.copy(workspace, target_path, function (__err) {
-						if (__err) {
-							console.log('do_web_run Err:', __err);
-							socket.to().emit('/plugin/do_web_run', {
-								code: 500,
-								message: "Copy Error",
-							});
-						} else {
+								
 
-							
-
-							socket.to().emit('/plugin/do_web_run', {
-								code: 200,
-								message: "success",
-								run_path: run_path
-							});
-						}
+								socket.to().emit('/plugin/do_web_run', {
+									code: 200,
+									message: "success",
+									run_path: run_path
+								});
+							}
+						});
 					});
 				};
 				
@@ -1176,11 +1208,12 @@ module.exports = {
 
 			
 			
+			/*
 			
 			
 
 			
-
+			*/
 			socket.on('/upload/dir_skeleton', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
@@ -1212,6 +1245,8 @@ module.exports = {
 					}
 				});
 			});
+
+			
 
 			///////
 			//API end

@@ -260,8 +260,7 @@ goorm.core.project = {
 					}
 				});
 			}
-		}
-		else {
+		} else {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type] !== undefined) {
 				core.status.current_project_absolute_path = core.preference.workspace_path + core.status.current_project_path + "/";
 					
@@ -369,11 +368,11 @@ goorm.core.project = {
 		});
 
 		var run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main;
-		
-		if(core.status.current_project_type == "dart") {
+
+		if (core.status.current_project_type == "dart") {
 			run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_main + '.dart.js';
 		}
-		
+
 		console.log(run_file_path, core.status.current_project_path);
 		core._socket.emit('/project/check_latest_build', {
 			"project_path": core.status.current_project_path,
@@ -407,11 +406,27 @@ goorm.core.project = {
 	},
 
 	create: function(options, callback) {
+		// jeongmin: make checkout progress space
+		var loading_bar = $('#dlg_loading_bar');
+		var scm_checkout_progress = $('#scm_checkout_progress');
+
+		// show checkout progress. Jeong-Min Im.
+		var progress_callback = function(data) {
+			scm_checkout_progress.append('<p>' + data + '</p>');
+			scm_checkout_progress.scrollTop(scm_checkout_progress[0].scrollHeight); // scroll to bottom
+		};
+
+		scm_checkout_progress.empty(); // initialize
+		scm_checkout_progress.show();
+
+		loading_bar.find('.progress').hide();
+		loading_bar.find('.modal-dialog').css('width', 400);
 
 		core.module.loading_bar.start({
 			str: core.module.localization.msg.import_sync_to_file_system
 		});
 
+		core._socket.on('/plugin/create/progress', progress_callback);
 		core._socket.once('/plugin/create', function(result) {
 			
 
@@ -419,6 +434,7 @@ goorm.core.project = {
 			callback(result);
 			
 		});
+
 		core._socket.emit('/plugin/create', options);
 	},
 
