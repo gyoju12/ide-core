@@ -30,7 +30,7 @@ goorm.core.menu.action = {
 			$("a[href='#new_project_template']").click();
 
 			core.dialog.new_project.show();
-			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+			//$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
 		
@@ -41,7 +41,7 @@ goorm.core.menu.action = {
 			core.dialog.new_project.show({
 				next_button: false
 			});
-			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+			//$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
 

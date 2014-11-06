@@ -26,6 +26,18 @@ goorm.core.dialog.wizard.prototype = {
 
 		var goorm_dialog_container = $("#" + self.id);
 
+		goorm_dialog_container.draggable({});
+		goorm_dialog_container.css("overflow", "hidden");
+
+		goorm_dialog_container.on("shown.bs.modal", this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._new.js)
+		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var offset_width = (($(window).width() - $dialog.width()) / 2);
+			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
 
 		var handle_next = function() {
 			if (!self.next()) {
@@ -64,16 +76,7 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		};
 
-		goorm_dialog_container.on("shown.bs.modal", this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._new.js)
-
-		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
-
-			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
-			var offset_height = (($(window).height() - $dialog.height()) / 2);
-			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
-		});
+		
 
 		// move to Center 	//jeongmin: done at dialog.js
 		//

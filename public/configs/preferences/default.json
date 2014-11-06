@@ -5,7 +5,6 @@
 	"preference.editor.indent_unit": 4,
 	"preference.editor.indent_with_tabs": true,
 	"preference.editor.show_line_numbers": true,
-	"preference.editor.undo_depth": 40,
 	"preference.editor.highlight_current_cursor_line": true,
 	"preference.editor.auto_close_brackets": true,
 	"preference.editor.theme": "default",

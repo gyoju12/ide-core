@@ -49,16 +49,11 @@ goorm.core.file._export = {
 					//var _iframe_download=$('<iframe id="download_frame"/>').attr('src',"download/?file=" + data.path).hide().appendTo
 					$("#download_frame").css('display', 'none');
 
-					//useonly(mode=dev,edu-on-promise,book,edu,product,oss)
+					
 					$("#download_frame").attr('src', "download/?file=" + data.path);
-					//useonlyend
+					
 
-					//useonly(mode=product-l2-ide)
-					var fs_info = core.module.router.get_fs_info();
-					var url = fs_info.protocol + '://' + fs_info.host + ':' + fs_info.port;
-
-					$("#download_frame").attr('src', url+"/download/?file=" + data.path);
-					//useonlyend
+					
 				} else {
 					switch (data.err_code) {
 						case 10:

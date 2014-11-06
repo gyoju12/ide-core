@@ -22,25 +22,41 @@ module.exports = {
 		// var workspace = global.__workspace + "/" + req.data.project_author + "_" + req.data.project_name;
 		var workspace = global.__workspace + "/" + req.data.project_dir;
 
-				
+		
+
+		
 
 		// Delete All files in new directory And Create phonegap
 		fs.readFile(workspace+"/goorm.manifest", 'utf-8', function (err, file_data) {
-			var contents = JSON.parse(file_data);
+			var contents = JSON.parse(file_data || "{}");
 			contents.plugins = req.data.plugins;
 			contents.building_after_save_option = true;
-
-			exec("rm -rf " + workspace + "/*" + " | phonegap create " + workspace + "/", function (stderr, stdout) {
-				fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), 'utf-8', function (err) {
-					
-					if (err === null) {
-						evt.emit("do_new_complete", {
-							code : 200,
-							message : "success"
-						});
-					}
-				});
+			exec("phonegap create " + workspace + "/temp", function (_err, _stdout, _stderr) {
+				if (!err) {
+					exec("mv " + workspace + "/temp/* " + workspace + "; rm -rf " + workspace + "/temp", function (__err, __stdout, __stderr) {
+						
+						if (__err) {
+							evt.emit("do_new_complete", {
+								code: 200,
+								message: "success"
+							});
+						}
+					});
+				}
 			});
+
+
+			// exec("rm -rf " + workspace + "/*; phonegap create " + workspace + "/", function (err, stdout, stderr) {
+			// 	fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), 'utf-8', function (err) {
+			// 		
+			// 		if (err === null) {
+			// 			evt.emit("do_new_complete", {
+			// 				code : 200,
+			// 				message : "success"
+			// 			});
+			// 		}
+			// 	});
+			// });
 		});
 	}
 };

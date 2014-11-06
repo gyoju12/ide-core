@@ -38,6 +38,7 @@ goorm.core.window.panel = function() {
 	this.undo_depth = 0; // to remember undo. remove '*' sign when save and modify.
 	this.done = null;
 	this.options = null;
+	this.id = null;
 
 	this.history_edit = {
 		undo: 0,
@@ -218,130 +219,136 @@ goorm.core.window.panel.prototype = {
 			}
 
 			var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
+		var timestamp = new Date().getTime();
+		timestamp = options.id;
+		
+		if (editor == "Editor") {
+			this.panel = $("<div id='g_window_" + timestamp + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
+			core.module.localization.apply({
+				'placeholder_editor': {
+					'value': core.module.localization.msg.placeholder_editor
+				}
+			}); // jeongmin: placeholder localization
+		}
+		
+		
+		else if (this.filename == "debug" && editor == "Terminal")
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+		
+		else if (editor == "WebView")
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+		else if (editor == "Custom")
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
 
-			if (editor == "Editor") {
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add filepath
-				core.module.localization.apply({
-					'placeholder_editor': {
-						'value': core.module.localization.msg.placeholder_editor
-					}
-				}); // jeongmin: placeholder localization
-			}
-			
-			
-			else if (this.filename == "debug" && editor == "Terminal")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
-			
-			else if (editor == "WebView")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
-			else if (editor == "Custom")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+		this.workspace.append(this.panel);
+		var on_panel_create = function() {
+			var mode;
 
-			this.workspace.append(this.panel);
-			var on_panel_create = function() {
-				var mode;
+			if (self.storage == "goormIDE_Storage") {
+				if (editor == "Editor") {
 
-				if (self.storage == "goormIDE_Storage") {
-					if (editor == "Editor") {
+					self.type = "Editor";
 
-						self.type = "Editor";
+					
+					
+					mode = core.filetypes[self.inArray(self.filetype)].mode;
+					
+					self.panel.dialog("option", "title", title);
 
-						
-						
+					self.editor = new goorm.core.edit();
+					//bootstrap start
+					self.editor.init("#g_window_" + timestamp, self.title, self.filepath, options);
+					//bootstrap end
+					//
+					self.editor.load(self.filepath, self.filename, self.filetype, options);
+					self.editor.set_mode(mode);
+
+				}
+				
+				
+				else if (this.filename == "debug" && editor == "Terminal") {
+					self.type = "Terminal";
+					// self.title = "debug";
+
+					self.terminal = new goorm.core.terminal();
+
+					self.terminal.init($("#g_window_" + morphed_title), self.filename, true);
+
+					self.panel.parent().height(parseInt(self.panel.parent().height()));
+
+					// $("#g_window_" + morphed_title).css("overflow", "auto");
+
+					// self.panel.setFooter("");
+				}
+				
+				else if (editor == "WebView") {
+					self.type = "WebView";
+					var title = (options.title) ? options.title : self.title;
+
+					
+
+					var iframe = $("<iframe src='" + self.filepath + "/" + self.filename + "' style='width:100%;height:100%;border:0;background:white'>");
+					$(self.panel).css("overflow", "hidden").html(iframe);
+					// .end().find(".ui-dialog-title").text("[Web view] "+title);
+					self.panel.dialog("option", "title", "[Web view] " + title);
+
+					// iframe cannot bind onclick event
+					iframe.on("load", function() {
+						$(this).contents().find("body").on("click", function() {
+							self.panel.mousedown();
+						}).on("keydown keypress keyup", function(e) {
+							var evt = $.Event(e.type);
+							evt.which = e.which;
+							evt.keyCode = e.keyCode;
+							evt.ctrlKey = e.ctrlKey;
+							evt.metaKey = e.metaKey;
+							evt.altKey = e.altKey;
+							evt.shiftKey = e.shiftKey;
+
+							$(document).trigger(evt);
+
+							////// jeongmin: prevent occurring multiple events //////
+							var shortcut_manager = core.module.shortcut_manager;
+							var key_string = shortcut_manager.make_shortcut_input(e); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
+							if (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1) { // there is shortcut! So, manually triggered event will do something
+								e.stopPropagation(); // and we don't have to propagate original key event
+								e.preventDefault();
+							}
+						}).on("mousemove mouseup", function(e) { // not resized properly when heading to inside by drag. we have to send correct pageX, Y positions to outside.																
+							e.pageX += self.panel.parent().offset().left;
+							e.pageY += self.panel.parent().offset().top;
+
+							$(document).trigger(e);
+						});
+					});
+
+					// self.panel.setFooter("Web view is running");
+				} else if (editor == "Custom") {
+					//for Custom Window
+					self.plug();
+
+				} else if (self.inArray(self.filetype) > -1) {
+					self.type = core.filetypes[self.inArray(self.filetype)].editor;
+
+					if (self.type == "Editor") {
 						mode = core.filetypes[self.inArray(self.filetype)].mode;
-						
-						self.panel.dialog("option", "title", title);
-
-						self.editor = new goorm.core.edit();
-						//bootstrap start
-						self.editor.init("#g_window_" + morphed_title, self.title, self.filepath, options);
-						//bootstrap end
-						//
+						self.editor = new goorm.core.edit(this);
+						self.editor.init(self.panel.find(".window_container"), null, self.filepath);
 						self.editor.load(self.filepath, self.filename, self.filetype, options);
 						self.editor.set_mode(mode);
 
-
 					}
-					
-					
-					else if (this.filename == "debug" && editor == "Terminal") {
-						self.type = "Terminal";
-						// self.title = "debug";
+				} else { // default txt
+					mode = 'text/javascript';
 
-						self.terminal = new goorm.core.terminal();
+					self.editor = new goorm.core.edit(this);
+						// self.editor.init(self.panel.find(".window_container"), null, self.filepath);
+						// self.editor.init("#g_window_"+timestamp, null, self.filepath);
+						// self.editor.load(self.filepath, self.filename, self.filetype, options);
 
-						self.terminal.init($("#g_window_" + morphed_title), self.filename, true);
-
-						self.panel.parent().height(parseInt(self.panel.parent().height()));
-
-						// $("#g_window_" + morphed_title).css("overflow", "auto");
-
-						// self.panel.setFooter("");
-					}
-					
-					else if (editor == "WebView") {
-						self.type = "WebView";
-						var title = (options.title) ? options.title : self.title;
-
-						
-
-						var iframe = $("<iframe src='" + self.filepath + "/" + self.filename + "' style='width:100%;height:100%;border:0;background:white'>");
-						$(self.panel).css("overflow", "hidden").html(iframe);
-						// .end().find(".ui-dialog-title").text("[Web view] "+title);
-						self.panel.dialog("option", "title", "[Web view] " + title);
-
-						// iframe cannot bind onclick event
-						iframe.on("load", function() {
-							$(this).contents().find("body").on("click", function() {
-								self.panel.mousedown();
-							}).on("keydown keypress keyup", function(e) {
-								var evt = $.Event(e.type);
-								evt.which = e.which;
-								evt.keyCode = e.keyCode;
-								evt.ctrlKey = e.ctrlKey;
-								evt.metaKey = e.metaKey;
-								evt.altKey = e.altKey;
-								evt.shiftKey = e.shiftKey;
-
-								$(document).trigger(evt);
-
-								////// jeongmin: prevent occurring multiple events //////
-								var shortcut_manager = core.module.shortcut_manager;
-								var key_string = shortcut_manager.make_shortcut_input(e); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
-								if (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1) { // there is shortcut! So, manually triggered event will do something
-									e.stopPropagation(); // and we don't have to propagate original key event
-									e.preventDefault();
-								}
-							}).on("mousemove mouseup", function(e) { // not resized properly when heading to inside by drag. we have to send correct pageX, Y positions to outside.																
-								e.pageX += self.panel.parent().offset().left;
-								e.pageY += self.panel.parent().offset().top;
-
-								$(document).trigger(e);
-							});
-						});
-
-						// self.panel.setFooter("Web view is running");
-					} else if (editor == "Custom") {
-						//for Custom Window
-						self.plug();
-
-					} else if (self.inArray(self.filetype) > -1) {
-						self.type = core.filetypes[self.inArray(self.filetype)].editor;
-
-						if (self.type == "Editor") {
-							mode = core.filetypes[self.inArray(self.filetype)].mode;
-							self.editor = new goorm.core.edit(this);
-							self.editor.init(self.panel.find(".window_container"), null, self.filepath);
-							self.editor.load(self.filepath, self.filename, self.filetype, options);
-							self.editor.set_mode(mode);
-
-						}
-					} else { // default txt
-						mode = 'text/javascript';
-
-						self.editor = new goorm.core.edit(this);
 						self.editor.init(self.panel.find(".window_container"));
 						self.editor.load(self.filepath, self.filename, 'txt', options);
+
 						self.editor.set_mode(mode);
 					}
 				}
@@ -711,6 +718,7 @@ goorm.core.window.panel.prototype = {
 					button_undo.addClass('disabled');
 				}
 
+				//console.log(this.undo_depth, this.history_edit.undo);
 				if (this.undo_depth != null && this.history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
 					if (this.history_edit.redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
 						this.set_saved();

@@ -14,7 +14,7 @@ goorm.plugin.python = {
 		Properties
 	 */
 	name: "python",
-	compiler: [ "python2", "python3" ],
+	compiler: ["python2", "python3"],
 	// mainmenu: null,
 	debug_con: null,
 	// current_debug_project: null,
@@ -24,7 +24,7 @@ goorm.plugin.python = {
 	/*
 		Methods
 	 */
-	init: function () {
+	init: function() {
 		var self = this;
 
 		core.module.project.add({
@@ -32,40 +32,40 @@ goorm.plugin.python = {
 			'img': '/goorm.plugin.python/images/python.png',
 			'items': [{
 				'key': 'python_project',
-				'detail_type' : 'default',
+				'detail_type': 'default',
 				'img': '/goorm.plugin.python/images/python_console.png'
 			}, {
 				'key': 'python_example_xml_parser_project',
-				'detail_type' : 'xml-parser',
+				'detail_type': 'xml-parser',
 				'img': '/goorm.plugin.python/images/python_console.png'
 			}, {
 				'key': 'python_example_hangman_project',
-				'detail_type' : 'hangman',
+				'detail_type': 'hangman',
 				'img': '/goorm.plugin.python/images/python_console.png'
 			}, {
 				'key': 'python_example_web_crawler_project',
-				'detail_type' : 'web-crawler',
+				'detail_type': 'web-crawler',
 				'img': '/goorm.plugin.python/images/python_console.png'
 			}]
 		});
 
 		// this.add_project_item();
-		
+
 		// this.mainmenu = core.module.layout.mainmenu;
-		
+
 		// this.cErrorFilter = /[A-Za-z]* error: [A-Za-z0-9 '",:_\\\/\.\+\-\*\#\@]*/;
 		// this.cWarningFilter = /[A-Za-z]* warning: [A-Za-z0-9 '",:_\\\/\.\+\-\*\#\@]*/;
 		// this.lineFilter = /:[0-9]*:/;
-		
+
 		// this.add_mainmenu();
-		
+
 		// this.add_menu_action();
-		
+
 		this.preference = core.preference.plugins['goorm.plugin.python'];
 		self.compiler_list_up($("#preference_python_tab").find("select[name='plugin.python.compiler_type']"));
 		self.compiler_list_up($("#project_python_tab").find("select[name='plugin.python.compiler_type']"));
 	},
-	
+
 	/*
 	add_project_item: function () {
 		// Project New 왼쪽에 Project Type 버튼 추가
@@ -101,49 +101,51 @@ goorm.plugin.python = {
 		});
 	},
 	*/
-	
-	new_project: function(data) {
 
+	new_project: function(data) {
 		var send_data = {
-				"plugin" : "goorm.plugin.python",
-				"data" : data
+			"plugin": "goorm.plugin.python",
+			"data": data
 		};
-		
-		core.module.project.create( send_data, function(result){
+
+		core.module.project.create(send_data, function(result) {
 			// 가끔씩 제대로 refresh가 안됨.
 			// setTimeout(function(){
-				var property = core.property.plugins['goorm.plugin.python'];
+			var property = core.property.plugins['goorm.plugin.python'];
 
-				var filepath = core.status.current_project_path + '/' + property['plugin.python.source_path'];
-				var filename = property['plugin.python.main']+'.py';
-				var filetype = 'py';
+			var filepath = core.status.current_project_path + '/' + property['plugin.python.source_path'];
+			var filename = property['plugin.python.main'] + '.py';
+			var filetype = 'py';
 
-				core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
+			core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
 
-				core.module.layout.project_explorer.refresh();
-				// $(core).trigger("on_project_open");
+			core.module.layout.project_explorer.refresh();
+			// $(core).trigger("on_project_open");
 			// }, 500);
-		}); 
+		});
 	},
-	
+
 	run: function(options, callback) {
-		var self=this;
+		var self = this;
 		var property = options.property;
-		
+
 		var classpath = property['plugin.python.source_path'];
-		var classname = property['plugin.python.main']+'.py';
+		var classname = property['plugin.python.main'] + '.py';
 
 		var workspace = core.preference.workspace_path;
-		var absolute_path=workspace+core.status.current_project_path+"/"+classpath+classname;
+		var absolute_path = workspace + core.status.current_project_path + "/" + classpath + classname;
 
-		
-		core.module.project.run({'cmd': "clear;python "+absolute_path}, function(){
-			core.module.layout.select('terminal'); // jeongmin: show terminal tab
+		core.module.layout.select('terminal'); // jeongmin: show terminal tab before process run
+
+		core.module.project.run({
+			'cmd': "clear;python " + absolute_path,
+			'process_name': absolute_path
+		}, function() { // jeongmin: this callback will be run after all process is done.
 			callback();
 		});
 	},
 
-	debug: function (options) {
+	debug: function(options) {
 		var self = this;
 		var path = options.path;
 		var property = options.property;
@@ -159,45 +161,44 @@ goorm.plugin.python = {
 			'prompt': /\(Pdb\) $/,
 			'endstr': /The program finished/
 		});
-		
+
 		// debug탭 초기화
 		// table_variable.fnClearTable();
 		debug_module.clear_table();
-		
+
 		this.breakpoints = [];
-		
+
 		// debug start!
 		var send_data = {
-				"plugin" : "goorm.plugin.python",
-				"path" : path,
-				"mode" : "init"
+			"plugin": "goorm.plugin.python",
+			"path": path,
+			"mode": "init"
 		};
-		
-		if(debug_module.debug_terminal.index != -1) {
+
+		if (debug_module.debug_terminal.index != -1) {
 			self.debug_cmd({
 				property: property,
 				cmd: send_data
 			});
-		}
-		else {
-			$(debug_module.debug_terminal).one("terminal_ready."+debug_module.debug_terminal.terminal_name, function(){
+		} else {
+			$(debug_module.debug_terminal).one("terminal_ready." + debug_module.debug_terminal.terminal_name, function() {
 				self.debug_cmd({
 					property: property,
 					cmd: send_data
 				});
 			});
 		}
-		
+
 		$(debug_module).off("value_changed");
-		$(debug_module).on("value_changed",function(e, data){
-			debug_module.debug_terminal.send_command(data.variable+"="+data.value+"\r", debug_module.debug_prompt);
+		$(debug_module).on("value_changed", function(e, data) {
+			debug_module.debug_terminal.send_command(data.variable + "=" + data.value + "\r", debug_module.debug_prompt);
 		});
-		
+
 		$(debug_module).off("debug_end");
-		$(debug_module).on("debug_end",function(){
+		$(debug_module).on("debug_end", function() {
 			// table_variable.fnClearTable();
 			debug_module.clear_table();
-			
+
 			// clear highlight lines
 			var windows = core.module.layout.workspace.window_manager.window;
 			for (var i in windows) {
@@ -206,8 +207,8 @@ goorm.plugin.python = {
 					window.editor && window.editor.clear_highlight();
 				}
 			}
-			
-			setTimeout(function(){
+
+			setTimeout(function() {
 				// self.debug_cmd({mode:'terminate'});
 				core.module.debug.debug_terminate();
 			}, 500);
@@ -217,94 +218,98 @@ goorm.plugin.python = {
 	/*
 	 * 디버깅 명령어 전송
 	 */
-	debug_cmd: function (options, callback) {
+	debug_cmd: function(options, callback) {
 		/*
 		 * cmd = { mode, project_path }
 		 */
-		var self=this;
+		var self = this;
 		var path = options.path;
 		var property = options.property;
 		// var table_variable = core.module.debug.table_variable;
-		
+
 		var workspace = core.preference.workspace_path;
-		var projectName = core.status.current_project_path+"/";
+		var projectName = core.status.current_project_path + "/";
 		var mainPath = property['plugin.python.main'] + '.py';
 		var source_path = property['plugin.python.source_path'];
 		var debug_terminal = core.module.debug.debug_terminal;
-		
-//		if(this.terminal === null) {
-//			console.log("no connection!");
-//			var result = {result:false, code:6};
-//			core.module.project.display_error_message(result, 'alert');
-//			return ;
-//		}
-		
+
+		//		if(this.terminal === null) {
+		//			console.log("no connection!");
+		//			var result = {result:false, code:6};
+		//			core.module.project.display_error_message(result, 'alert');
+		//			return ;
+		//		}
+
 		if (debug_terminal) {
 			switch (cmd.mode) {
-			case 'init':
-				debug_terminal.flush_command_queue();
-				debug_terminal.send_command("python -m pdb "+workspace+projectName+source_path+mainPath+"\r");
-				self.set_breakpoints();
-				debug_terminal.send_command("run\r", debug_module.debug_prompt, function(){
-					cmd.mode = 'continue';
-					self.debug_cmd({
-						property: property,
-						cmd: cmd
-					});
-				});
-				break;
-			case 'continue':
-				self.set_breakpoints();
-				debug_terminal.send_command("continue\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			case 'terminate':
-				debug_terminal.flush_command_queue();
-				debug_terminal.send_command("quit\r", debug_module.debug_prompt);
-				setTimeout(function(){
-					debug_terminal.send_command("y\r", /(Exit|Quit) anyway\?/);
+				case 'init':
 					debug_terminal.flush_command_queue();
+					debug_terminal.send_command("python -m pdb " + workspace + projectName + source_path + mainPath + "\r");
+					self.set_breakpoints();
+					debug_terminal.send_command("run\r", debug_module.debug_prompt, function() {
+						cmd.mode = 'continue';
+						self.debug_cmd({
+							property: property,
+							cmd: cmd
+						});
+					});
+					break;
+				case 'continue':
+					self.set_breakpoints();
+					debug_terminal.send_command("continue\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'terminate':
+					debug_terminal.flush_command_queue();
+					debug_terminal.send_command("quit\r", debug_module.debug_prompt);
+					setTimeout(function() {
+						debug_terminal.send_command("y\r", /(Exit|Quit) anyway\?/);
+						debug_terminal.flush_command_queue();
 
-					if (callback) 
-						callback();
-				}, 500);
-				// table_variable.fnClearTable();
-				core.module.debug.clear_table();
-				
-				// clear highlight lines
-				var windows = core.module.layout.workspace.window_manager.window;
-				for (var i in windows) {
-					var window = windows[i];
-					if (window.project == debug_module.debug_current_project) {
-						window.editor && window.editor.clear_highlight();
+						if (callback)
+							callback();
+					}, 500);
+					// table_variable.fnClearTable();
+					core.module.debug.clear_table();
+
+					// clear highlight lines
+					var windows = core.module.layout.workspace.window_manager.window;
+					for (var i in windows) {
+						var window = windows[i];
+						if (window.project == debug_module.debug_current_project) {
+							window.editor && window.editor.clear_highlight();
+						}
 					}
-				}
-				
-				break;
-			case 'step_over':
-				self.set_breakpoints();
-				debug_terminal.send_command("next\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			case 'step_in':
-				self.set_breakpoints();
-				debug_terminal.send_command("step\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			case 'step_out':
-				self.set_breakpoints();
-				debug_terminal.send_command("jump\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			default : break;
+
+					break;
+				case 'step_over':
+					self.set_breakpoints();
+					debug_terminal.send_command("next\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'step_in':
+					self.set_breakpoints();
+					debug_terminal.send_command("step\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'step_out':
+					self.set_breakpoints();
+					debug_terminal.send_command("jump\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				default:
+					break;
 			}
-		}
-		else {
+		} else {
 			if (callback) callback();
 		}
 	},
 
-	set_breakpoints: function(){
+	set_breakpoints: function() {
 		var self = this;
 		var windows = core.module.layout.workspace.window_manager.window;
 		var debug_module = core.module.debug;
@@ -312,43 +317,43 @@ goorm.plugin.python = {
 			var window = windows[i];
 			if (window.project == debug_module.debug_current_project) {
 				var filename = window.filename;
-				
-				if(!window.editor) continue;				
+
+				if (!window.editor) continue;
 				var breakpoints = window.editor.breakpoints;
 				// self.terminal.send_command('clear\r', self.prompt, function() {
 				// 	self.terminal.send_command('y\r', self.prompt, function() {
-						for(var i=0; i < breakpoints.length; i++) {
-							var breakpoint = breakpoints[i];
-							breakpoint += 1;
-							breakpoint = filename+":"+breakpoint;
-							core.module.debug.debug_terminal.send_command("b "+breakpoint+"\r", debug_module.debug_prompt);
-						}
+				for (var i = 0; i < breakpoints.length; i++) {
+					var breakpoint = breakpoints[i];
+					breakpoint += 1;
+					breakpoint = filename + ":" + breakpoint;
+					core.module.debug.debug_terminal.send_command("b " + breakpoint + "\r", debug_module.debug_prompt);
+				}
 				// 	});
 				// });
 			}
 		}
 	},
 
-	debug_get_status: function(){
+	debug_get_status: function() {
 		var self = this;
 		var debug_module = core.module.debug;
-		debug_module.debug_terminal.send_command("where\r", debug_module.debug_prompt, function(terminal_data){
+		debug_module.debug_terminal.send_command("where\r", debug_module.debug_prompt, function(terminal_data) {
 			self.set_currentline(terminal_data);
 		});
 
 		// Timing Problem by nys
 		//
-		setTimeout(function(){
-			debug_module.debug_terminal.send_command("p locals().keys()\r", debug_module.debug_prompt, function(local_terminal_data){
+		setTimeout(function() {
+			debug_module.debug_terminal.send_command("p locals().keys()\r", debug_module.debug_prompt, function(local_terminal_data) {
 				self.set_debug_variable(local_terminal_data);
 			});
 		}, 500)
 	},
-	
-	set_currentline: function(terminal_data){
+
+	set_currentline: function(terminal_data) {
 		var self = this;
 		var lines = terminal_data.split('\n');
-		
+
 		// clear highlight lines
 		var windows = core.module.layout.workspace.window_manager.window;
 		for (var i in windows) {
@@ -358,35 +363,33 @@ goorm.plugin.python = {
 			}
 		}
 
-		$.each(lines, function(i, line){
-			if(lines == '') return;
+		$.each(lines, function(i, line) {
+			if (lines == '') return;
 			// 현재 라인 처리
-//			var regex = /.py\(\d+\)/;
+			//			var regex = /.py\(\d+\)/;
 			var regex = /> ((.*)\/)?(.*)(\(\d+)/
 
-			if(regex.test(line)) {
+			if (regex.test(line)) {
 				var filepath = line.replace(core.preference.workspace_path, "")
 				var match = line.match(regex);
 				var filepath = match[2];
 				var filename = match[3];
-				var line_number = match[4].substring(1);				
-				if(line_number == '1') return;
+				var line_number = match[4].substring(1);
+				if (line_number == '1') return;
 
 				var windows = core.module.layout.workspace.window_manager.window;
-								
-				for (var j=0; j<windows.length; j++) {
+
+				for (var j = 0; j < windows.length; j++) {
 					var window = windows[j];
 
-					if (window.project == debug_module.debug_current_project 
-							&& window.filename == filename){
+					if (window.project == debug_module.debug_current_project && window.filename == filename) {
 
-						if(typeof(line_number) == "string") line_number = parseInt(line_number);
+						if (typeof(line_number) == "string") line_number = parseInt(line_number);
 
-						if(filepath && filepath.search(window.filepath.substring(0, window.filepath.length-1)) > -1) {
-							window.editor.highlight_line(line_number-1);
-						}
-						else if (!filepath) {
-							window.editor.highlight_line(line_number-1);
+						if (filepath && filepath.search(window.filepath.substring(0, window.filepath.length - 1)) > -1) {
+							window.editor.highlight_line(line_number - 1);
+						} else if (!filepath) {
+							window.editor.highlight_line(line_number - 1);
 						}
 					}
 				}
@@ -394,7 +397,7 @@ goorm.plugin.python = {
 		});
 	},
 
-	set_debug_variable: function(terminal_data){
+	set_debug_variable: function(terminal_data) {
 		var self = this;
 		var lines = terminal_data.split('\n');
 		var debug_module = core.module.debug;
@@ -405,8 +408,8 @@ goorm.plugin.python = {
 		var keys = JSON.parse(lines.join('\n').replace(/\'/g, '"'));
 
 		var get_value = function(key, callback) {
-			self.terminal.send_command('p '+key+'\r', debug_module.debug_prompt, function(data){
-				if(data) {
+			self.terminal.send_command('p ' + key + '\r', debug_module.debug_prompt, function(data) {
+				if (data) {
 					var line = data.split('\n');
 					line.shift();
 					line.pop();
@@ -419,13 +422,11 @@ goorm.plugin.python = {
 		}
 
 		var get_type = function(value) {
-			if(/^'/.test(value)) {
+			if (/^'/.test(value)) {
 				return 'String';
-			}
-			else if(/^</.test(value)) {
+			} else if (/^</.test(value)) {
 				return 'Module';
-			}
-			else {
+			} else {
 				return 'Number';
 			}
 		}
@@ -433,12 +434,12 @@ goorm.plugin.python = {
 		// core.module.debug.table_variable.fnClearTable();
 		core.module.debug.clear_table();
 
-		$.each(keys, function(i,o){
-			if( !/^__/.test(o)) {
-				get_value(o, function(value){
+		$.each(keys, function(i, o) {
+			if (!/^__/.test(o)) {
+				get_value(o, function(value) {
 					var type = get_type(value);
 
-					value = ((value.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;'); 
+					value = ((value.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;');
 					value = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 					self.add_row(o, value, type);
@@ -447,7 +448,7 @@ goorm.plugin.python = {
 		});
 	},
 
-	add_row: function (variable, value, summary) {
+	add_row: function(variable, value, summary) {
 		core.module.debug.add_data_table(variable, value, summary);
 		// if(variable && value && summary){
 		// 	core.module.debug.table_variable.fnAddData([
@@ -458,19 +459,19 @@ goorm.plugin.python = {
 		// }
 	},
 
-	compiler_list_up : function(tab_select){
-		if(!this.socket){
+	compiler_list_up: function(tab_select) {
+		if (!this.socket) {
 			this.socket = io.connect();
 		}
 
 		var data = {
-			"plugin" : "goorm.plugin.python",
-			"channel" : "list_up",
-			"test_data" : this.compiler
+			"plugin": "goorm.plugin.python",
+			"channel": "list_up",
+			"test_data": this.compiler
 		};
-		this.socket.on("python_compiler_list_up", function(compiler_list){
+		this.socket.on("python_compiler_list_up", function(compiler_list) {
 			tab_select.find("option").remove();
-			for(var i = 0; i<compiler_list.length; i++){
+			for (var i = 0; i < compiler_list.length; i++) {
 				tab_select.append("<option value='" + compiler_list[i] + "'>" + compiler_list[i] + ".xx</option>");
 			}
 		});

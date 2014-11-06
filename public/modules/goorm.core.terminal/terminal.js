@@ -128,9 +128,7 @@ goorm.core.terminal.prototype = {
 			});
 
 			$(core).on("on_project_open", function () {
-				if (core.status.current_project_path === "") {
-					self.change_project_dir();
-				}
+				self.change_project_dir();
 			});
 
 			$(document).on(self.terminal_name + "_resized", function() {

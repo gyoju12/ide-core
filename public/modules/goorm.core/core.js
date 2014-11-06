@@ -525,10 +525,10 @@ goorm.core.prototype = {
 
 		
 
-		if (goorm.core.npm) {
-			this.module.npm = goorm.core.npm;
-			this.module.npm.init();
-		}
+		// if (goorm.core.npm) {
+		// 	this.module.npm = goorm.core.npm;
+		// 	this.module.npm.init();
+		// }
 
 		if (goorm.core.localization) {
 			this.module.localization = goorm.core.localization;

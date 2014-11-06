@@ -8,15 +8,16 @@
 
 library solar;
 
+import 'dart:async';
 import 'dart:html';
 import 'dart:math';
 
 void main() {
-  CanvasElement canvas = query("#area");
-  window.setImmediate(new SolarSystem(canvas).start);
+  CanvasElement canvas = querySelector("#area");
+  scheduleMicrotask(new SolarSystem(canvas).start);
 }
 
-Element notes = query("#fps");
+Element notes = querySelector("#fps");
 num fpsAverage;
 
 /// Display the animation's FPS in a div.
@@ -48,25 +49,20 @@ class SolarSystem {
   // Initialize the planets and start the simulation.
   start() {
     // Measure the canvas element.
-    Rect rect = canvas.parent.client;
+    Rectangle rect = canvas.parent.client;
     width = rect.width;
     height = rect.height;
     canvas.width = width;
 
-    // Create sun.    
+    // Create sun.
     final mercury = new PlanetaryBody(this, "orange", 0.382, 0.387, 0.241);
     final venus   = new PlanetaryBody(this, "green", 0.949, 0.723, 0.615);
-    sun = new PlanetaryBody(this, "#ff2", 14.0)..addPlanet(mercury)
-                                               ..addPlanet(venus);
-    
     final earth = new PlanetaryBody(this, "#33f", 1.0, 1.0, 1.0);
     final moon  = new PlanetaryBody(this, "gray", 0.2, 0.14, 0.075);
-    final mars  = new PlanetaryBody(this, "red", 0.532, 1.524, 1.88);
-    sun.addPlanet(earth..addPlanet(moon)
-                       ..addPlanet(mars));
+    earth.addPlanet(moon);
 
-    addAsteroidBelt(sun, 150);
-    
+    final mars  = new PlanetaryBody(this, "red", 0.532, 1.524, 1.88);
+
     final f = 0.1;
     final h = 1 / 1500.0;
     final g = 1 / 72.0;
@@ -76,11 +72,20 @@ class SolarSystem {
     final europa   = new PlanetaryBody(this, "gray", 3.1*f, 671*h, 3.551*g);
     final ganymede = new PlanetaryBody(this, "gray", 5.3*f, 1070*h, 7.154*g);
     final callisto = new PlanetaryBody(this, "gray", 4.8*f, 1882*h, 16.689*g);
-    sun.addPlanet(jupiter..addPlanet(io)
-                         ..addPlanet(europa)
-                         ..addPlanet(ganymede)
-                         ..addPlanet(callisto));
-    requestRedraw();
+    jupiter..addPlanet(io)
+           ..addPlanet(europa)
+           ..addPlanet(ganymede)
+           ..addPlanet(callisto);
+
+    sun = new PlanetaryBody(this, "#ff2", 14.0)..addPlanet(mercury)
+                                               ..addPlanet(venus)
+                                               ..addPlanet(earth)
+                                               ..addPlanet(mars)
+                                               ..addPlanet(jupiter);
+
+    addAsteroidBelt(sun, 150);
+
+   requestRedraw();
   }
 
   void draw(num _) {

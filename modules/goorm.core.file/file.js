@@ -1127,7 +1127,7 @@ module.exports = {
 						var stat = stats[i];
 						var file = {};
 
-						if (name[0] === "." || name === "goorm.manifest" || /_run.js$/.test(name)) {} else {
+						if (name[0] === "." || name === "goorm.manifest" || name === "lost+found" || /_run.js$/.test(name)) {} else {
 							file.filename = name;
 							file.text = name;
 							file.id = relative_path + "/" + name;

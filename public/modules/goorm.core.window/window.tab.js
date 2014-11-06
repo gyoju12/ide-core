@@ -51,8 +51,10 @@ goorm.core.window.tab.prototype = {
 		// };
 
 		//bootstrap start
-		var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
-
+		//var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
+		
+		// changed to timestamp. not using file path anymore for window id
+		var morphed_title = options.id;
 
 		this.tab_list_id = "g_window_tab_" + morphed_title;
 		this.tab_content_id = "g_wndw_tab_ctnt_" + morphed_title;

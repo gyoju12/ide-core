@@ -9613,5 +9613,17 @@ a.bg-danger:hover {
 	float: right !important;
 }
 
+/* bootstrap duplicate */
+.modal.fade .modal-dialog, .modal.in .modal-dialog
+{
+	-webkit-transform: none !important;
+	-ms-transform: none !important;
+	transform: none !important;
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
+}
+
 /* image preload */
 #dlg_notice { background: url(/images/goorm.core.dialog/dialog_notice.png) no-repeat -9999px -9999px; }
