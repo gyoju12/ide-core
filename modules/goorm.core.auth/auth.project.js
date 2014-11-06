@@ -12,7 +12,7 @@ var duration = 60 * 60 * 36 // seconds
 	
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
-// spawn = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 var fs = require('fs');
 
 
@@ -239,45 +239,9 @@ module.exports = {
 	
 	// change goorm.manifest's permission and owner. Jeong-Min Im.
 	manifest_setting: function(project_path, callback) {
-		var perm = null,
-			own_group = null,
-			chattr_cmd = null,
-			path = null,
-			callback = callback || function() {};
+		
 
-		if (project_path) {
-			if (project_path.indexOf(global.__workspace) > -1) {
-				path = project_path;
-			} else {
-				path = global.__workspace + project_path;
-			}
-
-			if (platform.platform().indexOf('darwin') > -1) {
-				perm = '740 ';
-				own_group = ' ';
-				chattr_cmd = 'chflags uchg ';
-			} else {
-				perm = '774 ';
-				own_group = ':root ';
-				chattr_cmd = 'chattr +i ';
-			}
-
-			if (perm && own_group)
-				exec('chmod ' + perm + path + '/goorm.manifest', function(err) {
-					exec('chown root' + own_group + path + '/goorm.manifest', function(err) {
-						// exec(chattr_cmd + path + '/goorm.manifest', function(err) {	// hidden by jeongmin: change attribute command is not for every file system and if this command is applied, modification isn't permitted
-						// if (err)
-						// console.log('chattr err in manifest_setting:', err);
-
-						callback();
-						// });
-					});
-				});
-			else
-				callback();
-		} else { // jeongmin: error
-			callback();
-		}
+		
 	},
 
 	// change bin's group permission. Jeong-Min Im.

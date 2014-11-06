@@ -234,6 +234,8 @@ goorm.connect_db = function() {
 	
 
 	
+
+	
 }
 
 goorm.config = function() {

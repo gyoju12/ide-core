@@ -136,7 +136,7 @@ goorm.core.utility.treeview.prototype = {
 		var project_root = null;
 		if (this.options.root_node === null) {
 			project_root = {
-				text: core.status.current_project_path,
+				text: core.status.current_project_name,
 				state: {
 					"opened": true
 				},
