@@ -3451,24 +3451,24 @@
                                         </li>
 
                                         
-<li target='cpp' style='display:none;'>
-<a href='#project_cpp_tab' data-toggle='tab' id='project_cpp_nav'>cpp</a>
-</li><li target='dart' style='display:none;'>
-<a href='#project_dart_tab' data-toggle='tab' id='project_dart_nav'>dart</a>
-</li><li target='go' style='display:none;'>
-<a href='#project_go_tab' data-toggle='tab' id='project_go_nav'>go</a>
+<li target='web' style='display:none;'>
+<a href='#project_web_tab' data-toggle='tab' id='project_web_nav'>web</a>
 </li><li target='java' style='display:none;'>
 <a href='#project_java_tab' data-toggle='tab' id='project_java_nav'>java</a>
-</li><li target='nodejs' style='display:none;'>
-<a href='#project_nodejs_tab' data-toggle='tab' id='project_nodejs_nav'>nodejs</a>
-</li><li target='phonegap' style='display:none;'>
-<a href='#project_phonegap_tab' data-toggle='tab' id='project_phonegap_nav'>phonegap</a>
-</li><li target='python' style='display:none;'>
-<a href='#project_python_tab' data-toggle='tab' id='project_python_nav'>python</a>
 </li><li target='ruby' style='display:none;'>
 <a href='#project_ruby_tab' data-toggle='tab' id='project_ruby_nav'>ruby</a>
-</li><li target='web' style='display:none;'>
-<a href='#project_web_tab' data-toggle='tab' id='project_web_nav'>web</a>
+</li><li target='cpp' style='display:none;'>
+<a href='#project_cpp_tab' data-toggle='tab' id='project_cpp_nav'>cpp</a>
+</li><li target='python' style='display:none;'>
+<a href='#project_python_tab' data-toggle='tab' id='project_python_nav'>python</a>
+</li><li target='phonegap' style='display:none;'>
+<a href='#project_phonegap_tab' data-toggle='tab' id='project_phonegap_nav'>phonegap</a>
+</li><li target='go' style='display:none;'>
+<a href='#project_go_tab' data-toggle='tab' id='project_go_nav'>go</a>
+</li><li target='nodejs' style='display:none;'>
+<a href='#project_nodejs_tab' data-toggle='tab' id='project_nodejs_nav'>nodejs</a>
+</li><li target='dart' style='display:none;'>
+<a href='#project_dart_tab' data-toggle='tab' id='project_dart_nav'>dart</a>
 </li>
                                     </ul>
 
@@ -3520,6 +3520,85 @@
                                             </fieldset>
                                         </div>
                                         
+<div class='tab-pane fade' id='project_web_tab' plugin='goorm.plugin.web'>
+<!-- jeongmin: change to bootstrap UI -->
+<div id="selectederenceTitle">Web Plugin</div>
+
+<fieldset>
+	<div class="row">
+		<div class="dialog_template_body_div">
+			<label for="web_run_index" localization_key="plugin.web.index_file" class="col-md-3 control-label dialog_template_body_span">Index File</label>
+			<div class="col-md-9">
+				<input type="text" name="plugin.web.run_index" id="web_run_index" class="form-control"/>
+			</div>
+		</div>
+
+		<div class="dialog_template_body_div">
+			<label localization_key="plugin.web.web_view_type" class="col-md-3 control-label dialog_template_body_span">Web View Type</label>
+			<div class="col-md-9 web_view_type">
+				<input type="radio" name="plugin.web.webview_type" id="web_webview_type_tab" value="tab">
+				<label for="web_webview_type_tab">Tab</label>
+				<input type="radio" name="plugin.web.webview_type" id="web_webview_type_window" value="window">
+				<label for="web_webview_type_window">New Window</label>
+			</div>
+		</div>
+	</div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
+<div class='tab-pane fade' id='project_java_tab' plugin='goorm.plugin.java'>
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+    <div class="row">
+        <label for="plugin.java.main" localization_key="plugin.java.main_class_name" class="col-md-3 control-label">Main Class Name</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.java.main" id="plugin.java.main" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.source_path" localization_key="plugin.java.source_path" class="col-md-3 control-label">Source Path</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.java.source_path" id="plugin.java.source_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.build_path" localization_key="plugin.java.build_path" class="col-md-3 control-label">Build Path</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.java.build_path" id="plugin.java.build_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.build_option" localization_key="plugin.java.build_option" class="col-md-3 control-label">Build Option</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.java.build_option" id="plugin.java.build_option" class="form-control"/>
+        </div>
+    </div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
+<div class='tab-pane fade' id='project_ruby_tab' plugin='goorm.plugin.ruby'>
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+    <div class="row">
+        <label for="plugin.ruby.main" localization_key="plugin.ruby.main" class="col-md-3 control-label">Main</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.ruby.main" id="plugin.ruby.main" class="form-control"/>
+        </div>
+
+        <label for="plugin.ruby.source_path" localization_key="plugin.ruby.source_path" class="col-md-3 control-label">Source Path</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.ruby.source_path" id="plugin.ruby.source_path" class="form-control"/>
+        </div>
+    </div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
 <div class='tab-pane fade' id='project_cpp_tab' plugin='goorm.plugin.cpp'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
@@ -3561,110 +3640,24 @@
     <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
-<div class='tab-pane fade' id='project_dart_tab' plugin='goorm.plugin.dart'>
+<div class='tab-pane fade' id='project_python_tab' plugin='goorm.plugin.python'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.dart.main" localization_key="plugin.dart.main_name" class="col-md-3 control-label">Main Name</label>
+        <label for="plugin.python.compiler_type" localization_key="plugin.python.complier_type" class="col-md-3 control-label">Compiler Type</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.dart.main" id="plugin.dart.main" class="form-control"/>
+            <select name="plugin.python.compiler_type" id="plugin.python.compiler_type" class="form-control"></select>
         </div>
 
-        <label for="plugin.dart.build_option" localization_key="plugin.dart.build_option" class="col-md-3 control-label">Build Option</label>
+        <label for="plugin.python.main" localization_key="plugin.python.main" class="col-md-3 control-label">Main</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.dart.build_option" id="plugin.dart.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-<div class='tab-pane fade' id='project_go_tab' plugin='goorm.plugin.go'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.go.main" localization_key="plugin.go.main_class_name" class="col-md-3 control-label">Main Class Name</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.go.main" id="plugin.go.main" class="form-control"/>
+            <input type="text" name="plugin.python.main" id="plugin.python.main" class="form-control"/>
         </div>
 
-        <label for="plugin.go.source_path" localization_key="plugin.go.source_path" class="col-md-3 control-label">Source Path</label>
+        <label for="plugin.python.source_path" localization_key="plugin.python.source_path" class="col-md-3 control-label">Source Path</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.go.source_path" id="plugin.go.source_path" class="form-control"/>
+            <input type="text" name="plugin.python.source_path" id="plugin.python.source_path" class="form-control"/>
         </div>
-
-        <label for="plugin.go.build_path" localization_key="plugin.go.build_path" class="col-md-3 control-label">Build Path</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.go.build_path" id="plugin.go.build_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.go.build_option" localization_key="plugin.go.build_option" class="col-md-3 control-label">Build Option</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.go.build_option" id="plugin.go.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-<div class='tab-pane fade' id='project_java_tab' plugin='goorm.plugin.java'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.java.main" localization_key="plugin.java.main_class_name" class="col-md-3 control-label">Main Class Name</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.java.main" id="plugin.java.main" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.source_path" localization_key="plugin.java.source_path" class="col-md-3 control-label">Source Path</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.java.source_path" id="plugin.java.source_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.build_path" localization_key="plugin.java.build_path" class="col-md-3 control-label">Build Path</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.java.build_path" id="plugin.java.build_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.build_option" localization_key="plugin.java.build_option" class="col-md-3 control-label">Build Option</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.java.build_option" id="plugin.java.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-<div class='tab-pane fade' id='project_nodejs_tab' plugin='goorm.plugin.nodejs'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.nodejs.main" localization_key="plugin.nodejs.main_name" class="col-md-3 control-label">Main</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.nodejs.main" id="plugin.nodejs.main" class="form-control"/>
-        </div>
-
-        <label for="plugin.nodejs.source_path" localization_key="plugin.nodejs.source_path" class="col-md-3 control-label">Source Path</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.nodejs.source_path" id="plugin.nodejs.source_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.nodejs.debug_option" localization_key="plugin.nodejs.debug_option" class="col-md-3 control-label">Debug Option</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.nodejs.debug_option" id="plugin.nodejs.debug_option" class="form-control"/>
-        </div> 
-
-        <label for="plugin.nodejs.run_option" localization_key="plugin.nodejs.run_option" class="col-md-3 control-label">Run Option</label>
-        <div class="col-md-9">
-            <input type="text" name="plugin.nodejs.run_option" id="plugin.nodejs.run_option" class="form-control"/>
-        </div>
-
     </div>
 </fieldset>
 <div class="text-right"> <!-- jeongmin: for line up buttons right side -->
@@ -3727,23 +3720,28 @@
 	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
-<div class='tab-pane fade' id='project_python_tab' plugin='goorm.plugin.python'>
+<div class='tab-pane fade' id='project_go_tab' plugin='goorm.plugin.go'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.python.compiler_type" localization_key="plugin.python.complier_type" class="col-md-3 control-label">Compiler Type</label>
+        <label for="plugin.go.main" localization_key="plugin.go.main_class_name" class="col-md-3 control-label">Main Class Name</label>
         <div class="col-md-9">
-            <select name="plugin.python.compiler_type" id="plugin.python.compiler_type" class="form-control"></select>
+            <input type="text" name="plugin.go.main" id="plugin.go.main" class="form-control"/>
         </div>
 
-        <label for="plugin.python.main" localization_key="plugin.python.main" class="col-md-3 control-label">Main</label>
+        <label for="plugin.go.source_path" localization_key="plugin.go.source_path" class="col-md-3 control-label">Source Path</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.python.main" id="plugin.python.main" class="form-control"/>
+            <input type="text" name="plugin.go.source_path" id="plugin.go.source_path" class="form-control"/>
         </div>
 
-        <label for="plugin.python.source_path" localization_key="plugin.python.source_path" class="col-md-3 control-label">Source Path</label>
+        <label for="plugin.go.build_path" localization_key="plugin.go.build_path" class="col-md-3 control-label">Build Path</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.python.source_path" id="plugin.python.source_path" class="form-control"/>
+            <input type="text" name="plugin.go.build_path" id="plugin.go.build_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.go.build_option" localization_key="plugin.go.build_option" class="col-md-3 control-label">Build Option</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.go.build_option" id="plugin.go.build_option" class="form-control"/>
         </div>
     </div>
 </fieldset>
@@ -3752,19 +3750,30 @@
     <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
-<div class='tab-pane fade' id='project_ruby_tab' plugin='goorm.plugin.ruby'>
+<div class='tab-pane fade' id='project_nodejs_tab' plugin='goorm.plugin.nodejs'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.ruby.main" localization_key="plugin.ruby.main" class="col-md-3 control-label">Main</label>
+        <label for="plugin.nodejs.main" localization_key="plugin.nodejs.main_name" class="col-md-3 control-label">Main</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.ruby.main" id="plugin.ruby.main" class="form-control"/>
+            <input type="text" name="plugin.nodejs.main" id="plugin.nodejs.main" class="form-control"/>
         </div>
 
-        <label for="plugin.ruby.source_path" localization_key="plugin.ruby.source_path" class="col-md-3 control-label">Source Path</label>
+        <label for="plugin.nodejs.source_path" localization_key="plugin.nodejs.source_path" class="col-md-3 control-label">Source Path</label>
         <div class="col-md-9">
-            <input type="text" name="plugin.ruby.source_path" id="plugin.ruby.source_path" class="form-control"/>
+            <input type="text" name="plugin.nodejs.source_path" id="plugin.nodejs.source_path" class="form-control"/>
         </div>
+
+        <label for="plugin.nodejs.debug_option" localization_key="plugin.nodejs.debug_option" class="col-md-3 control-label">Debug Option</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.nodejs.debug_option" id="plugin.nodejs.debug_option" class="form-control"/>
+        </div> 
+
+        <label for="plugin.nodejs.run_option" localization_key="plugin.nodejs.run_option" class="col-md-3 control-label">Run Option</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.nodejs.run_option" id="plugin.nodejs.run_option" class="form-control"/>
+        </div>
+
     </div>
 </fieldset>
 <div class="text-right"> <!-- jeongmin: for line up buttons right side -->
@@ -3772,33 +3781,24 @@
     <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
-<div class='tab-pane fade' id='project_web_tab' plugin='goorm.plugin.web'>
+<div class='tab-pane fade' id='project_dart_tab' plugin='goorm.plugin.dart'>
 <!-- jeongmin: change to bootstrap UI -->
-<div id="selectederenceTitle">Web Plugin</div>
-
 <fieldset>
-	<div class="row">
-		<div class="dialog_template_body_div">
-			<label for="web_run_index" localization_key="plugin.web.index_file" class="col-md-3 control-label dialog_template_body_span">Index File</label>
-			<div class="col-md-9">
-				<input type="text" name="plugin.web.run_index" id="web_run_index" class="form-control"/>
-			</div>
-		</div>
+    <div class="row">
+        <label for="plugin.dart.main" localization_key="plugin.dart.main_name" class="col-md-3 control-label">Main Name</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.dart.main" id="plugin.dart.main" class="form-control"/>
+        </div>
 
-		<div class="dialog_template_body_div">
-			<label localization_key="plugin.web.web_view_type" class="col-md-3 control-label dialog_template_body_span">Web View Type</label>
-			<div class="col-md-9 web_view_type">
-				<input type="radio" name="plugin.web.webview_type" id="web_webview_type_tab" value="tab">
-				<label for="web_webview_type_tab">Tab</label>
-				<input type="radio" name="plugin.web.webview_type" id="web_webview_type_window" value="window">
-				<label for="web_webview_type_window">New Window</label>
-			</div>
-		</div>
-	</div>
+        <label for="plugin.dart.build_option" localization_key="plugin.dart.build_option" class="col-md-3 control-label">Build Option</label>
+        <div class="col-md-9">
+            <input type="text" name="plugin.dart.build_option" id="plugin.dart.build_option" class="form-control"/>
+        </div>
+    </div>
 </fieldset>
 <div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
 
@@ -4127,40 +4127,40 @@
 
                                     
 
-<li target='cpp' style='display:none;'>
-<a href='#preference_cpp_tab' data-toggle='tab' id='preference_cpp_nav'>cpp</a>
-</li>
-
-<li target='dart' style='display:none;'>
-<a href='#preference_dart_tab' data-toggle='tab' id='preference_dart_nav'>dart</a>
-</li>
-
-<li target='go' style='display:none;'>
-<a href='#preference_go_tab' data-toggle='tab' id='preference_go_nav'>go</a>
+<li target='web' style='display:none;'>
+<a href='#preference_web_tab' data-toggle='tab' id='preference_web_nav'>web</a>
 </li>
 
 <li target='java' style='display:none;'>
 <a href='#preference_java_tab' data-toggle='tab' id='preference_java_nav'>java</a>
 </li>
 
-<li target='nodejs' style='display:none;'>
-<a href='#preference_nodejs_tab' data-toggle='tab' id='preference_nodejs_nav'>nodejs</a>
+<li target='ruby' style='display:none;'>
+<a href='#preference_ruby_tab' data-toggle='tab' id='preference_ruby_nav'>ruby</a>
 </li>
 
-<li target='phonegap' style='display:none;'>
-<a href='#preference_phonegap_tab' data-toggle='tab' id='preference_phonegap_nav'>phonegap</a>
+<li target='cpp' style='display:none;'>
+<a href='#preference_cpp_tab' data-toggle='tab' id='preference_cpp_nav'>cpp</a>
 </li>
 
 <li target='python' style='display:none;'>
 <a href='#preference_python_tab' data-toggle='tab' id='preference_python_nav'>python</a>
 </li>
 
-<li target='ruby' style='display:none;'>
-<a href='#preference_ruby_tab' data-toggle='tab' id='preference_ruby_nav'>ruby</a>
+<li target='phonegap' style='display:none;'>
+<a href='#preference_phonegap_tab' data-toggle='tab' id='preference_phonegap_nav'>phonegap</a>
 </li>
 
-<li target='web' style='display:none;'>
-<a href='#preference_web_tab' data-toggle='tab' id='preference_web_nav'>web</a>
+<li target='go' style='display:none;'>
+<a href='#preference_go_tab' data-toggle='tab' id='preference_go_nav'>go</a>
+</li>
+
+<li target='nodejs' style='display:none;'>
+<a href='#preference_nodejs_tab' data-toggle='tab' id='preference_nodejs_nav'>nodejs</a>
+</li>
+
+<li target='dart' style='display:none;'>
+<a href='#preference_dart_tab' data-toggle='tab' id='preference_dart_nav'>dart</a>
 </li>
 
                                 </ul>
@@ -4962,6 +4962,86 @@
                                     </div>
                                     
 
+<div class='tab-pane fade' id='preference_web_tab' plugin='goorm.plugin.web'>
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+	<div class="row">
+		<div class="dialog_template_body_div">
+			<label for="pref_web_run_index" localization_key="plugin.web.d_index_file" class="col-md-4 control-label dialog_template_body_span">Index File</label>
+			<div class="col-md-8">
+				<input type="text" name="plugin.web.run_index" id="pref_web_run_index" class="form-control"/>
+			</div>
+		</div>
+
+		<div class="dialog_template_body_div">
+			<label localization_key="plugin.web.d_web_view_type" class="col-md-4 control-label dialog_template_body_span">Web View Type</label>
+			<div class="col-md-8 web_view_type">
+				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_tab" value="tab">
+				<label for="pref_web_webview_type_tab">Tab</label>
+				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_window" value="window">
+				<label for="pref_web_webview_type_window">New Window</label>
+			</div>
+		</div>
+	</div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
+
+<div class='tab-pane fade' id='preference_java_tab' plugin='goorm.plugin.java'>
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+    <div class="row">
+        <label for="plugin.java.main" localization_key="plugin.java.d_main_class_name" class="col-md-4 control-label">Default Main Class Name</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.java.main" id="plugin.java.main" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.source_path" localization_key="plugin.java.d_source_path" class="col-md-4 control-label">Default Source Path</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.java.source_path" id="plugin.java.source_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.build_path" localization_key="plugin.java.d_build_path" class="col-md-4 control-label">Default Build Path</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.java.build_path" id="plugin.java.build_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.java.build_option" localization_key="plugin.java.d_build_option" class="col-md-4 control-label">Default Build Option</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.java.build_option" id="plugin.java.build_option" class="form-control"/>
+        </div>
+    </div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
+
+<div class='tab-pane fade' id='preference_ruby_tab' plugin='goorm.plugin.ruby'>
+<!-- jeongmin: change to bootstrap UI -->
+<fieldset>
+    <div class="row">
+        <label for="plugin.ruby.main" localization_key="plugin.ruby.d_main" class="col-md-4 control-label">Default Main</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.ruby.main" id="plugin.ruby.main" class="form-control"/>
+        </div>
+
+        <label for="plugin.ruby.source_path" localization_key="plugin.ruby.d_source_path" class="col-md-4 control-label">Default Source Path</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.ruby.source_path" id="plugin.ruby.source_path" class="form-control"/>
+        </div>
+    </div>
+</fieldset>
+<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+</div>
+</div>
+
 <div class='tab-pane fade' id='preference_cpp_tab' plugin='goorm.plugin.cpp'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
@@ -5005,106 +5085,23 @@
 </div>
 </div>
 
-<div class='tab-pane fade' id='preference_dart_tab' plugin='goorm.plugin.dart'>
+<div class='tab-pane fade' id='preference_python_tab' plugin='goorm.plugin.python'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.dart.main" localization_key="plugin.dart.d_main_name" class="col-md-4 control-label">Default Main Name</label>
+        <label for="plugin.python.compiler_type" localization_key="plugin.python.d_complier_type" class="col-md-4 control-label">Default Compiler Type</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.dart.main" id="plugin.dart.main" class="form-control"/>
+            <select name="plugin.python.compiler_type" id="plugin.python.compiler_type" class="form-control"></select>
         </div>
 
-        <label for="plugin.dart.build_option" localization_key="plugin.dart.d_build_option" class="col-md-4 control-label">Default Build Option</label>
+        <label for="plugin.python.main" localization_key="plugin.python.d_main" class="col-md-4 control-label">Default Main</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.dart.build_option" id="plugin.dart.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-
-<div class='tab-pane fade' id='preference_go_tab' plugin='goorm.plugin.go'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.go.main" localization_key="plugin.go.d_main_class_name" class="col-md-4 control-label">Default Main Class Name</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.go.main" id="plugin.go.main" class="form-control"/>
+            <input type="text" name="plugin.python.main" id="plugin.python.main" class="form-control"/>
         </div>
 
-        <label for="plugin.go.source_path" localization_key="plugin.go.d_source_path" class="col-md-4 control-label">Default Source Path</label>
+        <label for="plugin.python.source_path" localization_key="plugin.python.d_source_path" class="col-md-4 control-label">Default Source Path</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.go.source_path" id="plugin.go.source_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.go.build_path" localization_key="plugin.go.d_build_path" class="col-md-4 control-label">Default Build Path</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.go.build_path" id="plugin.go.build_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.go.build_option" localization_key="plugin.go.d_build_option" class="col-md-4 control-label">Default Build Option</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.go.build_option" id="plugin.go.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-
-<div class='tab-pane fade' id='preference_java_tab' plugin='goorm.plugin.java'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.java.main" localization_key="plugin.java.d_main_class_name" class="col-md-4 control-label">Default Main Class Name</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.java.main" id="plugin.java.main" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.source_path" localization_key="plugin.java.d_source_path" class="col-md-4 control-label">Default Source Path</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.java.source_path" id="plugin.java.source_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.build_path" localization_key="plugin.java.d_build_path" class="col-md-4 control-label">Default Build Path</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.java.build_path" id="plugin.java.build_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.java.build_option" localization_key="plugin.java.d_build_option" class="col-md-4 control-label">Default Build Option</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.java.build_option" id="plugin.java.build_option" class="form-control"/>
-        </div>
-    </div>
-</fieldset>
-<div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
-</div>
-</div>
-
-<div class='tab-pane fade' id='preference_nodejs_tab' plugin='goorm.plugin.nodejs'>
-<!-- jeongmin: change to bootstrap UI -->
-<fieldset>
-    <div class="row">
-        <label for="plugin.nodejs.main" localization_key="plugin.nodejs.d_main_name" class="col-md-4 control-label">Default Main Name</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.nodejs.main" id="plugin.nodejs.main" class="form-control"/>
-        </div>
-
-        <label for="plugin.nodejs.source_path" localization_key="plugin.nodejs.d_source_path" class="col-md-4 control-label">Default Source Path</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.nodejs.source_path" id="plugin.nodejs.source_path" class="form-control"/>
-        </div>
-
-        <label for="plugin.nodejs.debug_option" localization_key="plugin.nodejs.d_debug_option" class="col-md-4 control-label">Default Debug Option</label>
-        <div class="col-md-8">
-            <input type="text" name="plugin.nodejs.debug_option" id="plugin.nodejs.debug_option" class="form-control"/>
+            <input type="text" name="plugin.python.source_path" id="plugin.python.source_path" class="form-control"/>
         </div>
     </div>
 </fieldset>
@@ -5170,23 +5167,28 @@
 </div>
 </div>
 
-<div class='tab-pane fade' id='preference_python_tab' plugin='goorm.plugin.python'>
+<div class='tab-pane fade' id='preference_go_tab' plugin='goorm.plugin.go'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.python.compiler_type" localization_key="plugin.python.d_complier_type" class="col-md-4 control-label">Default Compiler Type</label>
+        <label for="plugin.go.main" localization_key="plugin.go.d_main_class_name" class="col-md-4 control-label">Default Main Class Name</label>
         <div class="col-md-8">
-            <select name="plugin.python.compiler_type" id="plugin.python.compiler_type" class="form-control"></select>
+            <input type="text" name="plugin.go.main" id="plugin.go.main" class="form-control"/>
         </div>
 
-        <label for="plugin.python.main" localization_key="plugin.python.d_main" class="col-md-4 control-label">Default Main</label>
+        <label for="plugin.go.source_path" localization_key="plugin.go.d_source_path" class="col-md-4 control-label">Default Source Path</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.python.main" id="plugin.python.main" class="form-control"/>
+            <input type="text" name="plugin.go.source_path" id="plugin.go.source_path" class="form-control"/>
         </div>
 
-        <label for="plugin.python.source_path" localization_key="plugin.python.d_source_path" class="col-md-4 control-label">Default Source Path</label>
+        <label for="plugin.go.build_path" localization_key="plugin.go.d_build_path" class="col-md-4 control-label">Default Build Path</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.python.source_path" id="plugin.python.source_path" class="form-control"/>
+            <input type="text" name="plugin.go.build_path" id="plugin.go.build_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.go.build_option" localization_key="plugin.go.d_build_option" class="col-md-4 control-label">Default Build Option</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.go.build_option" id="plugin.go.build_option" class="form-control"/>
         </div>
     </div>
 </fieldset>
@@ -5196,18 +5198,23 @@
 </div>
 </div>
 
-<div class='tab-pane fade' id='preference_ruby_tab' plugin='goorm.plugin.ruby'>
+<div class='tab-pane fade' id='preference_nodejs_tab' plugin='goorm.plugin.nodejs'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
     <div class="row">
-        <label for="plugin.ruby.main" localization_key="plugin.ruby.d_main" class="col-md-4 control-label">Default Main</label>
+        <label for="plugin.nodejs.main" localization_key="plugin.nodejs.d_main_name" class="col-md-4 control-label">Default Main Name</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.ruby.main" id="plugin.ruby.main" class="form-control"/>
+            <input type="text" name="plugin.nodejs.main" id="plugin.nodejs.main" class="form-control"/>
         </div>
 
-        <label for="plugin.ruby.source_path" localization_key="plugin.ruby.d_source_path" class="col-md-4 control-label">Default Source Path</label>
+        <label for="plugin.nodejs.source_path" localization_key="plugin.nodejs.d_source_path" class="col-md-4 control-label">Default Source Path</label>
         <div class="col-md-8">
-            <input type="text" name="plugin.ruby.source_path" id="plugin.ruby.source_path" class="form-control"/>
+            <input type="text" name="plugin.nodejs.source_path" id="plugin.nodejs.source_path" class="form-control"/>
+        </div>
+
+        <label for="plugin.nodejs.debug_option" localization_key="plugin.nodejs.d_debug_option" class="col-md-4 control-label">Default Debug Option</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.nodejs.debug_option" id="plugin.nodejs.debug_option" class="form-control"/>
         </div>
     </div>
 </fieldset>
@@ -5217,31 +5224,24 @@
 </div>
 </div>
 
-<div class='tab-pane fade' id='preference_web_tab' plugin='goorm.plugin.web'>
+<div class='tab-pane fade' id='preference_dart_tab' plugin='goorm.plugin.dart'>
 <!-- jeongmin: change to bootstrap UI -->
 <fieldset>
-	<div class="row">
-		<div class="dialog_template_body_div">
-			<label for="pref_web_run_index" localization_key="plugin.web.d_index_file" class="col-md-4 control-label dialog_template_body_span">Index File</label>
-			<div class="col-md-8">
-				<input type="text" name="plugin.web.run_index" id="pref_web_run_index" class="form-control"/>
-			</div>
-		</div>
+    <div class="row">
+        <label for="plugin.dart.main" localization_key="plugin.dart.d_main_name" class="col-md-4 control-label">Default Main Name</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.dart.main" id="plugin.dart.main" class="form-control"/>
+        </div>
 
-		<div class="dialog_template_body_div">
-			<label localization_key="plugin.web.d_web_view_type" class="col-md-4 control-label dialog_template_body_span">Web View Type</label>
-			<div class="col-md-8 web_view_type">
-				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_tab" value="tab">
-				<label for="pref_web_webview_type_tab">Tab</label>
-				<input type="radio" name="plugin.web.webview_type" id="pref_web_webview_type_window" value="window">
-				<label for="pref_web_webview_type_window">New Window</label>
-			</div>
-		</div>
-	</div>
+        <label for="plugin.dart.build_option" localization_key="plugin.dart.d_build_option" class="col-md-4 control-label">Default Build Option</label>
+        <div class="col-md-8">
+            <input type="text" name="plugin.dart.build_option" id="plugin.dart.build_option" class="form-control"/>
+        </div>
+    </div>
 </fieldset>
 <div class="text-right"> <!-- jeongmin: for line up buttons right side -->
-	<button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-	<button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+    <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
+    <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
 </div>
 </div>
 

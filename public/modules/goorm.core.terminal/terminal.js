@@ -40,15 +40,15 @@ goorm.core.terminal.prototype = {
 		this.target = target;
 		this.in_panel = in_panel;
 		this.terminal_name = terminal_name;
-		this.dummy = "dummy_"+terminal_name;
+		this.dummy = "dummy_" + terminal_name;
 		this.timestamp = (new Date()).getTime();
 		this.preference = core.preference;
 
 		this.resize = $.throttle(self._resize, 100);
- 		
-		$("#terminal_dummy").append("<span id='"+self.dummy+"'></span>");
 
-		var create_terminal = function () {
+		$("#terminal_dummy").append("<span id='" + self.dummy + "'></span>");
+
+		var create_terminal = function() {
 			$(self.target).addClass('terminal');
 
 			var terminal_open_complete = function() {
@@ -67,7 +67,7 @@ goorm.core.terminal.prototype = {
 			self.Terminal = new Terminal({
 				cols: geometry.cols,
 				rows: geometry.rows,
-			});//seongho.cha: if not calculate when new Terminal, first line will be not refreshed correctly fisrt time.
+			}); //seongho.cha: if not calculate when new Terminal, first line will be not refreshed correctly fisrt time.
 
 			self.Terminal.open(self, self.target, {
 				'timestamp': self.timestamp,
@@ -95,14 +95,14 @@ goorm.core.terminal.prototype = {
 			}, 100, false));
 
 			var init = false;
-			$(self).one('terminal_ready.'+self.terminal_name, function() {
+			$(self).one('terminal_ready.' + self.terminal_name, function() {
 				if (!init) {
 					// window.setTimeout(function() {
-						
+					
 
-						
-						//$(self.target[0]).prepend('<div>Welcome to goorm terminal :)</div>');
-						
+					
+					//$(self.target[0]).prepend('<div>Welcome to goorm terminal :)</div>');
+					
 					// }, 100);
 					init = true;
 					self.ready = true;
@@ -118,7 +118,7 @@ goorm.core.terminal.prototype = {
 				// terminal leave
 				self.Terminal.destroy();
 				$(document).trigger(self.terminal_name + '_closed'); // jeongmin: let server know terminal is closed
-				$("#"+self.dummy).remove();
+				$("#" + self.dummy).remove();
 				// socket disconnect
 				// self.socket.disconnect();	// hidden by jeongmin: this disconnects socket before other terminal's socket communication is done. Socket disconnection is automatically done by socket.io, so no need to do this manually
 			});
@@ -127,7 +127,7 @@ goorm.core.terminal.prototype = {
 				self.resize_all("layout");
 			});
 
-			$(core).on("on_project_open", function () {
+			$(core).on("on_project_open", function() {
 				self.change_project_dir();
 			});
 
@@ -206,11 +206,11 @@ goorm.core.terminal.prototype = {
 
 			
 
-			self.socket.on("on_change_project_dir."+self.terminal_name, function(data) {
-				$(self).trigger("terminal_ready."+self.terminal_name);
+			self.socket.on("on_change_project_dir." + self.terminal_name, function(data) {
+				$(self).trigger("terminal_ready." + self.terminal_name);
 			});
 
-			self.socket.on("platform."+self.terminal_name, function(data) {
+			self.socket.on("platform." + self.terminal_name, function(data) {
 				data = JSON.parse(data);
 
 				if (!self.default_prompt) self.default_prompt = /.*@.*:.*(\#|\$)/;
@@ -218,7 +218,7 @@ goorm.core.terminal.prototype = {
 				core.env.os = data.platform;
 			});
 
-			self.socket.on("terminal_index."+self.terminal_name, function(data) {
+			self.socket.on("terminal_index." + self.terminal_name, function(data) {
 				data = JSON.parse(data);
 
 				if (self.index == -1 && self.timestamp == data.timestamp) {
@@ -234,7 +234,7 @@ goorm.core.terminal.prototype = {
 						self.send('change_project_dir', {
 							'data': msg,
 							'stringify': true
-						});						
+						});
 						// self.socket.emit("change_project_dir", JSON.stringify(msg));
 					}
 				}
@@ -244,10 +244,10 @@ goorm.core.terminal.prototype = {
 			self.socket.on("pty_command_result", function(msg) {
 
 				//build stop fix --heeje
-				if(core.module.project.is_running && msg.stdout.indexOf('[01;32m') > 0 && msg.stdout.indexOf('^C') == 0 && msg.stdout.indexOf('[H[2J') < 0) {
+				if (core.module.project.is_running && (msg.stdout.indexOf('[01;32m') > 0 || msg.stdout.indexOf('^C') == 0 || msg.stdout.indexOf('[H[2J') < 0)) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
-					$('button[action="stop"]').attr('isdisabled','disabled');
+					$('button[action="stop"]').attr('isdisabled', 'disabled');
 					$('a[action="stop"]').parent().addClass('disabled')
 				}
 
@@ -286,19 +286,19 @@ goorm.core.terminal.prototype = {
 			});
 
 			// received terminal refresh complete msg
-			self.socket.on("terminal_refresh_complete."+self.terminal_name, function(data) {
-				if(data.index == self.index){
+			self.socket.on("terminal_refresh_complete." + self.terminal_name, function(data) {
+				if (data.index == self.index) {
 					self.resize();
-					console.log(self.terminal_name+"_terminal_refresh_complete");
+					console.log(self.terminal_name + "_terminal_refresh_complete");
 					self.change_project_dir();
 				}
 
 				
 			});
 
-			self.socket.on("terminal_exited."+self.terminal_name, function(data) {
-				if(data.index == self.index && self.in_panel){
-					setTimeout(function(){
+			self.socket.on("terminal_exited." + self.terminal_name, function(data) {
+				if (data.index == self.index && self.in_panel) {
+					setTimeout(function() {
 						self.target.parent().find(".ui-dialog-titlebar-close").click();
 					}, 1000);
 				}
@@ -333,7 +333,7 @@ goorm.core.terminal.prototype = {
 		
 	},
 
-	send: function (namespace, options) {
+	send: function(namespace, options) {
 		var data = options.data;
 		var stringify = options.stringify;
 
@@ -380,7 +380,7 @@ goorm.core.terminal.prototype = {
 
 		this.send_command("complete;clear;\r");
 		
-  	},
+	},
 
 	focus: function() {
 		$(this.target).parent().attr('tabindex', 0);
@@ -391,7 +391,7 @@ goorm.core.terminal.prototype = {
 	// it makes all terminals refresh
 	refresh_terminal: function() {
 
-		if( this.index != -1){
+		if (this.index != -1) {
 
 			var msg = {
 				"index": this.index,
@@ -409,29 +409,29 @@ goorm.core.terminal.prototype = {
 			// this.socket.emit("terminal_refresh", JSON.stringify(msg));
 		}
 	},
-	calculate_geometry: function() { 
+	calculate_geometry: function() {
 		var geometry = {};
 		var div_height = parseInt($(this.target).css('line-height'));
 		var font_size = parseInt($(this.target).css('font-size'));
-        	var height;
+		var height;
 		var width;
 
-	        // seongho : I calculate the pixels. floor(font_size * 0.625) is real width of pixels
+		// seongho : I calculate the pixels. floor(font_size * 0.625) is real width of pixels
 		var font_width = Math.floor(font_size * 0.625);
-		if(font_width == 6)  // but font_size:11px is exception. Calculation value is 6px, but in real, 7px
+		if (font_width == 6) // but font_size:11px is exception. Calculation value is 6px, but in real, 7px
 			font_width = 7;
-	
+
 		if (this.terminal_name == "default_terminal") {
 			height = parseInt($(this.target).parent().height() - 10);
 			width = parseInt($(this.target).parent().width() - 10);
 
 			geometry.rows = Math.floor((height - 10) / div_height);
 			geometry.cols = Math.floor((width - 10) / font_width);
-		}else{ 
-			if(core.module.layout.workspace.window_manager.maximized) {
+		} else {
+			if (core.module.layout.workspace.window_manager.maximized) {
 				height = parseInt($("#workspace").css('height')) - 10;
 				width = parseInt($("#workspace").css('width')) - 12;
-			}else{
+			} else {
 				height = parseInt($(this.target).height());
 				width = parseInt($(this.target).width());
 			}
@@ -439,33 +439,33 @@ goorm.core.terminal.prototype = {
 			geometry.cols = Math.floor((width - 3) / font_width);
 		}
 		////// jeongmin: sometimes, width is much smaller than it is. So, reset its width as its parent's width //////
-			
+
 		$(this.target).width(width);
 		$(this.target).height(height);
 
-		if (geometry.cols <= 0 || geometry.rows <= 0 || isNaN(geometry.cols)) {  //it can be NaN - divide by 0
+		if (geometry.cols <= 0 || geometry.rows <= 0 || isNaN(geometry.cols)) { //it can be NaN - divide by 0
 			geometry.cols = 1000;
 			geometry.rows = 10;
-		}else{
+		} else {
 			///seongho.cha : some browers not fit upper fomula because of spacing. it will calculate real width...
 			var dummy_str = (new Array(geometry.cols + 1)).join("a");
-			$("#"+this.dummy).html(dummy_str);
-			while ($("#"+this.dummy).width() > width){
+			$("#" + this.dummy).html(dummy_str);
+			while ($("#" + this.dummy).width() > width) {
 				geometry.cols -= 1;
 				dummy_str = dummy_str.slice(1);
-				$("#"+this.dummy).html(dummy_str);
+				$("#" + this.dummy).html(dummy_str);
 			}
-			geometry.cols -=1;
+			geometry.cols -= 1;
 		}
 		return geometry;
 	},
-	_resize: function (){
+	_resize: function() {
 		var geometry = this.calculate_geometry();
 		this.cols = geometry.cols;
 		this.rows = geometry.rows;
 		$(this).trigger("terminal_resize");
 	},
-	
+
 	// work_resize: function() {
 	// 	var self = this;
 
@@ -536,7 +536,7 @@ goorm.core.terminal.prototype = {
 
 
 		var idx = stdout.indexOf(prom);
-		
+
 		var dir = "";
 
 		if (idx > -1 && stdout !== prom) {
@@ -551,7 +551,7 @@ goorm.core.terminal.prototype = {
 
 			dir = del_enter(dir);
 		}
-		
+
 		if (dir && dir !== "") {
 			$("#g_window_tab_list").find('.tab_title[id$="tab_title__' + this.terminal_name + '"]').attr("filename", dir);
 			this.set_title(dir);
@@ -560,10 +560,10 @@ goorm.core.terminal.prototype = {
 
 	set_title: function(title) {
 		var _title;
-		_title = title.substring(0,title.indexOf('['));
+		_title = title.substring(0, title.indexOf('['));
 
 		var w = core.module.layout.workspace.window_manager.get_window('/', this.terminal_name);
-		
+
 		if (w) {
 			w.title = _title;
 			w.tab.title = _title;
@@ -574,7 +574,7 @@ goorm.core.terminal.prototype = {
 	},
 
 	send_command: function(command, options, callback, callback_prompt) {
-		if(!this.ready){
+		if (!this.ready) {
 			return;
 		}
 
@@ -592,11 +592,9 @@ goorm.core.terminal.prototype = {
 				callback_prompt = callback;
 				callback = options;
 				options = null;
-			}
-			else if (RegExp.prototype.isPrototypeOf(options)) {
+			} else if (RegExp.prototype.isPrototypeOf(options)) {
 				prompt = options;
-			}
-			else {
+			} else {
 				if (options.prompt) {
 					prompt = options.prompt;
 				}
@@ -639,7 +637,7 @@ goorm.core.terminal.prototype = {
 		if (stdout) {
 			this.stdout += stdout;
 		}
-		
+
 		if (!this.command_queue || this.command_queue.length === 0) {
 			this.command_queue = [];
 			return;
@@ -653,20 +651,18 @@ goorm.core.terminal.prototype = {
 
 		if (this.stdout === "") {
 			this.command_ready = true;
-		}
-		else if (prompt && prompt.test(this.stdout)) {
+		} else if (prompt && prompt.test(this.stdout)) {
 			this.command_ready = true;
-		}
-		else if (this.terminal_name != 'debug' && this.stdout) {
+		} else if (this.terminal_name != 'debug' && this.stdout) {
 			var output = this.stdout.replace(/\r\n/g, "").replace(/\n/g, "").replace(/\r/g, "");
 
 			if (prompt.test(output) || this.old_prompt.test(output)) {
 				this.stdout = this.stdout.replace(/\r/g, "");
 				this.command_ready = true;
-			} else if(prompt == "/Build /") {
-				if(this.stdout.indexOf("No such file or directory") >= 0){
+			} else if (prompt == "/Build /") {
+				if (this.stdout.indexOf("No such file or directory") >= 0) {
 					this.stdout = this.stdout.replace(/\r/g, "");
-					this.command_ready = true;	
+					this.command_ready = true;
 				}
 			}
 		}
@@ -765,5 +761,3 @@ goorm.core.terminal.prototype = {
 		setTimeout(self.resize, 1000);
 	}
 };
-
-
