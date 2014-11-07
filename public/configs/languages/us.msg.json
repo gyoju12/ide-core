@@ -1299,7 +1299,7 @@
         "value": "There are some duplicate directories"
     },
     "alert_invalid_folder_name": {
-        "value": "Only alphabets, numbers, _, - and / are allowed."
+        "value": "Only alphabets, numbers and some special characters(_, -, /, (, ), [, ],) are allowed."
     },
     "alert_cannot_export_file": {
         "value": "Can not export file"
@@ -1461,7 +1461,7 @@
         "value": "Do you want to overwrite?"
     },
     "alert_allow_file_has_valid_name": {
-        "value": "File/folder's name should have only alphabets, numbers and _, -."
+        "value": "File/folder's name should have only alphabets, numbers and some special characters(_, -, /, (, ), [, ])."
     },
     "confirmation_project_clean_title": {
         "value": "Project Clean"

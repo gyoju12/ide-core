@@ -20,10 +20,15 @@ goorm.core.file._new = {
 		this.panel = $("#dlg_new_file");
 
 		var dst_name_check = function(dst_name) {
-			var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
+			/*var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
-			return true;
+			return true;*/
+			if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)){
+				return false;
+			}else{
+				return true;
+			}
 		};
 
 		var handle_ok = function() {

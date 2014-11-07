@@ -19,9 +19,14 @@ goorm.core.file._new.folder = {
 		this.panel = $("#dlg_new_folder");
 
 		var dst_name_check = function(dst_name) {
-			var strings = "{}[]()<>?|~`!@#$%^&*+\"' ";
-			for (var i = 0; i < strings.length; i++)
-				if (dst_name.indexOf(strings[i]) != -1) return false;
+			// var strings = "{}[]()<>?|~`!@#$%^&*+\"' ";
+			// for (var i = 0; i < strings.length; i++)
+			// 	if (dst_name.indexOf(strings[i]) != -1) return false;
+			if (/[^a-zA-Z0-9\/\_\-\.\(\)\[\]\\]/.test(dst_name)){
+				return false;
+			}else{
+				return true;
+			}
 
 			if (dst_name.indexOf('..') > -1) return false; // jeongmin: prevent access higher directory
 

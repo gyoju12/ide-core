@@ -14,6 +14,7 @@ var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var fs = require('fs');
+var async = require('async');
 
 
 
@@ -146,45 +147,67 @@ module.exports = {
 	
 	add_user: function(user_list, group_name, callback) {
 		var self = this;
-		var evt = new EventEmitter();
+		// var evt = new EventEmitter();
 
-		evt.on('add_user', function(evt, i) {
-			if (user_list[i]) {
-				var user = user_list[i];
-				// if (user_list[i].indexOf('_') > -1) {
-				// 	user = user.split('_');
-				// 	user.pop();
-				// 	user.join('_');
-				// 	user = user[0];
-				// }
+		// evt.on('add_user', function(evt, i) {
+		// 	if (user_list[i]) {
+		// 		var user = user_list[i];
+		// 		// if (user_list[i].indexOf('_') > -1) {
+		// 		// 	user = user.split('_');
+		// 		// 	user.pop();
+		// 		// 	user.join('_');
+		// 		// 	user = user[0];
+		// 		// }
 
-				self.g_exec(os.user_add(group_name, user), function(result) {
-					evt.emit('add_user', evt, ++i);
-				});
-			} else {
+		// 		self.g_exec(os.user_add(group_name, user), function(result) {
+		// 			evt.emit('add_user', evt, ++i);
+		// 		});
+		// 	} else {
+		// 		callback(true);
+		// 	}
+		// });
+		// evt.emit('add_user', evt, 0);
+		async.each(user_list, function(item, callback){
+			var user = item;
+
+			self.g_exec(os.user_add(group_name, user), function(result) {
+				callback();
+			});
+		}, function(err) {
+			if(!err) {
 				callback(true);
 			}
 		});
-		evt.emit('add_user', evt, 0);
 	},
 
 	del_user: function(user_list, group_name, callback) {
 		var self = this;
 		var evt = new EventEmitter();
 
-		evt.on('del_user', function(evt, i) {
-			if (user_list[i]) {
-				// var user = user_list[i].split('_')[0];
-				var user = user_list[i];
+		// evt.on('del_user', function(evt, i) {
+		// 	if (user_list[i]) {
+		// 		// var user = user_list[i].split('_')[0];
+		// 		var user = user_list[i];
 
-				self.g_exec(os.user_del(group_name, user), function(result) {
-					evt.emit('del_user', evt, ++i);
-				});
-			} else {
+		// 		self.g_exec(os.user_del(group_name, user), function(result) {
+		// 			evt.emit('del_user', evt, ++i);
+		// 		});
+		// 	} else {
+		// 		callback(true);
+		// 	}
+		// });
+		// evt.emit('del_user', evt, 0);
+		async.each(user_list, function(item, callback){
+			var user = item;
+
+			self.g_exec(os.user_del(group_name, user), function(result) {
+				callback();
+			});
+		}, function(err) {
+			if(!err) {
 				callback(true);
 			}
 		});
-		evt.emit('del_user', evt, 0);
 	},
 	
 	

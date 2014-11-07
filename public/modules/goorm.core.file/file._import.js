@@ -194,7 +194,7 @@ goorm.core.file._import = {
 		var self = this;
 		var data = self.dialog_explorer.get_data();
 		var file_list = e.target.files;
-		var filename_check_regexp = /[^a-zA-Z0-9_\-\.]/g;
+		var filename_check_regexp = /[^a-zA-Z0-9_\/\-\.\(\)\[\]]/g;
 
 		if (data.path === "" || data.path === "/") {
 			alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);

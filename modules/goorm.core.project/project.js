@@ -15,6 +15,7 @@ var rimraf = require('rimraf');
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
+var async = require('async');
 
 
 
