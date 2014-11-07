@@ -19,9 +19,14 @@ goorm.core.file._new.folder = {
 		this.panel = $("#dlg_new_folder");
 
 		var dst_name_check = function(dst_name) {
-			var strings = "{}[]()<>?|~`!@#$%^&*+\"' ";
-			for (var i = 0; i < strings.length; i++)
-				if (dst_name.indexOf(strings[i]) != -1) return false;
+			// var strings = "{}[]()<>?|~`!@#$%^&*+\"' ";
+			// for (var i = 0; i < strings.length; i++)
+			// 	if (dst_name.indexOf(strings[i]) != -1) return false;
+			if (/[^a-zA-Z0-9\/\_\-\.\(\)\[\]\\]/.test(dst_name)){
+				return false;
+			}else{
+				return true;
+			}
 
 			if (dst_name.indexOf('..') > -1) return false; // jeongmin: prevent access higher directory
 
@@ -62,11 +67,12 @@ goorm.core.file._new.folder = {
 					if (core.module.terminal.terminal) {
 						// actual making new folder. Jeong-Min Im.
 						function do_fs_mkdir() {
-							core.module.terminal.fs_mkdir(data.path + "/" + data.name, function on_mkdir(data) {
-								var m = data.match(/mkdir\:.*/m);
+							core.module.terminal.fs_mkdir(data.path + "/" + data.name, function on_mkdir(check_data) {
+								var m = check_data.match(/mkdir\:.*/m);
 								if (m) {
 									alert.show(localization.alert_not_directory);
 								} else {
+									core.module.layout.project_explorer.treeview.open_path(data.path);
 									core.module.layout.project_explorer.refresh();
 								}
 							});
@@ -74,7 +80,6 @@ goorm.core.file._new.folder = {
 
 						if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
 							core.module.terminal.fs_rm(data.path + "/" + data.name, function on_delete_file() {
-
 								core.module.layout.project_explorer.refresh();
 
 								var window_manager = core.module.layout.workspace.window_manager;
@@ -104,14 +109,15 @@ goorm.core.file._new.folder = {
 						// actual making new folder. Jeong-Min Im.
 						function do_file_new_folder() {
 							//$.get("file/new_folder", postdata, function (data) {
-							core._socket.once("/file/new_folder", function(data) {
-								if (data.err_code === 0) {
+							core._socket.once("/file/new_folder", function(check_data) {
+								if (check_data.err_code === 0) {
+									core.module.layout.project_explorer.treeview.open_path(data.path);
 									core.module.layout.project_explorer.refresh();
-								} else if (data.err_code == 20) {
-									alert.show(localization[data.message]);
+								} else if (check_data.err_code == 20) {
+									alert.show(localization[check_data.message]);
 
 								} else {
-									alert.show(data.message);
+									alert.show(check_data.message);
 								}
 							});
 

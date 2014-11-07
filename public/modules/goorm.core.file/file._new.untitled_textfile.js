@@ -36,14 +36,15 @@ goorm.core.file._new.untitled_textfile = {
 				current_path: data.path
 			};
 			//$.get("file/new_untitled_text_file", postdata, function (data) {
-			core._socket.once("/file/new_untitled_text_file", function(data){
-				if (data.err_code === 0) {
+			core._socket.once("/file/new_untitled_text_file", function(check_data){
+				if (check_data.err_code === 0) {
+					core.module.layout.project_explorer.treeview.open_path(data.path);	
 					core.module.layout.project_explorer.refresh();
-				} else if (data.err_code == 20) {
-					alert.show(core.module.localization.msg[data.message]);
+				} else if (check_data.err_code == 20) {
+					alert.show(core.module.localization.msg[check_data.message]);
 
 				} else {
-					alert.show(data.message);
+					alert.show(check_data.message);
 				}
 
 			});

@@ -73,6 +73,7 @@ goorm.core.file._import = {
 							}
 
 							notice.show(core.module.localization.msg.notice_file_import_done);
+							core.module.layout.project_explorer.treeview.open_path(goorm.core.file._import.dialog_explorer.get_data().path);
 							core.module.layout.project_explorer.refresh();
 						} else {
 							switch (data.err_code) {
@@ -194,7 +195,7 @@ goorm.core.file._import = {
 		var self = this;
 		var data = self.dialog_explorer.get_data();
 		var file_list = e.target.files;
-		var filename_check_regexp = /[^a-zA-Z0-9_\-\.]/g;
+		var filename_check_regexp = /[^a-zA-Z0-9_\/\-\.\(\)\[\]]/g;
 
 		if (data.path === "" || data.path === "/") {
 			alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
