@@ -1298,7 +1298,7 @@
         "value": "같은 이름의 디렉토리가 존재합니다"
     },
     "alert_invalid_folder_name": {
-        "value": "알파벳과 숫자, _, -, /만 입력 가능합니다."
+        "value": "알파벳, 숫자 그리고 일부 특수문자(_, -, /, (, ), [, ])만 입력 가능합니다."
     },
     "alert_cannot_export_file": {
         "value": "파일을 내보낼 수 없습니다"
@@ -1463,7 +1463,7 @@
         "value": "덮어쓰기 하시겠습니까?"
     },
     "alert_allow_file_has_valid_name": {
-        "value": "파일/폴더 이름은 알파벳과 숫자, _, - 만 가능합니다."
+        "value": "파일/폴더 이름은 알파벳, 숫자 그리고 일부 특수문자(_, -, /, (, ), [, ])만 가능합니다."
     },
     "confirmation_project_clean_title": {
         "value": "프로젝트 클린"

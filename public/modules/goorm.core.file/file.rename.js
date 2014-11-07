@@ -26,7 +26,7 @@ goorm.core.file.rename = {
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
 			return true;*/
-			if (/[^a-zA-Z0-9\_\-\.]/.test(dst_name)){
+			if (/[^a-zA-Z0-9\/\_\-\.\(\)\[\]]/.test(dst_name)){
 				return false;
 			}else{
 				return true;

@@ -9544,11 +9544,12 @@ a.bg-danger:hover {
 }
 
 /* to ignore bootstrap resizing --heeje */
+
 #new_proj_scm_test_bt { 
-	position: fixed;
+	position: absolute;
 	width: 83px;
-	top: 222px;
-	left: 739px;
+	top: -342px;
+	left: 665px;
 }
 
 /* bootstrap sizing fix to prevent border-hiding problem --heeje */
@@ -9565,6 +9566,12 @@ a.bg-danger:hover {
 	}
 	.filetype_contents {
 		width: 532px;
+	}
+	#new_proj_scm_test_bt { 
+		position: initial;
+		width: 83px;
+		top: 222px;
+		left: 739px;
 	}
 }
 
