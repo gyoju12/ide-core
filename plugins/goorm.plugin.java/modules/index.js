@@ -37,9 +37,13 @@ module.exports = {
 		var evt = new EventEmitter();
 		var make_template = require(common.path+"modules/project/new_template.js");
 
+		
 		evt.on("make_template_complete", function (data) {
 			res.json(data);
 		});
+		
+
+		
 		
 		make_template.make_template(req, evt);
 	},

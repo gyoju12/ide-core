@@ -22,7 +22,9 @@ module.exports = {
 		// var workspace = global.__workspace + "/" + req.data.project_author + "_" + req.data.project_name;
 		var workspace = global.__workspace + "/" + req.data.project_dir;
 
-				
+		
+
+		
 
 		// Delete All files in new directory And Create phonegap
 		fs.readFile(workspace+"/goorm.manifest", 'utf-8', function (err, file_data) {
@@ -30,7 +32,7 @@ module.exports = {
 			contents.plugins = req.data.plugins;
 			contents.building_after_save_option = true;
 
-			exec("rm -rf " + workspace + "/*" + " | phonegap create " + workspace + "/", function (stderr, stdout) {
+			exec("rm -rf " + workspace + "/*; phonegap create " + workspace + "/", function (err, stdout, stderr) {
 				fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), 'utf-8', function (err) {
 					
 					if (err === null) {

@@ -103,7 +103,6 @@ goorm.plugin.python = {
 	*/
 	
 	new_project: function(data) {
-
 		var send_data = {
 				"plugin" : "goorm.plugin.python",
 				"data" : data
@@ -135,9 +134,8 @@ goorm.plugin.python = {
 
 		var workspace = core.preference.workspace_path;
 		var absolute_path=workspace+core.status.current_project_path+"/"+classpath+classname;
-
 		
-		core.module.project.run({'cmd': "clear;python "+absolute_path}, function(){
+		core.module.project.run({'cmd': "clear;python "+absolute_path, 'process_name': absolute_path}, function(){
 			core.module.layout.select('terminal'); // jeongmin: show terminal tab
 			callback();
 		});

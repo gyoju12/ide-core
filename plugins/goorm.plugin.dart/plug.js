@@ -71,6 +71,7 @@ goorm.plugin.dart = {
 
 		// this.add_menu_action();
 
+		
 
 		this.linter = core.module.plugin_linter;
 		this.linter.init(this.name); // jeongmin: linter init
@@ -140,30 +141,48 @@ goorm.plugin.dart = {
 		var property = options.property;
 		var path = options.path;
 
-		var send_data = {
-			"plugin": "goorm.plugin.dart",
-			"data": {
-				"project_path": path
-			}
-		};
-
-		$.get('/plugin/run', send_data, function(result) {
+		core.module.project.run({
+			'type': 'Web'
+		}, function (result) {
 			if (result.code == 200) {
 				//success 
 				if (result.run_path) {
-					window.open('.' + result.run_path + '/index.html', 'goormDart', 'width=900, height=400');
+					// open web view on panel
+					var filename = 'index.html';
+					var filepath = result.run_path;
+					var filetype = 'WebView';
+					var title = filepath + filename; // jeongmin: core.status.current_project_path -> filepath. If use current project path as title, id attribute is same as original index.html file. So, there are two elements that has same id and it makes bug!
+
+					var window_manager = core.module.layout.workspace.window_manager;
+
+					var index = window_manager.is_opened(filepath, filename);
+					if (index == -1) {
+						window_manager.open(filepath, filename, filetype, "WebView", {
+							title: title
+						});
+					} else {
+						var webview = window_manager.open(filepath, filename, filetype, "WebView", {
+							title: title
+						});
+						var iframe = $(webview.panel).find("iframe");
+						//console.log("reload iframe");
+						window.iframe = iframe;
+
+						if (iframe.length) iframe[0].contentWindow.location.reload(true);
+					}
 				}
 			}
 
-			core.module.layout.select('terminal'); // jeongmin: show terminal tab
-			callback();
+			if (callback && typeof(callback) === 'function') {
+				callback();
+			}
 		});
 	},
 
-	build: function(options, callback) {
+	build: function(options, callback) { 
 		var property = options.property;
 		var base_dir = core.preference.workspace_path + options.project_path + '/';
-		console.log(property);
+		//console.log(property);
 		var build_options = " " + property['plugin.dart.build_option'];
 		var path = {
 			'out': ' --out=' + base_dir + '/' + property['plugin.dart.main'] + '.dart.js',
@@ -176,7 +195,7 @@ goorm.plugin.dart = {
 			core.module.layout.project_explorer.refresh();
 
 			core.module.layout.select('terminal'); // jeongmin: show terminal tab
-			if (callback) callback();
+			if (callback) callback(true);
 		});
 	},
 
