@@ -123,6 +123,34 @@ goorm.core.edit.prototype = {
             matchBrackets: true,
         });
 
+        //unbind CodeMirror key & shaping searching area --heeje
+        this.editor.setOption("extraKeys", {
+            "Ctrl-G": function() {
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Cmd-G": function() {
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Ctrl-Shift-G": function() {
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            },
+            "Cmd-Shift-G": function() {
+                if (self.editor.getSelection() !== "") {
+                    $("#find_query_inputbox").val(self.editor.getSelection());
+                    if (true) return CodeMirror.PASS;
+                }
+            }
+        });
+
         //cannot edit codeMirror before successfully loaded --heeje
         
         self.font_manager.init(this);
@@ -711,6 +739,7 @@ goorm.core.edit.prototype = {
         this.editor.setOption('autoCloseBrackets', this.auto_close_brackets);
         this.editor.setOption("lineWrapping", this.line_wrapping); // jeongmin: even if these value are false, option must be set
         this.editor.setOption("lineNumbers", this.show_line_numbers);
+	this.editor.setOption("indentWithTabs", this.indent_with_tabs);
 
         if (this.vim_mode) {
             this.editor.setOption("vimMode", true);
@@ -757,6 +786,7 @@ goorm.core.edit.prototype = {
             this.editor.setOption("tabSize", this.indent_unit);
         }
         if (this.indent_with_tabs) {
+            if (this.indent_with_tabs === "false") this.indent_with_tabs = false;
             this.editor.setOption("indentWithTabs", this.indent_with_tabs);
         }
 
@@ -1049,8 +1079,8 @@ goorm.core.edit.prototype = {
                     $("#goorm_bottom").find(".breadcrumb #editor_saved").show();
 
                     if (option == "close") {
+                        __window.tab.close(); // jeongmin: tab should be closed before window close. Because tab accesses window.
                         __window.close();
-                        __window.tab.close();
                     }
 
                     linter_timer = $.debounce(function() {

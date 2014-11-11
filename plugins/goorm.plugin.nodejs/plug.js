@@ -240,14 +240,17 @@ goorm.plugin.nodejs = {
 		var workspace = core.preference.workspace_path;
 		var run_path = workspace + project_path + '/' + source_path + main + '.js';
 
-		var cmd1 = "node " + run_path + " " + run_option;
+		var cmd = "node " + run_path + " " + run_option;
 
-		// core.module.layout.terminal.send_command(cmd1+'\r');
-
-		this.make_server_tab("nodejs", function() {
-			self.bg_terminal.command(cmd1);
-			callback();
-		});
+		if (core.property && core.property.detailedtype === 'default') {
+			core.module.layout.terminal.send_command(cmd+'\r');
+		}
+		else {
+			this.make_server_tab("nodejs", function() {
+				self.bg_terminal.command(cmd);
+				callback();
+			});
+		}
 		
 	},
 

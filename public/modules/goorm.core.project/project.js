@@ -62,6 +62,7 @@ goorm.core.project = {
 						query = {
 							project_path: options.project_path,
 							project_type: options.project_type,
+							detail_type: project_data.detailedtype,
 							class_name: property["plugin." + options.project_type + ".main"],
 							source_path: property["plugin." + options.project_type + ".source_path"]
 						};
@@ -215,10 +216,53 @@ goorm.core.project = {
 	run: function(options, callback) {
 		var self = this;
 
-		if (!options) {
+		this.process_name = null;
+
+		if (options) {
+			if (options.process_name) {
+				this.process_name = options.process_name; // for stop
+			}
+
+			if (options.type == 'Native') {
+				if (Boolean(options.cmd)) {
+					core.module.layout.terminal.send_command(options.cmd + '\r', null, function() {
+						if (callback && typeof(callback)) {
+							callback(true);
+						}
+					});
+				} else {
+					if (callback && typeof(callback)) {
+						callback(false);
+					}
+				}
+
+			} else if (options.type == 'Web') {
+				options.project_path = core.status.current_project_path;
+				options.project_dir = core.status.current_project_path;
+
+				core._socket.once('/plugin/do_web_run', function(result) {
+					if (result.code == 200) {
+						if (callback && typeof(callback)) {
+							callback(result);
+						}
+					} else {
+						if (callback && typeof(callback)) {
+							callback(false);
+						}
+					}
+				});
+				core._socket.emit('/plugin/do_web_run', options);
+
+			} else if (options.cmd) {
+				core.module.layout.terminal.send_command(options.cmd + '\r', function(result) {
+					if (callback && typeof(callback)) {
+						callback(result);
+					}
+				});
+			}
+		} else {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type] !== undefined) {
 				core.status.current_project_absolute_path = core.preference.workspace_path + core.status.current_project_path + "/";
-
 					
 				self.send_run_cmd();
 				
@@ -233,42 +277,6 @@ goorm.core.project = {
 				};
 				core.module.project.display_error_message(result, 'alert');
 			}
-		} else if (options.type == 'Native') {
-			if (Boolean(options.cmd)) {
-				core.module.layout.terminal.send_command(options.cmd + '\r', null, function() {
-					if (callback && typeof(callback)) {
-						callback(true);
-					}
-				});
-			} else {
-				if (callback && typeof(callback)) {
-					callback(false);
-				}
-			}
-
-		} else if (options.type == 'Web') {
-			options.project_path = core.status.current_project_path;
-			options.project_dir = core.status.current_project_path;
-
-			core._socket.once('/plugin/do_web_run', function(result) {
-				if (result.code == 200) {
-					if (callback && typeof(callback)) {
-						callback(result);
-					}
-				} else {
-					if (callback && typeof(callback)) {
-						callback(false);
-					}
-				}
-			});
-			core._socket.emit('/plugin/do_web_run', options);
-
-		} else if (options.cmd) {
-			core.module.layout.terminal.send_command(options.cmd + '\r', function(result) {
-				if (callback && typeof(callback)) {
-					callback(result);
-				}
-			});
 		}
 
 		// if (!options) {
@@ -317,7 +325,7 @@ goorm.core.project = {
 		var property = core.workspace[core.status.current_project_path];
 		var p = property.plugins["goorm.plugin." + core.status.current_project_type];
 		var latest = property.is_latest_build;
-		var build_path = p["plugin." + core.status.current_project_type + ".build_path"];
+		var build_path = p["plugin." + core.status.current_project_type + ".build_path"] || "";
 		var build_main = p["plugin." + core.status.current_project_type + ".main"];
 
 		//language fix -- java -will have to be changed to switch-case if languages using this function are bigger --heeje
@@ -358,9 +366,17 @@ goorm.core.project = {
 				self.send_run_cmd();
 			}
 		});
+
+		var run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main;
+
+		if (core.status.current_project_type == "dart") {
+			run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_main + '.dart.js';
+		}
+
+		console.log(run_file_path, core.status.current_project_path);
 		core._socket.emit('/project/check_latest_build', {
 			"project_path": core.status.current_project_path,
-			"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
+			"run_file_path": run_file_path
 		});
 	},
 
@@ -390,6 +406,27 @@ goorm.core.project = {
 	},
 
 	create: function(options, callback) {
+		// jeongmin: make checkout progress space
+		var loading_bar = $('#dlg_loading_bar');
+		var scm_checkout_progress = $('#scm_checkout_progress');
+
+		// show checkout progress. Jeong-Min Im.
+		var progress_callback = function(data) {
+			scm_checkout_progress.append('<p>' + data + '</p>');
+			scm_checkout_progress.scrollTop(scm_checkout_progress[0].scrollHeight); // scroll to bottom
+		};
+
+		scm_checkout_progress.empty(); // initialize
+		scm_checkout_progress.show();
+
+		loading_bar.find('.progress').hide();
+		loading_bar.find('.modal-dialog').css('width', 400);
+
+		core.module.loading_bar.start({
+			str: core.module.localization.msg.import_sync_to_file_system
+		});
+
+		core._socket.on('/plugin/create/progress', progress_callback);
 		core._socket.once('/plugin/create', function(result) {
 			
 
@@ -397,6 +434,7 @@ goorm.core.project = {
 			callback(result);
 			
 		});
+
 		core._socket.emit('/plugin/create', options);
 	},
 

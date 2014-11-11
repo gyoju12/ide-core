@@ -9,11 +9,12 @@
  **/
 
 var duration = 60 * 60 * 36 // seconds
-
+	
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
-// spawn = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 var fs = require('fs');
+var async = require('async');
 
 
 
@@ -146,45 +147,67 @@ module.exports = {
 	
 	add_user: function(user_list, group_name, callback) {
 		var self = this;
-		var evt = new EventEmitter();
+		// var evt = new EventEmitter();
 
-		evt.on('add_user', function(evt, i) {
-			if (user_list[i]) {
-				var user = user_list[i];
-				// if (user_list[i].indexOf('_') > -1) {
-				// 	user = user.split('_');
-				// 	user.pop();
-				// 	user.join('_');
-				// 	user = user[0];
-				// }
+		// evt.on('add_user', function(evt, i) {
+		// 	if (user_list[i]) {
+		// 		var user = user_list[i];
+		// 		// if (user_list[i].indexOf('_') > -1) {
+		// 		// 	user = user.split('_');
+		// 		// 	user.pop();
+		// 		// 	user.join('_');
+		// 		// 	user = user[0];
+		// 		// }
 
-				self.g_exec(os.user_add(group_name, user), function(result) {
-					evt.emit('add_user', evt, ++i);
-				});
-			} else {
+		// 		self.g_exec(os.user_add(group_name, user), function(result) {
+		// 			evt.emit('add_user', evt, ++i);
+		// 		});
+		// 	} else {
+		// 		callback(true);
+		// 	}
+		// });
+		// evt.emit('add_user', evt, 0);
+		async.each(user_list, function(item, callback){
+			var user = item;
+
+			self.g_exec(os.user_add(group_name, user), function(result) {
+				callback();
+			});
+		}, function(err) {
+			if(!err) {
 				callback(true);
 			}
 		});
-		evt.emit('add_user', evt, 0);
 	},
 
 	del_user: function(user_list, group_name, callback) {
 		var self = this;
 		var evt = new EventEmitter();
 
-		evt.on('del_user', function(evt, i) {
-			if (user_list[i]) {
-				// var user = user_list[i].split('_')[0];
-				var user = user_list[i];
+		// evt.on('del_user', function(evt, i) {
+		// 	if (user_list[i]) {
+		// 		// var user = user_list[i].split('_')[0];
+		// 		var user = user_list[i];
 
-				self.g_exec(os.user_del(group_name, user), function(result) {
-					evt.emit('del_user', evt, ++i);
-				});
-			} else {
+		// 		self.g_exec(os.user_del(group_name, user), function(result) {
+		// 			evt.emit('del_user', evt, ++i);
+		// 		});
+		// 	} else {
+		// 		callback(true);
+		// 	}
+		// });
+		// evt.emit('del_user', evt, 0);
+		async.each(user_list, function(item, callback){
+			var user = item;
+
+			self.g_exec(os.user_del(group_name, user), function(result) {
+				callback();
+			});
+		}, function(err) {
+			if(!err) {
 				callback(true);
 			}
 		});
-		evt.emit('del_user', evt, 0);
 	},
 	
 	
@@ -239,45 +262,9 @@ module.exports = {
 	
 	// change goorm.manifest's permission and owner. Jeong-Min Im.
 	manifest_setting: function(project_path, callback) {
-		var perm = null,
-			own_group = null,
-			chattr_cmd = null,
-			path = null,
-			callback = callback || function() {};
+		
 
-		if (project_path) {
-			if (project_path.indexOf(global.__workspace) > -1) {
-				path = project_path;
-			} else {
-				path = global.__workspace + project_path;
-			}
-
-			if (platform.platform().indexOf('darwin') > -1) {
-				perm = '740 ';
-				own_group = ' ';
-				chattr_cmd = 'chflags uchg ';
-			} else {
-				perm = '774 ';
-				own_group = ':root ';
-				chattr_cmd = 'chattr +i ';
-			}
-
-			if (perm && own_group)
-				exec('chmod ' + perm + path + '/goorm.manifest', function(err) {
-					exec('chown root' + own_group + path + '/goorm.manifest', function(err) {
-						// exec(chattr_cmd + path + '/goorm.manifest', function(err) {	// hidden by jeongmin: change attribute command is not for every file system and if this command is applied, modification isn't permitted
-						// if (err)
-						// console.log('chattr err in manifest_setting:', err);
-
-						callback();
-						// });
-					});
-				});
-			else
-				callback();
-		} else { // jeongmin: error
-			callback();
-		}
+		
 	},
 
 	// change bin's group permission. Jeong-Min Im.

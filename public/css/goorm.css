@@ -2451,7 +2451,7 @@ fieldset {
 	float: right;
 }
 
-.debug_not_active,.history_toolbar_not_activated {
+.run_not_active,.debug_not_active,.history_toolbar_not_activated {
 	opacity: 0.5;
 }
 
@@ -7168,6 +7168,13 @@ div.goorm_menu_item .dropdown-menu {
 
 #chat .user_chat_img {
 	margin-right: 5px;
+	background-color: transparent;
+	background-image:url(../images/goorm.core.collaboration/keyboard_off.png); 
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width:16px; 
+	height:16px;
+	display: inline-block;
 }
 
 #chat .user_new_message_area {
@@ -7208,7 +7215,7 @@ div.goorm_menu_item .dropdown-menu {
 	width:50px;
 	height:50px;
 }
-#chat_user_container ul.list-group li .media-heading img{
+#chat_user_container ul.list-group li .media-heading span{
 	position: absolute;
 	right: -2px;
 	bottom: 1px;
@@ -9527,7 +9534,7 @@ a.bg-danger:hover {
 	top: 1px !important;
 }
 
-#svn_checkout_progress {
+#scm_checkout_progress {
 	height: 300px;
 	overflow: auto;
 	width: inherit;
@@ -9544,11 +9551,12 @@ a.bg-danger:hover {
 }
 
 /* to ignore bootstrap resizing --heeje */
+
 #new_proj_scm_test_bt { 
-	position: fixed;
+	position: absolute;
 	width: 83px;
-	top: 222px;
-	left: 739px;
+	top: -342px;
+	left: 665px;
 }
 
 /* bootstrap sizing fix to prevent border-hiding problem --heeje */
@@ -9565,6 +9573,12 @@ a.bg-danger:hover {
 	}
 	.filetype_contents {
 		width: 532px;
+	}
+	#new_proj_scm_test_bt { 
+		position: initial;
+		width: 83px;
+		top: 222px;
+		left: 739px;
 	}
 }
 
@@ -9587,6 +9601,11 @@ a.bg-danger:hover {
 	padding-right: 12px;	/* jeongmin. for showing full code width */
 }
 
+.CodeMirror-merge .CodeMirror-sizer {
+	padding-right: 12px;	/* jeongmin. for showing full code width */
+	border-right: 18px solid transparent;
+}
+
 .disconnected {
 	width: 100%;
 	height: calc(100% - 27px);
@@ -9606,6 +9625,18 @@ a.bg-danger:hover {
 
 .toolbar_right {
 	float: right !important;
+}
+
+/* bootstrap duplicate */
+.modal.fade .modal-dialog, .modal.in .modal-dialog
+{
+	-webkit-transform: none !important;
+	-ms-transform: none !important;
+	transform: none !important;
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
 }
 
 /* image preload */

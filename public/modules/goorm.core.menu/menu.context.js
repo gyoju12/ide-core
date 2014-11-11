@@ -52,6 +52,10 @@ goorm.core.menu.context.prototype = {
 				if (nobind === false) {
 					$(trigger).mousedown(function(e) {
 						if (e.which == 3) {
+							if (name == "project.explorer_context"){
+								core.module.layout.project_explorer.reset_tree_selected();
+								trigger.find(".jstree").jstree("deselect_all", false);
+							}
 							self.show(e);
 
 							e.preventDefault();

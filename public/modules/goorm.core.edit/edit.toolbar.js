@@ -47,7 +47,7 @@ goorm.core.edit.toolbar = {
 		if(select == "go_to_line") {
 			this.ok_button.html("Go");	//set button text
 			this.select_option.val("Go to Line");	//set select box
-			this.execute_option = goorm.core.edit.go_to_line;	//get go to line			
+			this.execute_option = goorm.core.edit.go_to_line;	//get go to line		
 		}	
 
 		if(this.execute_option.show()) {	//show function in edit.option.js

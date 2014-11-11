@@ -1127,7 +1127,7 @@ module.exports = {
 						var stat = stats[i];
 						var file = {};
 
-						if (name[0] === "." || name === "goorm.manifest" || /_run.js$/.test(name)) {} else {
+						if (name[0] === "." || name === "goorm.manifest" || name === "lost+found" || /_run.js$/.test(name)) {} else {
 							file.filename = name;
 							file.text = name;
 							file.id = relative_path + "/" + name;
@@ -1139,7 +1139,7 @@ module.exports = {
 
 							if (stat.isFile()) {
 								if (folder_only) continue;
-								var type = path.extname(name);
+								var type = path.extname(name).toLowerCase();
 								if (type[0] === '.') type = type.replace(".", "");
 								file.li_attr.file_type = (type !== "") ? _this._set_filetype(type) : "etc";
 								file.type = "file";

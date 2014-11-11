@@ -39,6 +39,10 @@ RedisStore = null;
 
 
 
+
+
+
+
 RedisHost = '127.0.0.1';
 RedisPort = 6379;
 
@@ -145,7 +149,7 @@ goorm.init = function() {
 
 		if (config_data.workspace !== undefined) {
 			global.__workspace = config_data.workspace;
-		} else if (workspace) {
+		} else if (workspace && workspace != 'undefined') {
 			global.__workspace = workspace;
 		} else {
 				
@@ -225,6 +229,8 @@ goorm.connect_db = function() {
 			auto_reconnect: true
 		}
 	}); //global
+	
+
 	
 
 	
@@ -378,6 +384,7 @@ goorm.routing = function() {
 	
 
 	//for plugin
+	goorm.get('/plugin/new', goorm.check_session, routes.plugin.do_new);
 	goorm.get('/plugin/get_list', routes.plugin.get_list);
 	goorm.post('/plugin/get_dialog', goorm.check_session, routes.plugin.get_dialog);
 	goorm.post('/plugin/check_css', routes.plugin.check_css);
@@ -426,6 +433,7 @@ goorm.routing = function() {
 
 	//for help
 	goorm.get('/help/get_readme_markdown', routes.help.get_readme_markdown);
+	
 	goorm.get('/help/send_to_bug_report', routes.help.send_to_bug_report);
 
 		
@@ -591,6 +599,9 @@ goorm.load = function() {
 			});
 
 			cluster.on('listening', function(worker, address) {
+
+				
+
 				// console.log("worker %s listening %s:%s", worker.id, address.address, address.port);
 			});
 
@@ -667,6 +678,10 @@ goorm.load = function() {
 		
 
 		
+
+		
+
+		
 		var set_io = function() {
 			io = socketio.listen(server, {
 				'heartbeatTimeout': 30 * 1000
@@ -680,7 +695,20 @@ goorm.load = function() {
 						'redisSub': global.__redis.sub,
 						'redisClient': global.__redis.store
 					}));
-				})
+				});
+
+				io.set('authorization', function (handshakeData, accept) {
+					if (handshakeData.headers.cookie) {
+					    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+					    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+
+					    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+							return accept('Cookie is invalid.', false);
+					    }
+					}
+
+					accept(null, true);
+				});
 			}
 
 			g_terminal.start(io);

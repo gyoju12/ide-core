@@ -87,6 +87,13 @@ goorm.plugin.linter = {
 	// after build in background terminal, parsing result.
 	__lint: function (__window) {
 		var self = this;
+
+		var active_file_type = __window.filetype;
+		var check_flag = (active_file_type === 'c' || active_file_type === 'cpp' || active_file_type === 'java');
+		if(!check_flag) {
+			return false;
+		}
+		
 		if (__window.project === core.status.current_project_path) {
 			var project_type = core.status.current_project_type;
 			if (project_type === "cpp" || project_type === "c_examples" || project_type === "java" || project_type === "java_examples") {

@@ -15,6 +15,7 @@ var rimraf = require('rimraf');
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
+var async = require('async');
 
 
 
@@ -182,6 +183,11 @@ module.exports = {
 	},
 
 	do_import_check: function(query, file, evt) {
+
+		if(file == null){
+			return false;
+		}
+
 		var data = {};
 		data.err_code = 0;
 		data.type = 'check';
@@ -736,20 +742,20 @@ module.exports = {
 		//var force = data.force ? '-f' : '';
 
 		var callback = function(err, stdout, stderr) {
-				if (err) {
-					console.log(err, stdout, stderr);
+			if (err) {
+				console.log(err, stdout, stderr);
 
-					evt.emit('move_file', {
-						flag: false
-					});
-				}
-				if (i == length - 1 || i == length) {
+				evt.emit('move_file', {
+					flag: false
+				});
+			}
+			if (i == length - 1 || i == length) {
 
-					evt.emit('move_file', {
-						flag: true
-					});
-				}
-			};
+				evt.emit('move_file', {
+					flag: true
+				});
+			}
+		};
 
 		var move = function(current_path, target_path) {
 			exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
@@ -764,11 +770,9 @@ module.exports = {
 
 
 			//console.log(exist_check_path, data.current_path[i], data.after_path);
-			if(fs.existsSync(exist_check_path)) {
-				exec('rm -rf ' + exist_check_path + ' | ' 
-					+ 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-			}
-			else {
+			if (fs.existsSync(exist_check_path)) {
+				exec('rm -rf ' + exist_check_path + ' | ' + 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+			} else {
 				exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
 				//move(data.current_path[i], data.after_path);
 			}
@@ -850,6 +854,33 @@ module.exports = {
 		//2. directory and main file check
 		switch (query.project_type) {
 			case "c_examples":
+				fs.exists(source_path, function(exist) {
+					if (!exist) {
+						evt.emit('check_valid_property', {
+							result: false,
+							code: 1
+						});
+						return false;
+					} else {
+						source_file = source_file + ".c";
+
+						fs.exists(source_file, function(exist) {
+							if (!exist) {
+								evt.emit('check_valid_property', {
+									result: false,
+									code: 2
+								});
+								return false;
+							} else {
+								evt.emit('check_valid_property', {
+									result: true
+								});
+								return true;
+							}
+						});
+					}
+				});
+				break;
 			case "cpp":
 				fs.exists(source_path, function(exist) {
 					if (!exist) {
@@ -859,7 +890,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file += ".c";
+						source_file = (query.detail_type == "cpp") ? source_file + ".cpp" : source_file + ".c";
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {

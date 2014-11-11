@@ -115,7 +115,8 @@ goorm.core.project.open = {
 
 		if (project_path !== "") {
 			core._socket.once('/project/mount', function (result) {
-				callback(result);
+				if(callback && typeof(callback) == "function")
+					callback(result);
 			});
 
 			core._socket.emit('/project/mount', {
@@ -157,9 +158,7 @@ goorm.core.project.open = {
 			});
 		}
 		else {
-			callback({
-				'result': true
-			});
+			callback(true);
 		}
 	},
 
@@ -187,7 +186,6 @@ goorm.core.project.open = {
 
 			localStorage.current_project = JSON.stringify(current_project);
 
-			core.dialog.project_property.refresh_toolbox();
 			core.module.layout.project_explorer.refresh();
 			core.module.layout.project_explorer.refresh_project_selectbox();
 

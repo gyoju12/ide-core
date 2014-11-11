@@ -29,6 +29,9 @@ goorm.core.file._import = {
 			core.module.loading_bar.start({
 				str: core.module.localization.msg.processing
 			});
+
+			self.upload_file_path = data.path + '/'; // jeongmin: for reopening windows
+
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 		};
@@ -42,67 +45,21 @@ goorm.core.file._import = {
 			// kind: "import",
 			success: function() {
 				self.input.on("change", function(e) {
-					self.filename_check(e);
+					var data = self.dialog_explorer.get_data();
+					if (data.path === "" || data.path === "/") {
+						alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
+						self.input.val('');
+						return false;
+					}
+					if(!self.filename_check(e.target.files))
+						self.input.val('');;
+					$('.jstree-clicked').click();
 				});
 
 				var form_options = {
 					target: "#upload_output",
-					success: function(data) {
-						core.module.loading_bar.stop();
-
-						if (data.err_code === 0) {
-							self.panel.modal('hide');
-
-							notice.show(core.module.localization.msg.notice_file_import_done);
-							core.module.layout.project_explorer.refresh();
-						} else {
-							switch (data.err_code) {
-								case 21:
-									confirmation.init({
-										message: (data.file.length == 1) ? "[" + data.file[0] + "] " + core.module.localization.msg.imported_file_exist_single : "[" + data.file.join(", ") + "] " + core.module.localization.msg.imported_file_exist_multiple,
-										yes_text: core.module.localization.msg.confirmation_yes,
-										no_text: core.module.localization.msg.confirmation_no,
-										title: "Confirmation",
-										zIndex: 1001,
-
-										yes: function() {
-											$('#myForm').attr('action', 'file/import?is_overwrite=true');
-											core.module.loading_bar.start({
-												str: core.module.localization.msg.import_in_progress
-											});
-											$('#myForm').submit();
-											self.panel.modal('hide');
-											$('#myForm').attr('action', 'file/import');
-
-										},
-										no: function() {
-											self.dialog_explorer.init(true, true);
-
-											// Prevent working two treeviews at the same(close) time. Jeong-Min Im.
-											setTimeout(function() {
-												core.module.layout.project_explorer.refresh();
-											}, 300);
-
-											$('#myForm').resetForm();
-										}
-									});
-
-									confirmation.show();
-									break;
-								case 20:
-									self.panel.modal('hide');
-									alert.show(core.module.localization.msg.alert_permission_denied);
-									break;
-								case 30:
-									alert.show("[" + data.file.join(", ") + "]<br/>" + core.module.localization.msg.alert_duplicate_dir);
-									break;
-								default:
-									self.panel.modal('hide');
-
-									alert.show(core.module.localization.msg.alert_invalide_query);
-									break;
-							}
-						}
+					success: function (data) {
+						self.files_upload(data);
 					}
 				};
 
@@ -142,8 +99,14 @@ goorm.core.file._import = {
 		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
 				case 13: // 'enter' key
-					$("#g_if_btn_ok").click();
-					break;
+					if (self.input.val() === '') {
+						self.input.click();
+						break;
+					} else {
+						self.upload_file_name = self.input.val();
+						$("#g_if_btn_ok").click();
+						break;
+					}
 			}
 		});
 
@@ -163,27 +126,150 @@ goorm.core.file._import = {
 		});
 	},
 
-	filename_check: function(e) {
+	filename_check: function(file_list) {
 		var self = this;
-		var data = self.dialog_explorer.get_data();
-		var file_list = e.target.files;
-		var filename_check_regexp = /[^a-zA-Z0-9_\-\.]/g;
-
-		if (data.path === "" || data.path === "/") {
-			alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
-			self.input.val('');
-			return false;
-		}
+		var filename_check_regexp = /[^a-zA-Z0-9_\/\-\.\(\)\[\]]/g;
 
 		if (file_list.length > 0) {
 			for (var i = 0; i < file_list.length; i++) {
 				//if (!/^[\w가-힣0-9a-zA-Z._-]*$/.test(file_list[i].name)) { // jeongmin: remove space
 				if (filename_check_regexp.test(file_list[i].name)) {
 					alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
-					self.input.val('');
 					return false;
 				}
 			}
 		}
+		return true;
+	},
+
+	files_upload: function(data) {
+		var self = this;
+		core.module.loading_bar.stop();
+
+		if (data.err_code === 0) {
+			self.panel.modal('hide');
+
+			// jeongmin: close opened windows and reopen these windows
+			var window_manager = core.module.layout.workspace.window_manager;
+			var opening_window = [];
+
+			for (var i = window_manager.window.length - 1; 0 <= i; i--) {
+				for (var j = self.upload_file_name.length - 1; 0 <= j; j--) {
+					if (window_manager.window[i].title == self.upload_file_path + self.upload_file_name[j]) {
+						window_manager.close_by_index(i, i);
+						window_manager.open(self.upload_file_path, self.upload_file_name[j], self.upload_file_name[j].split('.')[1]);
+
+						break; // jeongmin: we found
+					}
+				}
+			}
+
+			notice.show(core.module.localization.msg.notice_file_import_done);
+			// core.module.layout.project_explorer.treeview.open_path(self.dialog_explorer.get_data().path); error occured in drag n drop
+			core.module.layout.project_explorer.refresh();
+		} else {
+			switch (data.err_code) {
+				case 21:
+					confirmation.init({
+						message: (data.file.length == 1) ? "[" + data.file[0] + "] " + core.module.localization.msg.imported_file_exist_single : "[" + data.file.join(", ") + "] " + core.module.localization.msg.imported_file_exist_multiple,
+						yes_text: core.module.localization.msg.confirmation_yes,
+						no_text: core.module.localization.msg.confirmation_no,
+						title: "Confirmation",
+						zIndex: 1001,
+
+						yes: function() {
+							$('#myForm').attr('action', 'file/import?is_overwrite=true');
+							core.module.loading_bar.start({
+								str: core.module.localization.msg.import_in_progress
+							});
+
+							self.upload_file_name = data.file; // jeongmin: for reopening windows
+
+							$('#myForm').submit();
+							self.panel.modal('hide');
+							$('#myForm').attr('action', 'file/import');
+						},
+						no: function() {
+							self.dialog_explorer.init(true, true);
+
+							// Prevent working two treeviews at the same(close) time. Jeong-Min Im.
+							setTimeout(function() {
+								core.module.layout.project_explorer.refresh();
+							}, 300);
+
+							$('#myForm').resetForm();
+						}
+					});
+
+					confirmation.show();
+					break;
+				case 20:
+					self.panel.modal('hide');
+					alert.show(core.module.localization.msg.alert_permission_denied);
+					break;
+				case 30:
+					alert.show("[" + data.file.join(", ") + "]<br/>" + core.module.localization.msg.alert_duplicate_dir);
+					break;
+				default:
+					self.panel.modal('hide');
+
+					alert.show(core.module.localization.msg.alert_invalide_query);
+					break;
+			}
+		}
+	},
+	upload_file_drag: function(files, path, callback) {
+		var self = this;
+		var localization_msg = core.module.localization.msg;
+		var current_project = path ? path: core.status.current_project_path;
+		var fd = new FormData();
+		if(!self.filename_check(files))
+			return;
+		for(var i = 0; i < files.length; i++)
+			fd.append('file', files[i]);
+		fd.append('file_import_location_path', current_project);
+		core.module.loading_bar.start({
+			str: core.module.localization.msg.import_in_progress
+		});
+		jQuery.ajax({
+            url: "file/import",
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: fd,
+            xhr: function() {
+				var xhr_o = $.ajaxSettings.xhr();
+
+				if (xhr_o.upload) {
+					xhr_o.upload.addEventListener('progress', function() {
+						var percent = 0;
+						var position = event.loaded || event.position;
+						var total = event.total;
+						if (event.lengthComputable) {
+							percent = Math.ceil(position / total * 100);
+						}
+
+						core.progressbar.set(percent); // set Progress
+					}, false);
+				}
+
+				return xhr_o;
+			},
+            success: function(data){
+          		self.files_upload(data);	
+            },
+            error: function (e) {
+            	core.module.loading_bar.stop();
+            	if(e.status == 400)
+            		alert.show(core.module.localization.msg.folder_dnd_error);
+            	else
+            		alert.show("Error" + e.status);
+            },
+            complete: function(){
+            	if(jQuery.isFunction(callback))
+            		callback();
+            }
+        });
 	}
 };

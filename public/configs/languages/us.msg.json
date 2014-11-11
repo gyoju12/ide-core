@@ -1299,7 +1299,7 @@
         "value": "There are some duplicate directories"
     },
     "alert_invalid_folder_name": {
-        "value": "Only alphabets, numbers, _, - and / are allowed."
+        "value": "Only alphabets, numbers and some special characters(_, -, /, (, ), [, ],) are allowed."
     },
     "alert_cannot_export_file": {
         "value": "Can not export file"
@@ -1389,10 +1389,10 @@
         "value": "Input search keyword."
     },
     "same_folder_exist_title": {
-        "value": "Same Directory Exists"
+        "value": "Same File/Directory Exists"
     },
     "same_folder_exist": {
-        "value": "Same directory exists. Do you want to merge original directory with the new one?"
+        "value": "Same file/directory exists. If it is file, this file will be deleted and if it is directory, original directory will be merged with the new one. Do you want to go on?"
     },
     "confirmation_save_deleted_file": {
         "value": "This file was deleted. Do you want to re-create this file?"
@@ -1461,12 +1461,18 @@
         "value": "Do you want to overwrite?"
     },
     "alert_allow_file_has_valid_name": {
-        "value": "File/folder's name should have only alphabets, numbers and _, -."
+        "value": "File/folder's name should have only alphabets, numbers and some special characters(_, -, /, (, ), [, ])."
     },
     "confirmation_project_clean_title": {
         "value": "Project Clean"
     },
     "confirmation_project_clean_message": {
         "value": "This project will be cleaned."
+    },
+    "folder_dnd_error" : {
+        "value": "You cannot upload the folder by drag and drop!"
+    },
+    "only_chrome_allowed" : {
+        "value": "Only chrome browser supports this feature."
     }
 }

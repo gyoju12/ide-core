@@ -428,6 +428,9 @@
 			}
 		}
 	},
+	"decompress_file": {
+		"value": "ZIP/TAR 압축 풀기"
+	},
 	"open_terminal_here": {
 		"value": "해당 위치에서 터미널 열기"
 	},
@@ -588,5 +591,65 @@
 	},
 	"open_goorm_edu_lecture": {
 		"value": "goormEDU 강좌 열기"
+	},
+	"Previous": {
+		"value": "이전"
+	},
+	"Play": {
+		"value": "실행"
+	},
+	"Next": {
+		"value": "다음"
+	}, 
+	"Palette": {
+		"value": "팔레트"
+	},
+	"Connect with co-developers": {
+		"value": "연결"
+	}, 
+	"Pencil": {
+		"value": "연필"
+	}, 
+	"Erase": {
+		"value": "지우개"		
+	}, 
+	"Color Wheel": {
+		"value": "색상표"		
+	}, 
+	"Size Slider": {
+		"value": "연필 두께"		
+	}, 
+	"Erase All": {
+		"value": "모두 지우기"		
+	},
+	"Go to Page": {
+		"value": "페이지로 이동하기"
+	}, 
+	"Magnify": {
+		"value": "확대"
+	},
+	"Minify": {
+		"value": "축소"
+	},
+	"Connect/Disconnect": {
+		"value": "연결/연결종료"
+	},
+	"New Window": {
+		"value": "새 창"
+	},
+	"Pause": {
+		"value": "일시정지"
+	},
+	"Stop": {
+		"value": "정지"
+	},
+	"History Rollback": {
+		"value": "작업내역 되돌리기"
+	},
+	"History Delete": {
+		"value": "작업내역 삭제"
+	},
+	"History Delete All": {
+		"value": "작업내역 모두 삭제"
 	}
 }

@@ -47,8 +47,7 @@ goorm.core.project.explorer.prototype = {
 		self.current_project = {};
 
 		// drag & drop file upload
-		//self.drag_n_drop(); disable until all issues are fixed.
-
+		self.drag_n_drop();
 		$(core).on('project_get_list_complete', function() {
 			if (!$.isEmptyObject(localStorage.current_project) && localStorage.current_project != "") {
 				self.current_project = $.parseJSON(localStorage.current_project);
@@ -184,7 +183,7 @@ goorm.core.project.explorer.prototype = {
 				$("#project_treeview").hide();
 				self.make_project_list_table();
 			} else {
-				core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], core.property);
+				
 
 				var temp_project_path = core.status.current_project_path;
 				$("#project_treeview").css("background-color", "#FFF");
@@ -228,7 +227,7 @@ goorm.core.project.explorer.prototype = {
 					core.module.layout.workspace.window_manager.close_by_index(o.index, o.index);
 				}
 			}
-
+			self.drag_n_drop();
 			if (callback && typeof(callback) === 'function') callback();
 		});
 		core.socket.emit("/project/get_list", {
@@ -356,10 +355,6 @@ goorm.core.project.explorer.prototype = {
 			self.current_project.current_project_type = self.project_data[project_idx].contents.type;
 			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
 		} else {
-
-			core.current_project_name = "";
-			//core.status.current_project_path = "";
-			core.current_project_type = "";
 			self.current_project.current_project_path = "";
 			self.current_project.current_project_name = "";
 			self.current_project.current_project_type = "";
@@ -422,7 +417,7 @@ goorm.core.project.explorer.prototype = {
 		this.context_menu_folder.init("configs/menu/goorm.core.project/project.explorer.folder.html", "project.explorer.folder_context", $("#project_treeview"), "", null, null, true);
 
 		this.context_menu_project = new goorm.core.menu.context();
-		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_treeview"), "", null, null, false);
+		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_explorer"), "", null, null, false);
 
 		$(core).on('contextmenu_all_hide', function() {
 			self.hide_all_context_menu();
@@ -556,6 +551,7 @@ goorm.core.project.explorer.prototype = {
 
 			],
 			"sDom": '<"H"f>rt',
+			"iDisplayLength": -1,
 			"oLanguage": {
 				"sEmptyTable": '<span localization_key="project_empty">' + core.module.localization.msg.project_empty + '</span>'
 			}
@@ -585,12 +581,12 @@ goorm.core.project.explorer.prototype = {
 
 			self.on_project_selectbox_change(idx);
 
-			$('#project_selectbox').find('option').each(function(i, item) {
-				if ($(item).html() == selected_project_name) {
-					$('#project_selectbox').val($(item).val());
-					self.on_project_selectbox_change($(item).val());
-				}
-			});
+			// $('#project_selectbox').find('option').each(function(i, item) {
+			// 	if ($(item).html() == selected_project_name) {
+			// 		$('#project_selectbox').val($(item).val());
+			// 		self.on_project_selectbox_change($(item).val());
+			// 	}
+			// });
 		});
 
 		this.styling_search();
@@ -617,102 +613,6 @@ goorm.core.project.explorer.prototype = {
 		filter.find('label').remove();
 	},
 
-	upload_to_project: function (_files, _target, callback) {
-		var self = this;
-		var localization_msg = core.module.localization.msg;
-
-		var files = Array.prototype.slice.call(_files, 0);
-		//var items = _items;
-		var target = _target;
-		var invalid_name_files = [];
-		var path = target.attr('path');
-
-		// TODO: It should be moved to config. where?
-		var total_filesize_limit = 20000000;
-		//var filesize_limit = 10000000;
-		var file_count_limit = 20;
-
-		var fd = new FormData();
-		var total_size = 0;
-
-		if(files.length > file_count_limit) {
-			alert.show(localization_msg.alert_too_many_files_limit_20);
-			return false;
-		}
-		
-		for(var i = files.length -1; i >= 0; i--) {
-			var file = files[i];
-			//var entry = items[i].getAsEntry() ? items[i].getAsEntry() : items[i].webkitGetAsEntry();
-
-			if(/[^.0-9A-Za-z_-]/g.test(file.name) || file.size === 0) {
-				invalid_name_files.push(file);
-				files.splice(i, 1);
-			}
-			/*
-			else if(entry && entry.isDirectory) {
-				alert.show(core.module.localization.msg.alert_folder_upload_is_not_allowed);
-				return false;
-			}*/
-			else {
-				total_size += file.size;
-
-				if(total_size >= total_filesize_limit) {
-				//if(file.size >= filesize_limit) {
-					alert.show(localization_msg.alert_file_size_too_big_to_upload);
-					return false;
-				}
-
-				fd.append('file', file);												
-			}
-		}
-
-		fd.append('target_path', path);
-
-		$.ajax({
-			url: "/upload/dir_file",
-			data: fd,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: "POST",
-			success: function(e, m, xhr) {
-				console.log(arguments);
-				if (xhr.status === 200) {
-					console.log('all done: ' + xhr.status);
-			  	} else {
-			  		// TODO : we have to handle failure more smartly.		  	
-			  		// TODO : handle if the same file exist.
-			  		//alert.show('Upload Fail');
-			  		alert.show(localization_msg.alert_upload_fail);
-					console.log('Something went terribly wrong...');
-			  	}
-			  	core.module.loading_bar.stop();
-			  	self.refresh();			  	
-			  	self.treeview.open_node(target);			  	
-
-			  	if(invalid_name_files.length > 0) {
-				  	var filelist = [];
-
-				  	for(var i = 0; i < invalid_name_files.length; i++) {
-				  		var file = invalid_name_files[i];
-				  		filelist[i] = '"' + invalid_name_files[i].name + '"';
-				  	}
-
-				  	filelist.join('\n');
-
-				  	alert.show(localization_msg.alert_allow_character + '\n' + filelist);
-				 }
-
-				 callback();
-			}
-		});
-
-		// TODO : localization
-		core.module.loading_bar.start({
-			str: localization_msg.loading_bar_folder_upload
-		});
-	},
-
 	drag_n_drop: function() {
 		var self = this;		
 		var treeview = $('#project_treeview');
@@ -720,6 +620,10 @@ goorm.core.project.explorer.prototype = {
 		var isWholerow = true;
 		var isUploading = false;
 		// file drag & drop from local
+		treeview.off('dragover');
+		treeview.off('drop');
+		treeview.off('dragenter');
+		treeview.off('dragleave');
 		treeview.on('dragover', function(e) { 
 			return false; 
 		}) 
@@ -749,26 +653,7 @@ goorm.core.project.explorer.prototype = {
 					return false;
 				}
 			}
-
-			confirmation.init({
-				title: core.module.localization.msg.import_file,
-				message: core.module.localization.msg.confirmation_file_upload,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
-				//yes_localization: 'confirmation_auto_logout_keep_using',
-				//no_localization: 'confirmation_logout',
-				yes: function() {
-					isUploading = true;
-					self.upload_to_project(files, target, callback);					
-				},
-				no: function() {					
-					return false;
-				},
-				close: function() {
-					return false;
-				}
-			});
-			confirmation.show();
+			goorm.core.file._import.upload_file_drag(files, target.attr("path"), callback);						
 			return false; 
 		})
 		.on('dragenter', 'li:not([file_type])', function(e) {
@@ -1291,6 +1176,7 @@ goorm.core.project.explorer.prototype = {
 
 
 		var on_click = function(e, node) {
+			e.stopPropagation();
 			$(core).trigger('contextmenu_all_hide');
 
 			core.status.selected_node = e.target;

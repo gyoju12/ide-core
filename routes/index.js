@@ -339,6 +339,8 @@ exports.plugin.do_create = function(req, res) {
 					
 
 					
+
+					
 					res.json({
 						code: 200,
 						message: "success"
@@ -354,6 +356,12 @@ exports.plugin.do_create = function(req, res) {
 	
 	copy();
 	
+};
+
+exports.plugin.do_new = function(req, res) {
+	req.query.user = req.__user;
+
+	g_plugin.do_new(req.query, res);
 };
 
 exports.plugin.do_web_run = function(req, res) {
@@ -728,8 +736,7 @@ exports.file.get_file = function(req, res) {
 		});
 
 		g_file.get_file(filepath, filename, evt);
-	}
-	else {
+	} else {
 		res.json({});
 	}
 	
@@ -998,6 +1005,8 @@ exports.help.get_readme_markdown = function(req, res) {
 
 	res.json(data);
 };
+
+
 
 exports.help.send_to_bug_report = function(req, res) {
 	var evt = new EventEmitter();

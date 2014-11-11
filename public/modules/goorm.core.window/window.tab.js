@@ -41,7 +41,7 @@ goorm.core.window.tab.prototype = {
 		// this.tabview = tabview;
 		// this.list_menu = list_menu;
 		this.title = options.title || "";
-		this.filename = options.filename;
+		this.filename = options.filename || options.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 		this.filepath = options.filepath;
 
 
@@ -51,8 +51,10 @@ goorm.core.window.tab.prototype = {
 		// };
 
 		//bootstrap start
-		var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
-
+		//var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
+		
+		// changed to timestamp. not using file path anymore for window id
+		var morphed_title = options.id;
 
 		this.tab_list_id = "g_window_tab_" + morphed_title;
 		this.tab_content_id = "g_wndw_tab_ctnt_" + morphed_title;
@@ -93,7 +95,6 @@ goorm.core.window.tab.prototype = {
 			$("#g_window_" + morphed_title).dialog("moveToTop");
 			//self.window.panel.mousedown();
 			self.window.activate();
-
 		});
 
 		$("#" + this.tab_list_id + " .tab_close_button").click(function() {

@@ -81,38 +81,47 @@ goorm.core.window.manager = {
 
 						editor_exist = true;
 
-						self.open(__file.filepath, __file.filename, __file.filetype, __file.editor, __file, function(__window) {
-							var current_window = __window;
-							// arrange windows with each position and size
-							// current_window = self.window[self.index - 1];
+						var open_cb = function(result){
+							self.open(__file.filepath, __file.filename, __file.filetype, __file.editor, __file, function(__window) {
+								var current_window = __window;
+								// arrange windows with each position and size
+								// current_window = self.window[self.index - 1];
 
-							// when the editor was set to vim mode, open the editor as it was
-							if (__file.vim_mode) {
-								var editor = __window.editor;
-								editor.set_option({
-									"vim_mode": true,
-									"shortcut_theme": "vim"
-								});
-							}
+								// when the editor was set to vim mode, open the editor as it was
+								if (__file.vim_mode) {
+									var editor = __window.editor;
+									editor.set_option({
+										"vim_mode": true,
+										"shortcut_theme": "vim"
+									});
+								}
 
-							current_window.left = __file.left;
-							current_window.top = __file.top;
-							current_window.width = __file.width;
-							current_window.height = __file.height;
-							current_window.zindex = __file.zindex;
-							current_window.project = __file.project;
-							current_window.activated = __file.activated;
-							current_window.cursor = __file.cursor;
+								current_window.left = __file.left;
+								current_window.top = __file.top;
+								current_window.width = __file.width;
+								current_window.height = __file.height;
+								current_window.zindex = __file.zindex;
+								current_window.project = __file.project;
+								current_window.activated = __file.activated;
+								current_window.cursor = __file.cursor;
 
-							if (current_window.activated) {
-								active_window = current_window;
-							}
-							current_window.move(__file.top, __file.left);
-							current_window.bind_width(__file.width);
-							current_window.bind_height(__file.height);
+								if (current_window.activated) {
+									active_window = current_window;
+								}
+								current_window.move(__file.top, __file.left);
+								current_window.bind_width(__file.width);
+								current_window.bind_height(__file.height);
 
-							async_callback();
-						});
+								async_callback();
+							});
+						};
+
+						//console.log("WM __file", __file);
+						console.log(__file.filepath.split('/')[0]);
+						core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
+						
+						//console.log("mount test");
+						
 					}, function() {
 						if (active_window) {
 							active_window.activate();
@@ -162,99 +171,6 @@ goorm.core.window.manager = {
 						}
 					});
 
-					////// open previous window by recursive form for sync. Jeong-Min Im. //////
-					// var cb = function(i) {
-					// 	if (file_list.length === i) { // end
-
-					// 		if (file_list.length > 0) { // jeongmin: sometimes window's activation isn't synchronized, so sync it
-					// 			if (self.active_window === -1 || !self.window[self.active_window].activated) { // if active window was merge or debug window, active_window can't find those windows. So, just activate current last window.
-					// 				self.window[self.index - 1].activate();
-					// 			}
-					// 		}
-					// 		if (active_window)
-					// 			active_window.activate();
-					// 		if (maximized) {
-					// 			self.maximize_all();
-					// 		}
-
-					// 		// jeongmin: confirm restoring unsaved data after all opened windows are loaded
-					// 		var language = localStorage["language.confirmation.automatic_change"];
-					// 		if (language && typeof(language) === 'string') language = JSON.parse(language);
-
-					// 		if (localStorage.unsaved_data && language === true) {
-					// 			confirmation.init({
-					// 				message: core.module.localization.msg.confirmation_restore_unsaved_data,
-					// 				yes_text: core.module.localization.msg.confirmation_yes,
-					// 				no_text: core.module.localization.msg.confirmation_no,
-					// 				title: "Confirmation",
-
-					// 				yes: function() {
-					// 					goorm.core.edit.prototype.restore_unsaved_file_from_local();
-					// 				},
-					// 				no: function() {
-					// 					localStorage.unsaved_data = '';
-					// 				}
-					// 			});
-
-					// 			confirmation.show();
-					// 		}
-					// 		return;
-					// 	}
-
-					// 	if (file_list[i].filetype === "merge" || file_list[i].filename === 'debug' || file_list[i].filetype === "terminal" || file_list[i].filetype == 'WebView' || file_list[i].filetype == 'url') // jeongmin: skip merge window and debug window
-					// 		return cb(++i); // go to next window
-
-					// 	// file_list[i].activate = false;	// jeongmin: I don't know why this code is needed
-					// 	self.open(file_list[i].filepath, file_list[i].filename, file_list[i].filetype, file_list[i].editor, file_list[i], function() { // jeongmin: when opening, we communicate with server and it's async. So, we'll do this after communication is done.
-					// 		//TODO: sort by index
-
-					// 		//TODO: arrange windows with each position and size
-					// 		var current_window = self.window[self.index - 1];
-					// 		current_window.left = file_list[i].left;
-					// 		current_window.top = file_list[i].top;
-					// 		current_window.width = file_list[i].width;
-					// 		current_window.height = file_list[i].height;
-					// 		current_window.zindex = file_list[i].zindex;
-					// 		// current_window.status = file_list[i].status;
-					// 		current_window.project = file_list[i].project;
-					// 		current_window.activated = file_list[i].activated;
-					// 		current_window.cursor = file_list[i].cursor;
-
-					// 		if (current_window.activated) {
-					// 			active_window = current_window;
-					// 		}
-
-					// 		if (file_list[i].width <= 200 || file_list[i].height <= 300) {
-					// 			file_list[i].width = 350;
-					// 			file_list[i].height = 250;
-					// 		}
-
-					// 		if (typeof(file_list[i].left) === 'string' && file_list[i].left.indexOf('px')) {
-					// 			file_list[i].left = file_list[i].left.split('px')[0];
-					// 		}
-
-					// 		if (typeof(file_list[i].top) === 'string' && file_list[i].top.indexOf('px')) {
-					// 			file_list[i].top = file_list[i].top.split('px')[0];
-					// 		}
-
-					// 		//??? why three move????
-					// 		current_window.move(file_list[i].top, file_list[i].left);
-					// 		current_window.bind_width(file_list[i].width);
-					// 		current_window.bind_height(file_list[i].height);
-
-					// 		// current_window.status = "normal";
-
-					// 		// if (file_list[i].status == "maximized") {
-					// 		// 	this.maximized = true;
-					// 		// }
-
-					// 		cb(++i); // go to next window
-					// 	});
-
-					// };
-
-					// ////// let's start check previous window //////
-					// cb(0);
 				});
 
 			}
@@ -322,6 +238,22 @@ goorm.core.window.manager = {
 		localStorage.workspace_window = JSON.stringify(window_info);
 	},
 	
+
+		/*
+
+		if (this.recent_window.length==0) {
+			$(".menu-open-recent-file").css('display', 'none');
+			$(".menu-open-recent-file.recent_file_empty").css('display', 'list-item');
+		}
+*/
+	},
+
+	clear_recent_file: function() {
+		this.recent_window = [];
+		this.handle_recent_file();
+		localStorage.setItem('recent_files', JSON.stringify(this.recent_window));
+	},
+	
 	open: function(filepath, filename, filetype, editor, __options, callback) {
 		var self = this;
 		var options = __options || {};
@@ -331,7 +263,6 @@ goorm.core.window.manager = {
 		// 	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
 		// 	return str;
 		// };
-
 		////// file is good to open, so do it! Jeong-Min Im. //////
 		function do_open() {
 			if (filepath !== "/" && filepath !== "") {
@@ -365,6 +296,7 @@ goorm.core.window.manager = {
 
 				var idx = self.window.length - 1;
 
+				options.id = new Date().getTime();
 				options.index = self.window_count++;
 				options.filename = filename;
 				self.add(filepath, filename, filetype, editor, options);
@@ -538,7 +470,7 @@ goorm.core.window.manager = {
 					options.filepath = filepath;
 					this.tab[this.index].init(options);
 
-					this.window[this.index] = new goorm.core.window.panel();
+					this.window[this.index] = new goorm.core.window.panel(); 
 					options.maximized = this.maximized;
 					this.window[this.index].init(filepath, filename, filetype, editor, options);
 
@@ -1311,14 +1243,14 @@ goorm.core.window.manager = {
 									if (workspace_height > this.height) {
 										this.move((workspace_height - (this.height + 12)), this.left);
 									} else {
-										// this.move(0, this.left);
+										this.move(0, this.left); //if this make bug, then call to chw
 									}
 								}
 								if (workspace_width < (this.left + this.width)) {
 									if (workspace_width > this.width) {
 										this.move(this.top, (workspace_width - (this.width + 12)));
 									} else {
-										// this.move(this.top, 0);
+										this.move(this.top, 0); //if this make bug, then call to chw
 									}
 								}
 							}

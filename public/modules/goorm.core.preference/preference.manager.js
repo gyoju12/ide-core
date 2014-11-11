@@ -82,17 +82,19 @@ goorm.core.preference.manager = {
 			parent: "#",
 			icon: false,
 			id: this.treeview_id+"/Preference"
-		}, 
-		{
-			text: json.plugin.label,
-			state: {"opened": true},
-			type: "root",
-			li_attr: {"path": "Plugin", "folder_only": false},
-			a_attr: {"localization_key": "plugin"},
-			parent: "#",
-			icon: false,
-			id: this.treeview_id+"/Plugin"
-		}];
+		}
+		// , 
+		// {
+		// 	text: json.plugin.label,
+		// 	state: {"opened": true},
+		// 	type: "root",
+		// 	li_attr: {"path": "Plugin", "folder_only": false},
+		// 	a_attr: {"localization_key": "plugin"},
+		// 	parent: "#",
+		// 	icon: false,
+		// 	id: this.treeview_id+"/Plugin"
+		// }
+		];
 
 		this.json.core = self.convert_json_to_tree("Preference", json.core.child);
 
@@ -122,9 +124,9 @@ goorm.core.preference.manager = {
 					}
 					
 				}
-				else if(path === "Plugin") {
-					callback(self.plugin_data);
-				}
+				// else if(path === "Plugin") {
+				// 	callback(self.plugin_data);
+				// }
 				else callback(null);
 			}
 		});		

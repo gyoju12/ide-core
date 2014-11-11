@@ -180,7 +180,7 @@
                     </span>
                 </div>
                 <div id="popup_message" class="chat_message_content my_message">
-                    <div id="popup_message_nick"></div>
+                    <div id="popup_message_nick" style="float:right"></div><br>
                     <div id="popup_message_message" class="cm-s-default triangle-border right"></div>
                 </div>
             </div>
@@ -876,9 +876,7 @@
                             <li>
                                 <a href="#" action="help_contents" localization_key="help_help_contents" class="menu-help-contents">Help Contents</a>
                             </li>
-                            <li>
-                                <a href="#" action="help_about_private_url" localization_key="help_about_private_url" class="menu-help-contents">About Private URL</a>
-                            </li>
+                            
                             <li>
                                 <a href="#" action="view_all_shortcuts" name="preference.shortcut.help.view_all_shortcuts" localization_key="help_view_all_shortcuts" class="menu-view-shortcuts">
                                     View All Shortcuts
@@ -1775,7 +1773,7 @@
                                 <span class="sr-only">50% Complete (success)</span>
                             </div>
                         </div>
-                        <div id='svn_checkout_progress' style='display:none;'></div>  <!-- jeongmin: for showing svn checkout progress -->
+                        <div id='scm_checkout_progress' style='display:none;'></div>  <!-- jeongmin: for showing svn checkout progress -->
                     </div>
                     <div class="modal-footer">  <!-- jeongmin: hide or cancel loading -->
                         <button type="button" id="g_lb_btn_hide" class="btn btn-default" localization_key='hide'>Hide</button>
@@ -3324,7 +3322,8 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="padding:13px 13px 13px;">
-                        <button type="button" id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a>
+                        <!-- depreciated -heeje -->
+                        <!-- <button type="button" id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a> -->
                         <button type="button" id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
                         <button type="button" id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
                         <button type="button" id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
@@ -3859,7 +3858,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9"></div> <!-- jeongmin: get along with #help_contents_left's col-md-3 -->
+                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9"></div> 
+                            <!-- jeongmin: get along with #help_contents_left's col-md-3 -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3884,7 +3884,7 @@
                             <div class="well">
                                 <h3>goormIDE Dev Team</h3>
                                 <p class="lead" style="font-size:110%;">
-                                    Sung-tae Ryu, Noori Kim, Byeong-ung Ahn, Hyeong-jun Kim, You-seok Nam, Yong-seong Kim, Jeong-min Im, Hyeong-won Choe, Hee-je Lee, Kyeong-wook Jeong, Seong-ho Cha, Dong-uk Kim, Yu-jeong Jeon
+                                    Sung-tae Ryu, Hyeong-jun Kim, You-seok Nam, Yong-seong Kim, Jeong-min Im, Hyeong-won Choe, Hee-je Lee, Kyeong-wook Jeong, Seong-ho Cha, Dong-uk Kim
                                 </p>
                             </div>
                             <div style="text-align:right; margin-top:30px;">
@@ -4052,63 +4052,7 @@
         <!--
      DIALOG : help.about_private_url
     -->
-        <div class="modal fade" id="dlg_about_private_url" tabindex="-1" role="dialog" aria-labelledby="modal_about_private_url" aria-hidden="true">
-            <div class="modal-dialog" style="width: 800px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_about_private_url" localization_key='help_about_private_url'>About Private URL</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div id="help_about_private_url_left" class="row">
-                            <div id="help_about_private_url_treeview" class="col-md-3">
-                                <div id="nav">
-                                    <ul class="nav list-group">
-                                        <li class="active list-group-item">
-                                            <a href="#private_url">Private URL</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#private_ports">Private Ports</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div id="help_about_private_url_middle" data-spy="scroll" data-target="#nav" class="col-md-9">
-                                <h1>Private URL & Private Ports</h1>
-
-                                <p>이 메뉴얼은 사용자가 PHP/JSP/Node.js을 통하여 자신만의 웹 서버를 구축하여 어떻게 접근하는지에 대해여 적혀있습니다.</p>
-
-                                <div id="private_url">
-                                    <h2>Private URL</h2>
-
-                                    <p><Private URL은 다음과 같은 구조를 갖습니다.</p>
-                                    <p><strong>http://[USER_ID].run.goorm.org/</strong></p>
-
-                                    <p>Private URL은 자신의 홈과 연결되어 있으며, 80은 Apache가 8080은 Tomcat이 붙어있습니다.</p>
-                                    <p>예를 들어, goorm_jsp_project 밑에 index.jsp의 내용을 띄우고 싶다면,</p>
-
-                                    <p>http://[USER_ID].run.goorm.org:8080/goorm_jsp_project/index.php와 같이 접근할 수 있습니다.</p>
-                                </div>
-
-                                <div id="private_ports">
-                                    <h2>Private Ports</h2>
-
-                                    <p>Private Ports는 유저가 자유롭게 쓸 수 있는 Port들입니다.</p>
-                                    <p>유저의 Private Ports는 <strong id="private_ports_1" class="private_ports">12345</strong> / <strong id="private_ports_2" class="private_ports">4223</strong> / <strong id="private_ports_3" class="private_ports">5555</strong>입니다.</p>
-
-                                    <p>예를 들어, Node.js을 통하여 웹 서버를 구축하고 Port 12345를 주어 실행하였다면,</p>
-                                    <p>[USER_ID].run.goorm.org:12345로 접근하시면 됩니다.</p>
-                                </div>
-                            </div> <!-- jeongmin: get along with #help_contents_left's col-md-3 -->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="g_hbr_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
 
         <!--
      DIALOG : preference
@@ -4336,43 +4280,45 @@
                                                     <input name="preference.editor.indent_unit" id="preference.editor.indent_unit" class="form-control" validate="required, number" />
                                                 </div>
 
+                                                <!--
                                                 <label for="preference.editor.undo_depth" localization_key="dialog_preference_editor_first_undo_depth" class="col-md-3 control-label">Undo Depth</label>
                                                 <div class="col-md-3">
                                                     <input name="preference.editor.undo_depth" id="preference.editor.undo_depth" class="form-control" />
                                                 </div>
-
+                                                -->
+                                                
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.indent_with_tabs" id="preference.editor.indent_with_tabs" type="checkbox" id="indent_with_tabs" />
+                                                    <input name="preference.editor.indent_with_tabs" id="preference.editor.indent_with_tabs" type="checkbox" id="indent_with_tabs" class="form-control"/>
                                                     <label for="preference.editor.indent_with_tabs" localization_key="dialog_preference_editor_indent_with_tabs">Indent With Tabs</label>   <!-- jeongmin: put checkbox label inside -->
 
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.show_line_numbers" id="preference.editor.show_line_numbers" type="checkbox" id="show_line_numbers" />
+                                                    <input name="preference.editor.show_line_numbers" id="preference.editor.show_line_numbers" type="checkbox" id="show_line_numbers" class="form-control"/>
                                                     <label for="preference.editor.show_line_numbers" localization_key="dialog_preference_editor_show_line_numbers">Show Line Numbers</label>   <!-- jeongmin: put checkbox label inside -->
 
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.highlight_current_cursor_line" type="checkbox" id="preference.editor.highlight_current_cursor_line" />
+                                                    <input name="preference.editor.highlight_current_cursor_line" type="checkbox" id="preference.editor.highlight_current_cursor_line" class="form-control"/>
                                                     <label for="preference.editor.highlight_current_cursor_line" localization_key="dialog_preference_editor_highlight_current_cursor_line">Highlight Current Cursor Line</label>   <!-- jeongmin: put checkbox label inside -->
 
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.auto_close_brackets" type="checkbox" id="preference.editor.auto_close_brackets" />
+                                                    <input name="preference.editor.auto_close_brackets" type="checkbox" id="preference.editor.auto_close_brackets" class="form-control"/>
                                                     <label for="preference.editor.auto_close_brackets" localization_key="dialog_preference_editor_auto_close_brackets">Use autoCloseBrackets</label>   <!-- jeongmin: put checkbox label inside -->
 
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.line_wrapping" type="checkbox" id="preference.editor.line_wrapping" />
+                                                    <input name="preference.editor.line_wrapping" type="checkbox" id="preference.editor.line_wrapping" class="form-control"/>
                                                     <label for="preference.editor.line_wrapping" localization_key="dialog_preference_editor_line_wrapping">Use Line Wrapping</label>   <!-- jeongmin: put checkbox label inside -->
 
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <input name="preference.editor.rulers" type="checkbox" id="preference.editor.rulers" />
+                                                    <input name="preference.editor.rulers" type="checkbox" id="preference.editor.rulers" class="form-control"/>
                                                     <label for="preference.editor.rulers" localization_key="dialog_preference_editor_rulers">Show Rulers</label>
                                                 </div>
 
@@ -5427,11 +5373,6 @@
                                 </div>
                             </a>
                             <div id="goorm_profile_container" class="row media-body profile_container">
-                                <label for="profile_id_input" localization_key='dialog_goorm_profile_id' class=" col-md-3 control-label">ID :</label>
-                                <div class='col-md-9'>
-                                    <input id="profile_id_input" type="text" name="profile_id_input" class="form-control" readonly="readonly" />
-                                </div>
-
                                 <label for="profile_name_input" localization_key='dialog_goorm_profile_name' class=" col-md-3 control-label">Name :</label>
                                 <div class='col-md-9'>
                                     <input id="profile_name_input" type="text" name="profile_name_input" class="form-control" readonly="readonly" localization_key='signup_name' placeholder="2~15 digits, Hangul/Alphabet/Num/(-/_/./ /)" />
@@ -5842,7 +5783,7 @@
     
 
     </div>
-
+	-->
     <!--
      DIALOG : help_shortcuts
  -->
@@ -6406,6 +6347,8 @@
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/stex/stex.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/xml/xml.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/mode/yaml/yaml.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.0/mode/go/go.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.0/mode/dart/dart.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/keymap/vim.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.0/keymap/sublime.js"></script>
     <!--JS : tty.js-->

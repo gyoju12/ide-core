@@ -20,10 +20,15 @@ goorm.core.file._new = {
 		this.panel = $("#dlg_new_file");
 
 		var dst_name_check = function(dst_name) {
-			var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
+			/*var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
-			return true;
+			return true;*/
+			if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)){
+				return false;
+			}else{
+				return true;
+			}
 		};
 
 		var handle_ok = function() {
@@ -50,8 +55,8 @@ goorm.core.file._new = {
 				type: data.type
 			};
 			//$.get("file/new", postdata, function (data) {
-			core._socket.once("/file/new", function(data) {
-				if (data.err_code == 99) {
+			core._socket.once("/file/new", function(check_data) {
+				if (check_data.err_code == 99) {
 					confirmation.init({
 						message: localization.confirmation_new_message,
 						yes_text: localization.confirmation_yes,
@@ -67,9 +72,9 @@ goorm.core.file._new = {
 					});
 
 					confirmation.show();
-				} else if (data.err_code === 0) {
+				} else if (check_data.err_code === 0) {
 					self.panel.modal('hide');
-
+					core.module.layout.project_explorer.treeview.open_path(data.path);
 					if (self.is_new_anyway) { // jeongmin: if exists and opened, close created file
 						var window_manager = core.module.layout.workspace.window_manager;
 						var windows = window_manager.window;
@@ -90,12 +95,12 @@ goorm.core.file._new = {
 					}
 
 					core.module.layout.project_explorer.refresh();
-				} else if (data.err_code == 20) {
-					var msg = localization[data.message] || data.message;
+				} else if (check_data.err_code == 20) {
+					var msg = localization[check_data.message] || check_data.message;
 					alert.show(msg);
 
 				} else {
-					var msg = localization[data.message] || data.message;
+					var msg = localization[check_data.message] || check_data.message;
 					alert.show(msg);
 				}
 			});

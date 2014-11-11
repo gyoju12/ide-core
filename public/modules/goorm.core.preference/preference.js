@@ -41,7 +41,6 @@ goorm.core.preference = {
 		// read default preference file
 		// if (core.is_optimization) {
 		var json = this.parse_json();
-
 		self.preference = json;
 		core.preference = json;
 		self.preference_default = $.extend(true, {}, json);
@@ -103,7 +102,7 @@ goorm.core.preference = {
 	parse_json: function() {
 		var os = goorm.core.shortcut.manager.getOStype();
 		var json = JSON.parse(external_json['public']['configs']['preferences']['default.json']);
-
+		//console.log(external_json['public']['configs']['preferences']['default.json']);
 		if (!json) json = {};
 
 		if (os == "mac") {
@@ -231,7 +230,7 @@ goorm.core.preference = {
 		}
 
 		this.update_ui();
-		$(core).trigger('renew_stack');
+		//$(core).trigger('renew_stack');
 		core.module.layout.workspace.window_manager.resize_all();
 	},
 
@@ -253,7 +252,7 @@ goorm.core.preference = {
 				key = preference.plugins[$(targets[index]).attr('plugin')];
 			}
 			if (key) {
-				$(targets[index]).find("input.form-control").each(function() {
+				$(targets[index]).find("input").each(function() {
 					var value;
 
 					if ($(this).attr("type") === "checkbox") {
@@ -300,9 +299,10 @@ goorm.core.preference = {
 				$(targets[index]).find("input.form-control").each(function() {
 					var name = $(this).attr("name");
 					var type = $(this).attr("type");
-
+					
 					if (key[name] !== "undefined") {
 						if (type == "checkbox") {
+							
 							if (key[name] == "true" || key[name] === true) {
 								$(this).iCheck("check"); //jeongmin: change to iCheck
 							} else {
@@ -389,13 +389,6 @@ goorm.core.preference = {
 			} else {
 				if ($("#preference\\.editor\\.indent_unit").val() < 1) {
 					return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
-				}
-			}
-			if (!/^[0-9]*$/.test($("#preference\\.editor\\.undo_depth").val())) {
-				return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
-			} else {
-				if ($("#preference\\.editor\\.undo_depth").val() < 1) {
-					return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
 				}
 			}
 

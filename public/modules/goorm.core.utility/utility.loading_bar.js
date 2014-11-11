@@ -18,6 +18,15 @@ goorm.core.utility.loading_bar = {
 		this.panel = $('#dlg_loading_bar'); // loading bar dialog
 		this.goorm_progress_bar = $('#goorm_progress_bar'); // progress bar in bottom status bar
 
+		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var offset_width = (($(window).width() - $dialog.width()) / 2);
+			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
+
 		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
 		$("#g_lb_btn_hide").click(function() {
 			var now = self.panel.find(".progress-bar").attr("aria-valuenow"); // get current loading bar progress percentage

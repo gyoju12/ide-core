@@ -66,18 +66,14 @@ goorm.core.help.about_private_url = {
 
 		this.panel.on('shown.bs.modal', function() {
 			$('help_about_private_url_middle[data-spy="scroll"]').each(function() {
-				var $spy = $(this).scrollspy('refresh')
+				var $spy = $(this).scrollspy('refresh');
 			});
 		});
 	},
 
 	show: function() {
-		if (this.user_ports && this.user_ports.length > 0) {
-			$('#private_ports_1').html(this.user_ports[0])
-			$('#private_ports_2').html(this.user_ports[1])
-			$('#private_ports_3').html(this.user_ports[2])
-		}
+		var self = this;
 
-		this.panel.modal('show');
+		
 	}
 };

@@ -38,6 +38,7 @@ goorm.core.window.panel = function() {
 	this.undo_depth = 0; // to remember undo. remove '*' sign when save and modify.
 	this.done = null;
 	this.options = null;
+	this.id = null;
 
 	this.history_edit = {
 		undo: 0,
@@ -217,129 +218,142 @@ goorm.core.window.panel.prototype = {
 				this.title = this.filepath + this.filename;
 			}
 
-			var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
-
-			if (editor == "Editor") {
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
-				core.module.localization.apply({
-					'placeholder_editor': {
-						'value': core.module.localization.msg.placeholder_editor
-					}
-				}); // jeongmin: placeholder localization
-			}
+		// var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
+		// var morphed_title = new Date().getTime();
+		var morphed_title = options.id;
+		
+		if (editor == "Editor") {
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
+			core.module.localization.apply({
+				'placeholder_editor': {
+					'value': core.module.localization.msg.placeholder_editor
+				}
+			}); // jeongmin: placeholder localization
+		}
+		
+		
+		else if (this.filename == "debug" && editor == "Terminal") {
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+			$(this.panel).on("mousedown", $.throttle(function(i, e) {
+	            self.activate();
+	        }, 200));
+		}
 			
-			
-			else if (this.filename == "debug" && editor == "Terminal")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
-			
-			else if (editor == "WebView")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
-			else if (editor == "Custom")
-				this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+		
+		else if (editor == "WebView")
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+		else if (editor == "Custom")
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
 
-			this.workspace.append(this.panel);
-			var on_panel_create = function() {
-				var mode;
+		this.workspace.append(this.panel);
+		var on_panel_create = function() {
+			var mode;
 
-				if (self.storage == "goormIDE_Storage") {
-					if (editor == "Editor") {
+			if (self.storage == "goormIDE_Storage") {
+				if (editor == "Editor") {
 
-						self.type = "Editor";
+					self.type = "Editor";
 
-						
-						
+					
+					
+					mode = core.filetypes[self.inArray(self.filetype)].mode;
+					
+					self.panel.dialog("option", "title", title);
+
+					self.editor = new goorm.core.edit();
+					//bootstrap start
+					self.editor.init("#g_window_" + morphed_title, self.title, self.filepath, options);
+					//bootstrap end
+					//
+					self.editor.load(self.filepath, self.filename, self.filetype, options);
+					self.editor.set_mode(mode);
+
+				}
+				
+				
+				else if (this.filename == "debug" && editor == "Terminal") {
+					self.type = "Terminal";
+					// self.title = "debug";
+
+					self.terminal = new goorm.core.terminal();
+
+					self.terminal.init($("#g_window_" + morphed_title), self.filename, true);
+
+					self.panel.parent().height(parseInt(self.panel.parent().height()));
+
+					// $("#g_window_" + morphed_title).css("overflow", "auto");
+
+					// self.panel.setFooter("");
+				}
+				
+				else if (editor == "WebView") {
+					self.type = "WebView";
+					var title = (options.title) ? options.title : self.title;
+
+					
+
+					var iframe = $("<iframe src='" + self.filepath + "/" + self.filename + "' style='width:100%;height:100%;border:0;background:white'>");
+					$(self.panel).css("overflow", "hidden").html(iframe);
+					// .end().find(".ui-dialog-title").text("[Web view] "+title);
+					self.panel.dialog("option", "title", "[Web view] " + title);
+
+					// iframe cannot bind onclick event
+					iframe.on("load", function() {
+						$(this).contents().find("body").on("click", function() {
+							self.panel.mousedown();
+						}).on("keydown keypress keyup", function(e) {
+							var evt = $.Event(e.type);
+							evt.which = e.which;
+							evt.keyCode = e.keyCode;
+							evt.ctrlKey = e.ctrlKey;
+							evt.metaKey = e.metaKey;
+							evt.altKey = e.altKey;
+							evt.shiftKey = e.shiftKey;
+
+							$(document).trigger(evt);
+
+							////// jeongmin: prevent occurring multiple events //////
+							var shortcut_manager = core.module.shortcut_manager;
+							var key_string = shortcut_manager.make_shortcut_input(e); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
+							if (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1) { // there is shortcut! So, manually triggered event will do something
+								e.stopPropagation(); // and we don't have to propagate original key event
+								e.preventDefault();
+							}
+						}).on("mousemove mouseup", function(e) { // not resized properly when heading to inside by drag. we have to send correct pageX, Y positions to outside.																
+							e.pageX += self.panel.parent().offset().left;
+							e.pageY += self.panel.parent().offset().top;
+
+							$(document).trigger(e);
+						});
+					});
+
+					// self.panel.setFooter("Web view is running");
+				} else if (editor == "Custom") {
+					//for Custom Window
+					self.plug();
+
+				} else if (self.inArray(self.filetype) > -1) {
+					self.type = core.filetypes[self.inArray(self.filetype)].editor;
+
+					if (self.type == "Editor") {
 						mode = core.filetypes[self.inArray(self.filetype)].mode;
-						
-						self.panel.dialog("option", "title", title);
-
-						self.editor = new goorm.core.edit();
-						//bootstrap start
-						self.editor.init("#g_window_" + morphed_title, self.title, self.filepath, options);
-						//bootstrap end
-						//
+						self.editor = new goorm.core.edit(this);
+						self.editor.init(self.panel.find(".window_container"), null, self.filepath);
 						self.editor.load(self.filepath, self.filename, self.filetype, options);
 						self.editor.set_mode(mode);
 
-
 					}
-					
-					
-					else if (this.filename == "debug" && editor == "Terminal") {
-						self.type = "Terminal";
-						// self.title = "debug";
+				} else { // default txt
+					mode = 'text/javascript';
 
-						self.terminal = new goorm.core.terminal();
+					self.editor = new goorm.core.edit(this);
+						// self.editor.init(self.panel.find(".window_container"), null, self.filepath);
+						// self.editor.init("#g_window_"+timestamp, null, self.filepath);
+						// self.editor.load(self.filepath, self.filename, self.filetype, options);
 
-						self.terminal.init($("#g_window_" + morphed_title), self.filename, true);
-
-						self.panel.parent().height(parseInt(self.panel.parent().height()));
-
-						// $("#g_window_" + morphed_title).css("overflow", "auto");
-
-						// self.panel.setFooter("");
-					}
-					
-					else if (editor == "WebView") {
-						self.type = "WebView";
-						var title = (options.title) ? options.title : self.title;
-
-						var iframe = $("<iframe src='" + self.filepath + "/" + self.filename + "' style='width:100%;height:100%;border:0;background:white'>");
-						$(self.panel).css("overflow", "hidden").html(iframe);
-						// .end().find(".ui-dialog-title").text("[Web view] "+title);
-						self.panel.dialog("option", "title", "[Web view] " + title);
-
-						// iframe cannot bind onclick event
-						iframe.on("load", function() {
-							$(this).contents().find("body").on("click", function() {
-								self.panel.mousedown();
-							}).on("keydown keypress keyup", function(e) {
-								var evt = $.Event(e.type);
-								evt.which = e.which;
-								evt.keyCode = e.keyCode;
-								evt.ctrlKey = e.ctrlKey;
-								evt.metaKey = e.metaKey;
-								evt.altKey = e.altKey;
-								evt.shiftKey = e.shiftKey;
-
-								$(document).trigger(evt);
-
-								////// jeongmin: prevent occurring multiple events //////
-								var shortcut_manager = core.module.shortcut_manager;
-								var key_string = shortcut_manager.make_shortcut_input(e); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
-								if (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1) { // there is shortcut! So, manually triggered event will do something
-									e.stopPropagation(); // and we don't have to propagate original key event
-									e.preventDefault();
-								}
-							}).on("mousemove mouseup", function(e) { // not resized properly when heading to inside by drag. we have to send correct pageX, Y positions to outside.																
-								e.pageX += self.panel.parent().offset().left;
-								e.pageY += self.panel.parent().offset().top;
-
-								$(document).trigger(e);
-							});
-						});
-
-						// self.panel.setFooter("Web view is running");
-					} else if (editor == "Custom") {
-						//for Custom Window
-						self.plug();
-
-					} else if (self.inArray(self.filetype) > -1) {
-						self.type = core.filetypes[self.inArray(self.filetype)].editor;
-
-						if (self.type == "Editor") {
-							mode = core.filetypes[self.inArray(self.filetype)].mode;
-							self.editor = new goorm.core.edit(this);
-							self.editor.init(self.panel.find(".window_container"), null, self.filepath);
-							self.editor.load(self.filepath, self.filename, self.filetype, options);
-							self.editor.set_mode(mode);
-
-						}
-					} else { // default txt
-						mode = 'text/javascript';
-
-						self.editor = new goorm.core.edit(this);
 						self.editor.init(self.panel.find(".window_container"));
 						self.editor.load(self.filepath, self.filename, 'txt', options);
+
 						self.editor.set_mode(mode);
 					}
 				}
@@ -397,6 +411,10 @@ goorm.core.window.panel.prototype = {
 					}
 					var menu_undo = $(".menu-undo[action=do_undo]").parent();
 					var menu_redo = $(".menu-redo[action=do_redo]").parent();
+					var button_redo = $("button[action=do_redo]");
+					var button_undo = $("button[action=do_undo]");
+					button_undo.addClass('disabled');
+					button_redo.addClass('disabled');
 					menu_redo.addClass('disabled');
 					menu_undo.addClass('disabled');
 					$("<table class='disconnected'><tr><td><img src='images/goorm.core.window/disconnected.png' /><br />Goorm is trying to reconnect the server.<br />But we recommend you to refresh this page.</td></tr></table>").appendTo(self.panel.parent()).css('display', 'none');
@@ -432,6 +450,10 @@ goorm.core.window.panel.prototype = {
 								self.tab.is_saved = true;
 								var menu_undo = $(".menu-undo[action=do_undo]").parent();
 								var menu_redo = $(".menu-redo[action=do_redo]").parent();
+								var button_redo = $("button[action=do_redo]");
+								var button_undo = $("button[action=do_undo]");
+								button_undo.addClass('disabled');
+								button_redo.addClass('disabled');
 								menu_redo.addClass('disabled');
 								menu_undo.addClass('disabled');
 								window_manager.close_by_title(self.title);
@@ -682,19 +704,26 @@ goorm.core.window.panel.prototype = {
 
 				var menu_undo = $(".menu-undo[action=do_undo]").parent();
 				var menu_redo = $(".menu-redo[action=do_redo]").parent();
+				var button_redo = $("button[action=do_redo]");
+				var button_undo = $("button[action=do_undo]");
 
 				if (this.history_edit.redo > 0) {
 					menu_redo.removeClass('disabled');
+					button_redo.removeClass('disabled');
 				} else if (this.history_edit.redo <= 0) {
 					menu_redo.addClass('disabled');
+					button_redo.addClass('disabled');
 				}
 
 				if (this.history_edit.undo > 0) {
 					menu_undo.removeClass('disabled');
+					button_undo.removeClass('disabled');
 				} else if (this.history_edit.undo <= 0) {
 					menu_undo.addClass('disabled');
+					button_undo.addClass('disabled');
 				}
 
+				//console.log(this.undo_depth, this.history_edit.undo);
 				if (this.undo_depth != null && this.history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
 					if (this.history_edit.redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
 						this.set_saved();
@@ -973,12 +1002,16 @@ goorm.core.window.panel.prototype = {
 					$("a[action=comment_selected]").parent().removeClass("disabled");
 					$("a#parent_merge_menu").parent().removeClass("disabled");
 					$("a#parent_refactor_menu").parent().removeClass("disabled");
+
+
 				} else {
 					$('#editor_status').hide();
 
 					if (this.type !== "Merge") {
 						$("a[action=do_undo]").parent().addClass("disabled");
 						$("a[action=do_redo]").parent().addClass("disabled");
+						$("button[action=do_redo]").addClass("disabled");
+						$("button[action=do_undo]").addClass("disabled");
 						$("a[action=do_delete]").parent().addClass("disabled");
 						$("a[action=select_all]").parent().addClass("disabled");
 						$("a[action=do_go_to_line]").parent().addClass("disabled");
@@ -995,6 +1028,25 @@ goorm.core.window.panel.prototype = {
 
 				if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
 					core.module.layout.outline.clear();
+				}
+
+				if (this.type == 'Editor') { //editor undo/redo fix --heeje
+					var stack = this.editor.collaboration.getStack();
+					if (stack.undo > 0) {
+						$("a[action=do_undo]").parent().removeClass("disabled");
+						$("button[action=do_undo]").removeClass("disabled");
+					} else {
+						$("a[action=do_undo]").parent().addClass("disabled");
+						$("button[action=do_undo]").addClass("disabled");
+					}
+
+					if (stack.redo > 0) {
+						$("a[action=do_redo]").parent().removeClass("disabled");
+						$("button[action=do_redo]").removeClass("disabled");
+					} else {
+						$("a[action=do_redo]").parent().addClass("disabled");
+						$("button[action=do_redo]").addClass("disabled");
+					}
 				}
 			}
 
@@ -1017,7 +1069,7 @@ goorm.core.window.panel.prototype = {
 
 			var project = this.filepath.split("/").shift();
 			// var title = (this.options.title) ? this.options.title : this.title; //annotation - Donguk Kim
-			var title = (this.options.filename); //Panel display name change - Donguk Kim
+			var title = (this.options.filename) ? this.options.filename : this.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 
 			this.panel.dialog("option", "title", title);
 

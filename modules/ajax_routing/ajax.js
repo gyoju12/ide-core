@@ -9,6 +9,7 @@
  **/
 
 var fs = require("fs");
+var fse = require("fs-extra");
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
@@ -45,8 +46,6 @@ var check_valid_path = function(str) {
 
 
 
-
-
 module.exports = {
 	start: function(io) {
 		var self = this;
@@ -79,14 +78,14 @@ module.exports = {
 							var fs_access = false;
 
 							self.get_user_data(socket, function(user_data) {
-								if (user_data.result) {	
+								if (user_data.result) {
 									fs_access = true;
 
 									user_data = user_data.data;
 
 									var id = user_data.id;
 
-									fs_socket.set('id_type', JSON.stringify({
+									fs_socket.set('fs_id', JSON.stringify({
 										'id': id
 									}));
 
@@ -348,7 +347,7 @@ module.exports = {
 
 			
 
-			socket.on('/plugin/create', function (msg) {
+			socket.on('/plugin/create', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -390,10 +389,25 @@ module.exports = {
 								}
 							}
 
-							exec('cp -r ' + template + '/* ' + workspace, function(__err) {
-								if (__err) {
-									console.log("do_create error!:", __err);
+							// jeongmin: show copy progress
+							var copy_progress = spawn('rsync', ['-ah', '--progress', template + '/', workspace]);
+
+							copy_progress.stderr.on('data', function(data) {
+								var buf = new Buffer(data);
+
+								console.log('copy error in do_create:', buf.toString());
+							});
+
+							copy_progress.stdout.on('data', function(data) {
+								var buf = new Buffer(data);
+								var progress = buf.toString();
+
+								if (progress.indexOf('to-check') < 0) { // jeongmin: don't show detail progress
+									socket.to().emit('/plugin/create/progress', buf.toString());
 								}
+							});
+
+							copy_progress.on('close', function(code, signal) {
 								fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
 									var contents = JSON.parse(file_data);
 
@@ -405,8 +419,10 @@ module.exports = {
 										mode: 0700
 									}, function(err) {
 										if (err) {
-											console.log(err);
+											console.log('goorm.manifest write err in do_create:', err);
 										}
+										
+
 										
 
 										
@@ -420,6 +436,39 @@ module.exports = {
 									});
 								});
 							});
+
+							// fse.copy(template, workspace, function (__err) {
+							// 	if (__err) {
+							// 		console.log("do_create error!:", __err);
+							// 	}
+							// 	fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+							// 		var contents = JSON.parse(file_data);
+
+							// 		contents.plugins = project_data.plugins;
+							// 		contents.detailedtype = project_data.project_detailed_type;
+
+							// 		fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+							// 			encoding: 'utf-8',
+							// 			mode: 0700
+							// 		}, function(err) {
+							// 			if (err) {
+							// 				console.log(err);
+							// 			}
+							// 			
+
+							// 			
+
+							// 			
+
+							// 			
+							// 			socket.to().emit('/plugin/create', {
+							// 				code: 200,
+							// 				message: "success"
+							// 			});
+							// 			
+							// 		});
+							// 	});
+							// });
 						};
 
 						
@@ -431,42 +480,34 @@ module.exports = {
 				});
 			});
 
-			socket.on('/plugin/do_web_run', function (msg) {
+			socket.on('/plugin/do_web_run', function(msg) {
 				var uid = null;
 				var gid = null;
 				var copy = function() {
 					var workspace = global.__workspace + "/" + msg.project_path;
 
-					var target_path = __temp_dir + "plugins/web/" + msg.project_path;
+					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + msg.project_path : __temp_dir + "plugins/web/" + msg.project_path;
 
 					var run_path = target_path.split("temp_files").pop();
+					fse.ensureDir(target_path, function(__err1) {
+						fse.copy(workspace, target_path, function(__err2) {
+							if (__err1 || __err2) {
+								console.log('do_web_run Err:', __err1, __err2);
+								socket.to().emit('/plugin/do_web_run', {
+									code: 500,
+									message: "Copy Error",
+								});
+							} else {
 
-					if (!fs.existsSync(__temp_dir)) {
-						fs.mkdirSync(__temp_dir);
-					}
-					if (!fs.existsSync(__temp_dir + "/plugins")) {
-						fs.mkdirSync(__temp_dir + "/plugins");
-					}
-					if (!fs.existsSync(__temp_dir + "/plugins/web")) {
-						fs.mkdirSync(__temp_dir + "/plugins/web");
-					}
-					if (!fs.existsSync(target_path)) {
-						fs.mkdirSync(target_path);
-					}
+								
 
-					exec('cp -r ' + workspace + '/* ' + target_path, function(__err) {
-						if (__err) {
-							console.log('do_web_run Err:', __err);
-						} else {
-
-							
-
-							res.json({
-								code: 200,
-								message: "success",
-								run_path: run_path
-							});
-						}
+								socket.to().emit('/plugin/do_web_run', {
+									code: 200,
+									message: "success",
+									run_path: run_path
+								});
+							}
+						});
 					});
 				};
 				
@@ -1169,11 +1210,12 @@ module.exports = {
 
 			
 			
+			/*
 			
 			
 
 			
-
+			*/
 			socket.on('/upload/dir_skeleton', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
@@ -1185,18 +1227,18 @@ module.exports = {
 						var project_path = (path[0] !== "") ? path[0] : path[1];
 
 						evt.on("upload_dir_skeleton", function(data) {
-							res.json(data);
+							socket.emit('/upload/dir_skeleton', data);
 						});
 
 						// validate permission
 						// 
-						g_auth_p.can_edit_project(user_data.id, project_path, function(can_edit) {
+						g_auth_project.can_edit_project(user_data.id, project_path, function(can_edit) {
 							if (can_edit) {
 								msg.user_id = user_data.id;
 
 								g_file.upload_dir_skeleton(msg, evt);
 							} else {
-								res.json({
+								socket.emit('/upload/dir_skeleton', {
 									err_code: 20,
 									message: "Permission denied"
 								});
@@ -1205,6 +1247,8 @@ module.exports = {
 					}
 				});
 			});
+
+			
 
 			///////
 			//API end
@@ -1217,8 +1261,11 @@ module.exports = {
 
 	get_session_id: function(socket_id, callback) {
 		var client = this.io.sockets.socket(socket_id);
+		var url = 'id_type';
 
-		client.get('id_type', function(err, data) {
+		
+
+		client.get(url, function(err, data) {
 			if (data) {
 				try { // jeongmin: try catching
 					data = JSON.parse(data);
@@ -1253,7 +1300,7 @@ module.exports = {
 	get_user_data: function(socket, callback) {
 		var self = this;
 
-		var load_from_socket_id = function (cb) {
+		var load_from_socket_id = function(cb) {
 			var socket_id = socket.id;
 
 			self.get_session_id(socket_id, function(sessionID) {
@@ -1310,7 +1357,7 @@ module.exports = {
 			});
 		};
 
-		var load_from_session_id = function (cb) {
+		var load_from_session_id = function(cb) {
 			var sessionID = socket.handshake.sessionID;
 
 			store.client.get(sessionID, function(err, user_data) {
@@ -1337,17 +1384,15 @@ module.exports = {
 		};
 
 		if (global.__redis_mode && socket && socket.handshake && socket.handshake.sessionID) {
-			load_from_session_id(function (load) {
+			load_from_session_id(function(load) {
 				if (load.result) {
 					callback(load);
-				}
-				else {
-					load_from_socket_id(function (load) {
+				} else {
+					load_from_socket_id(function(load) {
 						if (load.result) {
 							callback(load);
-						}
-						else {
-							
+						} else {
+
 						}
 					});
 				}

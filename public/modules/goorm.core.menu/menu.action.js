@@ -30,7 +30,7 @@ goorm.core.menu.action = {
 			$("a[href='#new_project_template']").click();
 
 			core.dialog.new_project.show();
-			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+			//$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
 		
@@ -41,7 +41,7 @@ goorm.core.menu.action = {
 			core.dialog.new_project.show({
 				next_button: false
 			});
-			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+			//$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
 
@@ -385,6 +385,11 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.undo();
+					//window_manager.window[window_manager.active_window].set_modified();
+					$(core).trigger('undo_redo_pressed', { // make event --heeje
+                    	undo: true,
+                    	redo: false
+                	});
 				}
 			}
 		});
@@ -400,6 +405,11 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.redo();
+					$(core).trigger('undo_redo_pressed', { // make event --heeje
+                    	undo: false,
+                    	redo: true
+                	});
+					//window_manager.window[window_manager.active_window].set_modified();
 				}
 			}
 		});
@@ -776,6 +786,12 @@ goorm.core.menu.action = {
 			if (run_lock.data('disable') === true) {
 				return false;
 			}
+
+			if (goorm.core.project.is_building === true) {
+				setTimeout(function(){$("[action=run]").click();}, 300);
+				return false;	
+			}
+
 			run_lock.data('disable', true);
 			// window.setTimeout(function() {
 			var temp = $.debounce(function() {
@@ -788,11 +804,21 @@ goorm.core.menu.action = {
 
 		$("[action=stop]").off("click").tooltip();
 		$("[action=stop]").click(function() {
-			var cmd = "\x03\n"
+			var cmd = "";
+			var terminal = null;
+
+			if (core.module.project.process_name) {
+				cmd = "ps -ef | grep " + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
+				terminal = core.module.terminal.terminal;
+			}
+			else {
+				cmd = "\x03\n";
+				terminal = core.module.layout.terminal;
+			}
 
 			if (core.module.project.is_running && !$('button[action="stop"]').hasClass('debug_not_active')) {
-				core.module.layout.terminal.command_ready = true;
-				core.module.layout.terminal.send_command(cmd);
+				terminal.command_ready = true;
+				terminal.send_command(cmd);
 				core.module.project.is_running = false;
 				$('button[action="stop"]').addClass('debug_not_active');
 				$('button[action="stop"]').attr('isdisabled', 'disabled');
@@ -822,7 +848,6 @@ goorm.core.menu.action = {
 		$("[action=build_project]").click(function() {
 			var project_path = core.status.current_project_path;
 			var project_type = core.status.current_project_type;
-
 			core.module.project.load_build({
 				'project_path': project_path,
 				'project_type': project_type,

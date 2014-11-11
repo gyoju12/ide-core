@@ -428,6 +428,9 @@
 			}
 		}
 	},
+	"decompress_file": {
+		"value": "Unzip / Untar "
+	},
 	"open_terminal_here": {
 		"value": "Open Terminal Here"
 	},
@@ -588,5 +591,65 @@
 	},
 	"open_goorm_edu_lecture": {
 		"value": "Open goormEDU Lectures"
+	},
+	"Previous": {
+		"value": "Previous"
+	},
+	"Play": {
+		"value": "Play"
+	},
+	"Next": {
+		"value": "Next"
+	}, 
+	"Palette": {
+		"value": "Palette"
+	},
+	"Connect with co-developers": {
+		"value": "Connect"
+	}, 
+	"Pencil": {
+		"value": "Pencil"
+	}, 
+	"Erase": {
+		"value": "Erase"		
+	}, 
+	"Color Wheel": {
+		"value": "Color Wheel"		
+	}, 
+	"Size Slider": {
+		"value": "Size Slider"		
+	}, 
+	"Erase All": {
+		"value": "Erase All"		
+	},
+	"Go to Page": {
+		"value": "Go to Page"
+	}, 
+	"Magnify": {
+		"value": "Magnify"
+	},
+	"Minify": {
+		"value": "Minify"
+	},
+	"Connect/Disconnect": {
+		"value": "Connect/Disconnect"
+	},
+	"New Window": {
+		"value": "New Window"
+	},
+	"Pause": {
+		"value": "Pause"
+	},
+	"Stop": {
+		"value": "Stop"
+	},
+	"History Rollback": {
+		"value": "History Rollback"
+	},
+	"History Delete": {
+		"value": "History Delete"
+	},
+	"History Delete All": {
+		"value": "History Delete All"
 	}
 }

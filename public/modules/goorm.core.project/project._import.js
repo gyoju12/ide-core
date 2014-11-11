@@ -135,12 +135,16 @@ goorm.core.project._import = {
 				//core.status.current_project_type = data.project_type;
 
 				// if (where.attr("id") == "dlg_import_project")	// hidden by jeongmin: first of all, project must be opened no matter what type of import
+
+				
 				core.dialog.open_project.open(project_dir, data.project_name, data.project_type);
 
 				//core.module.plugin_manager.new_project(senddata,false);
 				where.find(".project_import_location").val(core.status.current_project_path);
 
 				where.find('.project_import_form').submit();
+				
+				
 
 				// {
 
@@ -271,8 +275,8 @@ goorm.core.project._import = {
 				// core.progressbar.set(10);
 				if (where.find('.project_import_form').attr('action') == 'project/import') // jeongmin: only when import is really in progress
 					core.module.loading_bar.start({
-						str: core.module.localization.msg.import_in_progress
-					});
+					str: core.module.localization.msg.import_in_progress
+				});
 			},
 
 			success: function(data) {
@@ -284,7 +288,9 @@ goorm.core.project._import = {
 
 						// do it after list is set. Jeong-Min Im.
 						$(core).one('change_done', function() {
-							where.find('.select_import_project_detail_type').val(detailed_type);
+							if (where.find('.select_import_project_detail_type [value="' + detailed_type + '"]').length > 0) { // jeongmin: only if this detailedtype exists
+								where.find('.select_import_project_detail_type').val(detailed_type);
+							}
 						});
 
 						where.find('.select_import_project_type').val(data.result.type);
@@ -351,8 +357,14 @@ goorm.core.project._import = {
 		}
 
 		where.find('.project_import_file').change(function() {
-			__check();
-			__load();
+			if(where.find('.project_import_file').val() != ""){
+				__check();
+				__load();
+			}else{
+				where.find(".input_import_project_name").val("");
+				where.find(".input_import_project_desc").val("");
+				where.find(".project_import_file").val("");
+			}
 		});
 	},
 
@@ -407,42 +419,42 @@ goorm.core.project._import = {
 				continue;
 
 			// align project types...
-			switch (project_type) {
-				case 'dartp':
-					project_type = 'dart';
-					break;
+			// switch (project_type) {
+			// 	case 'dartp':
+			// 		project_type = 'dart';
+			// 		break;
 
-				case 'javap':
-					project_type = 'java';
-					break;
+			// 	case 'javap':
+			// 		project_type = 'java';
+			// 		break;
 
-				case 'javaexamp':
-					project_type = 'java_examples';
-					break;
+			// 	case 'javaexamp':
+			// 		project_type = 'java_examples';
+			// 		break;
 
-				case 'jqueryp1':
-					project_type = 'jquery';
-					break;
+			// 	case 'jqueryp1':
+			// 		project_type = 'jquery';
+			// 		break;
 
-				case 'jspp':
-					project_type = 'jsp';
-					break;
+			// 	case 'jspp':
+			// 		project_type = 'jsp';
+			// 		break;
 
-				case 'nodejsp':
-					project_type = 'nodejs';
-					break;
+			// 	case 'nodejsp':
+			// 		project_type = 'nodejs';
+			// 		break;
 
-				case 'phonegapp':
-					project_type = 'phonegap';
-					break;
+			// 	case 'phonegapp':
+			// 		project_type = 'phonegap';
+			// 		break;
 
-				case 'phpp':
-					project_type = 'php';
-					break;
+			// 	case 'phpp':
+			// 		project_type = 'php';
+			// 		break;
 
-				case 'webp':
-					project_type = 'web';
-			}
+			// 	case 'webp':
+			// 		project_type = 'web';
+			// }
 
 			select_project_type.append('<option value="' + project_type + '">' + project_name + '</option>');
 		}

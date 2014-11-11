@@ -22,6 +22,15 @@ goorm.core.utility.toast = {
 			$('.modal.in').focus();			
 		});
 
+		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var offset_width = (($(window).width() - $dialog.width()) / 2);
+			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
+
 		// this.panel.on("show.bs.modal", function (){	//jeongmin: done at dialog.js
 		// 	setTimeout(function () {
 		// 		self.panel.css('top', '0px');

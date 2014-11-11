@@ -24,7 +24,7 @@ goorm.core.dialog.confirmation = function () {
 	this.no = null;
 	this.close = null;
 	this.first_init = false;
-	this.reculsive = false;
+	this.recursive = false;
 	this.bt_clicked = false;
 
 	// this.handler_flag = true;
@@ -60,6 +60,15 @@ goorm.core.dialog.confirmation.prototype = {
 
 		var goorm_dialog_container = this.panel.find('#confirmation_content_container');
 		goorm_dialog_container.empty().append(this.message);
+
+		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var offset_width = (($(window).width() - $dialog.width()) / 2);
+			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
 
 		var cfrm_btn_yes = this.panel.find(".modal-footer #g_cfrm_btn_yes");	//jeongmin: yes confirm button
 		var cfrm_btn_no = this.panel.find(".modal-footer #g_cfrm_btn_no");	//jeongmin: no confirm button
@@ -148,7 +157,7 @@ goorm.core.dialog.confirmation.prototype = {
 	show: function () {
 		var self = this;
 
-		if (this.reculsive) {
+		if (this.recursive) {
 			$('div.modal-backdrop.fade.in').first().remove();
 
 			// window.setTimeout(function() {

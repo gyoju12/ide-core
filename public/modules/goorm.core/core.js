@@ -525,10 +525,10 @@ goorm.core.prototype = {
 
 		
 
-		if (goorm.core.npm) {
-			this.module.npm = goorm.core.npm;
-			this.module.npm.init();
-		}
+		// if (goorm.core.npm) {
+		// 	this.module.npm = goorm.core.npm;
+		// 	this.module.npm.init();
+		// }
 
 		if (goorm.core.localization) {
 			this.module.localization = goorm.core.localization;
@@ -675,8 +675,6 @@ goorm.core.prototype = {
 	local_complete: function() {
 		$("#loading_background").delay(1000).fadeOut(1000);
 		$("#loading_panel_container").delay(1500).fadeOut(1000);
-
-		this.dialog.project_property.refresh_toolbox();
 
 		// $(core).trigger('goorm_login_complete');
 		this.socket_connect();

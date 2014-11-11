@@ -102,6 +102,11 @@ module.exports = {
 		var self = this;
 		var sha_pw = crypto.createHash('sha1');
 		var sha_pw2 = crypto.createHash('sha1');
+
+		
+
+		
+
 		
 		
 		// Update Session
@@ -115,6 +120,10 @@ module.exports = {
 	
 	
 	
+
+	
+
+
 	
 	filtering: function(data) {
 		var user_data = {};
@@ -162,6 +171,8 @@ module.exports = {
 			});
 		}
 		
+
+		
 	},
 
 	destroy_session: function(req, callback) {
@@ -207,6 +218,13 @@ module.exports = {
 	get_user_schema: function() {
 		return user_schema;
 	},
+
+	
+
+	
+
+	
+
 	
 	/* 
 	 * id / src / coords
