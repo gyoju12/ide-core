@@ -402,8 +402,8 @@ module.exports = {
 								var buf = new Buffer(data);
 								var progress = buf.toString();
 
-								if (progress.indexOf('to-check') < 0) { // jeongmin: don't show detail progress
-									socket.to().emit('/plugin/create/progress', buf.toString());
+								if (progress.indexOf('to-check') < 0 || progress.indexOf('to-chk') < 0) { // jeongmin: don't show detail progress
+									socket.to().emit('/plugin/create/progress', progress);
 								}
 							});
 
