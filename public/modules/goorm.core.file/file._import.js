@@ -51,14 +51,14 @@ goorm.core.file._import = {
 						self.input.val('');
 						return false;
 					}
-					if(!self.filename_check(e.target.files))
+					if (!self.filename_check(e.target.files))
 						self.input.val('');;
 					$('.jstree-clicked').click();
 				});
 
 				var form_options = {
 					target: "#upload_output",
-					success: function (data) {
+					success: function(data) {
 						self.files_upload(data);
 					}
 				};
@@ -149,19 +149,22 @@ goorm.core.file._import = {
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
 
-			// jeongmin: close opened windows and reopen these windows
-			var window_manager = core.module.layout.workspace.window_manager;
-			var opening_window = [];
+			if (self.upload_file_name) { // jeongmin: close opened windows and reopen these windows
+				var window_manager = core.module.layout.workspace.window_manager;
+				var opening_window = [];
 
-			for (var i = window_manager.window.length - 1; 0 <= i; i--) {
-				for (var j = self.upload_file_name.length - 1; 0 <= j; j--) {
-					if (window_manager.window[i].title == self.upload_file_path + self.upload_file_name[j]) {
-						window_manager.close_by_index(i, i);
-						window_manager.open(self.upload_file_path, self.upload_file_name[j], self.upload_file_name[j].split('.')[1]);
+				for (var i = window_manager.window.length - 1; 0 <= i; i--) {
+					for (var j = self.upload_file_name.length - 1; 0 <= j; j--) {
+						if (window_manager.window[i].title == self.upload_file_path + self.upload_file_name[j]) {
+							window_manager.close_by_index(i, i);
+							window_manager.open(self.upload_file_path, self.upload_file_name[j], self.upload_file_name[j].split('.')[1]);
 
-						break; // jeongmin: we found
+							break; // jeongmin: we found
+						}
 					}
 				}
+
+				self.upload_file_name = null;	// jeongmin: initialize
 			}
 
 			notice.show(core.module.localization.msg.notice_file_import_done);
@@ -221,24 +224,24 @@ goorm.core.file._import = {
 	upload_file_drag: function(files, path, callback) {
 		var self = this;
 		var localization_msg = core.module.localization.msg;
-		var current_project = path ? path: core.status.current_project_path;
+		var current_project = path ? path : core.status.current_project_path;
 		var fd = new FormData();
-		if(!self.filename_check(files))
+		if (!self.filename_check(files))
 			return;
-		for(var i = 0; i < files.length; i++)
+		for (var i = 0; i < files.length; i++)
 			fd.append('file', files[i]);
 		fd.append('file_import_location_path', current_project);
 		core.module.loading_bar.start({
 			str: core.module.localization.msg.import_in_progress
 		});
 		jQuery.ajax({
-            url: "file/import",
-            type: 'POST',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: fd,
-            xhr: function() {
+			url: "file/import",
+			type: 'POST',
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: fd,
+			xhr: function() {
 				var xhr_o = $.ajaxSettings.xhr();
 
 				if (xhr_o.upload) {
@@ -256,20 +259,20 @@ goorm.core.file._import = {
 
 				return xhr_o;
 			},
-            success: function(data){
-          		self.files_upload(data);	
-            },
-            error: function (e) {
-            	core.module.loading_bar.stop();
-            	if(e.status == 400)
-            		alert.show(core.module.localization.msg.folder_dnd_error);
-            	else
-            		alert.show("Error" + e.status);
-            },
-            complete: function(){
-            	if(jQuery.isFunction(callback))
-            		callback();
-            }
-        });
+			success: function(data) {
+				self.files_upload(data);
+			},
+			error: function(e) {
+				core.module.loading_bar.stop();
+				if (e.status == 400)
+					alert.show(core.module.localization.msg.folder_dnd_error);
+				else
+					alert.show("Error" + e.status);
+			},
+			complete: function() {
+				if (jQuery.isFunction(callback))
+					callback();
+			}
+		});
 	}
 };
