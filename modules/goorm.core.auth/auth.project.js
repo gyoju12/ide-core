@@ -167,14 +167,14 @@ module.exports = {
 		// 	}
 		// });
 		// evt.emit('add_user', evt, 0);
-		async.each(user_list, function(item, callback){
+		async.each(user_list, function(item, callback) {
 			var user = item;
 
 			self.g_exec(os.user_add(group_name, user), function(result) {
 				callback();
 			});
 		}, function(err) {
-			if(!err) {
+			if (!err) {
 				callback(true);
 			}
 		});
@@ -197,14 +197,14 @@ module.exports = {
 		// 	}
 		// });
 		// evt.emit('del_user', evt, 0);
-		async.each(user_list, function(item, callback){
+		async.each(user_list, function(item, callback) {
 			var user = item;
 
 			self.g_exec(os.user_del(group_name, user), function(result) {
 				callback();
 			});
 		}, function(err) {
-			if(!err) {
+			if (!err) {
 				callback(true);
 			}
 		});
