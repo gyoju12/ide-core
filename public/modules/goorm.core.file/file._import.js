@@ -59,7 +59,16 @@ goorm.core.file._import = {
 				var form_options = {
 					target: "#upload_output",
 					success: function(data) {
-						self.files_upload(data);
+						self.files_upload(data, function() { // jeongmin: overwrite function
+							$('#myForm').attr('action', 'file/import?is_overwrite=true');
+							core.module.loading_bar.start({
+								str: core.module.localization.msg.import_in_progress
+							});
+
+							$('#myForm').submit();
+							self.panel.modal('hide');
+							$('#myForm').attr('action', 'file/import');
+						});
 					}
 				};
 
@@ -142,7 +151,7 @@ goorm.core.file._import = {
 		return true;
 	},
 
-	files_upload: function(data) {
+	files_upload: function(data, overwrite) {
 		var self = this;
 		core.module.loading_bar.stop();
 
@@ -164,7 +173,7 @@ goorm.core.file._import = {
 					}
 				}
 
-				self.upload_file_name = null;	// jeongmin: initialize
+				this.upload_file_name = null; // jeongmin: initialize
 			}
 
 			notice.show(core.module.localization.msg.notice_file_import_done);
@@ -181,16 +190,9 @@ goorm.core.file._import = {
 						zIndex: 1001,
 
 						yes: function() {
-							$('#myForm').attr('action', 'file/import?is_overwrite=true');
-							core.module.loading_bar.start({
-								str: core.module.localization.msg.import_in_progress
-							});
-
 							self.upload_file_name = data.file; // jeongmin: for reopening windows
 
-							$('#myForm').submit();
-							self.panel.modal('hide');
-							$('#myForm').attr('action', 'file/import');
+							overwrite && overwrite();
 						},
 						no: function() {
 							self.dialog_explorer.init(true, true);
@@ -231,48 +233,62 @@ goorm.core.file._import = {
 		for (var i = 0; i < files.length; i++)
 			fd.append('file', files[i]);
 		fd.append('file_import_location_path', current_project);
+
+		this.upload_file_path = current_project + '/'; // jeongmin: for reopening windows
+
 		core.module.loading_bar.start({
 			str: core.module.localization.msg.import_in_progress
 		});
-		jQuery.ajax({
-			url: "file/import",
-			type: 'POST',
-			cache: false,
-			contentType: false,
-			processData: false,
-			data: fd,
-			xhr: function() {
-				var xhr_o = $.ajaxSettings.xhr();
 
-				if (xhr_o.upload) {
-					xhr_o.upload.addEventListener('progress', function() {
-						var percent = 0;
-						var position = event.loaded || event.position;
-						var total = event.total;
-						if (event.lengthComputable) {
-							percent = Math.ceil(position / total * 100);
-						}
+		function send(url) {
+			jQuery.ajax({
+				url: url,
+				type: 'POST',
+				cache: false,
+				contentType: false,
+				processData: false,
+				data: fd,
+				xhr: function() {
+					var xhr_o = $.ajaxSettings.xhr();
 
-						core.progressbar.set(percent); // set Progress
-					}, false);
+					if (xhr_o.upload) {
+						xhr_o.upload.addEventListener('progress', function() {
+							var percent = 0;
+							var position = event.loaded || event.position;
+							var total = event.total;
+							if (event.lengthComputable) {
+								percent = Math.ceil(position / total * 100);
+							}
+
+							core.progressbar.set(percent); // set Progress
+						}, false);
+					}
+
+					return xhr_o;
+				},
+				success: function(data) {
+					self.files_upload(data, function() { // jeongmin: overwrite function
+						core.module.loading_bar.start({
+							str: core.module.localization.msg.import_in_progress
+						});
+
+						send('file/import?is_overwrite=true');
+					});
+				},
+				error: function(e) {
+					core.module.loading_bar.stop();
+					if (e.status == 400)
+						alert.show(core.module.localization.msg.folder_dnd_error);
+					else
+						alert.show("Error" + e.status);
+				},
+				complete: function() {
+					if (jQuery.isFunction(callback))
+						callback();
 				}
+			});
+		}
 
-				return xhr_o;
-			},
-			success: function(data) {
-				self.files_upload(data);
-			},
-			error: function(e) {
-				core.module.loading_bar.stop();
-				if (e.status == 400)
-					alert.show(core.module.localization.msg.folder_dnd_error);
-				else
-					alert.show("Error" + e.status);
-			},
-			complete: function() {
-				if (jQuery.isFunction(callback))
-					callback();
-			}
-		});
+		send('file/import');
 	}
 };
