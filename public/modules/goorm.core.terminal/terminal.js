@@ -291,7 +291,6 @@ goorm.core.terminal.prototype = {
 			self.socket.on("terminal_refresh_complete." + self.terminal_name, function(data) {
 				if (data.index == self.index) {
 					self.resize();
-					console.log(self.terminal_name + "_terminal_refresh_complete");
 					self.change_project_dir();
 				}
 

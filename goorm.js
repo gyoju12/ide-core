@@ -105,8 +105,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 				
 
-				console.log('      $ node goorm.js set -x plugin_exclude_list');
-				console.log('      $ goorm set --plugin_exclude_list [plugin_exclude_list]');
 				console.log('');
 				console.log('  Command: Clean Configs');
 				console.log('');
@@ -409,7 +407,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 			.option('-u, --user [user_id]', 'Set the user')
 			
 
-			.option('-x, --plugin_exclude_list [plugin_exclude_list]', 'Set the plugin list you want to exclude plugin loading (ex)[\"goorm.plugin.c\",\"goorm.plugin.cpp\",\"goorm.plugin.java\"]')
 			.action(function(env, options) {
 
 				if (!fs.existsSync(process.env.HOME + '/.goorm/')) {
@@ -430,8 +427,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 					
 
-					var plugin_exclude_list = config_data.plugin_exclude_list || null;
-
 					if (options.workspace) {
 						workspace = options.workspace || process.env.PWD + '/' + "workspace/";
 
@@ -450,11 +445,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 						} else {
 							console.log("That directory already exists!");
 						}
-					}
-
-					////exclude plugin
-					if (options['plugin_exclude_list']) {
-						plugin_exclude_list = options['plugin_exclude_list'] || null;
 					}
 
 					
@@ -517,7 +507,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 								var config_data = {
 									workspace: workspace,
 									temp_dir: temp_dir,
-									plugin_exclude_list: plugin_exclude_list,
 									users: [user]
 								};
 
@@ -530,7 +519,6 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 						var config_data = {
 							workspace: workspace,
 							temp_dir: temp_dir,
-							plugin_exclude_list: plugin_exclude_list,
 							users: users
 						};
 

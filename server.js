@@ -43,20 +43,16 @@ RedisStore = null;
 
 
 
-RedisHost = '127.0.0.1';
-RedisPort = 6379;
+REDIS_HOST = '127.0.0.1';
+REDIS_PORT = 6379;
 
 
 // Local Variables
 //
-var home = process.env.HOME;
+var home = null;
 var workspace = null;
 var goorm = module.exports = express();
-var config_data = {
-	workspace: undefined,
-	temp_dir: undefined,
-	redis_mode: undefined
-};
+var config_data = {};
 var users = [];
 var server = null;
 var io = null;
@@ -98,19 +94,6 @@ goorm.init = function() {
 		// Session Store
 		//
 		global.store = null;
-
-		if (global.__redis_mode) {
-			RedisStore = require('connect-redis')(express)
-			global.store = new RedisStore({
-				'host': RedisHost,
-				'port': RedisPort
-			});
-			// global.store = new RedisStore
-		} else {
-			global.store = new express.session.MemoryStore;
-		}
-
-		global.__set_redis_client = false;
 	}
 
 	var set_arguments = function() {
@@ -139,81 +122,94 @@ goorm.init = function() {
 		
 	}
 
+
 	var set_goorm_config = function() {
+			
+		var base = process.env.HOME + "/goorm_workspace/";
+
+		if (!fs.existsSync(base)) {
+			fs.mkdir(base, 0755, function(err) {
+				if (err) {
+					console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
+				}
+			});
+		}
+
+		global.__workspace = process.env.HOME + "/goorm_workspace/";
+		
+
+		
+
+		
+
+			
+
+			
+		var temp = process.env.HOME + "/goorm_tempdir/";
+
+		if (!fs.existsSync(temp)) {
+			fs.mkdir(temp, 0755, function(err) {
+				if (err) {
+					console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
+				}
+			});
+		}
+
+		global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
+		
+
+		
+
 		if (fs.existsSync(home + '/.goorm/config.json')) {
 			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
 			if (data !== "") {
 				config_data = JSON.parse(data);
 			}
-		}
 
-		if (config_data.workspace !== undefined) {
-			global.__workspace = config_data.workspace;
-		} else if (workspace && workspace != 'undefined') {
-			global.__workspace = workspace;
-		} else {
-				
-			var base = process.env.HOME + "/goorm_workspace/";
-
-			if (!fs.existsSync(base)) {
-				fs.mkdir(base, 0755, function(err) {
-					if (err) {
-						console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
+			if (config_data) {
+				for (var attr in config_data) {
+					if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
+						continue;
 					}
-				});
-			}
 
-			global.__workspace = process.env.HOME + "/goorm_workspace/";
-			
-
-			
-
-			
-
-			
-		}
-
-		// Update Workspace Path 
-		//
-		if (global.__workspace && global.__workspace !== "") {
-			if (global.__workspace[global.__workspace.length - 1] !== '/') {
-				global.__workspace = global.__workspace + '/';
-			}
-		}
-
-		if (config_data.temp_dir != undefined) {
-			global.__temp_dir = config_data.temp_dir;
-		} else {
-				
-			var temp = process.env.HOME + "/goorm_tempdir/";
-
-			if (!fs.existsSync(temp)) {
-				fs.mkdir(temp, 0755, function(err) {
-					if (err) {
-						console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
+					if (config_data[attr] && config_data[attr] !== 'undefined') {
+						global[attr] = config_data[attr];
 					}
-				});
+				}
 			}
-
-			global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
-			
-
-			
 		}
-
-		if (config_data.plugin_exclude_list != undefined) {
-			console.log(config_data.plugin_exclude_list);
-			global.__plugin_exclude_list = config_data.plugin_exclude_list.split(",");
-			for (var i = 0; i < global.__plugin_exclude_list.length; i++) {
-				var type = global.__plugin_exclude_list[i];
-				global.__plugin_exclude_list[i] = "goorm.plugin." + type;
-			}
-		} else global.__plugin_exclude_list = null;
 	}
 
 	set_global();
 	set_arguments();
 	set_goorm_config();
+
+	// Update Workspace Path 
+	//
+	if (workspace) {
+		global.__workspace = workspace;
+	}
+
+	if (global.__workspace && global.__workspace !== "") {
+		if (global.__workspace[global.__workspace.length - 1] !== '/') {
+			global.__workspace = global.__workspace + '/';
+		}
+	}
+
+	// Update Store
+	//
+	if (global.__redis_mode) {
+		RedisStore = require('connect-redis')(express)
+		global.store = new RedisStore({
+			'host': REDIS_HOST,
+			'port': REDIS_PORT
+		});
+		// global.store = new RedisStore
+	} else {
+		global.store = new express.session.MemoryStore;
+	}
+
+	global.__set_redis_client = false;
 }
 
 goorm.connect_db = function() {
@@ -569,9 +565,9 @@ goorm.load = function() {
 		global.__set_redis_client = true;
 
 		global.__redis = {};
-		global.__redis.pub = redis.createClient(RedisPort, RedisHost);
-		global.__redis.sub = redis.createClient(RedisPort, RedisHost);
-		global.__redis.store = redis.createClient(RedisPort, RedisHost);
+		global.__redis.pub = redis.createClient(REDIS_PORT, REDIS_HOST);
+		global.__redis.sub = redis.createClient(REDIS_PORT, REDIS_HOST);
+		global.__redis.store = redis.createClient(REDIS_PORT, REDIS_HOST);
 
 		
 
@@ -664,9 +660,9 @@ goorm.load = function() {
 		global.__set_redis_client = true;
 
 		global.__redis = {};
-		global.__redis.pub = redis.createClient(RedisPort, RedisHost);
-		global.__redis.sub = redis.createClient(RedisPort, RedisHost);
-		global.__redis.store = redis.createClient(RedisPort, RedisHost);
+		global.__redis.pub = redis.createClient(REDIS_PORT, REDIS_HOST);
+		global.__redis.sub = redis.createClient(REDIS_PORT, REDIS_HOST);
+		global.__redis.store = redis.createClient(REDIS_PORT, REDIS_HOST);
 		
 
 		
