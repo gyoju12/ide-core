@@ -401,8 +401,8 @@ module.exports = {
 							copy_progress.stdout.on('data', function(data) {
 								var buf = new Buffer(data);
 								var progress = buf.toString();
-
-								if (progress.indexOf('to-check') < 0 || progress.indexOf('to-chk') < 0) { // jeongmin: don't show detail progress
+								// jeongmin: don't show detail progress
+								if (progress.indexOf('to-check') < 0 && progress.indexOf('to-chk') < 0) { // to-check: mac, to-chk: linux
 									socket.to().emit('/plugin/create/progress', progress);
 								}
 							});
