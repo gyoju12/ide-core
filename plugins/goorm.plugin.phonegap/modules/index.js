@@ -17,9 +17,13 @@ module.exports = {
 		var evt = new EventEmitter();
 		var new_project = require(common.path+"modules/project/new_project.js");
 		
+		
 		evt.on("do_new_complete", function (data) {
 			res.json(data);
 		});
+		
+
+		
 		
 		new_project.do_new(req, evt);
 	},

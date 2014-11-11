@@ -231,6 +231,22 @@ goorm.core.window.manager = {
 		localStorage.workspace_window = JSON.stringify(window_info);
 	},
 	
+
+		/*
+
+		if (this.recent_window.length==0) {
+			$(".menu-open-recent-file").css('display', 'none');
+			$(".menu-open-recent-file.recent_file_empty").css('display', 'list-item');
+		}
+*/
+	},
+
+	clear_recent_file: function() {
+		this.recent_window = [];
+		this.handle_recent_file();
+		localStorage.setItem('recent_files', JSON.stringify(this.recent_window));
+	},
+	
 	open: function(filepath, filename, filetype, editor, __options, callback) {
 		var self = this;
 		var options = __options || {};

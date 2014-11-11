@@ -119,10 +119,10 @@ goorm.plugin.java = {
 				var str = string;
 
 				if(string[0] = "/") {
-					str = string.split(1, string.length);
+					str = string.substring(1, string.length);
 				}
 				if(string[string.length - 1] = "/") {
-					str = string.split(0, string.length - 1);
+					str = string.substring(0, string.length - 1);
 				}
 
 				return str + "";
@@ -701,7 +701,7 @@ goorm.plugin.java = {
 		clear(function () {
 			var cmd = base_dir + "make" + path.source + path.build + build_options;
 
-			core.module.project.build(cmd, function(result) {
+			core.module.project.build('cd ~;'+cmd+';cd -', function(result) {
 				core.module.layout.project_explorer.refresh();
 
 				// PARSING & AUTO IMPORT - ONLY FOR JAVA
@@ -817,7 +817,7 @@ goorm.plugin.java = {
 			'plugin': 'goorm.plugin.java'
 		};
 
-		$.get("plugin/make_template", senddata, function(data) {
+		_$.get("plugin/make_template", senddata, function(data) {
 			if (data.code == 204) {
 
 				self.class_panel.modal('hide');
@@ -864,7 +864,7 @@ goorm.plugin.java = {
 			'plugin': 'goorm.plugin.java'
 		};
 
-		$.get("plugin/make_template", senddata, function(data) {
+		_$.get("plugin/make_template", senddata, function(data) {
 			if (data.code == 201) {
 
 				self.package_panel.modal('hide');
@@ -905,7 +905,7 @@ goorm.plugin.java = {
 			'type': 'interface',
 			'plugin': 'goorm.plugin.java'
 		};
-		$.get("plugin/make_template", senddata, function(data) {
+		_$.get("plugin/make_template", senddata, function(data) {
 			if (data.code == 204) {
 
 				self.interface_panel.modal('hide');

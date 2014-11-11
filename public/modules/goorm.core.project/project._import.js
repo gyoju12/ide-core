@@ -419,42 +419,42 @@ goorm.core.project._import = {
 				continue;
 
 			// align project types...
-			switch (project_type) {
-				case 'dartp':
-					project_type = 'dart';
-					break;
+			// switch (project_type) {
+			// 	case 'dartp':
+			// 		project_type = 'dart';
+			// 		break;
 
-				case 'javap':
-					project_type = 'java';
-					break;
+			// 	case 'javap':
+			// 		project_type = 'java';
+			// 		break;
 
-				case 'javaexamp':
-					project_type = 'java_examples';
-					break;
+			// 	case 'javaexamp':
+			// 		project_type = 'java_examples';
+			// 		break;
 
-				case 'jqueryp1':
-					project_type = 'jquery';
-					break;
+			// 	case 'jqueryp1':
+			// 		project_type = 'jquery';
+			// 		break;
 
-				case 'jspp':
-					project_type = 'jsp';
-					break;
+			// 	case 'jspp':
+			// 		project_type = 'jsp';
+			// 		break;
 
-				case 'nodejsp':
-					project_type = 'nodejs';
-					break;
+			// 	case 'nodejsp':
+			// 		project_type = 'nodejs';
+			// 		break;
 
-				case 'phonegapp':
-					project_type = 'phonegap';
-					break;
+			// 	case 'phonegapp':
+			// 		project_type = 'phonegap';
+			// 		break;
 
-				case 'phpp':
-					project_type = 'php';
-					break;
+			// 	case 'phpp':
+			// 		project_type = 'php';
+			// 		break;
 
-				case 'webp':
-					project_type = 'web';
-			}
+			// 	case 'webp':
+			// 		project_type = 'web';
+			// }
 
 			select_project_type.append('<option value="' + project_type + '">' + project_name + '</option>');
 		}

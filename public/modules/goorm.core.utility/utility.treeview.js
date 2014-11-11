@@ -393,6 +393,48 @@ goorm.core.utility.treeview.prototype = {
 		return state;
 	},
 
+	open_path: function(path) {
+		var path = path.split("/");
+		var current_path = path[0];
+		var i = 1;
+		var self = this;
+
+
+		// seongho.cha : most of cases it is called only 1 time per node, but when treeview refreshed at the same time, open_node need to call again
+		//               200ms is proper.
+		var handle = setInterval(function(){
+			while( self.tree.jstree("is_open", $("[path='"+current_path+"'] a i "))){
+				if( i < path.length ){
+					current_path += "/" + path[i++];
+				} else {
+					clearInterval(handle);
+					return;
+				}
+			}
+			self.tree.jstree("open_node", $("[path='"+current_path+"'] a i"));
+		}, 200);
+
+
+/*
+		this.tree.on("after_open.jstree.set_open", function(){
+			while ( i < path.length ){
+				current_path += "/" + path[i++];
+				if ( !self.tree.jstree("is_open", $("[path='"+current_path+"'] a i "))){
+					self.tree.jstree("open_node", $("[path='"+current_path+"'] a i"));
+					break;
+				}
+			}
+			if( i >= path.length){
+				self.tree.unbind("after_open.jstree.set_open");
+			}
+
+		});
+		this.tree.trigger("after_open.jstree.set_open");
+*/
+
+
+	},
+
 	/**
 	 * bind keys
 	 * @private

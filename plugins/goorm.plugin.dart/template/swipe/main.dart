@@ -17,7 +17,7 @@ double anglePos = 0.0;
 Timer timer;
 
 void main() {
-  target = query('#target');
+  target = querySelector('#target');
 
   initialize3D();
 
@@ -74,14 +74,14 @@ void initialize3D() {
 
   num childCount = target.children.length;
 
-  window.setImmediate(() {
-    num width = query("#target").client.width;
+  scheduleMicrotask(() {
+    num width = querySelector("#target").client.width;
     figureWidth = (width / 2) ~/ tan(PI / childCount);
 
     target.style.transform = "translateZ(-${figureWidth}px)";
 
     num radius = (figureWidth * 1.2).round();
-    query('#container2').style.width = "${radius}px";
+    querySelector('#container2').style.width = "${radius}px";
 
     for (int i = 0; i < childCount; i++) {
       var panel = target.children[i];

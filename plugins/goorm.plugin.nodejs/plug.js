@@ -86,6 +86,11 @@ goorm.plugin.nodejs = {
 			}
 		});
 
+		//should close current server when refreshing --heeje
+		$(window).unload(function() {
+		  self.stop(); 
+		});
+
 		//checking server running before creating or opening/changing project --heeje
 		$(core).on('on_project_binding', function() {
 			
@@ -240,14 +245,16 @@ goorm.plugin.nodejs = {
 		var workspace = core.preference.workspace_path;
 		var run_path = workspace + project_path + '/' + source_path + main + '.js';
 
-		var cmd1 = "node " + run_path + " " + run_option;
+		var cmd = "node " + run_path + " " + run_option;
 
-		// core.module.layout.terminal.send_command(cmd1+'\r');
-
-		this.make_server_tab("nodejs", function() {
-			self.bg_terminal.command(cmd1);
-			callback();
-		});
+		if (core.property && core.property.detailedtype === 'default') {
+			core.module.layout.terminal.send_command(cmd+'\r');
+		}
+		else {
+			this.make_server_tab("nodejs", function() {
+				self.bg_terminal.command(cmd);
+			});
+		} 
 		
 	},
 
@@ -263,6 +270,8 @@ goorm.plugin.nodejs = {
 		var main = property['plugin.nodejs.main'];
 
 		var project_path = core.status.current_project_path;
+
+		self.stopping = true;
 
 		
 
@@ -665,13 +674,16 @@ goorm.plugin.nodejs = {
 
 				this.on_message(function(msg) {
 					if (/\n/.test(msg.stdout)) {
+						if(self.stopping) {
+							msg.stdout = msg.stdout.replace("^C", "Server Stopped.");
+						}
 						$inner.append(msg.stdout.replace(/\n/g, "<br>").replace(/\[\d+m/g, ""));
 						$content.scrollTop($content[0].scrollHeight);
 					} else {
 						$inner.append(msg.stdout.replace(/\[\d+m/g, ""));
-					}
+					} 
 				});
-
+ 
 				callback();
 				self.server_running = true;
 				setTimeout(function() {

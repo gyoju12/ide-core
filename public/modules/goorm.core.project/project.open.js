@@ -115,7 +115,8 @@ goorm.core.project.open = {
 
 		if (project_path !== "") {
 			core._socket.once('/project/mount', function (result) {
-				callback(result);
+				if(callback && typeof(callback) == "function")
+					callback(result);
 			});
 
 			core._socket.emit('/project/mount', {
