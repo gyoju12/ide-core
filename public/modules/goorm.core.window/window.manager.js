@@ -263,7 +263,6 @@ goorm.core.window.manager = {
 		// 	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
 		// 	return str;
 		// };
-
 		////// file is good to open, so do it! Jeong-Min Im. //////
 		function do_open() {
 			if (filepath !== "/" && filepath !== "") {

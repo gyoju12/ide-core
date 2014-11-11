@@ -218,12 +218,12 @@ goorm.core.window.panel.prototype = {
 				this.title = this.filepath + this.filename;
 			}
 
-			var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
-		var timestamp = new Date().getTime();
-		timestamp = options.id;
+		// var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
+		// var morphed_title = new Date().getTime();
+		var morphed_title = options.id;
 		
 		if (editor == "Editor") {
-			this.panel = $("<div id='g_window_" + timestamp + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
+			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
 			core.module.localization.apply({
 				'placeholder_editor': {
 					'value': core.module.localization.msg.placeholder_editor
@@ -262,7 +262,7 @@ goorm.core.window.panel.prototype = {
 
 					self.editor = new goorm.core.edit();
 					//bootstrap start
-					self.editor.init("#g_window_" + timestamp, self.title, self.filepath, options);
+					self.editor.init("#g_window_" + morphed_title, self.title, self.filepath, options);
 					//bootstrap end
 					//
 					self.editor.load(self.filepath, self.filename, self.filetype, options);

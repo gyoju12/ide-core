@@ -551,6 +551,7 @@ goorm.core.project.explorer.prototype = {
 
 			],
 			"sDom": '<"H"f>rt',
+			"iDisplayLength": -1,
 			"oLanguage": {
 				"sEmptyTable": '<span localization_key="project_empty">' + core.module.localization.msg.project_empty + '</span>'
 			}
