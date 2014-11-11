@@ -115,14 +115,18 @@ goorm.plugin.web = {
 		var property = options.property;
 		var window_manager = core.module.layout.workspace.window_manager;
 		var output_manager = core.module.layout.tab_manager.output_manager;
+		var send_data = {
+			"plugin": "goorm.plugin.web",
+			"data": {
+				"project_path": path
+			}
+		};
 
 		// lint output
 		if ($('#output_tab_web').length === 0) // jeongmin: because of some sync problem, there isn't output tab
 			core.module.layout.tab_manager.make_output_tab(this.name); // so we make it before lint
 
-		core.module.project.run({
-			'type': 'Web'
-		}, function (result) {
+		$.get('/plugin/run', send_data, function(result) {
 			if (result.code === 200) {
 				//success 
 				if (result.run_path) {

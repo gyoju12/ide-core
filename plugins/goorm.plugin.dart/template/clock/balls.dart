@@ -71,6 +71,8 @@ class Balls {
           double d = sqrt(d2);
 
           if (d == 0) {
+            // TODO: move balls apart.
+
             return;
           }
 
