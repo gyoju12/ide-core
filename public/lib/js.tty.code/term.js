@@ -3666,15 +3666,6 @@ Terminal.prototype.saveCursor = function(params) {
 Terminal.prototype.restoreCursor = function(params) {
   this.x = this.savedX || 0;
   this.y = this.savedY || 0;
-
-  if(this.x > this.cols - 1){
-    this.x = this.cols - 1;
-  }
-
-  if(this.y > this.rows - 1){
-    this.y = this.rows - 1;
-  }
-
 };
 
 /**

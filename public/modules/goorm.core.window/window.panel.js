@@ -232,8 +232,13 @@ goorm.core.window.panel.prototype = {
 		}
 		
 		
-		else if (this.filename == "debug" && editor == "Terminal")
+		else if (this.filename == "debug" && editor == "Terminal") {
 			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
+			$(this.panel).on("mousedown", $.throttle(function(i, e) {
+	            self.activate();
+	        }, 200));
+		}
+			
 		
 		else if (editor == "WebView")
 			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");

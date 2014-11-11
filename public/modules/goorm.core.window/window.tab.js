@@ -95,7 +95,6 @@ goorm.core.window.tab.prototype = {
 			$("#g_window_" + morphed_title).dialog("moveToTop");
 			//self.window.panel.mousedown();
 			self.window.activate();
-
 		});
 
 		$("#" + this.tab_list_id + " .tab_close_button").click(function() {

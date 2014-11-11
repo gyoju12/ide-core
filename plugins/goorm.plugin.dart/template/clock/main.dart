@@ -4,7 +4,6 @@
 
 library clock;
 
-import 'dart:async';
 import 'dart:html';
 import 'dart:math';
 
@@ -26,7 +25,7 @@ void showFps(num fps) {
   } else {
     fpsAverage = fps * 0.05 + fpsAverage * 0.95;
 
-    querySelector("#notes").text = "${fpsAverage.round().toInt()} fps";
+    query("#notes").text = "${fpsAverage.round().toInt()} fps";
   }
 }
 
@@ -44,7 +43,7 @@ class CountDownClock {
   Balls balls = new Balls();
 
   CountDownClock() {
-    var parent = querySelector("#canvas-content");
+    var parent = query("#canvas-content");
 
     createNumbers(parent, parent.client.width, parent.client.height);
 
@@ -104,7 +103,7 @@ class CountDownClock {
     DivElement root = new DivElement();
     makeRelative(root);
     root.style.textAlign = 'center';
-    querySelector("#canvas-content").nodes.add(root);
+    query("#canvas-content").nodes.add(root);
 
     double hSize = (BALL_WIDTH * ClockNumber.WIDTH + NUMBER_SPACING) * 6
         + (BALL_WIDTH + NUMBER_SPACING) * 2;

@@ -81,40 +81,47 @@ goorm.core.window.manager = {
 
 						editor_exist = true;
 
-						console.log("WM __file", __file);
+						var open_cb = function(result){
+							self.open(__file.filepath, __file.filename, __file.filetype, __file.editor, __file, function(__window) {
+								var current_window = __window;
+								// arrange windows with each position and size
+								// current_window = self.window[self.index - 1];
 
-						self.open(__file.filepath, __file.filename, __file.filetype, __file.editor, __file, function(__window) {
-							var current_window = __window;
-							// arrange windows with each position and size
-							// current_window = self.window[self.index - 1];
+								// when the editor was set to vim mode, open the editor as it was
+								if (__file.vim_mode) {
+									var editor = __window.editor;
+									editor.set_option({
+										"vim_mode": true,
+										"shortcut_theme": "vim"
+									});
+								}
 
-							// when the editor was set to vim mode, open the editor as it was
-							if (__file.vim_mode) {
-								var editor = __window.editor;
-								editor.set_option({
-									"vim_mode": true,
-									"shortcut_theme": "vim"
-								});
-							}
+								current_window.left = __file.left;
+								current_window.top = __file.top;
+								current_window.width = __file.width;
+								current_window.height = __file.height;
+								current_window.zindex = __file.zindex;
+								current_window.project = __file.project;
+								current_window.activated = __file.activated;
+								current_window.cursor = __file.cursor;
 
-							current_window.left = __file.left;
-							current_window.top = __file.top;
-							current_window.width = __file.width;
-							current_window.height = __file.height;
-							current_window.zindex = __file.zindex;
-							current_window.project = __file.project;
-							current_window.activated = __file.activated;
-							current_window.cursor = __file.cursor;
+								if (current_window.activated) {
+									active_window = current_window;
+								}
+								current_window.move(__file.top, __file.left);
+								current_window.bind_width(__file.width);
+								current_window.bind_height(__file.height);
 
-							if (current_window.activated) {
-								active_window = current_window;
-							}
-							current_window.move(__file.top, __file.left);
-							current_window.bind_width(__file.width);
-							current_window.bind_height(__file.height);
+								async_callback();
+							});
+						};
 
-							async_callback();
-						});
+						//console.log("WM __file", __file);
+						console.log(__file.filepath.split('/')[0]);
+						core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
+						
+						//console.log("mount test");
+						
 					}, function() {
 						if (active_window) {
 							active_window.activate();

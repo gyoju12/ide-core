@@ -24,7 +24,7 @@ goorm.core.dialog.confirmation = function () {
 	this.no = null;
 	this.close = null;
 	this.first_init = false;
-	this.reculsive = false;
+	this.recursive = false;
 	this.bt_clicked = false;
 
 	// this.handler_flag = true;
@@ -157,7 +157,7 @@ goorm.core.dialog.confirmation.prototype = {
 	show: function () {
 		var self = this;
 
-		if (this.reculsive) {
+		if (this.recursive) {
 			$('div.modal-backdrop.fade.in').first().remove();
 
 			// window.setTimeout(function() {

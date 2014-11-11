@@ -158,16 +158,7 @@ goorm.core.project.open = {
 			});
 		}
 		else {
-			core._socket.once('/project/unmount', function (result) {
-				callback({
-					'result': true
-				});
-			});
-
-			core._socket.emit('/project/unmount', {
-				'project_path': '',
-				'reculsive': true
-			});
+			callback(true);
 		}
 	},
 

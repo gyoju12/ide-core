@@ -81,6 +81,8 @@ goorm.core.terminal.prototype = {
 					$("#workspace").scrollTop(0).scrollLeft(0);
 				}, 100);
 			});
+
+			
 		};
 
 		var init_terminal = function() {
@@ -244,7 +246,7 @@ goorm.core.terminal.prototype = {
 			self.socket.on("pty_command_result", function(msg) {
 
 				//build stop fix --heeje
-				if (core.module.project.is_running && (msg.stdout.indexOf('[01;32m') > 0 || msg.stdout.indexOf('^C') == 0 || msg.stdout.indexOf('[H[2J') < 0)) {
+				if (core.module.project.is_running && msg.stdout.indexOf('^C') == 0) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
 					$('button[action="stop"]').attr('isdisabled', 'disabled');

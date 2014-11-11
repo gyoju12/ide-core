@@ -30,93 +30,99 @@ goorm.core.project._delete = {
 			var delete_project_path = data.path;
 
 			var postdata = {
-				project_path: data.path
+				project_path: delete_project_path
 			};
 
 			var storage = $("#project_delete_storage").find("span").html().toString();
 
 			if (storage == "goormIDE Storage") {
-				core._socket.once("/project/delete", function(data) {
-					$("#project_delete_list").empty();
-					$("#project_delete_information").empty();
+				var do_delete = function () {
+					core._socket.once("/project/delete", function(data) {
+						$("#project_delete_list").empty();
+						$("#project_delete_information").empty();
 
-					var received_data = data;
-					if (received_data.err_code === 0) {
-
-						
-						// var window_manager = core.module.layout.workspace.window_manager;
-						// $(window_manager.window).each(function (i) {
-						// 	if (postdata.project_path == this.project && this.storage == "goormIDE_Storage") {
-						// 		window_manager.close_by_index(i, i);
-						// 	}
-						// });
-
-						var wm = core.module.layout.workspace.window_manager;
-
-						for (var i = wm.window.length - 1; i >= 0; i--) {
-							var w = wm.window[i];
-
-							if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
-								w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
-
-								wm.close_by_index(i, i);
-							}
-						}
-
-						$("#goorm_main_toolbar .debug_continue, #goorm_main_toolbar .debug_terminate, #goorm_main_toolbar .debug_step_over, #goorm_main_toolbar .debug_step_in, #goorm_main_toolbar .debug_step_out").addClass('debug_not_active');
-						$("#goorm_main_toolbar .debug").removeClass("debug_not_active");
-						$("#Debug .menu-debug-continue, #Debug .menu-debug-terminate, #Debug .menu-debug-step-over, #Debug .menu-debug-step-in, #Debug .menu-debug-step-out").addClass('debug_not_active');
-						$("#Debug .menu-debug-start").removeClass('debug_not_active');
-
-						notice.show(core.module.localization.msg.notice_project_delete_done);
-
-						// project list focusing is needed for enable key event. Jeong-Min Im.
-						// notice.panel.one('hidden.bs.modal', function() {
-						// 	$('#project_delete_list').focus();
-						// });
-
-						if (postdata.project_path == core.status.current_project_path) {
+						var received_data = data;
+						if (received_data.err_code === 0) {
 
 							
+							// var window_manager = core.module.layout.workspace.window_manager;
+							// $(window_manager.window).each(function (i) {
+							// 	if (postdata.project_path == this.project && this.storage == "goormIDE_Storage") {
+							// 		window_manager.close_by_index(i, i);
+							// 	}
+							// });
 
-							core.status.current_project_path = "";
-							core.status.current_project_name = "";
-							core.status.current_project_type = "";
-							core.dialog.open_project.open("", "", "");
+							var wm = core.module.layout.workspace.window_manager;
 
+							for (var i = wm.window.length - 1; i >= 0; i--) {
+								var w = wm.window[i];
+
+								if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
+									w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
+
+									wm.close_by_index(i, i);
+								}
+							}
+
+							$("#goorm_main_toolbar .debug_continue, #goorm_main_toolbar .debug_terminate, #goorm_main_toolbar .debug_step_over, #goorm_main_toolbar .debug_step_in, #goorm_main_toolbar .debug_step_out").addClass('debug_not_active');
+							$("#goorm_main_toolbar .debug").removeClass("debug_not_active");
+							$("#Debug .menu-debug-continue, #Debug .menu-debug-terminate, #Debug .menu-debug-step-over, #Debug .menu-debug-step-in, #Debug .menu-debug-step-out").addClass('debug_not_active');
+							$("#Debug .menu-debug-start").removeClass('debug_not_active');
+
+							notice.show(core.module.localization.msg.notice_project_delete_done);
+
+							// project list focusing is needed for enable key event. Jeong-Min Im.
+							// notice.panel.one('hidden.bs.modal', function() {
+							// 	$('#project_delete_list').focus();
+							// });
+						} else {
+							alert.show(core.module.localization.msg.alert_cannot_project_delete);
+
+							// project list focusing is needed for enable key event. Jeong-Min Im.
+							// alert.panel.one('hidden.bs.modal', function() {
+							// 	$('#project_delete_list').focus();
+							// });
 						}
-					} else {
-						alert.show(core.module.localization.msg.alert_cannot_project_delete);
 
-						// project list focusing is needed for enable key event. Jeong-Min Im.
-						// alert.panel.one('hidden.bs.modal', function() {
-						// 	$('#project_delete_list').focus();
-						// });
-					}
+						if (core.status.current_project_path === "" || core.status.current_project_path == data.path) {
+							core.module.layout.project_explorer.refresh();
+						} else {
+							core.module.layout.project_explorer.refresh_project_selectbox();
+						}
 
-					if (core.status.current_project_path === "" || core.status.current_project_path == data.path) {
-						core.module.layout.project_explorer.refresh();
-					} else {
-						core.module.layout.project_explorer.refresh_project_selectbox();
-					}
-
-					core.module.layout.terminal.resize();
+						core.module.layout.terminal.resize();
 
 
-					self.project_list = new goorm.core.project.list();
-					self.project_list.init("#project_delete", function() {
-						self.project_list.init_project(); //let's set first project
-						$("#project_delete_list").focus();
-						var data = self.project_list.get_data();
-						if (data.path == "") $("#project_delete_location").hide();
-						else $("#project_delete_location").show();
-						self.processing = false;
+						self.project_list = new goorm.core.project.list();
+						self.project_list.init("#project_delete", function() {
+							self.project_list.init_project(); //let's set first project
+							$("#project_delete_list").focus();
+							var data = self.project_list.get_data();
+							if (data.path == "") $("#project_delete_location").hide();
+							else $("#project_delete_location").show();
+							self.processing = false;
+						});
+					}, true, {
+						lock: true
+					}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
+					core._socket.emit("/project/delete", postdata);
+				}
+
+				if (postdata.project_path == core.status.current_project_path) {
+					$(core).one('on_project_open', function () {
+						do_delete();
 					});
 
-				}, true, {
-					lock: true
-				}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
-				core._socket.emit("/project/delete", postdata);
+					
+
+					core.status.current_project_path = "";
+					core.status.current_project_name = "";
+					core.status.current_project_type = "";
+					core.dialog.open_project.open("", "", "");
+				}
+				else {
+					do_delete();
+				}
 			}
 		}, 400, true); // jeongmin: true means invokeAsap
 

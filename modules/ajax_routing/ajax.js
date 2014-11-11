@@ -400,8 +400,11 @@ module.exports = {
 
 							copy_progress.stdout.on('data', function(data) {
 								var buf = new Buffer(data);
+								var progress = buf.toString();
 
-								socket.to().emit('/plugin/create/progress', buf.toString());
+								if (progress.indexOf('to-check') < 0) { // jeongmin: don't show detail progress
+									socket.to().emit('/plugin/create/progress', buf.toString());
+								}
 							});
 
 							copy_progress.on('close', function(code, signal) {
@@ -483,10 +486,9 @@ module.exports = {
 				var copy = function() {
 					var workspace = global.__workspace + "/" + msg.project_path;
 
-					var target_path = msg.deploy_path + '/' + msg.project_path || __temp_dir + "plugins/web/" + msg.project_path;
+					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + msg.project_path : __temp_dir + "plugins/web/" + msg.project_path;
 
 					var run_path = target_path.split("temp_files").pop();
-
 					fse.ensureDir(target_path, function(__err1) {
 						fse.copy(workspace, target_path, function(__err2) {
 							if (__err1 || __err2) {

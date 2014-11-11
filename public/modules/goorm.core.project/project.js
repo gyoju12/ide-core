@@ -325,7 +325,7 @@ goorm.core.project = {
 		var property = core.workspace[core.status.current_project_path];
 		var p = property.plugins["goorm.plugin." + core.status.current_project_type];
 		var latest = property.is_latest_build;
-		var build_path = p["plugin." + core.status.current_project_type + ".build_path"];
+		var build_path = p["plugin." + core.status.current_project_type + ".build_path"] || "";
 		var build_main = p["plugin." + core.status.current_project_type + ".main"];
 
 		//language fix -- java -will have to be changed to switch-case if languages using this function are bigger --heeje

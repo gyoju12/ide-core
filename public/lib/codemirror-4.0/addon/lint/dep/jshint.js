@@ -313,7 +313,7 @@ var JSHINT = (function () {
             undef       : true, // if variables should be declared before used
             scripturl   : true, // if script-targeted URLs should be tolerated
             shadow      : true, // if variable shadowing should be tolerated
-            smarttabs   : false, // if smarttabs should be tolerated
+            smarttabs   : true, // if smarttabs should be tolerated
                                 // (http://www.emacswiki.org/emacs/SmartTabs)
             strict      : true, // require the "use strict"; pragma
             sub         : true, // if all forms of subscript notation are tolerated
@@ -4174,11 +4174,10 @@ loop:   for (;;) {
         option.indent = option.indent || 4;
         option.maxerr = option.maxerr || 50;
 
-        // Customizing Codemirro Option - yongseong.kim
         option.laxbreak = option.laxbreak || true;
         option.laxcomma = option.laxcomma || true;
-        option.smarttabs = option.smarttabs || true;
-        
+        option.smarttabs = option.smarttabs || false;
+
         tab = '';
         for (i = 0; i < option.indent; i += 1) {
             tab += ' ';

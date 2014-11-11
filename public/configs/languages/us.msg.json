@@ -1468,5 +1468,11 @@
     },
     "confirmation_project_clean_message": {
         "value": "This project will be cleaned."
+    },
+    "folder_dnd_error" : {
+        "value": "You cannot upload the folder by drag and drop!"
+    },
+    "only_chrome_allowed" : {
+        "value": "Only chrome browser supports this feature."
     }
 }

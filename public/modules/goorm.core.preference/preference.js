@@ -41,7 +41,6 @@ goorm.core.preference = {
 		// read default preference file
 		// if (core.is_optimization) {
 		var json = this.parse_json();
-
 		self.preference = json;
 		core.preference = json;
 		self.preference_default = $.extend(true, {}, json);
@@ -103,7 +102,7 @@ goorm.core.preference = {
 	parse_json: function() {
 		var os = goorm.core.shortcut.manager.getOStype();
 		var json = JSON.parse(external_json['public']['configs']['preferences']['default.json']);
-
+		//console.log(external_json['public']['configs']['preferences']['default.json']);
 		if (!json) json = {};
 
 		if (os == "mac") {
@@ -390,13 +389,6 @@ goorm.core.preference = {
 			} else {
 				if ($("#preference\\.editor\\.indent_unit").val() < 1) {
 					return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
-				}
-			}
-			if (!/^[0-9]*$/.test($("#preference\\.editor\\.undo_depth").val())) {
-				return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
-			} else {
-				if ($("#preference\\.editor\\.undo_depth").val() < 1) {
-					return_string.push($("label[for=preference\\.editor\\.undo_depth]").text());
 				}
 			}
 

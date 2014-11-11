@@ -337,7 +337,7 @@ goorm.core.edit.find_and_replace = {
 			// cursor.findPrevious();
 			// if (!cursor.findPrevious()) {
 			// 	//첫번재 match 단어에서 previous 시
-
+ 
 			// 	if (this.find_on_workspace === true) {
 			// 		for (var i = 0; i < window_manager.window.length; i++) {
 			// 			if (window_manager.active_window === 0) {

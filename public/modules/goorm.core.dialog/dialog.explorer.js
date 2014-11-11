@@ -231,12 +231,17 @@ goorm.core.dialog.explorer.prototype = {
 
 					icon_str += "<div style='word-break:break-all; width:100px; line-height:12px; height: 20px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom:5px; text-align: center;'>";
 
-					if (data[idx].type == "folder") {
-						icon_str += data[idx].text;
+					// if (data[idx].type == "folder") {
+					// 	icon_str += data[idx].text;
+					// } else {
+					// 	icon_str += data[idx].text;
+					// }
+					if(data[idx].text.length > 28) {
+						icon_str += data[idx].text.substr(0, 24) + ' ...';
 					} else {
 						icon_str += data[idx].text;
 					}
-
+					
 					icon_str += "</div>";
 
 					files.append(icon_str);

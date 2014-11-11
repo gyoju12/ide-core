@@ -145,7 +145,7 @@ goorm.init = function() {
 
 		if (config_data.workspace !== undefined) {
 			global.__workspace = config_data.workspace;
-		} else if (workspace) {
+		} else if (workspace && workspace != 'undefined') {
 			global.__workspace = workspace;
 		} else {
 				

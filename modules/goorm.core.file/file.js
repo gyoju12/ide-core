@@ -1139,7 +1139,7 @@ module.exports = {
 
 							if (stat.isFile()) {
 								if (folder_only) continue;
-								var type = path.extname(name);
+								var type = path.extname(name).toLowerCase();
 								if (type[0] === '.') type = type.replace(".", "");
 								file.li_attr.file_type = (type !== "") ? _this._set_filetype(type) : "etc";
 								file.type = "file";
