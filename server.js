@@ -47,7 +47,15 @@ REDIS_HOST = '127.0.0.1';
 REDIS_PORT = 6379;
 
 
-MONGO_DB_HOST = 'mongodb://127.0.0.1:27017/goorm_ide'
+
+MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
+
+
+
+
+
+
+
 
 PROJECT_BUCKET = 'grm-project-bucket';
 
@@ -99,15 +107,6 @@ goorm.init = function() {
 		//
 		global.store = null;
 
-		
-		MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
-		
-
-		
-
-		
-
-		
 	}
 
 	var set_arguments = function() {
@@ -174,6 +173,7 @@ goorm.init = function() {
 
 		
 
+		if (!home) home = process.env.HOME;
 		if (fs.existsSync(home + '/.goorm/config.json')) {
 			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
 			if (data !== "") {
