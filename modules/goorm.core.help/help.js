@@ -11,10 +11,9 @@
 var http = require('http');
 var fs = require("fs");
 var querystring = require('querystring');
-var exec = require('child_process').exec;
 
 module.exports = {
-	send_to_bug_report: function(query, evt) {
+	send_to_bug_report: function (query, evt) {
 		var return_data = {};
 		return_data.err_code = 0;
 		return_data.message = "Process Done";
@@ -38,27 +37,27 @@ module.exports = {
 			}
 		};
 
-		var post_req = http.request(post_options, function(res) {
+		var post_req = http.request(post_options, function (res) {
 			res.setEncoding('utf8');
 
 			var data = "";
 
-			res.on('data', function(chunk) {
+			res.on('data', function (chunk) {
 				data += chunk;
 			});
 
-			res.on('end', function() {
+			res.on('end', function () {
 				evt.emit("help_send_to_bug_report", return_data);
 			});
 		});
 
-		post_req.on('error', function(e) {});
+		post_req.on('error', function (e) {});
 
 		post_req.write(post_data);
 		post_req.end();
 	},
 
-	get_readme_markdown: function(language, filename, filepath) {
+	get_readme_markdown: function (language, filename, filepath) {
 		var input;
 		var markdownpath = (filepath === undefined) ? global.__path : global.__path + filepath;
 
@@ -80,20 +79,6 @@ module.exports = {
 			html: input
 		};
 	},
-	
-	get_oss_license_ver: function(evt) {
-		var versions = {};
 
-		exec('node --version', function(error, stdout, stderr) {
-			if (error) {
-				console.log('get_oss_license_ver err:', error);
-			}
-
-			versions.node = stdout.split('v')[1];
-
-			evt.emit('get_oss_license_ver', versions);
-		});
-	},
-	
 	
 };

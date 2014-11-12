@@ -231,10 +231,7 @@ goorm.core.router = {
 		return this.fs_info;
 	},
 
-	// manage socket connections. Jeong-Min Im.
-	connect: function() {
-		var self = this;
-
+	set_reconnect: function (socket) {
 		var reconnect_attempts = 1;
 
 		var generate_interval = function(k) {
@@ -248,7 +245,7 @@ goorm.core.router = {
 			return Math.random() * maxInterval;
 		};
 
-		var disconnect = function() {
+		var disconnect = function(socket) {
 			console.log('Goorm IDE disconnect');
 			var wm = core.module.layout.workspace.window_manager;
 
@@ -263,18 +260,18 @@ goorm.core.router = {
 			var temp = $.debounce(function() {
 				reconnect_attempts++;
 
-				self.socket.socket.reconnect();
+				socket.socket.reconnect();
 			}, interval);
 			temp();
 		};
 
-		var reconnect = function() {
+		var reconnect = function(socket) {
 			if (!core.force_disconnect) {
 				var wm = core.module.layout.workspace.window_manager;
 
 				// set User Data to Socket...
 				//
-				self.socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
+				socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
 					'channel': 'join',
 					'reconnect': true
 				}));
@@ -299,6 +296,45 @@ goorm.core.router = {
 			reconnect_attempts--;
 		};
 
+		socket.on('disconnect', function() {
+			disconnect(socket);
+		});
+
+		socket.on('reconnect', function() {
+			reconnect(socket);
+		});
+
+		socket.on('reconnect_failed', function() {
+			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
+
+			// Reconnect Fail --> Refresh !!
+			//
+			$('#g_alert_btn_ok').one('click', function() {
+				document.location = '/';
+			});
+
+			alert.show(msg);
+		});
+
+		socket.on('/get_lxc_data_failed', function() {
+			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
+
+			alert.show(msg);
+		});
+
+		window.addEventListener('offline', function(e) {
+			disconnect(socket);
+		});
+
+		window.addEventListener('online', function(e) {
+			reconnect(socket);
+		});
+	},
+
+	// manage socket connections. Jeong-Min Im.
+	connect: function() {
+		var self = this;
+
 		// Socket Connect
 		//
 		if (!this.socket) {
@@ -314,39 +350,7 @@ goorm.core.router = {
 
 		
 
-		this.socket.on('disconnect', function() {
-			disconnect();
-		});
-
-		this.socket.on('reconnect', function() {
-			reconnect();
-		});
-
-		this.socket.on('reconnect_failed', function() {
-			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
-
-			// Reconnect Fail --> Refresh !!
-			//
-			$('#g_alert_btn_ok').one('click', function() {
-				document.location = '/';
-			});
-
-			alert.show(msg);
-		});
-
-		this.socket.on('/get_lxc_data_failed', function() {
-			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
-
-			alert.show(msg);
-		});
-
-		window.addEventListener('offline', function(e) {
-			disconnect();
-		});
-
-		window.addEventListener('online', function(e) {
-			reconnect();
-		});
+		this.set_reconnect(this.socket);
 	},
 
 	get_socket: function() {

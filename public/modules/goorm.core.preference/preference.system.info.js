@@ -17,59 +17,67 @@ goorm.core.preference.info = {
 	init: function() {
 		var self = this;
 
-		$.get("/preference/get_server_info", null, function(data) {
-			if (data.err_code === 0) {
-				$("#server_os").append(data.info.os_version);
-				$("#node_version").append(data.info.node_version);
+		$(core).on('goorm_login_complete', function() {
+			_$.get("/preference/get_server_info", null, function(data) {
+				if (data.err_code === 0) {
+					$("#server_os").append(data.info.os_version);
+					$("#node_version").append(data.info.node_version);
 
-				
-			}
-		});
+					core.dialog.help_license.set_version(data.info.node_version);
 
-		$.get("/preference/get_goorm_info", null, function(data) {
-			if (data.err_code === 0) {
-				core.env.version = data.info.version;
-				$('.goorm_version').html("goorm IDE " + core.env.version);
-				//attach tooltips --heeje
-				$(".version-icon").attr('title', $('.goorm_version').text()).tooltip();
-				$("#core_version").append(data.info.version);
+					
+				}
+			});
 
-				// console.log('version',data);
-				$.each(data.info.lib, function(index, lib) {
-					var version = lib.version;
-					switch (lib.name) {
-						case "jQuery":
-							$("#jquery_version").append(version);
-							break;
-						case "jQuery UI":
-							$("#jqueryui_version").append(version);
-							break;
-						case "CodeMirror":
-							$("#codemirror_version").append(version);
-							break;
-						case "GCC":
-							$("#gcc_version").append(version);
-							$("#gcc_version").css('display', '');
-							break;
-						case "GDB":
-							$("#gdb_version").append(version);
-							$("#gdb_version").css('display', '');
-							break;
-						case "Java":
-							$("#java_version").append(version);
-							$("#java_version").css('display', '');
-							break;
-						case "Node":
-							$("#node_version_preference").append(version);
-							$("#node_version_preference").css('display', '');
-							break;
-						case "Python":
-							$("#python_version").append(version);
-							$("#python_version").css('display', '');
-							break;
-					}
-				});
-			}
+			_$.get("/preference/get_goorm_info", null, function(data) {
+				if (data.err_code === 0) {
+					core.env.version = data.info.version;
+					$('.goorm_version').html("goorm IDE " + core.env.version);
+					//attach tooltips --heeje
+					$(".version-icon").attr('title', $('.goorm_version').text()).tooltip();
+					$("#core_version").append(data.info.version);
+
+					// console.log('version',data);
+					$.each(data.info.lib, function(index, lib) {
+						var version = lib.version;
+						switch (lib.name) {
+							case "jQuery":
+								$("#jquery_version").append(version);
+								$("#jquery_oss_version").html('jQuery ' + version);
+								break;
+							case "jQuery UI":
+								$("#jqueryui_version").append(version);
+								break;
+							case "CodeMirror":
+								$("#codemirror_version").append(version);
+								$("#codemirror_oss_version").html('CodeMirror ' + version);
+								break;
+							case "GCC":
+								$("#gcc_version").append(version);
+								$("#gcc_version").css('display', '');
+								break;
+							case "GDB":
+								$("#gdb_version").append(version);
+								$("#gdb_version").css('display', '');
+								break;
+							case "Java":
+								$("#java_version").append(version);
+								$("#java_version").css('display', '');
+								break;
+							case "Node":
+								$("#node_version_preference").append(version);
+								$("#node_version_preference").css('display', '');
+								break;
+							case "Python":
+								$("#python_version").append(version);
+								$("#python_version").css('display', '');
+								break;
+						}
+					});
+
+					core.dialog.help_license.set_version(data.info.lib);
+				}
+			});
 		});
 
 		if (navigator.appVersion.indexOf("Win") != -1)

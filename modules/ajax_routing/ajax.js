@@ -20,7 +20,7 @@ var g_preference = require("../goorm.core.preference/preference");
 var g_project = require("../goorm.core.project/project");
 // var g_terminal = require("../goorm.core.terminal/terminal");
 // var g_plugin = require("../goorm.plugin/plugin");
-var g_help = require("../goorm.core.help/help");
+// var g_help = require("../goorm.core.help/help");
 var g_search = require("../goorm.core.search/search");
 var g_edit = require("../goorm.core.edit/edit");
 var g_secure = require("../goorm.core.secure/secure");
@@ -106,17 +106,8 @@ module.exports = {
 			/////////
 
 			
-			
-			socket.on('/help/get_oss_license_ver', function() {
-				var evt = new EventEmitter();
 
-				evt.on('get_oss_license_ver', function(versions) {
-					socket.emit('/help/get_oss_license_ver', versions);
-				});
 
-				g_help.get_oss_license_ver(evt);
-			});
-			
 			//API : project
 
 			socket.on('/project/valid', function(msg) {

@@ -20,20 +20,43 @@ goorm.core.help.license = {
 			success: null
 
 		});
-
-		$(core).one('goorm_login_complete', function() {
-			// get open source license versions. Jeong-Min Im.
-			core._socket.once('/help/get_oss_license_ver', function(versions) { // Object that has each versions
-				if (versions.node) {
-					$('#nodejs_version').html('NodeJS ' + versions.node);
-				}
-			});
-			core._socket.emit('/help/get_oss_license_ver');
-		});
 	},
 
 	show: function() {
 		this.panel.modal('show');
 	},
 
+	set_version: function(_lib) {
+		if (typeof _lib == 'string') {
+			$('#node_oss_version').html('NodeJS ' + _lib.split('v')[1]); // jeongmin: help - open source license
+		} else if (typeof _lib == 'object') {
+			$.each(_lib, function(index, lib) {
+				switch (lib.name) {
+					case "jQuery":
+						$("#jquery_oss_version").html('jQuery ' + lib.version);
+						break;
+					case "Bootstrap":
+						$("#bootstrap_oss_version").html('Bootstrap ' + lib.version);
+						break;
+					case "CodeMirror":
+						$("#codemirror_oss_version").html('CodeMirror ' + lib.version);
+						break;
+					case "Bootstrap-tour":
+						$("#bootstrap_tour_oss_version").html('Bootstrap-tour ' + lib.version);
+						break;
+					case "Bootstrap-formhelpers":
+						$("#bootstrap_form_oss_version").html('Bootstrap-formhelpers ' + lib.version);
+						break;
+					case "pdf.js":
+						$("#pdf_oss_version").html('pdf.js ' + lib.version);
+						break;
+					case "iCheck":
+						$("#icheck_oss_version").html('iCheck ' + lib.version);
+						break;
+					case "RequireJs":
+						$("#require_oss_version").html('RequireJs ' + lib.version);
+				}
+			});
+		}
+	}
 };
