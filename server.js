@@ -47,6 +47,10 @@ REDIS_HOST = '127.0.0.1';
 REDIS_PORT = 6379;
 
 
+MONGO_DB_HOST = 'mongodb://127.0.0.1:27017/goorm_ide'
+
+PROJECT_BUCKET = 'grm-project-bucket';
+
 // Local Variables
 //
 var home = null;
@@ -94,6 +98,16 @@ goorm.init = function() {
 		// Session Store
 		//
 		global.store = null;
+
+		
+		MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
+		
+
+		
+
+		
+
+		
 	}
 
 	var set_arguments = function() {
@@ -215,12 +229,11 @@ goorm.init = function() {
 goorm.connect_db = function() {
 
 	
-	var db_url = 'mongodb://localhost/goorm_ide';
 	var mongoose_module = require('mongoose');
 	Schema = mongoose_module.Schema; //global
 	ObjectId = mongoose_module.Types.ObjectId; // global
 	global.__use_mongodb = true;
-	mongoose = mongoose_module.createConnection(db_url, {
+	mongoose = mongoose_module.createConnection(MONGO_DB_HOST, {
 		server: {
 			auto_reconnect: true
 		}
