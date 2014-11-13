@@ -153,13 +153,15 @@ goorm.core.file._import = {
 
 	files_upload: function(data, overwrite) {
 		var self = this;
+		var layout = core.module.layout;
+
 		core.module.loading_bar.stop();
 
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
 
 			if (self.upload_file_name) { // jeongmin: close opened windows and reopen these windows
-				var window_manager = core.module.layout.workspace.window_manager;
+				var window_manager = layout.workspace.window_manager;
 				var opening_window = [];
 
 				for (var i = window_manager.window.length - 1; 0 <= i; i--) {
@@ -177,8 +179,8 @@ goorm.core.file._import = {
 			}
 
 			notice.show(core.module.localization.msg.notice_file_import_done);
-			// core.module.layout.project_explorer.treeview.open_path(self.dialog_explorer.get_data().path); error occured in drag n drop
-			core.module.layout.project_explorer.refresh();
+			layout.project_explorer.treeview.open_path(self.upload_file_path); // jeongmin: open uploaded path
+			layout.project_explorer.refresh();
 		} else {
 			switch (data.err_code) {
 				case 21:
