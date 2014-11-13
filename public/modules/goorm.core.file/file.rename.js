@@ -18,6 +18,7 @@ goorm.core.file.rename = {
 	init: function() {
 
 		var self = this;
+		this.processing = false;
 
 		this.panel = $("#dlg_rename_file");
 
@@ -34,6 +35,9 @@ goorm.core.file.rename = {
 		};
 
 		var handle_ok = function(panel) {
+			if(self.processing) return;
+			self.processing = true;
+
 			var ori_path = $("#input_rename_old_filepath").val();
 			var ori_name = $("#input_rename_old_filename").val();
 			var dst_name = $("#input_rename_new_filename").val();
@@ -96,6 +100,7 @@ goorm.core.file.rename = {
 							self.panel.modal('hide');
 						});
 					}
+
 					if (data && data.exist && data.type == 'file') {
 						core.module.terminal.fs_rm(ori_path + "/" + dst_name, function on_delete_file() {
 							do_fs_rename();
@@ -187,6 +192,7 @@ goorm.core.file.rename = {
 
 	show: function(context) {
 		this.is_alive_window = false;
+		this.processing = false;
 
 		if (core.status.selected_file === core.status.current_project_path) {
 			alert.show(core.module.localization.msg.alert_project_rename);
@@ -215,8 +221,6 @@ goorm.core.file.rename = {
 					this.is_alive_window = true;
 				}
 			}
-
-
 
 			this.panel.modal('show');
 		} else {

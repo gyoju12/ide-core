@@ -318,32 +318,32 @@ module.exports = {
 
 
 			// goorm.manifest validation when login. Jeong-Min Im.
-			socket.on('/project/valid_manifest', function(msg) {
-				var evt = new EventEmitter();
+			// socket.on('/project/valid_manifest', function(msg) {
+			// 	var evt = new EventEmitter();
 
-				// validate goorm.manifest. Jeong-Min Im.
-				evt.on('project_get_list', function(data) {
-					for (var i = data.length - 1; 0 <= i; i--) {
-						g_auth_project.valid_manifest(data[i].name, data[i].contents, function() {
-							socket.emit('/project/valid_manifest');
-						});
-					}
-				});
+			// 	// validate goorm.manifest. Jeong-Min Im.
+			// 	evt.on('project_get_list', function(data) {
+			// 		for (var i = data.length - 1; 0 <= i; i--) {
+			// 			g_auth_project.valid_manifest(data[i].name, data[i].contents, function() {
+			// 				socket.emit('/project/valid_manifest');
+			// 			});
+			// 		}
+			// 	});
 
-				// get user's project list. Jeong-Min Im.
-				self.get_user_data(socket, function(user_data) {
-					if (user_data.result) {
-						user_data = user_data.data;
+			// 	// get user's project list. Jeong-Min Im.
+			// 	self.get_user_data(socket, function(user_data) {
+			// 		if (user_data.result) {
+			// 			user_data = user_data.data;
 
-						msg['author'] = {
-							author_id: user_data.id
-						};
-						msg.get_list_type = 'collaboration_list';
+			// 			msg['author'] = {
+			// 				author_id: user_data.id
+			// 			};
+			// 			msg.get_list_type = 'collaboration_list';
 
-						g_project.get_list(msg, evt);
-					}
-				});
-			});
+			// 			g_project.get_list(msg, evt);
+			// 		}
+			// 	});
+			// });
 
 			
 

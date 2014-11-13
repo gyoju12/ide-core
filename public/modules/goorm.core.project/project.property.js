@@ -53,7 +53,7 @@ goorm.core.project.property = {
 							$('[action="help_about_private_url"]').hide();
 							break;
 					}
-				}
+				} 
 
 				self.property.plugins || (self.property.plugins = {});
 				if (contents) {

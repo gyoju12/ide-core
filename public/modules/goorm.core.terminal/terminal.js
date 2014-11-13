@@ -244,9 +244,8 @@ goorm.core.terminal.prototype = {
 
 			// result write
 			self.socket.on("pty_command_result", function(msg) {
-
 				//build stop fix --heeje
-				if (core.module.project.is_running && msg.stdout.indexOf('^C') == 0) {
+				if ((core.module.project.is_running && msg.stdout.indexOf('^C') == 0) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m$') == msg.stdout.length-6) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m#') == msg.stdout.length-6)) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
 					$('button[action="stop"]').attr('isdisabled', 'disabled');

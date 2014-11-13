@@ -34,6 +34,8 @@ ObjectId = null;
 g_cluster = require("./modules/goorm.core.utility/utility.cluster");
 RedisStore = null;
 
+VERSION = 3;
+
 
 
 
@@ -200,7 +202,7 @@ goorm.init = function() {
 
 	// Update Workspace Path 
 	//
-	if (workspace) {
+	if (workspace && workspace !== 'undefined') {
 		global.__workspace = workspace;
 	}
 

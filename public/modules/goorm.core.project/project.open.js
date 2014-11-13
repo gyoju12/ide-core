@@ -115,10 +115,16 @@ goorm.core.project.open = {
 
 		if (project_path !== "") {
 			core._socket.set_url('/project/mount'+project_path);
-			core._socket.once('/project/mount'+project_path, function (result) {	
-				if(result.path == path) {
-					if(callback && typeof(callback) == "function")
+			core._socket.once('/project/mount'+project_path, function (result) {
+				if(path && result.path == path) {
+					if(callback && typeof(callback) == "function") {
 						callback(result);
+					}
+				}
+				else {
+					if(callback && typeof(callback) == "function") {
+						callback(result);
+					}
 				}
 			});
 
