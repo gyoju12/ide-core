@@ -184,7 +184,7 @@ module.exports = {
 
 	do_import_check: function(query, file, evt) {
 
-		if(file == null){
+		if (file == null) {
 			return false;
 		}
 
@@ -737,47 +737,47 @@ module.exports = {
 		});
 	},
 
-	move_file: function(data, evt) {
-		var length = data.current_path.length;
-		//var force = data.force ? '-f' : '';
+	// move_file: function(data, evt) {
+	// 	var length = data.current_path.length;
+	// 	//var force = data.force ? '-f' : '';
 
-		var callback = function(err, stdout, stderr) {
-			if (err) {
-				console.log(err, stdout, stderr);
+	// 	var callback = function(err, stdout, stderr) {
+	// 		if (err) {
+	// 			console.log(err, stdout, stderr);
 
-				evt.emit('move_file', {
-					flag: false
-				});
-			}
-			if (i == length - 1 || i == length) {
+	// 			evt.emit('move_file', {
+	// 				flag: false
+	// 			});
+	// 		}
+	// 		if (i == length - 1 || i == length) {
 
-				evt.emit('move_file', {
-					flag: true
-				});
-			}
-		};
+	// 			evt.emit('move_file', {
+	// 				flag: true
+	// 			});
+	// 		}
+	// 	};
 
-		var move = function(current_path, target_path) {
-			exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
-		}
+	// 	var move = function(current_path, target_path) {
+	// 		exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
+	// 	}
 
-		//console.log('move_file');
-		for (var i = 0; i < length; i++) {
-			data.current_path[i] = g_secure.command_filter(data.current_path[i]);
-			data.after_path = g_secure.command_filter(data.after_path);
-			var filename = data.current_path[i].split('/').slice(-1)[0];
-			var exist_check_path = path.join(global.__workspace, data.after_path, filename);
+	// 	//console.log('move_file');
+	// 	for (var i = 0; i < length; i++) {
+	// 		data.current_path[i] = g_secure.command_filter(data.current_path[i]);
+	// 		data.after_path = g_secure.command_filter(data.after_path);
+	// 		var filename = data.current_path[i].split('/').slice(-1)[0];
+	// 		var exist_check_path = path.join(global.__workspace, data.after_path, filename);
 
 
-			//console.log(exist_check_path, data.current_path[i], data.after_path);
-			if (fs.existsSync(exist_check_path)) {
-				exec('rm -rf ' + exist_check_path + ' | ' + 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-			} else {
-				exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-				//move(data.current_path[i], data.after_path);
-			}
-		}
-	},
+	// 		//console.log(exist_check_path, data.current_path[i], data.after_path);
+	// 		if (fs.existsSync(exist_check_path)) {
+	// 			exec('rm -rf ' + exist_check_path + ' | ' + 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+	// 		} else {
+	// 			exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
+	// 			//move(data.current_path[i], data.after_path);
+	// 		}
+	// 	}
+	// },
 
 	check_running_project: function(req, evt) {
 		var res = {};

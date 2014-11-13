@@ -36,40 +36,7 @@ goorm.core.file.move = {
 				dst_file: data.name
 			};
 
-			if (core.module.terminal.terminal) {
-				core.module.terminal.fs_move(postdata.ori_path + "/" + postdata.ori_file, postdata.dst_path + "/" + postdata.dst_file, function on_move(data) {
-					postdata.change = 'dialog_mv';
-					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
-					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
-						core.module.layout.workspace.window_manager.synch_with_fs(postdata);
-					//2.open file .....
-					core.module.layout.project_explorer.refresh();
-					self.panel.modal('hide');
-
-					
-				});
-			} else {
-				core._socket.once("/file/move", function(data) {
-					if (data.err_code === 0) {
-						postdata.change = 'dialog_mv';
-						postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
-						if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
-							core.module.layout.workspace.window_manager.synch_with_fs(postdata);
-						//2.open file .....
-						core.module.layout.project_explorer.refresh();
-
-						
-					} else if (data.err_code == 20) {
-						alert.show(data.message);
-
-					} else {
-						alert.show(data.message);
-					}
-				});
-				core._socket.emit("/file/move", postdata);
-
-				self.panel.modal('hide');
-			}
+			self.send(postdata);
 		};
 
 
@@ -197,5 +164,62 @@ goorm.core.file.move = {
 			self.filetype = $(this).attr("filetype");
 			self.filepath = $(this).attr("filepath");
 		});
+	},
+
+	send: function(postdata) {
+		var self = this;
+
+		if (core.module.terminal.terminal) {
+			function _move(file_data) {
+				core.module.terminal.fs_move(file_data.ori_path + "/" + file_data.ori_file, file_data.dst_path + "/" + file_data.dst_file, function on_move(data) {
+					file_data.change = 'dialog_mv';
+					file_data.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
+					if (file_data.ori_path + file_data.ori_file != file_data.dst_path + file_data.dst_file)
+						core.module.layout.workspace.window_manager.synch_with_fs(file_data);
+					//2.open file .....
+					core.module.layout.project_explorer.refresh();
+					self.panel.modal('hide');
+
+					
+				});
+			}
+
+			if (postdata.ori_file && postdata.dst_file) { // jeongmin: from dialog. Only one file.
+				_move(postdata);
+			} else { // jeongmin: from drag and drop. Can be multiple files.
+				for (var i = postdata.ori_path.length - 1; 0 <= i; i--) {
+					var cur_ori_path = postdata.ori_path[i];
+					var file = cur_ori_path.slice(cur_ori_path.lastIndexOf('/') + 1);
+
+					_move({
+						ori_path: cur_ori_path.slice(0, cur_ori_path.lastIndexOf('/')),
+						ori_file: file, // jeongmin: file name is same on drag and drop
+						dst_path: postdata.dst_path,
+						dst_file: file
+					});
+				}
+			}
+		} else {
+			core._socket.once("/file/move", function(data) {
+				if (data.err_code === 0) {
+					postdata.change = 'dialog_mv';
+					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
+					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
+						core.module.layout.workspace.window_manager.synch_with_fs(postdata);
+					//2.open file .....
+					core.module.layout.project_explorer.refresh();
+
+					
+				} else if (data.err_code == 20) {
+					alert.show(data.message);
+
+				} else {
+					alert.show(data.message);
+				}
+			});
+			core._socket.emit("/file/move", postdata);
+
+			self.panel.modal('hide');
+		}
 	}
 };

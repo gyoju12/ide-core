@@ -307,14 +307,14 @@ module.exports = {
 				});
 			});
 
-			socket.on('/project/move_file', function(msg) {
-				var evt = new EventEmitter();
-				evt.on('move_file', function(data) {
-					socket.emit('/project/move_file', data);
-				});
+			// socket.on('/project/move_file', function(msg) {
+			// 	var evt = new EventEmitter();
+			// 	evt.on('move_file', function(data) {
+			// 		socket.emit('/project/move_file', data);
+			// 	});
 
-				g_project.move_file(msg, evt);
-			});
+			// 	g_project.move_file(msg, evt);
+			// });
 
 
 			// goorm.manifest validation when login. Jeong-Min Im.

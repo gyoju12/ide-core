@@ -388,25 +388,38 @@ module.exports = {
 		data.err_code = 0;
 		data.message = "Process Done";
 
-		if (query.ori_path && query.ori_file && query.dst_path && query.dst_file) {
-			var ori_full = global.__workspace + '/' + query.ori_path + "/" + query.ori_file;
-			var dst_full = global.__workspace + '/' + query.dst_path + "/" + query.dst_file;
+		function move(file_data, last) { // last: all files are moved or not
+			var ori_full = global.__workspace + '/' + file_data.ori_path + "/" + file_data.ori_file;
+			var dst_full = global.__workspace + '/' + file_data.dst_path + "/" + file_data.dst_file;
 
 			fs.rename(ori_full, dst_full, function(err) {
-
 				if (err !== null) {
 					data.err_code = 20;
 					data.message = "Can not move file";
-
-					evt.emit("file_do_move", data);
 				} else {
+					data.path = file_data.dst_path;
+					data.file = file_data.dst_file;
+				}
 
-					data.path = query.dst_path;
-					data.file = query.dst_file;
-
+				if (last) {
 					evt.emit("file_do_move", data);
 				}
 			});
+		}
+
+		if (query.ori_path && query.ori_file && query.dst_path && query.dst_file) { // jeongmin: from dialog. Only one file.
+			move(query, true);
+		} else if (query.ori_path && query.dst_path) { // jeongmin: from drag and drop. Can be multiple files.
+			for (var i = query.ori_path.length - 1; 0 <= i; i--) {
+				var file = query.ori_path[i].slice(lastIndexOf('/') + 1);
+
+				_move({
+					ori_path: query.ori_path[i].slice(0, lastIndexOf('/')),
+					ori_file: file, // jeongmin: file name is same on drag and drop
+					dst_path: query.dst_path,
+					dst_file: file
+				}, i == 0);
+			}
 		} else {
 			data.err_code = 10;
 			data.message = "Invalide query";
