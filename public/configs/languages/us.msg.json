@@ -1455,7 +1455,7 @@
         "value": "Parent folder cannot be moved to its child folder"
     },
     "confirmation_do_you_want_move": {
-        "value": "Do you want to move?"
+        "value": "Do you want to move?<br/>If files/folders have same name, they will be overwritted.<br/>If it is abnormal action, they will be not moved."
     },
     "confirmation_do_you_want_overwrite": {
         "value": "Do you want to overwrite?"
@@ -1469,10 +1469,10 @@
     "confirmation_project_clean_message": {
         "value": "This project will be cleaned."
     },
-    "folder_dnd_error" : {
+    "folder_dnd_error": {
         "value": "You cannot upload the folder by drag and drop!"
     },
-    "only_chrome_allowed" : {
+    "only_chrome_allowed": {
         "value": "Only chrome browser supports this feature."
     }
 }

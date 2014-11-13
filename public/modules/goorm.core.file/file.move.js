@@ -168,6 +168,7 @@ goorm.core.file.move = {
 
 	send: function(postdata) {
 		var self = this;
+		var layout = core.module.layout;
 
 		if (core.module.terminal.terminal) {
 			function _move(file_data) {
@@ -175,9 +176,10 @@ goorm.core.file.move = {
 					file_data.change = 'dialog_mv';
 					file_data.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
 					if (file_data.ori_path + file_data.ori_file != file_data.dst_path + file_data.dst_file)
-						core.module.layout.workspace.window_manager.synch_with_fs(file_data);
+						layout.workspace.window_manager.synch_with_fs(file_data);
 					//2.open file .....
-					core.module.layout.project_explorer.refresh();
+					layout.project_explorer.treeview.open_path(file_data.dst_path);
+					layout.project_explorer.refresh();
 					self.panel.modal('hide');
 
 					
@@ -205,9 +207,10 @@ goorm.core.file.move = {
 					postdata.change = 'dialog_mv';
 					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
 					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
-						core.module.layout.workspace.window_manager.synch_with_fs(postdata);
+						layout.workspace.window_manager.synch_with_fs(postdata);
 					//2.open file .....
-					core.module.layout.project_explorer.refresh();
+					layout.project_explorer.treeview.open_path(postdata.dst_path);
+					layout.project_explorer.refresh();
 
 					
 				} else if (data.err_code == 20) {

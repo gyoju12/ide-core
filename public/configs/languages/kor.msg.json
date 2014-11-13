@@ -1457,7 +1457,7 @@
         "value": "부모폴더가 자식 폴더로는 이동할 수 없습니다."
     },
     "confirmation_do_you_want_move": {
-        "value": "이동시키겠습니까?"
+        "value": "이동시키겠습니까?<br/>파일/폴더가 같은 이름이라면, 덮어씌워질 것입니다.<br/>옳지 않은 이동이라면, 이동되지 않습니다."
     },
     "confirmation_do_you_want_overwrite": {
         "value": "덮어쓰기 하시겠습니까?"
@@ -1471,10 +1471,10 @@
     "confirmation_project_clean_message": {
         "value": "현재 프로젝트의 클린을 진행합니다."
     },
-    "folder_dnd_error" : {
+    "folder_dnd_error": {
         "value": "폴더는 드래그로 업로드할 수 없습니다!"
     },
-    "only_chrome_allowed" : {
+    "only_chrome_allowed": {
         "value": "해당 기능은 크롬브라우저에서만 가능합니다."
     }
 }
