@@ -7761,19 +7761,26 @@ top: -9px;
 #git_status_tab .panel-body,
 #git_branch_tab .panel-body,
 #git_tag_tab .panel-body {	/* jeongmin */
+	height: 237px;
+	overflow: auto;
+}
+
+#svn_status_tab .panel-body,
+#svn_lock_tab .panel-body,
+#git_status_tab .panel-body {	/* jeongmin */
 	height: 255px;
 	overflow: auto;
 }
 
 #svn_log_tab .panel-body,
 #git_log_tab .panel-body {	/* jeongmin */
-	height: 293px;
+	height: 274px;
 	overflow: auto;
 }
 
 #svn_blame_tab .panel-body,
 #svn_diff_tab .panel-body {	/* jeongmin */
-	height: 293px;
+	height: 274px;
 	padding: 0px;
 }
 
@@ -9627,6 +9634,10 @@ a.bg-danger:hover {
 	float: right !important;
 }
 
+#profile_old_input_container {
+	left: 42px;
+	margin-top: 10px;
+}
 /* bootstrap duplicate */
 .modal.fade .modal-dialog, .modal.in .modal-dialog
 {

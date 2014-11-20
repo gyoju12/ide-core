@@ -152,21 +152,14 @@ goorm.core.project = {
 						'property': property,
 						'detailed_type': project_data.detailedtype
 					}, function(data) {
-						_$.get('project/set_bin', { // jeongmin: change bin's group permission
-							project_path: project_path
-						}, function(build_result) {
-							if (build_result) {
-								//save latest build status on the goorm.manifest --heeje
-								project_data.is_latest_build = true;
-								core.module.project.property.save_property(project_path, project_data, callback);
-								self.is_building = false;
-							} else {
-								if (callback && typeof(callback) == "function") {
-									callback();
-									self.is_building = false;
-								}
-							}
-						});
+						
+
+						
+						//save latest build status on the goorm.manifest --heeje
+						project_data.is_latest_build = true;
+						core.module.project.property.save_property(project_path, project_data, callback);
+						self.is_building = false;
+						
 					});
 				}
 			}

@@ -18,9 +18,6 @@ var EventEmitter = require('events').EventEmitter;
 var g_file = require("../goorm.core.file/file");
 var g_preference = require("../goorm.core.preference/preference");
 var g_project = require("../goorm.core.project/project");
-// var g_terminal = require("../goorm.core.terminal/terminal");
-// var g_plugin = require("../goorm.plugin/plugin");
-// var g_help = require("../goorm.core.help/help");
 var g_search = require("../goorm.core.search/search");
 var g_edit = require("../goorm.core.edit/edit");
 var g_secure = require("../goorm.core.secure/secure");
@@ -29,6 +26,7 @@ var g_secure = require("../goorm.core.secure/secure");
 var g_auth = require("../goorm.core.auth/auth");
 var g_auth_manager = require("../goorm.core.auth/auth.manager");
 var g_auth_project = require("../goorm.core.auth/auth.project");
+var g_auth_monitor = require("../goorm.core.auth/auth.monitor");
 
 
 
@@ -64,6 +62,8 @@ module.exports = {
 					}
 
 					if (channel == "join") {
+						g_auth_monitor.connect(socket);
+
 						if (socket && socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id);
@@ -973,6 +973,9 @@ module.exports = {
 					return false;
 				}
 				
+
+				
+				
 				
 				// file validate
 				// 
@@ -1250,6 +1253,8 @@ module.exports = {
 
 			
 
+			
+
 			///////
 			//API end
 			////////////
@@ -1401,72 +1406,4 @@ module.exports = {
 			load_from_socket_id(callback);
 		}
 	}
-
-	// update_session: function(sessionID, user) {
-	// 	var user_data = user;
-
-	// 	// for (var attr in user_schema) {
-	// 	// 	if (attr == 'deleted' || attr == 'last_access_time')
-	// 	// 		continue;
-	// 	// 	user_data[attr] = user[attr];
-	// 	// }
-
-	// 	// Redis Store
-	// 	if (global.__redis_mode) {
-	// 		store.client.set('session_' + user_data.id, sessionID);
-	// 		store.client.set(sessionID, JSON.stringify(user_data));
-	// 	} else {
-	// 		// session.auth = {
-	// 		// 	loggedIn: true
-	// 		// };
-	// 		// session.auth[user.type.toLowerCase()] = {
-	// 		// 	user: user_data
-	// 		// };
-	// 		//jeongmin: literal is faster
-
-	// 		store.set('session_' + user_data.id, {
-	// 			'cookie': {
-	// 				'expires': null
-	// 			},
-	// 			'session_id': sessionID
-	// 		});
-	// 		store.set(sessionID, {
-	// 			'cookie': {
-	// 				'expires': null
-	// 			},
-	// 			'user_data': JSON.stringify(user_data)
-	// 		});
-	// 	}
-
-	// 	if (global.__sso_mode) {
-	// 		var postdata = {
-	// 			'user_data': user_data,
-	// 			'session_id': sessionID,
-	// 			'session_type': global.__service_config.session_type
-	// 		};
-
-	// 		var post_data = querystring.stringify({
-	// 			'data': JSON.stringify(postdata)
-	// 		});
-	// 		var post_options = {
-	// 			'host': '127.0.0.1',
-	// 			'port': 81,
-	// 			'path': '/session/save',
-	// 			'method': 'POST',
-	// 			'headers': {
-	// 				'Content-Type': 'application/x-www-form-urlencoded',
-	// 				'Content-Length': post_data.length
-	// 			}
-	// 		};
-
-	// 		var content = "";
-	// 		var post_req = http.request(post_options);
-	// 		post_req.on('error', function(e) {
-	// 			console.log(e);
-	// 		});
-
-	// 		post_req.write(post_data);
-	// 		post_req.end();
-	// 	}
-	// }
 }

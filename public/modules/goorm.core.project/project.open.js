@@ -95,13 +95,14 @@ goorm.core.project.open = {
 		$("#project_open_list").focus();
 	},
 
-	bind: function(name, fn) {
+	bind: function(type, name, fn) {
 		if (!this.handler) {
 			this.handler = {};
 		}
 
 		if (fn && typeof(fn) === 'function') {
-			this.handler[name] = fn;
+			this.handler[type] = {};
+			this.handler[type][name] = fn;
 		}
 	},
 
@@ -174,7 +175,7 @@ goorm.core.project.open = {
 	open: function(current_project_path, current_project_name, current_project_type) {
 		var self = this;
 
-		$(core).trigger("on_project_binding");
+		//$(core).trigger("on_project_binding");
 
 		//set once-open trigger every call of open so that can get the message of nodejs project --heeje
 		$(core).one('do_open', function() {
@@ -212,9 +213,8 @@ goorm.core.project.open = {
 			});
 			
 		})
-
-		if (this.handler && this.handler.before) {
-			this.handler.before();
+		if (this.handler && this.handler[core.status.current_project_type] && this.handler[core.status.current_project_type].before) {
+			this.handler[core.status.current_project_type].before();
 		} else {
 			$(core).trigger('do_open');
 		}

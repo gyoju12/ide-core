@@ -34,26 +34,24 @@ goorm.core.project.property = {
 			// var plugin_run = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type].run;
 			// goorm.core.project.clickRun = plugin_run ? plugin_run : function(){};
 			self.load_property(core.status.current_project_path, function(contents) {
-				if (core.property.type) {
-					switch (core.property.type) {
-						case 'python':
-						case 'web':
-						case 'nodejs':
-						
-						case 'go':
-						case 'ruby':
-							$('[action="build_project"]').css('display', 'none');
-							$('[action="build_clean"]').css('display', 'none');
-							$('[action="help_about_private_url"]').show();
-							break;
-						
-						default:
-							$('[action="build_project"]').css('display', '');
-							$('[action="build_clean"]').css('display', '');
-							$('[action="help_about_private_url"]').hide();
-							break;
-					}
-				} 
+				switch (core.property.type) {
+					case 'python':
+					case 'web':
+					case 'nodejs':
+					
+					case 'go':
+					case 'ruby':
+						$('[action="build_project"]').css('display', 'none');
+						$('[action="build_clean"]').css('display', 'none');
+						$('[action="help_about_private_url"]').show();
+						break;
+					
+					default:
+						$('[action="build_project"]').css('display', '');
+						$('[action="build_clean"]').css('display', '');
+						$('[action="help_about_private_url"]').hide();
+						break;
+				}
 
 				self.property.plugins || (self.property.plugins = {});
 				if (contents) {
@@ -291,43 +289,49 @@ goorm.core.project.property = {
 
 	load_property: function(path, callback) {
 		var self = this;
+		if (path == ''){
+			self.property = {};
+			core.property = self.property;
+			callback && callback(null);
 
-		core._socket.once("/project/get_property", function(data) {
-			if (data.err_code === 0) {
-				////// get scm property //////
-				// if (data.contents) {
-				// 	////// finding this project information //////
-				// 	core.socket.once('/scm/get', function(_data) {
-				// 		////// set scm property //////
-				// 		if (_data) { // only when this project has scm repository
-				// 			data.contents.scm_URL = _data.URL,
-				// 			data.contents.scm_auth = _data.auth,
-				// 			data.contents.scm_id = _data.id,
-				// 			data.contents.scm_path = _data.path,
-				// 			data.contents.scm_pw = _data.pw,
-				// 			data.contents.scm_type = _data.type
-				// 		}
+		} else {
+			core._socket.once("/project/get_property", function(data) {
+				if (data.err_code === 0) {
+					////// get scm property //////
+					// if (data.contents) {
+					// 	////// finding this project information //////
+					// 	core.socket.once('/scm/get', function(_data) {
+					// 		////// set scm property //////
+					// 		if (_data) { // only when this project has scm repository
+					// 			data.contents.scm_URL = _data.URL,
+					// 			data.contents.scm_auth = _data.auth,
+					// 			data.contents.scm_id = _data.id,
+					// 			data.contents.scm_path = _data.path,
+					// 			data.contents.scm_pw = _data.pw,
+					// 			data.contents.scm_type = _data.type
+					// 		}
 
-				// 		callback && callback(data.contents);
-				// 	});
-				// 	core.socket.emit('/scm/get', {
-				// 		project_path: path,
-				// 		author_id: data.contents.author
-				// 	});
-				// } else { // deletion of project
-				self.property = data.contents || {};
-				core.property = self.property;
-				callback && callback(data.contents);
-				// }
-			} else {
-				
-				alert.show(data.message);
-			}
-		});
+					// 		callback && callback(data.contents);
+					// 	});
+					// 	core.socket.emit('/scm/get', {
+					// 		project_path: path,
+					// 		author_id: data.contents.author
+					// 	});
+					// } else { // deletion of project
+					self.property = data.contents || {};
+					core.property = self.property;
+					callback && callback(data.contents);
+					// }
+				} else {
+					
+					alert.show(data.message);
+				}
+			});
 
-		core._socket.emit("/project/get_property", {
-			project_path: path
-		});
+			core._socket.emit("/project/get_property", {
+				project_path: path
+			});
+		}
 	},
 
 	get_property: function(options) {

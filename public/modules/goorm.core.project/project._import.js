@@ -77,7 +77,11 @@ goorm.core.project._import = {
 
 
 			//}else if(!self.target_zip_file || (self.target_zip_file.type!=='application/x-zip-compressed'  && self.target_zip_file.type!=='application/zip') ){
-		} else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
+		} else if (where.find(".project_import_file").val() == "") {
+			alert.show(localization_msg.alert_no_imported_file);
+			return false;
+		}
+		else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
 			alert.show(localization_msg.alert_unsupported_file_type);
 			return false;
 		} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test(where.find(".input_import_project_author").val())) {

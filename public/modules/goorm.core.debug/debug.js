@@ -169,11 +169,7 @@ goorm.core.debug.prototype = {
 				if (data) {
 					if (data.result && latest) {
 						self.button_active();
-						//useonly(mode=dev,edu-on-promise,book,edu,product,product-l2-ide,product-l2-fs)
-						//check history and alter it to current status --heeje
-						if (core.module.layout.history.selected_snapshot)
-							$("#history .history_header").click();
-						//useonlyend
+						
 						core.module.layout.select('debug');
 						core.module.layout.terminal.status = 'debug';
 						plugin_manager.debug({
@@ -249,6 +245,7 @@ goorm.core.debug.prototype = {
 	debug_continue: function() {
 		var plugin_manager = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type];
 
+		console.log(plugin_manager, $("#g_window_debug").length);
 		if (plugin_manager !== undefined && $("#g_window_debug").length != 0) {
 			core.module.layout.select('debug');
 			var cmd = {
@@ -367,7 +364,10 @@ goorm.core.debug.prototype = {
 
 	/* Debug Table API */
 	debug_terminal_open: function() {
-		this.debug_terminal = core.module.layout.workspace.window_manager.open("/", "debug", "terminal", "Terminal").terminal;
+		//id patch --heeje
+		this.debug_window = core.module.layout.workspace.window_manager.open("/", "debug", "terminal", "Terminal");
+		this.debug_terminal = this.debug_window.terminal;
+		this.debug_window.panel.attr("id", "g_window_debug");
 	},
 
 	debug_setting: function(options) {

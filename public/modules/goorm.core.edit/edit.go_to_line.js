@@ -22,17 +22,18 @@ goorm.core.edit.go_to_line = {
 			$("#edit_toolbar_ok").parent().off("mousedown");
 			$("#edit_toolbar_inputbox").keydown(function(e) {
 				var ev = e || event;
-
 				if (ev.keyCode == 27) { //jeongmin: add this again for esc
 					// esc key
 					$(this).blur(); //jeongmin: go to line is done
 					return false; //jeongmin: stop event
 				} else if (ev.keyCode == 13) {
 					self.move();
+					// $(this).blur(); //jeongmin: go to line is done
+
 					e.stopPropagation();
 					e.preventDefault();
-
-					$(this).blur(); //jeongmin: go to line is done
+					
+					
 					return false;
 				} else if ((ev.ctrlKey || ev.metaKey) && ev.shiftKey && ev.keyCode == 76) { //jeongmin: when edit toolbar is shown, if ctrl + shift + l (go to line shortcut) is pushed, exit
 					$(this).blur(); //jeongmin: go to line is done
@@ -43,7 +44,7 @@ goorm.core.edit.go_to_line = {
 			//button 
 			$("#edit_toolbar_ok").parent().on("mousedown", "#edit_toolbar_ok", function() {
 				self.move();
-				$("#edit_toolbar").toggleClass('hidden');
+				// $("#edit_toolbar").toggleClass('hidden');
 				return false;
 			});
 
@@ -53,6 +54,7 @@ goorm.core.edit.go_to_line = {
 
 	move: function() {
 		// Get current active_window's editor
+
 		if (this.editor) {
 			// Get current active_window's CodeMirror editor
 			// this.editor = window_manager.window[window_manager.active_window].editor.editor;	// hidden by jeongmin: editor is decided at show, so no need to do it again
@@ -62,19 +64,19 @@ goorm.core.edit.go_to_line = {
 			// Call search function of goorm.core.file.findReplace with keyword and editor	
 
 			//editor error fix --heeje
-			$("#edit_toolbar").toggleClass('hidden');
+			$(this).blur();
+			// $("#edit_toolbar").toggleClass('hidden');
 			if (isNaN(keyword) || keyword <= 0) return;
 
 			this.editor.setCursor(parseInt(keyword, 10) - 1, 0);
 
-			//scroll location calculate
-			var container_id = window_manager.window[window_manager.active_window].container;
-			var to_mean = ($('#' + container_id + ' .bd').height() / (this.font_size + 3)) / 2;
-			this.editor.scrollIntoView(parseInt(parseInt(keyword, 10) - 1 - to_mean, 10));
-			this.editor.scrollIntoView(parseInt(parseInt(keyword, 10) - 1 + to_mean, 10));
-			this.editor.scrollIntoView(parseInt(keyword, 10) - 1);
+			//scroll location calculate : no need - KW
+			// var container_id = window_manager.window[window_manager.active_window].container;
+			// var to_mean = ($('#' + container_id + ' .bd').height() / (this.font_size + 3)) / 2;
+			// this.editor.scrollIntoView(parseInt(parseInt(keyword, 10) - 1 - to_mean, 10));
+			// this.editor.scrollIntoView(parseInt(parseInt(keyword, 10) - 1 + to_mean, 10));
+			// this.editor.scrollIntoView(parseInt(keyword, 10) - 1);
 			this.editor.focus();
-
 		}
 	},
 

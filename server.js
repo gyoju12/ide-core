@@ -36,6 +36,8 @@ RedisStore = null;
 
 VERSION = 3;
 
+IDE_HOST = "ide.goorm.io";
+
 
 
 
@@ -374,6 +376,8 @@ goorm.routing = function() {
 
 	
 
+	
+
 	//for project
 	// goorm.post('/project/new', goorm.check_session, routes.project.make_project);
 	
@@ -528,6 +532,8 @@ goorm.load = function() {
 
 	
 
+	
+
 	var g_ajax = require("./modules/ajax_routing/ajax.js")
 
 	
@@ -662,6 +668,8 @@ goorm.load = function() {
 				});
 
 				
+
+				
 			};
 
 			
@@ -686,6 +694,7 @@ goorm.load = function() {
 
 		
 
+		
 		
 
 		

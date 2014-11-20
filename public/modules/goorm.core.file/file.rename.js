@@ -50,12 +50,15 @@ goorm.core.file.rename = {
 	
 			if (dst_name === "") {
 				alert.show(core.module.localization.msg.alert_filename_empty);
+				self.processing = false;
 				return false;
 			} else if (dst_name.indexOf(" ") != -1) {
 				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
+				self.processing = false;
 				return false;
 			} else if (!dst_name_check(dst_name)) {
 				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
+				self.processing = false;
 				return false;
 			}
 
@@ -66,52 +69,52 @@ goorm.core.file.rename = {
 			};
 
 			function do_rename(data) {
-				if (core.module.terminal.terminal) {
-					function do_fs_rename(){
-						core.module.terminal.fs_move(postdata.ori_path + "/" + postdata.ori_name, postdata.ori_path + "/" + postdata.dst_name, function on_move(data) {
-							var window_manager = core.module.layout.workspace.window_manager;
-							var window_list = window_manager.window;
+				// if (core.module.terminal.terminal) {
+				// 	function do_fs_rename(){
+				// 		core.module.terminal.fs_move(postdata.ori_path + "/" + postdata.ori_name, postdata.ori_path + "/" + postdata.dst_name, function on_move(data) {
+				// 			var window_manager = core.module.layout.workspace.window_manager;
+				// 			var window_list = window_manager.window;
 
-							for (var i = window_list.length - 1; i >= 0; i--) {
-								if ((window_list[i].title).indexOf(ori_path + ori_name) > -1) {
-									window_list[i].is_saved = true;
-									window_list[i].tab.is_saved = true;
+				// 			for (var i = window_list.length - 1; i >= 0; i--) {
+				// 				if ((window_list[i].title).indexOf(ori_path + ori_name) > -1) {
+				// 					window_list[i].is_saved = true;
+				// 					window_list[i].tab.is_saved = true;
 
-									var old_path = window_list[i].title;
+				// 					var old_path = window_list[i].title;
 
-									var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
+				// 					var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
 
-									var filename = new_path.split('/').pop();
-									var filepath = new_path.substring(0, new_path.length - filename.length);
-									var filetype = postdata.dst_name.slice(postdata.dst_name.lastIndexOf('.') + 1); // jeongmin: extract dst file name's filetype (filetype can be changed)
+				// 					var filename = new_path.split('/').pop();
+				// 					var filepath = new_path.substring(0, new_path.length - filename.length);
+				// 					var filetype = postdata.dst_name.slice(postdata.dst_name.lastIndexOf('.') + 1); // jeongmin: extract dst file name's filetype (filetype can be changed)
 
-									// window_list[i].close();
-									window_manager.close_by_index(i, i); // panel idx, tab idx
+				// 					// window_list[i].close();
+				// 					window_manager.close_by_index(i, i); // panel idx, tab idx
 
-									if (data.type == 'file') { // jeongmin: only file can be opened
-										core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
+				// 					if (data.type == 'file') { // jeongmin: only file can be opened
+				// 						core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
 
-										
-									}
-								}
-							}
+				// 						
+				// 					}
+				// 				}
+				// 			}
 
-							core.module.layout.project_explorer.refresh();
-							self.panel.modal('hide');
-						});
-					}
+				// 			core.module.layout.project_explorer.refresh();
+				// 			self.panel.modal('hide');
+				// 		});
+				// 	}
 
-					if (data && data.exist && data.type == 'file') {
-						core.module.terminal.fs_rm(ori_path + "/" + dst_name, function on_delete_file() {
-							do_fs_rename();
-						});
-					}else{
-						do_fs_rename();
-					}
-				} else {
+				// 	if (data && data.exist && data.type == 'file') {
+				// 		core.module.terminal.fs_rm(ori_path + "/" + dst_name, function on_delete_file() {
+				// 			do_fs_rename();
+				// 		});
+				// 	}else{
+				// 		do_fs_rename();
+				// 	}
+				// } else {
 					function do_file_rename(){
-						core._socket.once("/file/rename", function(data) {
-							var received_data = data;
+						core._socket.once("/file/rename", function(_data) {
+							var received_data = _data;
 
 							if (received_data.err_code === 0) {
 								var window_manager = core.module.layout.workspace.window_manager;
@@ -133,7 +136,8 @@ goorm.core.file.rename = {
 										// window_list[i].close();
 										window_manager.close_by_index(i, i); // panel idx, tab idx
 
-										if (data.type == 'file') { // jeongmin: only file can be opened
+										if (received_data.type !== 'directory') { // type is null when file name is not duplicate - KW
+										// if (data.type == 'file') { // jeongmin: only file can be opened
 											core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
 
 											
@@ -151,6 +155,7 @@ goorm.core.file.rename = {
 						core._socket.emit("/file/rename", postdata);
 						self.panel.modal('hide');
 					}
+
 					if (data && data.exist && data.type == 'file') {
 						var _postdata = {
 							filename: ori_path + "/" + dst_name
@@ -163,7 +168,7 @@ goorm.core.file.rename = {
 						do_file_rename();
 					}
 
-				}
+				// }
 			}
 
 			self.check_exist(postdata, 'confirmation_rename_message', do_rename);
@@ -265,21 +270,25 @@ goorm.core.file.rename = {
 		core._socket.once('/file/exist', function(data) {
 			if (data.err_code == 0) {
 				if (data.exist) {
-					confirmation.init({
-						message: localization[confirm_msg],
-						yes_text: localization.confirmation_yes,
-						no_text: localization.confirmation_no,
-						title: "Confirmation",
+					if (data.type === 'file') {
+						confirmation.init({
+							message: localization[confirm_msg],
+							yes_text: localization.confirmation_yes,
+							no_text: localization.confirmation_no,
+							title: "Confirmation",
 
-						yes: function() {
-							callback(data);
-						},
-						no: function() {}
-					});
+							yes: function() {
+								callback(data);
+							},
+							no: function() {}
+						});
 
-					confirmation.show();
+						confirmation.show();
+					} else if (data.type === 'directory') {
+						alert.show(localization.alert_rename_exist_folder);
+					}
 				} else {
-					callback();
+					callback(data);
 				}
 			} else {
 				var msg = '' || localization[data.message];

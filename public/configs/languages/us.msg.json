@@ -68,6 +68,9 @@
     "alert_unsupported_file_type": {
         "value": "We don't support this file type."
     },
+    "alert_no_imported_file": {
+        "value": "There is no project to be imported"
+    },
     "alert_project_not_opened": {
         "value": "Cannot find opened project."
     },
@@ -309,7 +312,7 @@
         "value": "Same file(folder) name already exists. Do you want to create anyway?<br/>(The contents of original file(folder) will be gone.)"
     },
     "confirmation_rename_message": {
-        "value": "Same file(folder) name already exists. Do you want to rename anyway?<br/>(If new name is same as folder, file will be moved in that folder.)"
+        "value": "Same file name already exists. Do you want to rename anyway?<br/>(If you choose 'yes', original file will be deleted."
     },
     "confirmation_move_message": {
         "value": "Same file(folder) name already exists. Do you want to move anyway?"
@@ -498,7 +501,7 @@
         "value": "Are you sure you want to delete a user?"
     },
     "confirmation_modify_profile": {
-        "value": "Are you sure you want to modify an information?"
+        "value": "If you want to change your profile, please write your password."
     },
     "notice_help_goorm_ide_current_version": {
         "value": "goorm IDE Current Version"
@@ -1474,5 +1477,11 @@
     },
     "only_chrome_allowed": {
         "value": "Only chrome browser supports this feature."
+    },
+    "alert_select_auth": {
+        "value": "Please select the authentication method."
+    },
+    "alert_rename_exist_folder": {
+        "value": "Same folder name exists."
     }
 }

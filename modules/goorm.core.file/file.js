@@ -1012,6 +1012,8 @@ module.exports = {
 
 	
 
+	
+
 	/**
 	 * Get file list from the path
 	 * @method get_result_ls
@@ -1105,7 +1107,7 @@ module.exports = {
 						});
 				} catch (e) {
 					console.log('_read_dir error:', e);
-					evt.emit('got_result_ls', files);
+					evt.emit('got_result_ls', false);
 				}
 			}
 		};

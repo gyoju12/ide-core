@@ -483,10 +483,10 @@
 				"value": " 이름"
 			},
 			"dialog_goorm_profile_password": {
-				"value": " 패스워드"
+				"value": " 새 비밀번호"
 			},
 			"dialog_goorm_profile_password_confirm": {
-				"value": " 패스워드(확인)"
+				"value": " 새 비밀번호(확인)"
 			},
 			"dialog_goorm_profile_nick": {
 				"value": " 닉네임"
@@ -514,7 +514,7 @@
 	"dialog_scm_path": {
 		"value": "파일 경로"
 	},
-	"dilaog_scm_update_guide": {
+	"dialog_scm_update_guide": {
 		"value": "특정 리비전 또는 특정 날짜로 업데이트를 받습니다."
 	},
 	"dialog_scm_date": {
@@ -698,5 +698,8 @@
 	},
 	"dialog_new_untitled_textfile": {
 		"value": "새 텍스트 파일"
+	},
+	"dialog_scm_selected_path": {
+		"value": "경로: "
 	}
 }

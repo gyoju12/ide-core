@@ -2675,16 +2675,16 @@
                         <div id="move_dialog_middle" class="row">
                             <div id="file_move_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
                             <div id="file_move_files" class="col-md-8 dialog_center"></div>
-                            <label for="file_move_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
-                            <div class="col-md-10">
+                            <!-- <label for="file_move_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
+                            <div class="col-md-10"> -->
                                 <input type="hidden" id="file_move_ori_path" />
                                 <input type="hidden" id="file_move_ori_file" />
-                                <input type="text" id="file_move_target_name" class="form-control col-md-10" />
-                            </div>
+                                <input type="hidden" id="file_move_target_name" class="form-control col-md-10" />
+                            <!-- </div>
                             <label for="file_move_file_type" class="col-md-2 control-label" localization_key='common_filetype'>File Type</label>
                             <div class="col-md-10">
                                 <select id='file_move_file_type' class="form-control col-md-10"></select>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3310,7 +3310,7 @@
                                     <button type="button" id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
                                 </div>
                                 <div class="btn-group btn-group-sm" style="width: 100%">
-                                    <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="Find Prev" data-container="body" tooltip="msg_find_previous" tabindex="-1">
+                                    <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
                                         <div class="find_replace_prev" style="margin: 0px 5px 0px 7px"></div>
                                     </button>
                                     <button id="g_far_btn_find" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
@@ -5387,9 +5387,8 @@
                                 <div class='col-md-9'>
                                  <input id="profile_email_input" type="text" name="profile_email_input" class="form-control" readonly="readonly" placeholder="example@example.com" />
                                 </div>
-
                                 <div class="password_area">
-                                    <label for='profile_pw_input' localization_key='dialog_goorm_profile_password' name='profile_pw_span' class=' col-md-3 control-label'>PW :</label>
+                                    <label for='profile_pw_input' localization_key='dialog_goorm_profile_password' name='profile_pw_span' class=' col-md-3 control-label'>New PW :</label>
                                     <div class='col-md-9'>
                                         <input id='profile_pw_input' type='password' name='profile_pw_input' class='form-control' readonly="readonly" localization_key="profile_password" placeholder='(8~15), Alphabet+Number+Special' />
                                     </div>

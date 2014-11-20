@@ -117,7 +117,6 @@ goorm.core.window.manager = {
 						};
 
 						//console.log("WM __file", __file);
-						console.log(__file.filepath.split('/')[0]);
 						core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
 						
 						//console.log("mount test");

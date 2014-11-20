@@ -1209,7 +1209,7 @@ goorm.core.shortcut.manager = {
 				if (editor) {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
-					if (editor.editor && !editor.editor.state.search.query) {
+					if (editor.editor && editor.editor.state.search.query) {
 						core.dialog.find_and_replace.find_prev();
 					}
 					core.status.keydown = true;

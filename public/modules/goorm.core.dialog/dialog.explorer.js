@@ -316,7 +316,7 @@ goorm.core.dialog.explorer.prototype = {
 					folder_item.removeClass("selected_item");
 					$(this).addClass("selected_item");
 
-					input_file_name.val($(this).attr("filename"));
+					$(self.input_file_name).val($(this).attr("filename"));
 
 					self.filename = $(this).attr("filename");
 					self.filetype = $(this).attr("filetype");

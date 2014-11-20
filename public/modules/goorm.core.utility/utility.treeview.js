@@ -17,6 +17,7 @@ goorm.core.utility.treeview = function(selector, opts) {
 	this.tree = $(selector);
 	this.is_ready = false;
 	this.raw_data = {};
+	this.normally_made = false;	// jeongmin: treeview is made normally or not
 
 	this.init(opts);
 };
@@ -57,11 +58,14 @@ goorm.core.utility.treeview.prototype = {
 		this.unbind();
 		this.bind();
 
-		this.create();
+		if (this.create()) { // jeongmin: only making tree successes
+			// unbind keydown event on jstree to customize keydown event
+			var element = this.tree.jstree(true).element || this.tree.jstree(true)._element; // jeongmin: _element is emergency element
+			element.off('keydown.jstree', '.jstree-anchor');
 
-		// unbind keydown event on jstree to customize keydown event
-		var element = this.tree.jstree(true).element || this.tree.jstree(true)._element; // jeongmin: _element is emergency element
-		element.off('keydown.jstree', '.jstree-anchor');
+			this.normally_made = true;
+		}
+
 		return this;
 	},
 
@@ -109,7 +113,7 @@ goorm.core.utility.treeview.prototype = {
 			}
 		}).on('mousedown.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
-			if(!_this.options.multiple) {
+			if (!_this.options.multiple) {
 				_this.tree.jstree("deselect_all");
 			}
 
@@ -150,6 +154,9 @@ goorm.core.utility.treeview.prototype = {
 			};
 		} else project_root = this.options.root_node;
 
+		if (this.options.line && this.options.line == 1 && project_root.length > 800) {
+			return false;
+		}
 
 		// plugin settings
 		var plugins = ["types", "ui", "unique"];
@@ -198,7 +205,7 @@ goorm.core.utility.treeview.prototype = {
 
 		_this.tree.jstree({
 			// the `plugins` array allows you to configure the active plugins on this instance
-			"plugins": plugins,			
+			"plugins": plugins,
 			"themes": {
 				"stripes": true
 			},
@@ -402,35 +409,35 @@ goorm.core.utility.treeview.prototype = {
 
 		// seongho.cha : most of cases it is called only 1 time per node, but when treeview refreshed at the same time, open_node need to call again
 		//               200ms is proper.
-		var handle = setInterval(function(){
-			while( self.tree.jstree("is_open", $("[path='"+current_path+"'] a i "))){
-				if( i < path.length ){
+		var handle = setInterval(function() {
+			while (self.tree.jstree("is_open", $("[path='" + current_path + "'] a i "))) {
+				if (i < path.length) {
 					current_path += "/" + path[i++];
 				} else {
 					clearInterval(handle);
 					return;
 				}
 			}
-			self.tree.jstree("open_node", $("[path='"+current_path+"'] a i"));
+			self.tree.jstree("open_node", $("[path='" + current_path + "'] a i"));
 		}, 200);
 
 
-/*
-		this.tree.on("after_open.jstree.set_open", function(){
-			while ( i < path.length ){
-				current_path += "/" + path[i++];
-				if ( !self.tree.jstree("is_open", $("[path='"+current_path+"'] a i "))){
-					self.tree.jstree("open_node", $("[path='"+current_path+"'] a i"));
-					break;
-				}
-			}
-			if( i >= path.length){
-				self.tree.unbind("after_open.jstree.set_open");
-			}
+		/*
+				this.tree.on("after_open.jstree.set_open", function(){
+					while ( i < path.length ){
+						current_path += "/" + path[i++];
+						if ( !self.tree.jstree("is_open", $("[path='"+current_path+"'] a i "))){
+							self.tree.jstree("open_node", $("[path='"+current_path+"'] a i"));
+							break;
+						}
+					}
+					if( i >= path.length){
+						self.tree.unbind("after_open.jstree.set_open");
+					}
 
-		});
-		this.tree.trigger("after_open.jstree.set_open");
-*/
+				});
+				this.tree.trigger("after_open.jstree.set_open");
+		*/
 
 
 	},
@@ -527,7 +534,7 @@ goorm.core.utility.treeview.prototype = {
 		}
 	},
 
-	select_node: function (node) {
+	select_node: function(node) {
 		if (this.tree.jstree("is_loaded", node)) {
 			this.tree.jstree("deselect_all");
 			this.tree.jstree("select_node", node);
@@ -536,7 +543,7 @@ goorm.core.utility.treeview.prototype = {
 		}
 	},
 
-	get_root_node: function () {
+	get_root_node: function() {
 		var _this = this;
 		// console.log("get_root_node");
 		return this.get_node(this.tree).then(function(root) {
@@ -545,14 +552,14 @@ goorm.core.utility.treeview.prototype = {
 		});
 	},
 
-	get_node: function (node) {
+	get_node: function(node) {
 		var _this = this;
 
 		var deferred = $.Deferred();
 		var promise = function(n) {
 			if (_this.tree.jstree("is_loaded", n) !== true || _this.tree.jstree("is_loading", n) === true) {
 				//setTimeout(function() {
-        		var temp = $.debounce(function() {
+				var temp = $.debounce(function() {
 					return promise(n);
 				}, 200);
 				temp();
@@ -567,7 +574,7 @@ goorm.core.utility.treeview.prototype = {
 		return promise(node);
 	},
 
-	get_children: function (node) {
+	get_children: function(node) {
 
 		// console.log("get_children", node.children);
 		if ($.isArray(node.children)) {
@@ -587,7 +594,7 @@ goorm.core.utility.treeview.prototype = {
 	 * @method destroy
 	 * @return {treeview}
 	 */
-	destroy: function () {
+	destroy: function() {
 		console.log(this.id, "destroy");
 		this.tree.jstree("destroy");
 		return this;

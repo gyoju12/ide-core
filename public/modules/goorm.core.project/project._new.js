@@ -14,7 +14,6 @@ goorm.core.project._new = {
 	tabview: null,
 	panel: null,
 	callback: null,
-	project_error: false,
 
 	init: function() {
 		var self = this;
@@ -89,7 +88,7 @@ goorm.core.project._new = {
 				});
 
 				//three tabs' common works. Value validation check and communication with server. Jeong-Min Im.
-				var handle_ok = function(data) {
+				var handle_ok = function(data, callback) {
 					/* TODO : make new function or module for validation */
 
 					// var use_scm = false;	//jeongmin: whether or not use scm for getting scm
@@ -178,19 +177,12 @@ goorm.core.project._new = {
 							// else{
 							$(core).trigger('project_is_created');
 
-							////// jeongmin: get plugin items only when user make new project using template //////
-							if ($("a[href='#new_project_template']").parent().hasClass("active"))
-								core.module.plugin_manager.new_project(senddata);
+							callback(senddata); // jeongmin: do template or scm callback
 
 							core.module.layout.terminal.resize();
-							// }
-
-							self.project_error = false;
 						} else {
 							alert.show(data.message);
 							$ok_btn.prop('disabled', false);
-
-							self.project_error = true;
 
 							return false;
 						}
@@ -238,8 +230,6 @@ goorm.core.project._new = {
 									break;
 							}
 
-							self.project_error = true;
-
 							$ok_btn.prop('disabled', false); // jeongmin: making directory is done
 						}
 					});
@@ -276,8 +266,12 @@ goorm.core.project._new = {
 					var selected_storage = $("#new_project_storage").val().toString();
 
 					if (selected_storage == "goormIDE_Storage") {
+						var callback = function(senddata) {
+							core.module.plugin_manager.new_project(senddata);
+						};
+
 						////// communicate with server //////
-						if (!handle_ok(project_info))
+						if (!handle_ok(project_info, callback))
 							return false;
 					}
 					// else if (selected_storage == "Dropbox") {

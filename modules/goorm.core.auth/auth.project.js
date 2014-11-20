@@ -260,6 +260,7 @@ module.exports = {
 	
 	
 	
+	
 	// change goorm.manifest's permission and owner. Jeong-Min Im.
 	manifest_setting: function(project_path, callback) {
 		

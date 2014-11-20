@@ -48,18 +48,18 @@ goorm.core.file.move = {
 			show: $.proxy(this.after_show, this),
 			success: function() {
 
-				$("#file_move_project_type").change(function() {
-					var type = $(this).val();
-					$("#move_dialog_center").find(".file_item").each(function() {
-						if (type === 0) {
-							$(this).css("display", "block");
-						} else if ($(this).attr('filetype') == type) {
-							$(this).css("display", "block");
-						} else {
-							$(this).css("display", "none");
-						}
-					});
-				});
+				// $("#file_move_project_type").change(function() {
+				// 	var type = $(this).val();
+				// 	$("#move_dialog_center").find(".file_item").each(function() {
+				// 		if (type === 0) {
+				// 			$(this).css("display", "block");
+				// 		} else if ($(this).attr('filetype') == type) {
+				// 			$(this).css("display", "block");
+				// 		} else {
+				// 			$(this).css("display", "none");
+				// 		}
+				// 	});
+				// });
 			}
 		});
 
@@ -70,7 +70,7 @@ goorm.core.file.move = {
 	show: function(context) {
 
 		var self = this;
-		self.dialog_explorer.init(true, true, false);
+		self.dialog_explorer.init(true, true, true);
 		self.is_alive_window = false;
 		if (context) {
 			if (core.status.current_project_path === core.status.selected_file) {
@@ -170,38 +170,38 @@ goorm.core.file.move = {
 		var self = this;
 		var layout = core.module.layout;
 
-		if (core.module.terminal.terminal) {
-			function _move(file_data) {
-				core.module.terminal.fs_move(file_data.ori_path + "/" + file_data.ori_file, file_data.dst_path + "/" + file_data.dst_file, function on_move(data) {
-					file_data.change = 'dialog_mv';
-					file_data.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
-					if (file_data.ori_path + file_data.ori_file != file_data.dst_path + file_data.dst_file)
-						layout.workspace.window_manager.synch_with_fs(file_data);
-					//2.open file .....
-					layout.project_explorer.treeview.open_path(file_data.dst_path);
-					layout.project_explorer.refresh();
-					self.panel.modal('hide');
+		// if (core.module.terminal.terminal) {
+		// 	function _move(file_data) {
+		// 		core.module.terminal.fs_move(file_data.ori_path + "/" + file_data.ori_file, file_data.dst_path + "/" + file_data.dst_file, function on_move(data) {
+		// 			file_data.change = 'dialog_mv';
+		// 			file_data.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
+		// 			if (file_data.ori_path + file_data.ori_file != file_data.dst_path + file_data.dst_file)
+		// 				layout.workspace.window_manager.synch_with_fs(file_data);
+		// 			//2.open file .....
+		// 			layout.project_explorer.treeview.open_path(file_data.dst_path);
+		// 			layout.project_explorer.refresh();
+		// 			self.panel.modal('hide');
 
-					
-				});
-			}
+		// 			
+		// 		});
+		// 	}
 
-			if (postdata.ori_file && postdata.dst_file) { // jeongmin: from dialog. Only one file.
-				_move(postdata);
-			} else { // jeongmin: from drag and drop. Can be multiple files.
-				for (var i = postdata.ori_path.length - 1; 0 <= i; i--) {
-					var cur_ori_path = postdata.ori_path[i];
-					var file = cur_ori_path.slice(cur_ori_path.lastIndexOf('/') + 1);
+		// 	if (postdata.ori_file && postdata.dst_file) { // jeongmin: from dialog. Only one file.
+		// 		_move(postdata);
+		// 	} else { // jeongmin: from drag and drop. Can be multiple files.
+		// 		for (var i = postdata.ori_path.length - 1; 0 <= i; i--) {
+		// 			var cur_ori_path = postdata.ori_path[i];
+		// 			var file = cur_ori_path.slice(cur_ori_path.lastIndexOf('/') + 1);
 
-					_move({
-						ori_path: cur_ori_path.slice(0, cur_ori_path.lastIndexOf('/')),
-						ori_file: file, // jeongmin: file name is same on drag and drop
-						dst_path: postdata.dst_path,
-						dst_file: file
-					});
-				}
-			}
-		} else {
+		// 			_move({
+		// 				ori_path: cur_ori_path.slice(0, cur_ori_path.lastIndexOf('/')),
+		// 				ori_file: file, // jeongmin: file name is same on drag and drop
+		// 				dst_path: postdata.dst_path,
+		// 				dst_file: file
+		// 			});
+		// 		}
+		// 	}
+		// } else {
 			core._socket.once("/file/move", function(data) {
 				if (data.err_code === 0) {
 					postdata.change = 'dialog_mv';
@@ -223,6 +223,6 @@ goorm.core.file.move = {
 			core._socket.emit("/file/move", postdata);
 
 			self.panel.modal('hide');
-		}
+		// }
 	}
 };

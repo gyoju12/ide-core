@@ -483,10 +483,10 @@
 				"value": "Name"
 			},
 			"dialog_goorm_profile_password": {
-				"value": "PW"
+				"value": "New PW"
 			},
 			"dialog_goorm_profile_password_confirm": {
-				"value": "Confirm PW"
+				"value": "Confirm New PW"
 			},
 			"dialog_goorm_profile_nick": {
 				"value": "Nickname"
@@ -514,7 +514,7 @@
 	"dialog_scm_path": {
 		"value": "File Path"
 	},
-	"dilaog_scm_update_guide": {
+	"dialog_scm_update_guide": {
 		"value": "Update to specific revision or specific date."
 	},
 	"dialog_scm_date": {
@@ -698,5 +698,8 @@
 	},
 	"dialog_new_untitled_textfile": {
 		"value": "New Untitled Textfile"
+	},
+	"dialog_scm_selected_path": {
+		"value": "Path: "
 	}
 }

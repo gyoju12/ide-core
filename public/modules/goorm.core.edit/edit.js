@@ -739,7 +739,7 @@ goorm.core.edit.prototype = {
         this.editor.setOption('autoCloseBrackets', this.auto_close_brackets);
         this.editor.setOption("lineWrapping", this.line_wrapping); // jeongmin: even if these value are false, option must be set
         this.editor.setOption("lineNumbers", this.show_line_numbers);
-	this.editor.setOption("indentWithTabs", this.indent_with_tabs);
+        this.editor.setOption("indentWithTabs", this.indent_with_tabs);
 
         if (this.vim_mode) {
             this.editor.setOption("vimMode", true);
