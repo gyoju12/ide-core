@@ -945,6 +945,10 @@ goorm.core.window.panel.prototype = {
 				$("a[action=comment_selected").parent().addClass("disabled");
 				$("a#parent_merge_menu").parent().addClass("disabled");
 				$("a#parent_refactor_menu").parent().addClass("disabled");
+				$(".menu-undo[action=do_undo]").parent().addClass("disabled");
+				$(".menu-redo[action=do_redo]").parent().addClass("disabled");
+				$("button[action=do_redo]").addClass("disabled");
+				$("button[action=do_undo]").addClass("disabled");
 			}
 
 			if (window_manager.active_window != this.index) { // jeongmin: reset active_window

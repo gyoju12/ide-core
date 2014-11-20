@@ -1195,8 +1195,10 @@ module.exports = {
 			socket.on('/edit/save_tags', function(msg) {
 				var option = msg;
 
-				g_edit.save_tags_data(option);
-				socket.emit("/edit/save_tags", true);
+				g_edit.save_tags_data(option, function(){
+					socket.emit("/edit/save_tags", true);
+				});
+				
 			});
 			
 			
