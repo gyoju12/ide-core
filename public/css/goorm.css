@@ -7774,13 +7774,17 @@ top: -9px;
 
 #svn_log_tab .panel-body,
 #git_log_tab .panel-body {	/* jeongmin */
-	height: 274px;
+	height: 257px;
 	overflow: auto;
 }
 
-#svn_blame_tab .panel-body,
 #svn_diff_tab .panel-body {	/* jeongmin */
-	height: 274px;
+	height: 240px;
+	padding: 0px;
+}
+
+#svn_blame_tab .panel-body {	/* jeongmin */
+	height: 257px;
 	padding: 0px;
 }
 
@@ -8767,7 +8771,7 @@ label {
 
 #git_cmd_log_tab .panel-body,
 #svn_cmd_log_tab .panel-body { /* jeongmin */
-	height: 308px;
+	height: 307px;
 	overflow: auto;
 }
 

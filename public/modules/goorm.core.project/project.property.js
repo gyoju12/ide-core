@@ -210,6 +210,16 @@ goorm.core.project.property = {
 				}
 			});
 
+			//makefile option --heeje
+			target_index.find("input[type=checkbox]").each(function() {
+				if($(this).attr("name") !== undefined) {
+					if($(this).parent().hasClass('checked'))
+						key[$(this).attr("name")] = "true";
+					else
+						key[$(this).attr("name")] = "false";
+				}
+			});
+
 			target_index.find("textarea").each(function() {
 				if ($(this).attr("name") !== undefined) {
 					key[$(this).attr("name")] = $(this).val();
@@ -284,6 +294,7 @@ goorm.core.project.property = {
 					$(this).val(key[$(this).attr("name")]);
 				}
 			});
+
 		});
 	},
 
