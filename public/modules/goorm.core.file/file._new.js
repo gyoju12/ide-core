@@ -18,6 +18,9 @@ goorm.core.file._new = {
 		var self = this;
 
 		this.panel = $("#dlg_new_file");
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
 
 		var dst_name_check = function(dst_name) {
 			/*var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
@@ -112,7 +115,11 @@ goorm.core.file._new = {
 			// localization_key: "title_new_file",
 			id: "dlg_new_file",
 			handle_ok: handle_ok,
-			success: null,
+			success: function() {
+				$(document).on("click", "li.open.storage", function() {
+					$("button[localization_key=common_target]").blur();
+				});
+			},
 			show: $.proxy(this.after_show, this)
 		});
 

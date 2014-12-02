@@ -1003,7 +1003,7 @@ goorm.core.edit.prototype = {
         };
 
         var post_url = url + postdata.path.replace(/\:/g, '');
-        core._socket.set_url(post_url);
+        core._socket.set_url(post_url, true);
 
         if (!options.restore) {
             core._socket.once(post_url, callback_wrapper(false, null));
@@ -1549,10 +1549,14 @@ goorm.core.edit.prototype = {
             this.editor.setOption("readOnly", true);
         }
 
+        this.readonly = true;
+
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').addClass('panel_readonly');
     },
 
     set_editable: function() {
+        this.readonly = false;
+
         this.editor.setOption("readOnly", false);
 
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').removeClass('panel_readonly');

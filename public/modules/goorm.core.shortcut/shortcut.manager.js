@@ -81,8 +81,8 @@ goorm.core.shortcut.manager = {
 			.replace("Alt", "&#x2325;")
 			.replace("Shift", "&#x21E7;")
 			.replace("Backspace", "&#x232b") // jeongmin: backward delete
-		.replace("Del", "&#x2326") // jeongmin: forward delete
-		.replace("Left", "⇦")
+			.replace("Del", "&#x2326") // jeongmin: forward delete
+			.replace("Left", "⇦")
 			.replace("Right", "⇨")
 			.split("+").join("");
 
@@ -1241,18 +1241,82 @@ goorm.core.shortcut.manager = {
 
 		//Main Menu : Edit
 
-		//Debug (F7)
+		//Debug (Alt+F5)
 		if (this.hotkeys.debug) {
 			this.hotkeys_fn.debug = function(e) {
 				core.module.debug.debug_start();
 
-				console.log('F7');
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
 			};
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug', this.hotkeys.debug), this.hotkeys.debug, this.hotkeys_fn.debug);
+		}
+		
+		//Debug Terminate (Ctrl/Meta+Shift+T)
+		if (this.hotkeys.debug_terminate) {
+			this.hotkeys_fn.debug_terminate = function(e) {
+				core.module.debug.debug_terminate();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('debug_terminate', this.hotkeys.debug_terminate), this.hotkeys.debug_terminate, this.hotkeys_fn.debug_terminate);
+		}
+		
+		//Debug Continue(Ctrl/Meta+Shift+Y)
+		if (this.hotkeys.debug_continue) {
+			this.hotkeys_fn.debug_continue = function(e) {
+				core.module.debug.debug_continue();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('debug_continue', this.hotkeys.debug_continue), this.hotkeys.debug_continue, this.hotkeys_fn.debug_continue);
+		}
+		
+		//Debug Step Over(F6)
+		if (this.hotkeys.debug_step_over) {
+			this.hotkeys_fn.debug_step_over = function(e) {
+				core.module.debug.debug_step_over();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('debug_step_over', this.hotkeys.debug_step_over), this.hotkeys.debug_step_over, this.hotkeys_fn.debug_step_over);
+		}
+		
+		//Debug Step In(F7)
+		if (this.hotkeys.debug_step_in) {
+			this.hotkeys_fn.debug_step_in = function(e) {
+				core.module.debug.debug_step_in();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('debug_step_in', this.hotkeys.debug_step_in), this.hotkeys.debug_step_in, this.hotkeys_fn.debug_step_in);
+		}
+		
+		//Debug Step Out(F8)
+		if (this.hotkeys.debug_step_out) {
+			this.hotkeys_fn.debug_step_out = function(e) {
+				core.module.debug.debug_step_out();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('debug_step_out', this.hotkeys.debug_step_out), this.hotkeys.debug_step_out, this.hotkeys_fn.debug_step_out);
 		}
 
 		var key_event_lock = false;

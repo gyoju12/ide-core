@@ -625,7 +625,6 @@ module.exports = {
 		var data = {};
 		data.err_code = 0;
 		data.message = "Process Done";
-
 		if (query.path !== null) {
 
 			fs.stat(global.__workspace + '/' + query.path, function(err, stats) {
@@ -649,7 +648,7 @@ module.exports = {
 					data.err_code = 20;
 					data.path = query.path;
 					data.message = "Can not find target file";
-					console.log('get property stat error:', err, data.message);
+					//console.log('get property stat error:', err, data.message);
 					evt.emit("file_get_property", data);
 				}
 			});
@@ -1189,6 +1188,7 @@ module.exports = {
 
 	_set_filetype: function(type) {
 		switch (type) {
+			case 'bmp':
 			case 'c':
 			case 'c#':
 			case 'c++':
@@ -1197,6 +1197,7 @@ module.exports = {
 			case 'cpp':
 			case 'css':
 			case 'doc':
+			case 'docx':
 			case 'docs':
 			case 'gif':
 			case 'go':
@@ -1229,6 +1230,12 @@ module.exports = {
 			case 'xoz':
 			case 'zip':
 			case 'blk':
+			case 'avi':
+			case 'mpg':
+			case 'mp4':
+			case 'wmv':
+			case 'rar':
+			case 'egg':
 				break;
 			default:
 				type = 'etc';

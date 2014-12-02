@@ -562,6 +562,9 @@ goorm.core.terminal.prototype = {
 		var _title;
 		_title = title.substring(0, title.indexOf('['));
 
+		if (core.status.current_project_path === "") {
+			_title = "~";
+		}
 		var w = core.module.layout.workspace.window_manager.get_window('/', this.terminal_name);
 
 		if (w) {

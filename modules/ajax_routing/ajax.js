@@ -9,7 +9,6 @@
  **/
 
 var fs = require("fs");
-var fse = require("fs-extra");
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
@@ -26,7 +25,6 @@ var g_secure = require("../goorm.core.secure/secure");
 var g_auth = require("../goorm.core.auth/auth");
 var g_auth_manager = require("../goorm.core.auth/auth.manager");
 var g_auth_project = require("../goorm.core.auth/auth.project");
-var g_auth_monitor = require("../goorm.core.auth/auth.monitor");
 
 
 
@@ -62,8 +60,7 @@ module.exports = {
 					}
 
 					if (channel == "join") {
-						g_auth_monitor.connect(socket);
-
+						
 						if (socket && socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id);
@@ -86,13 +83,38 @@ module.exports = {
 									var id = user_data.id;
 
 									fs_socket.set('fs_id', JSON.stringify({
-										'id': id
+										'id': id,
+										'sessionID': msg_obj.fs_express_id
 									}));
 
 									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
 								}
 
 								socket.to().emit('fs_access', fs_access);
+							});
+						}
+
+						if (msg_obj.project_express_id && msg_obj.project_socket_id) {
+							var project_socket = io.sockets.socket(msg_obj.project_socket_id);
+							var project_access = false;
+
+							self.get_user_data(socket, function(user_data) {
+								if (user_data.result) {
+									project_access = true;
+
+									user_data = user_data.data;
+
+									var id = user_data.id;
+
+									project_socket.set('project_id', JSON.stringify({
+										'id': id,
+										'sessionID': msg_obj.project_express_id
+									}));
+
+									store.client.set(msg_obj.project_express_id, JSON.stringify(user_data));
+								}
+
+								socket.to().emit('project_access', project_access);
 							});
 						}
 					}
@@ -259,8 +281,9 @@ module.exports = {
 						
 						socket.emit("/project/get_property", data);
 						
-					} else {}
-					// socket.emit("/project/get_property", data);  :emit twice, so removed
+					} else {
+						socket.emit("/project/get_property", data);
+					}
 				});
 
 				g_project.get_property(msg, evt);
@@ -975,7 +998,7 @@ module.exports = {
 				
 
 				
-				
+
 				
 				// file validate
 				// 
@@ -1195,10 +1218,10 @@ module.exports = {
 			socket.on('/edit/save_tags', function(msg) {
 				var option = msg;
 
-				g_edit.save_tags_data(option, function(){
+				g_edit.save_tags_data(option, function() {
 					socket.emit("/edit/save_tags", true);
 				});
-				
+
 			});
 			
 			
@@ -1278,17 +1301,22 @@ module.exports = {
 					data = JSON.parse(data);
 
 					var id = data.id;
+					var sessionID = data.sessionID;
 
-					if (global.__redis_mode) {
-						store.client.get('session_' + id, function(err, sessionID) {
-							callback(sessionID);
-						});
+					if (sessionID) {
+						callback(sessionID);
 					} else {
-						store.get('session_' + id, function(err, session_data) {
-							var sessionID = session_data.session_id;
+						if (global.__redis_mode) {
+							store.client.get('session_' + IDE_HOST + '_' + id, function(err, sessionID) {
+								callback(sessionID);
+							});
+						} else {
+							store.get('session_' + IDE_HOST + '_' + id, function(err, session_data) {
+								var sessionID = session_data.session_id;
 
-							callback(sessionID);
-						});
+								callback(sessionID);
+							});
+						}
 					}
 				} catch (e) {
 					console.log('get session id error:', e);

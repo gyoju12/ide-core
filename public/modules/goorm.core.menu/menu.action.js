@@ -282,14 +282,14 @@ goorm.core.menu.action = {
 							// 		close_window();
 							// 	});
 							// } else {
-								core._socket.once("/file/delete", function(data) {
-									// m.s("delete: " + core.status.selected_file);
+							core._socket.once("/file/delete", function(data) {
+								// m.s("delete: " + core.status.selected_file);
 
-									core.module.layout.project_explorer.refresh();
+								core.module.layout.project_explorer.refresh();
 
-									close_window();
-								}, true);
-								core._socket.emit("/file/delete", postdata);
+								close_window();
+							}, true);
+							core._socket.emit("/file/delete", postdata);
 							// }
 						},
 						no: null
@@ -387,9 +387,9 @@ goorm.core.menu.action = {
 					window_manager.window[window_manager.active_window].editor.undo();
 					//window_manager.window[window_manager.active_window].set_modified();
 					$(core).trigger('undo_redo_pressed', { // make event --heeje
-                    	undo: true,
-                    	redo: false
-                	});
+						undo: true,
+						redo: false
+					});
 				}
 			}
 		});
@@ -406,9 +406,9 @@ goorm.core.menu.action = {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.redo();
 					$(core).trigger('undo_redo_pressed', { // make event --heeje
-                    	undo: false,
-                    	redo: true
-                	});
+						undo: false,
+						redo: true
+					});
 					//window_manager.window[window_manager.active_window].set_modified();
 				}
 			}
@@ -710,26 +710,54 @@ goorm.core.menu.action = {
 
 		$("a[action=account_logout]").off("click").tooltip();
 		$("a[action=account_logout]").click(function(e) {
-			var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
-			if (unsaved_file) {
-				confirmation.init({
-					message: unsaved_file + core.module.localization.msg.confirmation_not_saved,
-					yes_text: core.module.localization.msg.confirmation_stay,
+			var msg = "";
+			var modified = [];
+			$(goorm.core.window.manager.window).each(function(i) {
+				if (!this.is_saved) {
+					modified.push(this);
+					msg = msg + "\"" + this.filename + "\",";
+				}
+			});
+
+			if (msg.length > 0) {
+				msg = msg.slice(0, -1);
+			}
+
+			function logout(){
+				
+				
+				core.unload();
+				core.logout = true;
+				location.href = '/';
+				
+			}
+
+			if (modified.length > 0) {
+				confirmation_save.init({
+					message: msg + " " + core.module.localization.msg.confirmation_save_message,
+					yes_text: core.module.localization.msg.confirmation_logout_save,
 					no_text: core.module.localization.msg.confirmation_logout,
+					cancel_text: core.module.localization.msg.confirmation_cancel,
 					title: core.module.localization.msg.confirmation_title,
 
-					yes: function() {},
+					cancel: function() {},
+					yes: function() {
+						var save_counter = 0;
+						$(modified).each(function(i) {
+							this.editor.save(null, function(){
+								save_counter++;
+								if (save_counter >= modified.length) {
+									logout();
+								}
+							});
+                                		});
+					},
 					no: function() {
-						
-						
-						core.unload();
-						core.logout = true;
-						location.href = '/';
-						
+						logout();
 					}
 				});
 
-				confirmation.show();
+				confirmation_save.show();
 				return false;
 			}
 			confirmation.init({
@@ -788,8 +816,10 @@ goorm.core.menu.action = {
 			}
 
 			if (goorm.core.project.is_building === true) {
-				setTimeout(function(){$("[action=run]").click();}, 300);
-				return false;	
+				setTimeout(function() {
+					$("[action=run]").click();
+				}, 300);
+				return false;
 			}
 
 			run_lock.data('disable', true);
@@ -810,8 +840,7 @@ goorm.core.menu.action = {
 			if (core.module.project.process_name) {
 				cmd = "ps -ef | grep " + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
 				terminal = core.module.terminal.terminal;
-			}
-			else {
+			} else {
 				cmd = "\x03\n";
 				terminal = core.module.layout.terminal;
 			}
@@ -1182,9 +1211,9 @@ goorm.core.menu.action = {
 						window_manager.close_by_index(opened_window, opened_window);
 
 						// jeongmin: these are should be done after deleting selected file
+						}
 						core.status.selected_file = "";
 						core.status.selected_file_type = "";
-					}
 				}
 
 				confirmation.init({
@@ -1206,17 +1235,17 @@ goorm.core.menu.action = {
 						// 		close_window();
 						// 	});
 						// } else {
-							core._socket.once("/file/delete", function(data) {
-								if (data.err_code == 20) {
-									alert.show(localization[data.message]);
-								}
+						core._socket.once("/file/delete", function(data) {
+							if (data.err_code == 20) {
+								alert.show(localization.alert_file_cannot_delete);
+							}
 
-								// console.log("delete: " + core.status.selected_file);
-								core.module.layout.project_explorer.refresh();
+							// console.log("delete: " + core.status.selected_file);
+							core.module.layout.project_explorer.refresh();
 
-								close_window();
-							});
-							core._socket.emit("/file/delete", postdata);
+							close_window();
+						});
+						core._socket.emit("/file/delete", postdata);
 						// }
 					},
 					no: null

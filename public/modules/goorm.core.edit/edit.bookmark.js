@@ -59,6 +59,7 @@ goorm.core.edit.bookmark = {
 
 				if (self.list[self.target]) //only current bookmark list is not undefined
 					self.active_editor.set_bookmark(self.list[self.target]); //send loaded bookmark list and set those
+				$(core).trigger("bookmark_table_refresh");
 			}
 		});
 
@@ -291,7 +292,18 @@ goorm.core.edit.bookmark = {
 					if (line) {
 						////// making row //////
 						var delete_button = '<button type="button" id="delete_bookmark_' + line + '" class="close" aria-hidden="true">&times;</button>';
-						$bookmark_table.append('<tr><td id="bookmark_line_' + line + '" class="bookmark_line">' + line + '</td><td><div id="bookmark_text_' + line + '" class="bookmark_text col-md-11"></div>' + delete_button + '</td></tr>');
+						var lines = Object.keys(self.list[target]);
+						//$bookmark_table.find(".bookmark_line").each(function(){lines.push($(this).text())});
+						for(var i = lines.length - 1; i>=0; i--){
+							if(lines[i]<line){
+								break;
+							}
+						}
+						if(i == -1){
+							$bookmark_table.prepend('<tr><td id="bookmark_line_' + line + '" class="bookmark_line">' + line + '</td><td><div id="bookmark_text_' + line + '" class="bookmark_text col-md-11"></div>' + delete_button + '</td></tr>');
+						} else {
+							$bookmark_table.children().eq(i).after('<tr><td id="bookmark_line_' + line + '" class="bookmark_line">' + line + '</td><td><div id="bookmark_text_' + line + '" class="bookmark_text col-md-11"></div>' + delete_button + '</td></tr>');
+						}
 
 						////// delete bookmark button handler //////
 						$('#delete_bookmark_' + line).click(function() {

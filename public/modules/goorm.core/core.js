@@ -249,7 +249,7 @@ goorm.core.prototype = {
 			$('#south_tab a:first').tab('show'); // Select first tab
 
 			core.status.login_complete = true;
-			core.module.toast.show(core.module.localization.msg.notice_welcome_goorm);
+			// core.module.toast.show(core.module.localization.msg.notice_welcome_goorm);
 
 			
 

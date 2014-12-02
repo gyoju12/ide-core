@@ -21,7 +21,7 @@
 	"preference.shortcut.debug.step_over": "F6",
 	"preference.shortcut.debug.step_out": "F8",
 	"preference.shortcut.debug.continue": "Ctrl+Shift+Y",
-	"preference.shortcut.debug.terminate": "Ctrl+Shift+T",
+	"preference.shortcut.debug.terminate": "F9",
 	"preference.shortcut.edit.auto_formatting": "Ctrl+K",
 	"preference.shortcut.edit.comment_selected": "Ctrl+/",
 	"preference.shortcut.edit.copy": "Ctrl+C",

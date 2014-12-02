@@ -140,7 +140,6 @@ goorm.core.project.explorer.prototype = {
 				self.old_project_list_table_width = table.width();
 				self.make_project_list_table();
 			}
-			
 		});
 
 		// when click treeview div, hide context menu
@@ -537,7 +536,7 @@ goorm.core.project.explorer.prototype = {
 			}
 		}
 
-		$('#project_list_table').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered table-striped" id="project_list_jquery_table" ></table>');
+		$('#project_list_table').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="project_list_jquery_table" ></table>');
 
 		this.table = $('#project_list_jquery_table').dataTable({
 			"aaData": my_project_list.concat(shared_project_list),
@@ -1183,8 +1182,7 @@ goorm.core.project.explorer.prototype = {
 
 		//tree init 
 
-
-		var on_click = function(e, node) {
+		var on_mousedown = function(e, node) {
 			e.stopPropagation();
 			$(core).trigger('contextmenu_all_hide');
 
@@ -1228,6 +1226,18 @@ goorm.core.project.explorer.prototype = {
 				self.treeview.tree.jstree("select_node", node);
 			}
 		};
+	
+		var on_click = function(e, node) {
+			e.stopPropagation();
+			$(core).trigger('contextmenu_all_hide');
+
+			core.status.selected_node = e.target;
+			core.status.selected_file = node.li_attr.path;
+			core.status.selected_file_type = node.type;
+			self.selected_type = node.li_attr.file_type;
+
+			
+		};
 
 		var on_dblclick = function(e, node) {
 			if (node.type === "file") {
@@ -1235,6 +1245,8 @@ goorm.core.project.explorer.prototype = {
 				var filename = path.pop();
 				var filetype = node.li_attr.file_type;
 				var filepath = path.join("/") + "/";
+
+				core.status.selected_file = node.li_attr.path;
 
 				core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
 			}
@@ -1254,6 +1266,7 @@ goorm.core.project.explorer.prototype = {
 			dnd: true,	// jeongmin: for moving(dragging) treeview item
 			on_click: on_click,
 			on_dblclick: on_dblclick,
+			on_mousedown: on_mousedown,
 			on_ready: on_ready,
 			check_callback: function(op, node, parent, pos, more) {
 					var args = arguments;

@@ -22,6 +22,9 @@ goorm.core.project.open = {
 		var self = this;
 
 		this.panel = $("#dlg_open_project");
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
 
 		this.__handle_open = function() {
 			var data = self.project_list.get_data();
@@ -55,6 +58,7 @@ goorm.core.project.open = {
 				$("#project_open_storage").find("span").html("goormIDE_Storage");
 				$(document).on("click", "li.open.storage", function() {
 					var storage = $(this).find("a").html();
+					$("button[localization_key=common_target]").blur();
 					$("#project_open_storage").find("span").html(storage);
 					if (storage == "goormIDE Storage") {
 						$("#project_open_list").empty();
@@ -117,6 +121,8 @@ goorm.core.project.open = {
 		if (project_path !== "") {
 			core._socket.set_url('/project/mount'+project_path);
 			core._socket.once('/project/mount'+project_path, function (result) {
+				core.module.layout.project.permission[project_path] = result.permission;
+				
 				if(path && result.path == path) {
 					if(callback && typeof(callback) == "function") {
 						callback(result);

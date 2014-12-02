@@ -809,7 +809,7 @@ goorm.plugin.cpp = {
 	// 	},
 
 	// 	create: function () {
-	// 		$('[id="'+this.context+'"]').html( '<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered table-striped" id="'+this.context+'_table" ></table>' );
+	// 		$('[id="'+this.context+'"]').html( '<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="'+this.context+'_table" ></table>' );
 	// 		this.table = $('[id="'+this.context+'_table"]').dataTable( {
 	// 			"aaData": [],
 	// 			"aoColumns": [

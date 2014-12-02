@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CodeMirror 2: Dart mode</title>
+    <link rel="stylesheet" href="../../lib/codemirror.css">
+    <script src="../../lib/codemirror.js"></script>
+    <script src="dart.js"></script>
+    <link rel="stylesheet" href="../../theme/default.css">
+    <link rel="stylesheet" href="../../css/docs.css">
+    <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+  </head>
+  <body>
+    <h1>CodeMirror 2: Dart mode</h1>
+
+<div><textarea id="code" name="code">
+// Copyright (c) 2011, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+/**
+ * Very simple sample app showing use of the [SliderMenu] view.
+ */
+class SliderSample  {
+
+  SliderMenu sliderMenu;
+  final List<String> menuItems;
+
+  SliderSample() : menuItems = const["Apple", "Banana", "Cherry", "Durian"] {}
+
+  void ready() {
+    document.query("#status").innerHTML = "Slider Menu Sample App";
+    sliderMenu = new SliderMenu(menuItems, (selectedText) {
+      document.query("#message").innerHTML = "Selected '${selectedText}'";
+    });
+    document.query("#menu").nodes.add(sliderMenu.node);
+
+    document.query('#next').on.click.add((e) {
+      sliderMenu.selectNext(true);
+    });
+
+    document.query('#prev').on.click.add((e) {
+      sliderMenu.selectPrevious(true);
+    });
+
+    sliderMenu.enterDocument();
+  }
+
+  static void main() {
+    Dom.ready( () { new SliderSample().ready();} );
+  }
+}
+</textarea></div>
+
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/dart"
+      });
+    </script>
+
+    <p><strong>MIME types defined:</strong> <code>text/dart</code>.</p>
+  </body>
+</html>

@@ -76,23 +76,22 @@ goorm.plugin.phonegap = {
 				"data" : data
 		};
 		
-		$.get('/plugin/new', send_data, function (result) {
-			// 가끔씩 제대로 refresh가 안됨.
-			setTimeout(function(){
-				
-				var property = core.property.plugins['goorm.plugin.phonegap'];
-				
-				var main_file_path = core.status.current_project_path +"/"+ property['plugin.phonegap.run_index'];
-				
-				// var filename = (main_file_path.split("/")).pop();
-				// var filepath = main_file_path.replace(filename, "");
-				// var filetype = 'html';
-				
-				setTimeout(function (){
-					// core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
-					core.module.layout.project_explorer.refresh();
-				}, 1000);
-			}, 500);
+		core.module.loading_bar.start({
+			str: core.module.localization.msg.import_sync_to_file_system,
+		});
+
+		_$.get('/plugin/new', send_data, function (result) {
+			core.module.loading_bar.stop();
+
+			var property = core.property.plugins['goorm.plugin.phonegap'];
+			
+			var main_file_path = core.status.current_project_path +"/"+ property['plugin.phonegap.run_index'];
+			
+			var filename = (main_file_path.split("/")).pop();
+			var filepath = main_file_path.replace(filename, "");
+			var filetype = 'html';
+			
+			core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
 		});
 	},
 	

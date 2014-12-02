@@ -373,7 +373,8 @@ goorm.core.project._new = {
 		$(document).on('click', '#dlg_new_project .project_wizard_second_button', function() {
 			$(".project_wizard_second_button").removeClass("selected_button");
 			$(this).addClass("selected_button");
-
+			$("#project_new").find(".project_items").focus();
+			
 			$("#input_project_type").attr("value", "");
 			$("#input_project_detailed_type").attr("value", "");
 			$("#input_project_plugin").attr("value", "");

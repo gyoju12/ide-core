@@ -15,7 +15,6 @@ var rimraf = require('rimraf');
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
-var async = require('async');
 
 
 
@@ -957,7 +956,7 @@ module.exports = {
 			query.run_file_path = g_secure.command_filter(query.run_file_path);
 			query.project_path = g_secure.command_filter(query.project_path);
 
-			fs.exists(query.run_file_path, function(exist) {
+			fs.exists(global.__workspace + query.run_file_path, function(exist) {
 				if (!exist) {
 					evt.emit('check_latest_build', {
 						result: false

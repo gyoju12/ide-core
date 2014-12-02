@@ -27,8 +27,7 @@ var express = require('express'),
 // External Variables
 //
 port = 9999;
-mongoose = null;
-mongoose_dev = null;
+
 Schema = null;
 ObjectId = null;
 g_cluster = require("./modules/goorm.core.utility/utility.cluster");
@@ -77,7 +76,7 @@ var io = null;
 //
 goorm.start = function() {
 	goorm.init();
-	goorm.connect_db();
+	
 	goorm.config();
 	goorm.routing();
 	goorm.load();
@@ -230,19 +229,6 @@ goorm.init = function() {
 	global.__set_redis_client = false;
 }
 
-goorm.connect_db = function() {
-
-	
-	var mongoose_module = require('mongoose');
-	Schema = mongoose_module.Schema; //global
-	ObjectId = mongoose_module.Types.ObjectId; // global
-	global.__use_mongodb = true;
-	mongoose = mongoose_module.createConnection(MONGO_DB_HOST, {
-		server: {
-			auto_reconnect: true
-		}
-	}); //global
-	
 
 	
 

@@ -22,6 +22,14 @@ goorm.core.file.open = {
 
 		this.panel = $("#dlg_open_file");
 
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
+
+		$(document).on("click", "li.open.storage", function() {
+			$("button[localization_key=common_target]").blur();
+		});
+
 		var handle_ok = function (panel) {
 
 			var data = self.dialog_explorer.get_data();
@@ -69,6 +77,32 @@ goorm.core.file.open = {
 		// var files = this.dialog_explorer.files;
 		// $(files).click();
 		$("#file_open_dir_tree").find(".jstree-clicked").click();
+	},
+
+	down: function(filepath, filename) {
+		var target = core.status.selected_file;
+		if (target) {
+			confirmation.init({
+				title: core.module.localization.msg.alert_error,
+				message: core.module.localization.msg.confirmation_down_file,
+				yes_text: core.module.localization.msg.confirmation_yes,
+				no_text: core.module.localization.msg.confirmation_no,
+				yes: function() {
+						var query = {
+							filepath: filepath,
+							filename: filename
+						};
+						_$.get("file/get_file", query, function() {
+							
+							
+						});
+				},	
+				no: null
+			});
+			confirmation.show();
+		} else {	
+			alert.show(core.module.localization.msg.alert_select_file);
+		}
 	},
 
 	bind: function(){

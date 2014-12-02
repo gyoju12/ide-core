@@ -885,7 +885,6 @@ Terminal.prototype.refresh = function(start, end) {
     , flags
     , row
     , parent;
-
   if (end - start >= this.rows / 2) {
     parent = this.element.parentNode;
     if (parent) parent.removeChild(this.element);
@@ -2405,7 +2404,7 @@ Terminal.prototype.resize = function(x, y) {
           this.lines.splice(i+1, 1);
           if(this.ybase > 0){
             this.ybase--;
-          }else if(y > 0){
+          }else if(this.y > 0){
             this.y--;
           }
           if(this.ydisp > 0){
@@ -3666,6 +3665,15 @@ Terminal.prototype.saveCursor = function(params) {
 Terminal.prototype.restoreCursor = function(params) {
   this.x = this.savedX || 0;
   this.y = this.savedY || 0;
+
+  if(this.x > this.cols - 1){
+    this.x = this.cols - 1;
+  }
+
+  if(this.y > this.rows - 1){
+    this.y = this.rows - 1;
+  }
+
 };
 
 /**

@@ -360,10 +360,10 @@ goorm.core.project = {
 			}
 		});
 
-		var run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main;
+		var run_file_path = core.status.current_project_path + '/' + build_path + build_main;
 
 		if (core.status.current_project_type == "dart") {
-			run_file_path = core.preference.workspace_path + core.status.current_project_path + '/' + build_main + '.dart.js';
+			run_file_path = core.status.current_project_path + '/' + build_main + '.dart.js';
 		}
 
 		console.log(run_file_path, core.status.current_project_path);

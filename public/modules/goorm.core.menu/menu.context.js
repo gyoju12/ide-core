@@ -52,7 +52,7 @@ goorm.core.menu.context.prototype = {
 				if (nobind === false) {
 					$(trigger).mousedown(function(e) {
 						if (e.which == 3) {
-							if (name == "project.explorer_context"){
+							if (name == "project.explorer_context") {
 								core.module.layout.project_explorer.reset_tree_selected();
 								trigger.find(".jstree").jstree("deselect_all", false);
 							}
@@ -70,6 +70,13 @@ goorm.core.menu.context.prototype = {
 
 				$(document).click(function() {
 					self.menu.hide();
+				});
+
+				// hide context menu on esc key. Jeong-Min Im.
+				$(document).keydown(function(e) {
+					if (e.keyCode == 27) { // ESC
+						self.hide();
+					}
 				});
 			}
 

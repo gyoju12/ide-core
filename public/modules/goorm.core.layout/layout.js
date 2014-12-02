@@ -356,7 +356,7 @@ goorm.core.layout = {
 
 			//width and height fix
 			$('#bubble_toolbar').height($('#bubble_toolbar_sub').outerHeight());
-			if ($('#bubble_toolbar').width() <= 610) {
+			if ($('#bubble_toolbar').width() <= 610 && $('#bubble_toolbar').width() > 77) {
 				$('#bubble_toolbar').css('right', 0);
 			}
 		});
@@ -524,12 +524,15 @@ goorm.core.layout = {
 	resize_all: function() {
 
 		// -- left --
-		$('#project_explorer').height($("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - $('#project_selector').outerHeight() - parseInt($('#project_explorer').css('padding-top')) * 2);
+		var left_height = $("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - 1;
+		$('#project_explorer').height(left_height - $('#project_selector').outerHeight());
+		$('#share_list_group').height(left_height);
+		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
 
-		var project_selector_width = $("#project_explorer_tab").width() - 11;
-		if (project_selector_width < 190) project_selector_width = 190;
+		var project_selector_width = $("#project_explorer_tab").width() - 27;
+		// if (project_selector_width < 190) project_selector_width = 190;
 
-		$('#project_selectbox').css('width', (project_selector_width - 38)); // for margin & refresh tool
+		$('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool
 
 		var layout_right_height = $("div.ui-layout-east").height() - $("#east_tab").height();
 		var goorm_inner_layout_right = $("#goorm_inner_layout_right");
@@ -553,7 +556,7 @@ goorm.core.layout = {
 		var layout_center_height = $('#goorm_inner_layout_center').height() - 30;
 		$("#workspace").height(layout_center_height - 1);
 
-		var layout_center_width = $('#goorm_inner_layout_center').width();
+		var layout_center_width = $('#goorm_inner_layout_center').width() - 2;
 		$("#workspace").width(layout_center_width);
 
 
@@ -1046,7 +1049,7 @@ goorm.core.layout = {
 			toolbar_right_margin = 25;
 		}
 
-		if ($('#bubble_toolbar').width() <= 610) {
+		if ($('#bubble_toolbar').width() <= 610 && $('#bubble_toolbar').width() > 77) {
 			$('#bubble_toolbar').css('right', 0);
 		} else {
 			$('#bubble_toolbar').css('right', toolbar_right_margin);

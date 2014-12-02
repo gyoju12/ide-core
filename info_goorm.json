@@ -1,17 +1,31 @@
 {
     "url": "http://goorm.io",
-    "lib": [
-        {
-            "name": "jQuery",
-            "version": "2.0.3"
-        },
-        {
-            "name": "jQuery UI",
-            "version": "1.10.4"
-        },
-        {
-            "name": "CodeMirror",
-            "version": "4.0.3"
-        }
-    ]
+    "lib": [{
+        "name": "jQuery",
+        "version": "2.0.3"
+    }, {
+        "name": "jQuery UI",
+        "version": "1.10.4"
+    }, {
+        "name": "CodeMirror",
+        "version": "4.0.3"
+    }, {
+        "name": "Bootstrap",
+        "version": "3.0.2"
+    }, {
+        "name": "Bootstrap-tour",
+        "version": "0.9.1"
+    }, {
+        "name": "Bootstrap-formhelpers",
+        "version": "2.3.0"
+    }, {
+        "name": "pdf.js",
+        "version": "0.8.131"
+    }, {
+        "name": "iCheck",
+        "version": "1.0.1"
+    }, {
+        "name": "RequireJs",
+        "version": "2.1.9"
+    }]
 }

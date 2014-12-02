@@ -19,6 +19,10 @@ goorm.core.file._import = {
 		self.panel = $("#dlg_import_file");
 		self.input = $('#file_import_file');
 
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
+
 		var handle_ok = function() {
 			if (self.input.val() === '') {
 				alert.show(core.module.localization.msg.alert_file_not_select);
@@ -44,6 +48,12 @@ goorm.core.file._import = {
 			show: $.proxy(this.after_show, this),
 			// kind: "import",
 			success: function() {
+
+				$(document).on("click", "li.open.storage", function() {
+					$("button[localization_key=common_target]").blur();
+				});
+
+						
 				self.input.on("change", function(e) {
 					var data = self.dialog_explorer.get_data();
 					if (data.path === "" || data.path === "/") {

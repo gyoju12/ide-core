@@ -4,5 +4,6 @@
 	"plugin.cpp.source_path" : 	"src/",
 	"plugin.cpp.makefile_path" : 	"make",
 	"plugin.cpp.build_path" : 	"bin/",
-	"plugin.cpp.build_option" : "-g"
+	"plugin.cpp.build_option" : "-g",
+	"plugin.cpp.makefile_option'" : "false"
 }

@@ -102,7 +102,7 @@
     state.query = null;
     cm.removeOverlay(state.overlay);
   });}
-
+ 
   var replaceQueryDialog =
     'Replace: <input type="text" style="width: 10em"/> <span style="color: #888">(Use /re/ syntax for regexp search)</span>';
   var replacementQueryDialog = 'With: <input type="text" style="width: 10em"/>';
@@ -110,7 +110,7 @@
   function replace(cm, all) {
     dialog(cm, replaceQueryDialog, "Replace:", cm.getSelection(), function(query) {
       if (!query) return;
-      query = parseQuery(query);
+      query = parseQuery(query); 
       dialog(cm, replacementQueryDialog, "Replace with:", "", function(text) {
         if (all) {
           cm.operation(function() {
@@ -142,7 +142,7 @@
             advance();
           };
           advance();
-        }
+        } 
       });
     });
   }
@@ -155,7 +155,9 @@
   };//hw: add caseFold parameter
   CodeMirror.commands.findNext = doSearch;
   CodeMirror.commands.findPrev = function(cm, rev, query, caseFold) { 
+    CodeMirror.commands.find(cm, null, query, caseFold);
     CodeMirror.commands.find(cm, true, query, caseFold);
+    CodeMirror.commands.find(cm, true, query, caseFold); //prevent selectioning
   };  // jeongmin: add 'query' parameter -> user search query string, hw: add caseFold parameter
   CodeMirror.commands.clearSearch = clearSearch;
   CodeMirror.commands.replace = replace;

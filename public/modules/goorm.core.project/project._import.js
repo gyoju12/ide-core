@@ -306,13 +306,8 @@ goorm.core.project._import = {
 						// There is no goorm.manifest in zip/tar file
 						switch (data.err_code) {
 							case 9:
-								alert.show(core.module.localization.msg.alert_invalid_zip_file);
-								where.find('.project_import_form').resetForm();
-								where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
-								where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
-								break;
 							case 10:
-								alert.show(core.module.localization.msg.alert_invalid_tar_file);
+								alert.show(core.module.localization.msg.alert_invalid_project_file);
 								where.find('.project_import_form').resetForm();
 								where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
 								where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
@@ -388,6 +383,9 @@ goorm.core.project._import = {
 		where.find(".input_import_project_desc").val("");
 		where.find(".project_import_file").val("");
 
+				
+		//where.find(".select_import_project_detail_type option")[0].selected = true;
+
 		if (!this.import_list_done && where.attr("id") == "dlg_import_project") {
 			this.make_project_detailed_type_list(where);
 			this.make_project_type_list(where);
@@ -399,6 +397,10 @@ goorm.core.project._import = {
 
 			this.new_list_done = true;
 		}
+
+		where.find(".select_import_project_type option")[0].selected = true;
+		where.find(".select_import_project_type option").change();
+
 
 		this.target_zip_file = null;
 		where.find(".project_import_upload_output").text('');

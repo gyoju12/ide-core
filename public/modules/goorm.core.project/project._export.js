@@ -21,6 +21,12 @@ goorm.core.project._export = {
 
 		this.panel = $("#dlg_export_project");
 
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
+
+		
+
 		var handle_ok = $.debounce(function() { // jeongmin: prevent multiple export
 			var data = self.project_list.get_data();
 			var type = $("#dlg_export_project label.active").text().trim();
@@ -74,6 +80,10 @@ goorm.core.project._export = {
 				$('[name=project_export_datatype]').on('ifChecked', function() {
 					$('#export_project_type .active').removeClass('active'); // remove old active button
 					$(this).parent().parent().addClass('active'); // set active this button (hierarchy: label > iCheck > input)
+				});
+
+				$(document).on("click", "li.open.storage", function() {
+					$("button[localization_key=common_target]").blur();
 				});
 			},
 

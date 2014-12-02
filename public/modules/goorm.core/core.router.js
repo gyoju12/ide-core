@@ -11,6 +11,7 @@
 goorm.core.router = {
 	socket: null,
 	socket_fs: null,
+	socket_project: null,
 	fs_load: false,
 	fs_ready: false,
 	fs_info: {
@@ -18,6 +19,8 @@ goorm.core.router = {
 		'host': null,
 		'port': null
 	},
+	project_load: false,
+	project_ready: false,
 
 	init: function() {
 		this._socket = function() {
@@ -33,6 +36,7 @@ goorm.core.router = {
 
 			
 			this.fs_url = [];
+			this.project_url = [];
 			
 
 			this.queue = [];
@@ -50,7 +54,7 @@ goorm.core.router = {
 
 		this._socket.prototype = {
 			router: goorm.core.router,
-			set_url: function(url) {
+			set_url: function(url, use_project_socket) {
 				
 			},
 
@@ -97,7 +101,15 @@ goorm.core.router = {
 			get: function(url) {
 				if (this.fs_url.indexOf(url) > -1) {
 					if (this.router.fs_load && this.router.fs_ready) {
-						return this.router.socket_fs;
+						var permission = core.module.layout.project.get_permission();
+						var project_path = core.status.current_project_path;
+
+						if (this.project_url.indexOf(url) > -1 && project_path && permission && !permission.writable) {
+							return this.router.socket_project;
+						}
+						else {
+							return this.router.socket_fs;
+						}
 					} else {
 						return null;
 					}
@@ -154,6 +166,7 @@ goorm.core.router = {
 
 			
 			this.fs_url = [];
+			this.project_url = [];
 			
 		};
 
@@ -174,21 +187,6 @@ goorm.core.router = {
 				}
 			},
 
-			post: function(url, data, fn) {
-				if (data && typeof(data) === 'function') {
-					fn = data;
-					data = null;
-				}
-
-				if (url && this.__get(url)) {
-					if (url[0] === '/') url = url.substr(1);
-
-					$.post('http://' + this.host + ":" + this.port + '/' + url, data, fn, 'jsonp');
-				} else {
-					$.post(url, data, fn);
-				}
-			},
-
 			get: function(url, data, fn) {
 				if (data && typeof(data) === 'function') {
 					fn = data;
@@ -196,10 +194,25 @@ goorm.core.router = {
 				}
 
 				if (url && this.__get(url)) {
+					var host = this.host;
+					var port = this.port;
+
+					var permission = core.module.layout.project.get_permission();
+					var project_path = core.status.current_project_path;
+
+					if (this.project_url.indexOf(url) > -1 && project_path && permission && !permission.writable) {
+						host = core.user.project_host;
+						port = core.user.project_port;
+
+						if (data) {
+							data.secure_session_id = core.user.project_session_id;
+						}
+					}
+
 					if (url[0] === '/') url = url.substr(1);
 
 					$.ajax({
-						url: 'http://' + this.host + ":" + this.port + '/' + url,
+						url: 'http://' + host + ":" + port + '/' + url,
 						data: data,
 						dataType: "jsonp",
 						jsonp: 'callback',

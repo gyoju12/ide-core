@@ -72,7 +72,7 @@ goorm.core.project.list.prototype = {
 		var dictionary_author = (core.module.localization && core.module.localization.msg && core.module.localization.msg.dictionary_type) ? core.module.localization.msg.dictionary_author : 'author';
 		var project_empty = (core.module.localization && core.module.localization.msg && core.module.localization.msg.project_empty) ? core.module.localization.msg.project_empty : 'Proejct does not exist.';
 
-		$('#' + this.context).html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered table-striped" id="' + this.table_context + '" ></table>')
+		$('#' + this.context).html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.table_context + '" ></table>')
 		this.table = $('#' + this.table_context).dataTable({
 			"aaData": [],
 			"aoColumns": [{

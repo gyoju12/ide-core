@@ -37,9 +37,9 @@ goorm.core.dialog.confirmation.save.prototype = {
 		this.title = option.title;
 		this.message = option.message;
 
-		this.yes_text = option.yes_text;
+		this.yes_text = option.yes_text || core.module.localization.msg.confirmation_yes || "Yes";
 		this.cancel_text = option.cancel_text;
-		this.no_text = option.no_text;
+		this.no_text = option.no_text || core.module.localization.msg.confirmation_no || "No";
 
 		this.yes = option.yes;
 		this.cancel = option.cancel;
@@ -60,10 +60,20 @@ goorm.core.dialog.confirmation.save.prototype = {
 
 		var goorm_dialog_container = this.panel.find('#confirmation_save_content_container');
 		goorm_dialog_container.empty().append(this.message);
+	
+		var cfrm_btn_yes = this.panel.find(".modal-footer #g_cfrm_s_btn_yes");    //jeongmin: yes confirm button
+		var cfrm_btn_no = this.panel.find(".modal-footer #g_cfrm_s_btn_no");      //jeongmin: no confirm button
+
+		if (this.yes_text) {
+			cfrm_btn_yes.html(this.yes_text);
+		}
+		if (this.no_text) {
+			cfrm_btn_no.html(this.no_text);
+		}
 
 		if(typeof option.yes == "function") {
-			this.panel.find(".modal-footer #g_cfrm_s_btn_yes").off('click');
-			this.panel.find(".modal-footer #g_cfrm_s_btn_yes").click(function(){
+			cfrm_btn_yes.off('click');
+			cfrm_btn_yes.click(function(){
 				option.yes.call();
 
 				self.panel.modal('hide');
@@ -80,8 +90,8 @@ goorm.core.dialog.confirmation.save.prototype = {
 		}
 
 		if(typeof option.no == "function") {
-			this.panel.find(".modal-footer #g_cfrm_s_btn_no").off('click');
-			this.panel.find(".modal-footer #g_cfrm_s_btn_no").click(function(){
+			cfrm_btn_no.off('click');
+			cfrm_btn_no.click(function(){
 				option.no.call();
 
 				self.panel.modal('hide');

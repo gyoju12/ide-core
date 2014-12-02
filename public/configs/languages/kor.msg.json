@@ -215,6 +215,9 @@
     "confirmation_language_message_no": {
         "value": "No"
     },
+    "confirmation_logout_save": {
+	"value": "저장 후 로그아웃"
+    },
     "confirmation_logout": {
         "value": "로그아웃"
     },
@@ -321,6 +324,9 @@
     },
     "confirmation_decompress_file": {
         "value": "정말 이 파일의 압축을 해제하시겠습니까?"
+    },
+    "confirmation_down_file": {
+        "value": "압축을 바로 풀 수 없는 확장자입니다. 다운로드하시겠습니까?"
     },
     "confirmation_delete_file": {
         "value": "정말 이 파일을 지우시겠습니까?"
@@ -546,6 +552,9 @@
     },
     "confirmation_file_upload": {
         "value": "파일을 올리시겠습니까?"
+    },
+    "alert_file_cannot_delete": {
+	"value": "파일을 삭제할 수 없습니다."
     },
     "alert_file_not_defined": {
         "value": "파일을 선택하여 주세요."
@@ -881,7 +890,7 @@
         "value": "' 는 최신 파일이 아닙니다.<br/>이 파일을 업데이트 하시겠습니까?"
     },
     "confirmation_revert_to_head": {
-        "value": "HEAD 리비전으로 되돌리시겠습니까?"
+        "value": "HEAD 리비전으로 되돌리시겠습니까?<br/>수정된 내용은 사라지게 되며, 되돌릴 수 없습니다."
     },
     "confirmation_do_you_want_to_update": {
         "value": "업데이트 하시겠습니까?"
@@ -1105,6 +1114,9 @@
     "alert_only_for_file": {
         "value": " 은 오직 파일을 위한 명령입니다."
     },
+    "alert_only_for_folder": {
+	"value": " 은 오직 폴더를 위한 명령입니다."
+    },
     "alert_auth_fail": {
         "value": "인증에 실패했습니다."
     },
@@ -1128,9 +1140,6 @@
     },
     "alert_scm_branch_move_fail": {
         "value": "이동되지 않았습니다.<br/>"
-    },
-    "alert_scm_select_branch": {
-        "value": "브랜치를 선택해 주세요."
     },
     "alert_scm_input_right_value": {
         "value": "올바른 값을 입력해 주세요.<br/>올바르지 않은 값: "
@@ -1258,6 +1267,9 @@
     "import_sync_to_file_system": {
         "value": "파일 시스템 동기화 중..."
     },
+    "open_project_in_progess": {
+        "value": "프로젝트를 열고 있습니다..."
+    },
     "alert_project_rename": {
         "value": "프로젝트 명은 바꿀 수 없습니다."
     },
@@ -1354,11 +1366,14 @@
     "alert_invalid_tar_file": {
         "value": "유효하지 않은 tar 파일입니다."
     },
+    "alert_invalid_project_file": {
+	"value": "유효하지 않는 프로젝트 파일입니다."
+    },
     "scm_check_repository": {
         "value": "SCM 저장소 Test를 먼저 수행해주시기 바랍니다."
     },
     "search_user_placeholder": {
-        "value": "Id나 이름, 또는 닉네임으로 사용자를 찾을 수 있습니다."
+        "value": "이름이나 이메일로 사용자를 찾을 수 있습니다."
     },
     "output_tab_no_error": {
         "value": "오류가 존재하지 않습니다."
@@ -1485,5 +1500,8 @@
     },
     "alert_rename_exist_folder": {
         "value": "같은 이름의 폴더가 존재하므로 변경할 수 없습니다."
+    },
+    "confirmation_reload_window": {
+        "value": "파일의 내용이 갱신되었습니다. 파일을 다시 로딩하시겠습니까?<br/>(수정되었던 내용은 사라질 수 있습니다.)<br/>"
     }
 }

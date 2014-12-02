@@ -381,6 +381,7 @@
   background: transparent;
   box-shadow: none;
   border-radius: 0;
+  color: white;
 }
 .jstree-default .jstree-wholerow {
   -moz-box-sizing: border-box;
@@ -391,14 +392,8 @@
   background: #e7f4f9;
 }
 .jstree-default .jstree-wholerow-clicked {
-  background: #beebff;
-  background: -moz-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #beebff), color-stop(100%, #a8e4ff));
-  background: -webkit-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: -o-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: -ms-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
-  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@color1', endColorstr='@color2',GradientType=0 );*/
+  background: #007ee5;
+  color: white;
 }
 .jstree-default .jstree-node {
   min-height: 24px;

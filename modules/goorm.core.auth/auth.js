@@ -35,7 +35,7 @@ module.exports = {
 				if (!err && data) {
 					try { // jeongmin: try catching
 						var redis_session = JSON.parse(data);
-						store.client.get("session_" + redis_session.id, function(err, data) {
+						store.client.get('session_'+IDE_HOST+'_' + redis_session.id, function(err, data) {
 							// compare ID: session ID 
 							if (data === session_id) {
 								callback(redis_session);

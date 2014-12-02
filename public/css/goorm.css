@@ -7,6 +7,10 @@
  **/
 
 
+.goorm_layout {
+	display: none; 
+}
+
 
 /*
 CodeMirror CSS
@@ -55,7 +59,7 @@ CodeMirror CSS
 }
 /* GUTTER */
 .CodeMirror-gutters {
-	border-right:1px solid #ddd;
+	border: none;
 	background-color:#f7f7f7;
 	position:absolute;
 	left:0;
@@ -476,17 +480,12 @@ Optimized:Start
 	font-size: 13px;
 }
 
-.dialog_template_body_div {
-	width: 100%;
-	text-align: left;
-	/*margin-top: 10px;*/	/*jeongmin*/
-}
-
-.dialog_template_content {
+/*.dialog_template_content {
 	float: left;
 	margin-top: 10px;
 	width: 100%;
 }
+*/
 
 .dialog_template_label {
 	margin-top: 5px;
@@ -823,12 +822,13 @@ Optimized:Start
 #loading_message {
 	top: 50%;
 	left: 50%;
-	margin-left: -100px;
-	margin-top: -192px;
-	text-align: center;
+	margin-left: -30px;
+	margin-top: -70px;
 	position: fixed;
-	text-align: left;
-	color: #fff;
+	text-align: center;
+	color: #007ee5;
+	font-size: 30px;
+	font-family: 'Open Sans', 'Nanum Barun Gothic', sans-serif;
 }
 
 #goorm_loading_indicator {
@@ -844,7 +844,7 @@ Optimized:Start
 }
 
 #loading_background {
-	background-color: #2e7db9;
+	background-color: #eee;
 }
 
 div.tooltip {
@@ -982,7 +982,7 @@ div.tooltip {
 
 #goorm-mainmenu .menu-applied {
 	float: left;
-	margin-left: -42px;
+	margin-left: -22px;
 	border: 1px solid #ccc;
 	width: 16px;
 	height: 16px;
@@ -1017,7 +1017,8 @@ div.tooltip {
 #debug_left {
 	/*background-color: #ebebeb;*/
 	border-right: 1px solid #ccc;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 	min-width: 200px;
 	max-width: calc(100% - 200px);
 	float: left;
@@ -1026,7 +1027,8 @@ div.tooltip {
 /* for debug-left resize --heeje*/
 #debug_tab_center {
 	width: inherit;
-	overflow-y: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 	margin-left: 200px;
 }
 
@@ -1095,21 +1097,6 @@ div.tooltip {
 	padding: 2px;
 	overflow: auto;
 }
-
-/* jeongmin: add highlight to selected project at export/delete project */
-#project_export_list .selected_button,
-#project_delete_list .selected_button,
-#project_open_list .selected_button {
-	background-color: #B3D4FF;
-	border-radius: 5px;
-}
-
-#project_export_list .selector_project:hover,
-#project_delete_list .selector_project:hover,
-#project_open_list .selector_project:hover {
-	cursor: pointer;
-}
-
 
 #current_outline_wrapper {
 	display: table-row;
@@ -1300,20 +1287,8 @@ div.tooltip {
 
 /* Import Project */
 
-#dlg_import_project .form-group {
-	margin-bottom: 0px;
-}
-
 #dlg_import_project textarea {
 	resize: none;
-}
-
-fieldset {
-	border: 1px solid #ccc;
-	padding: 10px 10px 2px 10px;
-	background-color: #FBFBFB;
-	/*margin-top: 10px;*/	/*jeongmin*/
-	margin-bottom: 10px;
 }
 
 #dlg_import_project .import_project_guide {
@@ -1333,13 +1308,6 @@ fieldset {
 }
 
 /* Dialog */
-
-
-.modal-dialog {	/* jeongmin: set same as padding-bottom */
-	padding-top: 30px;
-}
-
-
 #dlg_find_and_replace .modal-body .btn-info {
 	padding: 5px 8px 5px 8px;
 }
@@ -1386,9 +1354,7 @@ fieldset {
 	width: 16px;
 	height: 16px;
 }
-.join_message, .leave_message, .change_message{
-	margin-top: 10px;
-}
+
 /* message_container */
 #message {
 	margin: 5px;
@@ -1511,10 +1477,6 @@ fieldset {
 
 
 /* tab */
-#g_window_tab_list {
-	height: 31px; 
-}
-
 #g_window_tab_list .tab_modified_button {
 	display: none;
 	padding: 0;
@@ -1556,18 +1518,21 @@ fieldset {
 
 
 #goorm_top {
-	border-bottom: 1px solid #aaa;
+	z-index: 11 !important;
+	background: rgba(255,255,255,1);
+	border-bottom: 1px solid #ddd;
 }
 
 #goorm_left, #goorm_inner_layout_right, #goorm_inner_layout_bottom {	/* jeongmin. goorm_inner_layout_center should not be overflowed */
-	border: 1px solid #aaa;
 	box-sizing: border-box;
 	overflow: hidden;
 	background: white;
 }
 
 #goorm_bottom {
-	border-top: 1px solid #aaa;
+	font-size: 11px;
+	padding:7px;
+	border-top: 1px solid #ddd;
 }
 
 #editor_status{
@@ -2132,9 +2097,8 @@ fieldset {
 
 #history_player_control {
 	background-color: #fff;
-	padding-bottom: 3px;
-	padding-top: 4px;
-	height: 39px;
+	padding: 3px;
+	height: 37px;
 }
 
 #history_player_control button>img {
@@ -2455,18 +2419,8 @@ fieldset {
 	opacity: 0.5;
 }
 
-#project_selector,#toolbox_selector,#cloud_selector { 
-	width: 100%;
-	height: 40px;
-	border-bottom: 1px solid #eee;
-}
-
-#project_explorer {
-	overflow: auto;
-	padding-top: 5px;
-}
-
-#project_explorer_tab #share #share_list_group {
+#project_explorer, 
+#share_list_group {
 	overflow: auto;
 }
 
@@ -2592,10 +2546,6 @@ Main Menu CSS
 
 #goorm-mainmenu .dropdown-menu {
 	overflow-y: auto;
-}
-
-#goorm-mainmenu li.dropdown .dropdown-menu > li > a {
-	padding: 5px 21px 3px 45px;
 }
 
 #submenu_container > ul a {
@@ -2829,9 +2779,6 @@ Filetype CSS
 /*
 Toolbar CSS
 */
-#goorm_main_toolbar {
-	height: 50px;
-}
 
 .main_toolbar .toolbar_button {
 	text-decoration: none;
@@ -6801,30 +6748,6 @@ div.goorm_menu_item:hover {
 	cursor: pointer;
 }
 
-#dlg_about_private_url li.list-group-item, #dlg_help_contents li.list-group-item {
-	padding: 5px;
-}
-
-#dlg_about_private_url li.list-group-item > a:hover , #dlg_help_contents li.list-group-item > a:hover {
-  background-color: #fff;
-}
-
-#dlg_about_private_url li.list-group-item.active:focus, #dlg_help_contents li.list-group-item.active:focus {
-  background-color: #428BCA;
-}
-
-#dlg_about_private_url li.list-group-item.active, #dlg_help_contents li.list-group-item.active {
-  background-color: #428BCA;
-}
-
-#dlg_about_private_url li.list-group-item.active > a, #dlg_help_contents li.list-group-item.active > a {
-  color: #fff;
-}
-
-#dlg_about_private_url li.list-group-item.active > a:hover, #dlg_help_contents li.list-group-item.active > a:hover {
-  background-color: #428BCA;
-}
-
 #share_list_group li.list-group-item {
 	width: 100%;
 }
@@ -6836,10 +6759,6 @@ div.goorm_menu_item:hover {
 
 
 /* confident css */
-.goorm_layout {
-	display: none;
-}
-
 .dropdown-submenu {
     position:relative;
 }
@@ -6888,14 +6807,6 @@ div.goorm_menu_item:hover {
  *  NOTE: All CSS is purely cosmetic - it does not affect functionality
  */
 /* customize borders to avoid double-borders around inner-layouts */
-.ui-layout-pane {
-	border: 0;
-	/* override layout-default-latest.css */
-}
-.ui-layout-pane-north, .ui-layout-pane-south {
-}
-.ui-layout-pane-west, .ui-layout-pane-east {
-}
 .ui-layout-pane-center {
 	border-left: 0;
 	border-right: 0;
@@ -6919,9 +6830,6 @@ div.goorm_menu_item:hover {
 /*
  *  customize borders on panes/resizers to make pretty
  */
-.ui-layout-pane-west {
-	border-right: 0;
-}
 /*.ui-layout-resizer-west     { border-left:      1px solid #BBB; }*/
 .ui-layout-pane-east {
 	border-left: 0;
@@ -6997,7 +6905,7 @@ div.goorm_menu_item:hover {
 
 .dialog_left_inner {
 	overflow-y: scroll;
-	border-width: 1px 0px 1px 1px;
+	border-width: 1px 0px 1px 0px;
 	border-style: solid;
 	border-color: #CCC;
 	background-color: #FFF;
@@ -7006,12 +6914,13 @@ div.goorm_menu_item:hover {
 }
 
 .dialog_center {
-	/*float: right;*/	/* jeongmin. This makes weird UI in horizontally small page */
 	overflow: auto;
-	border: 1px solid #CCC;
+	border-width: 1px 0px 1px 1px;
+	border-style: solid;
+	border-color: #CCC;
 	background-color: #FFF;
 	height: 290px;
-	padding: 10px;
+	padding: 0px;
 }
 
 
@@ -7046,7 +6955,7 @@ div.goorm_menu_item:hover {
 }
 
 .ui-layout-resizer {
-	background-color: #ccc;
+	background-color: #f4f4f4;
 }
 
 .ui-layout-toggler {
@@ -7061,37 +6970,13 @@ div.goorm_menu_item .dropdown-menu {
 	overflow-y: auto;
 }
 */
-#goorm_top {
-	z-index: 9999;
-	background: rgba(255,255,255,1);
-	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(98%, rgba(226,224,223,1)), color-stop(100%, rgba(217,217,217,1)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9d9d9', GradientType=0 );
-}
 
-#goorm_bottom {
-	font-size: 11px;
-	padding:7px;
 
-  background: rgba(255,255,255,1);
-  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(98%, rgba(226,224,223,1)), color-stop(100%, rgba(217,217,217,1)));
-  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9d9d9', GradientType=0 );
-}
-
-.path{
+/*.path{
 	max-width: calc(100% - 200px);
 	margin-bottom: 10px;
 	word-break: break-all;
-}
+}*/
 
 .path_divide_symbol{
 	padding: 0 5px;
@@ -7118,9 +7003,7 @@ div.goorm_menu_item .dropdown-menu {
 	box-sizing: border-box;
 }
 #chat .chat_message_container, #chat .sub_chat_message_container {
-	margin-bottom:2px;
 	overflow: auto;
-	border-radius: 0px;
 }
 
 /* to prevent from removing gap chat message (in fire fox) */
@@ -7142,18 +7025,10 @@ div.goorm_menu_item .dropdown-menu {
 	margin-bottom: 0px;
 }
 
-#chat .list-group .user-select{
-	cursor: pointer;
-}
-
 #chat .list-group .user-select:hover {
 	background: #eef;
 }
 
-#chat .list-group li {
-	z-index: 1;
-	border-bottom: 1px solid #ccc
-}
 
 #chat .chat_toolbar {
 	cursor: pointer;
@@ -7183,8 +7058,6 @@ div.goorm_menu_item .dropdown-menu {
 
 #chat_location {
 	padding: 6px 0px 5px 10px;
-	font-weight: bold;
-	height: 35px;
 }
 
 #chats {
@@ -7198,10 +7071,6 @@ div.goorm_menu_item .dropdown-menu {
 	display: none;
 }
 
-#chats ul.list-group {
-	min-height: 100px;
-	margin-bottom: 0px;
-}
 #chat_user_container ul.list-group li{
 	display: inline-block;
 	padding: 0px;
@@ -7210,31 +7079,17 @@ div.goorm_menu_item .dropdown-menu {
 	float: left;
 	height: 51px;
 }
-#chat_user_container ul.list-group li > a img{
-	margin: 0px;
-	width:50px;
-	height:50px;
-}
 #chat_user_container ul.list-group li .media-heading span{
 	position: absolute;
 	right: -2px;
 	bottom: 1px;
 }
-#search_friend_container {
-	height: 45px;
-	padding: 5px;
-}
-
 #my_friend_list ul {
 	overflow: auto;
 }
 
 #add_friend_list ul {
 	overflow: auto;
-}
-
-#add_friend_list #get_more_friends {
-	margin: 10px;
 }
 
 #add_friend_list #get_more_friends:hover {
@@ -7293,39 +7148,35 @@ span.project_message_guide {
 	background: #eef;
 }
 */
-#chat .me, #project .me {
-	background-color: #FFFAE5;
-}
 
-
+/*#goorm_inner_layout_right .tab-content:first {
+	background-color: #fff;
+}*/
 
 #goorm_left .tab-pane {
-	/*border-right: 1px solid #dddddd;*/
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }
 
-#goorm_inner_layout_right .tab-content:first {
+#goorm_inner_layout_right .tab-pane, 
+#goorm_inner_layout_bottom .tab-pane {
 	background-color: #fff;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
-#goorm_inner_layout_right .tab-pane, #goorm_inner_layout_bottom .tab-pane {
-	background-color: #fff;
-	/*border-left: 1px solid #dddddd;*/
-}
-
-#goorm_inner_layout_bottom .tab-content{
-	height: 100%;
+#goorm_left .tab-pane .tab-pane, 
+#goorm_inner_layout_right .tab-pane .tab-pane, 
+#goorm_inner_layout_bottom .tab-pane .tab-pane {
+	border:none;
 }
 
 #workspace {
-/*	-moz-box-shadow: inset 0 28px 10px 0 #999;
-	-webkit-box-shadow: inset 0 28px 10px 0 #999;
-	box-shadow: inset 0 28px 10px 0 #999;*/
-	/*background-color: #f00; */
-	border-width: 0px; 
-	border-style: solid;
-	border-color: #dddddd;
 	overflow: hidden;
 	position: relative;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: #ddd;
 }
 
 
@@ -7388,35 +7239,34 @@ span.project_message_guide {
 	right: 6px;
 }
 
-#workspace .ui-dialog .ui-dialog-titlebar {
-	background-color: #428bca; 
+.dialog_treeview {
+	height:400px; 
+	padding: 0px;	 
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: #CCC;
+	background-color: #FFF;
+	overflow:auto;	
 }
 
 
 .dialog_tabview {
-	min-height: 400px; /* jeongmin. height -> min-height for adative ui */
+	min-height: 400px;
 	text-align:left;
-	border: 1px solid #ccc;
+	border-width: 1px 0px 1px 1px;
+	border-style: solid;
+	border-color: #CCC;
+	background-color: #FFF;
 	padding: 0px;
+	padding-top: 5px;
 }
 
-.dialog_tabview .tab-content {
+
+/*.dialog_tabview .tab-content {
 	padding: 10px;
-}
+}*/
 
-.dialog_treeview {
-	height:400px; 
-	padding:5px;  
-	border:1px solid #ccc;
-	border-right:0px; 
-	background-color:#fff; 
-	overflow:auto;
-}
 
-.CodeMirror {
-	border-bottom: 1px solid #ddd;
-	border-radius: 4px;
-}
 
 /*#terminal #prompt,.terminal .prompt {
 	-moz-border-radius: 0;
@@ -7600,10 +7450,6 @@ top: -9px;
 	padding: 2px 5px !important;
 }
 
-.nav-tabs {
-	background: linear-gradient(to bottom,rgba(245,245,245,1) 0,rgba(222,222,222,1) 88%,rgba(217,217,217,1) 100%);
-}
-
 /* workspace tab size */
 #goorm_inner_layout_center .nav-tabs {
 	width: 100%;
@@ -7721,10 +7567,6 @@ top: -9px;
 	background-color: transparent;	/* #dddddd */
 	border: none;
 	box-shadow: initial;
-}
-
-.list-group-item:first-child, .list-group-item:last-child {
-	border-radius: 0px;
 }
 
 
@@ -7870,28 +7712,6 @@ top: -9px;
 	height: inherit;
 }
 
-#project_selector, #slide_url, #history_player_control {
-	margin-top: 4px;
-	padding: 2px 5px 5px 9px;
-}
-
-#slide_url .btn-default, #history_player_control .btn-default, #project_selector .btn-default {
-	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(226,224,223,1) 98%, rgba(217,217,217,1) 100%);
-	height:31px;
-	margin-left: -4px;
-}
-
-.control-label {
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-top: 7px;
-}
-
-#property_file_contents {
-	border: 1px solid #ccc;
-	/*height: 240px;*/	/* jeongmin. No need */
-}
-
 #property_generic {
 	padding: 10px;
 }
@@ -7963,14 +7783,6 @@ top: -9px;
 	margin-top: 7px;
 }
 
-.CodeMirror {
-	border: 0px solid #ccc;
-	box-sizing: border-box;
-}
-
-.ui-dialog .ui-dialog-content {
-	padding: 2px 0 2px 0;
-}
 
 /*.modal-backdrop.in {
 	opacity: 0.8;
@@ -8305,8 +8117,8 @@ label {
 	margin-top: 5px;
 }
 
-#project_new {	/* jeongmin */
-	min-height: 427px;
+#project_new {
+	min-height: 420px;
 }
 
 #bookmark_table .well {	/* jeongmin */
@@ -8720,10 +8532,6 @@ label {
 	color: #000;
 }
 
-#gLayoutTab_chat {
-	padding-bottom: 4px;
-}
-
 #input_chat_message{
 	height:65px;
 	resize:none;
@@ -8833,10 +8641,6 @@ label {
 /* prevent resizer overlap south and east */
 .ui-layout-resizer-temp {
 	z-index: 9 !important;
-}
-
-#goorm_top {
-	z-index: 11 !important;
 }
 
 #git_branch_list th,
@@ -9485,11 +9289,6 @@ a.bg-danger:hover {
 	cursor:hand;
 }
 
-#goorm_inner_layout_center {
-	border: 1px solid #aaa;
-	box-sizing: border-box;
-}
-
 #dlg_npm_list #npm_list_container_guide {
 	margin-bottom: 10px;
 	font-weight: bold;
@@ -9572,9 +9371,6 @@ a.bg-danger:hover {
 
 /* bootstrap sizing fix to prevent border-hiding problem --heeje */
 @media (min-width: 992px) {
-	#help_contents_middle {
-		width: 550px;
-	}
 	.filetype_detail {
 		width: 390px;
 		padding-left: 10px;
@@ -9643,7 +9439,7 @@ a.bg-danger:hover {
 	margin-top: 10px;
 }
 /* bootstrap duplicate */
-.modal.fade .modal-dialog, .modal.in .modal-dialog
+.modal.fade .modal-dialog, .modal.in .modal-dialogß
 {
 	-webkit-transform: none !important;
 	-ms-transform: none !important;
@@ -9656,3 +9452,34 @@ a.bg-danger:hover {
 
 /* image preload */
 #dlg_notice { background: url(/images/goorm.core.dialog/dialog_notice.png) no-repeat -9999px -9999px; }
+
+/* jeongmin: for showing status by position */
+#dlg_svn tr td:nth-child(2) {
+	white-space: pre;
+}
+
+li.active > #gLayoutTab_Terminal {
+	background-color: rgb(70, 70, 70);
+	color: white;
+	border-color: rgb(70, 70, 70);
+}
+
+#dlg_scm_auth {	/* jeongmin. Put auth dialog above scm dialog */
+	z-index: 1041;
+}
+
+.user_profile_image {
+	width: 48px;
+	height: 48px;
+	margin-right: 5px;
+	border-radius: 24px;
+	border:1px solid #ddd;
+}
+
+/* youseok. change keyboard img position at 1:1 chat */
+
+#sub_chat_user_container ul.list-group li .media-heading span.user_chat_img {
+	position: absolute;
+	bottom: -10px;
+	left: 37px;
+}

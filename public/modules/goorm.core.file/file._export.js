@@ -19,6 +19,10 @@ goorm.core.file._export = {
 
 		this.panel = $("#dlg_export_file");
 
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
+
 		var handle_ok = function() {
 			var data = self.dialog_explorer.get_data();
 
@@ -49,16 +53,11 @@ goorm.core.file._export = {
 					//var _iframe_download=$('<iframe id="download_frame"/>').attr('src',"download/?file=" + data.path).hide().appendTo
 					$("#download_frame").css('display', 'none');
 
-					//useonly(mode=dev,edu-on-promise,book,edu,product,oss)
+					
 					$("#download_frame").attr('src', "download/?file=" + data.path);
-					//useonlyend
+					
 
-					//useonly(mode=product-l2-ide)
-					var fs_info = core.module.router.get_fs_info();
-					var url = fs_info.protocol + '://' + fs_info.host + ':' + fs_info.port;
-
-					$("#download_frame").attr('src', url+"/download/?file=" + data.path);
-					//useonlyend
+					
 				} else {
 					switch (data.err_code) {
 						case 10:
@@ -79,7 +78,11 @@ goorm.core.file._export = {
 			// localization_key: "title_export_file",
 			id: "dlg_export_file",
 			handle_ok: handle_ok,
-			success: null,
+			success: function() {
+				$(document).on("click", "li.open.storage", function() {
+					$("button[localization_key=common_target]").blur();
+				});
+			},
 			show: $.proxy(this.after_show, this)
 		});
 

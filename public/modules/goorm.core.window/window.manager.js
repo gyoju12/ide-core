@@ -317,7 +317,7 @@ goorm.core.window.manager = {
 		
 		
 			
-			if (filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx") {
+			if (filetype == "bmp" || filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx" || filetype == "avi" || filetype == "mpg" || filetype == "mp4" || filetype == "wmv") {
 				
 				var query = {
 					filepath: filepath,
@@ -326,7 +326,8 @@ goorm.core.window.manager = {
 
 				if (!options.storage) {
 					_$.get("file/get_file", query, function() {
-						window.open("files/" + filepath + filename);
+						
+						
 					});
 				}
 				// else { // if dropbox or google drive ...etc
@@ -336,6 +337,7 @@ goorm.core.window.manager = {
 				
 				if (callback && typeof(callback) === 'function')
 					callback();
+
 			} else {
 				
 					
@@ -387,7 +389,8 @@ goorm.core.window.manager = {
 					};
 
 					_$.get("file/get_file", query, function() {
-						window.open("files/" + filepath + filename);
+						
+						
 					});
 				} else {
 					if (filepath != "/" && filepath !== "") {

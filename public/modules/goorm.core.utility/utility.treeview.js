@@ -35,6 +35,7 @@ goorm.core.utility.treeview.prototype = {
 			project_path: null,
 			on_select: null,
 			on_click: null,
+			on_mousedown: null,
 			on_open: null,
 			on_ready: null,
 			on_dblclick: null,
@@ -101,14 +102,25 @@ goorm.core.utility.treeview.prototype = {
 		}).on("load_node.jstree", function(event, data) {
 			// console.log("on load_node", data);
 		}).on("dblclick.jstree", function(event, data) {
-
 			var node = _this.tree.jstree("get_node", event.target);
 			if (node) {
 				if (node.type === "folder" || node.type === "root") {
 					_this.tree.jstree("toggle_node", node);
-				}
+				} 
 				if (typeof _this.options.on_dblclick === "function") {
 					_this.options.on_dblclick(event, node);
+				}
+			}
+		}).on('click.jstree', function(e) {
+			var node = _this.tree.jstree("get_node", $(e.target));
+			if (!_this.options.multiple) {
+				_this.tree.jstree("deselect_all");
+			}
+			if (node.id !== "#") {
+				if (typeof _this.options.on_click === "function") {
+					_this.options.on_click(e, node);
+				} else {
+					_this.tree.jstree("select_node", node);
 				}
 			}
 		}).on('mousedown.jstree', function(e) {
@@ -116,10 +128,9 @@ goorm.core.utility.treeview.prototype = {
 			if (!_this.options.multiple) {
 				_this.tree.jstree("deselect_all");
 			}
-
 			if (node.id !== "#") {
-				if (typeof _this.options.on_click === "function") {
-					_this.options.on_click(e, node);
+				if (typeof _this.options.on_mousedown === "function") {
+					_this.options.on_mousedown(e, node);
 				} else {
 					_this.tree.jstree("select_node", node);
 				}
@@ -194,7 +205,7 @@ goorm.core.utility.treeview.prototype = {
 				// _this._refresh = false;
 				// console.log("load folder", postdata);
 
-				core._socket.set_url("/file/get_result_ls" + path);
+				core._socket.set_url("/file/get_result_ls" + path, true);
 
 				core._socket.once("/file/get_result_ls" + path, function(data) {
 					callback(data);
@@ -379,13 +390,13 @@ goorm.core.utility.treeview.prototype = {
 	 * @method refresh
 	 * @return {treeview}
 	 */
-	refresh: function() {
+	refresh: $.throttle(function() {
 		this.options.state = this.get_state();
 		this._refresh = true;
 		this.tree.jstree("refresh");
 
 		return this;
-	},
+	},500),
 
 	/**
 	 * get state (opened files, selected files etc..)

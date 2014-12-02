@@ -14,7 +14,6 @@ var expire_date = 60 * 60 * 2; // 2h
 
 
 var EventEmitter = require("events").EventEmitter;
-var async = require('async');
 var crypto = require('crypto');
 var http = require('http');
 var querystring = require('querystring');
@@ -148,7 +147,7 @@ module.exports = {
 
 		// Redis Store
 		if (global.__redis_mode) {
-			store.client.set('session_' + user_data.id, req.sessionID);
+			store.client.set('session_'+IDE_HOST+'_' + user_data.id, req.sessionID);
 			store.client.set(req.sessionID, JSON.stringify(user_data));
 		} else {
 			session.auth = {
@@ -157,7 +156,7 @@ module.exports = {
 
 			//jeongmin: literal is faster
 
-			store.set('session_' + user_data.id, {
+			store.set('session_'+IDE_HOST+'_' + user_data.id, {
 				'cookie': {
 					'expires': null
 				},

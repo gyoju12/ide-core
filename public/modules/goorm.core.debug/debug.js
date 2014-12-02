@@ -112,7 +112,7 @@ goorm.core.debug.prototype = {
 		// }
 
 		//height...
-		var layout_bottom_height = $("#goorm_inner_layout_bottom").height() - 26;
+		var layout_bottom_height = $("#goorm_inner_layout_bottom").height() - 30;
 		layout_bottom_height = parseInt(layout_bottom_height);
 		$("#debug_tab").css("height", layout_bottom_height + 'px');
 		$('#debug_wrapper').css("height", layout_bottom_height + 'px');
@@ -164,7 +164,7 @@ goorm.core.debug.prototype = {
 		if (plugin_manager && plugin_manager.debug) {
 			_$.get("project/check_latest_build", {
 				"project_path": project_path,
-				"run_file_path": core.preference.workspace_path + core.status.current_project_path + '/' + build_path + build_main
+				"run_file_path": project_path + '/' + build_path + build_main
 			}, function(data) {
 				if (data) {
 					if (data.result && latest) {

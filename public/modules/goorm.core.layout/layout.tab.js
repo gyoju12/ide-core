@@ -34,7 +34,7 @@ goorm.core.layout.tab = {
 		},
 
 		create: function() {
-			$('[id="' + this.context + '"]').addClass('output_tab').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered table-striped" id="' + this.context + '_table" ></table>');
+			$('[id="' + this.context + '"]').addClass('output_tab').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.context + '_table" ></table>');
 			this.table = $('[id="' + this.context + '_table"]').dataTable({
 				"aaData": [],
 				"aoColumns": [{
@@ -228,6 +228,9 @@ goorm.core.layout.tab = {
 		var option = data || {};
 
 		if (option.tab && option.tab_content) {
+			if (!option.localization) {
+				option.localization = {};
+			}
 
 			if (!this.update_complete) {
 				this.queue(position, data);
@@ -240,7 +243,7 @@ goorm.core.layout.tab = {
 
 				this.del(position, data);
 
-				var content = (core.module.localization) ? core.module.localization.msg[option.localization.tab] : option.tab.content;
+				var content = (core.module.localization && option.localization.tab) ? core.module.localization.msg[option.localization.tab] : option.tab.content;
 				var classes = option.tab_content['class'] || "";
 
 				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + option.localization.tab + '">' + content + '</a></li>');

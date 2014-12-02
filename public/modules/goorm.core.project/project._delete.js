@@ -20,6 +20,9 @@ goorm.core.project._delete = {
 		var self = this;
 
 		this.panel = $("#dlg_delete_project");
+		this.panel.click(function() {
+			$("button[localization_key=common_target]").blur();
+		});
 
 		
 		this.__handle_delete = $.debounce(function(panel) { // jeongmin: prevent multiple export
@@ -161,13 +164,14 @@ goorm.core.project._delete = {
 			success: function() {
 				$("#project_delete_storage").find("span").html("goormIDE_Storage");
 				$(document).on("click", "li.delete.storage", function() {
-					var storage = $(this).find("a").html();
-					$("#project_delete_storage").find("span").html(storage);
-					$("#project_delete_list").empty();
-					$("#project_delete_information").empty();
-					if (storage == "goormIDE Storage") {
-						self.project_list = new goorm.core.project.list();
-					}
+					// var storage = $(this).find("a").html();
+					$("button[localization_key=common_target]").blur();
+					// $("#project_delete_storage").find("span").html(storage);
+					// $("#project_delete_list").empty();
+					// $("#project_delete_information").empty();
+					// if (storage == "goormIDE Storage") {
+					// 	self.project_list = new goorm.core.project.list();
+					// }
 					// else if (storage == "Google Drive") {
 
 					// } else if (storage == "Dropbox") {
