@@ -516,8 +516,16 @@ Optimized:Start
 }*/
 
 .selector_project {
-	padding: 5px;
-	margin: 5px 5px 0px 5px !important;
+/*	margin: 5px 5px 0px 5px !important;*/
+	height: 80px;
+	padding: 10px;
+	margin: 0px;
+	cursor: pointer;
+}
+
+.selected_button {
+	color: white;
+	background-color: #007ee5;
 }
 
 .selector_project .project_list_img {
@@ -8047,10 +8055,6 @@ label {
 	border-right: 0px;
 }
 
-#project_new .dialog_tabview {	/* jeongmin */
-	height: 480px;
-}
-
 #new_project_scm_field {	/* jeongmin */
 	height: 380px;
 }
@@ -8115,10 +8119,6 @@ label {
 
 #image_specification label {
 	margin-top: 5px;
-}
-
-#project_new {
-	min-height: 420px;
 }
 
 #bookmark_table .well {	/* jeongmin */
@@ -8653,11 +8653,6 @@ label {
 	height: 291px;
 }
 
-#export_project_type {	/* jeongmin */
-	width: 300px;
-	text-align: right;
-}
-
 #export_project_type .btn-group {	/* jeongmin */
 	padding-left: 25px;
 }
@@ -8670,10 +8665,6 @@ label {
 
 #bookmark_tab {	/* jeongmin */
 	border-bottom: 2px solid #ccc;
-}
-
-#dlg_export_project .modal-body {	/* jeongmin. Make it responsive */
-	min-height: 450px;
 }
 
 .server_tab {
@@ -9476,10 +9467,11 @@ li.active > #gLayoutTab_Terminal {
 	border:1px solid #ddd;
 }
 
-/* youseok. change keyboard img position at 1:1 chat */
+.tab-pane .row {
+	margin-left: -8px;
+	margin-right: -8px;
+}
 
-#sub_chat_user_container ul.list-group li .media-heading span.user_chat_img {
-	position: absolute;
-	bottom: -10px;
-	left: 37px;
+.tab-pane .row .row {
+	margin: 0px;
 }

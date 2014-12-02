@@ -1813,17 +1813,17 @@
                     </div>
                     <div id="project_new" class="modal-body">
                         <div class="wizard_step" step="1">
-                            <div class="dialog_tabview">
-                                <ul class="nav nav-tabs">   
-                                    <li class="active"><a href="#new_project_template" data-toggle="tab">Template</a></li>
-                                    <!--  -->
-                                    <li><a href="#new_project_import" data-toggle="tab">Import</a></li>
-                                </ul>
+                            <ul class="nav nav-tabs">   
+                                <li class="active"><a href="#new_project_template" data-toggle="tab">Template</a></li>
+                                <!--  -->
+                                <li><a href="#new_project_import" data-toggle="tab">Import</a></li>
+                            </ul>
 
-                                <div class="tab-content">
-                                    <div class="tab-pane fade in active" id="new_project_template">
-                                        <div class="well well-sm" localization_key='dialog_new_project_guide1'>Select Project Type</div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="new_project_template">
+                                    <div class="well well-sm" localization_key='dialog_new_project_guide1'>Select Project Type</div>
 
+                                    <div class="row">
                                         <div class="col-sm-4 dialog_left_inner" style="height:380px;">
                                             <div class="project_types list-group" tabindex="-1">
                                                 <a href='#' class='list-group-item project_wizard_first_button active' project_type='all'><img src='/images/goorm.core.project/project.png' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key="dialog_new_project_view_all">All</h4><p class='list-group-item-text' class='project_type_description' localization_key="dialog_new_project_view_all_description">View all available<br>project items</p></a>
@@ -1845,82 +1845,82 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--  -->
-                                    <div class="tab-pane fade" id="new_project_import">
-                                        <form class="project_import_form" action="project/import" method="post" enctype="multipart/form-data">
-                                            <div class="project_import">
-                                                <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
+                                </div>
+                                <!--  -->
+                                <div class="tab-pane fade" id="new_project_import">
+                                    <form class="project_import_form" action="project/import" method="post" enctype="multipart/form-data">
+                                        <div class="project_import">
+                                            <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
 
-                                                <div class="form-group row">
-                                                <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
-                                                <div class="col-md-10">
-                                                    <select class="import_storage form-control">
-                                                        <option value="goormIDE_Storage">goormIDE Storage</option>
-                                                        <!-- <option value="Dropbox" disabled>Dropbox</option>
-                                                                <option value="Google_Drive" disabled>Google Drive</option> -->
-                                                    </select>
-                                                </div>
+                                            <div class="row">
+                                            <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
+                                            <div class="col-md-10">
+                                                <select class="import_storage form-control">
+                                                    <option value="goormIDE_Storage">goormIDE Storage</option>
+                                                    <!-- <option value="Dropbox" disabled>Dropbox</option>
+                                                            <option value="Google_Drive" disabled>Google Drive</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="project_author row">
+                                            <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author">Author ID</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="input_import_project_author" class="input_import_project_author form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="project_author_name row">
+                                            <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="input_import_project_author_name" class="input_import_project_author_name form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="project_type row">
+                                            <label for="select_import_project_type" class="col-sm-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control select_import_project_type" name="select_import_project_type" project_type="cpp"></select>
+                                            </div>
+                                        </div>
+                                        <div class="project_detail_type row">
+                                            <label for="select_import_project_detail_type" class="col-sm-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control select_import_project_detail_type" name="select_import_project_detail_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
                                             </div>
 
-                                            <div class="project_author form-group row">
-                                                <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author">Author ID</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" name="input_import_project_author" class="input_import_project_author form-control" />
-                                                </div>
+                                            <input type="hidden" class="input_import_project_type" checkField="yes" />
+                                            <input type="hidden" class="input_import_project_plugin" checkField="yes" />
+                                            <input type="hidden" class="input_import_project_detailed_type" checkField="yes" />
+                                        </div>
+
+                                        <div class="project_name row">
+                                            <label for="input_import_project_name" class="col-sm-2 control-label" localization_key="dialog_new_project_name">Project Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="input_import_project_name" class="input_import_project_name form-control" />
                                             </div>
+                                        </div>
 
-                                            <div class="project_author_name form-group row">
-                                                <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" name="input_import_project_author_name" class="input_import_project_author_name form-control" />
-                                                </div>
+                                        <div class="project_desc row">
+                                            <label for="input_import_project_desc" class="col-sm-2 control-label" localization_key="dialog_new_project_description">Project Description</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control input_import_project_desc" name='input_import_project_desc' rows='2' draggable='false'></textarea>
                                             </div>
+                                        </div>
 
-                                            <div class="project_type form-group row">
-                                                <label for="select_import_project_type" class="col-sm-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control select_import_project_type" name="select_import_project_type" project_type="cpp"></select>
-                                                </div>
-                                            </div>
-                                            <div class="project_detail_type form-group row">
-                                                <label for="select_import_project_detail_type" class="col-sm-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control select_import_project_detail_type" name="select_import_project_detail_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
-                                                </div>
+                                        <label id="import_label" for="file_import_file" class="col-md-4 control-label" localization_key='dialog_new_project_import_message'>Select a zip file to import</label>
 
-                                                <input type="hidden" class="input_import_project_type" checkField="yes" />
-                                                <input type="hidden" class="input_import_project_plugin" checkField="yes" />
-                                                <input type="hidden" class="input_import_project_detailed_type" checkField="yes" />
-                                            </div>
+                                        <div class="col-md-8">
+                                            <div class="project_import_upload_output"></div>
+                                            <input type="file" name="file" class="project_import_file form-control" />
+                                            <input type="hidden" class="project_import_location" name="project_import_location" readonly="readonly" />
+                                        </div>
 
-                                            <div class="project_name form-group row">
-                                                <label for="input_import_project_name" class="col-sm-2 control-label" localization_key="dialog_new_project_name">Project Name</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" name="input_import_project_name" class="input_import_project_name form-control" />
-                                                </div>
-                                            </div>
+                                        <input type="hidden" class="import_project_using_plugin" value="no" />
+                                        <div class="import_project_expansion_container" style="width:770px;"></div>
 
-                                            <div class="project_desc form-group row">
-                                                <label for="input_import_project_desc" class="col-sm-2 control-label" localization_key="dialog_new_project_description">Project Description</label>
-                                                <div class="col-sm-10">
-                                                    <textarea class="form-control input_import_project_desc" name='input_import_project_desc' rows='2' draggable='false'></textarea>
-                                                </div>
-                                            </div>
-
-                                            <label id="import_label" for="file_import_file" class="col-md-4 control-label" localization_key='dialog_new_project_import_message'>Select a zip file to import</label>
-
-                                            <div class="col-md-8">
-                                                <div class="project_import_upload_output"></div>
-                                                <input type="file" name="file" class="project_import_file form-control" />
-                                                <input type="hidden" class="project_import_location" name="project_import_location" readonly="readonly" />
-                                            </div>
-
-                                            <input type="hidden" class="import_project_using_plugin" value="no" />
-                                            <div class="import_project_expansion_container" style="width:770px;"></div>
-
-                                            </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -1928,58 +1928,53 @@
                         
                         <div class="wizard_step next_wizard_step" step="2">
                             <div class="well well-sm" localization_key='dialog_new_project_guide2'>Input Information for New Project</div>
-                            <div> <!-- style="height:340px;"> -->   
-                                <div> <!-- style="height:200px;"> -->   
 
-                                    <fieldset>
-                                        <label for="new_project_storage" class="col-md-2 control-label" localization_key='dialog_storage'>Storage</label>
-                                        <div class="col-md-10">
-                                            <select id="new_project_storage" class="form-control">
-                                                <option value="goormIDE_Storage">goormIDE Storage</option>
-                                                <!-- <option value="Dropbox" disabled>Dropbox</option>
-                                                <option value="Google_Drive" disabled>Google Drive</option> -->
-                                            </select>
-                                        </div>
-                                    </fieldset>
-
-                                    <fieldset>
-                                        <div class="form-group project_author">
-                                            <label for="input_project_author" class="col-md-2 control-label" localization_key='dialog_new_project_author'>Author ID</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" id="input_project_author" placeholder="Author ID" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group project_author_name">
-                                            <label for="input_project_author_name" class="col-md-2 control-label" localization_key='dialog_new_project_author_name'>Author Name</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" id="input_project_author_name" placeholder="Author Name" />
-                                            </div>
-                                        </div>
-                                        <div class="project_type form-group">   
-                                            <label for="select_input_project_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
-                                            <div class="col-md-10">
-                                                <select class="form-control" id="select_input_project_type" name="select_input_project_type" project_type="cpp"></select>
-                                            </div>
-                                            <label for="select_input_project_detail_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
-                                            <div class="col-md-10">
-                                                <select class="form-control" id="select_input_project_detail_type" name="select_input_project_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group project_name">
-                                            <label for="input_project_name" class="col-md-2 control-label" localization_key='dialog_new_project_name'>Project Name</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" id="input_project_name" maxlength="25"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group project_desc">
-                                            <label for="input_project_desc" class="col-md-2 control-label" localization_key='dialog_new_project_desc'>Project Name</label>
-                                            <div class="col-md-10">
-                                                <textarea class="form-control" id='input_project_desc' style='width:100%; height:120px;' draggable='false'></textarea>
-                                            </div>
-                                        </div>
-                                    </fieldset>
+                            <div class="row">
+                                <label for="new_project_storage" class="col-md-2 control-label" localization_key='dialog_storage'>Storage</label>
+                                <div class="col-md-10">
+                                    <select id="new_project_storage" class="form-control">
+                                        <option value="goormIDE_Storage">goormIDE Storage</option>
+                                        <!-- <option value="Dropbox" disabled>Dropbox</option>
+                                                                        <option value="Google_Drive" disabled>Google Drive</option> -->
+                                    </select>
                                 </div>
                             </div>
+
+                            <div class="row project_author">
+                                <label for="input_project_author" class="col-md-2 control-label" localization_key='dialog_new_project_author'>Author ID</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="input_project_author" placeholder="Author ID" />
+                                </div>
+                            </div>
+                            <div class="row project_author_name">
+                                <label for="input_project_author_name" class="col-md-2 control-label" localization_key='dialog_new_project_author_name'>Author Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="input_project_author_name" placeholder="Author Name" />
+                                </div>
+                            </div>
+                            <div class="row project_type">
+                                <label for="select_input_project_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" id="select_input_project_type" name="select_input_project_type" project_type="cpp"></select>
+                                </div>
+                                <label for="select_input_project_detail_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" id="select_input_project_detail_type" name="select_input_project_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
+                                </div>
+                            </div>
+                            <div class="row project_name">
+                                <label for="input_project_name" class="col-md-2 control-label" localization_key='dialog_new_project_name'>Project Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="input_project_name" maxlength="25" />
+                                </div>
+                            </div>
+                            <div class="row project_desc">
+                                <label for="input_project_desc" class="col-md-2 control-label" localization_key='dialog_new_project_desc'>Project Name</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" id='input_project_desc' style='width:100%; height:120px;' draggable='false'></textarea>
+                                </div>
+                            </div>
+
                             <input type="hidden" id="new_project_using_plugin" value="no" />
                             <div id="new_project_expansion_container" style="width:770px;"></div>
                         </div>
@@ -3107,8 +3102,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_project_delete_guide'>Select a project to delete</div>
-
-                        <div id="project.delete">
+                        <div id="project_delete">
                             <nav class="navbar navbar-default" role="navigation">
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav path">
@@ -3148,7 +3142,7 @@
                                     </ul>
                                 </div>
                             </nav>
-                            <div id="project_delete_dialog_middle">
+                            <div class="row">
                                 <div id="project_delete_list" class="col-md-4 dialog_left_inner" tabindex="-1"></div>
                                 <div id="project_delete_dialog_center" class="col-md-8 dialog_center">
                                     <div id="project_delete_information"></div>
@@ -3159,7 +3153,7 @@
                             <input id="project_delete_type" type="hidden" />
                         </div>
                     </div>
-                    <div class="modal-footer" style="border-top:0px;">
+                    <div class="modal-footer">
                         <button type="button" id="g_dp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
                         <button type="button" id="g_dp_btn_ok" class="btn btn-primary" localization_key='delete'>Delete</button>
                     </div>

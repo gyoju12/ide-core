@@ -348,13 +348,13 @@
   box-shadow: none;
 }
 .jstree-default.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-  background: #e7f4f9;
+  background: #007ee5;
 }
 .jstree-default.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked {
   background: transparent;
 }
 .jstree-default.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-  background: #e7f4f9;
+  background: #007ee5;
 }
 #jstree-dnd.jstree-default .jstree-ok,
 #jstree-dnd.jstree-default .jstree-er {
