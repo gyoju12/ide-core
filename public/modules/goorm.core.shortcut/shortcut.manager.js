@@ -1178,7 +1178,7 @@ goorm.core.shortcut.manager = {
 
 		if (this.hotkeys.do_find_next) {
 			this.hotkeys_fn.do_find_next = function(e) {
-				
+
 				var window_manager = core.module.layout.workspace.window_manager;
 				var editor = window_manager.window[window_manager.active_window].editor;
 
@@ -1209,7 +1209,8 @@ goorm.core.shortcut.manager = {
 				if (editor) {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
-					if (editor.editor && editor.editor.state.search.query) {
+					// if (editor.editor && editor.editor.state.search.query) {
+					if (editor.editor) { // jeongmin: query condition prevents prev, but we need to do prev even though we're not in search state
 						core.dialog.find_and_replace.find_prev();
 					}
 					core.status.keydown = true;
@@ -1253,7 +1254,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug', this.hotkeys.debug), this.hotkeys.debug, this.hotkeys_fn.debug);
 		}
-		
+
 		//Debug Terminate (Ctrl/Meta+Shift+T)
 		if (this.hotkeys.debug_terminate) {
 			this.hotkeys_fn.debug_terminate = function(e) {
@@ -1266,7 +1267,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug_terminate', this.hotkeys.debug_terminate), this.hotkeys.debug_terminate, this.hotkeys_fn.debug_terminate);
 		}
-		
+
 		//Debug Continue(Ctrl/Meta+Shift+Y)
 		if (this.hotkeys.debug_continue) {
 			this.hotkeys_fn.debug_continue = function(e) {
@@ -1279,7 +1280,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug_continue', this.hotkeys.debug_continue), this.hotkeys.debug_continue, this.hotkeys_fn.debug_continue);
 		}
-		
+
 		//Debug Step Over(F6)
 		if (this.hotkeys.debug_step_over) {
 			this.hotkeys_fn.debug_step_over = function(e) {
@@ -1292,7 +1293,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug_step_over', this.hotkeys.debug_step_over), this.hotkeys.debug_step_over, this.hotkeys_fn.debug_step_over);
 		}
-		
+
 		//Debug Step In(F7)
 		if (this.hotkeys.debug_step_in) {
 			this.hotkeys_fn.debug_step_in = function(e) {
@@ -1305,7 +1306,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug_step_in', this.hotkeys.debug_step_in), this.hotkeys.debug_step_in, this.hotkeys_fn.debug_step_in);
 		}
-		
+
 		//Debug Step Out(F8)
 		if (this.hotkeys.debug_step_out) {
 			this.hotkeys_fn.debug_step_out = function(e) {
