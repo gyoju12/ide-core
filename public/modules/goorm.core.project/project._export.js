@@ -37,7 +37,7 @@ goorm.core.project._export = {
 			}
 
 			// var name = core.user.id;
-
+			var project_path = data.path;
 			var postdata = {
 				// user: name,
 				project_path: data.path,

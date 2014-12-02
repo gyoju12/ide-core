@@ -106,6 +106,11 @@ module.exports = {
 
 		
 
+		//to make correct host --heeje
+		if(host.indexOf(':') >= 0){
+			host = host.split(':')[0];
+		}
+
 		
 		
 		// Update Session
