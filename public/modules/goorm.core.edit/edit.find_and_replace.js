@@ -133,6 +133,7 @@ goorm.core.edit.find_and_replace = {
 						var editor = window_manager.window[window_manager.active_window].editor.editor;
 						// jeongmin: remove all the highlights
 						CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
+						editor.focus(); // jeongmin: user can edit source code right after finding
 					}
 				});
 
@@ -310,7 +311,7 @@ goorm.core.edit.find_and_replace = {
 
 		if (this.use_regexp === true)
 			try {
-				keyword = keyword.replace('/','');
+				keyword = keyword.replace('/', '');
 				text = RegExp(keyword, "g");
 				console.log(text);
 			} catch (e) {
@@ -337,7 +338,7 @@ goorm.core.edit.find_and_replace = {
 			// cursor.findPrevious();
 			// if (!cursor.findPrevious()) {
 			// 	//첫번재 match 단어에서 previous 시
- 
+
 			// 	if (this.find_on_workspace === true) {
 			// 		for (var i = 0; i < window_manager.window.length; i++) {
 			// 			if (window_manager.active_window === 0) {
