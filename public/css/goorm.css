@@ -2204,20 +2204,12 @@ div.tooltip {
 }
 
 /* goorm_profile_container */
-
-#dlg_auth_profile .profile_button_group {
-	margin-top: 5px;
-	margin-left: 8px;
-}
-
-#dlg_auth_profile .profile_media_container {
-	margin-top: 5px;
-}
-
 #dlg_auth_profile .profile_media_container img {
 	width:120px;
 	height:120px;
-	margin-left: 2px;
+	border-radius: 60px;
+	border: 1px solid #ddd;
+	margin-bottom: 10px;
 }
 
 #goorm_profile_container .goorm_profile_input {
@@ -7559,6 +7551,7 @@ top: -9px;
 
 .dataTables_filter {
 	text-align: center;
+	padding-top: 5px;
 }
 
 .introjs-helperNumberLayer {
@@ -8072,28 +8065,10 @@ label {
  *  Profile Image
  */
 
-#dlg_auth_profile_image #uploaded_image {
-	width: 400px;
+#uploaded_image {
 	height: 400px;
 	border: 1px solid #ccc;
 	overflow: auto;
-}
-
-#dlg_auth_profile_image #upload_image {
-	float: left;
-	width: 240px;
-	outline: none;
-}
-
-#dlg_auth_profile_image #image_preview_container {
-	text-align: center;
-}
-
-#dlg_auth_profile_image #image_cropping_container_footer {
-	width: 400px;
-	margin-top: 10px;
-	padding-bottom: 10px;
-	text-align: center;
 }
 
 #image_cropping_container_footer button {
@@ -8105,20 +8080,13 @@ label {
 	margin-bottom: 8px;
 }
 
-#dlg_auth_profile_image #preview_image {
+.profile_preview_image {
 	width: 120px;
 	height: 120px;
+	border-radius: 60px;
 	margin: 0 auto;
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 	overflow: hidden;
-}
-
-#dlg_auth_profile_image .preview_image_guide {
-	margin-top: 5px;
-}
-
-#image_specification label {
-	margin-top: 5px;
 }
 
 #bookmark_table .well {	/* jeongmin */

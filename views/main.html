@@ -5454,48 +5454,48 @@
                         <h4 class="modal-title" id="modal_auth_profile" localization_key='dialog_auth_profile'>Profile</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="media">
-                            <a class="pull-left profile_media_container" href="#">
-                                <img class="media-object" src="" alt="">
+                        <div class="row">
+                            <div class="profile_media_container col-md-3 text-center">
+                                <img src="" alt="">
                                 <div class="profile_button_group btn-group">
                                     <button type="button" id="g_ap_btn_profile_edit" class="btn btn-default" data-dismiss="modal" localization_key='edit'>Edit</button>
                                     <button type="button" id="g_ap_btn_profile_delete" class="btn btn-default" data-dismiss="modal" localization_key='delete'>Delete</button>
                                 </div>
-                            </a>
-                            <div id="goorm_profile_container" class="row media-body profile_container">
+                            </div>
+                            <div id="goorm_profile_container" class="profile_container col-md-9">
                                 <div class="row">
-                                    <label for="profile_name_input" localization_key='dialog_goorm_profile_name' class=" col-md-3 control-label">Name :</label>
-                                    <div class='col-md-9'>
+                                    <label for="profile_name_input" localization_key='dialog_goorm_profile_name' class="col-md-4 control-label">Name :</label>
+                                    <div class='col-md-8'>
                                         <input id="profile_name_input" type="text" name="profile_name_input" class="form-control" readonly="readonly" localization_key='signup_name' placeholder="2~15 digits, Hangul/Alphabet/Num/(-/_/./ /)" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="profile_nickname_input" localization_key='dialog_goorm_profile_nick' class=" col-md-3 control-label">Nickname :</label>
-                                    <div class='col-md-9'>
+                                    <label for="profile_nickname_input" localization_key='dialog_goorm_profile_nick' class="col-md-4 control-label">Nickname :</label>
+                                    <div class='col-md-8'>
                                         <input id="profile_nickname_input" type="text" name="profile_nickname_input" class="form-control" readonly="readonly" localization_key='signup_nick' placeholder="2~20 digits, Hangul/Alphabet/Num/(-/_/./ /)" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="profile_email_input" localization_key='dialog_goorm_profile_email' class=" col-md-3 control-label">E-mail :</label>
-                                    <div class='col-md-9'>
+                                    <label for="profile_email_input" localization_key='dialog_goorm_profile_email' class="col-md-4 control-label">E-mail :</label>
+                                    <div class='col-md-8'>
                                         <input id="profile_email_input" type="text" name="profile_email_input" class="form-control" readonly="readonly" placeholder="example@example.com" />
                                     </div>
                                 </div>
                                 <div class="row password_area">
-                                    <label for='profile_pw_input' localization_key='dialog_goorm_profile_password' name='profile_pw_span' class=' col-md-3 control-label'>New PW :</label>
-                                    <div class='col-md-9'>
+                                    <label for='profile_pw_input' localization_key='dialog_goorm_profile_password' name='profile_pw_span' class=' col-md-4 control-label'>New PW :</label>
+                                    <div class='col-md-8'>
                                         <input id='profile_pw_input' type='password' name='profile_pw_input' class='form-control' readonly="readonly" localization_key="profile_password" placeholder='(8~15), Alphabet+Number+Special' />
                                     </div>
                                 </div>
                                 <div class="row password_area">
-                                    <label for='profile_re_pw_input' localization_key='dialog_goorm_profile_password_confirm' name='profile_re_pw_span' class='col-md-3 control-label'>Confirm PW :</label>
-                                    <div class='col-md-9'>
+                                    <label for='profile_re_pw_input' localization_key='dialog_goorm_profile_password_confirm' name='profile_re_pw_span' class='col-md-4 control-label'>Confirm PW :</label>
+                                    <div class='col-md-8'>
                                         <input id='profile_re_pw_input' type='password' name='profile_re_pw_input' class='form-control' readonly="readonly" localization_key="profile_password_confirm" placeholder='Please enter your pw again to confirm...' />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="profile_comment_input" localization_key='dialog_goorm_profile_comment' class=" col-md-3 control-label">Comment :</label>
-                                    <div class='col-md-9'>
+                                    <label for="profile_comment_input" localization_key='dialog_goorm_profile_comment' class="col-md-4 control-label">Comment :</label>
+                                    <div class='col-md-8'>
                                         <input id="profile_comment_input" type="text" name="profile_comment_input" class="form-control" readonly="readonly" placeholder="Comment..." localization_key="profile_comment" />
                                     </div>
                                 </div>
@@ -5523,33 +5523,35 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" localization_key='dialog_auth_profile_image'>Profile Image</h4>
                     </div>
-                    <div class="modal-body row">
-                        <div id="image_cropping_container" class="col-md-8">
-                            <div id="uploaded_image">
-                                <img class="profile_image" />
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="image_cropping_container" class="col-md-8">
+                                <div id="uploaded_image">
+                                    <img class="profile_image" />
+                                </div>
                             </div>
-                            <fieldset id="image_cropping_container_footer">
-                                <input id="upload_image" type="file" class="form-control" />
+                            <div id="image_preview_container" class="col-md-4 text-center">
+                                <div class="row">
+                                    <label class="profile_label col-md-3">Width:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control profile_width" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="profile_label col-md-3">Height:</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control profile_height" />
+                                    </div>
+                                </div>
+                                <div class="profile_preview_image">
+                                    <img class="profile_image" />
+                                </div>
+                                <div>120 x 120</div>
+                                <input id="upload_image" type="file" />
                                 <button id="toggle_selection" type="button" class="btn btn-default" localization_key='toggle_selection'>Toggle Selection</button>
-                            </fieldset>
+                                <button id="crop_profile_image" type="button" class="btn btn-default" localization_key='crop'>Crop</button>
+                            </div>
                         </div>
-                        <fieldset id="image_preview_container" class="col-md-4">
-                            <div id="image_specification">
-                                <label class="profile_label col-md-3">Width:</label>
-                                <div class="col-md-9">
-                                    <input class="form-control profile_width" />
-                                </div>
-                                <label class="profile_label col-md-3">Height:</label>
-                                <div class="col-md-9">
-                                    <input class="form-control profile_height" />
-                                </div>
-                            </div>
-                            <div id="preview_image">
-                                <img class="profile_image" />
-                            </div>
-                            <div class="preview_image_guide">120 x 120</div>
-                            <button id="crop_profile_image" type="button" class="btn btn-default" localization_key='crop'>Crop</button>
-                        </fieldset>
                     </div>
                     <div class="modal-footer">
                         <button id="upload_profile_image" type="button" class="btn btn-primary"localization_key='upload'>Upload</button>
