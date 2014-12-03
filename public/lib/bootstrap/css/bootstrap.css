@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  background-color: #eee;
 }
 article,
 aside,
@@ -4200,6 +4201,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #ccc;
   background-color: transparent;
 }
+.navbar-default .navbar-nav > .btn-group {
+  padding-right: 3px;
+  color: #555;
+  border-right: 1px solid #ddd;
+}
+.navbar-default .navbar-nav > .btn-group:last-child {
+  border-right: none;
+}
+.navbar-default .navbar-nav > .btn-group .btn-default {
+  border: none;
+}
 .navbar-default .navbar-toggle {
   border-color: #ddd;
 }
@@ -6121,6 +6133,19 @@ button.close {
 }
 .affix {
   position: fixed;
+}
+.margin-5px {
+  margin: 5px !important;
+}
+.margin-8px {
+  margin: 8px !important;
+}
+.margin-10px {
+  margin: 10px !important;
+}
+.stretch-row {
+  margin-right: -8px !important;
+  margin-left: -8px !important;
 }
 @-ms-viewport {
   width: device-width;

@@ -337,12 +337,14 @@ goorm.core.search = {
 			var project_root = this.convert_data_to_tree(data);
 
 			var on_dblclick = function (e, node) {
-				var filename = node.li_attr.filename;
-				var filetype = node.li_attr.filetype;
-				var filepath = node.li_attr.filepath;
-				var matched_line = node.li_attr.matched_line;
+				if (node.li_attr) {
+					var filename = node.li_attr.filename;
+					var filetype = node.li_attr.filetype;
+					var filepath = node.li_attr.filepath;
+					var matched_line = node.li_attr.matched_line;
 
-				search(filename, filetype, filepath, matched_line);
+					search(filename, filetype, filepath, matched_line);
+				}
 			};
 			
 			if (this.treeview) self.treeview.destroy();

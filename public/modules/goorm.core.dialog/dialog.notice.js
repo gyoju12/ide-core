@@ -14,7 +14,7 @@ goorm.core.dialog.notice = function() {
 	// this.path = null;
 	// this.title = null;
 	this.message = null;
-	this.image_url = null;
+	this.icon = null;
 	// this.type = null;
 	// this.left = null;
 	// this.top = null;
@@ -30,7 +30,7 @@ goorm.core.dialog.notice.prototype = {
 		this.panel = $('#dlg_notice');
 
 		// this.title = "Alert";
-		this.image_url = "images/goorm.core.dialog/dialog_notice.png";
+		this.icon = "<i class=\"fa fa-bullhorn fa-3x\"></i>";
 		this.panel.find(".modal-footer button:last-child").last().click(function() {
 			self.panel.modal('hide');
 		});
@@ -81,22 +81,22 @@ goorm.core.dialog.notice.prototype = {
 
 	},
 
-	show: function(message, option_image_url, no_image) {
+	show: function(message, option_icon, no_image) {
 		var filtered_msg = message || '';
 		filtered_msg = core.module.bookmark.filtering(filtered_msg.replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
 
 		this.message = filtered_msg;
 		//this.title="Notice";
 		var panelContainer_bd = this.panel.find("#notice_content_container");
-		panelContainer_bd.empty().append("<div class='notice_content_div col-md-9'>" + this.message + "</div>");
+		panelContainer_bd.empty().append("<div class='notice_content_div col-md-10'>" + this.message + "</div>");
 
 		if (!no_image) {
 			panelContainer_bd.css('text-align', 'left');
 
-			if (!option_image_url) {
-				panelContainer_bd.prepend("<div class='notice_image_div col-md-3'><img src='" + this.image_url + "'/></div>");
+			if (!option_icon) {
+				panelContainer_bd.prepend("<div class='notice_image_div col-md-2'>" + this.icon + "</div>");
 			} else {
-				panelContainer_bd.prepend("<div class='notice_image_div col-md-3'><img style='width:80%; height:80%' src='" + option_image_url + "'/></div>");
+				panelContainer_bd.prepend("<div class='notice_image_div col-md-2'><img style='width:80%; height:80%' src='" + option_icon + "'/></div>");
 			}
 		} else {
 			panelContainer_bd.css('text-align', 'center');

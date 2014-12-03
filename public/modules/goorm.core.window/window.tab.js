@@ -52,7 +52,7 @@ goorm.core.window.tab.prototype = {
 
 		//bootstrap start
 		//var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
-		
+
 		// changed to timestamp. not using file path anymore for window id
 		var morphed_title = options.id;
 
@@ -63,7 +63,7 @@ goorm.core.window.tab.prototype = {
 			core.status.current_opened_list[this.filename] = 1;
 		} else {
 			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + this.title + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name		
-			core.status.current_opened_list[this.filename]++;
+			core.status.current_opened_list[this.filename] ++;
 		}
 
 
@@ -235,6 +235,8 @@ goorm.core.window.tab.prototype = {
 
 	set_modified: function() {
 		if (this.saved) { // jeongmin: it is saved by panel, so don't modify
+			this.saved = false; // jeongmin: initialize
+
 			return;
 		}
 

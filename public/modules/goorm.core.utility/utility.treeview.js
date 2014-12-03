@@ -36,6 +36,8 @@ goorm.core.utility.treeview.prototype = {
 			on_select: null,
 			on_click: null,
 			on_mousedown: null,
+			on_mouseover: null,
+			on_mouseleave: null,
 			on_open: null,
 			on_ready: null,
 			on_dblclick: null,
@@ -133,6 +135,20 @@ goorm.core.utility.treeview.prototype = {
 					_this.options.on_mousedown(e, node);
 				} else {
 					_this.tree.jstree("select_node", node);
+				}
+			}
+		}).on('mouseover.jstree', function (e) {
+			var node = _this.tree.jstree("get_node", $(e.target));
+			if (node.id !== "#") {
+				if (typeof _this.options.on_mouseover === "function") {
+					_this.options.on_mouseover(e, node);
+				}
+			}
+		}).on('mouseleave.jstree', function (e) {
+			var node = _this.tree.jstree("get_node", $(e.target));
+			if (node.id !== "#") {
+				if (typeof _this.options.on_mouseleave === "function") {
+					_this.options.on_mouseleave(e, node);
 				}
 			}
 		});

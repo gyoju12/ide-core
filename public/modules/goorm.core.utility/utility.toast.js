@@ -55,7 +55,7 @@ goorm.core.utility.toast = {
 
 		if(!str) str = "";
 
-		this.panel.find('.modal-body').html(str);
+		this.panel.find('.modal-body .row').html(str);
 		this.panel.modal('show');
 
 		if (duration !== undefined && typeof (duration) == "number") {

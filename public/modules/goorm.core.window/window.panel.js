@@ -385,7 +385,7 @@ goorm.core.window.panel.prototype = {
 				height: this.height,
 				position: [this.left, this.top],
 				focus: function() {
-					if (options.activated) { // jeongmin: only if this window was activated
+					if (options.activated !== false) { // jeongmin: only if this window was activated
 						self.activate();
 					}
 				},
@@ -671,73 +671,29 @@ goorm.core.window.panel.prototype = {
 		set_modified: function(data) {
 			var self = this;
 			var titlebar = this.panel.dialog("option", "title");
-			
-			// when all modified undo, remove '*'
-			if (this.editor) {
-				if (data) { // jeongmin: undo and redo event are occurred, so set history
-					if (data.undo) { // jeongmin: undo occurs
-						
-						
-						this.history_edit.redo++; // jeongmin: now, can redo
-						this.history_edit.undone += 2;
 
-						if (this.history_edit.undo != 0) { // jeongmin: prevent to be minus
-							this.history_edit.undo--;
-						}
-						
-					} else { // jeongmin: redo occurs
-						if (this.history_edit.redo != 0) { // jeongmin: prevent to be minus
-							this.history_edit.redo--;
-						}
-
-						if (this.history_edit.undone != 0) { // jeongmin: prevent to be minus
-							this.history_edit.undone--;
-						}
-
-						this.history_edit.undo++; // jeongmin: now, can undo
-					}
-				} else { // jeongmin: just modified
-					this.history_edit.undo++;
-					this.history_edit.redo = 0;
-					this.history_edit.undone = 0;
-				}
-
-				var menu_undo = $(".menu-undo[action=do_undo]").parent();
-				var menu_redo = $(".menu-redo[action=do_redo]").parent();
-				var button_redo = $("button[action=do_redo]");
-				var button_undo = $("button[action=do_undo]");
-
-				if (this.history_edit.redo > 0) {
-					menu_redo.removeClass('disabled');
-					button_redo.removeClass('disabled');
-				} else if (this.history_edit.redo <= 0) {
-					menu_redo.addClass('disabled');
-					button_redo.addClass('disabled');
-				}
-
-				if (this.history_edit.undo > 0) {
-					menu_undo.removeClass('disabled');
-					button_undo.removeClass('disabled');
-				} else if (this.history_edit.undo <= 0) {
-					menu_undo.addClass('disabled');
-					button_undo.addClass('disabled');
-				}
-
-				//console.log(this.undo_depth, this.history_edit.undo);
-				if (this.undo_depth != null && this.history_edit.undo === this.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
-					if (this.history_edit.redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
-						this.set_saved();
-						this.tab.set_saved();
-						this.tab.saved = true; // jeongmin: let tab know saved
-						return;
-					} else if (this.history_edit.undone != 0) { // jeongmin: modified by redo -> undone array is not 0 because if redo is possible, there is undone text
-						this.set_saved();
-						this.tab.set_saved();
-						this.tab.saved = true; // jeongmin: let tab know saved
-						return;
+			// undo/redo makes window saved, and it is done by codemirror's original edit history. Jeong-Min Im.
+			function set_saved_by_original_cm(editor) { // editor: codemirror
+				// when all modified undo, remove '*'
+				if (self.undo_depth != null && editor.doc.historySize().undo === self.undo_depth) { // jeongmin: add undo_depth valid check. If undo_depth is null, no saved status to go back.
+					if (editor.doc.historySize().redo != 0) { // jeongmin: add 'redo != 0' for knowing whether modified by undo or not
+						self.set_saved();
+						return true;
+					} else if (editor.doc.history.undone.length != 0) { // jeongmin: modified by redo -> undone array is not 0 because if redo is possible, there is undone text
+						self.set_saved();
+						return true;
 					} else
-						this.undo_depth = null; // jeongmin: if not in above any conditions, modified by new text -> undo_depth must be initialized. It means saved status no longer exists.
+						self.undo_depth = null; // jeongmin: if not in above any conditions, modified by new text -> undo_depth must be initialized. It means saved status no longer exists.
 				}
+			}
+
+			if (this.editor) {
+				
+				
+				if (set_saved_by_original_cm(this.editor.editor)) return;
+				
+			} else if (this.merge) { // jeongmin: use codemirror's original edit history
+				if (set_saved_by_original_cm(this.merge.edit)) return;
 			}
 
 			this.panel.dialog("option", "title", titlebar);
@@ -747,7 +703,6 @@ goorm.core.window.panel.prototype = {
 
 			this.is_saved = false;
 		},
-
 		set_saved: function() {
 			var self = this;
 			var titlebar = null;
@@ -1032,25 +987,6 @@ goorm.core.window.panel.prototype = {
 
 				if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
 					core.module.layout.outline.clear();
-				}
-
-				if (this.type == 'Editor') { //editor undo/redo fix --heeje
-					var stack = this.editor.collaboration.getStack();
-					if (stack.undo > 0) {
-						$("a[action=do_undo]").parent().removeClass("disabled");
-						$("button[action=do_undo]").removeClass("disabled");
-					} else {
-						$("a[action=do_undo]").parent().addClass("disabled");
-						$("button[action=do_undo]").addClass("disabled");
-					}
-
-					if (stack.redo > 0) {
-						$("a[action=do_redo]").parent().removeClass("disabled");
-						$("button[action=do_redo]").removeClass("disabled");
-					} else {
-						$("a[action=do_redo]").parent().addClass("disabled");
-						$("button[action=do_redo]").addClass("disabled");
-					}
 				}
 			}
 

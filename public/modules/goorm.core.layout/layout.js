@@ -87,20 +87,20 @@ goorm.core.layout = {
 			},
 			onresize: function() {},
 			onresize_end: function() {
-				// Main Toolbar - More Button
-				//				
-				// if (self._f_init_resize) {
-				// 	if (self.more_toolbar_wait_timer) clearTimeout(self.more_toolbar_wait_timer);
-				// 	self.more_toolbar_wait_timer = setTimeout(function() {
-				// 		self._f_init_resize = false;
-				// 		self.set_more_toolbar();
-				// 	}, self.more_toolbar_option.resize_timer + 400);
-				// } else {
-				self.set_more_toolbar();
-				// }
-			}
-			// onresize_end: function () {
-			// 	console.log('end');
+					// Main Toolbar - More Button
+					//				
+					// if (self._f_init_resize) {
+					// 	if (self.more_toolbar_wait_timer) clearTimeout(self.more_toolbar_wait_timer);
+					// 	self.more_toolbar_wait_timer = setTimeout(function() {
+					// 		self._f_init_resize = false;
+					// 		self.set_more_toolbar();
+					// 	}, self.more_toolbar_option.resize_timer + 400);
+					// } else {
+					self.set_more_toolbar();
+					// }
+				}
+				// onresize_end: function () {
+				// 	console.log('end');
 
 			// 	self.resize_all();
 
@@ -224,7 +224,7 @@ goorm.core.layout = {
 			$(core).trigger('contextmenu_all_hide');
 		});
 		
-		// when mainmenu dropdown, hover can open dropdown menu
+			// when mainmenu dropdown, hover can open dropdown menu
 		$('#goorm-mainmenu .dropdown').hover(function(e) {
 			menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
 			if (menu_shown) {
@@ -259,18 +259,18 @@ goorm.core.layout = {
 						$last_child_menu = $('#' + child);
 
 						$('#' + child).appendTo('#submenu_container')
-						// .addClass('active_menu')
-						.css({
-							'position': 'fixed',
-							'top': offset.top + 'px',
-							'left': (offset.left + $parent.outerWidth()) + 'px'
-						}) // move to external container
-						.on('force_hide', function() {
-							var parent = $(this).attr('parent');
-							var $local_parent = $('#' + parent).parent();
+							// .addClass('active_menu')
+							.css({
+								'position': 'fixed',
+								'top': offset.top + 'px',
+								'left': (offset.left + $parent.outerWidth()) + 'px'
+							}) // move to external container
+							.on('force_hide', function() {
+								var parent = $(this).attr('parent');
+								var $local_parent = $('#' + parent).parent();
 
-							$(this).appendTo($local_parent).hide();
-						})
+								$(this).appendTo($local_parent).hide();
+							})
 							.hover(function() {
 								is_hover = true;
 								clearTimeout(hover_timer);
@@ -331,7 +331,8 @@ goorm.core.layout = {
 		$(".ui-layout-resizer-south .ui-layout-toggler").hover(
 			function() {
 				$(".ui-layout-resizer-east").addClass("ui-layout-resizer-temp");
-			}, function() {
+			},
+			function() {
 				$(".ui-layout-resizer-east").removeClass("ui-layout-resizer-temp");
 			});
 
@@ -339,7 +340,8 @@ goorm.core.layout = {
 		$("#chat_all .list-group").hover(
 			function() {
 				$(".ui-layout-resizer-east").addClass("ui-layout-resizer-temp");
-			}, function() {
+			},
+			function() {
 				$(".ui-layout-resizer-east").removeClass("ui-layout-resizer-temp");
 			});
 		
@@ -447,6 +449,47 @@ goorm.core.layout = {
 			} else {
 				// from close layout to completely north layout
 				self.north_layout_toggle(3);
+			}
+		});
+
+		// edit menu is clicked -> check undo/redo menu. Jeong-Min Im.
+		$('#main-menu-edit').mousedown(function() {
+			var menu_undo = $("[action=do_undo]").parent();
+			var menu_redo = $("[action=do_redo]").parent();
+
+			// initialize
+			menu_undo.addClass('disabled');
+			menu_redo.addClass('disabled');
+
+			var window_manager = core.module.layout.workspace.window_manager;
+
+			// 1. is there any editor?
+			if (window_manager.window.length > 0) {
+				var active_window_obj = window_manager.window[window_manager.active_window];
+
+				// 2. isn't it terminal?
+				var history_edit = null;
+
+				if (active_window_obj.editor) {
+					if (active_window_obj.editor.collaboration) { // jeongmin: use ot_stack
+						history_edit = active_window_obj.history_edit;
+					} else { // jeongmin: use codemirror's original edit history
+						history_edit = active_window_obj.editor.editor.doc.historySize();
+					}
+				} else if (active_window_obj.merge) { // jeongmin: use codemirror's original edit history
+					history_edit = active_window_obj.merge.edit.doc.historySize();
+				}
+
+				if (history_edit) {
+					// 3. can we do undo/redo?
+					if (history_edit.redo > 0) {
+						menu_redo.removeClass('disabled');
+					}
+
+					if (history_edit.undo > 0) {
+						menu_undo.removeClass('disabled');
+					}
+				}
 			}
 		});
 

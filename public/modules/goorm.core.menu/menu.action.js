@@ -381,10 +381,13 @@ goorm.core.menu.action = {
 			}
 
 			var window_manager = core.module.layout.workspace.window_manager;
+			var active_window_obj = window_manager.window[window_manager.active_window];
 
-			if (window_manager.window[window_manager.active_window]) {
-				if (window_manager.window[window_manager.active_window].editor) {
-					window_manager.window[window_manager.active_window].editor.undo();
+			if (active_window_obj) {
+				if (active_window_obj.editor || active_window_obj.merge) {
+					var editor = active_window_obj.editor ? active_window_obj.editor : active_window_obj.merge.edit;
+
+					editor.undo();
 					//window_manager.window[window_manager.active_window].set_modified();
 					$(core).trigger('undo_redo_pressed', { // make event --heeje
 						undo: true,
@@ -401,10 +404,13 @@ goorm.core.menu.action = {
 			}
 
 			var window_manager = core.module.layout.workspace.window_manager;
+			var active_window_obj = window_manager.window[window_manager.active_window];
 
-			if (window_manager.window[window_manager.active_window]) {
-				if (window_manager.window[window_manager.active_window].editor) {
-					window_manager.window[window_manager.active_window].editor.redo();
+			if (active_window_obj) {
+				if (active_window_obj.editor || active_window_obj.merge) {
+					var editor = active_window_obj.editor ? active_window_obj.editor : active_window_obj.merge.edit;
+
+					editor.redo();
 					$(core).trigger('undo_redo_pressed', { // make event --heeje
 						undo: false,
 						redo: true

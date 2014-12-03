@@ -987,7 +987,7 @@ goorm.core.edit.prototype = {
                     } catch (e) {}
                 }
 
-                if (options.activated) { // jeongmin: only if this window was activated
+                if (options.activated !== false) { // jeongmin: only if this window was activated
                     self.on_activated();
                 }
 
