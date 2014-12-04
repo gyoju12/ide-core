@@ -66,12 +66,9 @@ goorm.core.project._delete = {
 									wm.close_by_index(i, i);
 								}
 							}
-
-							$("#goorm_main_toolbar .debug_continue, #goorm_main_toolbar .debug_terminate, #goorm_main_toolbar .debug_step_over, #goorm_main_toolbar .debug_step_in, #goorm_main_toolbar .debug_step_out").addClass('debug_not_active');
-							$("#goorm_main_toolbar .debug").removeClass("debug_not_active");
-							$("#Debug .menu-debug-continue, #Debug .menu-debug-terminate, #Debug .menu-debug-step-over, #Debug .menu-debug-step-in, #Debug .menu-debug-step-out").addClass('debug_not_active');
-							$("#Debug .menu-debug-start").removeClass('debug_not_active');
-
+							
+							core.module.debug.button_inactive();
+							
 							notice.show(core.module.localization.msg.notice_project_delete_done);
 
 							// project list focusing is needed for enable key event. Jeong-Min Im.
@@ -237,10 +234,7 @@ goorm.core.project._delete = {
 		wm.close_all();
 
 		//etc
-		$("#goorm_main_toolbar .debug_continue, #goorm_main_toolbar .debug_terminate, #goorm_main_toolbar .debug_step_over, #goorm_main_toolbar .debug_step_in, #goorm_main_toolbar .debug_step_out").addClass('debug_not_active');
-		$("#goorm_main_toolbar .debug").removeClass("debug_not_active");
-		$("#Debug .menu-debug-continue, #Debug .menu-debug-terminate, #Debug .menu-debug-step-over, #Debug .menu-debug-step-in, #Debug .menu-debug-step-out").addClass('debug_not_active');
-		$("#Debug .menu-debug-start").removeClass('debug_not_active');
+		core.module.debug.button_inactive();
 
 		//go to project list state
 		if (core.status.current_project_path !== "") {

@@ -15,11 +15,14 @@ goorm.plugin.linter = {
 
 		// make output tab for lint
 		$(core).on('on_project_open', function() {
-			core.module.layout.tab_manager.make_output_tab(plugin_name);
+			if (core.status.current_project_type === plugin_name) { // jeongmin: this event is handled by all plugins. But, function should be called only once by current project type
+				core.module.layout.tab_manager.del_by_tab_name('south', 'output'); // jeongmin: delete current output tab no matter what plugin's output tab is
+				core.module.layout.tab_manager.make_output_tab(plugin_name);
+			}
 		});
 	},
 
-	lint: function (__window, callback) {
+	lint: function(__window, callback) {
 		var window_manager = core.module.layout.workspace.window_manager;
 		var result = null;
 		if (window_manager.window.indexOf(__window) > -1 && __window.editor && __window.editor.editor.getValue() !== "") {
@@ -42,12 +45,12 @@ goorm.plugin.linter = {
 		}
 	},
 
-	lint_parse: function (__window, lint_result) {
+	lint_parse: function(__window, lint_result) {
 		var self = this;
 		var error_data, output_data;
 		var error_manager = __window.editor.error_manager;
 		// var output_manager = core.module.layout.tab_manager.output_manager;
-		
+
 		// init error message in editor & output tab
 		error_manager.clear();
 		// output_manager.clear();
@@ -85,15 +88,15 @@ goorm.plugin.linter = {
 
 	// to provide linter function in C, C++, Java
 	// after build in background terminal, parsing result.
-	__lint: function (__window) {
+	__lint: function(__window) {
 		var self = this;
 
 		var active_file_type = __window.filetype;
 		var check_flag = (active_file_type === 'c' || active_file_type === 'cpp' || active_file_type === 'java');
-		if(!check_flag) {
+		if (!check_flag) {
 			return false;
 		}
-		
+
 		if (__window.project === core.status.current_project_path) {
 			var project_type = core.status.current_project_type;
 			if (project_type === "cpp" || project_type === "c_examples" || project_type === "java" || project_type === "java_examples") {
@@ -108,7 +111,7 @@ goorm.plugin.linter = {
 				};
 				var cmd = "";
 				if (project_type === "cpp" || project_type === "c_examples") {
-					if(compiler_type === 'clang' || compiler_type === 'clang++') {
+					if (compiler_type === 'clang' || compiler_type === 'clang++') {
 						build_options += ' -fno-color-diagnostics';
 					}
 					cmd = project_path + "/make " + compiler_type + path.source_path + path.build_path + path.main + build_options;
@@ -116,7 +119,7 @@ goorm.plugin.linter = {
 					path.main += ".class";
 					cmd = project_path + "/make " + path.source_path + path.build_path + build_options;
 				}
-				core.module.project.background_build(cmd, function (result) {
+				core.module.project.background_build(cmd, function(result) {
 					if (result) {
 						var build_success = (result.indexOf("Build Complete") > -1) ? true : false;
 						var window_manager = core.module.layout.workspace.window_manager;
@@ -124,7 +127,7 @@ goorm.plugin.linter = {
 
 						window_manager.all_clear();
 						output_manager.clear();
-						
+
 						if (!build_success) {
 
 							self.__lint_parse(result, project_type);
@@ -134,10 +137,10 @@ goorm.plugin.linter = {
 				});
 			}
 		}
-	
+
 	},
 
-	__lint_parse: function (result, type) {
+	__lint_parse: function(result, type) {
 
 		core.module.layout.project_explorer.refresh();
 
@@ -152,7 +155,7 @@ goorm.plugin.linter = {
 		om.clear();
 		wm.all_clear();
 
-		var parsing = function (data) {
+		var parsing = function(data) {
 			var data_path = data.file || "";
 			data_path = data_path.split('/');
 			var filename = data_path.pop();
@@ -179,8 +182,8 @@ goorm.plugin.linter = {
 				e_m.add_line(error_data);
 				if (i == 0) e_m.error_message_box.add(e.target);
 				e_m.init_event();
-			}  
-			
+			}
+
 			data.content = error_message;
 			om.push(data);
 		}

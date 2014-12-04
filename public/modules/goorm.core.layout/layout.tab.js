@@ -106,32 +106,53 @@ goorm.core.layout.tab = {
 			var regex = null;
 			if (type === "cpp" || type === "c_examples" || type === "java" || type === "java_examples") {
 				data = [];
-				regex = /(.*)\/([^:]*):(\d+):(\d+)?:?/;
+				regex = /(.*)\/([^:]*):(\d+):(\d+)?:?(.*)/; // jeongmin: add (.*) -> contents
 
 				// Cut Build Fail
 				//
 				raw = raw.substring(0, raw.indexOf('Build Fail'));
-				raw = raw.split(' ');
+				raw = raw.split('\n');
+				// raw = raw.split(' ');
 
 				var find_error = function(i, m) {
 					if (/:(\d+):/.test(m)) return true;
 					else return false;
 				};
 
-				var get_content = function(i) {
-					var m = "";
+				var get_content = function(i, msg) { // msg: start of error contents
+					// 1. extract only contents
+					var m = msg.replace(/\s?\w* error: /, ''); // jeongraw[i]in: not only ' error: ', but also ' fatal error: '
+					var before_add = m; // jeongmin: for reverting added string
 
+					// 2. check any other error contents is there
 					for (var j = i + 1; j < raw.length; j++) {
-						m += ' ' + raw[j];
+						if (find_error(j, raw[j])) { // jeongmin: next error -> Should be ended now
+							break;
+						} else if (raw[j].indexOf('^') > -1) { // jeongmin: error position -> No need to include to contents
+							m = before_add; // jeongmin: before error position, there is error code. We don't need to include error code to contents. So revert contents.
 
-						if (/:(\d+):/.test(raw[j])) {
-							m = m.substring(0, m.indexOf('/'));
-							m = m.replace(/ error: /, '');
-							return m;
+							break;
 						}
+
+						before_add = m;
+						m += ' ' + raw[j];
 					}
 
 					return m;
+
+					// var m = "";
+
+					// for (var j = i + 1; j < raw.length; j++) {
+					// 	m += ' ' + raw[j];
+
+					// 	if (/:(\d+):/.test(raw[j])) {
+					// 		m = m.substring(0, m.indexOf('/'));
+					// 		m = m.replace(/\s?\w* error: /, ''); // jeongmin: not only ' error: ', but also ' fatal error: '
+					// 		return m;
+					// 	}
+					// }
+
+					// return m;
 				};
 
 				for (var i = 0; i < raw.length; i++) {
@@ -144,6 +165,7 @@ goorm.core.layout.tab = {
 						var filepath = "";
 						var temp_path = match[1].split('/');
 						var is_path = false;
+						var msg = match[5]; // jeongmin: start of error contents
 
 						for (var k = 0; k < temp_path.length; k++) {
 							if (temp_path[k] && temp_path[k] == core.status.current_project_path) is_path = true;
@@ -153,7 +175,7 @@ goorm.core.layout.tab = {
 							filepath += temp_path[k] + '/';
 						}
 
-						var content = get_content(i);
+						var content = get_content(i, msg);
 
 						data.push({
 							'file': filepath + filename,
@@ -195,7 +217,7 @@ goorm.core.layout.tab = {
 			var $tab = $(o);
 			var position = $tab.attr('position');
 
-			var key = self.tab_key[position] + self.tab_index[position]++;
+			var key = self.tab_key[position] + self.tab_index[position] ++;
 
 			$tab.find('.helptext').html(key);
 		});
@@ -302,6 +324,30 @@ goorm.core.layout.tab = {
 		}
 	},
 
+	// delete 'tab_name' tabs. Jeong-Min Im.
+	// position: east, west, south, north
+	// tab_name: debug, terminal, search, output ... (localization_key)
+	del_by_tab_name: function(position, tab_name) {
+		var tab_nav = $('#' + position + '_tab').find('[localization_key=' + tab_name + ']');
+
+		if (tab_nav.length > 0) {
+			var tab_id = tab_nav.attr('id');
+			var tab_content_id = tab_nav.attr('href').split('#').pop();
+
+			this.del(position, {
+				'tab': {
+					'id': tab_id
+				},
+				'tab_content': {
+					'id': tab_content_id
+				},
+				'tutorial': {
+					'step_name': tab_name + '_step'
+				}
+			});
+		}
+	},
+
 	queue: function(position, data) {
 		var self = this;
 
@@ -327,7 +373,7 @@ goorm.core.layout.tab = {
 		var action = 'toggle_' + position + '_' + tab.id;
 
 		// var key = ((os === 'mac') ? this.tab_key[position].replace(/Ctrl/g, 'meta') : this.tab_key[position]) + this.tab_index[position]++;
-		var key = this.tab_key[position] + this.tab_index[position]++;	// jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
+		var key = this.tab_key[position] + this.tab_index[position] ++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
 		var html_key = (os === 'mac') ? sm.replace_hotkey(key).replace(/ /g, '') : key;
 		var content = (core.module.localization) ? core.module.localization.msg[tab.localization.menu] : tab.content;
 
@@ -378,7 +424,7 @@ goorm.core.layout.tab = {
 			//
 			$('.' + action).off('click');
 
-			this.tab_index[position]--;
+			this.tab_index[position] --;
 		}
 	},
 
@@ -393,64 +439,64 @@ goorm.core.layout.tab = {
 		// goorm.plugin[plugin_name].add_menu_action();
 
 		////// remove output tab if exists //////
-		if ($('#' + tab_id).length !== 0)
-			this.del('south', {
-				'tab': {
-					'id': tab_id
-				},
-				'tab_content': {
-					'id': tab_content_id
-				},
-				'tutorial': {
-					'step_name': 'output_step'
-				}
-			});
+		// if ($('#' + tab_id).length !== 0)	// hidden by jeongmin: tab deletion is done before this function call
+		// 	this.del('south', {
+		// 		'tab': {
+		// 			'id': tab_id
+		// 		},
+		// 		'tab_content': {
+		// 			'id': tab_content_id
+		// 		},
+		// 		'tutorial': {
+		// 			'step_name': 'output_step'
+		// 		}
+		// 	});
 
-		if (core.status.current_project_type === plugin_name) {
-			// Make Output Tab
-			//	
-			this.add('south', {
-				'tab': {
-					'id': tab_id,
-					'content': 'Output'
-				},
-				'tab_content': {
-					'id': tab_content_id,
-					'content': ''
-				},
-				fn: function(e) {
-					core.module.layout.select(tab_id);
-
-					e.stopPropagation();
-					e.preventDefault();
-					return false;
-				},
-				'tutorial': {
-					'step_name': 'output_step',
-					'name': 'basic',
-					'plugin': plugin_name,
-					'element_id': 'goorm_inner_layout_bottom',
-					'step': {
-						element: '#goorm_inner_layout_bottom',
-						title: "",
-						content: core.module.localization.msg.tutorial_output_tab,
-						placement: 'top',
-						onShow: function(tour) {
-							$('#south_tab #' + tab_id).tab('show');
-						}
-					}
-				},
-				'localization': { // jeongmin; add localization
-					'tab': 'output',
-					'menu': 'window_bottom_layout_output'
-				}
-			});
-
-			this.output_manager.init(tab_content_id);
-
-			if ($('#south_tab .active>a[data-toggle=tab]').attr('localization_key') == 'output' || $('#goorm_inner_layout_bottom>.tab-content .active').length <= 0)
+		// if (core.status.current_project_type === plugin_name) {	// hidden by jeongmin: this is decided on project open
+		// Make Output Tab
+		//	
+		this.add('south', {
+			'tab': {
+				'id': tab_id,
+				'content': 'Output'
+			},
+			'tab_content': {
+				'id': tab_content_id,
+				'content': ''
+			},
+			fn: function(e) {
 				core.module.layout.select(tab_id);
-		}
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			},
+			'tutorial': {
+				'step_name': 'output_step',
+				'name': 'basic',
+				'plugin': plugin_name,
+				'element_id': 'goorm_inner_layout_bottom',
+				'step': {
+					element: '#goorm_inner_layout_bottom',
+					title: "",
+					content: core.module.localization.msg.tutorial_output_tab,
+					placement: 'top',
+					onShow: function(tour) {
+						$('#south_tab #' + tab_id).tab('show');
+					}
+				}
+			},
+			'localization': { // jeongmin; add localization
+				'tab': 'output',
+				'menu': 'window_bottom_layout_output'
+			}
+		});
+
+		this.output_manager.init(tab_content_id);
+
+		if ($('#south_tab .active>a[data-toggle=tab]').attr('localization_key') == 'output' || $('#goorm_inner_layout_bottom>.tab-content .active').length <= 0)
+			core.module.layout.select(tab_id);
+		// }
 
 	},
 

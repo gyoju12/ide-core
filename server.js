@@ -19,7 +19,6 @@ var express = require('express'),
 	socketio = require('socket.io'),
 	http = require('http'),
 	colors = require('colors'),
-	
 	redis = require('socket.io/node_modules/redis'),
 	connect = require('express/node_modules/connect'),
 	cookie = require('express/node_modules/connect/node_modules/cookie');
@@ -269,8 +268,6 @@ goorm.config = function() {
 
 		
 
-		
-
 
 		//goorm.use(express.logger('dev'));
 
@@ -504,6 +501,7 @@ goorm.routing = function() {
 	
 	goorm.post('/edit/save_tags', goorm.check_session, routes.edit.save_tags);
 	goorm.get('/edit/load_tags', goorm.check_session, routes.edit.load_tags);
+	
 	
 	
 }
