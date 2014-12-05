@@ -27,7 +27,7 @@ goorm.core.debug.prototype = {
 
 		this.init_css();
 		this.button_inactive();
-
+		
 		//left
 		$('#debug_left').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered" id="debug_left_table" ></table>');
 		this.table_thread = $('#debug_left_table').dataTable({
@@ -342,8 +342,8 @@ goorm.core.debug.prototype = {
 		
 		debug_state_btn1.removeClass('debug_not_active');
 		none_debug_state_btn1.addClass('debug_not_active');
-		debug_state_btn2.removeClass('debug_not_active');
-		none_debug_state_btn2.addClass('debug_not_active');
+		debug_state_btn2.parent().removeClass('disabled');
+		none_debug_state_btn2.parent().addClass('disabled');
 
 		debug_state_btn1.parent().parent().removeAttr("isdisabled");
 		none_debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
@@ -359,8 +359,8 @@ goorm.core.debug.prototype = {
 
 		debug_state_btn1.addClass('debug_not_active');
 		none_debug_state_btn1.removeClass('debug_not_active');
-		debug_state_btn2.addClass('debug_not_active');
-		none_debug_state_btn2.removeClass('debug_not_active');
+		debug_state_btn2.parent().addClass('disabled');
+		none_debug_state_btn2.parent().removeClass('disabled');
 
 		debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
 		none_debug_state_btn1.parent().parent().removeAttr("isdisabled");
@@ -403,7 +403,7 @@ goorm.core.debug.prototype = {
 			ev = {};
 		ev.keyDown = 13;
 
-		value = '<div id="' + id + '" class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
+		value = '<div variable=' + id + ' class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
 
 		if (this.table_variable) {
 			if (variable && value && summary)
@@ -414,9 +414,9 @@ goorm.core.debug.prototype = {
 				]);
 		}
 		var project_type = core.status.current_project_type;
-		if (project_type === 'c_examples' || project_type === 'cpp') {
+		if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java' || project_type === 'java_examples') {
 
-			var edit_box = $('#' + id);
+			var edit_box = $("div[variable='" + id +"']");
 			edit_box.parent().click(function() {
 				var data = edit_box.html();
 				if (edit_box.hasClass('edit_ready')) {
@@ -430,13 +430,13 @@ goorm.core.debug.prototype = {
 			});
 
 			$(document).on('click', function(e) {
-				var edit_box = $('#' + $('.editing').attr("id"));
+				var edit_box = $("div[variable='" + $('.editing').attr("variable") + "']" );
 				if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
 					var data = edit_box.children().val();
 					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("id");
+					sendData.variable = edit_box.attr("variable");
 					sendData.value = data;
 					if (typeof sendData.value != "undefined") {
 						$(core.module.debug).trigger('value_changed', sendData);
@@ -455,7 +455,7 @@ goorm.core.debug.prototype = {
 					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("id");
+					sendData.variable = edit_box.attr("variable");
 					sendData.value = data;
 					if (typeof sendData.value != "undefined") {
 						$(core.module.debug).trigger('value_changed', sendData);
