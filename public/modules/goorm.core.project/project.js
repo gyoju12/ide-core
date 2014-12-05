@@ -98,7 +98,6 @@ goorm.core.project = {
 							});
 						}
 					};
-
 					switch (options.project_type) {
 						case "java":
 						case "java_examples":
@@ -394,32 +393,19 @@ goorm.core.project = {
 
 		this.load_build({
 			'project_path': project_path,
-			'project_type': project_type
+			'project_type': project_type,
+			'check': true
 		}, callback);
 	},
 
 	create: function(options, callback) {
-		// jeongmin: make checkout progress space
-		var loading_bar = $('#dlg_loading_bar');
-		var scm_checkout_progress = $('#scm_checkout_progress');
-
-		// show checkout progress. Jeong-Min Im.
-		var progress_callback = function(data) {
-			scm_checkout_progress.append('<p>' + data + '</p>');
-			scm_checkout_progress.scrollTop(scm_checkout_progress[0].scrollHeight); // scroll to bottom
-		};
-
-		scm_checkout_progress.empty(); // initialize
-		scm_checkout_progress.show();
-
-		loading_bar.find('.progress').hide();
-		loading_bar.find('.modal-dialog').css('width', 400);
+		var copy_progress = core.module.loading_bar.show_progress();
 
 		core.module.loading_bar.start({
 			str: core.module.localization.msg.import_sync_to_file_system
 		});
 
-		core._socket.on('/plugin/create/progress', progress_callback);
+		core._socket.on('/plugin/create/progress', copy_progress);
 		core._socket.once('/plugin/create', function(result) {
 			
 

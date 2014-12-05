@@ -356,9 +356,26 @@ goorm.plugin.java = {
 		}
 
 		$(debug_module).off("value_changed");
-		// $(debug_module).on("value_changed",function(e, data){
-		// 	self.terminal.send_command("set "+data.variable+"="+data.value+"\r", self.prompt);
-		// });
+		$(debug_module).on("value_changed",function(e, data){
+			var debug_module = core.module.debug;
+			var debug_terminal = debug_module.debug_terminal;
+			core.module.terminal.terminal.focus();
+			
+			var command = "set "+data.variable+"="+data.value+'\r';
+
+			debug_terminal.send_command(command, debug_module.debug_prompt, function (result){
+				var start = result.indexOf(command) + command.length;
+				var end = result.indexOf(data.variable + "=" + data.value + " = ", start)
+				var exception = result.indexOf("com.sun.tools.example.debug.expr.ParseException:", start);
+				if (exception !== -1){
+					alert.show(result.substring(exception + 49, end));
+					$("div[variable='"+data.variable+"']").text(data.value);
+				}else{
+					end += command.length -2;
+					$("div[variable='"+data.variable+"']").text( result.substring(end, result.indexOf('\r', end)));
+				}
+			});
+		});
 
 		// off is not working - deleted -- heeje
 		//$(debug_module).off("debug_end");
@@ -537,7 +554,6 @@ goorm.plugin.java = {
 			var len;
 			var variable = line.split(' = ');
 			var summary = line.split('.');
-
 			if (summary.length != 1) {
 				summary = summary[summary.length - 1];
 				if (summary) {
@@ -545,7 +561,6 @@ goorm.plugin.java = {
 				}
 
 			} else {
-
 				if (/instance of/.test(summary[0])) {
 					summary = summary[0].slice(15, summary[0].length);
 					summary = summary.slice(0, summary.indexOf('('));
@@ -555,12 +570,11 @@ goorm.plugin.java = {
 			}
 
 			if (variable.length == 2) {
-				if (summary != " ") {
-					self.add_row(
-						variable[0].trim(),
-						variable[1].trim(),
-						" "
-					);
+				self.add_row(
+					variable[0].trim(),
+					variable[1].trim(),
+					summary
+				);
 					// self.add_row(
 					// 	"<img class='debug_plus' src='/images/goorm.core.layout/small_plus.jpg'></img>"+"<div class='expand_row' num = '1' type='"+summary+"' group='"+group+"' show='"+false+"'>"+ variable[0].trim()+"</div>",
 					// 	variable[1].trim(),
@@ -568,13 +582,6 @@ goorm.plugin.java = {
 					// );
 
 					// group++;
-				} else {
-					self.add_row(
-						variable[0].trim(),
-						variable[1].trim(),
-						summary
-					);
-				}
 
 			}
 		});
@@ -583,6 +590,7 @@ goorm.plugin.java = {
 	},
 
 	add_row: function(variable, value, summary) {
+		variable = "<div class='expand_row' type='"+summary+"' num = '1' key='"+variable+"' show='"+false+"'>"+variable+"</div>";
 		core.module.debug.add_data_table(variable, value, summary);
 		// if (variable && value && summary) {
 		// 	core.module.debug.table_variable.fnAddData([

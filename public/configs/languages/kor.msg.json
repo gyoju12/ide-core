@@ -216,7 +216,7 @@
         "value": "No"
     },
     "confirmation_logout_save": {
-	"value": "저장 후 로그아웃"
+        "value": "저장 후 로그아웃"
     },
     "confirmation_logout": {
         "value": "로그아웃"
@@ -554,7 +554,7 @@
         "value": "파일을 올리시겠습니까?"
     },
     "alert_file_cannot_delete": {
-	"value": "파일을 삭제할 수 없습니다."
+        "value": "파일을 삭제할 수 없습니다."
     },
     "alert_file_not_defined": {
         "value": "파일을 선택하여 주세요."
@@ -1115,7 +1115,7 @@
         "value": " 은 오직 파일을 위한 명령입니다."
     },
     "alert_only_for_folder": {
-	"value": " 은 오직 폴더를 위한 명령입니다."
+        "value": " 은 오직 폴더를 위한 명령입니다."
     },
     "alert_auth_fail": {
         "value": "인증에 실패했습니다."
@@ -1367,7 +1367,7 @@
         "value": "유효하지 않은 tar 파일입니다."
     },
     "alert_invalid_project_file": {
-	"value": "유효하지 않는 프로젝트 파일입니다."
+        "value": "유효하지 않는 프로젝트 파일입니다."
     },
     "scm_check_repository": {
         "value": "SCM 저장소 Test를 먼저 수행해주시기 바랍니다."
@@ -1503,5 +1503,11 @@
     },
     "confirmation_reload_window": {
         "value": "파일의 내용이 갱신되었습니다. 파일을 다시 로딩하시겠습니까?<br/>(수정되었던 내용은 사라질 수 있습니다.)<br/>"
+    },
+    "update_in_progress": {
+        "value": "업데이트 진행중..."
+    },
+    "in_progress": {
+        "value": " 진행중..."
     }
 }

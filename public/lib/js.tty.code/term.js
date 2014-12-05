@@ -374,6 +374,12 @@ Terminal.prototype.bindKeys = function(element) {
   
   
   parent.keydown(function(ev){
+
+    if(core.status.focus_obj.terminal_name == "debug" && ev.keyCode >= 117 && ev.keyCode <= 120){
+        $(document).trigger('keydown', ev);
+        return;
+    }
+
     if(core.module.layout.terminal.Terminal.ybase!=core.module.layout.terminal.Terminal.ydisp){
       core.module.layout.terminal.Terminal.scrollDisp(10000);
     }

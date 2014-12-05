@@ -345,6 +345,7 @@ goorm.set_expires_date = function(req, res, next) {
 goorm.routing = function() {
 	var routes = require('./routes');
 	var g_auth_m = require("./modules/goorm.core.auth/auth.manager"); // jeongmin: for update_session
+	var g_port_manager = require("./modules/goorm.core.utility/utility.port_manager");
 
 	
 

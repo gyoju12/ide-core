@@ -44,7 +44,7 @@ goorm.core.terminal.prototype = {
 		this.timestamp = (new Date()).getTime();
 		this.preference = core.preference;
 
-		this.resize = $.throttle(self._resize, 100);
+		this.resize = $.debounce(self._resize, 100);
 
 		$("#terminal_dummy").append("<span id='" + self.dummy + "'></span>");
 
@@ -139,7 +139,7 @@ goorm.core.terminal.prototype = {
 				}
 			});
 
-			$(document).on(self.terminal_name + "_closed", function() {
+			$(document).one(self.terminal_name + "_closed", function() {
 				var msg = {
 					index: self.index,
 					workspace: core.status.current_project_path,
@@ -588,7 +588,6 @@ goorm.core.terminal.prototype = {
 
 		var prompt = null;
 		var no_write = false;
-
 		// remove second parameter 'options' null
 		if (options) {
 			if (typeof(options) === "function") {
@@ -632,6 +631,7 @@ goorm.core.terminal.prototype = {
 
 	flush_command_queue: function() {
 		this.command_queue = [];
+		this.command_ready = true;
 	},
 
 	work_queue: function(stdout) {
@@ -646,8 +646,12 @@ goorm.core.terminal.prototype = {
 			return;
 		}
 
-		if (this.running_queue) return;
-		else this.running_queue = true;
+		if (this.running_queue) {
+			return;
+		}
+		else {
+			this.running_queue = true;
+		}
 
 		var prompt = this.command_queue[0].prompt;
 		if (!prompt) prompt = this.default_prompt;

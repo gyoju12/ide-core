@@ -333,10 +333,9 @@ goorm.plugin.nodejs = {
 
 
 		$(debug_module).off("debug_end");
-		$(debug_module).on("debug_end", function() {
+		$(debug_module).one("debug_end", function() {
 			// table_variable.initializeTable();
 			// table_variable.refreshView();
-
 			$.get("/remove_port", {
 				"port": self.debug_port
 			});
@@ -360,7 +359,7 @@ goorm.plugin.nodejs = {
 	/*
 	 * 디버깅 명령어 전송
 	 */
-	debug_cmd: function(options) {
+	debug_cmd: function(options, callback) {
 		/*
 		 * cmd = { mode, project_path }
 		 */
@@ -372,6 +371,7 @@ goorm.plugin.nodejs = {
 		var main = property['plugin.nodejs.main'];
 		var buildPath = " " + property['plugin.nodejs.source_path'];
 		var debug_terminal = core.module.debug.debug_terminal;
+		var debug_module = core.module.debug;
 
 		if (debug_terminal === null) {
 			// console.log("no connection!");
@@ -399,7 +399,7 @@ goorm.plugin.nodejs = {
 						debug_terminal.send_command("\r", /connecting.*ok/);
 						self.set_breakpoints();
 						self.debug_get_status();
-					}, 1000);
+					}, 500);
 				});
 				
 
@@ -414,10 +414,13 @@ goorm.plugin.nodejs = {
 				break;
 				break;
 			case 'terminate':
+				$.get("/remove_port", {
+					"port": self.debug_port
+				});
 				debug_terminal.flush_command_queue();
 				debug_terminal.send_command("quit\r", debug_module.debug_prompt);
 
-				// table_variable.initializeTable();
+				// table_variable.initializeTable(); 
 				// table_variable.refreshView();
 
 				// clear highlight lines
@@ -428,6 +431,10 @@ goorm.plugin.nodejs = {
 						window.editor && window.editor.clear_highlight();
 					}
 				}
+				if(callback){
+					callback();
+				}
+				
 				break;
 			case 'step_over':
 				self.set_breakpoints();

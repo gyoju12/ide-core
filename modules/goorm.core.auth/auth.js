@@ -24,25 +24,34 @@ module.exports = {
 	},
 
 	get_user_data: function(req, callback) {
-		var available_list = this.get_list();
-
 		var session = req.session;
 		var session_id = req.sessionID;
-		var is_ret = true;
+		var force = false;
+
+		if (req.body.secure_session_id || req.query.secure_session_id) {
+			session_id = (req.body.secure_session_id) ? req.body.secure_session_id : ((req.query.secure_session_id) ? req.query.secure_session_id : req.sessionID);
+			force = true;
+		}
 
 		if (global.__redis_mode) {
 			store.client.get(session_id, function(err, data) {
 				if (!err && data) {
 					try { // jeongmin: try catching
 						var redis_session = JSON.parse(data);
-						store.client.get('session_'+IDE_HOST+'_' + redis_session.id, function(err, data) {
-							// compare ID: session ID 
-							if (data === session_id) {
-								callback(redis_session);
-							} else {
-								callback({});
-							}
-						});
+
+						if (!force) {
+							store.client.get('session_'+IDE_HOST+'_' + redis_session.id, function(err, data) {
+								// compare ID: session ID 
+								if (data === session_id) {
+									callback(redis_session);
+								} else {
+									callback({});
+								}
+							});
+						}
+						else {
+							callback(redis_session);
+						}
 					} catch (e) {
 						console.log('get user data error:', e);
 						callback({});

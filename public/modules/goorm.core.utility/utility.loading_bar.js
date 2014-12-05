@@ -17,8 +17,9 @@ goorm.core.utility.loading_bar = {
 
 		this.panel = $('#dlg_loading_bar'); // loading bar dialog
 		this.goorm_progress_bar = $('#goorm_progress_bar'); // progress bar in bottom status bar
+		this.scm_checkout_progress = $('#scm_checkout_progress');
 
-		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+		this.panel.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
 			var $dialog = $(this).find(".modal-dialog");
@@ -151,5 +152,35 @@ goorm.core.utility.loading_bar = {
 	// }
 	change: function(option) {
 		this.show(option);
+	},
+
+	// make checkout progress space. Jeong-Min Im.
+	// return: function(get progress data from server)
+	show_progress: function() {
+		var self = this;
+
+		// show checkout progress. Jeong-Min Im.
+		this.progress_callback = function(data) {
+			self.scm_checkout_progress.append('<p>' + data + '</p>');
+			self.scm_checkout_progress.scrollTop(self.scm_checkout_progress[0].scrollHeight); // scroll to bottom
+		};
+
+		self.scm_checkout_progress.empty(); // initialize
+		self.scm_checkout_progress.show();
+
+		this.panel.find('.progress').hide();
+		this.panel.find('.modal-dialog').css('width', 400);
+
+		return this.progress_callback;
+	},
+
+	// set back to original loading bar. Jeong-Min Im.
+	// url: socket url
+	hide_progress: function(url) {
+		core._socket.removeListener(url, this.progress_callback);
+
+		this.scm_checkout_progress.hide(); // checkout is done
+		this.panel.find('.modal-dialog').css('width', 280); // set back to default
+		this.panel.find('.progress').show();
 	}
 };

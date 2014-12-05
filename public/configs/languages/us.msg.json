@@ -198,7 +198,7 @@
         "value": "언어설정을 한국어로 변경하시겠습니까?"
     },
     "confirmation_logout_save": {
-	"value": "Logout after save"
+        "value": "Logout after save"
     },
     "confirmation_logout": {
         "value": "Logout"
@@ -549,7 +549,7 @@
         "value": "Do you really want to upload the file?"
     },
     "alert_file_cannot_delete": {
-	"value": "Cannot delete file."
+        "value": "Cannot delete file."
     },
     "alert_file_not_defined": {
         "value": "Choose the file you want to upload."
@@ -1116,7 +1116,7 @@
         "value": " is only for files."
     },
     "alert_only_for_folder": {
-	"value": " is only for folders."
+        "value": " is only for folders."
     },
     "alert_auth_fail": {
         "value": "Authentication fails."
@@ -1501,5 +1501,11 @@
     },
     "confirmation_reload_window": {
         "value": "File's content is updated. Do you want to reload these files?<br/>(Modified contents can be gone.)<br/>"
+    },
+    "update_in_progress": {
+        "value": "Update is in progress..."
+    },
+    "in_progress": {
+        "value": " is in progress..."
     }
 }
