@@ -1243,7 +1243,7 @@ goorm.core.menu.action = {
 						// } else {
 						core._socket.once("/file/delete", function(data) {
 							if (data.err_code == 20) {
-								alert.show(localization.alert_file_cannot_delete);
+								alert.show(data.message);
 							}
 
 							// console.log("delete: " + core.status.selected_file);

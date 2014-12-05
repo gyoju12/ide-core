@@ -124,6 +124,8 @@ goorm.core.project.open = {
 				core.module.layout.project.permission[project_path] = result.permission;
 				
 				if(path && result.path == path) {
+					$(core).trigger('/project/mount.'+path);
+
 					if(callback && typeof(callback) == "function") {
 						callback(result);
 					}

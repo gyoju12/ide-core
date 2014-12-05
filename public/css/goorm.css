@@ -923,11 +923,6 @@ div.tooltip {
 #debug_wrapper {
     overflow: hidden;
 }
-/* toast & push message */
-
-#toast {
-    border: 0px;
-}
 /* outline */
 
 #outline {
@@ -3124,11 +3119,9 @@ Retina CSS
 #dlg_alert, #dlg_notice, #dlg_confirmation, #dlg_confirmation_save, #dlg_survey, #dlg_loading_bar, #dlg_toast {
     z-index: 1041;
     word-wrap: break-word;
-    /* jeongmin */
 }
-#dlg_toast .close {
-    position: relative;
-    top: -7px;
+#dlg_toast .modal-body .row {
+	text-align: center;
 }
 .alert_content_div, .notice_content_div {
     text-align: left;
@@ -3892,27 +3885,6 @@ button.toolbar_button_pressed {
 }
 /* SCM Dialogs CSS */
 
-#dlg_scm_commit .content_header, #dlg_scm_resolve .content_header, #dlg_scm_log .content_header, #dlg_scm_update .content_header, #dlg_scm_blame .content_header, #dlg_scm_diff .content_header {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
-    text-align: right;
-}
-#dlg_scm_commit textarea {
-    width: inherit;
-    resize: none;
-}
-/*#dlg_scm_commit table {
-	width: inherit;
-} jeongmin */
-
-#dlg_scm_commit #scm_commit_files {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
-#dlg_scm_log table {
-    width: inherit;
-}
 .dataTables_filter {
     text-align: center;
     padding-top: 5px;
@@ -3920,75 +3892,110 @@ button.toolbar_button_pressed {
 .introjs-helperNumberLayer {
     display: none;
 }
-.col-sm-4 {
-    padding: 0px;
+
+/* jeongmin
+
+#dlg_scm_commit #scm_commit_files {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
-#new_project_scm .panel {
-    /* jeongmin */
-    
+
+#dlg_scm_commit .content_header, #dlg_scm_resolve .content_header, #dlg_scm_log .content_header, #dlg_scm_update .content_header, #dlg_scm_blame .content_header, #dlg_scm_diff .content_header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    text-align: right;
+}
+dlg_scm_commit table {
+	width: inherit;
+}
+#dlg_scm_commit textarea {
+    width: inherit;
+    resize: none;
+}
+#dlg_scm_log table {
+    width: inherit;
+}
+#new_project_scm .panel {    
     -webkit-box-shadow: initial;
-    background-color: transparent;
-    /* #dddddd */
-    
+    background-color: transparent;    
     border: none;
     box-shadow: initial;
 }
-#new_project_scm .panel-heading {
-    /* jeongmin */
-    
+#new_project_scm .panel-heading {    
     background-color: transparent;
 }
-#new_project_scm .panel-title {
-    /* jeongmin */
-    
+#new_project_scm .panel-title {    
     font-size: 12px;
     font-weight: bold;
 }
-#svn_blame_tab .row, #svn_diff_tab .row, #svn_log_tab .row, #git_blame_tab .row, #git_diff_tab .row, #git_log_tab .row {
-    /* jeongmin */
-    
+#svn_blame_tab .row, #svn_diff_tab .row, #svn_log_tab .row, #git_blame_tab .row, #git_diff_tab .row, #git_log_tab .row {    
     margin-top: 0;
 }
-#svn_update_tab .form-control {
-    /* jeongmin */
-    
+#svn_update_tab .form-control {    
     height: 20px;
 }
-#svn_update_tab .form-group {
-    /* jeongmin */
-    
+#svn_update_tab .form-group {    
     margin-bottom: 0px;
 }
-#svn_status_tab .panel-body, #svn_lock_tab .panel-body, #svn_update_tab .panel-body, #svn_resolve_tab .panel-body, #git_status_tab .panel-body, #git_branch_tab .panel-body, #git_tag_tab .panel-body {
-    /* jeongmin */
-    
+#svn_status_tab .panel-body, #svn_lock_tab .panel-body, #svn_update_tab .panel-body, #svn_resolve_tab .panel-body, #git_status_tab .panel-body, #git_branch_tab .panel-body, #git_tag_tab .panel-body {    
     height: 237px;
     overflow: auto;
 }
-#svn_status_tab .panel-body, #svn_lock_tab .panel-body, #git_status_tab .panel-body {
-    /* jeongmin */
-    
+#svn_status_tab .panel-body, #svn_lock_tab .panel-body, #git_status_tab .panel-body {    
     height: 255px;
     overflow: auto;
 }
-#svn_log_tab .panel-body, #git_log_tab .panel-body {
-    /* jeongmin */
-    
+#svn_log_tab .panel-body, #git_log_tab .panel-body {    
     height: 257px;
     overflow: auto;
 }
-#svn_diff_tab .panel-body {
-    /* jeongmin */
-    
+#svn_diff_tab .panel-body {    
     height: 240px;
     padding: 0px;
 }
-#svn_blame_tab .panel-body {
-    /* jeongmin */
-    
+#svn_blame_tab .panel-body {    
     height: 257px;
     padding: 0px;
 }
+#dlg_edit_merge .panel, #dlg_git_push .panel, #dlg_scm_auth .panel, #dlg_scm_auth .col-md-9:last-child, #dlg_git_branch_create .panel {    
+    margin-bottom: 0;
+}
+
+#dlg_svn tr td:nth-child(2) {
+    white-space: pre;
+}
+#dlg_scm_auth {
+        
+    z-index: 1041;
+}
+#svn_blame_tab .input-group, #svn_diff_tab .input-group, #svn_log_tab .input-group, #git_blame_tab .input-group, #git_diff_tab .input-group, #git_log_tab .input-group {    
+    margin-bottom: 0px;
+}
+.scm_guide {    
+    margin-top: 7px;
+}
+#new_project_scm_field {    
+    height: 380px;
+}
+#git_cmd_log_tab .panel-body, #svn_cmd_log_tab .panel-body {    
+    height: 307px;
+    overflow: auto;
+}
+*/
+
+#svn_tabview .panel-body {
+	height: 263px;
+	padding: 0px;
+	overflow: auto;
+}
+
+#scm_checkout_progress {
+    height: 300px;
+    overflow: auto;
+    width: inherit;
+}
+
 /* Disabling Responsiveness */
 
 @media (max-width: 768px) {
@@ -4070,10 +4077,6 @@ button.toolbar_button_pressed {
     margin-left: 5px;
     margin-right: 10px;
 }
-#dlg_svn .modal-body, #dlg_git .modal-body {
-        
-    min-height: 439px;
-}
 #svn_tabview .panel, #git_tabview .panel {
     /* jeongmin: too much margin -> remove; */
     
@@ -4101,16 +4104,7 @@ button.toolbar_button_pressed {
     overflow: scroll;
     border: 1px;
 }
-#svn_blame_tab .input-group, #svn_diff_tab .input-group, #svn_log_tab .input-group, #git_blame_tab .input-group, #git_diff_tab .input-group, #git_log_tab .input-group {
-    /* jeongmin */
-    
-    margin-bottom: 0px;
-}
-.scm_guide {
-    /* jeongmin */
-    
-    margin-top: 7px;
-}
+
 /*.modal-backdrop.in {
 	opacity: 0.8;
 	filter: alpha(opacity=80);
@@ -4345,11 +4339,7 @@ label {
 #bookmark_tab_list .table tr td:last-child {
     border-right: 0px;
 }
-#new_project_scm_field {
-    /* jeongmin */
-    
-    height: 380px;
-}
+
 #import_label {
     /* jeongmin */
     
@@ -4660,11 +4650,12 @@ label {
         width: 100%;
     }
 }
+/*
 .CodeMirror-scroll>div:not(.CodeMirror-sizer):not(.CodeMirror-gutters) {
-    /*jeongmin: remove empty space at bottom of editor*/
-    /*height: auto !important;*/
-    /* hidden by jeongmin. This prevents scrolling full height */
+    height: auto !important;
 }
+*/
+/*
 #dlg_loading_bar.modal.fade .modal-dialog {
         
     -webkit-transform: translate(200%, 100%);
@@ -4681,6 +4672,7 @@ label {
     -ms-transform: translate(0, 0);
     transform: translate(0, 0);
 }
+*/
 .resize_height {
     /* jeongmin: when code length is shorter than window size, give gutter height 100% */
     
@@ -4723,11 +4715,7 @@ label {
     min-height: 16px;
     overflow: hidden;
 }
-#dlg_edit_merge .panel, #dlg_git_push .panel, #dlg_scm_auth .panel, #dlg_scm_auth .col-md-9:last-child, #dlg_git_branch_create .panel {
-    /* jeongmin */
-    
-    margin-bottom: 0;
-}
+
 .CodeMirror-merge, .CodeMirror-merge-pane {
     /* jeongmin */
     
@@ -4814,12 +4802,7 @@ label {
     display: inline-block;
     margin-bottom: -4px;
 }
-#git_cmd_log_tab .panel-body, #svn_cmd_log_tab .panel-body {
-    /* jeongmin */
-    
-    height: 307px;
-    overflow: auto;
-}
+
 /* ui panes show&close button effect */
 
 .ui-layout-toggler:hover {
@@ -5539,11 +5522,6 @@ a.bg-danger:hover {
     margin-right: 7px;
     top: 1px !important;
 }
-#scm_checkout_progress {
-    height: 300px;
-    overflow: auto;
-    width: inherit;
-}
 #my_project .dropdown-menu {
     width: 100%;
 }
@@ -5624,18 +5602,12 @@ a.bg-danger:hover {
     background: url(/images/goorm.core.dialog/dialog_notice.png) no-repeat -9999px -9999px;
 }
 
-#dlg_svn tr td:nth-child(2) {
-    white-space: pre;
-}
 li.active > #gLayoutTab_Terminal {
     background-color: rgb(70, 70, 70);
     color: white;
     border-color: rgb(70, 70, 70);
 }
-#dlg_scm_auth {
-        
-    z-index: 1041;
-}
+
 .user_profile_image {
     width: 48px;
     height: 48px;
@@ -5645,4 +5617,11 @@ li.active > #gLayoutTab_Terminal {
 }
 .modal-body .nav-tabs {
     background-color: #fff;
+}
+
+.terminal_style {
+	background-color: #444;
+	font-family: 'Source Code Pro', 'Courier New', 'Lucida Console', 'Nanum Gothic Coding';
+	color: white;
+	padding: 8px !important;	
 }

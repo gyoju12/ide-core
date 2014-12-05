@@ -614,6 +614,13 @@ module.exports = {
 								}
 							}
 
+							// jeongmin: remove scm property -> scm property should be not saved in goorm.manifest
+							for (var key in new_property) {
+								if (key.indexOf('scm') > -1) {
+									delete new_property[key];
+								}
+							}
+
 							if (data.err_code === 0) {
 								fs.writeFile(global.__workspace + '/' + query.project_path + "/goorm.manifest", JSON.stringify(new_property), {
 									encoding: 'utf-8',

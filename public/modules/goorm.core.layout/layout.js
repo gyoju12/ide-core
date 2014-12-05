@@ -572,7 +572,7 @@ goorm.core.layout = {
 		$('#share_list_group').height(left_height);
 		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
 
-		var project_selector_width = $("#project_explorer_tab").width() - 27;
+		var project_selector_width = $("#project_explorer_tab").width() - 40;
 		// if (project_selector_width < 190) project_selector_width = 190;
 
 		$('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool

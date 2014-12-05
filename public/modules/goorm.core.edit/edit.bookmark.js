@@ -292,8 +292,8 @@ goorm.core.edit.bookmark = {
 					if (line) {
 						////// making row //////
 						var delete_button = '<button type="button" id="delete_bookmark_' + line + '" class="close" aria-hidden="true">&times;</button>';
-						var lines = Object.keys(self.list[target]);
-						//$bookmark_table.find(".bookmark_line").each(function(){lines.push($(this).text())});
+						var lines = [];// Object.keys(self.list[target]);
+						$bookmark_table.find(".bookmark_line").each(function(){lines.push($(this).text())});
 						for(var i = lines.length - 1; i>=0; i--){
 							if(lines[i]<line){
 								break;

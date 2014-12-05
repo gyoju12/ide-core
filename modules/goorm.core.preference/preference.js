@@ -83,7 +83,7 @@ module.exports = {
 					var evt_for_tools_version = new EventEmitter();
 
 					evt_for_tools_version.on("get_tools_version", function(tools_version_info) {
-						data.info.lib = data.info.lib.concat(tools_version_info);
+						data.info.lib = tools_version_info.concat(data.info.lib);
 						evt.emit("preference_get_goorm_info", data);
 					});
 					self.get_tools_version(evt_for_tools_version);

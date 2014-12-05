@@ -59,7 +59,12 @@ goorm.core.window.manager = {
 					var maximized = saved_workspace_window.maximized;
 					var editor_exist = false;
 
+					var open = [];
+					var opened = [];
+
 					async.map(file_list, function(__file, async_callback) {
+						var project_path = __file.filepath.split('/')[0];
+
 						
 						
 							if (__file.filename === 'debug' || __file.filetype === 'WebView')
@@ -82,6 +87,10 @@ goorm.core.window.manager = {
 						editor_exist = true;
 
 						var open_cb = function(result){
+							if (opened && opened.indexOf(project_path) === -1) {
+								opened.push(project_path);
+							}
+
 							self.open(__file.filepath, __file.filename, __file.filetype, __file.editor, __file, function(__window) {
 								var current_window = __window;
 								// arrange windows with each position and size
@@ -117,7 +126,17 @@ goorm.core.window.manager = {
 						};
 
 						//console.log("WM __file", __file);
-						core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
+						if (opened && opened.indexOf(project_path) > -1) {
+							open_cb(true);
+						}
+						else if (open && open.indexOf(project_path) === -1) {
+							open.push(project_path);
+
+							core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
+						}
+						else {
+							$(core).one('/project/mount.'+project_path, open_cb);
+						}
 						
 						//console.log("mount test");
 						
@@ -308,7 +327,6 @@ goorm.core.window.manager = {
 				});
 
 				self.window[self.window.length - 1].resize_all();
-
 				return self.window[self.window.length - 1];
 			}
 
@@ -458,7 +476,7 @@ goorm.core.window.manager = {
 			add: function(filepath, filename, filetype, editor, __options) {
 				var self = this;
 				var options = __options || {};
-				// this.active_window = this.index;	// jeongmin: no need
+				this.active_window = this.index;	// jeongmin: no need -> Donguk : need (using eduView)
 
 				if (!options.title) {
 					options.title = filepath + filename;

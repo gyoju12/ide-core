@@ -105,29 +105,35 @@
                 <!--  -->
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="my_project">
-                        <div id="project_selector" class='btn-group'>
-                            <div class="btn-group">
-                                <button id="project_selectbox" class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
-                                    <span id="selected_project_name">Project List</span>
-                                    <span class='caret'></span>
-                                </button>
-                                <ul class='dropdown-menu'>
-                                    <li role='presentation' class='dropdown-header' localization_key="project_list">Project List</li>
-                                    <li id="back_to_project_table">
-                                        <a href='#' localization_key="project_table">Project Table</a>
-                                    </li>
-                                    <li class='divider'></li>
-                                    <li id="my_projects_header" role='presentation' class='dropdown-header' localization_key="my_project">My Projects</li>
-                                    <!-- <li class='divider'></li> -->
-                                    <!-- <li id="cloud_projects_header" role='presentation' class='dropdown-header' localization_key="cloud_projects">Cloud Projects</li> -->
+						<nav class="toolbar navbar navbar-default" role="navigation">
+							<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav">
+									<div id="project_selector" class='btn-group'>
+										<div class="btn-group">
+											<button id="project_selectbox" class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+												<span id="selected_project_name">Project List</span>
+												<span class='caret'></span>
+											</button>
+											<ul class='dropdown-menu'>
+												<li role='presentation' class='dropdown-header' localization_key="project_list">Project List</li>
+												<li id="back_to_project_table">
+													<a href='#' localization_key="project_table">Project Table</a>
+												</li>
+												<li class='divider'></li>
+												<li id="my_projects_header" role='presentation' class='dropdown-header' localization_key="my_project">My Projects</li>
+												<!-- <li class='divider'></li> -->
+												<!-- <li id="cloud_projects_header" role='presentation' class='dropdown-header' localization_key="cloud_projects">Cloud Projects</li> -->
 
-                                    <!--  -->
-                                </ul>
-                            </div>
-                            <div id='project_explorer_refresh_tool' class="btn btn-default">
-                                <i class="fa fa-refresh"></i>
-                            </div>
-                        </div>
+												<!--  -->
+											</ul>
+										</div>
+										<div id='project_explorer_refresh_tool' class="btn btn-default">
+											<i class="fa fa-refresh"></i>
+										</div>
+									</div>
+								</ul>
+							</div>
+						</nav>
                         <div id='project_explorer' class='directory_treeview'>
                             <!-- <div id='project_selector'>
                                 <label class='selectbox'>
@@ -660,32 +666,32 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" action="debug_continue" name="preference.shortcut.debug.continue" localization_key="debug_continue" class="debug_not_active">
+                                <a href="#" action="debug_continue" name="preference.shortcut.debug.continue" localization_key="debug_continue">
                                     Continue
                                     <em class="helptext">Ctrl + Shift + Y</em>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" action="debug_terminate" name="preference.shortcut.debug.terminate" localization_key="debug_terminate" class="debug_not_active">
+                                <a href="#" action="debug_terminate" name="preference.shortcut.debug.terminate" localization_key="debug_terminate">
                                     Terminate
                                     <em class="helptext">F9</em>
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#" action="debug_step_over" name="preference.shortcut.debug.step_over" localization_key="debug_step_over" class="debug_not_active">
+                                <a href="#" action="debug_step_over" name="preference.shortcut.debug.step_over" localization_key="debug_step_over">
                                     Step over
                                     <em class="helptext">F6</em>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" action="debug_step_in" name="preference.shortcut.debug.step_in" localization_key="debug_step_in" class="debug_not_active">
+                                <a href="#" action="debug_step_in" name="preference.shortcut.debug.step_in" localization_key="debug_step_in">
                                     Step into
                                     <em class="helptext">F7</em>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" action="debug_step_out" name="preference.shortcut.debug.step_out" localization_key="debug_step_out" class="debug_not_active">
+                                <a href="#" action="debug_step_out" name="preference.shortcut.debug.step_out" localization_key="debug_step_out">
                                     Step out
                                     <em class="helptext">F8</em>
                                 </a>
@@ -958,16 +964,20 @@
                         </button>
                         <!--  -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
-                            <div class="toolbar_button">
-                                <div class="toolbar-open-file"></div>
-                            </div>
+                            <span class="fa-stack">
+                                <i class="fa fa-stack-1x fa-file-o" style="margin-left: 4px; margin-top:-4px; font-size: 80%;"></i>
+                                <i class="fa fa-stack-1x fa-folder-open-o fa-lg"></i>
+                            </span>
                         </button>
                         <!--  -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
                             <i class="fa fa-save fa-lg"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
-                            <i class="fa fa-save"></i>
+                            <span class="fa-stack">
+                                <i class="fa fa-stack-1x fa-save" style="margin-left: -4px; margin-top:-4px;"></i>
+                                <i class="fa fa-stack-1x fa-save" style="margin-left:3px; margin-top:3px;"></i>
+                            </span>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
                             <i class="fa fa-cloud-upload fa-lg"></i>
@@ -1062,6 +1072,7 @@
                             <i class="fa fa-expand fa-lg"></i>
                         </button>
                     </div>
+                    <!--
                     <div id="main_window_toolbar" class="btn-group">
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="cascade" tooltip="window_cascade">
                             <div class="toolbar_button">
@@ -1098,54 +1109,45 @@
                             </div>
                         </button>
                     </div>
+                    -->
                 </ul>
             </div>
             <div id="bubble_toolbar" class="bubble_toolbar" style="display:none;">
                 <ul id="bubble_toolbar_sub" class="nav navbar-nav">
                     <div id="bubble_file_toolbar" class="btn-group bubble_file_toolbar" style="display:none;">
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_project" tooltip="file_new_project">
-                            <div class="toolbar_button">
-                                <div class="toolbar-new-project"></div>
-                            </div>
+                            <i class="fa fa-folder-o fa-lg"></i>
                         </button>
 
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_file_file" tooltip="file_new_file">
-                            <div class="toolbar_button">
-                                <div class="toolbar-new-file"></div>
-                            </div>
+                            <i class="fa fa-file-o fa-lg"></i>
                         </button>
 
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_project" tooltip="file_open_project">
-                            <div class="toolbar_button">
-                                <div class="toolbar-open-project"></div>
-                            </div>
+                            <i class="fa fa-folder-open-o fa-lg"></i>
                         </button>
                         <!--  -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
-                            <div class="toolbar_button">
-                                <div class="toolbar-open-file"></div>
-                            </div>
+                            <span class="fa-stack">
+                                <i class="fa fa-stack-1x fa-file-o" style="margin-left: 4px; margin-top:-4px; font-size: 80%;"></i>
+                                <i class="fa fa-stack-1x fa-folder-open-o fa-lg"></i>
+                            </span>
                         </button>
                         <!--  -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
-                            <div class="toolbar_button">
-                                <div class="toolbar-save"></div>
-                            </div>
+                            <i class="fa fa-save fa-lg"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
-                            <div class="toolbar_button">
-                                <div class="toolbar-save-as"></div>
-                            </div>
+                            <span class="fa-stack">
+                                <i class="fa fa-stack-1x fa-save" style="margin-left: -4px; margin-top:-4px;"></i>
+                                <i class="fa fa-stack-1x fa-save" style="margin-left:3px; margin-top:3px;"></i>
+                            </span>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
-                            <div class="toolbar_button">
-                                <div class="toolbar-import"></div>
-                            </div>
+                            <i class="fa fa-cloud-upload fa-lg"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_file" tooltip="file_export">
-                            <div class="toolbar_button">
-                                <div class="toolbar-export"></div>
-                            </div>
+                            <i class="fa fa-cloud-download fa-lg"></i>
                         </button>
                     </div>
                     <div id="bubble_edit_toolbar" class="btn-group bubble_edit_toolbar" style="display:none;">
@@ -1161,26 +1163,18 @@
                         </button> -->
                         <!--  -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_find" tooltip="edit_find_and_replace">
-                            <div class="toolbar_button">
-                                <div class="toolbar-find-replace"></div>
-                            </div>
+                            <i class="fa fa-search fa-lg"></i> FIND/REPLACE
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="search" tooltip="edit_search">
-                            <div class="toolbar_button">
-                                <div class="toolbar-search"></div>
-                            </div>
+                            <i class="fa fa-binoculars fa-lg"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
-                            <div class="toolbar_button">
-                                <div class="toolbar-preference"></div>
-                            </div>
+                            <i class="fa fa-wrench fa-lg"></i>
                         </button>
                     </div>
                     <div id="bubble_project_toolbar" class="btn-group bubble_project_toolbar" style="display:none;">
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="run" tooltip="project_run">
-                            <div class="toolbar_button">
-                                <div class="toolbar-run"></div>
-                            </div>
+                            <i class="fa fa-play-circle fa-lg"></i> RUN
                         </button>
                         <!-- <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="stop" tooltip="project_stop">
                             <div class="toolbar_button">
@@ -1188,9 +1182,7 @@
                             </div>
                         </button> -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_project" tooltip="project_build_project">
-                            <div class="toolbar_button">
-                                <div class="toolbar-build"></div>
-                            </div>
+                            <i class="fa fa-cog fa-lg"></i>
                         </button>
                         <!-- <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_clean" tooltip="project_clean">
                             <div class="toolbar_button">
@@ -1216,14 +1208,10 @@
                     </div>
                     <div id="bubble_debug_toolbar" class="btn-group bubble_debug_toolbar" style="display:none;">
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug" tooltip="debug_start">
-                            <div class="toolbar_button">
-                                <div class="toolbar-debug-start"></div>
-                            </div>
+                            <i class="fa fa-bug fa-lg"></i> DEBUG
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_continue" tooltip="debug_continue">
-                            <div class="toolbar_button">
-                                <div class="toolbar-debug-continue"></div>
-                            </div>
+                            <i class="fa fa-step-forward"></i>
                         </button>
                         <!-- <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_terminate" tooltip="debug_terminate">
                             <div class="toolbar_button">
@@ -1231,21 +1219,16 @@
                             </div>
                         </button> -->
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_over" tooltip="debug_step_over">
-                            <div class="toolbar_button">
-                                <div class="toolbar-debug-step-over"></div>
-                            </div>
+                            <i class="fa fa-fast-forward"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_in" tooltip="debug_step_in">
-                            <div class="toolbar_button">
-                                <div class="toolbar-debug-step-in"></div>
-                            </div>
+                            <i class="fa fa-compress fa-lg"></i>
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
-                            <div class="toolbar_button">
-                                <div class="toolbar-debug-step-out"></div>
-                            </div>
+                            <i class="fa fa-expand fa-lg"></i>
                         </button>
                     </div>
+                    <!--
                     <div id="bubble_window_toolbar" class="btn-group bubble_window_toolbar" style="display:none;">
                         <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="cascade" tooltip="window_cascade">
                             <div class="toolbar_button">
@@ -1275,6 +1258,7 @@
                             </div>
                         </button>
                     </div>
+                    -->
                 </ul>
                 <div id="bubble_arrow" class="jfk-bubble-arrow-id jfk-bubble-arrow jfk-bubble-arrowup">
                     <div class="jfk-bubble-arrowimplbefore"></div>
@@ -1721,7 +1705,7 @@
                         <h4 class="modal-title" id="modal_survey" localization_key='dialog_survey'>goormIDE Survey</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row margin-8px">
+                        <div class="row margin-10px">
                             <div id='survey_dialog_message'></div>
                             <textarea class="form-control" id="survey_inputbox" type="text"></textarea>
                         </div>
@@ -1744,7 +1728,7 @@
                         <h4 class="modal-title" id="modal_loading_bar" localization_key='dialog_loading_bar'></h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row margin-8px">
+                        <div class="row margin-10px">
                             <div class="progress progress-striped active">
                                 <div id="loading_progress_bar" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">    
                                     <span class="sr-only">50% Complete (success)</span>
@@ -1773,7 +1757,7 @@
                         <h4 class="modal-title" id="modal_toast" localization_key='dialog_toast'></h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row margin-8px">
+                        <div class="row margin-10px">
                         </div>
                     </div>
                     <div class="modal-footer"></div>
@@ -1934,14 +1918,18 @@
                                     <input type="text" class="form-control" id="input_project_author_name" placeholder="Author Name" />
                                 </div>
                             </div>
-                            <div class="row project_type">
-                                <label for="select_input_project_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" id="select_input_project_type" name="select_input_project_type" project_type="cpp"></select>
+                            <div class="project_type">
+                                <div class="row">
+                                    <label for="select_input_project_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_type">Project Type</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" id="select_input_project_type" name="select_input_project_type" project_type="cpp"></select>
+                                    </div>
                                 </div>
-                                <label for="select_input_project_detail_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" id="select_input_project_detail_type" name="select_input_project_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
+                                <div class="row">
+                                    <label for="select_input_project_detail_type" class="col-md-2 control-label" localization_key="dialog_project_property_project_detail">Project Detail</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" id="select_input_project_detail_type" name="select_input_project_type" project_type="cpp" project_detailed_type="c" plugin_name="goorm.plugin.cpp"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row project_name">
@@ -2591,7 +2579,7 @@
                         <h4 class="modal-title" id="modal_rename_file" localization_key='dialog_rename_file'>Rename File</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row margin-8px">
+                        <div class="row margin-10px">
                             <label for="input_rename_new_filename" localization_key="dialog_file_rename_new_name">New Name</label>
                             <input type="text" id="input_rename_new_filename" class="form-control" />
 
@@ -3038,7 +3026,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="project_import_file row">
                                     <label for="file_import_file" class="col-md-3" localization_key='dialog_new_project_import_message'>Import Project Type</label>
 
                                     <div class="col-md-9">

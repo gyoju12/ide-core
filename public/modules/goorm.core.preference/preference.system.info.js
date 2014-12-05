@@ -29,7 +29,7 @@ goorm.core.preference.info = {
 				}
 			});
 
-			_$.get("/preference/get_goorm_info", null, function(data) {
+			$.get("/preference/get_goorm_info", null, function(data) {
 				if (data.err_code === 0) {
 					core.env.version = data.info.version;
 					$('.goorm_version').html("goorm IDE " + core.env.version);
@@ -37,7 +37,7 @@ goorm.core.preference.info = {
 					$(".version-icon").attr('title', $('.goorm_version').text()).tooltip();
 					$("#core_version").append(data.info.version);
 
-					// console.log('version',data);
+					console.log('version',data);
 					$.each(data.info.lib, function(index, lib) {
 						var version = lib.version;
 						switch (lib.name) {

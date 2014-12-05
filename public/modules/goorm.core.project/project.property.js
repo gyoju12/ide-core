@@ -38,14 +38,14 @@ goorm.core.project.property = {
 					case 'python':
 					case 'web':
 					case 'nodejs':
-					
+						
 					case 'go':
 					case 'ruby':
 						$('[action="build_project"]').css('display', 'none');
 						$('[action="build_clean"]').css('display', 'none');
 						$('[action="help_about_private_url"]').show();
 						break;
-					
+						
 					default:
 						$('[action="build_project"]').css('display', '');
 						$('[action="build_clean"]').css('display', '');
@@ -192,7 +192,7 @@ goorm.core.project.property = {
 				if (key === undefined) return;
 			}
 
-			target_index.find("input.form-control").each(function() {
+			target_index.find("input").each(function() {
 				if ($(this).attr("name") !== undefined) {
 					
 
@@ -212,15 +212,15 @@ goorm.core.project.property = {
 
 			//makefile option --heeje
 			target_index.find("input[type=checkbox]").each(function() {
-				if($(this).attr("name") !== undefined) {
-					if($(this).parent().hasClass('checked'))
+				if ($(this).attr("name") !== undefined) {
+					if ($(this).parent().hasClass('checked'))
 						key[$(this).attr("name")] = "true";
 					else
 						key[$(this).attr("name")] = "false";
 				}
 			});
 
-			target_index.find("textarea").each(function() {
+			target_index.find("textarea.form-control").each(function() {
 				if ($(this).attr("name") !== undefined) {
 					key[$(this).attr("name")] = $(this).val();
 				}
@@ -235,11 +235,12 @@ goorm.core.project.property = {
 	},
 
 	fill_dialog: function(property) {
-		var target = "#property_tabview";
+		var targets = $("#property_tabview").children('.tab-content').children();
 
-		var targets = $(target).children('div.tab-content').children();
-
-		var key = null;
+		// 1. initialize
+		targets.find('[type=text]').val('');
+		targets.find('[type=radio], [type=checkbox]').iCheck('uncheck');
+		targets.find('select.form-control').val(targets.find('select.form-control option').val()); // set with first option
 
 		$.each(targets, function(index) {
 			var target_index = $(targets[index]);
@@ -252,41 +253,29 @@ goorm.core.project.property = {
 				if (key === undefined) return;
 			}
 
-			target_index.find("input.form-control").each(function() {
-				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
-					
-
-					if ($(this).attr("type") == "checkbox") {
-						if (key[$(this).attr("name")] == "true" || key[$(this).attr("name")] === true) {
-							$(this).iCheck("check");
-						} else {
-							$(this).iCheck("uncheck");
-						}
-
-						$(this).iCheck("update");
-					} else if ($(this).attr("type") == "radio") {
-						if (key[$(this).attr("name")] == $(this).val()) {
-							// $(this).prop("checked", true);
-							$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
-						} else { // jeongmin: check or uncheck must be selected
-							$(this).iCheck("uncheck");
-						}
-					} else {
-						
-
-						$(this).val(key[$(this).attr("name")]);
-					}
-				} else if ($(this).attr("type") == "text") { //jeongmin: if null property -> set blank (only text)
-					$(this).val("");
-				} else { // jeongmin: radio or checkbox are needed to uncheck
-					$(this).iCheck("uncheck");
-				}
+			target_index.find("input").each(function() { // jeongmin: don't find with '.form-control' -> radio buttons are icheck, so these will be omitted
 				
-			});
-			target_index.find("textarea").each(function() {
-				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
+
+				// if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {	// hidden by jeongmin: undefined and null won't affect to value
+				if ($(this).attr("type") == "checkbox") {
+					if (key[$(this).attr("name")] == "true" || key[$(this).attr("name")] === true) {
+						$(this).iCheck("check");
+					}
+
+					$(this).iCheck("update");
+				} else if ($(this).attr("type") == "radio") {
+					if (key[$(this).attr("name")] == $(this).val()) {
+						$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
+					}
+				} else {
 					$(this).val(key[$(this).attr("name")]);
 				}
+				// }
+			});
+			target_index.find("textarea.form-control").each(function() {
+				// if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {	// hidden by jeongmin: undefined and null won't affect to value
+				$(this).val(key[$(this).attr("name")]);
+				// }
 			});
 			target_index.find("select.form-control").each(function() {
 				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
@@ -300,7 +289,7 @@ goorm.core.project.property = {
 
 	load_property: function(path, callback) {
 		var self = this;
-		if (path == ''){
+		if (path == '') {
 			self.property = {};
 			core.property = self.property;
 			callback && callback(null);

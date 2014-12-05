@@ -403,7 +403,7 @@ goorm.core.debug.prototype = {
 			ev = {};
 		ev.keyDown = 13;
 
-		value = '<div variable=' + id + ' class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
+		value = '<div id="' + id + '" class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
 
 		if (this.table_variable) {
 			if (variable && value && summary)
@@ -414,9 +414,9 @@ goorm.core.debug.prototype = {
 				]);
 		}
 		var project_type = core.status.current_project_type;
-		if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java' || project_type === 'java_examples') {
+		if (project_type === 'c_examples' || project_type === 'cpp') {
 
-			var edit_box = $("div[variable='" + id +"']");
+			var edit_box = $('#' + id);
 			edit_box.parent().click(function() {
 				var data = edit_box.html();
 				if (edit_box.hasClass('edit_ready')) {
@@ -430,13 +430,13 @@ goorm.core.debug.prototype = {
 			});
 
 			$(document).on('click', function(e) {
-				var edit_box = $("div[variable='" + $('.editing').attr("variable") + "']" );
+				var edit_box = $('#' + $('.editing').attr("id"));
 				if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
 					var data = edit_box.children().val();
 					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("variable");
+					sendData.variable = edit_box.attr("id");
 					sendData.value = data;
 					if (typeof sendData.value != "undefined") {
 						$(core.module.debug).trigger('value_changed', sendData);
@@ -455,7 +455,7 @@ goorm.core.debug.prototype = {
 					edit_box.html(data);
 					edit_box.removeClass('editing');
 					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("variable");
+					sendData.variable = edit_box.attr("id");
 					sendData.value = data;
 					if (typeof sendData.value != "undefined") {
 						$(core.module.debug).trigger('value_changed', sendData);
