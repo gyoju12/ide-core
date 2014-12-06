@@ -508,13 +508,13 @@ goorm.core.layout = {
 				// half size
 				current_layout.sizePane("north", 30); // North Panel size - Toolbar Size = 30
 				current_layout.open("north");
-				$("#goorm_main_toolbar")[0].style.visibility = "hidden";
+				$("#goorm_main_toolbar").hide();
 				break;
 			case 3:
 				// completely open
 				current_layout.sizePane("north", 81);
 				current_layout.open("north");
-				$("#goorm_main_toolbar")[0].style.visibility = "visible";
+				$("#goorm_main_toolbar").show();
 				break;
 		}
 	},

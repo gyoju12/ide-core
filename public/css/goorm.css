@@ -2964,7 +2964,7 @@ Toolbar CSS
 Retina CSS
 */
 
-@mediaonly screen and (-webkit-min-device-pixel-ratio:2), only screen and ( min--moz-device-pixel-ratio:2), only screen and ( -o-min-device-pixel-ratio:2/1), only screen and ( min-device-pixel-ratio:2), only screen and ( min-resolution:192dpi), only screen and ( min-resolution:2dppx) {} #goorm_user_box {
+#goorm_user_box {
     color: #666;
     z-index: 2;
     width: 200px;
@@ -3525,7 +3525,7 @@ span.project_message_guide {
     width: 75% !important;
     /* jeongmin. 80 -> 75 */
 }
-#workspace .ui-dialog .ui-dialog-titlebar-minimize {
+/* #workspace .ui-dialog .ui-dialog-titlebar-minimize {
     position: absolute;
     right: 45px;
     background-image: url(../images/sprite.png);
@@ -3548,13 +3548,13 @@ span.project_message_guide {
     background-position: -128px -32px;
     background-repeat: no-repeat;
     border: 0px;
-}
-#workspace .ui-dialog .ui-dialog-titlebar-close, #workspace .ui-dialog .ui-dialog-titlebar-collapse, #workspace .ui-dialog .ui-dialog-titlebar-maximize, #workspace .ui-dialog .ui-dialog-titlebar-minimize {
+} */
+/* #workspace .ui-dialog .ui-dialog-titlebar-close, #workspace .ui-dialog .ui-dialog-titlebar-collapse, #workspace .ui-dialog .ui-dialog-titlebar-maximize, #workspace .ui-dialog .ui-dialog-titlebar-minimize {
     width: 16px;
     height: 16px;
     margin-top: -8px;
     top: 12px;
-}
+} */
 #workspace .ui-dialog .ui-dialog-titlebar-modified {
     display: none;
     padding: 0;
@@ -5587,7 +5587,7 @@ a.bg-danger:hover {
 }
 /* bootstrap duplicate */
 
-.modal.fade .modal-dialog, .modal.in .modal-dialogß {
+.modal.fade .modal-dialog, .modal.in .modal-dialog {
     -webkit-transform: none !important;
     -ms-transform: none !important;
     transform: none !important;

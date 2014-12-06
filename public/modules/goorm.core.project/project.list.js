@@ -295,6 +295,7 @@ goorm.core.project.list.prototype = {
 				$(data).each(function(i) {
 					var icon_str = "";
 					var img_src = (this.contents.is_user_plugin ? "/" + core.user.id + "/plugins" : "") + "/goorm.plugin." + this.contents.type + "/images/" + this.contents.type + ".png";
+					if(this.contents.type == 'edu') this.contents.detailedtype = 'edu';					
 					icon_str += "<div id='selector_" + this.contents.name + "' value='" + i + "' class='selector_project media' type='" + this.contents.type + "'>";
 					icon_str += "<a class='pull-left project_list_img' href='#'><img class='media-object project_list_img' alt='" + this.contents.type + "' src=" + img_src + "></a>"
 					icon_str += "<div style='white-space:nowrap; overflow:hidden; text-overflow:ellipsis'>";

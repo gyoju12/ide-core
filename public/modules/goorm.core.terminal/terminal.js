@@ -82,7 +82,7 @@ goorm.core.terminal.prototype = {
 				}, 100);
 			});
 
-			
+
 		};
 
 		var init_terminal = function() {
@@ -245,7 +245,7 @@ goorm.core.terminal.prototype = {
 			// result write
 			self.socket.on("pty_command_result", function(msg) {
 				//build stop fix --heeje
-				if ((core.module.project.is_running && msg.stdout.indexOf('^C') == 0) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m$') == msg.stdout.length-6) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m#') == msg.stdout.length-6)) {
+				if ((core.module.project.is_running && msg.stdout.indexOf('^C') == 0) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m$') == msg.stdout.length - 6) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m#') == msg.stdout.length - 6)) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
 					$('button[action="stop"]').attr('isdisabled', 'disabled');
@@ -315,7 +315,7 @@ goorm.core.terminal.prototype = {
 
 		$(core).on("on_preference_confirmed", function() { // 
 			self.set_option();
-			self.resize();
+			// self.resize();
 		});
 
 		// append message & prompt to terminal
@@ -417,16 +417,18 @@ goorm.core.terminal.prototype = {
 		var width;
 
 		// seongho : I calculate the pixels. floor(font_size * 0.625) is real width of pixels
-		var font_width = Math.floor(font_size * 0.625);
-		if (font_width == 6) // but font_size:11px is exception. Calculation value is 6px, but in real, 7px
-			font_width = 7;
+		var font_width = Math.floor(font_size * 0.5818079); // jeongmin: changed number -> it's statistical!!
+		// if (font_width == 6) // but font_size:11px is exception. Calculation value is 6px, but in real, 7px
+		// 	font_width = 7;	// hidden by jeongmin: more accurate column will be calculated below, anyway
 
 		if (this.terminal_name == "default_terminal") {
-			height = parseInt($(this.target).parent().height() - 10);
-			width = parseInt($(this.target).parent().width() - 10);
+			// for target space
+			height = parseInt($(this.target).parent().height() - 10); // 10 for leaving margins
+			width = parseInt($(this.target).parent().width() - 10); // 10 for leaving margins
 
-			geometry.rows = Math.floor((height - 10) / div_height);
-			geometry.cols = Math.floor((width - 10) / font_width);
+			// for text space
+			geometry.rows = Math.floor((height - 10) / div_height); // 10 for leaving margins
+			geometry.cols = Math.floor((width - 10) / font_width); // 10 for leaving margins
 		} else {
 			if (core.module.layout.workspace.window_manager.maximized) {
 				height = parseInt($("#workspace").css('height')) - 10;
@@ -446,17 +448,30 @@ goorm.core.terminal.prototype = {
 		if (geometry.cols <= 0 || geometry.rows <= 0 || isNaN(geometry.cols)) { //it can be NaN - divide by 0
 			geometry.cols = 1000;
 			geometry.rows = 10;
-		} else {
+		} else { // column experiment: check if caculated column exactly fits to target's width with font-size and font-family
 			///seongho.cha : some browers not fit upper fomula because of spacing. it will calculate real width...
-			var dummy_str = (new Array(geometry.cols + 1)).join("a");
-			$("#" + this.dummy).html(dummy_str);
-			while ($("#" + this.dummy).width() > width) {
-				geometry.cols -= 1;
-				dummy_str = dummy_str.slice(1);
-				$("#" + this.dummy).html(dummy_str);
+			var dummy_str = (new Array(geometry.cols + 1)).join("a"); // dummy text
+			$("#" + this.dummy).html(dummy_str); // put dummy text to dummy terminal
+
+			if ($("#" + this.dummy).width() > width) { // calculated column is too many for width -> text will be hidden
+				while ($("#" + this.dummy).width() > width) { // until calculated column exactly fits to terminal width
+					geometry.cols -= 1; // calculated column is too many, so decrease
+					dummy_str = dummy_str.slice(1); // what if shorter dummy text?
+					$("#" + this.dummy).html(dummy_str); // check again
+				}
+			} else if ($("#" + this.dummy).width() < width) { // calculated column is too few for width -> text will go over to next line
+				while ($("#" + this.dummy).width() < width) { // until calculated column exactly fits to terminal width
+					geometry.cols += 1; // calculated column is too few, so increase
+					dummy_str = dummy_str + 'a'; // what if longer dummy text?
+					$("#" + this.dummy).html(dummy_str); // check again
+				}
+
+				geometry.cols -= 1; // text should be inside of width, so decrease one more time
 			}
-			geometry.cols -= 1;
 		}
+
+		geometry.cols -= 1; // give some margin
+
 		return geometry;
 	},
 	_resize: function() {
@@ -648,8 +663,7 @@ goorm.core.terminal.prototype = {
 
 		if (this.running_queue) {
 			return;
-		}
-		else {
+		} else {
 			this.running_queue = true;
 		}
 
@@ -765,6 +779,7 @@ goorm.core.terminal.prototype = {
 			.css("line-height", this.line_spacing / 10 + 1)
 			.css("color", this.font_color);
 
-		setTimeout(self.resize, 1000);
+		// setTimeout(self.resize, 1000);
+		this.resize();
 	}
 };

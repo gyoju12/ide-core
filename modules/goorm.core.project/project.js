@@ -339,8 +339,18 @@ module.exports = {
 												flag: 'w'
 											}, function(err) {});
 										};
-
-										stdout.splice(stdout.indexOf("goorm.manifest"), 1);
+										
+										var lostfound = stdout.indexOf("lost+found");
+										var manifest = stdout.indexOf("goorm.manifest");
+										
+										if (lostfound !== -1){
+											stdout.splice(lostfound, 1);
+										}
+										if (manifest !== -1){
+											stdout.splice(manifest, 1);
+										}
+										
+										
 										if (stdout.length == 1) {
 											fs.exists(project_abs_path + "/" + stdout[0] + "/goorm.manifest", function(exists) {
 												if (exists) {
