@@ -24,7 +24,7 @@
     
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.0/addon/tern/tern.css" />
     
-    <link rel="stylesheet" type-"text/css" href="/lib/codemirror-4.0/addon/fold/foldgutter.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.0/addon/fold/foldgutter.css" />
     
     
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
@@ -35,6 +35,10 @@
     
     <link rel="stylesheet" type="text/css" href="/lib/icheck/skins/minimal/minimal.css" />
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/jquery.Jcrop.css" />
+
+    <link href="lib/com.jquery.code/plugins/jquery.treetable.css" rel="stylesheet" type="text/css" />
+    <link href="lib/com.jquery.code/plugins/jquery.treetable.theme.goorm.css" rel="stylesheet" type="text/css" />   
+
     <link rel="stylesheet" type="text/css" href="/css/goorm.css" />
     <link rel="stylesheet" type="text/css" href="/css/default.css" kind="theme" />
     
@@ -64,7 +68,7 @@
                     <input type='password' id='local_user_pw_input' name='local_user_pw_input' placeholder='PASSWORD' class="form-control common_pw_input" localization_key='password'/>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" id="goorm_local_mode_button" class="btn btn-default" localization_key='login'>Login</button>
+                    <button id="goorm_local_mode_button" class="btn btn-default" localization_key='login'>Login</button>
                 </div>
             </div>
             
@@ -91,7 +95,7 @@
                 
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="my_project">
-						<nav class="toolbar navbar navbar-default" role="navigation">
+						<nav class="navbar navbar-default" role="navigation">
 							<div class="collapse navbar-collapse">
 								<ul class="nav navbar-nav">
 									<div id="project_selector" class='btn-group'>
@@ -699,7 +703,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="goorm_tab_menu" position="right" action="right_slide_show" name="preference.shortcut.window.right_layout_toggle_slide" localization_key="window_right_layout_toggle_slide">
+                                        <a href="#" class="goorm_tab_menu" position="right" action="right_slideshare_show" name="preference.shortcut.window.right_layout_toggle_slide" localization_key="window_right_layout_toggle_slide">
                                             Show Slide
                                             <em class="helptext">Alt + Shift + 4</em>
                                         </a>
@@ -834,6 +838,7 @@
                             
                         </ul>
                     </li>
+
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -855,175 +860,182 @@
             </div>
         </nav>
 
-        <nav id="goorm_main_toolbar" class="toolbar navbar navbar-default" role="navigation">
+        <nav id="goorm_main_toolbar" class="navbar navbar-default" role="navigation">
             <div id="main_toolbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <div id="main_file_toolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_project" tooltip="file_new_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_project" tooltip="file_new_project">
                             <i class="fa fa-folder-o fa-lg"></i>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_file_file" tooltip="file_new_file">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_file_file" tooltip="file_new_file">
                             <i class="fa fa-file-o fa-lg"></i>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_project" tooltip="file_open_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_project" tooltip="file_open_project">
                             <i class="fa fa-folder-open-o fa-lg"></i>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
                             <span class="fa-stack">
                                 <i class="fa fa-stack-1x fa-file-o" style="margin-left: 4px; margin-top:-4px; font-size: 80%;"></i>
                                 <i class="fa fa-stack-1x fa-folder-open-o fa-lg"></i>
                             </span>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
                             <i class="fa fa-save fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
                             <span class="fa-stack">
                                 <i class="fa fa-stack-1x fa-save" style="margin-left: -4px; margin-top:-4px;"></i>
                                 <i class="fa fa-stack-1x fa-save" style="margin-left:3px; margin-top:3px;"></i>
                             </span>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
                             <i class="fa fa-cloud-upload fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_file" tooltip="file_export">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_file" tooltip="file_export">
                             <i class="fa fa-cloud-download fa-lg"></i>
                         </button>
                     </div>
                     <div id="main_edit_toolbar" class="btn-group">
                         
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_find" tooltip="edit_find_and_replace">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_find" tooltip="edit_find_and_replace">
                             <i class="fa fa-search fa-lg"></i> FIND/REPLACE
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="search" tooltip="edit_search">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="search" tooltip="edit_search">
                             <i class="fa fa-binoculars fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
                             <i class="fa fa-wrench fa-lg"></i>
                         </button>
                     </div>
                     <div id="main_project_toolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="run" tooltip="project_run">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="run" tooltip="project_run">
                             <i class="fa fa-play-circle fa-lg"></i> RUN
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_project" tooltip="project_build_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_project" tooltip="project_build_project">
                             <i class="fa fa-cog fa-lg"></i>
                         </button>
                         
                         
                     </div>
                     <div id="main_debug_toolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug" tooltip="debug_start">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug" tooltip="debug_start">
                             <i class="fa fa-bug fa-lg"></i> DEBUG
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_continue" tooltip="debug_continue">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_continue" tooltip="debug_continue">
                             <i class="fa fa-step-forward"></i>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_over" tooltip="debug_step_over">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_over" tooltip="debug_step_over">
                             <i class="fa fa-fast-forward"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_in" tooltip="debug_step_in">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_in" tooltip="debug_step_in">
                             <i class="fa fa-compress fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
                             <i class="fa fa-expand fa-lg"></i>
                         </button>
                     </div>
                     
+                    <div class="btn-group" id="toolbar_more_button_group" style="display:none;">
+                        <button id="toolbar_more_button" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-container="body" action="">
+                            <div class="toolbar_button more_button">
+                                <span>More<b class="caret caret_padding"></b></span>
+                            </div>
+                        </button>
+                    </div>
                 </ul>
             </div>
             <div id="bubble_toolbar" class="bubble_toolbar" style="display:none;">
                 <ul id="bubble_toolbar_sub" class="nav navbar-nav">
                     <div id="bubble_file_toolbar" class="btn-group bubble_file_toolbar" style="display:none;">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_project" tooltip="file_new_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_project" tooltip="file_new_project">
                             <i class="fa fa-folder-o fa-lg"></i>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_file_file" tooltip="file_new_file">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="new_file_file" tooltip="file_new_file">
                             <i class="fa fa-file-o fa-lg"></i>
                         </button>
 
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_project" tooltip="file_open_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_project" tooltip="file_open_project">
                             <i class="fa fa-folder-open-o fa-lg"></i>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="open_file" tooltip="file_open_file">
                             <span class="fa-stack">
                                 <i class="fa fa-stack-1x fa-file-o" style="margin-left: 4px; margin-top:-4px; font-size: 80%;"></i>
                                 <i class="fa fa-stack-1x fa-folder-open-o fa-lg"></i>
                             </span>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_file" tooltip="file_save">
                             <i class="fa fa-save fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="save_as_file" tooltip="file_save_as">
                             <span class="fa-stack">
                                 <i class="fa fa-stack-1x fa-save" style="margin-left: -4px; margin-top:-4px;"></i>
                                 <i class="fa fa-stack-1x fa-save" style="margin-left:3px; margin-top:3px;"></i>
                             </span>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="import_file" tooltip="file_import">
                             <i class="fa fa-cloud-upload fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_file" tooltip="file_export">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="export_file" tooltip="file_export">
                             <i class="fa fa-cloud-download fa-lg"></i>
                         </button>
                     </div>
                     <div id="bubble_edit_toolbar" class="btn-group bubble_edit_toolbar" style="display:none;">
                         
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_find" tooltip="edit_find_and_replace">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_find" tooltip="edit_find_and_replace">
                             <i class="fa fa-search fa-lg"></i> FIND/REPLACE
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="search" tooltip="edit_search">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="search" tooltip="edit_search">
                             <i class="fa fa-binoculars fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="preference" tooltip="edit_preference">
                             <i class="fa fa-wrench fa-lg"></i>
                         </button>
                     </div>
                     <div id="bubble_project_toolbar" class="btn-group bubble_project_toolbar" style="display:none;">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="run" tooltip="project_run">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="run" tooltip="project_run">
                             <i class="fa fa-play-circle fa-lg"></i> RUN
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_project" tooltip="project_build_project">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="build_project" tooltip="project_build_project">
                             <i class="fa fa-cog fa-lg"></i>
                         </button>
                         
                         
                     </div>
                     <div id="bubble_debug_toolbar" class="btn-group bubble_debug_toolbar" style="display:none;">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug" tooltip="debug_start">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug" tooltip="debug_start">
                             <i class="fa fa-bug fa-lg"></i> DEBUG
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_continue" tooltip="debug_continue">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_continue" tooltip="debug_continue">
                             <i class="fa fa-step-forward"></i>
                         </button>
                         
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_over" tooltip="debug_step_over">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_over" tooltip="debug_step_over">
                             <i class="fa fa-fast-forward"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_in" tooltip="debug_step_in">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_in" tooltip="debug_step_in">
                             <i class="fa fa-compress fa-lg"></i>
                         </button>
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
                             <i class="fa fa-expand fa-lg"></i>
                         </button>
                     </div>
                     
                 </ul>
-                <div id="bubble_arrow" class="jfk-bubble-arrow-id jfk-bubble-arrow jfk-bubble-arrowup">
-                    <div class="jfk-bubble-arrowimplbefore"></div>
-                    <div class="jfk-bubble-arrowimplafter"></div>
+                <div id="bubble_arrow" class="goorm-bubble-arrow-id goorm-bubble-arrow goorm-bubble-arrowup">
+                    <div class="goorm-bubble-arrowimplbefore"></div>
+                    <div class="goorm-bubble-arrowimplafter"></div>
                 </div>
             </div>
         </nav>
@@ -1327,12 +1339,12 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_alert" localization_key='dialog_alert'>Alert</h4>
                     </div>
                     <div id="alert_content_container" class="modal-body row"></div>
                     <div class="modal-footer">
-                        <button type="button" id="g_alert_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_alert_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1343,12 +1355,12 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_notice" localization_key='dialog_notice'>Notice</h4>
                     </div>
                     <div id="notice_content_container" class="modal-body row"></div>
                     <div class="modal-footer">
-                        <button type="button" id="g_nt_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_nt_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1359,13 +1371,13 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="confirmation_title" localization_key='dialog_confirmation'>Confirmation</h4>
                     </div>
                     <div id="confirmation_content_container" class="modal-body row"></div>
                     <div class="modal-footer">
-                        <button type="button" id="g_cfrm_btn_no" class="btn btn-default" localization_key='no'>no</button>
-                        <button type="button" id="g_cfrm_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
+                        <button id="g_cfrm_btn_no" class="btn btn-default" localization_key='no'>no</button>
+                        <button id="g_cfrm_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
                     </div>
                 </div>
             </div>
@@ -1376,14 +1388,14 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_confirmation_save" localization_key='dialog_confirmation_save'>Confirmation Save</h4>
                     </div>
                     <div id="confirmation_save_content_container" class="modal-body row"></div>
                     <div class="modal-footer">
-                        <button type="button" id="g_cfrm_s_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
-                        <button type="button" id="g_cfrm_s_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
-                        <button type="button" id="g_cfrm_s_btn_no" class="btn btn-default" localization_key='no'>no</button>
+                        <button id="g_cfrm_s_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
+                        <button id="g_cfrm_s_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
+                        <button id="g_cfrm_s_btn_no" class="btn btn-default" localization_key='no'>no</button>
                     </div>
                 </div>
             </div>
@@ -1394,7 +1406,7 @@
             <div class="modal-dialog" style="width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_survey" localization_key='dialog_survey'>goormIDE Survey</h4>
                     </div>
                     <div class="modal-body">
@@ -1404,8 +1416,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_sv_btn_send" class="btn btn-default" localization_key='send'>send</button>
-                        <button type="button" id="g_sv_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
+                        <button id="g_sv_btn_send" class="btn btn-default" localization_key='send'>send</button>
+                        <button id="g_sv_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
                     </div>
                 </div>
             </div>
@@ -1429,20 +1441,20 @@
                         </div>
                     </div>
                     <div class="modal-footer">  
-                        <button type="button" id="g_lb_btn_hide" class="btn btn-default" localization_key='hide'>Hide</button>
-                        <button type="button" id="g_lb_btn_cancel" class="btn btn-default" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_lb_btn_ok" class="btn btn-default" localization_key='ok'>OK</button>
+                        <button id="g_lb_btn_hide" class="btn btn-default" localization_key='hide'>Hide</button>
+                        <button id="g_lb_btn_cancel" class="btn btn-default" localization_key='cancel'>Cancel</button>
+                        <button id="g_lb_btn_ok" class="btn btn-default" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
         </div>
 
         
-        <div class="modal fade" id="dlg_toast" tabindex="-1" role="dialog" aria-labelledby="modal_toast" aria-hidden="true" data-backdrop="false" data-keyboard="true">
+        <div class="modal fade" id="dlg_toast" tabindex="-1" role="dialog" aria-labelledby="modal_toast" aria-hidden="true" data-backdrop="false">
             <div class="modal-dialog" style="width: 240px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_toast" localization_key='dialog_toast'></h4>
                     </div>
                     <div class="modal-body">
@@ -1455,11 +1467,11 @@
         </div>
 
         
-        <div class="modal fade" id="dlg_new_project" tabindex="-1" role="dialog" aria-labelledby="modal_new_project" aria-hidden="true" data-backdrop="false" data-keyboard="true">
+        <div class="modal fade" id="dlg_new_project" tabindex="-1" role="dialog" aria-labelledby="modal_new_project" aria-hidden="true">
             <div class="modal-dialog" style="width: 900px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_new_project" localization_key='dialog_new_project'>New Project</h4>
                     </div>
                     <div id="project_new" class="modal-body">
@@ -1480,12 +1492,10 @@
                                                 <a href='#' class='list-group-item project_wizard_first_button active' project_type='all'><img src='/images/goorm.core.project/project.png' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key="dialog_new_project_view_all">All</h4><p class='list-group-item-text' class='project_type_description' localization_key="dialog_new_project_view_all_description">View all available<br>project items</p></a>
                                             </div>
                                         </div>
-                                        <div class="col-sm-8" style="height:380px;">
-                                            <div style="width:100%; height:270px; border-bottom:1px solid #999; background-color:#fff; text-align:center; overflow:auto; line-height:12px; padding: 8px;">
-                                                <div class="project_items row" tabindex="-1"></div>
-                                            </div>
-                                            <div class="project_description" style="width:100%; height:77px; background-color:#FFF; overflow:auto;">
-                                                <div style="padding:10px;">
+                                        <div class="col-sm-8 dialog_center" style="height:380px;">
+                                            <div class="project_items row" tabindex="-1"></div>
+                                            <div class="project_description">
+                                                <div class="margin-10px">
                                                     <b localization_key='dialog_new_project_description'>Project Description</b>
                                                     <br/>
                                                     <div id="text_project_description" style="width:100%; padding:5px;"></div>
@@ -1635,12 +1645,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_np_btn_previous" class="btn btn-default" localization_key='previous'>Previous</button>
-                        <button type="button" id="g_np_btn_next" class="btn btn-default" localization_key='next'>Next</button>
-                        <button type="button" id="g_np_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_np_btn_ok_template" class="btn btn-primary g_np_btn_ok" localization_key='create'>Create</button>
+                        <button id="g_np_btn_previous" class="btn btn-default" localization_key='previous'>Previous</button>
+                        <button id="g_np_btn_next" class="btn btn-default" localization_key='next'>Next</button>
+                        <button id="g_np_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_np_btn_ok_template" class="btn btn-primary g_np_btn_ok" localization_key='create'>Create</button>
                         
-                        <button type="button" id="g_np_btn_ok_import" class="btn btn-primary g_np_btn_ok" localization_key='ok'>OK</button>
+                        <button id="g_np_btn_ok_import" class="btn btn-primary g_np_btn_ok" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1651,7 +1661,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_open_project" localization_key='dialog_open_project'>Open Project</h4>
                     </div>
                     <div class="modal-body">
@@ -1692,8 +1702,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1705,7 +1715,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_new_file" localization_key='dialog_new_file'>New File</h4>
                     </div>
                     <div class="modal-body">
@@ -1741,7 +1751,7 @@
 
                         <div id="file_new_dialog_middle" class="row">
                             <div id="file_new_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                            <div id="file_new_files" class="col-md-8"></div>
+                            <div id="file_new_files" class="col-md-8 dialog_center"></div>
                         </div>
                         <div class="row">
                             <label for="file_new_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
@@ -1757,8 +1767,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_nf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_nf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_nf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_nf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1769,7 +1779,7 @@
             <div class="modal-dialog" style="width: 500px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_new_other_file" localization_key='dialog_new_other_file'>New Other File</h4>
                     </div>
                     <div class="modal-body">
@@ -1844,8 +1854,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_nof_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_nof_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_nof_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_nof_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1856,7 +1866,7 @@
             <div class="modal-dialog" style="width: 500px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_new_folder" localization_key='dialog_new_folder'>New Folder</h4>
                     </div>
                     <div class="modal-body" style="max-height: 445px; min-height: 340px;">
@@ -1897,8 +1907,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_nfo_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_nfo_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_nfo_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_nfo_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1909,7 +1919,7 @@
             <div class="modal-dialog" style="width: 500px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_new_untitled_textfile" localization_key='dialog_new_untitled_textfile'>New Untitled Textfile</h4>
                     </div>
                     <div class="modal-body" style="max-height: 445px; min-height: 340px;">
@@ -1945,8 +1955,8 @@
                         <div id="text_new_dir_tree" class='directory_treeview'></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_nut_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_nut_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_nut_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_nut_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -1957,7 +1967,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_open_file" localization_key='dialog_open_file'>Open File</h4>
                     </div>
                     <div class="modal-body">
@@ -1990,7 +2000,7 @@
                         </nav>
                         <div class="row">
                             <div id="file_open_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                            <div id="file_open_files" class="col-md-8"></div>
+                            <div id="file_open_files" class="col-md-8 dialog_center"></div>
                         </div>
                         <div class="row">
                             <label for="file_open_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
@@ -2006,8 +2016,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_of_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_of_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_of_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_of_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2018,7 +2028,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_upload_file" localization_key='dialog_upload_file'>Upload File</h4>
                     </div>
                     <div class="modal-body">
@@ -2052,7 +2062,7 @@
                             </nav>
                             <div id="file_cloud_upload_dialog_middle" class="row">
                                 <div id="file_cloud_upload_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                                <div id="file_cloud_upload_files" class="col-md-8"></div>
+                                <div id="file_cloud_upload_files" class="col-md-8 dialog_center"></div>
                             </div>
                             <input id="file_cloud_upload_project_path" type="hidden" />
                             <table>
@@ -2077,8 +2087,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_uf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_uf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_uf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_uf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2089,7 +2099,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_save_as_file" localization_key='dialog_save_as_file'>Save as...</h4>
                     </div>
                     <div class="modal-body">
@@ -2123,7 +2133,7 @@
 
                         <div id="save_as_dialog_middle" class="row">
                             <div id="file_save_as_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                            <div id="file_save_as_files" class="col-md-8"></div>
+                            <div id="file_save_as_files" class="col-md-8 dialog_center"></div>
 
                             <span class="col-md-3" localization_key='common_filename'>File Name</span>
                             <div class="col-md-9">
@@ -2139,8 +2149,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_saf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_saf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_saf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_saf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2151,7 +2161,7 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_rename_file" localization_key='dialog_rename_file'>Rename File</h4>
                     </div>
                     <div class="modal-body">
@@ -2164,8 +2174,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_rf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_rf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_rf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_rf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2176,7 +2186,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_move_file" localization_key='dialog_move_file'>Move File</h4>
                     </div>
                     <div class="modal-body">
@@ -2209,7 +2219,7 @@
                         </nav>
                         <div id="move_dialog_middle" class="row">
                             <div id="file_move_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                            <div id="file_move_files" class="col-md-8"></div>
+                            <div id="file_move_files" class="col-md-8 dialog_center"></div>
                             
                                 <input type="hidden" id="file_move_ori_path" />
                                 <input type="hidden" id="file_move_ori_file" />
@@ -2218,8 +2228,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_mf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_mf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_mf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_mf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2231,7 +2241,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_import_file" localization_key="file_import">Import File</h4>
                     </div>
                     <div class="modal-body" style="min-min-height:400px;">
@@ -2271,7 +2281,7 @@
                                     <div id="import_dialog_middle">
                                         <div class="row">
                                             <div id="file_import_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                                            <div id="file_import_files" class="col-md-8"></div>
+                                            <div id="file_import_files" class="col-md-8 dialog_center"></div>
                                             
                                         </div>
                                         <div class="row">
@@ -2289,8 +2299,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_if_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_if_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_if_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_if_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2301,7 +2311,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_export_file" localization_key='file_export'>Export File</h4>
                     </div>
                     <div class="modal-body" style="min-min-height:400px;">
@@ -2341,7 +2351,7 @@
                             <div id="file_export_dialog_middle">
                                 <div class="row">
                                     <div id="file_export_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
-                                    <div id="file_export_files" class="col-md-8"></div>
+                                    <div id="file_export_files" class="col-md-8 dialog_center"></div>
                                     
                                 </div>
                                 <div class="row">
@@ -2362,8 +2372,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ef_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_ef_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_ef_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ef_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2374,7 +2384,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_export_project" localization_key='dialog_project_export'>Export Project</h4>
                     </div>
                     <div class="modal-body">
@@ -2439,8 +2449,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ep_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_ep_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_ep_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ep_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2451,7 +2461,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_import_project" localization_key='title_import_project'>Import Project</h4>
                     </div>
                     <div class="modal-body">
@@ -2532,8 +2542,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ip_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_ip_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_ip_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ip_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2544,7 +2554,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_delete_project" localization_key='dialog_project_delete'>Delete Project</h4>
                     </div>
                     <div class="modal-body">
@@ -2588,8 +2598,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_dp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_dp_btn_ok" class="btn btn-primary" localization_key='delete'>Delete</button>
+                        <button id="g_dp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_dp_btn_ok" class="btn btn-primary" localization_key='delete'>Delete</button>
                     </div>
                 </div>
             </div>
@@ -2600,7 +2610,7 @@
             <div class="modal-dialog" style="width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_build_all" localization_key='dialog_build_all'>Build All</h4>
                     </div>
                     <div class="modal-body">
@@ -2611,8 +2621,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ba_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_ba_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_ba_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ba_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2623,24 +2633,24 @@
             <div class="modal-dialog" style="width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_build_project" localization_key='dialog_build_project'>Build Project</h4>
                     </div>
                     <div class="modal-body">
                         <div id="build_project">
                             <div id="build_project_list" class="well well-sm"></div>
-                            <button type="button" id="build_project_select_all" class="btn btn-default">
+                            <button id="build_project_select_all" class="btn btn-default">
                                 <span localization_key="common_select_all">Select All</span>
                             </button>
 
-                            <button type="button" id="build_project_deselect_all" class="btn btn-default">
+                            <button id="build_project_deselect_all" class="btn btn-default">
                                 <span localization_key="common_deselect_all">Deselect All</span>
                             </button>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_bp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_bp_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_bp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_bp_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2651,19 +2661,19 @@
             <div class="modal-dialog" style="width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_build_clean" localization_key='dialog_build_clean'>Build Clean</h4>
                     </div>
                     <div class="modal-body">
                         <div id="build_clean">
                             <div id="build_clean_list" class="well well-sm"></div>
-                            <button type="button" class="btn btn-default" id="build_clean_select_all" localization_key="common_select_all">Select All</button>
-                            <button type="button" class="btn btn-default" id="build_clean_unselect_all" localization_key="common_deselect_all">Deselect All</button>
+                            <button class="btn btn-default" id="build_clean_select_all" localization_key="common_select_all">Select All</button>
+                            <button class="btn btn-default" id="build_clean_unselect_all" localization_key="common_deselect_all">Deselect All</button>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_bc_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_bc_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_bc_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_bc_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2674,15 +2684,15 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_build_configuration" localization_key='dialog_build_configuration'>Build Configuration</h4>
                     </div>
                     <div class="modal-body">
                         <div id="build_configuration"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2701,7 +2711,7 @@
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_find_and_replace" localization_key='title_find_replace'>Find and Replace</h4>
                     </div>
                     <div class="modal-body" style="padding:10px">
@@ -2718,9 +2728,9 @@
 
                             <div class="col-xs-4">
                                 <div class="btn-group btn-group-sm" style="margin-bottom: 13px; width: 100%">
-                                    <button type="button" id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
-                                    <button type="button" id="far_ignore_whitespace" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Ignore WhiteSpace" tooltip="msg_project_ignore_whitespace_guide" data-container="body" tabindex="-1">"  "</button>
-                                    <button type="button" id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
+                                    <button id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
+                                    <button id="far_ignore_whitespace" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Ignore WhiteSpace" tooltip="msg_project_ignore_whitespace_guide" data-container="body" tabindex="-1">"  "</button>
+                                    <button id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
                                 </div>
                                 <div class="btn-group btn-group-sm" style="width: 100%">
                                     <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
@@ -2737,9 +2747,9 @@
                     <div class="modal-footer" style="padding:13px 13px 13px;">
                         
                         
-                        <button type="button" id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
-                        <button type="button" id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
-                        <button type="button" id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
+                        <button id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
+                        <button id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
+                        <button id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
                     </div>
                 </div>
             </div>
@@ -2748,11 +2758,11 @@
         
 
         
-        <div class="modal fade" id="dlg_search" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true" data-backdrop="false" data-keyboard="true">
+        <div class="modal fade" id="dlg_search" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true" data-backdrop="false">
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_open_project" localization_key='dialog_search'>Search</h4>
                     </div>
                     <div class="modal-body" style="padding: 10px">
@@ -2766,9 +2776,9 @@
                             </div>
                             <div class="col-xs-4">
                                 <div class="btn-group btn-group-sm" style="margin-bottom: 3px; width: 100%">
-                                    <button type="button" id="search_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
-                                    <button type="button" id="search_ignore_whitespace" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Ignore WhiteSpace" tooltip="Ignore WhiteSpace" data-container="body" tabindex="-1">"  "</button>
-                                    <button type="button" id="search_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="Use Regular Expression" data-container="body" tabindex="-1">Exp</button>
+                                    <button id="search_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
+                                    <button id="search_ignore_whitespace" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Ignore WhiteSpace" tooltip="Ignore WhiteSpace" data-container="body" tabindex="-1">"  "</button>
+                                    <button id="search_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="Use Regular Expression" data-container="body" tabindex="-1">Exp</button>
                                 </div>
                             </div>
                         </div>
@@ -2776,8 +2786,8 @@
                         
                     </div>
                     <div class="modal-footer" style="padding: 13px 13px 13px">
-                        <button type="button" id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -2788,7 +2798,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_project_property" localization_key='dialog_project_property'>Project Property</h4>
                     </div>
                     <div class="modal-body row">
@@ -3148,8 +3158,8 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_pp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_pp_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_pp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_pp_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -3161,7 +3171,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_help_contents" localization_key='dialog_help_contents'>Help Contents</h4>
                     </div>
                     <div class="modal-body">
@@ -3192,7 +3202,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_hc_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                        <button id="g_hc_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                     </div>
                 </div>
             </div>
@@ -3203,7 +3213,7 @@
             <div class="modal-dialog" style="width: 500px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_help_about" localization_key='dialog_help_about'>About goormIDE</h4>
                     </div>
                     <div class="modal-body">
@@ -3227,7 +3237,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ha_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                        <button id="g_ha_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                     </div>
                 </div>
             </div>
@@ -3238,7 +3248,7 @@
             <div class="modal-dialog" style="width: 600px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_help_license" localization_key='dialog_help_license'>Open Source License</h4>
                     </div>
                     <div class="modal-body">
@@ -3309,7 +3319,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ha_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                        <button id="g_ha_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                     </div>
                 </div>
             </div>
@@ -3320,7 +3330,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_help_bug_report" localization_key='dialog_help_bug_report'>Send Bug Report</h4>
                     </div>
                     <div class="modal-body">
@@ -3364,8 +3374,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_hbr_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_hbr_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_hbr_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_hbr_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -3380,7 +3390,7 @@
             <div class="modal-dialog" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_preference" localization_key='dialog_preference'>Preference</h4>
                     </div>
                     <div class="modal-body">
@@ -3428,6 +3438,7 @@
                                     <li target="Shortcut" style="display:none;">    
                                         <a href="#shortcut_help_tab" data-toggle="tab" localization_key="help" id='shortcut_help'>Help</a>
                                     </li>
+                                    
                                     <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_theme_tab" data-toggle="tab" localization_key="theme" id='shortcut_theme'>Theme</a>
                                     </li>
@@ -3624,8 +3635,8 @@
 
                                         <div class="text-right">
                                             
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="editor_theme_tab" plugin="null">
@@ -3652,8 +3663,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="terminal_setting_tab" plugin="null">
@@ -3737,8 +3748,8 @@
 
                                         <div class="text-right">
                                             
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     
@@ -3818,8 +3829,8 @@
                                             
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="shortcut_edit_tab" class="shortcut_tab" plugin="null">
@@ -3930,8 +3941,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="shortcut_project_tab" class="shortcut_tab" plugin="null">
@@ -3968,8 +3979,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="shortcut_debug_tab" class="shortcut_tab" plugin="null">
@@ -4013,8 +4024,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     
@@ -4099,8 +4110,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="shortcut_help_tab" plugin="null">
@@ -4114,10 +4125,11 @@
                                             </div>
                                         </div>
                                         <div class="text-right">    
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
+                                    
                                     <div class="tab-pane fade" id="shortcut_theme_tab" plugin="null">
                                         <div class="shortcut_tab row">
                                             <div class="row">
@@ -4141,8 +4153,8 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" class="btn btn-default restore_default" localization_key="default">Default</button>
-                                            <button type="button" class="btn btn-default apply" localization_key="apply">Apply</button>
+                                            <button class="btn btn-default restore_default" localization_key="default">Default</button>
+                                            <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
                                     
@@ -4432,8 +4444,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_prf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_prf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_prf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_prf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -4444,20 +4456,20 @@
             <div class="modal-dialog" style="width: 300px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_auth_find_info" localization_key='dialog_auth_find_info'>Find Information</h4>
                     </div>
                     <div class="modal-body">
 
                         <div id="goorm_find_info_container" class="find_info_container">
-                            <button type="button" id="find_info_id_bt" class="btn btn-default goorm_find_info_id_bt" data-dismiss="modal" localization_key='forgot_id'>Forgot ID</button>
-                            <button type="button" id="find_info_pw_bt" class="btn btn-default goorm_find_info_pw_bt" localization_key='forgot_pw'>Forgot PW</button>
+                            <button id="find_info_id_bt" class="btn btn-default goorm_find_info_id_bt" data-dismiss="modal" localization_key='forgot_id'>Forgot ID</button>
+                            <button id="find_info_pw_bt" class="btn btn-default goorm_find_info_pw_bt" localization_key='forgot_pw'>Forgot PW</button>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_afi_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_afi_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_afi_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_afi_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -4468,7 +4480,7 @@
             <div class="modal-dialog" style="width: 450px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_auth_find_info_id" localization_key='dialog_auth_find_info_id'>Find ID Information</h4>
                     </div>
                     <div class="modal-body">
@@ -4489,8 +4501,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_afi_id_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_afi_id_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_afi_id_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_afi_id_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -4501,7 +4513,7 @@
             <div class="modal-dialog" style="width: 450px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_auth_find_info_pw" localization_key='dialog_auth_find_info_pw'>Find PW Information</h4>
                     </div>
                     <div class="modal-body">
@@ -4522,8 +4534,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_afi_pw_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_afi_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_afi_pw_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_afi_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -4534,7 +4546,7 @@
             <div class="modal-dialog" style="width: 600px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_auth_profile" localization_key='dialog_auth_profile'>Profile</h4>
                     </div>
                     <div class="modal-body">
@@ -4542,8 +4554,8 @@
                             <div class="profile_media_container col-md-3 text-center">
                                 <img src="" alt="">
                                 <div class="profile_button_group btn-group">
-                                    <button type="button" id="g_ap_btn_profile_edit" class="btn btn-default" data-dismiss="modal" localization_key='edit'>Edit</button>
-                                    <button type="button" id="g_ap_btn_profile_delete" class="btn btn-default" data-dismiss="modal" localization_key='delete'>Delete</button>
+                                    <button id="g_ap_btn_profile_edit" class="btn btn-default" data-dismiss="modal" localization_key='edit'>Edit</button>
+                                    <button id="g_ap_btn_profile_delete" class="btn btn-default" data-dismiss="modal" localization_key='delete'>Delete</button>
                                 </div>
                             </div>
                             <div id="goorm_profile_container" class="profile_container col-md-9">
@@ -4587,11 +4599,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_ap_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_ap_pw_btn_mdf" class="btn btn-primary" localization_key='modify'>Modify</button>
-                        <button type="button" id="g_ap_pw_btn_mdf_act" class="btn btn-primary" localization_key='account_modify'>Modify Account</button>
-                        <button type="button" id="g_ap_add_fri" class="btn btn-primary" localization_key='dictionary_add_friend'>Add Friend</button>
-                        <button type="button" id="g_ap_del_fri" class="btn btn-primary" localization_key='dictionary_unfriend'>Unfriend</button>
+                        <button id="g_ap_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ap_pw_btn_mdf" class="btn btn-primary" localization_key='modify'>Modify</button>
+                        <button id="g_ap_pw_btn_mdf_act" class="btn btn-primary" localization_key='account_modify'>Modify Account</button>
+                        <button id="g_ap_add_fri" class="btn btn-primary" localization_key='dictionary_add_friend'>Add Friend</button>
+                        <button id="g_ap_del_fri" class="btn btn-primary" localization_key='dictionary_unfriend'>Unfriend</button>
                     </div>
                 </div>
             </div>
@@ -4602,7 +4614,7 @@
             <div class="modal-dialog" style="width: 700px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" localization_key='dialog_auth_profile_image'>Profile Image</h4>
                     </div>
                     <div class="modal-body">
@@ -4637,7 +4649,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="upload_profile_image" type="button" class="btn btn-primary"localization_key='upload'>Upload</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
                     </div>
                     <canvas id="dummy_canvas" width="120" height="120" style="display:none;"></canvas>
                 </div>
@@ -4649,7 +4661,7 @@
             <div class="modal-dialog" style="width: 550px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_auth_signup" localization_key='dialog_auth_signup'>Register</h4>
                     </div>
                     <div class="modal-body">
@@ -4693,8 +4705,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="g_as_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button type="button" id="g_as_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_as_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_as_pw_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -4738,7 +4750,7 @@
                 <h4 class="modal-title" id="modal_help_shortcuts" localization_key='dialog_help_shortcuts'>goormIDE Shortcuts</h4>
             </div>
             <div class="modal-body" data-dismiss="modal">
-                <div class="row">
+                <div class="row"> 
                     <div class="col-md-4">
                         <h5 localization_key="file">File</h5>
                         <span name="preference.shortcut.file.new_project" localization_key="file_new_project">
@@ -4995,6 +5007,8 @@
                                 View All Shortcuts
                                 <em class="helptext">Ctrl + H</em>    
                             </span>
+
+                            
                         </div>
 
                     </div>
@@ -5217,7 +5231,9 @@
     <script type="text/javascript" src="/lib/com.jqueryui.code/jquery.debounce.js"></script>
     <script type="text/javascript" src="/lib/com.jqueryui.code/jquery.Jcrop.min.js"></script>
 
-    <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/com.jquery.code/plugins/jquery.treetable.js"></script>  
+
+    <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/js/bootstrap-formhelpers.min.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/js/bootstrap-tour.js"></script>
 
@@ -5327,7 +5343,7 @@
     <script type="text/javascript" src="/modules/goorm.core.menu/menu.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.menu/menu.action.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.menu/menu.context.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.edit/edit.js"></script></script>
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.dialog/dialog.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.dialog/dialog.confirmation.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.dialog/dialog.confirmation.save.js"></script>
@@ -5415,8 +5431,11 @@
     <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.project.list.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.project.message.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.workspace.js'></script>
-    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.slideshare.js'></script>
-    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.slideshare.canvas.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.docs.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.docs.slideshare.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.docs.slideshare.canvas.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.docs.pdf.js'></script>
+    <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.docs.pdf.canvas.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.history.js'></script>
     <script type='text/javascript' src='/modules/goorm.core.collaboration/collaboration.editing.js'></script>
 

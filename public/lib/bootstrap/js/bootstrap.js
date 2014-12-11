@@ -1084,7 +1084,7 @@ if (typeof jQuery === 'undefined') {
       var doAnimate = $.support.transition && animate
 
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-        .prependTo(this.$element)
+        .prependTo('body')
         .on('click.dismiss.bs.modal', $.proxy(function (e) {
           if (e.target !== e.currentTarget) return
           this.options.backdrop == 'static'
@@ -1132,7 +1132,8 @@ if (typeof jQuery === 'undefined') {
   Modal.prototype.adjustBackdrop = function () {
     this.$backdrop
       .css('height', 0)
-      .css('height', this.$element[0].scrollHeight)
+      .css('height', $('body').height())
+      //.css('height', this.$element[0].scrollHeight)
   }
 
   Modal.prototype.adjustDialog = function () {

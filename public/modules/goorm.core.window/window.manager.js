@@ -423,7 +423,6 @@ goorm.core.window.manager = {
 					this.add(filepath, filename, filetype, editor, options, callback);
 
 					if (this.maximized) {
-						console.log("open_file_already_opened");
 						this.window[this.window.length - 1].maximize();
 					}
 
@@ -1246,19 +1245,21 @@ goorm.core.window.manager = {
 						var workspace_height = parseInt($(this.workspace).css('height'));
 						var workspace_width = parseInt($(this.workspace).css('width'));
 
-						var is_maxmized = this.maximized;
+// 						var is_maxmized = this.maximized;
 
 						$(this.window).each(function(i) {
 							// move window when workspace too small
 							// window relocation
-							if (is_maxmized) {
+// 							if (is_maxmized) {
 								// this.move(workspace_top + (20*i), workspace_left + (20*i));
-								var top = workspace_top + (20 * i);
-								var left = workspace_left + (20 * i);
-								$(this.panel).parent().css('top', workspace_top, 'left', workspace_left);
-								this.top = top;
-								this.left = left;
-							} else {
+// 								var top = workspace_top + (20 * i);
+// 								var left = workspace_left + (20 * i);								
+								
+// 								$(this.panel).parent().css('top', workspace_top, 'left', workspace_left);
+								
+// 								this.top = top;
+// 								this.left = left;
+// 							} else {
 								if (workspace_height < (this.top + this.height)) {
 									if (workspace_height > this.height) {
 										this.move((workspace_height - (this.height + 12)), this.left);
@@ -1273,7 +1274,7 @@ goorm.core.window.manager = {
 										this.move(this.top, 0); //if this make bug, then call to chw
 									}
 								}
-							}
+// 							}
 
 							// tab resize
 							this.tab.resize();

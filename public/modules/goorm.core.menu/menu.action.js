@@ -851,11 +851,11 @@ goorm.core.menu.action = {
 				terminal = core.module.layout.terminal;
 			}
 
-			if (core.module.project.is_running && !$('button[action="stop"]').hasClass('debug_not_active')) {
+			if (core.module.project.is_running && !$('button[action="stop"]').hasClass('debug_inactive')) {
 				terminal.command_ready = true;
 				terminal.send_command(cmd);
 				core.module.project.is_running = false;
-				$('button[action="stop"]').addClass('debug_not_active');
+				$('button[action="stop"]').addClass('debug_inactive');
 				$('button[action="stop"]').attr('isdisabled', 'disabled');
 				$('a[action="stop"]').parent().addClass('disabled')
 			}
@@ -937,7 +937,7 @@ goorm.core.menu.action = {
 		//Main Menu : Debug
 		$("[action=debug]").off("click").tooltip();
 		$("[action=debug]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 
@@ -946,7 +946,7 @@ goorm.core.menu.action = {
 
 		$("[action=debug_continue]").off("click").tooltip();
 		$("[action=debug_continue]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 
@@ -955,7 +955,7 @@ goorm.core.menu.action = {
 
 		$("[action=debug_terminate]").off("click").tooltip();
 		$("[action=debug_terminate]").click(function(event, is_closed) {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 
@@ -964,7 +964,7 @@ goorm.core.menu.action = {
 
 		$("[action=debug_step_over]").off("click").tooltip();
 		$("[action=debug_step_over]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 
@@ -973,7 +973,7 @@ goorm.core.menu.action = {
 
 		$("[action=debug_step_in]").off("click").tooltip();
 		$("[action=debug_step_in]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 
@@ -982,7 +982,7 @@ goorm.core.menu.action = {
 
 		$("[action=debug_step_out]").off("click").tooltip();
 		$("[action=debug_step_out]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_not_active").length || $(this).attr("isdisabled")) {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
 

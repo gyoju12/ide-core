@@ -375,7 +375,7 @@ goorm.core.project = {
 	send_run_cmd: function() {
 		//for stop button
 		this.is_running = true;
-		$('button[action="stop"]').removeClass('debug_not_active');
+		$('button[action="stop"]').removeClass('debug_inactive');
 		$('button[action="stop"]').removeAttr('isdisabled', 'disabled');
 		$('a[action="stop"]').parent().removeClass('disabled');
 		

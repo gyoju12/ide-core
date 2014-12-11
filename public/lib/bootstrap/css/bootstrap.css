@@ -2064,6 +2064,8 @@ caption {
   text-align: left;
 }
 th {
+  font-weight: normal;
+  color: #777;
   text-align: left;
 }
 .table {
@@ -3850,7 +3852,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 0;
   margin-bottom: 5px;
   margin-left: 5px;
-  border: 1px solid transparent;
 }
 @media (min-width: 768px) {
   .navbar {
@@ -4207,9 +4208,21 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-right: 1px solid #ddd;
 }
 .navbar-default .navbar-nav > .btn-group:last-child {
+  padding-right: 0;
   border-right: none;
 }
 .navbar-default .navbar-nav > .btn-group .btn-default {
+  border: none;
+}
+.navbar-default .navbar-nav > .input-group {
+  padding-right: 3px;
+  color: #555;
+  border-right: 1px solid #ddd;
+}
+.navbar-default .navbar-nav > .input-group:last-child {
+  border-right: none;
+}
+.navbar-default .navbar-nav > .input-group .btn-default {
   border: none;
 }
 .navbar-default .navbar-toggle {
@@ -4910,7 +4923,7 @@ a.thumbnail.active {
 .list-group-item {
   position: relative;
   display: block;
-  padding: 5px 5px;
+  padding: 8px;
   margin-bottom: -1px;
   background-color: #fff;
 }
@@ -5510,10 +5523,6 @@ button.close {
        -o-transform: translate(0, 0);
           transform: translate(0, 0);
 }
-.modal-open .modal {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 .modal-dialog {
   position: relative;
   width: auto;
@@ -5536,6 +5545,7 @@ button.close {
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1000;
   background-color: #000;
 }
 .modal-backdrop.fade {

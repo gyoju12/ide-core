@@ -107,6 +107,7 @@ module.exports = {
 	},
 
 	run: function (req, res) {
+		console.log(req);
 		var plugin = require("../../plugins/" + req.plugin + "/modules/");
 		plugin.run(req, res);
 	},

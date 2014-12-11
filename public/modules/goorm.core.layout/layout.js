@@ -366,7 +366,7 @@ goorm.core.layout = {
 		this.tab_manager.update();
 
 		//stop button disabled
-		$('button[action="stop"]').addClass('debug_not_active');
+		$('button[action="stop"]').addClass('debug_inactive');
 		$('button[action="stop"]').attr('isdisabled', 'disabled');
 		$('a[action="stop"]').parent().addClass('disabled');
 		// console.log("layout.js:init();");
@@ -618,23 +618,21 @@ goorm.core.layout = {
 
 		var $more_button = $('#toolbar_more_button_group');
 
-		var toolbars = $('#goorm_main_toolbar #main_toolbar ul.navbar-nav').children();
-		var bubble_toolbars = $('#goorm_main_toolbar #bubble_toolbar ul.navbar-nav').children();
+		var toolbars = $('#main_toolbar ul.navbar-nav').children();
+		var bubble_toolbars = $('#bubble_toolbar ul.navbar-nav').children();
 
-		var main_toolbar_width = $('#goorm_main_toolbar').width();
+		var main_toolbar_width = $('#main_toolbar').width() - 90;
 		var current_toolbar_width = 0;
 
 		var is_hide = false;
-
-
 
 		for (var i = 0; i < toolbars.length - 1; i++) { // exclude more-button
 			var $toolbar = $(toolbars.get(i));
 			var $bubble_toolbar = $(bubble_toolbars.get(i));
 
-			current_toolbar_width += ($toolbar.outerWidth() + 15); // margin
-
-			if (current_toolbar_width + 63 > main_toolbar_width) {
+			current_toolbar_width += $toolbar.width(); // margin
+			
+			if (current_toolbar_width > main_toolbar_width) {
 				$toolbar.fadeOut({
 					'duration': this.more_toolbar_option.duration
 				});

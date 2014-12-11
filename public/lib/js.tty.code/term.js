@@ -374,8 +374,7 @@ Terminal.prototype.bindKeys = function(element) {
   
   
   parent.keydown(function(ev){
-
-    if(core.status.focus_obj.terminal_name == "debug" && ev.keyCode >= 117 && ev.keyCode <= 120){
+    if(core.status.focus_obj.terminal_name == "debug" && ((ev.keyCode >= 117 && ev.keyCode <= 120) || (ev.ctrlKey && ev.shiftKey && ev.keyCode == 89))){
         $(document).trigger('keydown', ev);
         return;
     }

@@ -27,7 +27,7 @@ goorm.core.dialog.wizard.prototype = {
 		var goorm_dialog_container = $("#" + self.id);
 
 		goorm_dialog_container.draggable({});
-		goorm_dialog_container.css("overflow", "hidden");
+// 		goorm_dialog_container.css("overflow", "hidden");
 
 		goorm_dialog_container.on("shown.bs.modal", this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._new.js)
 		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
@@ -166,7 +166,7 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		});
 
-		var next_button = option ? ((option.next_button != undefined) ? option.next_button : true) : true;
+		var next_button = option ? ((option.next_button !== undefined) ? option.next_button : true) : true;
 
 		self.show_previous_button(false);
 		self.show_next_button(next_button);

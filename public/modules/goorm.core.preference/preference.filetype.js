@@ -266,7 +266,6 @@ goorm.core.preference.filetype = {
 		var self = this;
 
 		var data = JSON.parse(external_json['public']['configs']['filetype']['filetype.json']);
-
 		core.filetypes = data;
 
 		// setTimeout(function(){

@@ -4,11 +4,11 @@
  * http://www.goorm.io/intro/License
  * email : contact@goorm.io
  *       : sungtae.ryu@goorm.io
- * project_name : goormIDE 
+ * project_name : goormIDE
  * version: 2.0.0
  **/
- 
- 
+
+
 goorm.plugin.cpp = {
 	/*
 		Properties
@@ -23,7 +23,7 @@ goorm.plugin.cpp = {
 	/*
 		Methods
 	 */
-	init: function () {
+	init: function() {
 		var self = this;
 
 		core.module.project.add({
@@ -32,64 +32,63 @@ goorm.plugin.cpp = {
 			'img': '/goorm.plugin.cpp/images/cpp.png',
 			'items': [{
 				'key': 'c_console_project',
-				'detail_type' : 'c',
+				'detail_type': 'c',
 				'img': '/goorm.plugin.cpp/images/cpp_console.png'
-			},
-			{
+			}, {
 				'key': 'cpp_console_project',
-				'detail_type' : 'cpp',
+				'detail_type': 'cpp',
 				'img': '/goorm.plugin.cpp/images/cpp_console.png'
 			}]
 		});
-		
+
 		// this.add_project_item();
 		// This is not used. 
 		//
 		// this.cErrorFilter = /[A-Za-z]* error: [A-Za-z0-9 '",:_\\\/\.\+\-\*\#\@]*/;
 		// this.cWarningFilter = /[A-Za-z]* warning: [A-Za-z0-9 '",:_\\\/\.\+\-\*\#\@]*/;
 		// this.lineFilter = /:[0-9]*:/;
-		
+
 		// this.add_mainmenu();
 		// this.add_menu_action();
-		
+
 		this.linter = core.module.plugin_linter;
 		this.linter.init(self.name);
-		
+
 		this.preference = core.preference.plugins['goorm.plugin.cpp'];
 		// $(core).on("set_default_compile_type", function(){
 		// 	self.compiler_list_up($("#preference_cpp_tab").find("select[name='plugin.cpp.compiler_type']"));
 		// 	self.compiler_list_up($("#project_cpp_tab").find("select[name='plugin.cpp.compiler_type']"));
 		// });
 	},
-	
+
 	new_project: function(data) {
-		
-		
+
+
 		var send_data = {
-			"plugin" : "goorm.plugin.cpp",
-			"data" : data
+			"plugin": "goorm.plugin.cpp",
+			"data": data
 		};
 
 		if (core.env.os == 'darwin') data.plugins["goorm.plugin.cpp"]["plugin.cpp.compiler_type"] = "clang++";
 		else data.plugins["goorm.plugin.cpp"]["plugin.cpp.compiler_type"] = "g++";
 
-		core.module.project.create(send_data, function(result){
-			
+		core.module.project.create(send_data, function(result) {
+
 			// update goorm.manifest file
-			core.dialog.project_property.load_property(core.status.current_project_path, function(res){
+			core.dialog.project_property.load_property(core.status.current_project_path, function(res) {
 				// setTimeout(function(){
-					var property = core.property.plugins['goorm.plugin.cpp'];
+				var property = core.property.plugins['goorm.plugin.cpp'];
 
-					var filepath = core.status.current_project_path + '/' + property['plugin.cpp.source_path'];
-					var filename = property['plugin.cpp.main']+'.'+data.project_detailed_type;
-					var filetype = data.project_detailed_type;
+				var filepath = core.status.current_project_path + '/' + property['plugin.cpp.source_path'];
+				var filename = property['plugin.cpp.main'] + '.' + data.project_detailed_type;
+				var filetype = data.project_detailed_type;
 
-					core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
-					core.module.layout.project_explorer.refresh();
-					// $(core).trigger("on_project_open");
+				core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
+				core.module.layout.project_explorer.refresh();
+				// $(core).trigger("on_project_open");
 				// }, 500);
-				
-				
+
+
 			});
 		});
 	},
@@ -97,31 +96,33 @@ goorm.plugin.cpp = {
 	run: function(options, callback) {
 		var self = this;
 		var property = options.property;
-		
+
 		var classpath = property['plugin.cpp.build_path'];
 		var classname = property['plugin.cpp.main'];
 
 		var workspace = core.preference.workspace_path;
 
-		var absolute_path=workspace+core.status.current_project_path+"/"+classpath+classname;
+		var absolute_path = workspace + core.status.current_project_path + "/" + classpath + classname;
 
 		
 
 		var is_run_success = true;
-		if(property['plugin.cpp.compiler_type'] === "i586-mingw32-gcc") {
-			$("#download_frame").css('display','none');
+		if (property['plugin.cpp.compiler_type'] === "i586-mingw32-gcc") {
+			$("#download_frame").css('display', 'none');
 			$("#download_frame").attr('src', "download/exe_file/?file=" + absolute_path + ".exe");
 			return;
 		}
-		
-		core.module.project.run({'cmd': 'clear;'+absolute_path}, function(result){
+
+		core.module.project.run({
+			'cmd': 'clear;' + absolute_path
+		}, function(result) {
 			core.module.layout.select('terminal'); // jeongmin: show terminal tab
 			core.module.toast.show(core.module.localization.msg['alert_plugin_check_terminal']);
 			callback();
-		});		
+		});
 	},
-	
-	debug: function (options) {
+
+	debug: function(options) {
 		var path = options.path;
 		var self = this;
 		var property = options.property;
@@ -140,53 +141,52 @@ goorm.plugin.cpp = {
 			'prompt': /\(gdb\) $/,
 			'endstr': /exited normally/
 		});
-		
+
 		// debug tab init
 		// table_variable.fnClearTable();
 		debug_module.clear_table();
-		
+
 		this.breakpoints = [];
-		
+
 		// debug start!
 		var send_data = {
-				"plugin" : "goorm.plugin.cpp",
-				"path" : path,
-				"mode" : "init"
+			"plugin": "goorm.plugin.cpp",
+			"path": path,
+			"mode": "init"
 		};
-		
+
 		// debug command
 		//
 
-		if(debug_module.debug_terminal.index != -1) {
+		if (debug_module.debug_terminal.index != -1) {
 			self.debug_cmd({
 				property: property,
 				cmd: send_data
 			});
-		}
-		else {
-			$(debug_module.debug_terminal).one("terminal_ready."+debug_module.debug_terminal.terminal_name, function(){
+		} else {
+			$(debug_module.debug_terminal).one("terminal_ready." + debug_module.debug_terminal.terminal_name, function() {
 				self.debug_cmd({
 					property: property,
 					cmd: send_data
 				});
 			});
 		}
-		
+
 		$(debug_module).off("value_changed");
-		$(debug_module).on("value_changed",function(e, data){
+		$(debug_module).on("value_changed", function(e, data) {
 			var debug_module = core.module.debug;
 			var debug_terminal = debug_module.debug_terminal;
 			core.module.terminal.terminal.focus();
-			debug_terminal.send_command("p "+data.variable+"="+data.value+'\r', debug_module.debug_prompt);
+			debug_terminal.send_command("p " + data.variable + "=" + data.value + '\r', debug_module.debug_prompt);
 		});
 
 		// debug terminate
 		// off is not working - deleted -- heeje
 		$(debug_module).off("debug_end");
-		$(debug_module).one("debug_end",function(){
+		$(debug_module).one("debug_end", function() {
 			// table_variable.fnClearTable();
 			debug_module.clear_table();
-			
+
 			// clear highlight lines
 			var windows = core.module.layout.workspace.window_manager.window;
 			for (var i in windows) {
@@ -196,119 +196,122 @@ goorm.plugin.cpp = {
 				}
 			}
 
-			setTimeout(function(){
+			setTimeout(function() {
 				// self.debug_cmd({mode:'terminate'});
 				core.module.debug.debug_terminate();
 			}, 500);
 		});
 	},
-	
+
 	/*
 	 * 디버깅 명령어 전송
 	 */
-	debug_cmd: function (options ,callback) {
+	debug_cmd: function(options, callback) {
 		/*
 		 * cmd = { mode, project_path }
 		 */
-		var self=this;
+		var self = this;
 		var cmd = options.cmd;
 		var property = options.property;
 		// var table_variable = core.module.debug.table_variable;
-		
+
 		var workspace = core.preference.workspace_path;
-		var projectName = core.status.current_project_path+"/";
+		var projectName = core.status.current_project_path + "/";
 		var mainPath = property['plugin.cpp.main'];
 		var buildPath = property['plugin.cpp.build_path'];
 		var debug_module = core.module.debug;
 		var debug_terminal = debug_module.debug_terminal;
-		
+
 		//flush command before run actually (does not typing flush without typing) --heeje
 		if (debug_terminal) {
 			switch (cmd.mode) {
-			case 'init':
-				debug_terminal.flush_command_queue();
-				debug_terminal.send_command("gdb "+workspace+projectName+buildPath+mainPath+" --quiet\r");
-				self.set_breakpoints();
-				debug_terminal.send_command("run\r", debug_module.debug_prompt, function(){
+				case 'init':
 					debug_terminal.flush_command_queue();
-					self.debug_get_status();
-				});
-				break;
-			case 'continue':
-				debug_terminal.flush_command_queue();
-				self.set_breakpoints();
-				debug_terminal.send_command("continue\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); 
-				break;
-			case 'terminate':
-				debug_terminal.flush_command_queue();
-				debug_terminal.send_command("quit\r", debug_module.debug_prompt, function(data){
-				});
-				setTimeout(function(){
-					debug_terminal.send_command("y\r", /(Exit|Quit) anyway\?/);
+					debug_terminal.send_command("gdb " + workspace + projectName + buildPath + mainPath + " --quiet\r");
+					self.set_breakpoints();
+					debug_terminal.send_command("run\r", debug_module.debug_prompt, function() {
+						debug_terminal.flush_command_queue();
+						self.debug_get_status();
+					});
+					break;
+				case 'continue':
 					debug_terminal.flush_command_queue();
-					if(callback)
-						callback();
-				}, 500);
-				// table_variable.fnClearTable();
-				core.module.debug.clear_table();
-				
-				// clear highlight lines
-				var windows = core.module.layout.workspace.window_manager.window;
-				for (var i in windows) {
-					var window = windows[i];
-					if (window.project === debug_module.debug_current_project) {
-						window.editor && window.editor.clear_highlight();
+					self.set_breakpoints();
+					debug_terminal.send_command("continue\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'terminate':
+					debug_terminal.flush_command_queue();
+					debug_terminal.send_command("quit\r", debug_module.debug_prompt, function(data) {});
+					setTimeout(function() {
+						debug_terminal.send_command("y\r", /(Exit|Quit) anyway\?/);
+						debug_terminal.flush_command_queue();
+						if (callback)
+							callback();
+					}, 500);
+					// table_variable.fnClearTable();
+					core.module.debug.clear_table();
+
+					// clear highlight lines
+					var windows = core.module.layout.workspace.window_manager.window;
+					for (var i in windows) {
+						var window = windows[i];
+						if (window.project === debug_module.debug_current_project) {
+							window.editor && window.editor.clear_highlight();
+						}
 					}
-				}
-				break;
-			case 'step_over':
-				debug_terminal.flush_command_queue();
-				self.set_breakpoints();
-				debug_terminal.send_command("next\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			case 'step_in':
-				debug_terminal.flush_command_queue();
-				self.set_breakpoints();
-				debug_terminal.send_command("step\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			case 'step_out':
-				debug_terminal.flush_command_queue();
-				self.set_breakpoints();
-				debug_terminal.send_command("finish\r", debug_module.debug_prompt, function(){
-					self.debug_get_status();
-				}); break;
-			default : break;
+					break;
+				case 'step_over':
+					debug_terminal.flush_command_queue();
+					self.set_breakpoints();
+					debug_terminal.send_command("next\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'step_in':
+					debug_terminal.flush_command_queue();
+					self.set_breakpoints();
+					debug_terminal.send_command("step\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				case 'step_out':
+					debug_terminal.flush_command_queue();
+					self.set_breakpoints();
+					debug_terminal.send_command("finish\r", debug_module.debug_prompt, function() {
+						self.debug_get_status();
+					});
+					break;
+				default:
+					break;
 			}
-		}
-		else {
+		} else {
 			if (callback) callback();
 		}
 	},
-	
-	debug_get_status: function(){
+
+	debug_get_status: function() {
 		var self = this;
 		var debug_module = core.module.debug;
-		debug_module.debug_terminal.send_command("where\r", debug_module.debug_prompt, function(terminal_data){
+		debug_module.debug_terminal.send_command("where\r", debug_module.debug_prompt, function(terminal_data) {
 			self.set_currentline(terminal_data);
 		});
 
 		// Timing Problem by nys
 		//
-		setTimeout(function(){
-			core.module.debug.debug_terminal.send_command("info locals\r", debug_module.debug_prompt, function(local_terminal_data){
+		setTimeout(function() {
+			debug_module.debug_terminal.send_command("info locals\r", debug_module.debug_prompt, function(local_terminal_data) {
 				self.set_debug_variable(local_terminal_data);
+				debug_module.refresh_treetable(); // jeongmin: apply tree table
 			});
 		}, 500)
 	},
-	
-	set_currentline: function(terminal_data){
+
+	set_currentline: function(terminal_data) {
 		var self = this;
 		var lines = terminal_data;
-		
+
 		// clear highlight lines
 		var windows = core.module.layout.workspace.window_manager.window;
 		var debug_module = core.module.debug;
@@ -320,62 +323,112 @@ goorm.plugin.cpp = {
 			}
 		}
 
-			if(lines == '') return;
-			// 현재 라인 처리
-			var regex = /at ((.*)\/)?(.*):(\d+)/;
-			
-			if(regex.test(lines)) {
-				//console.log(lines);
-				var match = lines.match(regex);
+		if (lines == '') return;
+		// 현재 라인 처리
+		var regex = /at ((.*)\/)?(.*):(\d+)/;
 
-				var filepath = match[2];
-				var filename = match[3];
-				var line_number = match[4];
-				
-				var windows = core.module.layout.workspace.window_manager.window;
-								
-				for (var j=0; j<windows.length; j++) {
-					var window = windows[j];
-					
-					if (window.project === debug_module.debug_current_project 
-							&& window.filename === filename){
-						
-						if(typeof(line_number) == "string") line_number = parseInt(line_number);
+		if (regex.test(lines)) {
+			//console.log(lines);
+			var match = lines.match(regex);
 
-						if(filepath && filepath.search(window.filepath.substring(0, window.filepath.length-1)) > -1) {
-							window.editor.highlight_line(line_number-1);
-						}
-						else if (!filepath) {
-							window.editor.highlight_line(line_number-1);
-						}
+			var filepath = match[2];
+			var filename = match[3];
+			var line_number = match[4];
+
+			var windows = core.module.layout.workspace.window_manager.window;
+
+			for (var j = 0; j < windows.length; j++) {
+				var window = windows[j];
+
+				if (window.project === debug_module.debug_current_project && window.filename === filename) {
+
+					if (typeof(line_number) == "string") line_number = parseInt(line_number);
+
+					if (filepath && filepath.search(window.filepath.substring(0, window.filepath.length - 1)) > -1) {
+						window.editor.highlight_line(line_number - 1);
+					} else if (!filepath) {
+						window.editor.highlight_line(line_number - 1);
 					}
 				}
 			}
+		}
 	},
 
-	set_debug_variable: function(terminal_data){
+	set_debug_variable: function(terminal_data) {
 		var self = this;
 		var lines = terminal_data.split('\n');
 
-		$.each(lines, function(i,o){
-			var word = o.slice(o.indexOf(" = ")+1, o.length);
-			
-			if(/^=/.test(word) || /gdb/.test(word)){}
-			else{
-				lines[parseInt(i)-1] += o;
-				delete lines[parseInt(i)];
-			}
-		});
+		// $.each(lines, function(i,o){
+		// 	var word = o.slice(o.indexOf(" = ")+1, o.length);
+
+		// 	if(/^=/.test(word) || /gdb/.test(word)){}
+		// 	else{
+		// 		lines[parseInt(i)-1] += o;
+		// 		delete lines[parseInt(i)];
+		// 	}
+		// });
 		self.locals = {};
 
-		var debug_module = core.module.debug;
+		// var debug_module = core.module.debug;
 		// var table_variable = debug_module.table_variable;
 
 
-		self.start(lines);
+		self.start(this.join_struct(lines)); // jeongmin: if there is struct, join it for expressing struct rightly
 	},
-	
-	set_breakpoints: function(){
+
+	// join splitted data as struct. Jeong-Min Im.
+	// lines: splitted data. 
+	// join_with: join splitted data with some string/character.
+	// return: variables list
+	join_struct: function(lines, join_with) {
+		var variables = []; // variables that is collected from splitted lines
+		var opened = 0; // number of {. Means start of struct
+		var object = ''; // joined string of struct
+
+		join_with = join_with || ''; // default: ''
+
+		// close struct. Add }. Jeong-Min Im.
+		// o: current splitted line
+		function closing(o) {
+			if (o.indexOf('}') > -1) { // means it's closing time
+				opened--; // it's closed, so opening {} decreases
+
+				if (opened == 0) { // struct is completed
+					variables.push(object); // add struct to variables list
+					object = ''; // initialize
+				}
+			}
+		}
+
+		// find struct. Jeong-Min Im.
+		$.each(lines, function(i, o) {
+			o = o.replace('<', '&lt;').replace('>', '&gt;'); // <, > act as html, so escape it
+
+			if (o.indexOf('{') > -1) { // it's struct
+				object += o; // start joining
+				opened++; // now struct is started(=opened)
+
+				closing(o); // isn't it one line struct?
+			} else if (opened > 0) { // it's in struct
+				object += join_with + o; // join struct with some character
+
+				closing(o); // check possibility of end of struct
+			} else { // no struct -> no need to join
+				variables.push(o); // just add to variables list
+			}
+
+			// var word = o.slice(o.indexOf(" = ") + 1, o.length);
+
+			// if (/^=/.test(word) || /gdb/.test(word)) {} else {
+			// 	lines[parseInt(i) - 1] += o;
+			// 	delete lines[parseInt(i)];
+			// }
+		});
+
+		return variables;
+	},
+
+	set_breakpoints: function() {
 		var self = this;
 		var windows = core.module.layout.workspace.window_manager.window;
 		var debug_module = core.module.debug;
@@ -384,23 +437,22 @@ goorm.plugin.cpp = {
 			var window = windows[i];
 			if (window.project === debug_module.debug_current_project) {
 				var filename = window.filename;
-				
-				if(!window.editor) continue;				
+
+				if (!window.editor) continue;
 				var breakpoints = window.editor.breakpoints;
 				core.module.debug.debug_terminal.send_command('clear\r', debug_module.debug_prompt);
-				
-				for(var i=0; i < breakpoints.length; i++) {
+
+				for (var i = 0; i < breakpoints.length; i++) {
 					var breakpoint = breakpoints[i];
 					breakpoint += 1;
-					breakpoint = filename+":"+breakpoint;
-					core.module.debug.debug_terminal.send_command("break "+breakpoint+"\r", debug_module.debug_prompt, function(data){
-					});
-				} 
+					breakpoint = filename + ":" + breakpoint;
+					core.module.debug.debug_terminal.send_command("break " + breakpoint + "\r", debug_module.debug_prompt, function(data) {});
+				}
 			}
 		}
 	},
-	
-	build: function (options, callback) {
+
+	build: function(options, callback) {
 		var property = options.property;
 		var base_dir = core.preference.workspace_path + options.project_path + '/';
 
@@ -410,46 +462,45 @@ goorm.plugin.cpp = {
 			'main': property['plugin.cpp.main']
 		};
 
-		if(property['plugin.cpp.compiler_type'] === "i586-mingw32-gcc")
+		if (property['plugin.cpp.compiler_type'] === "i586-mingw32-gcc")
 			path.main += ".exe";
 
-		var clear = function (callback) {
-			var clear_cmd ='';
-			clear_cmd += 'if [ ! -d '+path.build+' ];';
-			clear_cmd += 'then mkdir -p '+path.build+';';
+		var clear = function(callback) {
+			var clear_cmd = '';
+			clear_cmd += 'if [ ! -d ' + path.build + ' ];';
+			clear_cmd += 'then mkdir -p ' + path.build + ';';
 			clear_cmd += 'fi;clear;\n';
 
-			core.module.layout.terminal.send_command('\n', function(){
+			core.module.layout.terminal.send_command('\n', function() {
 				core.module.layout.terminal.flush_command_queue();
-				core.module.layout.terminal.send_command(clear_cmd, function(){
+				core.module.layout.terminal.send_command(clear_cmd, function() {
 					core.module.layout.terminal.flush_command_queue();
 					callback();
 				});
 			});
 		}
 
-		if(!this.socket){
+		if (!this.socket) {
 			this.socket = io.connect();
 		}
 
 		//this.socket.emit("check_makefile", "cpp");
 
-		clear(function(){
+		clear(function() {
 			var cmd = "";
 			var compiler_type = property['plugin.cpp.compiler_type'];
-			var build_options = " "+property['plugin.cpp.build_option'];
+			var build_options = " " + property['plugin.cpp.build_option'];
 
 			if (property['plugin.cpp.makefile_option'] === true || property['plugin.cpp.makefile_option'] === 'true') {
 				cmd = 'cd ' + base_dir + '; make';
-			}
-			else {
-				
+			} else {
+
 				if (core.env.os == 'darwin') property['plugin.cpp.compiler_type'] = "clang++";
 				else property['plugin.cpp.compiler_type'] = "g++";
-				
+
 				//attach removing color option to Mac OSX --heeje
 				//also the make file is edited to use clang, not gcc(g++) anymore.
-				if(compiler_type === 'clang' || compiler_type === 'clang++')
+				if (compiler_type === 'clang' || compiler_type === 'clang++')
 					build_options += ' -fno-color-diagnostics';
 
 				cmd = base_dir + '/make ' + compiler_type + path.source + path.build + path.main + build_options;
@@ -457,7 +508,7 @@ goorm.plugin.cpp = {
 
 			core.module.project.build(cmd, {
 				'prompt': /Build /
-			}, function (result) { // Donguk Kim
+			}, function(result) { // Donguk Kim
 				core.module.layout.project_explorer.refresh();
 
 				// OUTPUT MANAGER & ERROR MANAGER
@@ -471,7 +522,7 @@ goorm.plugin.cpp = {
 				om.clear();
 				wm.all_clear();
 
-				var parsing = function (data) {
+				var parsing = function(data) {
 					var data_path = data.file || "";
 					data_path = data_path.split('/');
 					var filename = data_path.pop();
@@ -481,7 +532,7 @@ goorm.plugin.cpp = {
 					var e = null;
 					var e_m = null;
 
-					var parsed_content = data.content.split('\r\n');  
+					var parsed_content = data.content.split('\r\n');
 					var error_message = (parsed_content[0]) ? parsed_content[0].replace('error: ', '').replace('<', '\"').replace('>', '\"').trim() : "";
 					var error_syntax = (parsed_content[1]) ? parsed_content[1].replace('<', '\"').replace('>', '\"') : ""; // jeongmin: replace <> -> might be recognized as html
 
@@ -498,8 +549,8 @@ goorm.plugin.cpp = {
 						e_m.add_line(error_data);
 						if (i == 0) e_m.error_message_box.add(e.target);
 						e_m.init_event();
-					}  
-					
+					}
+
 					data.content = error_message;
 					om.push(data);
 				}
@@ -509,7 +560,7 @@ goorm.plugin.cpp = {
 						parsing(parsed_data[i]);
 					}
 				}
-				
+
 				if (build_result) {
 					core.module.toast.show(core.module.localization.msg['alert_plugin_check_terminal']);
 					core.module.layout.select('terminal'); // jeongmin: show terminal tab
@@ -524,209 +575,250 @@ goorm.plugin.cpp = {
 			});
 		});
 	},
-	
-	clean: function(options, callback){
+
+	clean: function(options, callback) {
 		var property = options.property; // Kim Donguk : refactoring 
 		var plugin = property.plugins['goorm.plugin.cpp'];
 		var buildPath = plugin['plugin.cpp.build_path'];
-		
+
 		goorm.core.project.clean({
-			path: options.workspace+options.project_path+"/"+buildPath,
+			path: options.workspace + options.project_path + "/" + buildPath,
 			target: "*"
-		}, function(){
+		}, function() {
 			core.module.layout.project_explorer.refresh();
 
-			if(callback && typeof(callback) == "function")
+			if (callback && typeof(callback) == "function")
 				callback();
 		});
 	},
-	get_type : function(line){
-		
-		if(/=/.test(line)){
+	get_type: function(line) {
+
+		if (/=/.test(line)) {
 			var variable = line.slice(0, line.indexOf(" = "));
-			var word = line.slice(line.indexOf(" = ")+3, line.length);
-			if(word){
-				if(/^{/.test(word)){
+			var word = line.slice(line.indexOf(" = ") + 3, line.length);
+			if (word) {
+				if (/^{/.test(word)) {
 					var test = word.split(' = ');
-					if(test.length > 1){
-						return {							
-							'type' : 'struct',
-							'variable' : variable,
-							'data' : word
-						}
-					}else{
+					if (test.length > 1) {
 						return {
-							'type' : 'array',
-							'variable' : variable,
-							'data' : word
+							'type': 'struct',
+							'variable': variable,
+							'data': word
+						}
+					} else {
+						return {
+							'type': 'array',
+							'variable': variable,
+							'data': word
 						}
 					}
-				}
-				else if(/^0x/.test(word)){
+				} else if (/^0x/.test(word)) {
 					return {
-						'type' : 'pointer',
-						'variable' : variable,
-						'data' : line
+						'type': 'pointer',
+						'variable': variable,
+						'data': word
 					}
-				}
-				else if(/^"/.test(word)){
+				} else if (/^"/.test(word)) {
 					return {
-						'type' : 'string',
-						'variable' : variable,
-						'data' : line
+						'type': 'string',
+						'variable': variable,
+						'data': word
 					}
-				}
-				else{
+				} else {
 					return {
-						'type' : 'number',
-						'variable' : variable,
-						'data' : word
+						'type': 'number',
+						'variable': variable,
+						'data': word
 					}
 				}
 			}
-		}
-		else{
-			if(/^0x/.test(line)){
+		} else {
+			if (/^0x/.test(line)) {
 				return {
-					'type' : 'pointer',
-					'value' : line
+					'type': 'pointer',
+					'value': line
 				}
-			}
-			else{
+			} else {
 				return {
-					'type' : 'number',
-					'value' : line
+					'type': 'number',
+					'value': line
 				}
 			}
 		}
 	},
-	get_value : function(word){
+	get_value: function(word) {
 		var variable = word.split(' = ');
 		return {
-			'variable' : variable[0].trim(),
-			'value' : variable[1].trim()
+			'variable': variable[0].trim(),
+			'value': variable[1].trim()
 		}
 	},
-	struct_process : function(word, callback){
+	struct_process: function(word, callback) {
 		var self = this;
 		word = word.replace("{", "");
 		word = word.replace("}", "");
-		var array = {};
-		var temp = [];
-		var words = word.split(',').map(function(o){
-			return o.trim(); 
-		});
-		
-		$.each(words, function(i, __word){
-			var __word_type = self.get_type(__word);
-			if(/^{/.test(__word_type.data)){
-				array[i] = __word_type;
-				temp.push(i);
-			}else if(/$}/.test(__word_type.data)){
-				array[temp[0]].data += "," + __word;
-				temp.pop();
-			}else{
-			
-				if(temp.length>0){
-					array[temp[0]].data += "," + __word;
-				}else{
-					array[i] = __word_type;
-					
+		// var array = [];
+		// var temp = [];
+		// var words = word.split(',').map(function(o) {
+		// 	return o.trim();
+		// });
+		var words = word.split(',');
+
+		// jeongmin: check if there is any other struct
+		words = this.join_struct(words, ','); // jeongmin: we're in struct, so have to join with , 
+
+		var variables = []; // jeongmin: variables in struct
+		var object = ''; // jeongmin: a joined variable
+
+		// jeongmin: some variables have ,. So, join splitted(because of , split) variables.
+		for (var i = 0; i < words.length; i++) {
+			words[i] = words[i].trim();
+
+			if (words[i].indexOf('=') < 0) { // jeongmin: splitted variable tail because of ,
+				object += words[i]; // jeongmin: save variable tail
+			} else { // jeongmin: normally splitted -> no problem
+				if (object.length > 0) { // jeongmin: there is variable tail waiting for joining to variable body before
+					var last = variables.pop(); // jeongmin: variable body
+
+					variables.push(last + object); // jeongmin: add combined variable body and tail to variables list
+					object = ''; // jeongmin: initialize
 				}
+
+				variables.push(words[i]); // jeongmin: add current variable
 			}
-		});
-		callback(array);
+		}
+
+		// $.each(variables, function(i, __word) {
+		// 	array.push(self.get_type(__word));
+		// 	// var __word_type = self.get_type(__word);
+		// 	// if (/^{/.test(__word_type.data)) {
+		// 	// 	array[i] = __word_type;
+		// 	// 	temp.push(i);
+		// 	// } else if (/$}/.test(__word_type.data)) {
+		// 	// 	array[temp[0]].data += "," + __word;
+		// 	// 	temp.pop();
+		// 	// } else {
+
+		// 	// 	if (temp.length > 0) {
+		// 	// 		array[temp[0]].data += "," + __word;
+		// 	// 	} else {
+		// 	// 		array[i] = __word_type;
+
+		// 	// 	}
+		// 	// }
+		// });
+
+		callback(variables); // jeongmin: return this struct's items(children)
 	},
-	array_process : function(word, callback){
+	array_process: function(word, callback) {
 		var self = this;
 
 		word = word.replace("{", "");
 		word = word.replace("}", "");
 		var array = {};
-		var words = word.split(',').map(function(o){ return o.trim(); });
-		$.each(words, function(i, __word){
+		var words = word.split(',').map(function(o) {
+			return o.trim();
+		});
+		$.each(words, function(i, __word) {
 			var __word_type = self.get_type(__word);
 			array[i] = __word_type;
 		});
 		callback(array);
 	},
 
-	pointer_process : function(word, callback){
+	pointer_process: function(word, callback) {
 		var self = this;
-		var data = self.get_value(word);
-		
+		// var data = self.get_value(word);	// hidden by jeongmin: value is collected in get_type
+
 		callback({
-			'type' : 'pointer',
-			'value' : data.value
+			'type': 'pointer',
+			'value': word
 		});
 	},
 
-	number_process : function(word, callback){
+	number_process: function(word, callback) {
 		var self = this;
 
 		callback({
-			'type' : 'number',
-			'value' : word
+			'type': 'number',
+			'value': word
 		});
 	},
-	string_process : function(word, callback){
+	string_process: function(word, callback) {
 		var self = this;
-		var data = self.get_value(word);
+		// var data = self.get_value(word);	// hidden by jeongmin: value is collected in get_type
 		callback({
-			'type' : 'string',
-			'value' : data.value
+			'type': 'string',
+			'value': word
 		});
 	},
 
-	start : function(lines){
-		var self = this;
+	start: function(lines) {
+		// var self = this;
 		// var table_variable = core.module.debug.table_variable;
 
 		// table_variable.fnClearTable();
 		core.module.debug.clear_table();
-		$.each(lines, function(i, line){
-			if(!line || line == '' || /info locals/.test(line) || /gdb/.test(line) || /No locals/.test(line)) return;
+
+		this.distribute_types(lines); // jeongmin: switch types
+	},
+
+	// switch types and lines are processed according to its type. Jeong-Min Im.
+	// lines: variables
+	// parent: is this variable struct's children? Does this variable have parent?
+	distribute_types: function(lines, parent) {
+		var self = this;
+		var prefix = ''; // parent. Default is no parent.
+
+		if (parent) {
+			prefix = parent + '.'; // if this variable has parent, need to attach prefix that shows its parent
+		}
+
+		$.each(lines, function(i, line) {
+			if (!line || line == '' || /info locals/.test(line) || /gdb/.test(line) || /No locals/.test(line)) return;
 			var word = self.get_type(line);
-			switch(word.type){
+			switch (word.type) {
 				case 'struct':
-				self.struct_process(word.data, function(array){
-						self.locals[word.variable] =  array;
-						var variable = line.slice(line.indexOf(" = ")+3,line.length);
+					self.struct_process(word.data, function(array) { // array: struct's children
+						self.locals[word.variable] = array;
+						var variable = line.slice(line.indexOf(" = ") + 3, line.length);
 						var data = {};
 						data.value = variable.trim();
 						data.type = "struct";
+						self.add_row(data, prefix + word.variable, parent); // all variables have to attach prefix(default is empty string) and show their parent(default is undefined)
 
-						self.add_row(data, word.variable);
+						if (array) { // struct has children
+							self.distribute_types(array, prefix + word.variable); // explore its children and process these according to its type again
+						}
 					});
-				break;
+					break;
 				case 'array':
-					self.array_process(word.data, function(array){
-						self.locals[word.variable] =  array;
+					self.array_process(word.data, function(array) {
+						self.locals[word.variable] = array;
 
-						var variable = line.slice(line.indexOf(" = ")+3,line.length);
+						var variable = line.slice(line.indexOf(" = ") + 3, line.length);
 						var data = {};
 						data.value = variable.trim();
 						data.type = "array";
-
-						self.add_row(data, word.variable);
+						self.add_row(data, prefix + word.variable, parent); // all variable have to attach prefix(default is empty string) and show their parent(default is undefined)
 					});
 					break;
 				case 'pointer':
-					self.pointer_process(word.data, function(data){
+					self.pointer_process(word.data, function(data) {
 						self.locals[word.variable] = data;
-						self.add_row(data, word.variable);
+						self.add_row(data, prefix + word.variable, parent); // all variable have to attach prefix(default is empty string) and show their parent(default is undefined)
 					});
 					break;
 				case 'number':
-					self.number_process(word.data, function(data){
+					self.number_process(word.data, function(data) {
 						self.locals[word.variable] = data;
-						self.add_row(data, word.variable);
+						self.add_row(data, prefix + word.variable, parent); // all variable have to attach prefix(default is empty string) and show their parent(default is undefined)
 					});
 					break;
 				case 'string':
-					self.string_process(word.data, function(data){
+					self.string_process(word.data, function(data) {
 						self.locals[word.variable] = data;
-						self.add_row(data, word.variable);
+						self.add_row(data, prefix + word.variable, parent); // all variable have to attach prefix(default is empty string) and show their parent(default is undefined)
 					});
 					break;
 
@@ -736,12 +828,12 @@ goorm.plugin.cpp = {
 		});
 	},
 
-	push : function(table_variable){
+	push: function(table_variable) {
 		var self = this;
-		core.module.debug.debug_terminal.send_command("p "+"x"+"="+self.locals['x'].value+"\r", debug_module.debug_prompt);
+		core.module.debug.debug_terminal.send_command("p " + "x" + "=" + self.locals['x'].value + "\r", debug_module.debug_prompt);
 	},
-	add_row : function(variable, key){
-		core.module.debug.add_data_table("<div class='expand_row' type='"+variable.type+"' num = '1' key='"+key+"' show='"+false+"'>"+key+"</div>", variable.value, variable.type);
+	add_row: function(variable, key, parent) {
+		core.module.debug.add_data_table("<span class='expand_row' type='" + variable.type + "' num = '1' key='" + key + "' show='" + false + "'>" + key + "</span>", variable.value, variable.type, parent);
 		// if(variable && variable.value && variable.type){
 		// 	core.module.debug.table_variable.fnAddData(
 		// 		[
@@ -754,8 +846,8 @@ goorm.plugin.cpp = {
 		// }
 	},
 
-	delete_row : function(start, len){
-		for (var i=0; i<len; i++) {
+	delete_row: function(start, len) {
+		for (var i = 0; i < len; i++) {
 			core.module.debug.delete_data_table(start);
 		}
 		// for(var i=0;i<len;i++){
@@ -763,19 +855,19 @@ goorm.plugin.cpp = {
 		// }
 	},
 
-	compiler_list_up : function(tab_select){
-		if(!this.socket){
+	compiler_list_up: function(tab_select) {
+		if (!this.socket) {
 			this.socket = io.connect();
 		}
-		
+
 		var data = {
-			"plugin" : "goorm.plugin.cpp",
-			"channel" : "list_up",
-			"test_data" : this.compiler
+			"plugin": "goorm.plugin.cpp",
+			"channel": "list_up",
+			"test_data": this.compiler
 		};
-		this.socket.on("cpp_compiler_list_up", function(compiler_list){
+		this.socket.on("cpp_compiler_list_up", function(compiler_list) {
 			tab_select.find("option").remove();
-			for(var i = 0; i<compiler_list.length; i++){
+			for (var i = 0; i < compiler_list.length; i++) {
 				tab_select.append("<option value='" + compiler_list[i] + "'>" + compiler_list[i] + "</option>");
 			}
 		});

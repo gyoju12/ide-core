@@ -27,9 +27,9 @@ goorm.core.debug.prototype = {
 
 		this.init_css();
 		this.button_inactive();
-		
+
 		//left
-		$('#debug_left').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered" id="debug_left_table" ></table>');
+		$('#debug_left').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed" id="debug_left_table" ></table>');
 		this.table_thread = $('#debug_left_table').dataTable({
 			"aaData": [],
 			"aoColumns": [{
@@ -49,16 +49,20 @@ goorm.core.debug.prototype = {
 
 		});
 
+		this.table_thread.find("thead th:last").unbind('mousemove.ColReorder');
+
 		//center
-		$('#debug_tab_center').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-bordered" id="debug_tab_center_table" ></table>');
+		$('#debug_tab_center').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed" id="debug_tab_center_table" ></table>');
 		this.table_variable = $('#debug_tab_center_table').dataTable({
 			"aaData": [],
 			"aoColumns": [{
-				"sTitle": '<span localization_key="variable">Variable</span>'
+				"sTitle": '<span localization_key="variable">Variable</span>',
+				'sWidth': '100px' // jeongmin: fix width
 			}, {
 				"sTitle": '<span localization_key="value">Value</span>'
 			}, {
-				"sTitle": '<span localization_key="summary">Summary</span>'
+				"sTitle": '<span localization_key="summary">Summary</span>',
+				'sWidth': '100px' // jeongmin: fix width
 			}],
 			"sDom": '<"H"f>Rrt',
 			"bFilter": false,
@@ -67,8 +71,8 @@ goorm.core.debug.prototype = {
 			"oLanguage": {
 				"sZeroRecords": "N/A",
 				"sEmptyTable": "N/A"
-			}
-
+			},
+			"iDisplayLength": -1 // jeongmin: no paging
 		});
 
 		$("#debug_left").resizable();
@@ -117,6 +121,30 @@ goorm.core.debug.prototype = {
 		$("#debug_tab").css("height", layout_bottom_height + 'px');
 		$('#debug_wrapper').css("height", layout_bottom_height + 'px');
 		$('#debug_wrapper').children().css("height", layout_bottom_height + 'px');
+
+		// jeongmin: adjust width
+		var debug_tab_center_table = $('#debug_tab_center_table');
+		var left_column = debug_tab_center_table.find('.sorting_disabled:nth-child(1)'); // jeongmin: variable
+		var center_column = debug_tab_center_table.find('.sorting_disabled:nth-child(2)'); // jeongmin: value
+
+		// jeongmin: initialize
+		left_column.css('width', '');
+		center_column.css('width', '');
+
+		debug_tab_center_table.css('table-layout', 'auto'); // jeongmin: automatically adjust column width as fitting its contents width
+
+		var all = $('#debug_tab_center').innerWidth();
+		var left = left_column.outerWidth();
+		var left_padding = parseInt(left_column.css('padding')); // jeongmin: padding should be subtracted, too
+		var right = 100; // jeongmin: summary -> should be 100px, always
+		var right_padding = parseInt(debug_tab_center_table.find('.sorting_disabled:nth-child(3)').css('padding')); // jeongmin: padding should be subtracted, too
+		var center = all - left - left_padding - right - right_padding;
+
+		// jeongmin: set right width
+		left_column.width(left);
+		center_column.width(center);
+
+		debug_tab_center_table.css('table-layout', 'fixed'); // jeongmin: fix width
 	},
 
 	//function for debug
@@ -337,9 +365,9 @@ goorm.core.debug.prototype = {
 		var debug_state_btn2 = $("#goorm-mainmenu a[action='debug_continue'], #goorm-mainmenu a[action='debug_step_over'], #goorm-mainmenu a[action='debug_step_in'],#goorm-mainmenu a[action='debug_step_out'],#goorm-mainmenu a[action='debug_terminate']");
 		var none_debug_state_btn2 = $("#goorm-mainmenu a[action='debug']");
 
-		
-		debug_state_btn1.removeClass('debug_not_active');
-		none_debug_state_btn1.addClass('debug_not_active');
+
+		debug_state_btn1.removeClass('debug_inactive');
+		none_debug_state_btn1.addClass('debug_inactive');
 		debug_state_btn2.parent().removeClass('disabled');
 		none_debug_state_btn2.parent().addClass('disabled');
 
@@ -355,8 +383,8 @@ goorm.core.debug.prototype = {
 		var debug_state_btn2 = $("#goorm-mainmenu a[action='debug_continue'], #goorm-mainmenu a[action='debug_step_over'], #goorm-mainmenu a[action='debug_step_in'],#goorm-mainmenu a[action='debug_step_out'],#goorm-mainmenu a[action='debug_terminate']");
 		var none_debug_state_btn2 = $("#goorm-mainmenu a[action='debug']");
 
-		debug_state_btn1.addClass('debug_not_active');
-		none_debug_state_btn1.removeClass('debug_not_active');
+		debug_state_btn1.addClass('debug_inactive');
+		none_debug_state_btn1.removeClass('debug_inactive');
 		debug_state_btn2.parent().addClass('disabled');
 		none_debug_state_btn2.parent().removeClass('disabled');
 
@@ -393,7 +421,7 @@ goorm.core.debug.prototype = {
 		}
 	},
 
-	add_data_table: function(variable, value, summary) {
+	add_data_table: function(variable, value, summary, parent) { // parent: this row's parent(in struct)
 		var t1 = Number(variable.indexOf("key='")) + 5;
 		var t2 = Number(variable.indexOf("' show="));
 		var id = variable.slice(t1, t2);
@@ -411,24 +439,34 @@ goorm.core.debug.prototype = {
 					summary
 				]);
 		}
+
+		var edit_box = $("div[variable='" + id + "']");
+
+		if (parent) { // jeongmin: this row has parent(struct)
+			edit_box.parents('tr').attr('data-tt-parent-id', parent).attr('data-tt-id', id); // jeongmin: specify its parent, so connect with its parent as tree
+		} else {
+			edit_box.parents('tr').attr('data-tt-id', id); // jeongmin: all row has its treetable id
+		}
+
 		var project_type = core.status.current_project_type;
 		if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java' || project_type === 'java_examples') {
-
-			var edit_box = $("div[variable='" + id +"']");
 			edit_box.parent().click(function() {
 				var data = edit_box.html();
 				if (edit_box.hasClass('edit_ready')) {
 					core.module.terminal.terminal.Terminal.keyDown(ev);
 					edit_box.removeClass('edit_ready');
 					edit_box.addClass('editing');
-					edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
+					// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
+					edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
+
+					edit_box.find('.edit_box').val(data);
 
 					core.status.focus_obj = edit_box;
 				}
 			});
 
 			$(document).on('click', function(e) {
-				var edit_box = $("div[variable='" + $('.editing').attr("variable") + "']" );
+				var edit_box = $("div[variable='" + $('.editing').attr("variable") + "']");
 				if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
 					var data = edit_box.children().val();
 					edit_box.html(data);
@@ -472,7 +510,37 @@ goorm.core.debug.prototype = {
 	},
 
 	clear_table: function() {
-		if (this.table_variable)
+		if (this.table_variable) {
 			this.table_variable.fnClearTable();
+		}
+	},
+
+	// add treetable to debug table. Jeong-Min Im.
+	refresh_treetable: function() {
+		var self = this;
+
+		$('#debug_tab_center_table').treetable({
+			expandable: true,
+			// resize after expand -> width can be wide after expanding. Jeong-Min Im.
+			onNodeExpand: function() {
+				// resize after node is completely expanded. Jeong-Min Im.
+				var temp = $.debounce(function() {
+					self.resize();
+				}, 100);
+
+				temp();
+			},
+			// resize after collapse -> width can be narrowed after collapsing. Jeong-Min Im.
+			onNodeCollapse: function() {
+				// resize after node is completely collapsed. Jeong-Min Im.
+				var temp = $.debounce(function() {
+					self.resize();
+				}, 100);
+
+				temp();
+			}
+		}, true); // true: force reinitialize
+
+		this.resize();
 	}
 };

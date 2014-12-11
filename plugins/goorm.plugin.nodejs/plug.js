@@ -633,6 +633,13 @@ goorm.plugin.nodejs = {
 		if (!this.server_tab) {
 			this.server_tab = 'gLayoutServer_' + plugin_name;
 			this.server_tab_content = 'server_tab_' + plugin_name;
+
+			this.on_click = function () {
+				var $content = $("#" + self.server_tab_content + " .inner_content");
+
+				$content.scrollTop($content[0].scrollHeight);
+			}
+
 			core.module.layout.tab_manager.add('south', {
 				'tab': {
 					'id': this.server_tab,
@@ -640,12 +647,11 @@ goorm.plugin.nodejs = {
 				},
 				'tab_content': {
 					'id': this.server_tab_content,
-					'content': '<div class="clr_view"><button class="btn btn-primary btn-danger btn-sm server_btn">Stop Server</button><div class="server_status">Server is running on <a href="http://' + url + '" target="_blank">http://' + url + '</a></div></div><div class="inner_content rst_view terminal_style"></div>',
+					'content': '<div class="clr_view"><button class="btn btn-default btn-sm clear_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-danger btn-sm server_btn">Stop Server</button><div class="server_status">Server is running on <a href="http://' + url + '" target="_blank">http://' + url + '</a></div></div><div class="inner_content rst_view terminal_style"></div>',
 					'class': 'server_tab'
 				},
-				'localization': { // jeongmin; add localization
-					'tab': 'server',
-					'menu': 'window_bottom_layout_output'
+				'fn': function () {
+					self.on_click();
 				}
 			});
 
@@ -659,8 +665,13 @@ goorm.plugin.nodejs = {
 
 			var $content = $("#" + self.server_tab_content);
 			var $inner = $content.find(".inner_content");
+			var fix_scroll = true;
 
 			this.bg_terminal.on_ready = function() {
+				$content.on("click", ".clear_log_btn", function () {
+					$("#" + self.server_tab_content).find('.inner_content').html('');
+				});
+
 				$content.on("click", ".server_btn", function() {
 					if (self.server_running) {
 						self.stop({
@@ -680,18 +691,33 @@ goorm.plugin.nodejs = {
 					}
 				});
 
+				$inner.scroll($.debounce(function() {
+					if ($inner[0].scrollHeight - $inner.scrollTop() == $inner.outerHeight()) {
+						fix_scroll = true;
+					} else {
+						fix_scroll = false;
+					}
+				}, 30, false));
+
 				this.on_message(function(msg) {
 					if (/\n/.test(msg.stdout)) {
 						if(self.stopping) {
 							msg.stdout = msg.stdout.replace("^C", "Server Stopped.");
 						}
 						$inner.append(msg.stdout.replace(/\n/g, "<br>").replace(/\[\d+m/g, ""));
-						$content.scrollTop($content[0].scrollHeight);
+
+						if (fix_scroll) {
+							$inner.scrollTop($inner[0].scrollHeight);
+						}
 					} else {
 						$inner.append(msg.stdout.replace(/\[\d+m/g, ""));
-					} 
+					}
 				});
- 
+
+				$('#'+self.server_tab).click(function () {
+					self.on_click();
+				});
+
 				callback();
 				self.server_running = true;
 				setTimeout(function() {

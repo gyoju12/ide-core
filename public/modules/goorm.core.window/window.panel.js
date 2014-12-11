@@ -417,7 +417,7 @@ goorm.core.window.panel.prototype = {
 					button_redo.addClass('disabled');
 					menu_redo.addClass('disabled');
 					menu_undo.addClass('disabled');
-					$("<table class='disconnected'><tr><td><img src='images/goorm.core.window/disconnected.png' /><br />Goorm is trying to reconnect the server.<br />But we recommend you to refresh this page.</td></tr></table>").appendTo(self.panel.parent()).css('display', 'none');
+					$("<div class='disconnected'><i class='fa fa-frown-o fa-5x'></i><br />DISCONNECTED! <br /> goorm is trying to reconnect the server...<br />But we recommend you to relaunch goorm.</div>").appendTo(self.panel.parent()).hide();
 					self.is_loaded = true;
 
 					self.history_edit.undo = 0;
@@ -504,9 +504,9 @@ goorm.core.window.panel.prototype = {
 				minimizeLocation: "left",
 				maximize: function(evt, dlg) {
 					// if one window panel is maximize, all panel are maximized
-					var left = parseInt(self.workspace.offset().left, 10);
-					var top = parseInt(self.workspace.offset().top, 10);
-
+// 					var left = parseInt($("#goorm_inner_layout_center").offset().left, 10);
+// 					var top = parseInt($("#goorm_inner_layout_center").offset().top, 10) + 30;
+					
 					panel.dialog('widget').addClass('ui-dialog-maximize');
 
 					window_manager.maximized = true;
@@ -515,7 +515,11 @@ goorm.core.window.panel.prototype = {
 					$("[action=hide_all_windows]").parent().addClass("disabled");
 					$("[action=show_hide_window]").parent().addClass("disabled");
 
-					self.panel.dialog("option", "width", self.workspace.width()).dialog("option", "height", self.workspace.height() - 1).dialog("option", "position", [left, top]);
+					self.panel.dialog("option", "width", self.workspace.width()).dialog("option", "height", self.workspace.height() - 1); //.dialog("option", "position", [1, 1]);
+					self.panel.parent().css("left", "0px");
+					self.panel.parent().css("top", "0px");
+					console.log(self.panel.parent().css("top"));
+					
 					if (self.tab) {
 						self.tab.maximize();
 					}
@@ -540,6 +544,7 @@ goorm.core.window.panel.prototype = {
 					// 		window_manager.window[i].maximize();
 					// 	}
 					// }
+					
 				},
 				minimize: function(evt, dlg) {
 					self.status = "minimized";
@@ -558,6 +563,8 @@ goorm.core.window.panel.prototype = {
 					self.status = "normal";
 
 					self.tab.restore();
+					
+					console.log("_restore_maximized : " + self.panel.parent().css("top"));
 
 					// self.panel.trigger(self.filename + "_resized"); // jeongmin: document -> panel
 
@@ -665,7 +672,7 @@ goorm.core.window.panel.prototype = {
 		},
 
 		add_disconnect_window: function() {
-			$('.disconnected').css('display', 'table');
+			$('.disconnected').show();
 		},
 
 		set_modified: function(data) {
@@ -728,9 +735,12 @@ goorm.core.window.panel.prototype = {
 			if (this.state() === "maximized") {
 				// if it is already maximized
 				// only resize panel width, height.
-				var left = parseInt(this.workspace.offset().left, 10);
-				var top = parseInt(this.workspace.offset().top, 10);
-				this.panel.dialog("option", "width", this.workspace.width()).dialog("option", "height", this.workspace.height() - 1).dialog("option", "position", [left, top]);
+// 				var left = parseInt($("#g_window_tab_list").offset().left, 10);
+// 				var top = parseInt($("#g_window_tab_list").offset().top, 10) + 30;
+				this.panel.dialog("option", "width", this.workspace.width()).dialog("option", "height", this.workspace.height() - 1); //.dialog("option", "position", [1, 1]);
+				this.panel.parent().css("left", "0px");
+				this.panel.parent().css("top", "0px");
+				
 				this.resize_all();
 			} else {
 				$(this.panel).dialogExtend('maximize');
@@ -762,7 +772,7 @@ goorm.core.window.panel.prototype = {
 
 			this.top = top;
 			this.left = left;
-
+						
 			container.css('top', this.top + 'px').css('left', this.left + 'px');
 		},
 
@@ -1040,7 +1050,7 @@ goorm.core.window.panel.prototype = {
 
 			var width = parseInt((wm.maximized) ? this.workspace.width() : this.panel.parent().width() - 1);
 			var height = parseInt((wm.maximized) ? this.workspace.height() : this.panel.parent().height());
-			var content_height = parseInt((wm.maximized) ? height : height - this.panel.siblings('.ui-dialog-titlebar').height() - 12);
+			var content_height = parseInt((wm.maximized) ? height : height - this.panel.siblings('.ui-dialog-titlebar').outerHeight());
 
 			//Terminal has 10px padding and 2px border
 			if (this.type === 'Terminal') {
@@ -1072,8 +1082,9 @@ goorm.core.window.panel.prototype = {
 			}
 
 			//prevent window rolled- up --heeje
-			if (parseInt(this.panel.offsetParent().css('top'), 10) < 0)
+			if (parseInt(this.panel.offsetParent().css('top'), 10) < 0) {
 				this.panel.offsetParent().css('top', 0)
+			}
 
 			if (!$('#workspace').hasClass('use-scroll')) {
 				$("#workspace").scrollTop(0).scrollLeft(0);

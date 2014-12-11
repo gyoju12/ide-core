@@ -320,15 +320,21 @@
       if ($(this.element[0]).dialog("option", "draggable")) {
         $(this.element[0]).dialog("widget").draggable("option", "handle", null).find(".ui-dialog-draggable-handle").css("cursor", "text").end();
       }
-      $(this.element[0]).dialog("widget").css("position", "fixed").find(".ui-dialog-content").show().dialog("widget").find(".ui-dialog-content").dialog("option", {
+//       $(this.element[0]).dialog("widget").css("position", "fixed").find(".ui-dialog-content").show().dialog("widget").find(".ui-dialog-content").dialog("option", {
+//         "resizable": false,
+//         "draggable": false,
+//         "height": newHeight,
+//         "width": newWidth,
+//         "position": {
+//           my: "left top",
+//           at: "left top"
+//         }
+//       });
+	  $(this.element[0]).dialog("widget").find(".ui-dialog-content").show().dialog("widget").find(".ui-dialog-content").dialog("option", {
         "resizable": false,
         "draggable": false,
         "height": newHeight,
-        "width": newWidth,
-        "position": {
-          my: "left top",
-          at: "left top"
-        }
+        "width": newWidth
       });
       // this statement is added to customize...
       $(this.element[0]).dialog("widget").find(".ui-dialog-titlebar").hide();

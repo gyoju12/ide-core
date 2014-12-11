@@ -94,7 +94,7 @@ goorm.core.layout.tab = {
 						var filepath = $(parent).children("td:nth-child(1)").text();
 						var line = $(parent).children("td:nth-child(2)").text();
 						var content = $(parent).children("td:nth-child(3)").text();
-						ㅋ
+						
 						
 					}
 				});
@@ -247,11 +247,11 @@ goorm.core.layout.tab = {
 		var tab_container = null;
 		var tab_content_container = null;
 
-		var option = data || {};
+		var options = data || {};
 
-		if (option.tab && option.tab_content) {
-			if (!option.localization) {
-				option.localization = {};
+		if (options.tab && options.tab_content) {
+			if (!options.localization) {
+				options.localization = {};
 			}
 
 			if (!this.update_complete) {
@@ -260,25 +260,29 @@ goorm.core.layout.tab = {
 				tab_container = $('#' + position + '_tab');
 				tab_content_container = tab_container.siblings('.tab-content');
 
-				var tab_id = option.tab.id;
-				var tab_content_id = option.tab_content.id;
+				var tab_id = options.tab.id;
+				var tab_content_id = options.tab_content.id;
 
 				this.del(position, data);
 
-				var content = (core.module.localization && option.localization.tab) ? core.module.localization.msg[option.localization.tab] : option.tab.content;
-				var classes = option.tab_content['class'] || "";
+				var content = (core.module.localization && core.module.localization.msg && options.localization.tab && core.module.localization.msg[options.localization.tab]) ? core.module.localization.msg[options.localization.tab] : options.tab.content;
 
-				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + option.localization.tab + '">' + content + '</a></li>');
-				tab_content_container.append('<div class="tab-pane fade ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + option.tab_content.content + '</div>');
+				var classes = options.tab_content['class'] || "";
+				var fade = (options.tab_content.fade === false) ? false : true;
+
+				fade = (fade) ? "fade" : "";
+
+				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + options.localization.tab + '">' + content + '</a></li>');
+				tab_content_container.append('<div class="tab-pane '+fade+' ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + options.tab_content.content + '</div>');
 
 				this.list[tab_id] = {
 					'id': tab_id,
 					'pane': position
 				};
 
-				option.tab.localization = option.localization;
+				options.tab.localization = options.localization;
 
-				this.set_event(option.tab, this.convert_position(position), option.fn);
+				this.set_event(options.tab, this.convert_position(position), options.fn);
 
 				if (data.tutorial) {
 					if (core.module.tutorial.tab_steps["" + data.tutorial.step_name]) {
@@ -297,16 +301,16 @@ goorm.core.layout.tab = {
 		var tab_container = null;
 		var tab_content_container = null;
 
-		var option = data || {};
+		var options = data || {};
 
-		if (option.tab && option.tab_content) {
+		if (options.tab && options.tab_content) {
 			tab_container = $('#' + position + '_tab');
 			tab_content_container = tab_container.siblings('.tab-content');
 
-			tab_container.find('[id="' + option.tab.id + '"]').parents('li').remove();
-			tab_content_container.find('[id="' + option.tab_content.id + '"]').remove();
+			tab_container.find('[id="' + options.tab.id + '"]').parents('li').remove();
+			tab_content_container.find('[id="' + options.tab_content.id + '"]').remove();
 
-			this.off_event(option.tab, this.convert_position(position));
+			this.off_event(options.tab, this.convert_position(position));
 
 
 			if (data.tutorial) {
@@ -375,7 +379,7 @@ goorm.core.layout.tab = {
 		// var key = ((os === 'mac') ? this.tab_key[position].replace(/Ctrl/g, 'meta') : this.tab_key[position]) + this.tab_index[position]++;
 		var key = this.tab_key[position] + this.tab_index[position] ++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
 		var html_key = (os === 'mac') ? sm.replace_hotkey(key).replace(/ /g, '') : key;
-		var content = (core.module.localization) ? core.module.localization.msg[tab.localization.menu] : tab.content;
+		var content = (core.module.localization && core.module.localization.msg && core.module.localization.msg[tab.localization.menu]) ? core.module.localization.msg[tab.localization.menu] : tab.content;
 
 		// Bind Event
 		//
@@ -426,10 +430,6 @@ goorm.core.layout.tab = {
 
 			this.tab_index[position] --;
 		}
-	},
-
-	set_tab_content: function() {
-
 	},
 
 	make_output_tab: function(plugin_name) {

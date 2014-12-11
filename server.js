@@ -59,6 +59,9 @@ MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
 
 
 
+DASHBOARD_HOST = 'dasbhoard.goorm.io';
+DASHBOARD_PORT = 3000;
+
 PROJECT_BUCKET = 'grm-project-bucket';
 
 // Local Variables
@@ -389,7 +392,10 @@ goorm.routing = function() {
 	goorm.post('/plugin/check_css', routes.plugin.check_css);
 	goorm.get('/plugin/make_template', goorm.check_session, routes.plugin.make_template);
 	//goorm.get('/plugin/debug',  routes.plugin.debug);
-	goorm.get('/plugin/run', goorm.check_session, routes.plugin.run);
+	// goorm.get('/plugin/run', goorm.check_session, function(req,res) {
+	// 	console.log("===step1");
+	// 	routes.plugin.run(req,res);
+	// });
 	goorm.post('/plugin/do_web_run', goorm.check_session, routes.plugin.do_web_run);
 	goorm.get('/plugin/user_clean', goorm.check_session, routes.plugin.user_clean);
 	goorm.get('/plugin/set_property', goorm.check_session, routes.plugin.set_property);

@@ -24,7 +24,7 @@ goorm.core.dialog.prototype = {
 		var goorm_dialog_container = $("[id='" + option.id + "']");
 
 		goorm_dialog_container.draggable({});
-		goorm_dialog_container.css("overflow", "hidden");
+// 		goorm_dialog_container.css("overflow", "hidden");
 
 		// modal centering optimized - heeje
 		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
@@ -34,6 +34,8 @@ goorm.core.dialog.prototype = {
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
+
+			
 		});
 
 		$(document).on('click', '.modal-backdrop.in', function() {

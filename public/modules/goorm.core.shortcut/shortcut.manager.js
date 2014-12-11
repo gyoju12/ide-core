@@ -1883,6 +1883,9 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('show_all_windows', this.hotkeys.show_all_windows), this.hotkeys.show_all_windows, this.hotkeys_fn.show_all_windows);
 		}
 
+		
+
+		//View all shortcuts (Ctrl+H)
 		if (this.hotkeys.view_all_shortcuts) {
 			this.hotkeys_fn.view_all_shortcuts_down = function(e) {
 				core.dialog.help_shortcuts.show();

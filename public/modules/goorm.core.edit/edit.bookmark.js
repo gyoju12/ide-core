@@ -295,7 +295,7 @@ goorm.core.edit.bookmark = {
 						var lines = [];// Object.keys(self.list[target]);
 						$bookmark_table.find(".bookmark_line").each(function(){lines.push($(this).text())});
 						for(var i = lines.length - 1; i>=0; i--){
-							if(lines[i]<line){
+							if(parseInt(lines[i], 10)<line){
 								break;
 							}
 						}

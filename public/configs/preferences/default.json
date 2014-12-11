@@ -85,5 +85,8 @@
 	"preference.shortcut.window.tile_left": "Ctrl+Shift+[",
 	"preference.shortcut.window.tile_right": "Ctrl+Shift+]",
 	"preference.shortcut.window.toggle_full_workspace": "Alt+Shift+W",
+	"preference.shortcut.dev.start": "Alt+S",
+	"preference.shortcut.dev.build": "Alt+B",
+	"preference.shortcut.dev.update": "Alt+U",
 	"plugins": {}
 }
