@@ -399,11 +399,21 @@ goorm.core.project = {
 	},
 
 	create: function(options, callback) {
-		var copy_progress = core.module.loading_bar.show_progress();
-
-		core.module.loading_bar.start({
+		var progress_elements = core.module.loading_bar.start({
 			str: core.module.localization.msg.import_sync_to_file_system
 		});
+
+		function copy_progress(data) {
+			// jeongmin: give ellipsis in middle of text
+			if (data.length > 40) {
+				var front = data.slice(0, 18);
+				var back = data.slice(data.length - 18, data.length);
+
+				data = front + '...' + back;
+			}
+
+			$(progress_elements.contents).html(data);
+		}
 
 		core._socket.on('/plugin/create/progress', copy_progress);
 		core._socket.once('/plugin/create', function(result) {

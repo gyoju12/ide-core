@@ -1261,15 +1261,17 @@ dd {
 @media (min-width: 768px) {
   .dl-horizontal dt {
     float: left;
-    width: 160px;
+    width: 120px;
     overflow: hidden;
     clear: left;
+    line-height: 24px;
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .dl-horizontal dd {
-    margin-left: 180px;
+    margin-left: 140px;
+    line-height: 24px;
   }
 }
 abbr[title],
@@ -2109,6 +2111,22 @@ th {
 .table-condensed > tbody > tr > td,
 .table-condensed > tfoot > tr > td {
   padding: 5px;
+}
+.table-condensed > thead > tr > th:first-child,
+.table-condensed > tbody > tr > th:first-child,
+.table-condensed > tfoot > tr > th:first-child,
+.table-condensed > thead > tr > td:first-child,
+.table-condensed > tbody > tr > td:first-child,
+.table-condensed > tfoot > tr > td:first-child {
+  border-left: none;
+}
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+  border-left: 1px solid #ddd;
 }
 .table-bordered {
   border: 1px solid #ddd;
@@ -3252,7 +3270,7 @@ tbody.collapse.in {
 .dropdown-menu > .disabled > a,
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
-  color: #777;
+  color: #ccc;
 }
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
@@ -4607,6 +4625,7 @@ a.label:focus {
   display: inline-block;
   min-width: 10px;
   padding: 3px 7px;
+  margin-left: 5px;
   font-size: 11px;
   font-weight: bold;
   line-height: 1;
@@ -4614,7 +4633,7 @@ a.label:focus {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  background-color: #777;
+  background-color: #007ee5;
   border-radius: 10px;
 }
 .badge:empty {
@@ -4636,8 +4655,8 @@ a.badge:focus {
 }
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #777;
-  background-color: #fff;
+  color: #fff;
+  background-color: #007ee5;
 }
 .list-group-item > .badge {
   float: right;
@@ -4884,6 +4903,7 @@ a.thumbnail.active {
 }
 .media {
   margin-top: 15px;
+  border-bottom: 1px dashed #ddd;
 }
 .media:first-child {
   margin-top: 0;
@@ -4901,6 +4921,9 @@ a.thumbnail.active {
 .media-body {
   display: table-cell;
   vertical-align: top;
+}
+.media-body {
+  width: 100%;
 }
 .media-middle {
   vertical-align: middle;
@@ -5086,7 +5109,6 @@ a.list-group-item-danger.active:focus {
   line-height: 1.3;
 }
 .panel {
-  margin-bottom: 17px;
   background-color: #fff;
   border: 1px solid transparent;
   border-radius: 0;
@@ -5468,6 +5490,9 @@ a.list-group-item-danger.active:focus {
   padding: 9px;
   border-radius: 0;
 }
+.well .media {
+  border: none;
+}
 .close {
   float: right;
   font-size: 18px;
@@ -5645,11 +5670,12 @@ button.close {
   margin-left: -3px;
 }
 .tooltip-inner {
-  max-width: 200px;
+  max-width: 300px;
   padding: 3px 8px;
   color: #fff;
   text-align: center;
   text-decoration: none;
+  white-space: pre;
   background-color: #000;
   border-radius: 0;
 }
@@ -6147,6 +6173,9 @@ button.close {
 .margin-0px {
   margin: 0 !important;
 }
+.margin-3px {
+  margin: 3px !important;
+}
 .margin-5px {
   margin: 5px !important;
 }
@@ -6156,9 +6185,30 @@ button.close {
 .margin-10px {
   margin: 10px !important;
 }
+.padding-0px {
+  padding: 0 !important;
+}
+.padding-3px {
+  padding: 3px !important;
+}
+.padding-5px {
+  padding: 5px !important;
+}
+.padding-8px {
+  padding: 8px !important;
+}
+.padding-10px {
+  padding: 10px !important;
+}
 .stretch-row {
   margin-right: -8px !important;
   margin-left: -8px !important;
+}
+.auto-scroll {
+  overflow: auto;
+}
+.auto-scroll-y {
+  overflow-y: auto;
 }
 @-ms-viewport {
   width: device-width;

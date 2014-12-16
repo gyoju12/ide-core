@@ -71,10 +71,10 @@ goorm.core.window.manager = {
 							
 								return async_callback();
 
-						if (__file.width <= 200 || __file.height <= 300) {
-							__file.width = 350;
-							__file.height = 250;
-						}
+						// if (__file.width <= 200 || __file.height <= 300) {
+						// 	__file.width = 350;
+						// 	__file.height = 250;
+						// }
 
 						if (typeof(__file.left) === 'string' && __file.left.indexOf('px')) {
 							__file.left = __file.left.split('px')[0];
@@ -125,21 +125,10 @@ goorm.core.window.manager = {
 							});
 						};
 
-						//console.log("WM __file", __file);
-						if (opened && opened.indexOf(project_path) > -1) {
-							open_cb(true);
-						}
-						else if (open && open.indexOf(project_path) === -1) {
-							open.push(project_path);
+						
 
-							core.module.project.open.mount(__file.filepath.split('/')[0], open_cb);
-						}
-						else {
-							$(core).one('/project/mount.'+project_path, open_cb);
-						}
 						
-						//console.log("mount test");
-						
+
 					}, function() {
 						if (active_window) {
 							active_window.activate();
@@ -568,17 +557,20 @@ goorm.core.window.manager = {
 				var workspace_width = $("#workspace").width();
 				var workspace_height = $("#workspace").height();
 
+				var alive_windows = this.get_alive_window();
+				var length = alive_windows.length;
+
 				var target_window = null;
 
 				var left = 4;
 				var top = 4;
 
-				if ((left + (this.index * 24) + 350) > workspace_width) {
+				if ((left + (length * 24) + 350) > workspace_width) {
 					//show dailog "too many"
 				}
 
-				for (var i = 0; i < this.index; i++) {
-					target_window = this.window[i];
+				for (var i = 0; i < length; i++) {
+					target_window = alive_windows[i];
 
 					if (target_window && target_window.alive) {
 						if (target_window.state() == "maximized") {
@@ -609,7 +601,7 @@ goorm.core.window.manager = {
 					left = left + 24;
 					top = top + 24;
 
-					this.activate(i);
+					this.activate(target_window.index);
 				}
 
 				this.maximized = false;
@@ -621,7 +613,10 @@ goorm.core.window.manager = {
 				var workspace_width = $("#workspace").width();
 				var workspace_height = $("#workspace").height();
 
-				var each_width = Math.floor((workspace_width - 8) / this.count_alive_windows());
+				var alive_windows = this.get_alive_window();
+				var length = alive_windows.length;
+
+				var each_width = Math.floor((workspace_width - 8) / length);
 				var each_height = workspace_height - 8;
 
 				if (each_width < 150) {
@@ -634,8 +629,8 @@ goorm.core.window.manager = {
 				}
 
 				var target_window = null;
-				for (var i = 0; i < this.index; i++) {
-					target_window = this.window[i];
+				for (var i = 0; i < length; i++) {
+					target_window = alive_windows[i];
 
 					if (target_window.alive) {
 						if (target_window.state() == "maximized") {
@@ -664,8 +659,11 @@ goorm.core.window.manager = {
 				var workspace_width = $("#workspace").width();
 				var workspace_height = $("#workspace").height();
 
+				var alive_windows = this.get_alive_window();
+				var length = alive_windows.length;
+
 				var each_width = workspace_width - 8;
-				var each_height = Math.floor((workspace_height - 8) / this.count_alive_windows());
+				var each_height = Math.floor((workspace_height - 8) / length);
 
 				if (each_width < 300) {
 					//each_width = 300;
@@ -678,8 +676,8 @@ goorm.core.window.manager = {
 
 				var target_window = null;
 
-				for (var i = 0; i < this.index; i++) {
-					target_window = this.window[i];
+				for (var i = 0; i < length; i++) {
+					target_window = alive_windows[i];
 
 					if (target_window.alive) {
 						if (target_window.state() == "maximized") {
@@ -717,6 +715,10 @@ goorm.core.window.manager = {
 				var target_window = this.window[window_manager.active_window];
 
 				if (target_window.alive) {
+					if (target_window.state() == "minimized") {
+						return;
+					}
+
 					if (target_window.state() == "maximized") {
 						target_window.restore();
 						this.maximized = false;
@@ -751,6 +753,10 @@ goorm.core.window.manager = {
 				var target_window = this.window[window_manager.active_window];
 
 				if (target_window.alive) {
+					if (target_window.state() == "minimized") {
+						return;
+					}
+
 					if (target_window.state() == "maximized") {
 						target_window.restore();
 						this.maximized = false;
@@ -772,16 +778,20 @@ goorm.core.window.manager = {
 				//$(".tab_max_buttons").hide();
 			},
 
-			count_alive_windows: function() {
-				var count = 0;
+			get_alive_window: function () {
+				var windows = [];
 
 				for (var i = 0; i < this.index; i++) {
 					if (this.window[i].alive) {
-						count++;
+						if (this.window[i].state() == "minimized") {
+							continue;
+						}
+
+						windows.push(this.window[i]);
 					}
 				}
 
-				return count;
+				return windows;
 			},
 
 			delete_window_in_tab: function(target_index) {

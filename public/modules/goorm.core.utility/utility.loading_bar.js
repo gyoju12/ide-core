@@ -9,52 +9,32 @@
  **/
 
 goorm.core.utility.loading_bar = {
-	loading_bar: null,
-	queue: [],
+	list: {}, // loading bar's progress bar list
+	count: 0, // number of progress bars
+	template: '<div id="progress_wrapper" class="progress_wrapper">\
+					<dt id="progress_title"></dt>\
+						<div class="progress">\
+							<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">\
+							</div>\
+							<button id="progress_kill" class="close" aria-hidden="true">&times;</button>\
+						</div>\
+					<div id="progress_contents"></div>\
+				</div>', // progress bar template
 
+	// bind loading bar events. Jeong-Min Im.
 	init: function() {
 		var self = this;
 
 		this.panel = $('#dlg_loading_bar'); // loading bar dialog
 		this.goorm_progress_bar = $('#goorm_progress_bar'); // progress bar in bottom status bar
-		this.scm_checkout_progress = $('#scm_checkout_progress');
 
 		this.panel.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
-
 			$(this).css('display', 'block');
 			var $dialog = $(this).find(".modal-dialog");
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
 		});
-
-		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
-		$("#g_lb_btn_hide").click(function() {
-			var now = self.panel.find(".progress-bar").attr("aria-valuenow"); // get current loading bar progress percentage
-
-			self.hide(now);
-			self.goorm_progress_bar.css('cursor', 'pointer'); //show it as clickable	
-		});
-
-		// cancel current process. Jeong-Min Im.
-		$("#g_lb_btn_cancel").click(function() {
-			self.queue[0].kill();
-
-			self.stop();
-		});
-
-		// process is done and hide loading bar. Jeong-Min Im.
-		$("#g_lb_btn_ok").click(function() {
-			self.hide();
-		});
-
-		// restore loading bar. Jeong-Min Im.
-		this.goorm_progress_bar.click(function() {
-			core.progressbar.set(100); // progress bar to loading bar
-
-			self.queue[0] && self.show(self.queue[0]); // only when there is loading process
-		});
-
 		// enable key event on dialogs. Jeong-Min Im.
 		this.panel.on('hidden.bs.modal', function() {
 			$('.modal.in').focus();
@@ -64,123 +44,149 @@ goorm.core.utility.loading_bar = {
 				$("#project_delete_list").focus();
 			}
 		});
+
+		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
+		$("#g_lb_btn_hide").click(function() {
+			var now = self.panel.find(".progress-bar").attr("aria-valuenow"); // get current loading bar progress percentage
+
+			self.hide(now);
+			self.goorm_progress_bar.css('cursor', 'pointer'); //show it as clickable	
+		});
+		// process is done and hide loading bar. Jeong-Min Im.
+		$("#g_lb_btn_ok").click(function() {
+			self.hide();
+		});
+		// restore loading bar. Jeong-Min Im.
+		this.goorm_progress_bar.click(function() {
+			core.progressbar.set(100); // progress bar to loading bar
+
+			self.show();
+		});
 	},
 
-	// used internally for showing loading bar. Jeong-Min Im.
+	// add new progress bar and show loading bar. Jeong-Min Im.
 	// option = {
 	// 	now: current progress percentage
-	// 	lock: forbids hiding loading bar
 	// 	kill: cancel current loading
 	// 	str: loading message(means current process)
 	// }
-	show: function(option) { // str: loading/done message
-		var self = this;
-
-		// set options for loading bar
-		$("#modal_loading_bar").html(option.str || core.module.localization.msg.please_wait); // current process
-		core.progressbar.set(option.now || 99.9, "#loading_progress_bar");
-		option.lock ? $("#g_lb_btn_hide").hide() : $("#g_lb_btn_hide").show();
-		option.kill ? $("#g_lb_btn_cancel").show() : $("#g_lb_btn_cancel").hide();
-
-		this.goorm_progress_bar.css('cursor', ''); // loading bar is showing, so set goorm progress bar non-clickable
-		this.panel.modal('show');
-	},
-
-	// used internally for hiding loading bar. Jeong-Min Im.
-	hide: function(now) { // now: current progress percentage
-		this.panel.modal('hide');
-		core.progressbar.set(now || 100); // loading bar hide to progress bar in bottom
-	},
-
-	// loading bar should be started by this function. Jeong-Min Im.
-	// option = {
-	// 	now: current progress percentage
-	// 	lock: forbids hiding loading bar
-	// 	kill: cancel current loading
-	// 	str: loading message(means current process)
-	// }
+	// return: progress bar elements. For getting logs, progress percentage...
 	start: function(option) {
 		var self = this;
+		var wrapper = 'progress_wrapper_' + this.count;
+		var title = 'progress_title_' + this.count;
+		var bar = 'progress_bar_' + this.count;
+		var kill = 'progress_kill_' + this.count;
+		var contents = 'progress_contents_' + this.count;
 
 		option = option || {};
 
-		this.queue.push(option);
+		// count
+		this.list[this.count] = option;
+		this.count++;
 
-		$('#g_lb_btn_ok').hide(); // ok button is for done loading bar
+		// make progress bar using template and add to loading bar
+		this.panel.find('.row').append(this.template.replace('progress_wrapper', wrapper)
+			.replace('progress_title', title)
+			.replace('progress_bar', bar)
+			.replace('progress_kill', kill)
+			.replace('progress_contents', contents));
 
-		if (this.panel.css('display') == 'block') { // wait
-			var temp = $.debounce(function() { // jeongmin: delay following loading bar
-				if (self.queue[0]) {
-					self.show(self.queue[0]); // go on next
-				}
-			}, 300);
+		// set options
+		$('#modal_loading_bar').html(core.module.localization.msg.please_wait);
+		$('#' + title).html(option.str || core.module.localization.msg.please_wait);
+		core.progressbar.set(option.now || 99.9, '#' + bar);
 
-			temp();
-		} else { // go on
-			this.show(option);
+		// bind kill event
+		var kill_button = $("#" + kill);
+		if (option.kill) {
+			kill_button.show();
+
+			kill_button.click(function() {
+				var num = $(this).attr('id').split('_').pop(); // extract process that will be killed
+
+				self.list[num].kill(); // execute kill function
+				self.stop('#progress_wrapper_' + num); // stop this progress
+			});
+		} else {
+			kill_button.hide();
 		}
+
+		$("#g_lb_btn_hide").show(); // hide is default
+		$('#g_lb_btn_ok').hide(); // ok button is for done loading bar
+		this.goorm_progress_bar.css('cursor', ''); // loading bar is showing, so set goorm progress bar non-clickable
+
+		$.debounce(function() { // jeongmin: continuous dialog showing makes error. So give some delay
+			self.panel.modal('show');
+		}, 100)();
+
+		return {
+			wrapper: '#' + wrapper,
+			title: '#' + title,
+			bar: '#' + bar,
+			kill: "#" + kill,
+			contents: '#' + contents,
+			stop: function() { // stops 'this' progress
+				self.stop(this.wrapper); // this -> returned object
+			}
+		};
 	},
 
-	// loading bar should be stopped by this function. Jeong-Min Im.
-	stop: function() {
-		this.queue.shift();
-
-		if (this.queue.length > 0) { // still queue remains
-			this.show(this.queue[0]); // go on next
-		} else { // all queue item is done
+	// remove progress bar. Jeong-Min Im.
+	// wrapper: progress bar's wrapper
+	stop: function(wrapper) {
+		if (Object.keys(this.list).length == 1) { // last one
 			if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
 				this.hide();
 			} else { // in progressbar.. notice user that progress is done
-				$("#g_lb_btn_cancel").hide(); // cancel shouldn't be clicked by user after process is done. (cancel another process that has same PID as this process)
+				this.panel.find('.close').hide(); // cancel shouldn't be clicked by user after process is done. (cancel another process that has same PID as this process)
 				$('#g_lb_btn_ok').show();
 
+				// process done
 				this.show({
 					str: core.module.localization.msg.notice_process_done,
 					now: 100,
 					lock: true
 				});
 			}
+
+			// initialize
+			this.panel.find('.progress_wrapper').remove();
+			this.list = {};
+			this.count = 0; // nothing left. Last one is stopped
+		} else if (wrapper) {
+			var num = wrapper.split('_').pop(); // find out which progress is done
+
+			delete this.list[num]; // delete it from progress bars list
+			$(wrapper).remove();
 		}
 	},
 
-	// change current process message when continuous loading
+	// show loading bar dialog. Jeong-Min Im.
 	// option = {
-	// 	now: current progress percentage
 	// 	lock: forbids hiding loading bar
-	// 	kill: cancel current loading
 	// 	str: loading message(means current process)
 	// }
-	change: function(option) {
-		this.show(option);
+	show: function(option) {
+		if (option) {
+			if (option.str) {
+				$('#modal_loading_bar').html(option.str);
+			}
+
+			if (option.lock) {
+				$("#g_lb_btn_hide").hide();
+			}
+		}
+
+		this.goorm_progress_bar.css('cursor', ''); // loading bar is showing, so set goorm progress bar non-clickable
+		this.panel.modal('show');
 	},
 
-	// make checkout progress space. Jeong-Min Im.
-	// return: function(get progress data from server)
-	show_progress: function() {
-		var self = this;
+	// loading bar will be hidden into goorm progress bar on bottom status bar. Jeong-Min Im.
+	hide: function(now) {
+		this.panel.modal('hide');
 
-		// show checkout progress. Jeong-Min Im.
-		this.progress_callback = function(data) {
-			self.scm_checkout_progress.append('<p>' + data + '</p>');
-			self.scm_checkout_progress.scrollTop(self.scm_checkout_progress[0].scrollHeight); // scroll to bottom
-		};
-
-		self.scm_checkout_progress.empty(); // initialize
-		self.scm_checkout_progress.show();
-
-		this.panel.find('.progress').hide();
-		this.panel.find('.modal-dialog').css('width', 400);
-
-		return this.progress_callback;
-	},
-
-	// set back to original loading bar. Jeong-Min Im.
-	// url: socket url
-	hide_progress: function(url) {
-		core._socket.removeListener(url, this.progress_callback);
-
-		this.scm_checkout_progress.hide(); // checkout is done
-		this.panel.find('.modal-dialog').css('width', 280); // set back to default
-		this.panel.find('.progress').show();
+		core.progressbar.set(now || 100, "#loading_progress_bar");
+		core.progressbar.set(now || 100); // loading bar hide to progress bar in bottom
 	}
 };

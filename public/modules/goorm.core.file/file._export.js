@@ -40,11 +40,11 @@ goorm.core.file._export = {
 				file: data.name
 			};
 
-			core.module.loading_bar.start({
+			var progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.loading_bar_export
 			});
 			_$.get("file/export", postdata, function(data) {
-				core.module.loading_bar.stop();
+				progress_elements.stop();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');

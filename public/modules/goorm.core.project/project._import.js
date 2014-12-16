@@ -80,8 +80,7 @@ goorm.core.project._import = {
 		} else if (where.find(".project_import_file").val() == "") {
 			alert.show(localization_msg.alert_no_imported_file);
 			return false;
-		}
-		else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
+		} else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
 			alert.show(localization_msg.alert_unsupported_file_type);
 			return false;
 		} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test(where.find(".input_import_project_author").val())) {
@@ -263,6 +262,8 @@ goorm.core.project._import = {
 
 	//make submit options. Jeong-Min Im.
 	success: function(where) { //where(jQuery object): undefined or new project -> in import project dialog, there is no parameter
+		var self = this;
+
 		if (!where) //import project dialog
 			where = $("#dlg_import_project");
 
@@ -277,17 +278,18 @@ goorm.core.project._import = {
 
 			beforeSubmit: function() {
 				// core.progressbar.set(10);
-				if (where.find('.project_import_form').attr('action') == 'project/import') // jeongmin: only when import is really in progress
-					core.module.loading_bar.start({
-					str: core.module.localization.msg.import_in_progress
-				});
+				if (where.find('.project_import_form').attr('action') == 'project/import') { // jeongmin: only when import is really in progress
+					self.progress_elements = core.module.loading_bar.start({
+						str: core.module.localization.msg.import_in_progress
+					});
+				}
 			},
 
 			success: function(data) {
 				// core.progressbar.set(100);
 
 				if (data.type == 'check') {
-					if (data.result) { // it's goorm project
+					if (data.result && data.result.type) { // it's goorm project
 						var detailed_type = data.result.detailedtype;
 
 						// do it after list is set. Jeong-Min Im.
@@ -305,6 +307,9 @@ goorm.core.project._import = {
 					} else {
 						// There is no goorm.manifest in zip/tar file
 						switch (data.err_code) {
+							case 1:
+								alert.show(core.module.localization.msg.alert_invalid_compressed_file);
+								break;
 							case 9:
 							case 10:
 								alert.show(core.module.localization.msg.alert_invalid_project_file);
@@ -312,11 +317,13 @@ goorm.core.project._import = {
 								where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
 								where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
 								break;
+							case 50:
+								alert.show(core.module.localization.msg.alert_limit_file_size);
+								break;
 						}
-
 					}
 				} else {
-					core.module.loading_bar.stop(); // jeongmin: 'import is in progress' loading bar
+					this.progress_elements.stop(); // jeongmin: 'import is in progress' loading bar
 					where.modal('hide'); // jeongmin: import project dialog
 					
 					if (data.err_code === 0) {
@@ -335,7 +342,7 @@ goorm.core.project._import = {
 
 			error: function() {
 				// core.progressbar.set(100);
-				core.module.loading_bar.stop();
+				self.stop();
 			}
 		};
 
@@ -356,10 +363,10 @@ goorm.core.project._import = {
 		}
 
 		where.find('.project_import_file').change(function() {
-			if(where.find('.project_import_file').val() != ""){
+			if (where.find('.project_import_file').val() != "") {
 				__check();
 				__load();
-			}else{
+			} else {
 				where.find(".input_import_project_name").val("");
 				where.find(".input_import_project_desc").val("");
 				where.find(".project_import_file").val("");
@@ -383,7 +390,7 @@ goorm.core.project._import = {
 		where.find(".input_import_project_desc").val("");
 		where.find(".project_import_file").val("");
 
-				
+
 		//where.find(".select_import_project_detail_type option")[0].selected = true;
 
 		if (!this.import_list_done && where.attr("id") == "dlg_import_project") {

@@ -32,7 +32,7 @@ goorm.core.preference.info = {
 			$.get("/preference/get_goorm_info", null, function(data) {
 				if (data.err_code === 0) {
 					core.env.version = data.info.version;
-					$('.goorm_version').html("goorm IDE " + core.env.version);
+					$('.goorm_version').html("goorm-core " + core.env.version);
 					//attach tooltips --heeje
 					$(".version-icon").attr('title', $('.goorm_version').text()).tooltip();
 					$("#core_version").append(data.info.version);

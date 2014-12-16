@@ -30,6 +30,7 @@ module.exports = {
 
 		if (req.body.secure_session_id || req.query.secure_session_id) {
 			session_id = (req.body.secure_session_id) ? req.body.secure_session_id : ((req.query.secure_session_id) ? req.query.secure_session_id : req.sessionID);
+			session_id = session_id.replace(/ /g, "+");
 			force = true;
 		}
 

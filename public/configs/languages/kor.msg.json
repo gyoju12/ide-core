@@ -111,7 +111,7 @@
         "value": "님과 친구가 아닙니다."
     },
     "alert_collaboration_chat_change": {
-        "value": "님이 닉네임을 "
+        "value": "님이 이름을 "
     },
     "alert_collaboration_chat_change2": {
         "value": "로 바꾸었습니다."
@@ -474,6 +474,9 @@
     },
     "alert_user_unfit_nick": {
         "value": "닉네임의 형식이 올바르지 않습니다(3~20자리, 한글/알파벳/숫자/특수문자(-/_/./ /))."
+    },
+    "alert_user_limit_comment": {
+        "value": "코멘트 길이가 너무 깁니다.(최대 20자리)"
     },
     "alert_user_undefined_student_id": {
         "value": "학번을 입력해주세요."
@@ -1313,7 +1316,10 @@
         "value": "같은 이름의 디렉토리가 존재합니다"
     },
     "alert_invalid_folder_name": {
-        "value": "알파벳, 숫자 그리고 일부 특수문자(_, -, /, (, ), [, ])만 입력 가능합니다."
+        "value": "알파벳, 숫자 그리고 일부 특수문자(_, -, (, ), [, ])만 입력 가능합니다."
+    },
+    "alert_limit_file_size": {
+        "value": "50MB보다 큰 크기의 파일을 업로드하실 수 없습니다."
     },
     "alert_cannot_export_file": {
         "value": "파일을 내보낼 수 없습니다"
@@ -1509,5 +1515,8 @@
     },
     "in_progress": {
         "value": " 진행중..."
+    },
+    "alert_select_scm_revision": {
+        "value": "체크아웃받을 리비전을 선택해주세요!"
     }
 }

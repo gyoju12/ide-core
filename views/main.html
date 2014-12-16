@@ -26,7 +26,6 @@
     
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.0/addon/fold/foldgutter.css" />
     
-    
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-formhelpers.min.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-tour.css" />
@@ -124,7 +123,7 @@
 								</ul>
 							</div>
 						</nav>
-                        <div id='project_explorer' class='directory_treeview'>
+                        <div id='project_explorer' class='directory_treeview auto-scroll'>
                             
                             <div id='project_treeview' style='display:none'></div>
                             <div id='project_list_table' style='display:none'>
@@ -162,7 +161,7 @@
                     </span>
                 </div>
                 <div id="popup_message" class="chat_message_content my_message">
-                    <div id="popup_message_nick" style="float:right"></div><br>
+                    <div id="popup_message_name" style="float:right"></div><br>
                     <div id="popup_message_message" class="cm-s-default triangle-border right"></div>
                 </div>
             </div>
@@ -270,8 +269,8 @@
             </ol>
             <ol class="breadcrumb navbar-right progress-bar-breadcrumb">
                 <li>
-                    <div class="progress progress-striped" style="width:100px;">
-                        <div id="goorm_progress_bar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    <div class="progress" style="width:100px;">
+                        <div id="goorm_progress_bar" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                             <span class="sr-only">40% Complete (success)</span>
                         </div>
                     </div>
@@ -569,21 +568,6 @@
                                 <a href="#" action="build_project" name="preference.shortcut.project.build_project" localization_key="project_build_project">
                                     Build
                                     <em class="helptext">F5</em>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" action="build_dialog" name="preference.shortcut.project.build_dialog" localization_key="project_build_dialog">
-                                    Build Projects
-                                    <em class="helptext">Alt + Shift + F5</em>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" action="build_all" localization_key="project_build_all">Build All</a>
-                            </li>
-                            <li>
-                                <a href="#" action="build_clean" name="preference.shortcut.project.clean" localization_key="project_clean">
-                                    Clean
-                                    <em class="helptext">Ctrl + Del</em>
                                 </a>
                             </li>
                             <li>
@@ -1342,7 +1326,7 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_alert" localization_key='dialog_alert'>Alert</h4>
                     </div>
-                    <div id="alert_content_container" class="modal-body row"></div>
+                    <div id="alert_content_container" class="modal-body row padding-10px"></div>
                     <div class="modal-footer">
                         <button id="g_alert_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
@@ -1358,7 +1342,7 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_notice" localization_key='dialog_notice'>Notice</h4>
                     </div>
-                    <div id="notice_content_container" class="modal-body row"></div>
+                    <div id="notice_content_container" class="modal-body row padding-10px"></div>
                     <div class="modal-footer">
                         <button id="g_nt_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
@@ -1374,7 +1358,7 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="confirmation_title" localization_key='dialog_confirmation'>Confirmation</h4>
                     </div>
-                    <div id="confirmation_content_container" class="modal-body row"></div>
+                    <div id="confirmation_content_container" class="modal-body row padding-10px"></div>
                     <div class="modal-footer">
                         <button id="g_cfrm_btn_no" class="btn btn-default" localization_key='no'>no</button>
                         <button id="g_cfrm_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
@@ -1391,7 +1375,7 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_confirmation_save" localization_key='dialog_confirmation_save'>Confirmation Save</h4>
                     </div>
-                    <div id="confirmation_save_content_container" class="modal-body row"></div>
+                    <div id="confirmation_save_content_container" class="modal-body row padding-10px"></div>
                     <div class="modal-footer">
                         <button id="g_cfrm_s_btn_yes" class="btn btn-primary" localization_key='yes'>yes</button>
                         <button id="g_cfrm_s_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
@@ -1407,17 +1391,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_survey" localization_key='dialog_survey'>goormIDE Survey</h4>
+                        <h4 class="modal-title" id="modal_survey" localization_key='dialog_survey'>Survey</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="row margin-10px">
+                    <div class="modal-body padding-10px">
+                        <div class="row">
                             <div id='survey_dialog_message'></div>
+							<br />
                             <textarea class="form-control" id="survey_inputbox" type="text"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="g_sv_btn_send" class="btn btn-default" localization_key='send'>send</button>
-                        <button id="g_sv_btn_cancel" class="btn btn-default" localization_key='cancel'>cancel</button>
+                        <button id="g_sv_btn_send" class="btn btn-default" localization_key='send'>Send</button>
+                        <button id="g_sv_btn_cancel" class="btn btn-default" localization_key='cancel'>Cancel</button>
                     </div>
                 </div>
             </div>
@@ -1428,21 +1413,15 @@
             <div class="modal-dialog" style="width: 280px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modal_loading_bar" localization_key='dialog_loading_bar'></h4>
+                        <h4 class="modal-title" id="modal_loading_bar" localization_key='please_wait'></h4>
                     </div>
                     <div class="modal-body">
                         <div class="row margin-10px">
-                            <div class="progress progress-striped active">
-                                <div id="loading_progress_bar" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">    
-                                    <span class="sr-only">50% Complete (success)</span>
-                                </div>
-                            </div>
-                            <div id='scm_checkout_progress' style='display:none;'></div>  
                         </div>
                     </div>
                     <div class="modal-footer">  
                         <button id="g_lb_btn_hide" class="btn btn-default" localization_key='hide'>Hide</button>
-                        <button id="g_lb_btn_cancel" class="btn btn-default" localization_key='cancel'>Cancel</button>
+                         
                         <button id="g_lb_btn_ok" class="btn btn-default" localization_key='ok'>OK</button>
                     </div>
                 </div>
@@ -1517,7 +1496,7 @@
                                             <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
                                             <div class="col-md-10">
                                                 <select class="import_storage form-control">
-                                                    <option value="goormIDE_Storage">goormIDE Storage</option>
+                                                    <option value="goormIDE_Storage">goorm Storage</option>
                                                     
                                                 </select>
                                             </div>
@@ -1595,7 +1574,7 @@
                                 <label for="new_project_storage" class="col-md-2 control-label" localization_key='dialog_storage'>Storage</label>
                                 <div class="col-md-10">
                                     <select id="new_project_storage" class="form-control">
-                                        <option value="goormIDE_Storage">goormIDE Storage</option>
+                                        <option value="goormIDE_Storage">goorm Storage</option>
                                         
                                     </select>
                                 </div>
@@ -1681,7 +1660,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li class="open storage">
-                                                        <a href="#">goormIDE Storage</a>
+                                                        <a href="#">goorm Storage</a>
                                                     </li>
                                                     
                                                 </ul>
@@ -1738,7 +1717,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -1887,7 +1866,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -1941,7 +1920,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -1988,7 +1967,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -2051,7 +2030,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="#">goormIDE Storage</a>
+                                                        <a href="#">goorm Storage</a>
                                                     </li>
                                                     
                                                 </ul>
@@ -2121,7 +2100,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -2208,7 +2187,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                 </li>
                                                 
                                             </ul>
@@ -2268,7 +2247,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li>
-                                                            <a href="#">goormIDE Storage</a>
+                                                            <a href="#">goorm Storage</a>
                                                             
                                                         </li>
                                                         
@@ -2335,7 +2314,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">goormIDE Storage</a>
+                                                    <a href="#">goorm Storage</a>
                                                     
                                                 </li>
                                                 
@@ -2409,7 +2388,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="#">goormIDE Storage</a>
+                                                        <a href="#">goorm Storage</a>
                                                     </li>
                                                     
                                                 </ul>
@@ -2473,7 +2452,7 @@
                                     <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
                                     <div class="col-md-10">
                                         <select class="import_storage form-control">
-                                            <option value="goormIDE_Storage">goormIDE Storage</option>
+                                            <option value="goormIDE_Storage">goorm Storage</option>
                                             
                                         </select>
                                     </div>
@@ -2576,7 +2555,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li class="delete storage">
-                                                        <a href="#">goormIDE Storage</a>
+                                                        <a href="#">goorm Storage</a>
                                                     </li>
                                                     
                                                 </ul>
@@ -3197,7 +3176,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9"></div> 
+                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9 user-select-available"></div> 
                             
                         </div>
                     </div>
@@ -3214,12 +3193,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_help_about" localization_key='dialog_help_about'>About goormIDE</h4>
+                        <h4 class="modal-title" id="modal_help_about" localization_key='dialog_help_about'>About goorm</h4>
                     </div>
                     <div class="modal-body">
                         <div id="help_about_container">
                             <div class="well">
-                                <h3>goormIDE Dev Team</h3>
+                                <h3>goorm Dev Team</h3>
                                 <p>
                                     Sung-tae Ryu, You-seok Nam, Jeong-min Im, Hee-je Lee, Kyeong-wook Jeong, Seong-ho Cha, Dong-uk Kim
                                 </p>
@@ -3231,7 +3210,7 @@
                                     (c) Copyright goormDev Team, 2014-2015. All rights reserved.
                                     <br />
                                     Visit
-                                    <a href='http://goorm.io'>http://goorm.io/</a>
+                                    <a href='http://goorm.io' target='_blank'>http://goorm.io/</a>
                                 </div>
                             </div>
                         </div>
@@ -3493,16 +3472,11 @@
                                             <div style="width:100%; height:22px;">
                                                 <div id="node_version" style="float:left;"><b>Node.js</b> :</div>
                                             </div>
-
-                                            <div style="width:100%; height:22px;">
-                                                <div id="mongodb_version" style="float:left;"><b>mongoDB</b> :</div>
-                                            </div>
-
                                         </fieldset>
                                     </div>
                                     <div class="tab-pane fade" id="system_libraries_tab" plugin="null">
                                             <fieldset>
-                                                <div id="core_version" style="float:left;"><b>goormIDE Core</b> : </div>   
+                                                <div id="core_version" style="float:left;"><b>goorm Core</b> : </div>   
                                             </fieldset>
                                             <fieldset>
                                                 <div id="jquery_version"><b>jQuery</b> : </div>
@@ -4444,7 +4418,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="g_prf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_prf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                         <button id="g_prf_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
@@ -4566,12 +4540,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="profile_nickname_input" localization_key='dialog_goorm_profile_nick' class="col-md-4 control-label">Nickname :</label>
-                                    <div class='col-md-8'>
-                                        <input id="profile_nickname_input" type="text" name="profile_nickname_input" class="form-control" readonly="readonly" localization_key='signup_nick' placeholder="2~20 digits, Hangul/Alphabet/Num/(-/_/./ /)" />
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <label for="profile_email_input" localization_key='dialog_goorm_profile_email' class="col-md-4 control-label">E-mail :</label>
                                     <div class='col-md-8'>
                                         <input id="profile_email_input" type="text" name="profile_email_input" class="form-control" readonly="readonly" placeholder="example@example.com" />
@@ -4599,7 +4567,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="g_ap_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_ap_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                         <button id="g_ap_pw_btn_mdf" class="btn btn-primary" localization_key='modify'>Modify</button>
                         <button id="g_ap_pw_btn_mdf_act" class="btn btn-primary" localization_key='account_modify'>Modify Account</button>
                         <button id="g_ap_add_fri" class="btn btn-primary" localization_key='dictionary_add_friend'>Add Friend</button>
@@ -4689,11 +4657,6 @@
                                         <input type="text" name="signup_name_input" id="signup_name_input" class="form-control" placeholder="2~15 digits, Hangul/Alphabet/Num/(-/_/./ /)" localization_key="signup_name"/>
                                     </div>
 
-                                    <label class="goorm_signup_span col-md-3" for="signup_nick_input" localization_key="dialog_goorm_profile_nick">Nickname :</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="signup_nick_input" id="signup_nick_input" class="form-control" placeholder="2~20 digits, Hangul/Alphabet/Num/(-/_/./ /)" localization_key="signup_nick"/>
-                                    </div>
-
                                     <label class="goorm_signup_span col-md-3" for="signup_email_input" localization_key="dialog_goorm_profile_email">E-mail :</label>
                                     <div class="col-md-9">
                                         <input type="text" name="signup_email_input" id="signup_email_input" class="form-control" placeholder="goorm@goorm.io" />
@@ -4747,7 +4710,7 @@
     <div class="modal-dialog" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-header" data-dismiss="modal">
-                <h4 class="modal-title" id="modal_help_shortcuts" localization_key='dialog_help_shortcuts'>goormIDE Shortcuts</h4>
+                <h4 class="modal-title" id="modal_help_shortcuts" localization_key='dialog_help_shortcuts'>goorm Shortcuts</h4>
             </div>
             <div class="modal-body" data-dismiss="modal">
                 <div class="row"> 

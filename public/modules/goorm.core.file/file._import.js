@@ -30,7 +30,7 @@ goorm.core.file._import = {
 			}
 
 			var data = self.dialog_explorer.get_data();
-			core.module.loading_bar.start({
+			this.progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.processing
 			});
 
@@ -71,7 +71,7 @@ goorm.core.file._import = {
 					success: function(data) {
 						self.files_upload(data, function() { // jeongmin: overwrite function
 							$('#myForm').attr('action', 'file/import?is_overwrite=true');
-							core.module.loading_bar.start({
+							this.progress_elements = core.module.loading_bar.start({
 								str: core.module.localization.msg.import_in_progress
 							});
 
@@ -165,7 +165,7 @@ goorm.core.file._import = {
 		var self = this;
 		var layout = core.module.layout;
 
-		core.module.loading_bar.stop();
+		this.progress_elements.stop();
 
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
@@ -227,6 +227,13 @@ goorm.core.file._import = {
 				case 30:
 					alert.show("[" + data.file.join(", ") + "]<br/>" + core.module.localization.msg.alert_duplicate_dir);
 					break;
+				case 50:
+					var file = data.file.map(function (o) {
+						return o.originalname;
+					});
+
+					alert.show("[" + file.join(", ") + "]<br/>" + core.module.localization.msg.alert_limit_file_size);
+					break;
 				default:
 					self.panel.modal('hide');
 
@@ -248,7 +255,7 @@ goorm.core.file._import = {
 
 		this.upload_file_path = current_project + '/'; // jeongmin: for reopening windows
 
-		core.module.loading_bar.start({
+		this.progress_elements = core.module.loading_bar.start({
 			str: core.module.localization.msg.import_in_progress
 		});
 
@@ -280,7 +287,7 @@ goorm.core.file._import = {
 				},
 				success: function(data) {
 					self.files_upload(data, function() { // jeongmin: overwrite function
-						core.module.loading_bar.start({
+						self.progress_elements = core.module.loading_bar.start({
 							str: core.module.localization.msg.import_in_progress
 						});
 
@@ -288,7 +295,7 @@ goorm.core.file._import = {
 					});
 				},
 				error: function(e) {
-					core.module.loading_bar.stop();
+					self.progress_elements.stop();
 					if (e.status == 400)
 						alert.show(core.module.localization.msg.folder_dnd_error);
 					else

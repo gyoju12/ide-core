@@ -1245,6 +1245,9 @@ goorm.core.shortcut.manager = {
 		//Debug (Alt+F5)
 		if (this.hotkeys.debug) {
 			this.hotkeys_fn.debug = function(e) {
+				if (self.prevent($('a[action="debug"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_start();
 
 				e.stopPropagation();
@@ -1258,6 +1261,9 @@ goorm.core.shortcut.manager = {
 		//Debug Terminate (Ctrl/Meta+Shift+T)
 		if (this.hotkeys.debug_terminate) {
 			this.hotkeys_fn.debug_terminate = function(e) {
+				if (self.prevent($('a[action="debug_terminate"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_terminate();
 
 				e.stopPropagation();
@@ -1271,6 +1277,9 @@ goorm.core.shortcut.manager = {
 		//Debug Continue(Ctrl/Meta+Shift+Y)
 		if (this.hotkeys.debug_continue) {
 			this.hotkeys_fn.debug_continue = function(e) {
+				if (self.prevent($('a[action="debug_continue"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_continue();
 
 				e.stopPropagation();
@@ -1284,6 +1293,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step Over(F6)
 		if (this.hotkeys.debug_step_over) {
 			this.hotkeys_fn.debug_step_over = function(e) {
+				if (self.prevent($('a[action="debug_step_over"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_step_over();
 
 				e.stopPropagation();
@@ -1297,6 +1309,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step In(F7)
 		if (this.hotkeys.debug_step_in) {
 			this.hotkeys_fn.debug_step_in = function(e) {
+				if (self.prevent($('a[action="debug_step_in"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_step_in();
 
 				e.stopPropagation();
@@ -1310,6 +1325,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step Out(F8)
 		if (this.hotkeys.debug_step_out) {
 			this.hotkeys_fn.debug_step_out = function(e) {
+				if (self.prevent($('a[action="debug_step_out"]').get(0))) // jeongmin: some projects don't support debug...
+					return false;
+
 				core.module.debug.debug_step_out();
 
 				e.stopPropagation();
@@ -1506,10 +1524,18 @@ goorm.core.shortcut.manager = {
 						break;
 
 					default:
-						var cursor = editor.getCursor();
-						var token = editor.getTokenAt(cursor);
-						context.dictionary.search(token.string, null, "");
-						context.dictionary.show(editor);
+						if (context.dictionary.completable && $(context.dictionary.target).find("ul.dictionary_box").css("display") == "block") {
+							context.dictionary.complete();
+							editor.focus();
+						} 
+						else {
+							var cursor = editor.getCursor();
+							var token = editor.getTokenAt(cursor);
+							context.dictionary.search(token.string);
+							context.dictionary.show();
+							editor.focus();
+							context.dictionary.select_top();
+						}
 				}
 
 				e.stopPropagation();

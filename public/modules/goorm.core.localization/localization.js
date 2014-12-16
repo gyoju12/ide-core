@@ -16,6 +16,7 @@ goorm.core.localization = {
 	plugin: {},
 	language_data: {},
 	is_first: true,
+	is_load: false,
 	version: {},
 
 	init: function() {
@@ -192,10 +193,6 @@ goorm.core.localization = {
 		localStorage.setItem('language.data', JSON.stringify(data));
 	},
 
-	work_queue: function() {
-
-	},
-
 	change_language: function(language, flag, change_flag) {
 		var self = this;
 		var broswer_language = navigator.language || navigator.userLanguage;
@@ -203,6 +200,7 @@ goorm.core.localization = {
 
 		var change = function() {
 			var __language = (language && language != 'null' && language != 'undefined') ? language : broswer_language;
+
 			self.language = __language;
 			localStorage.setItem('language', __language);
 			// var current = "";

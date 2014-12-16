@@ -357,7 +357,7 @@
         "value": "is not your friend."
     },
     "alert_collaboration_chat_change": {
-        "value": "change nickname to "
+        "value": "change name to "
     },
     "alert_collaboration_chat_change2": {
         "value": "!"
@@ -476,6 +476,9 @@
     "alert_user_unfit_nick": {
         "value": "The format of the nickname is not valid. (3~20 digits, Hangul/Alphabet/Number/Special characters(-/_/./ /))."
     },
+    "alert_user_limit_comment": {
+        "value": "The comment is too long. (Up to 20 digits)"
+    },
     "alert_confirm_logout": {
         "value": "Are you sure you want to logout?"
     },
@@ -498,7 +501,7 @@
         "value": "No matching files found."
     },
     "notice_welcome_goorm": {
-        "value": "Welcome to goormIDE."
+        "value": "Welcome to cloud coding service goorm."
     },
     "alert_cannot_connect_db": {
         "value": "Fail to connect with database."
@@ -594,7 +597,7 @@
         "value": "It's not account of the service mode. Please register a new one."
     },
     "dialog_survey": {
-        "value": "goormIDE Survey"
+        "value": "Survey"
     },
     "survey_title": {
         "value": "User Survey"
@@ -906,7 +909,7 @@
         "value": "Do you want to push?"
     },
     "confirmation_do_you_want_to_project_update": {
-        "value": "Same project name exists in other goormIDE. Do you want it to overwrite?"
+        "value": "Same project name exists in other goorm. Do you want it to overwrite?"
     },
     "confirmation_del_profile_image": {
         "value": "Do you want to delete profile image?"
@@ -963,7 +966,7 @@
         "value": "Connected"
     },
     "disconnect_state": {
-        "value": "DisConnected"
+        "value": "Disconnected"
     },
     "shared_project_open": {
         "value": "Open"
@@ -1314,7 +1317,10 @@
         "value": "There are some duplicate directories"
     },
     "alert_invalid_folder_name": {
-        "value": "Only alphabets, numbers and some special characters(_, -, /, (, ), [, ],) are allowed."
+        "value": "Only alphabets, numbers and some special characters(_, -, (, ), [, ],) are allowed."
+    },
+    "alert_limit_file_size": {
+        "value": "You cannot upload large files with a size bigger than 50MB."
     },
     "alert_cannot_export_file": {
         "value": "Can not export file"
@@ -1366,6 +1372,9 @@
     },
     "alert_invalid_tar_file": {
         "value": "Invalid tar file"
+    },
+    "alert_invalid_compressed_file": {
+        "value": "Invalid compressed file."
     },
     "alert_invalid_project_file": {
         "value": "Invalid project file"
@@ -1507,5 +1516,8 @@
     },
     "in_progress": {
         "value": " is in progress..."
+    },
+    "alert_select_scm_revision": {
+        "value": "Select checkout revision!"
     }
 }

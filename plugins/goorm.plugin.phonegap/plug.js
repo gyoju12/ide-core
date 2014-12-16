@@ -27,20 +27,20 @@ goorm.plugin.phonegap = {
 	/*
 		Methods
 	 */
-	init: function () {
-		var self=this;
-		
+	init: function() {
+		var self = this;
+
 		core.module.project.add({
 			'type': 'phonegap',
 			'img': '/goorm.plugin.phonegap/images/phonegap.png',
 			'items': [{
 				'key': 'phonegap_project',
-				'detail_type' : 'phonegap',
+				'detail_type': 'phonegap',
 				'img': '/goorm.plugin.phonegap/images/phonegap_console.png'
 			}]
 		});
 
-		$(core).on('on_project_open',function(){
+		$(core).on('on_project_open', function() {
 			//self.add_output_tab();
 		});
 
@@ -51,11 +51,11 @@ goorm.plugin.phonegap = {
 		this.init_css();
 	},
 
-	add_output_tab: function(){
+	add_output_tab: function() {
 		var self = this;
 		var tabview = core.module.layout.inner_bottom_tabview;
 
-		if(tabview.output_tab) {
+		if (tabview.output_tab) {
 			$("#output_tab").html("");
 			tabview.removeTab(tabview.output_tab);
 			tabview.output_manager.detach();
@@ -64,74 +64,76 @@ goorm.plugin.phonegap = {
 			tabview.output_manager = null;
 		}
 
-		if(core.status && /phonegap/.test(core.status.current_project_type) && $("#output_tab").length == 0){
+		if (core.status && /phonegap/.test(core.status.current_project_type) && $("#output_tab").length == 0) {
 			self.attach_output(tabview);
 		}
 	},
-	
+
 	new_project: function(data) {
 		var self = this;
 		var send_data = {
-				"plugin" : "goorm.plugin.phonegap",
-				"data" : data
+			"plugin": "goorm.plugin.phonegap",
+			"data": data
 		};
-		
-		core.module.loading_bar.start({
+
+		var progress_elements = core.module.loading_bar.start({
 			str: core.module.localization.msg.import_sync_to_file_system,
 		});
 
-		_$.get('/plugin/new', send_data, function (result) {
-			core.module.loading_bar.stop();
+		_$.get('/plugin/new', send_data, function(result) {
+			progress_elements.stop();
 
 			var property = core.property.plugins['goorm.plugin.phonegap'];
-			
-			var main_file_path = core.status.current_project_path +"/"+ property['plugin.phonegap.run_index'];
-			
+
+			var main_file_path = core.status.current_project_path + "/" + property['plugin.phonegap.run_index'];
+
 			var filename = (main_file_path.split("/")).pop();
 			var filepath = main_file_path.replace(filename, "");
 			var filetype = 'html';
-			
+
 			core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, {});
 		});
 	},
-	
-	run: function (options) {
-		
+
+	run: function(options) {
+
 		var self = this;
 		var path = options.path;
 		var property = options.property;
 		var send_data = {
-			"plugin" : "goorm.plugin.phonegap",
-			"data" : {
-				"project_path" : path
+			"plugin": "goorm.plugin.phonegap",
+			"data": {
+				"project_path": path
 			}
 		};
-		
-		core.module.project.create( send_data, function(result){
-			if(result.code == 200){
+
+		core.module.project.create(send_data, function(result) {
+			if (result.code == 200) {
 				//success 
-				if(result.run_path) {
-					if(property['plugin.phonegap.webview_type'] == "window") {
+				if (result.run_path) {
+					if (property['plugin.phonegap.webview_type'] == "window") {
 						// open web view on new window
-						window.open('.'+result.run_path+property['plugin.phonegap.run_index'], 'goormPhonegap');
-					}
-					else {
+						window.open('.' + result.run_path + property['plugin.phonegap.run_index'], 'goormPhonegap');
+					} else {
 						// open web view on panel
 						var window_manager = core.module.layout.workspace.window_manager;
 						var main_file_path = property['plugin.phonegap.run_index'];
 						var filename = property['plugin.phonegap.run_index'];
 						var filepath = result.run_path;
 						var filetype = 'WebView';
-						var title = core.status.current_project_path +"/"+ property['plugin.phonegap.run_index'];
+						var title = core.status.current_project_path + "/" + property['plugin.phonegap.run_index'];
 
 						var index = window_manager.is_opened(filepath, filename);
-						if(index == -1){
-							window_manager.open(filepath, filename, filetype, "WebView", {title: title});
-						}
-						else {
-							var webview = window_manager.open(filepath, filename, filetype, "WebView", {title: title});
+						if (index == -1) {
+							window_manager.open(filepath, filename, filetype, "WebView", {
+								title: title
+							});
+						} else {
+							var webview = window_manager.open(filepath, filename, filetype, "WebView", {
+								title: title
+							});
 							var iframe = $(webview.panel.element).find("iframe");
-							if(iframe.length) iframe[0].contentWindow.location.reload(true);
+							if (iframe.length) iframe[0].contentWindow.location.reload(true);
 						}
 					}
 				}
@@ -141,12 +143,12 @@ goorm.plugin.phonegap = {
 		});
 
 	},
-	
-	build: function (options, callback) {
+
+	build: function(options, callback) {
 		var property = options.property;
 		var base_dir = core.preference.workspace_path + options.project_path + '/';
 
-		if(this.panel) {
+		if (this.panel) {
 			var el = this.panel;
 			var remote_id = property["plugin.phonegap.remote_id"];
 			var remote_password = property["plugin.phonegap.remote_password"];
@@ -154,16 +156,16 @@ goorm.plugin.phonegap = {
 
 			el.find("input[name='plugin.phonegap.remote_id']").val(remote_id);
 			el.find("input[name='plugin.phonegap.remote_password']").val(remote_password);
-			el.find("select[name='plugin.phonegap.build_platform'] option[value='"+build_platform+"']").prop("selected", true);
+			el.find("select[name='plugin.phonegap.build_platform'] option[value='" + build_platform + "']").prop("selected", true);
 
 			this.panel.modal('show');
 		}
 
 		core.module.layout.select('terminal'); // jeongmin: show terminal tab
-		if(callback) callback();
+		if (callback) callback();
 	},
 
-	init_dialogs: function(){
+	init_dialogs: function() {
 		var self = this;
 		var build = function() {
 			var el = $(self.panel);
@@ -172,7 +174,7 @@ goorm.plugin.phonegap = {
 			var build_platform = el.find("select[name='plugin.phonegap.build_platform'] option:selected").val();
 			var language_data = core.module.localization.language_data[core.module.localization.language]['goorm.plugin.phonegap'];
 
-			if(remote_id == "" || remote_password == "") {
+			if (remote_id == "" || remote_password == "") {
 				alert.show(language_data['plugin.phonegap.enter_account'].value);
 				return false;
 			}
@@ -193,22 +195,22 @@ goorm.plugin.phonegap = {
 			var workspace = core.preference.workspace_path + projectName + "/";
 
 
-			core.module.layout.terminal.send_command("cd "+workspace+"\r");
+			core.module.layout.terminal.send_command("cd " + workspace + "\r");
 			core.module.layout.terminal.send_command("phonegap remote logout\r");
-			core.module.layout.terminal.send_command("phonegap remote run "+build_platform+"\r");
-			core.module.layout.terminal.send_command(remote_id+"\r", /username|error/);
-			core.module.layout.terminal.send_command(remote_password+"\r", /password|error/, function(res){
+			core.module.layout.terminal.send_command("phonegap remote run " + build_platform + "\r");
+			core.module.layout.terminal.send_command(remote_id + "\r", /username|error/);
+			core.module.layout.terminal.send_command(remote_password + "\r", /password|error/, function(res) {
 				var error = null;
-				if(error = res.match(/\[error\].*(\{.*\})/)) {
+				if (error = res.match(/\[error\].*(\{.*\})/)) {
 					var msg = JSON.parse(error[1]);
-					if(msg.error)
-						alert.show(language_data['plugin.phonegap.build_error'].value+' : '+msg.error);
-					else alert.show(language_data['plugin.phonegap.build_error'].value+"!");
-					return ;
+					if (msg.error)
+						alert.show(language_data['plugin.phonegap.build_error'].value + ' : ' + msg.error);
+					else alert.show(language_data['plugin.phonegap.build_error'].value + "!");
+					return;
 				}
 				var qrcode_raw = res.match(/\[47m  .*\[47m  /);
 				var qrcode = "";
-				if(qrcode_raw) {
+				if (qrcode_raw) {
 					qrcode = self.parse_qrcode(qrcode_raw[0]);
 					var tabview = core.module.layout.inner_bottom_tabview;
 					tabview.output_manager.storage = qrcode;
@@ -229,7 +231,7 @@ goorm.plugin.phonegap = {
 			self.panel.modal('hide');
 		};
 
-		
+
 
 		// var handle_cancel = function() { 
 		// 	this.hide(); 
@@ -251,18 +253,18 @@ goorm.plugin.phonegap = {
 			// yes_text: "<span localization_key='ok'>OK</span>",
 			// no_text: "<span localization_key='close'>Close</span>",
 			// buttons: buttons,
-			success: function () {
+			success: function() {
 				self.panel = $('#dlg_phonegap_plugin_build');
 
 				var element = self.panel;
-				$(element).find("input").on("keydown", function(e){
-					if(e.keyCode == 13) {
+				$(element).find("input").on("keydown", function(e) {
+					if (e.keyCode == 13) {
 						event.preventDefault();
 						event.stopPropagation();
 						build.call(panel, panel);
 					}
 				});
-			}			
+			}
 		});
 
 		// this.dialogs.build = dialog;
@@ -274,24 +276,27 @@ goorm.plugin.phonegap = {
 		data = data.replace(/\[0m\[47m  /g, "0");
 		data = data.replace(/\[47m  /g, "0");
 		data = data.replace(/\[0m  /g, "1");
-		while(/0  /.test(data)) {
-			data = data.replace(/0  /g  , "0");
+		while (/0  /.test(data)) {
+			data = data.replace(/0  /g, "0");
 		}
-		while(/1  /.test(data)) {
-			data = data.replace(/1  /g  , "11");
+		while (/1  /.test(data)) {
+			data = data.replace(/1  /g, "11");
 		}
 
 		return data;
 	},
 
-	init_css: function(){
+	init_css: function() {
 		$('body').append("<style>.phonegap_qrcode {border: none;border-collapse:collapse;}.phonegap_qrcode td {width: 5px;height: 5px;}.phonegap_qrcode .qrcode_black {background: black;}</style>");
 	},
 
 	attach_output: function(target) {
 		var self = this;
 		this.output_tab = null;
-		this.output_tab = new YAHOO.widget.Tab({ label: "<span id='gLayoutTab_Output' localization_key='output'>Output</span>", content: "<div id='output_tab'></div>" });
+		this.output_tab = new YAHOO.widget.Tab({
+			label: "<span id='gLayoutTab_Output' localization_key='output'>Output</span>",
+			content: "<div id='output_tab'></div>"
+		});
 
 		target.addTab(self.output_tab);
 		target.output_tab = this.output_tab;
@@ -299,25 +304,25 @@ goorm.plugin.phonegap = {
 
 		self.output_manager.init(target, $('#output_tab'));
 
-		if(!core.is_mobile) {
+		if (!core.is_mobile) {
 			core.module.localization.local_apply('#goorm_inner_layout_bottom .yui-nav', 'dict');
 		}
 	},
 
-	output_manager : {
-		'container' : null,
-		'storage' : "",
+	output_manager: {
+		'container': null,
+		'storage': "",
 
-		init : function(tabview, container) {
+		init: function(tabview, container) {
 			this.tabview = tabview;
 			this.attach(tabview, container);
 		},
 
-		attach : function(tabview, container) {
+		attach: function(tabview, container) {
 			var self = this;
 			this.container = container;
 
-			if($(container).find('#output_table').length != 0) $(container).find('#output_table').remove();
+			if ($(container).find('#output_table').length != 0) $(container).find('#output_table').remove();
 			$(container).append('<div id="output_table"></div>');
 
 			var layout_bottom_height = $("div.yui-layout-unit-bottom div.yui-layout-wrap").height() - 26;
@@ -327,7 +332,7 @@ goorm.plugin.phonegap = {
 			$(container).find('#output_table table').css('width', '100%');
 			$(container).find('#output_table table').css('border', 'none');
 
-			$(core).on("layout_resized", function(){
+			$(core).on("layout_resized", function() {
 				var layout_bottom_height = $("div.yui-layout-unit-bottom div.yui-layout-wrap").height() - 26;
 				var layout_bottom_width = $("div.yui-layout-unit-bottom div.yui-layout-wrap").width();
 
@@ -337,83 +342,83 @@ goorm.plugin.phonegap = {
 			this.restore();
 		},
 
-		detach : function() {
+		detach: function() {
 			var container = this.container;
 			var tabview = this.tabview;
 
-			if(container) {
+			if (container) {
 				$('#output_table').remove();
 			}
 		},
 
-		render : function() {
+		render: function() {
 			var self = this;
 
 			// qrcode length should be 51*51
-			if(this.storage.length != 51*51) return ;
+			if (this.storage.length != 51 * 51) return;
 
 			var table = $('<table class="phonegap_qrcode" style="width:auto;">');
-			for(var i=0; i < 51; i++) {
+			for (var i = 0; i < 51; i++) {
 				table.append("<tr>");
 			}
-			for(var i=0; i < 51; i++) {
+			for (var i = 0; i < 51; i++) {
 				table.find("tr").append("<td>");
 			}
-			table.find("td").each(function(i){
-				if(self.storage[i] == '1')
+			table.find("td").each(function(i) {
+				if (self.storage[i] == '1')
 					$(this).addClass("qrcode_black");
 			});
 			$('#output_table').html('Install application by scanning QRcode below.');
 			$('#output_table').append(table);
 		},
 
-		restore : function() {
+		restore: function() {
 			var tabview = this.tabview;
 
-			if(this.storage != "") {
+			if (this.storage != "") {
 				this.render();
 			}
 		},
 
-		clear : function() {
+		clear: function() {
 			var tabview = this.tabview;
 			this.storage = "";
 		}
 	},
 
-	clean: function(options){
+	clean: function(options) {
 		var property = options.property; // Kim Donguk : refactoring 
 		var plugin = property.plugins['goorm.plugin.phonegap'];
 		var buildPath = plugin['plugin.phonegap.build_path'];
-		
+
 		core.module.layout.terminal.send_command('\n\r');
-		core.module.layout.terminal.send_command("rm -rf "+options.workspace+options.project_path+"/"+buildPath+"* \r", function(){
+		core.module.layout.terminal.send_command("rm -rf " + options.workspace + options.project_path + "/" + buildPath + "* \r", function() {
 			core.module.layout.project_explorer.refresh();
 		});
 	},
 
 	//auto import
-	organize_import : function(data){
-		var self=this;
-		var result_split=data;
-		var err_phonegap_file=[];
-		var missing_symbol=[];
+	organize_import: function(data) {
+		var self = this;
+		var result_split = data;
+		var err_phonegap_file = [];
+		var missing_symbol = [];
 
 		//build result parsing start
-		for(var i=0;i<result_split.length;i++){
-			if(/cannot find symbol/g.test(result_split[i]) ){
+		for (var i = 0; i < result_split.length; i++) {
+			if (/cannot find symbol/g.test(result_split[i])) {
 				//determine err phonegap file
-				if( ((result_split[i-1]+"").split('\n').pop()).indexOf(core.module.layout.workspace.window_manager.active_filename) == -1 ){
+				if (((result_split[i - 1] + "").split('\n').pop()).indexOf(core.module.layout.workspace.window_manager.active_filename) == -1) {
 					//not in current editor
 					continue;
 				}
-				err_phonegap_file.push( (result_split[i-1]+"").split('\n').pop()   );
+				err_phonegap_file.push((result_split[i - 1] + "").split('\n').pop());
 
 				//determine missing symbol
-				var missing_err=(result_split[i]+"").split("\n");
-				for(var k=0;k<missing_err.length;k++){
-					if(missing_err[k].indexOf('symbol:')!=-1){
-						missing_symbol.push(missing_err[k].split(' ').pop().split('\r')[0] );
+				var missing_err = (result_split[i] + "").split("\n");
+				for (var k = 0; k < missing_err.length; k++) {
+					if (missing_err[k].indexOf('symbol:') != -1) {
+						missing_symbol.push(missing_err[k].split(' ').pop().split('\r')[0]);
 						break;
 					}
 				}
@@ -428,21 +433,21 @@ goorm.plugin.phonegap = {
 
 		//core.status.err_phonegap_file=err_phonegap_file;
 		//core.status.missing_symbol=missing_symbol;
-		
-		core.status.missing_symbol=[];
-		core.status.err_phonegap_file=[];
 
-		for(var i=0; i<missing_symbol.length; i++){
-			var pre=false;
-			for(var k=0;k<core.status.missing_symbol.length;k++){
-				if(missing_symbol[i]==core.status.missing_symbol[k]){
-					pre=true;
+		core.status.missing_symbol = [];
+		core.status.err_phonegap_file = [];
+
+		for (var i = 0; i < missing_symbol.length; i++) {
+			var pre = false;
+			for (var k = 0; k < core.status.missing_symbol.length; k++) {
+				if (missing_symbol[i] == core.status.missing_symbol[k]) {
+					pre = true;
 					break;
-				}	
+				}
 			}
-			if(!pre){
-				core.status.missing_symbol.push(missing_symbol[i]+"");
-				core.status.err_phonegap_file.push(err_phonegap_file[i]+"");
+			if (!pre) {
+				core.status.missing_symbol.push(missing_symbol[i] + "");
+				core.status.err_phonegap_file.push(err_phonegap_file[i] + "");
 			}
 		}
 

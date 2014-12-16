@@ -6,6 +6,21 @@
  * version: 2.0.0
  **/
 
+/* user-select */
+body {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.user-select-available {
+    -khtml-user-select: auto;
+    -moz-user-select: auto;
+    -webkit-user-select: auto;
+    user-select: auto;
+}
+
 .goorm_layout {
     display: none;
 }
@@ -674,7 +689,7 @@ Optimized:Start
 
 #slideshare_drawing_container .goorm-bubble-arrow {
     top: -14px;
-    right: 39px;
+    right: 70px;
 }
 
 #slideshare_palette_container .goorm-bubble-arrow {
@@ -686,7 +701,7 @@ Optimized:Start
 }
 
 #pdf_drawing_container .goorm-bubble-arrow {
-    right: 40px;
+    right: 70px;
     top: -14px;
 }
 
@@ -719,6 +734,7 @@ Optimized:Start
     border: 1px solid #ddd;
     margin: 5px;
     color: #fff;
+    position: absolute;
 }
 
 
@@ -1041,10 +1057,10 @@ div.tooltip {
 }
 /* project_share_container */
 
-#project_share_container #user_list_container {
+/* #project_share_container #user_list_container {
     padding: 2px;
     text-align: center;
-}
+} */
 #project_share_container #user_list_container .user_list {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -1055,9 +1071,8 @@ div.tooltip {
     background-color: #fff;
 }
 #project_share_container #user_search_result_container li:hover {
-    border: 1px solid #999999;
-    background: #dadada;
-    color: #212121;
+    background: #007ee5;
+    color: #fff;
     cursor: pointer;
     text-decoration: none;
 }
@@ -1070,13 +1085,15 @@ div.tooltip {
     padding: 3px;
 }
 #user_search_result_container li.selected {
-    border: 1px solid #999999;
-    background: #dadada;
-    color: #212121;
+    background: #007ee5;
+    color: #fff;
+}
+#user_search_result_container li.selected a {
+	color: #fff;
 }
 #user_search_result_container>ul.ui-menu {
     overflow-y: auto;
-    max-height: 133px;
+    max-height: 140px;
 }
 #project_share_container #user_search_input {
     vertical-align: middle;
@@ -1086,43 +1103,36 @@ div.tooltip {
     vertical-align: middle;
 }
 #project_share_container .user_item {
-    float: left;
-    padding: 8px;
-    width: 100%;
     border-bottom: 1px solid #ccc;
+	padding-top: 10px; 
+	padding-bottom: 10px; 
 }
-#project_share_container .user_guest {
+/* #project_share_container .user_guest {
     border: 1px solid #ccc;
     border-radius: 4px;
-}
+} */
 #project_share_container .user_info_form {
-    float: left;
-    margin-left: 5px;
-    text-align: left;
-    width: 230px;
-    height: 31px;
     padding-top: 7px;
     word-wrap: break-word;
 }
-#project_share_container .user_permission_form {
+/* #project_share_container .user_permission_form {
     float: left;
     margin-left: 10px;
 }
 #project_share_container .guest_permission_form {
     float: right;
-}
-#project_share_container .user_link_btn_container {
+} */
+/* #project_share_container .user_link_btn_container {
     text-align: right;
-}
+} */
 #project_share_container .user_tool_form {
     cursor: pointer;
-    float: right;
-    padding-top: 8px;
+    padding-top: 6px;
 }
-#project_share_container .added_user {
+/* #project_share_container .added_user {
     background-color: #eee;
-}
-#project_share_container .edited_user .btn-group button {
+} */
+/* #project_share_container .edited_user .btn-group button {
     background-color: #EEFAAF;
 }
 #project_share_container .user_info_form .user_info_name {
@@ -1133,11 +1143,11 @@ div.tooltip {
     color: #555;
     padding: 5px;
     vertical-align: middle;
-}
-#project_share_container .user_info_form .user_info_group {
+} */
+/* #project_share_container .user_info_form .user_info_group {
     padding: 0 0 5px 5px;
     text-align: left;
-}
+} */
 /*#project_share_container .auto_complete_user_info_form {
 	clear: both;
 	text-align: left;
@@ -1181,10 +1191,10 @@ div.tooltip {
     position: absolute !important;
 }
 #project_share_container .ui-autocomplete li {
-    border-radius: 4px;
+/*     border-radius: 4px; */
     padding: 5px;
     margin-top: 2px;
-    border: 1px solid #ddd;
+/*     border: 1px solid #ddd; */
 }
 /* Import Project */
 
@@ -1232,14 +1242,15 @@ div.tooltip {
 }
 /* chat */
 
-#chat .chat_submessage_area {
+/* #chat .chat_submessage_area {
     text-align: left;
     display: inline-block;
     color: #555;
     padding-left: 5px;
     height: 15px;
     max-width: 250px;
-}
+} */
+
 #chat .chat_user_item_chat_img {
     float: left;
     margin-right: 5px;
@@ -1568,17 +1579,14 @@ div.tooltip {
 }
 /* window - user cursor */
 
-#workspace .user_name {
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    background-color: #eee;
-    border: 1px solid #bbb!important;
-    border-radius: 4px;
-    font-family: Droid Sans Mono, Consolas, Monotype;
-    height: 16px;
+#workspace .user_span {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    font-family: 'Source Code Pro', 'Courier New', 'Lucida Console', 'Nanum Gothic Coding';
     letter-spacing: 1px;
-    opacity: 0.8;
-    padding: 1px 4px;
+    opacity: 0.85;
+    padding: 3x;
     position: absolute;
     z-index: 10;
     color: black;
@@ -1718,12 +1726,11 @@ div.tooltip {
     background-color: rgba(90, 147, 226, 0.3);
 }
 .dictionary_desc {
-    max-height: 72px;
+    max-height: 200px;
     overflow: auto;
     z-index: 99;
 }
 .dictionary_desc_list {
-    overflow: hidden;
     word-break: break-all;
     z-index: 99;
 }
@@ -1823,6 +1830,7 @@ div.tooltip {
 }
 #new_function_box {
     min-width: 100px;
+    outline: none;
 }
 .new_function_fname {
     margin-left: 45px;
@@ -2149,9 +2157,6 @@ div.tooltip {
 }
 .run_inactive, .debug_inactive, .history_toolbar_not_activated {
     opacity: 0.5;
-}
-#project_explorer, #share_list_group {
-    overflow: auto;
 }
 [name='project_invitation_input'] {
     position: relative !important;
@@ -3185,9 +3190,6 @@ div.goorm_menu_item {
 div.goorm_menu_item:hover {
     cursor: pointer;
 }
-#share_list_group li.list-group-item {
-    width: 100%;
-}
 /* confident css */
 
 .dropdown-submenu {
@@ -3360,18 +3362,19 @@ div.goorm_menu_item:hover {
 
 #chat_user_container {
     height: 30%;
-    overflow-y: auto;
+    overflow-y: hidden;
     /*	padding: 7px;
 */
     
     border-top: 1px solid #ccc;
 }
-#chat_user_container > .list-group {
-    height: 100%;
-}
 #chat_user_container .ui-resizable-s {
     position: absolute;
     bottom: 0px;
+	background: #eee;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	height: 5px;
 }
 .ui-layout-resizer {
     background-color: #f4f4f4;
@@ -3408,21 +3411,15 @@ div.goorm_menu_item .dropdown-menu {
 #goorm_bottom .progress-bar-breadcrumb {
     background-color: transparent;
 }
-#chat .chat_message_input_container {
+/* #chat .chat_message_input_container {
     background-color: #fafafa;
     padding: 5px;
     box-sizing: border-box;
-}
+} */
 #chat .chat_message_container, #chat .sub_chat_message_container {
     overflow: auto;
 }
 /* to prevent from removing gap chat message (in fire fox) */
-
-@-moz-document url-prefix() {
-    #chat .chat_message_container .row {
-        margin-bottom: 10px;
-    }
-}
 #chat #chat_one {
     display: none;
 }
@@ -3435,10 +3432,11 @@ div.goorm_menu_item .dropdown-menu {
 #chat .list-group .user-select:hover {
     background: #eef;
 }
-#chat .chat_toolbar {
+
+/* #chat .chat_toolbar {
     cursor: pointer;
     float: right;
-}
+} */
 #chat span.unread_area {
     font-size: 10px;
     color: red;
@@ -3453,6 +3451,9 @@ div.goorm_menu_item .dropdown-menu {
     width: 16px;
     height: 16px;
     display: inline-block;
+	position: absolute;
+	left: 40px;
+	top: 40px;
 }
 #chat .user_new_message_area {
     margin-left: 5px;
@@ -3502,21 +3503,16 @@ div.goorm_menu_item .dropdown-menu {
 }
 */
 
-#share .chat_toolbar {
+/* #share .chat_toolbar {
     float: right;
-    /*width: 100px;*/
     
     font-weight: bold;
     padding-top: 10px;
 }
 #share .chat_toolbar .btn-group {
     width: 100%;
-}
-span.project_message_guide {
-    font-size: 9px;
-    color: #ccc;
-    float: right;
-}
+} */
+
 /*#projects #projects_list_group li{
 	cursor: pointer;
 }
@@ -3546,10 +3542,10 @@ span.project_message_guide {
 	background-color: #fff;
 }*/
 
-/*#goorm_left .tab-pane {
+#goorm_left .tab-pane {
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-}*/
+}
 
 #goorm_inner_layout_right .tab-pane, #goorm_inner_layout_bottom .tab-pane {
     background-color: #fff;
@@ -3863,13 +3859,6 @@ div:focus {
     height: inherit;
     /* give max height */
 }
-.badge {
-    /* jeongmin */
-    
-    background-color: #99acc4 !important;
-    margin-left: 5px;
-    padding: 2px 5px !important;
-}
 /* workspace tab size */
 
 #goorm_inner_layout_center .nav-tabs {
@@ -4008,10 +3997,10 @@ dlg_scm_commit table {
 #dlg_edit_merge .panel, #dlg_git_push .panel, #dlg_scm_auth .panel, #dlg_scm_auth .col-md-9:last-child, #dlg_git_branch_create .panel {    
     margin-bottom: 0;
 }
-
-#dlg_svn tr td:nth-child(2) {
+*/
+#dlg_svn tr td:nth-child(2) {   /* jeongmin. For showing each position's status(e.g. M  L  ) */
     white-space: pre;
-}
+}/*
 #dlg_scm_auth {
         
     z-index: 1041;
@@ -4031,7 +4020,7 @@ dlg_scm_commit table {
 }
 */
 
-#svn_tabview .panel-body {
+#svn_tabview .panel-body, #git_tabview .panel-body {
 	height: 263px;
 	padding: 0px;
 	overflow: auto;
@@ -4107,9 +4096,9 @@ dlg_scm_commit table {
     
     height: inherit;
 }
-#property_generic {
+/* #property_generic {
     padding: 10px;
-}
+} */
 #build_project_list {
     height: 220px;
     overflow: auto;
@@ -4124,11 +4113,9 @@ dlg_scm_commit table {
     margin-left: 5px;
     margin-right: 10px;
 }
-#svn_tabview .panel, #git_tabview .panel {
-    /* jeongmin: too much margin -> remove; */
-    
+/* #svn_tabview .panel, #git_tabview .panel {
     margin-bottom: 0px;
-}
+} */
 #blame_container .CodeMirror-scroll, #blame_container_git .CodeMirror-scroll {
         
     margin-right: 0px;
@@ -4236,29 +4223,30 @@ Plugin CSS: jeongmin
 #quiz_panel_opacity a {
     background-color: #add8e6;
 }
-#lecture_list_container {
+/* #lecture_list_container {
     width: 100%;
     height: 400px;
     overflow: auto;
-}
+} */
 #lecture_list_container img {
-    width: 180px;
+    width: 120px;
     height: auto;
 }
-#lecture_list_container .list-group-item .pull-left {
+#lecture_list_container .media {
+    min-height: 150px;
+}
+/* #lecture_list_container .list-group-item .pull-left {
     margin-right: 0px;
-}
-#lecture_list_container .media-body {
-    /*height: 190px;*/
-    
-    padding: 0px 20px 0px 5px;
-}
-#lecture_list_container .media-contents {
+} */
+/* #lecture_list_container .media-body {
+   padding: 0px 20px 0px 5px;
+} */
+/* #lecture_list_container .media-contents {
     height: 116px;
     font-size: 13px;
     margin-right: 5px;
-}
-#lecture_list_container .media-contents .educators {
+} */
+/* #lecture_list_container .media-contents .educators {
     color: #929497;
     margin: 10px 0px 10px 0px;
 }
@@ -4267,23 +4255,28 @@ Plugin CSS: jeongmin
 }
 #lecture_list_container .media-contents .description {
     word-wrap: break-word;
-}
-#lecture_list_container .lecture_toolbar {
+} */
+/* #lecture_list_container .lecture_toolbar {
     float: right;
     margin-right: 10px;
-}
+} */
 #lecture_list_container .lecture_group {
     float: right;
     margin-right: 10px;
 }
-#lecture_view_container {
+#lecture_view_container, #lecture_list_container {
     max-height: 400px;
     overflow: auto;
 }
 #lecture_view_container img {
     width: 100%
 }
-#lecture_view_container .lecture_contents_container {
+#lesson_list_container {
+	height: 250px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+}
+/* #lecture_view_container .lecture_contents_container {
     font-size: 13px;
 }
 #lecture_view_container .lecture_contents_container .educators {
@@ -4296,17 +4289,11 @@ Plugin CSS: jeongmin
 #lecture_view_container .lecture_toolbar_container {
     float: right;
     margin-top: 10px;
-}
-#lecture_view_toolbar {
+} */
+/* #lecture_view_toolbar {
     height: 30px;
     margin-top: -10px;
-}
-#lecture_view_toolbar .lecture_refresh_button {
-    float: right;
-}
-#lecture_view_toolbar .lesson_refresh_button {
-    float: right;
-}
+} */
 #lecture_view_container #lesson_list_table .week {
     width: 10%;
     text-align: center;
@@ -4324,6 +4311,9 @@ Plugin CSS: jeongmin
 }
 #lecture_view_container #lesson_list_table .btn_container {
     width: 10%;
+}
+#lecture_view_container thead tr th {
+    background-color: #eee;
 }
 #lecture_view_container tbody tr td {
     vertical-align: middle;
@@ -4773,23 +4763,19 @@ label {
     
     text-align: center;
 }
-#git_status_tab .pull-right {
-    /* jeongmin. */
-    
-    margin-top: 1px;
-}
 /* terminal */
 
 #terminal, .terminal {
     -khtml-user-select: auto;
     -moz-user-select: auto;
     -webkit-user-select: auto;
+    user-select: auto;
+    
     background-color: #464646!important;
     /* color: #FFF!important; */
     
     font-family: 'Source Code Pro', 'Courier New', 'Lucida Console', 'Nanum Gothic Coding';
     padding: 5px !important;
-    user-select: auto;
     font-size: 12px;
     box-sizing: border-box;
     height: 100%;
@@ -4964,12 +4950,6 @@ label {
     
     overflow: auto;
 }
-#property_file_contents .tab-content {
-    /* jeongmin */
-    
-    height: 197px;
-    overflow: auto;
-}
 #slideshare_url_top {
     width: 100%;
 }
@@ -5008,37 +4988,6 @@ label {
 }
 #workspace .goorm-tabs {
     display: block;
-}
-.bg-primary {
-    color: #fff;
-    background-color: #428bca;
-}
-a.bg-primary:hover {
-    background-color: #3071a9;
-}
-.bg-success {
-    background-color: #dff0d8;
-}
-a.bg-success:hover {
-    background-color: #c1e2b3;
-}
-.bg-info {
-    background-color: #d9edf7;
-}
-a.bg-info:hover {
-    background-color: #afd9ee;
-}
-.bg-warning {
-    background-color: #fcf8e3;
-}
-a.bg-warning:hover {
-    background-color: #f7ecb5;
-}
-.bg-danger {
-    background-color: #f2dede;
-}
-a.bg-danger:hover {
-    background-color: #e4b9b9;
 }
 #workspace .edu_mode_editor .ui-dialog {
     webkit-box-shadow: none;
@@ -5651,7 +5600,7 @@ li.active > #gLayoutTab_Terminal {
     width: 48px;
     height: 48px;
     margin-right: 5px;
-    border-radius: 24px;
+    border-radius: 50%;
     border: 1px solid #ddd;
 }
 .modal-body .nav-tabs {
@@ -5692,4 +5641,35 @@ li.active > #gLayoutTab_Terminal {
 }
 #debug_tab_center_table td:nth-child(2) {   /* jeongmin. For preventing word goes over line */
     word-wrap: break-word;
+}
+
+#new_project_scm_config .progress,
+#scm_configuration_tab .progress {
+    display: none;  /* jeongmin. Default, it is hidden behind test button */
+    height: 31px;   /* jeongmin. Same with test button height */
+    margin-bottom: 0;
+}
+
+#new_project_scm_config .progress-bar-striped,
+#scm_configuration_tab .progress-bar-striped {
+    width: 99.9%;   /* jeongmin. For just indicating loading state */
+}
+
+.canvas_container {
+    text-align: center;
+    overflow: auto;
+}
+
+.canvas_container canvas {
+    display: none;
+}
+
+.canvas_shadow {
+    -moz-box-shadow: 1px 10px 10px #ccc;
+    -webkit-box-shadow: 1px 10px 10px #ccc;
+    box-shadow: 1px 10px 10px #ccc;
+}
+
+#dlg_loading_bar .progress {
+    margin-bottom: 0;
 }

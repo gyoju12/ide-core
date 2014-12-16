@@ -694,7 +694,6 @@ goorm.core.prototype = {
 				self.user.id = id;
 				self.user.email = "";
 				self.user.name = id;
-				self.user.nick = id;
 				self.user.level = "Member";
 				self.user.type = "password";
 

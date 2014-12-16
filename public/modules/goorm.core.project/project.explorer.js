@@ -154,9 +154,9 @@ goorm.core.project.explorer.prototype = {
 		$("#project_treeview").hide();
 		$("#project_list_table").hide();
 		
-			
-			core.socket.once("/project/get_list/owner", function(data) {
-			
+		
+		core.socket.once("/project/get_list/owner", function(data) {
+		
 			self.project_data = data;
 			self.make_project_selectbox();
 

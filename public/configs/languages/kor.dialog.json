@@ -682,10 +682,10 @@
 		"value": "도움말 컨텐츠"
 	},
 	"dialog_help_shortcuts": {
-		"value": "goormIDE 단축키"
+		"value": "구름 단축키"
 	},
 	"dialog_help_about": {
-		"value": "goormIDE에 대하여"
+		"value": "구름에 대하여"
 	},
 	"dialog_help_license": {
 		"value": "오픈 소스 라이센스"

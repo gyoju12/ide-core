@@ -488,6 +488,7 @@ goorm.plugin.cpp = {
 
 		clear(function() {
 			var cmd = "";
+			var prompt = null;
 			var compiler_type = property['plugin.cpp.compiler_type'];
 			var build_options = " " + property['plugin.cpp.build_option'];
 
@@ -504,10 +505,11 @@ goorm.plugin.cpp = {
 					build_options += ' -fno-color-diagnostics';
 
 				cmd = base_dir + '/make ' + compiler_type + path.source + path.build + path.main + build_options;
+				prompt = /Build /;
 			}
 
 			core.module.project.build(cmd, {
-				'prompt': /Build /
+				'prompt': prompt
 			}, function(result) { // Donguk Kim
 				core.module.layout.project_explorer.refresh();
 

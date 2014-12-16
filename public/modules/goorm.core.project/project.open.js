@@ -110,7 +110,7 @@ goorm.core.project.open = {
 		}
 	},
 
-	mount: function (path, callback) {
+	mount: function(path, callback) {
 		if (typeof(path) === 'function') {
 			callback = path;
 			path = null;
@@ -119,19 +119,18 @@ goorm.core.project.open = {
 		var project_path = path || core.status.current_project_path;
 
 		if (project_path !== "") {
-			core._socket.set_url('/project/mount'+project_path);
-			core._socket.once('/project/mount'+project_path, function (result) {
+			core._socket.set_url('/project/mount' + project_path);
+			core._socket.once('/project/mount' + project_path, function(result) {
 				core.module.layout.project.permission[project_path] = result.permission;
-				
-				if(path && result.path == path) {
-					$(core).trigger('/project/mount.'+path);
 
-					if(callback && typeof(callback) == "function") {
+				if (path && result.path == path) {
+					$(core).trigger('/project/mount.' + path);
+
+					if (callback && typeof(callback) == "function") {
 						callback(result);
 					}
-				}
-				else {
-					if(callback && typeof(callback) == "function") {
+				} else {
+					if (callback && typeof(callback) == "function") {
 						callback(result);
 					}
 				}
@@ -140,15 +139,14 @@ goorm.core.project.open = {
 			core._socket.emit('/project/mount', {
 				'project_path': project_path
 			});
-		}
-		else {
+		} else {
 			callback({
 				'result': true
 			});
 		}
 	},
 
-	unmount: function (path, callback) {
+	unmount: function(path, callback) {
 		var self = this;
 
 		if (this.loading) return;
@@ -163,8 +161,8 @@ goorm.core.project.open = {
 		if (project_path !== "") {
 			this.loading = true;
 
-			core._socket.once('/project/unmount', function (result) {
-				setTimeout(function () {
+			core._socket.once('/project/unmount', function(result) {
+				setTimeout(function() {
 					self.loading = false;
 				}, 500);
 
@@ -174,8 +172,7 @@ goorm.core.project.open = {
 			core._socket.emit('/project/unmount', {
 				'project_path': project_path
 			});
-		}
-		else {
+		} else {
 			callback(true);
 		}
 	},

@@ -682,10 +682,10 @@
 		"value": "Help Contents"
 	},
 	"dialog_help_shortcuts": {
-		"value": "goormIDE Shortcuts"
+		"value": "goorm Shortcuts"
 	},
 	"dialog_help_about": {
-		"value": "About goormIDE"
+		"value": "About goorm"
 	},
 	"dialog_help_license": {
 		"value": "Open Source License"

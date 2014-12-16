@@ -25,7 +25,7 @@ goorm.core.project._export = {
 			$("button[localization_key=common_target]").blur();
 		});
 
-		
+
 
 		var handle_ok = $.debounce(function() { // jeongmin: prevent multiple export
 			var data = self.project_list.get_data();
@@ -45,17 +45,17 @@ goorm.core.project._export = {
 				export_type: type.toLowerCase()
 			};
 
-			core.module.loading_bar.start({
+			var progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.loading_bar_export
 			});
 			_$.get("project/export", postdata, function(data) {
-				core.module.loading_bar.stop();
+				progress_elements.stop();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');
 
 					$("#download_frame").css('display', 'none');
-					
+
 					
 					$("#download_frame").attr('src', "download/?file=" + data.path);
 					

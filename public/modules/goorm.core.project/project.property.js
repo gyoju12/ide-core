@@ -264,7 +264,7 @@ goorm.core.project.property = {
 
 					$(this).iCheck("update");
 				} else if ($(this).attr("type") == "radio") {
-					if (key[$(this).attr("name")] == $(this).val()) {
+					if (key[$(this).attr("name")] == $(this).val() || $(this).attr("name") == 'scm_revision') { // jeongmin: if scm_revision isn't HEAD, check certain revision
 						$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
 					}
 				} else {

@@ -29,6 +29,8 @@ goorm.core.help.contents = {
 			// localization_key: "title_help_contents",
 			id: "dlg_help_contents",
 			success: function () {
+				self.panel.draggable('disable'); // jeongmin: for dragging url
+				
 				$('#dlg_help_contents li.list-group-item').click(function (e) {
 					$('#dlg_help_contents li.list-group-item.active').removeClass('active');
 					$(this).addClass('active');

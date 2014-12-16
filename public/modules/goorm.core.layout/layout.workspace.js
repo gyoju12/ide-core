@@ -43,7 +43,7 @@ goorm.core.layout.workspace = {
 		});
 
 		ws.on('dragover', function(e) {
-			ws.css('border', '3px dashed #aaa');
+			ws.css('border', '2px dashed ##007ee5');
 			self.window_manager.tab_resize_window_relocation();
 
 			e.stopPropagation();
@@ -51,7 +51,7 @@ goorm.core.layout.workspace = {
 		});
 
 		ws.on('drop', function(e) {
-			ws.css('border', '1px solid #aaa');
+			ws.css('border', 'none');
 			self.window_manager.tab_resize_window_relocation();
 
 			var files = e.originalEvent.dataTransfer.files;
@@ -64,7 +64,7 @@ goorm.core.layout.workspace = {
 		});
 
 		ws.on('dragleave', $.debounce(function(e) {
-			ws.css('border', '1px solid #aaa');
+			ws.css('border', 'none');
 			self.window_manager.tab_resize_window_relocation();
 
 			e.stopPropagation();

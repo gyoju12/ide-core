@@ -70,36 +70,39 @@ goorm.core.edit = function(parent) {
     this.init_change = false;
     this.editor_loaded = false; //jeongmin: for bookmark table in outline tab
 
-    this.dark_themes = ['ambiance', 'blackboard', 'cobalt', 'erlang-dark', 'monokai', 'rubyblue', 'vibrant-ink', 'xq-dart', 'night'];
+    this.dark_themes = ['ambiance', 'blackboard', 'cobalt', 'erlang-dark', 'monokai', 'rubyblue', 'vibrant-ink', 'xq-dark', 'night'];
 };
 
 goorm.core.edit.prototype = {
     init: function(target, title, filepath, options) {
         var self = this;
 
+        this.preference = core.preference;
+
         this.parent = options.parent;
         this.target = target;
         this.title = title;
-
-        self.highlighted_qu = [];
-        var enter_key = false; // onChange can't get enter_key
-
-        
-
-        this.preference = core.preference;
         this.options = options;
-
-        this.dictionary = new goorm.core.edit.dictionary();
-        
-        this.font_manager = new goorm.core.edit.font_manager();
         this.timestamp = new Date().getTime();
 
         this.highlight_current_cursor_line = this.get_editor_preference('highlight_current_cursor_line');
         this.auto_close_brackets = this.get_editor_preference('auto_close_brackets');
         this.line_wrapping = this.get_editor_preference('line_wrapping');
 
+        this.init_events();
+        this.init_modules();
 
-        //this.fold_func = CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder);
+        this.set_dictionary();
+
+        
+
+        this.set_option(this.options);
+    },
+
+    init_events: function () {
+        var self = this;
+
+        var target = this.target;
 
         //add new ruler option for codemirror
         CodeMirror.defineOption("rulers", false, function() {
@@ -151,18 +154,10 @@ goorm.core.edit.prototype = {
             }
         });
 
-        //cannot edit codeMirror before successfully loaded --heeje
         
-        self.font_manager.init(this);
-
-        //for assistant authentic, also filepath
-        // self.window_manager = core.module.layout.workspace.window_manager;
-        // $(self.window_manager).trigger('window_open', {
-        //     "filepath": filepath
-        // });
 
         $(target).mousedown(function(e) {
-            self.dictionary.hide();
+            // self.dictionary.hide();
             // find target editor
             // var window_manager = core.module.layout.workspace.window_manager;
             // var window_list = window_manager.window;
@@ -187,8 +182,9 @@ goorm.core.edit.prototype = {
             var window_manager = core.module.layout.workspace.window_manager;
 
             // jeongmin: remove searching highlight
-            if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) // jeongmin: if doing find and replace, don't remove
+            if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) {// jeongmin: if doing find and replace, don't remove
                 CodeMirror.commands.clearSearch(self.editor);
+            }
 
             //console.log("this may be fucker");
 
@@ -211,20 +207,6 @@ goorm.core.edit.prototype = {
                 CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
             }
         });
-        this.set_dictionary();
-        this.set_selected_variable();
-
-         
-        this.codemirror_events();
-        
-
-        
-        this.error_manager = new goorm.core.edit.error_manager();
-        this.error_manager.init(this);
-
-        if (core.module.layout.history)
-            this.history = core.module.layout.history;
-        this.set_option(this.options);
 
         $(target).keypress(function(e) {
             if (!(e.which == 115 && e.ctrlKey)) return true;
@@ -241,9 +223,6 @@ goorm.core.edit.prototype = {
             self.set_part_of_option();
         });
 
-        this.context_menu = new goorm.core.menu.context();
-        this.context_menu.init("configs/menu/goorm.core.edit/edit.context.html", "edit.context", $(this.target)[0], this.title.replace('.', '_'), null, function() {});
-
         $(target).on("dialogfocus", function(event, ui) {
             var windows = core.module.layout.workspace.window_manager.window;
 
@@ -253,6 +232,33 @@ goorm.core.edit.prototype = {
                 }
             });
         });
+    },
+
+    init_modules: function () {
+        var self = this;
+
+        var options = this.options;
+
+         
+        this.codemirror_events();
+        
+
+        
+
+        this.dictionary = new goorm.core.edit.dictionary();
+
+        
+
+        this.font_manager = new goorm.core.edit.font_manager();
+        this.font_manager.init(this);
+
+        this.error_manager = new goorm.core.edit.error_manager();
+        this.error_manager.init(this);
+
+        this.history = (core.module.layout.history) ? core.module.layout.history : null;
+
+        this.context_menu = new goorm.core.menu.context();
+        this.context_menu.init("configs/menu/goorm.core.edit/edit.context.html", "edit.context", $(this.target)[0], this.title.replace('.', '_'), null, function() {});
     },
 
     get_editor_idx: function(total_path) {
@@ -272,10 +278,6 @@ goorm.core.edit.prototype = {
         var cm_editor = this.editor;
 
         var __target = $(self.target);
-        var dictionary_box = $('div.dictionary_box', self.target);
-        var function_box = $('div.function_box', self.target);
-
-        
 
         cm_editor.on("focus", function(i, e) {
             core.status.focus_obj = self;
@@ -292,17 +294,6 @@ goorm.core.edit.prototype = {
         }, 200));
 
         cm_editor.on("scroll", $.throttle(function(i, e) {
-
-            if (dictionary_box.css("display") == "block") {
-                self.dictionary.hide();
-                self.editor.focus();
-            }
-
-            if (function_box.css("display") == "block") {
-                
-                self.editor.focus();
-            }
-
             var last_scroll_top = self.scroll_top;
             var scroll_top = cm_editor.getScrollInfo().top;
             var changed_scroll_top_val = last_scroll_top - scroll_top;
@@ -331,6 +322,9 @@ goorm.core.edit.prototype = {
         var linter_timer = $.debounce(function() {
             core.module.plugin_linter.lint(self.parent);
         }, 1000);
+
+        
+
         cm_editor.on("change", function(i, e, a) {
             // i = CodeMirror object, e = change informations;
             if (self.editor.history_mode == "history") return;
@@ -367,12 +361,6 @@ goorm.core.edit.prototype = {
             var line = cur.line + 1;
             var ch = cur.ch;
 
-            //by sim
-            if (!(line == self.history_line && ch == self.history_ch + 1)) {
-                dictionary_box.hide();
-            }
-            //by sim
-
             self.history_ch = ch;
             self.history_line = line;
 
@@ -390,7 +378,6 @@ goorm.core.edit.prototype = {
                 line: cur.line,
                 ch: cur.ch + 1
             });
-
         });
 
         cm_editor.on("gutterClick", function(codemirror, linenumber, gutter, clickevent) {
@@ -405,11 +392,12 @@ goorm.core.edit.prototype = {
                 case "text/javascript":
                     //if breakpoint is needed, then add here
 
-                    if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
+                    // if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
+                    if (gutter !== "fold") { // gutter click event --> breakpoint or fold
                         markerHtml = "&#x25cf";
                         cm_editor.setGutterMarker(linenumber, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? self.remove_marker(linenumber, "breakpoint") : self.make_marker(linenumber, "breakpoint", markerHtml));
-
                     }
+
                     self.font_manager.refresh();
                     // window.setTimeout(function(){},);
                     break;
@@ -482,26 +470,7 @@ goorm.core.edit.prototype = {
                 self.special_pressed = false;
             }
             
-            if (dictionary_box.css("display") == "block" && e.keyCode == 8) {
-                var cursor = self.editor.getCursor();
-                var token = self.editor.getTokenAt(cursor);
-
-                if (token && token.string.trim() !== "") {
-                    token.string = token.string.slice(0, -1);
-
-                    if (token.string === "") {
-                        self.dictionary.hide();
-                    } else {
-                        self.dictionary.search(token.string);
-                        self.dictionary.show();
-                    }
-                } else {
-                    self.dictionary.hide();
-                }
-            }
-
             if (e.keyIdentifier == "Enter") {
-                enter_key = true;
                 self.toCh = self.editor.getCursor(false);
                 self.fromCh = self.editor.getCursor(true);
                 return false;
@@ -550,13 +519,6 @@ goorm.core.edit.prototype = {
 
         //onKeyEvent - keyup. Jeong-Min Im.
         __target.on("keyup", function(e) {
-            if (dictionary_box.css("display") == "block" && e.keyCode != 8 && e.keyCode != 32) {
-                var cursor = self.editor.getCursor();
-                var token = self.editor.getTokenAt(cursor);
-
-                self.dictionary.search(token.string);
-                self.dictionary.show(self.editor);
-            }
             
         });
 
@@ -577,6 +539,11 @@ goorm.core.edit.prototype = {
         marker.className = gutter;
         marker.id = gutter + linenumber;
         $(marker).css("font-size", (this.nowfont) / 2);
+
+        if (this.theme && this.theme !== "default" && this.dark_themes.indexOf(this.theme)) {
+            $(marker).css('color', '#ffff66');
+        }
+
         if (gutter == "breakpoint") {
             this.breakpoints.push(linenumber);
             this.breakpoints = jQuery.unique(this.breakpoints);
@@ -687,6 +654,7 @@ goorm.core.edit.prototype = {
         var code_width = $(this.target).find(".CodeMirror-code").width();
         var left = this.editor.charCoords(CodeMirror.Pos(this.editor.firstLine(), 0), "div").left;
 
+		
         for (var i = 0; i < code_width / tab_width; i++) {
             var elt = document.createElement("div");
 
@@ -708,21 +676,30 @@ goorm.core.edit.prototype = {
         var ruler = $(this.target).find(".CodeMirror-ruler");
 
         if (code_height > window_height) {
-            ruler.height(parseInt(code_height));
+            ruler.height(code_height);
         } else {
-            ruler.height(parseInt(window_height));
+            ruler.height(window_height);
         }
     },
 
     set_option: function(options) {
         var self = this;
+        var parse_boolean = function (str) {
+            if (str === true || str === 'true') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
+
         options = options || {};
 
         this.font_size = (options.font_size) ? options.font_size : parseInt(this.preference["preference.editor.font_size"], 10);
         this.line_spacing = (options.line_spacing) ? options.line_spacing : this.preference["preference.editor.line_spacing"];
         this.indent_unit = (options.indent_unit) ? options.indent_unit : parseInt(this.preference["preference.editor.indent_unit"], 10);
         this.indent_with_tabs = (options.indent_with_tabs) ? options.indent_with_tabs : this.preference["preference.editor.indent_with_tabs"];
-        this.show_line_numbers = (options.show_line_numbers) ? options.show_line_numbers : this.preference["preference.editor.show_line_numbers"];
+        this.show_line_numbers = (options.show_line_numbers) ? parse_boolean(options.show_line_numbers) : parse_boolean(this.preference["preference.editor.show_line_numbers"]);
         this.undo_depth = (options.undo_depth) ? options.undo_depth : parseInt(this.preference["preference.editor.undo_depth"], 10);
         this.highlight_current_cursor_line = (options.highlight_current_cursor_line) ? options.highlight_current_cursor_line : this.preference["preference.editor.highlight_current_cursor_line"];
         this.theme = (options.theme) ? options.theme : this.preference["preference.editor.theme"];
@@ -809,9 +786,11 @@ goorm.core.edit.prototype = {
             if (this.dark_themes.indexOf(this.theme) > -1) {
                 this.theme_cursor_highlight_color = 'background-color:#eee8aa !important; opacity:0.1 !important';
                 $('.CodeMirror-activeline-background').attr('style', this.theme_cursor_highlight_color);
+                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#ffff66')
             } else {
                 this.theme_cursor_highlight_color = 'background-color:#e8f2ff !important; opacity:0.3 !important';
                 $('.CodeMirror-activeline-background').attr('style', this.theme_cursor_highlight_color);
+                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#900')
             }
 
             this.editor.setOption("theme", this.theme);
@@ -865,49 +844,7 @@ goorm.core.edit.prototype = {
         }
     },
 
-    set_selected_variable: function() {
-        var self = this;
-
-        var get_token_data = function(token, callback) {
-            var workspace = core.status.current_project_path;
-            var project_type = core.status.current_project_type;
-
-            var postdata = {
-                'token': token,
-                'workspace': workspace
-            };
-            
-        };
-
-        var editor_body = $('div.CodeMirror-sizer', self.editor.getWrapperElement());
-
-        $(editor_body).find('span.cm-variable').off('hover');
-        $(editor_body).on('hover', 'span.cm-variable', function(e) {
-            var target = this;
-            var variable = $('span.cm-variable', editor_body);
-
-            if (e.ctrlKey || e.metaKey) {
-                variable.removeClass('selected_variable');
-
-                var token = $(target).html();
-                get_token_data(token, function(data) {
-                    if (data) {
-                        $(target).addClass('selected_variable');
-                    }
-                });
-            } else {
-                variable.removeClass('selected_variable');
-            }
-        });
-
-        $(editor_body).find('span.cm-variable').off('mousedown');
-        $(editor_body).on('mousedown', 'span.cm-variable', function(e) {
-            if ($(this).hasClass('selected_variable')) {
-                var token = $(this).html();
-                
-            }
-        });
-    },
+    
 
     load: function(filepath, filename, filetype, options, callback) {
         var self = this;
@@ -1107,7 +1044,7 @@ goorm.core.edit.prototype = {
 
                     
 
-                    if (option == "build" || option == 'merge') {
+                    if (option == "build" || option == 'merge' || option == 'logout') {
                         if (callback && typeof(callback) == 'function')
                             callback();
                     }
@@ -1254,13 +1191,27 @@ goorm.core.edit.prototype = {
     undo: function() {
         //console.log("mungmung");
         // this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
-        this.editor.undo(); // jeongmin: just do codemirror undo
+        // this.editor.undo(); // jeongmin: just do codemirror undo
+        if (this.editor.collaboration) {
+            this.editor.collaboration.cmClient.undo();
+        }
+        else {
+            this.editor.undo();
+        }
+
         this.editor.focus();
     },
 
     redo: function() {
         // this.editor.doc.redo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually redo.
-        this.editor.redo(); // jeongmin: just do codemirror redo
+        // this.editor.redo(); // jeongmin: just do codemirror redo
+        if (this.editor.collaboration) {
+            this.editor.collaboration.cmClient.redo();
+        }
+        else {
+            this.editor.redo();
+        }
+
         this.editor.focus();
     },
 
@@ -1296,7 +1247,7 @@ goorm.core.edit.prototype = {
         }, {
             "line": this.editor.lineCount(),
             "ch": 0
-        });
+        }, {scroll: false});
     },
 
     get_selected_range: function() {

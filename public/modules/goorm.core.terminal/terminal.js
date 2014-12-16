@@ -130,7 +130,9 @@ goorm.core.terminal.prototype = {
 			});
 
 			$(core).on("on_project_open", function() {
-				self.change_project_dir();
+				if (self.terminal_name === "default_terminal") {
+					self.change_project_dir();
+				}
 			});
 
 			$(document).on(self.terminal_name + "_resized", function() {
@@ -264,26 +266,24 @@ goorm.core.terminal.prototype = {
 
 					if (self.terminal_name == 'debug') {
 						$(self.target).scrollTop($(self.target).parent().prop('scrollHeight'));
-					}
-				}
-				
 
-				if (self.terminal_name == 'debug') {
-					if (msg.stdout && self.debug_endstr) {
-						var regex = new RegExp(self.debug_endstr);
-						if (regex.test(msg.stdout)) {
-							$(core.module.debug).trigger('debug_end');
+						if (msg.stdout && self.debug_endstr) {
+							var regex = new RegExp(self.debug_endstr);
+							if (regex.test(msg.stdout)) {
+								$(core.module.debug).trigger('debug_end');
+							}
+						}
+					}
+
+					if (self.in_panel) {
+						if (self.Terminal.title && self.Terminal.title !== "") {
+							self.set_title(self.Terminal.title);
+						} else {
+							self.load_pwd(msg.stdout);
 						}
 					}
 				}
-
-				if (self.in_panel) {
-					if (self.Terminal.title && self.Terminal.title !== "") {
-						self.set_title(self.Terminal.title);
-					} else {
-						self.load_pwd(msg.stdout);
-					}
-				}
+				
 			});
 
 			// received terminal refresh complete msg

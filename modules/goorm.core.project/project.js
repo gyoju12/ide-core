@@ -199,62 +199,75 @@ module.exports = {
 
 		var file_type = file.path.split('.').pop();
 
-		var cmd_get_list;
-		var cmd_get_manifest;
-		if (file_type === "zip") {
-			cmd_get_list = "unzip -Z -1 " + file.path;
-			cmd_get_manifest = "unzip -p " + file.path;
-		} else if (file_type === "gz") {
-			cmd_get_list = "tar -ztf " + file.path;
-			cmd_get_manifest = "tar -zxf " + file.path + " -O";
-		} else if (file_type === "tar") {
-			cmd_get_list = "tar -tf " + file.path;
-			cmd_get_manifest = "tar -xf " + file.path + " -O";
+		var cmd_get_list = {};
+		var cmd_get_manifest = "";
+
+		switch (file_type) {
+			case "zip":
+				cmd_get_list.cmd = 'unzip';
+				cmd_get_list.opt = ('-Z -1 ' + file.path).split(' ');
+
+				cmd_get_manifest = "unzip -p " + file.path;
+				break;
+
+			case "gz":
+				cmd_get_list.cmd = 'tar';
+				cmd_get_list.opt = ('-ztf ' + file.path).split(' ');
+
+				cmd_get_manifest = "tar -zxf " + file.path + " -O";
+				break;
+
+			case "tar":
+				cmd_get_list.cmd = 'tar';
+				cmd_get_list.opt = ('-tf ' + file.path).split(' ');
+
+				cmd_get_manifest = "tar -xf " + file.path + " -O";
+				break;
 		}
 
-		// exec(cmd_get_list + "|grep 'goorm.manifest'", function (err, manifest_path) {
-		exec(cmd_get_list, function(err, stdout, stderr) {
-			if (err) {
-				data.result = null;
-				data.err_code = 9;
-				evt.emit('project_do_import_check', data);
-			} else if (stdout == "") {
-				data.result = null;
-				data.err_code = 10;
-				evt.emit('project_do_import_check', data);
-			} else {
-				if (stdout.indexOf('goorm.manifest') > -1) {
-					var file_list = stdout.split('\n');
-					var manifest_path = "";
+		var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
 
-					for (var i = 0; i < file_list.length; i++) {
-						if (file_list[i].indexOf('goorm.manifest') != -1) {
-							manifest_path = file_list[i];
-							break;
+		var stdout = "";
+		var find = false;
+		var contents = null;
+
+		check_cmd.stdout.on('data', function(data) {
+			var buf = new Buffer(data);
+			stdout += buf.toString();
+
+			if (!find && stdout.indexOf('goorm.manifest') > -1) {
+				find = true;
+
+				var file_list = stdout.split('\n');
+				var manifest_path = "";
+
+				for (var i = 0; i < file_list.length; i++) {
+					if (file_list[i].indexOf('goorm.manifest') != -1) {
+						manifest_path = file_list[i];
+						break;
+					}
+				}
+
+				exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
+					if (__err) {
+						console.log(__err);
+
+						find = false;
+					} else {
+						try {
+							contents = JSON.parse(manifest_content);
+						} catch (e) {
+							find = false;
 						}
 					}
-					exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
-						if (__err) {
-							console.log(__err);
-							//data.err_code = 1;
-							//data.message = "Cannot check import file";
-							//evt.emit('project_do_import_check', data);
-						} else {
-							try {
-								data.result = JSON.parse(manifest_content);
-							} catch (e) {
-								data.result = null;
-							}
-							evt.emit('project_do_import_check', data);
-							success = true;
-						}
-					});
-				} else {
-					data.result = null;
-					evt.emit('project_do_import_check', data);
-				}
+				});
 			}
+		});
 
+		check_cmd.on('close', function(code) {
+			data.result = contents;
+			console.log(data);
+			evt.emit('project_do_import_check', data);
 		});
 	},
 

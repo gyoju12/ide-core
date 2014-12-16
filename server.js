@@ -21,7 +21,11 @@ var express = require('express'),
 	colors = require('colors'),
 	redis = require('socket.io/node_modules/redis'),
 	connect = require('express/node_modules/connect'),
-	cookie = require('express/node_modules/connect/node_modules/cookie');
+	cookie = require('express/node_modules/cookie'),
+	bodyParser = require('body-parser'),
+	cookieParser = require('cookie-parser'),
+	methodOverride = require('method-override'),
+	multer = require('multer');
 
 // External Variables
 //
@@ -59,7 +63,7 @@ MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
 
 
 
-DASHBOARD_HOST = 'dasbhoard.goorm.io';
+DASHBOARD_HOST = 'dashboard.goorm.io';
 DASHBOARD_PORT = 3000;
 
 PROJECT_BUCKET = 'grm-project-bucket';
@@ -245,55 +249,106 @@ goorm.init = function() {
 
 goorm.config = function() {
 	// Configuration
-	goorm.configure(function() {
-		goorm.set('views', __dirname + '/views');
-		goorm.set("jsonp callback", true);
+	goorm.set('views', __dirname + '/views');
+	goorm.set("jsonp callback", true);
+	goorm.set('uploadDir', __temp_dir);
+	goorm.set('keepExtensions', true);
 
-		goorm.engine('html', require('ejs').renderFile);
-		goorm.use(express.bodyParser({
-			keepExtensions: true,
-			uploadDir: __temp_dir
-		}));
+	goorm.engine('html', require('ejs').renderFile);
 
-		goorm.use(express.json({
-			limit: '50mb'
-		}));
-		goorm.use(express.urlencoded({
-			limit: '50mb'
-		}));
+	/**
+	 * limit 50mb
+	 */
+	goorm.use(multer({ 
+		limits: {
+			fileSize: 1024 * 1024 * 50
+		},
+		rename: function (fieldname, filename) {
+			return filename;
+		},
+		onFileSizeLimit: function (req, file) {
+			req.__upload_err = true;
 
-		goorm.use(express.cookieParser());
-		goorm.use(express.session({
-			secret: 'rnfmadlek',
-			key: 'express.sid',
-			store: store
-		}));
+			if (!req.file) {
+				req.__upload_err_files = [];
+			}
 
-		
+			req.__upload_err_files.push(file);
+		},
+		onParseEnd: function (req, res, next) {
+			if (req.__upload_err) {
+				if (req.files) {
+					var files = req.files.file;
+
+					if (files.constructor == Array && files.length > 0) {
+						for (var i = files.length - 1; 0 <= i; i--) {
+							fs.unlink(files[i].path);
+						}
+					}
+					else {
+						fs.unlink(files.path);
+					}
+				}
+
+				res.json({
+					err_code: 50,
+					type: 'check',
+					message: "You cannot upload large files with a size bigger than 50MB.",
+					file: req.__upload_err_files
+				});
+			}
+			else {
+				next();
+			}
+		},
+		dest: __temp_dir
+	}));
+
+	goorm.use(bodyParser.json({
+		limit: '50mb'
+	}));
+
+	goorm.use(bodyParser.urlencoded({
+		limit: '50mb',
+		extended: true
+	}));
+
+	if (__jx_mode) {
+		http.setMaxHeaderLength( 1024 * 1024 * 50 );
+	}
+
+	goorm.use(cookieParser());
+	goorm.use(express.session({
+		secret: 'rnfmadlek',
+		key: 'express.sid',
+		store: store
+	}));
+
+	
 
 
-		//goorm.use(express.logger('dev'));
+	//goorm.use(express.logger('dev'));
 
-		goorm.use(express.methodOverride());
-		goorm.use(goorm.router);
-		goorm.use(express.static(__dirname + '/public'));
-		goorm.use(express.static(__dirname + '/plugins'));
+	goorm.use(methodOverride());
+	goorm.use(goorm.router);
+	goorm.use(express.static(__dirname + '/public'));
+	goorm.use(express.static(__dirname + '/plugins'));
 
-		
+	
 
-		goorm.use(express.static(__temp_dir));
-	});
+	goorm.use(express.static(__temp_dir));
 
-	goorm.configure('development', function() {
+
+	var env = process.env.NODE_ENV || 'development';
+	if ('development' == env) {
 		goorm.use(express.errorHandler({
 			dumpExceptions: true,
 			showStack: true
 		}));
-	});
-
-	goorm.configure('production', function() {
+	}
+	else { // production
 		goorm.use(express.errorHandler());
-	});
+	}
 
 	process.on('uncaughtException', function(err) {
 		if (!fs.existsSync("./error_log/")) fs.mkdirSync("./error_log/", 0777);
@@ -633,7 +688,7 @@ goorm.load = function() {
 						io.set('authorization', function (handshakeData, accept) {
 							if (handshakeData.headers.cookie) {
 							    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-							    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+							    handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
 
 							    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
 									return accept('Cookie is invalid.', false);
@@ -711,7 +766,7 @@ goorm.load = function() {
 				io.set('authorization', function (handshakeData, accept) {
 					if (handshakeData.headers.cookie) {
 					    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-					    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+					    handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
 
 					    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
 							return accept('Cookie is invalid.', false);

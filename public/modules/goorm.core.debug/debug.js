@@ -92,6 +92,17 @@ goorm.core.debug.prototype = {
 			core.module.localization.local_apply('#debug_left span', 'dict');
 			core.module.localization.local_apply('#debug_tab_center span', 'dict');
 		});
+
+		// if current project doesn't support debug, hide debug menu and vice versa. Jeong-Min Im.
+		$(core).on('on_project_open', function() {
+			var plugin_manager = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type];
+
+			if (plugin_manager && plugin_manager.debug) { // current project supports debug feature
+				self.show_menu();
+			} else { // current project doesn't support debug feature
+				self.hide_menu();
+			}
+		});
 	},
 
 	init_css: function(argument) {
@@ -189,50 +200,50 @@ goorm.core.debug.prototype = {
 
 		//latest build checking --heeje
 		is_build_fail = is_build_fail || false;
-		if (plugin_manager && plugin_manager.debug) {
-			_$.get("project/check_latest_build", {
-				"project_path": project_path,
-				"run_file_path": project_path + '/' + build_path + build_main
-			}, function(data) {
-				if (data) {
-					if (data.result && latest) {
-						self.button_active();
-						
-						core.module.layout.select('debug');
-						core.module.layout.terminal.status = 'debug';
-						plugin_manager.debug({
-							'path': project_path,
-							'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
-						});
-					} else {
+		// if (plugin_manager && plugin_manager.debug) {	// jeongmin: if debug is undefined, menu will be not shown
+		_$.get("project/check_latest_build", {
+			"project_path": project_path,
+			"run_file_path": project_path + '/' + build_path + build_main
+		}, function(data) {
+			if (data) {
+				if (data.result && latest) {
+					self.button_active();
+					
+					core.module.layout.select('debug');
+					core.module.layout.terminal.status = 'debug';
+					plugin_manager.debug({
+						'path': project_path,
+						'property': core.property.plugins["goorm.plugin." + core.status.current_project_type]
+					});
+				} else {
 
-						self.button_inactive();
-						if (is_build_fail)
-							return;
-						confirmation.init({
-							title: core.module.localization.msg.confirmation_not_latest_build,
-							message: core.module.localization.msg.confirmation_not_latest_build_debug,
-							yes_text: core.module.localization.msg.confirmation_build_and_debug,
-							no_text: core.module.localization.msg.confirmation_cancel,
-							yes: function() {
-								goorm.core.project.send_build_cmd(function() {
-									self.debug_start(true);
-								});
-							},
-							no: function() {}
-						});
-						confirmation.show();
-					}
+					self.button_inactive();
+					if (is_build_fail)
+						return;
+					confirmation.init({
+						title: core.module.localization.msg.confirmation_not_latest_build,
+						message: core.module.localization.msg.confirmation_not_latest_build_debug,
+						yes_text: core.module.localization.msg.confirmation_build_and_debug,
+						no_text: core.module.localization.msg.confirmation_cancel,
+						yes: function() {
+							goorm.core.project.send_build_cmd(function() {
+								self.debug_start(true);
+							});
+						},
+						no: function() {}
+					});
+					confirmation.show();
 				}
-			});
+			}
+		});
 
-		} else {
-			var result = {
-				result: false,
-				code: 6
-			};
-			core.module.project.display_error_message(result, 'alert');
-		}
+		// } else {
+		// 	var result = {
+		// 		result: false,
+		// 		code: 6
+		// 	};
+		// 	core.module.project.display_error_message(result, 'alert');
+		// }
 	},
 
 	debug_terminate: function() {
@@ -392,6 +403,15 @@ goorm.core.debug.prototype = {
 		none_debug_state_btn1.parent().parent().removeAttr("isdisabled");
 	},
 
+	show_menu: function() {
+		$('#main-menu-debug').show();
+		$('#main_debug_toolbar').show();
+	},
+
+	hide_menu: function() {
+		$('#main-menu-debug').hide();
+		$('#main_debug_toolbar').hide();
+	},
 
 	/* Debug Table API */
 	debug_terminal_open: function() {

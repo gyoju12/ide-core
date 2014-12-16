@@ -647,7 +647,7 @@ goorm.plugin.nodejs = {
 				},
 				'tab_content': {
 					'id': this.server_tab_content,
-					'content': '<div class="clr_view"><button class="btn btn-default btn-sm clear_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-danger btn-sm server_btn">Stop Server</button><div class="server_status">Server is running on <a href="http://' + url + '" target="_blank">http://' + url + '</a></div></div><div class="inner_content rst_view terminal_style"></div>',
+					'content': '<div class="clr_view"><button class="btn btn-default btn-sm clear_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-danger btn-sm server_btn">Stop Server</button><div class="server_status">Server is running on <a href="http://' + url + '" target="_blank">http://' + url + '</a></div></div><div class="inner_content rst_view terminal_style user-select-available"></div>',
 					'class': 'server_tab'
 				},
 				'fn': function () {

@@ -12,7 +12,7 @@ goorm.core.menu.action = {
 	prevent: function(menu) { // if menu is disabled --> prevent click
 		var pv = false;
 
-		if ($(menu).parent().hasClass('disabled')) {
+		if ($(menu).parent().hasClass('disabled') || $(menu).hasClass('disabled')) {
 			pv = true;
 		}
 
@@ -116,6 +116,10 @@ goorm.core.menu.action = {
 			}
 			core.dialog.open_file.show();
 		});
+		
+
+		
+
 		
 
 		$("[action=exit]").off("click").tooltip();
@@ -729,7 +733,7 @@ goorm.core.menu.action = {
 				msg = msg.slice(0, -1);
 			}
 
-			function logout(){
+			function logout() {
 				
 				
 				core.unload();
@@ -750,13 +754,13 @@ goorm.core.menu.action = {
 					yes: function() {
 						var save_counter = 0;
 						$(modified).each(function(i) {
-							this.editor.save(null, function(){
+							this.editor.save('logout', function() {
 								save_counter++;
 								if (save_counter >= modified.length) {
 									logout();
 								}
 							});
-                                		});
+						});
 					},
 					no: function() {
 						logout();
@@ -1217,9 +1221,9 @@ goorm.core.menu.action = {
 						window_manager.close_by_index(opened_window, opened_window);
 
 						// jeongmin: these are should be done after deleting selected file
-						}
-						core.status.selected_file = "";
-						core.status.selected_file_type = "";
+					}
+					core.status.selected_file = "";
+					core.status.selected_file_type = "";
 				}
 
 				confirmation.init({

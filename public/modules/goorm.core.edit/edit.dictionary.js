@@ -17,6 +17,7 @@ goorm.core.edit.dictionary = function() {
 	this.result = [];
 	this.index = 0;
 	this.max_item_count = 4;
+	this.completable = false;
 };
 
 goorm.core.edit.dictionary.prototype = {
@@ -46,7 +47,8 @@ goorm.core.edit.dictionary.prototype = {
 		dict_box_html += "<table class='dictionary_list_table table-condensed' style='width:100%;'></table>";
 		dict_box_html += "</li>";
 		dict_box_html += "<li class='divider' style='display:none;'></li>";
-		dict_box_html += "<li class='dropdown-header dictionary_desc'></li>";
+// 		dict_box_html += "<li class='dropdown-header dictionary_desc'></li>";
+		dict_box_html += "<li class='dictionary_desc'></li>";
 		dict_box_html += "</ul>";
 
 		__target.append(dict_box_html);
@@ -77,50 +79,7 @@ goorm.core.edit.dictionary.prototype = {
 			self.box_width = stored_data.box_width;
 		}
 
-		if (this.$container.get(0)) {	// jeongmin: if there isn't container, error will be occured
-			CodeMirror.on(this.$container.get(0), "keydown", function(e) {
-				var code = e.keyCode;
-
-				if (__target.find("ul.dictionary_box").css("display") == "block") {
-					if (code == 27) { // key 'escape'
-						CodeMirror.e_stop(e);
-
-						self.hide();
-
-						self.editor.focus();
-					} else if (code == 38) { // key 'up arrow'
-						self.select(-1);
-					} else if (code == 40) { // key 'down arrow'
-						self.select(1);
-					} else if (code == 13) { // key 'enter'
-						CodeMirror.e_stop(e);
-
-						self.complete();
-
-						self.editor.focus();
-					} else if (code == 37 || code == 39) { // key 'left arrow'||'right arrow'
-						self.hide();
-						self.editor.focus();
-					} else if (code == 8 || code == 46) { // key 'backspace' || 'delete'
-						self.editor.triggerOnKeyDown(e);
-						self.editor.focus();
-					} else if (code == 17 || code == 32) { //control & space (in mac)
-
-					} else {
-						self.editor.focus();
-						self.autokey_down = true;
-					}
-				}
-			});
-		}
-
-		self.editor.on("keyup", function(e) {
-			if (self.autokey_down) {
-				$("a[action=do_autocomplete]:first").click();
-				self.autokey_down = false;
-			}
-		});
-
+		this.connect();
 
 		this.__proto__.__box_index++;
 	},
@@ -150,11 +109,12 @@ goorm.core.edit.dictionary.prototype = {
 		}
 
 		this.hide();
+		this.completable = false;
 	},
 
 	load: function(filetype) {
 		var self = this;
-
+		
 		$(this.target).find(".dictionary_list_table").empty();
 
 		// if (core.is_optimization) {
@@ -249,12 +209,14 @@ goorm.core.edit.dictionary.prototype = {
 				}
 			}
 		}
+		
 
 		if (this.result.length === 1) {
 			this.index = 0;
-			this.complete();
+// 			this.complete();
+			this.completable = true;
 			this.editor.focus();
-			return;
+// 			return;
 		}
 
 		if (this.result.length === 0) {
@@ -264,8 +226,8 @@ goorm.core.edit.dictionary.prototype = {
 			};
 			this.result.push(not_data);
 		}
-
-		if (this.result.length > 1) {
+		
+		if (this.result.length >= 1) {			
 			var dictionary_list_table_array = [];
 			var dictionary_desc_array = [];
 			var get_element_image = function(type) {
@@ -310,6 +272,7 @@ goorm.core.edit.dictionary.prototype = {
 				}
 
 			};
+			
 			$(this.result).each(function(i) {
 				var ele_id = "dict_" + i;
 
@@ -330,13 +293,11 @@ goorm.core.edit.dictionary.prototype = {
 
 				print_key = print_key.replace('<', '&lt').replace('>', '&gt');
 				if (keyword && keyword != '.')
-					print_key = print_key.replace(new RegExp(keyword, 'g'), '<b>' + keyword + '</b>');
-
-
-
+					print_key = print_key.replace(new RegExp(keyword, 'g'), '<span class="text-primary"><b>' + keyword + '</b></span>');
+				
 				var ele_html = "";
 				ele_html += "<tr class='dictionary_element' id='" + ele_id + "'>";
-				ele_html += "<td width='20px' style='font-size:11px;' height='21px' >" + get_element_image(this.type) + "</td><td style='font-size:11px; font-family: monospace;' height='21px'>" + print_key + "</td>";
+				ele_html += "<td width='20px' style='font-size:11px;' height='21px' >" + get_element_image(this.type) + "</td><td style='font-size:11px; font-family: " + core.preference["preference.editor.font_family"] + ", monospace;' height='21px'>" + print_key + "</td>";
 				ele_html += "</tr>";
 
 				dictionary_list_table_array.push(ele_html);
@@ -350,10 +311,10 @@ goorm.core.edit.dictionary.prototype = {
 					desc_html += "</li>";
 				} else {
 					desc_html += "<li class='dictionary_desc_list' id='" + desc_id + "'>";
-					desc_html += "<div style='margin:2px;'>" + this.description + "</div>";
+					desc_html += this.description;
 					desc_html += "</li>";
 				}
-
+				
 				dictionary_desc_array.push(desc_html);
 			});
 			dictionary_list_table.empty()[0].innerHTML = (dictionary_list_table_array.join(""));
@@ -454,8 +415,18 @@ goorm.core.edit.dictionary.prototype = {
 		}
 
 		var dictionary_element = $('tr.dictionary_element', dictionary_list);
+		
 		dictionary_element.removeClass("hovered");
 		dictionary_element.eq(next_item).mouseover();
+	},
+	
+	select_top: function() {
+		var __target = $(this.target);
+		var dictionary_list = $('li.dictionary_list', __target);
+		var dictionary_element = $('tr.dictionary_element', dictionary_list);
+		
+		dictionary_element.removeClass("hovered");
+		dictionary_element.eq(0).mouseover();
 	},
 
 	get_words: function() {
@@ -502,7 +473,7 @@ goorm.core.edit.dictionary.prototype = {
 		dictionary_box.css('left', left);
 		dictionary_box.css('top', top);
 
-		if (this.list_height && this.box_height) {}
+// 		if (this.list_height && this.box_height) {}
 
 		if (this.list_width > 0 && this.box_width > 0) {
 			//list
@@ -513,8 +484,9 @@ goorm.core.edit.dictionary.prototype = {
 			dictionary_box.find('li.dictionary_desc').css('width', this.list_width);
 			dictionary_box.find('div.dictionary_desc_list').css('width', this.list_width);
 		}
-		if (dictionary_list_table.text() != "")
+		if (dictionary_list_table.text() !== "") {
 			dictionary_box.show();
+		}
 		dictionary_box.attr("tabindex", -1).focus();
 
 		__target.find(".divider").hide();
@@ -522,12 +494,15 @@ goorm.core.edit.dictionary.prototype = {
 
 		this.index = 0;
 		dictionary_list.scrollTop(0);
+		
+		this.completable = true;
 	},
 
-	hide: function() {
+	hide: function() {		
 		var __target = $(this.target);
 		__target.find(".dictionary_box").hide();
 		__target.find(".dictionary_desc").hide();
+		this.completable = false;
 	},
 
 	search: function(keyword, type, line_content) {
@@ -659,19 +634,168 @@ goorm.core.edit.dictionary.prototype = {
 		// });
 	},
 
-	get_dictionary_java: function(query, callback) {
+	connect: function () {
 		var self = this;
-		self.result = [];
-		_$.get('/edit/get_proposal_java', {
-			selected_file_path: core.module.layout.workspace.window_manager.active_filename,
-			line: query
-		}, function(data) {
-			self.result = data;
-			self.set(query);
-			if (typeof callback === "function") {
-				callback();
+
+		var $target = $(this.target);
+        var cm_editor = this.editor;
+        var dictionary_box = this.$container;
+
+// 		if (dictionary_box.get(0)) {	// jeongmin: if there isn't container, error will be occured
+// 			CodeMirror.on(dictionary_box.get(0), "keydown", function(e) {
+// 				var code = e.keyCode;
+
+				
+// 			});
+// 		}
+
+// 		cm_editor.on("keyup", function(i, e) {
+// 			if (self.autokey_down) {
+// 				$("a[action=do_autocomplete]:first").click();
+// 				self.autokey_down = false;
+// 			}
+// 		});
+		
+		cm_editor.on("keydown", function(i, e) {
+			var code = e.keyCode;
+			
+			if (code == 91 || code == 93) self.metaKey = true;
+			if (code == 18) self.ctrlKey = true;
+			if (code == 17) self.altKey = true;	
+			
+			if ($target.find("ul.dictionary_box").css("display") == "block") {
+				if (code == 38) { // key 'up arrow'
+					CodeMirror.e_stop(e);
+					cm_editor.focus();
+					self.select(-1);
+				} else if (code == 40) { // key 'down arrow'
+					CodeMirror.e_stop(e);
+					cm_editor.focus();
+					self.select(1);
+				} else if (code == 13) { // key 'enter'
+					CodeMirror.e_stop(e);
+
+					self.complete();
+
+					cm_editor.focus();
+				}
 			}
 		});
-	}
+		
+		cm_editor.on("keyup", function(i, e) {
+			var code = e.keyCode;
+			var cursor = cm_editor.getCursor();
+			var token = cm_editor.getTokenAt(cursor);
+			
+			
+			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189) && !self.metaKey && !self.ctrlKey && !self.altKey) {
+				self.search(token.string);
+				self.show();
+				cm_editor.focus();
+				self.select_top();
+			}
+			else if ((self.metaKey || self.ctrlKey || self.altKey) && ((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189)) {
+				self.metaKey = false;
+				self.ctrlKey = false;
+				self.altKey = false;
+			}
+			
+			
+			if ($target.find("ul.dictionary_box").css("display") == "block") {
+				if (code == 27) { // key 'escape'
+					CodeMirror.e_stop(e);
 
+					self.hide();
+
+					cm_editor.focus();
+// 				}  else if (code == 32 && self.ctrlKey) {
+// 					self.complete();
+
+// 					cm_editor.focus();
+				} else if (code == 37 || code == 39) { // key 'left arrow'||'right arrow'
+					self.hide();
+					cm_editor.focus();
+				} else if (code == 8 || code == 46) { // key 'backspace' || 'delete'
+					if (token && token.string.trim() !== "") {
+// 						token.string = token.string.slice(0, -1);
+
+						if (token.string === "") {
+							self.hide();
+						} else {
+							self.search(token.string);
+							self.show();
+							self.select_top();
+						}
+					} else {
+						self.hide();
+					}
+					
+// 					cm_editor.triggerOnKeyDown(e);
+					cm_editor.focus();
+// 				} else if (code == 17 || code == 32) { //control & space (in mac)
+// 					self.hide();
+// 					cm_editor.focus();
+// 				} else {
+// 					cm_editor.focus();
+// 					self.autokey_down = true;
+				}
+			}
+		});
+
+        cm_editor.on("scroll", $.throttle(function(i, e) {
+            if (dictionary_box.css("display") == "block") {
+                self.hide();
+                cm_editor.focus();
+            }
+        }, 200));
+
+//         cm_editor.on("cursorActivity", function() {
+//             if (cm_editor.history_mode == "history") return;
+
+//             var cur = cm_editor.getCursor();
+//             var line = cur.line + 1;
+//             var ch = cur.ch;
+
+//             if (!(line == self.history_line && ch == self.history_ch + 1)) {
+// 				console.log("wtf?");
+//                 dictionary_box.hide();
+//             }
+//         });
+
+//         $target.on('keydown', function(e) {
+// 			var cursor = cm_editor.getCursor();
+// 			var token = cm_editor.getTokenAt(cursor);
+			
+//             if (dictionary_box.css("display") == "block" && e.keyCode == 8) {
+                
+
+//                 if (token && token.string.trim() !== "") {
+//                     token.string = token.string.slice(0, -1);
+
+//                     if (token.string === "") {
+//                         self.hide();
+//                     } else {
+//                         self.search(token.string);
+//                         self.show();
+//                     }
+//                 } else {
+//                     self.hide();
+//                 }
+//             }
+//         }); 
+
+        $target.mousedown(function(e) {
+        	self.hide();
+        });
+
+        // $target.on("keyup", function(e) {
+        //     if (dictionary_box.css("display") == "block" && e.keyCode != 8 && e.keyCode != 32) {
+        //         var cursor = self.editor.getCursor();
+        //         var token = self.editor.getTokenAt(cursor);
+
+        //         self.search(token.string);
+        //         self.show(self.editor);
+        //     }
+        // });
+	}
 };

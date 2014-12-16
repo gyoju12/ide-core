@@ -3,66 +3,66 @@
 	{
 		"keyword": "class",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Class</div><div style='padding:2px'><b>Description</b> : Class type keyword</div></div>"
+		"description": "<b>Type</b> : Class<br /><b>Description</b> : Class type keyword"
 	},
 	{
 		"keyword": "void",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Void Type</div><div style='padding:2px'><b>Description</b> : Void type</div></div>"
+		"description": "<b>Type</b> : Void Type<br /><b>Description</b> : Void type"
 	},
 	{
 		"keyword": "int",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Int Type</div><div style='padding:2px'><b>Description</b> : Integer type</div></div>"
+		"description": "<b>Type</b> : Int Type<br /><b>Description</b> : Integer type"
 	},
 	{
 		"keyword": "char",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Char Type</div><div style='padding:2px'><b>Description</b> : Character or small integer.</div></div>"
+		"description": "<b>Type</b> : Char Type<br /><b>Description</b> : Character or small integer."
 	},
 	{
 		"keyword": "float",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Float Type</div><div style='padding:2px'><b>Description</b> : Floating point number.</div></div>"
+		"description": "<b>Type</b> : Float Type<br /><b>Description</b> : Floating point number."
 	},
 	{
 		"keyword": "double",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Double Type</div><div style='padding:2px'><b>Description</b> : Double precision floating point number.</div></div>"
+		"description": "<b>Type</b> : Double Type<br /><b>Description</b> : Double precision floating point number."
 	},
 	{
 		"keyword": "null",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Null Type</div><div style='padding:2px'><b>Description</b> : null is used to denote 'no object' or 'unknown' or  'unavailable'</div></div>"
+		"description": "<b>Type</b> : Null Type<br /><b>Description</b> : null is used to denote 'no object' or 'unknown' or  'unavailable'"
 	},
 	{
 		"keyword":"String",
 		"type":"obj",
-		"description": "<div><div style='padding:2px'><b>Type</b> : String Type</div><div style='padding:2px'><b>Description</b> : A String object represents a string. String is a sequence of Unicode characters.</div></div>"
+		"description": "<b>Type</b> : String Type<br /><b>Description</b> : A String object represents a string. String is a sequence of Unicode characters."
 	},
 	{
 		"keyword": "new",
 		"type": "key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Key</div><div style='padding:2px'><b>Description</b> : The new keyword creates object.</div></div>"
+		"description": "<b>Type</b> : Key<br /><b>Description</b> : The new keyword creates object."
 	},
 	{
 		"keyword": "public",
 		"type": "modi",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Modifier</div><div style='padding:2px'><b>Description</b> : public modifier</div></div>"
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : public modifier"
 	},
 	{
 		"keyword": "private",
 		"type": "modi",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Modifier</div><div style='padding:2px'><b>Description</b> : private modifier</div></div>"
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : private modifier"
 	},
 	{
 		"keyword": "protected",
 		"type": "modi",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Modifier</div><div style='padding:2px'><b>Description</b> : protected modifier</div></div>"
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : protected modifier"
 	},
 	{
 		"keyword":"package",
 		"type":"key",
-		"description": "<div><div style='padding:2px'><b>Type</b> : Modifier</div><div style='padding:2px'><b>Description</b> : package modifier</div></div>"
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : package modifier"
 	}
 ]

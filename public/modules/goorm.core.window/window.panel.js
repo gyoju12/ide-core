@@ -91,7 +91,17 @@ goorm.core.window.panel.prototype = {
 
 		if (!editor) editor = 'Editor';
 
-		this.project = core.status.current_project_path;
+		var project = core.status.current_project_path;
+		if (filepath && typeof(filepath) === 'string') {
+			if (filepath.split('/')[0] === '') {
+				project = filepath.split('/')[1];
+			}
+			else {
+				project = filepath.split('/')[0];
+			}
+		}
+
+		this.project = project;
 
 		this.alive = true;
 		this.is_first_maximize = true;
@@ -518,7 +528,6 @@ goorm.core.window.panel.prototype = {
 					self.panel.dialog("option", "width", self.workspace.width()).dialog("option", "height", self.workspace.height() - 1); //.dialog("option", "position", [1, 1]);
 					self.panel.parent().css("left", "0px");
 					self.panel.parent().css("top", "0px");
-					console.log(self.panel.parent().css("top"));
 					
 					if (self.tab) {
 						self.tab.maximize();
@@ -548,7 +557,10 @@ goorm.core.window.panel.prototype = {
 				},
 				minimize: function(evt, dlg) {
 					self.status = "minimized";
-					self.tab.minimize();
+
+					if (self.tab) {
+						self.tab.minimize();
+					}
 				},
 				// when restore dialog, set drag and resize containment.
 				_restore_maximized: function(evt, dlg) {
@@ -654,6 +666,12 @@ goorm.core.window.panel.prototype = {
 
 			if (window_manager.maximized) {
 				this.maximize();
+			}
+
+			if (options.status) {
+				if (options.status === 'minimized') {
+					this.minimize();
+				}
 			}
 
 			panel.parent().data("window", this);
@@ -890,7 +908,10 @@ goorm.core.window.panel.prototype = {
 			// window_manager.active_window = new_window;
 
 			for (var i = 0; i < window_manager.index; i++) {
-				if (window_manager.window[i].type == "Editor" || window_manager.window[i].type == "Merge") {
+				
+				
+				if (window_manager.window[i].type == "Editor") {
+				
 					editor_exist = true;
 					break;
 				}
@@ -899,17 +920,7 @@ goorm.core.window.panel.prototype = {
 
 				// disable main menu - editor
 
-				$("a[action=do_delete]").parent().addClass("disabled");
-				$("a[action=select_all").parent().addClass("disabled");
-				$("a[action=do_go_to_line").parent().addClass("disabled");
-				$("a#parent_bookmark_menu").parent().addClass("disabled");
-				$("a[action=do_find").parent().addClass("disabled");
-				$("a[action=do_find_next").parent().addClass("disabled");
-				$("a[action=do_find_previous").parent().addClass("disabled");
-				$("a[action=auto_formatting").parent().addClass("disabled");
-				$("a[action=comment_selected").parent().addClass("disabled");
-				$("a#parent_merge_menu").parent().addClass("disabled");
-				$("a#parent_refactor_menu").parent().addClass("disabled");
+				this.disable_edit_menu();
 				$(".menu-undo[action=do_undo]").parent().addClass("disabled");
 				$(".menu-redo[action=do_redo]").parent().addClass("disabled");
 				$("button[action=do_redo]").addClass("disabled");
@@ -960,39 +971,19 @@ goorm.core.window.panel.prototype = {
 				if (this.type == "Editor") {
 					$('#editor_status').show();
 
-					$("a[action=do_delete]").parent().removeClass("disabled");
-					$("a[action=select_all]").parent().removeClass("disabled");
-					$("a[action=do_go_to_line]").parent().removeClass("disabled");
-					$("a#parent_bookmark_menu").parent().removeClass("disabled");
-					$("a[action=do_find]").parent().removeClass("disabled");
-					$("a[action=do_find_next]").parent().removeClass("disabled");
-					$("a[action=do_find_previous]").parent().removeClass("disabled");
-					$("a[action=auto_formatting]").parent().removeClass("disabled");
-					$("a[action=comment_selected]").parent().removeClass("disabled");
-					$("a#parent_merge_menu").parent().removeClass("disabled");
-					$("a#parent_refactor_menu").parent().removeClass("disabled");
+					this.enable_edit_menu("Editor");
 
-
-				} else {
+				} 
+				
+				else {
 					$('#editor_status').hide();
 
-					if (this.type !== "Merge") {
-						$("a[action=do_undo]").parent().addClass("disabled");
-						$("a[action=do_redo]").parent().addClass("disabled");
-						$("button[action=do_redo]").addClass("disabled");
-						$("button[action=do_undo]").addClass("disabled");
-						$("a[action=do_delete]").parent().addClass("disabled");
-						$("a[action=select_all]").parent().addClass("disabled");
-						$("a[action=do_go_to_line]").parent().addClass("disabled");
-						$("a#parent_bookmark_menu").parent().addClass("disabled");
-						$("a[action=do_find]").parent().addClass("disabled");
-						$("a[action=do_find_next]").parent().addClass("disabled");
-						$("a[action=do_find_previous]").parent().addClass("disabled");
-						$("a[action=auto_formatting]").parent().addClass("disabled");
-						$("a[action=comment_selected]").parent().addClass("disabled");
-						$("a#parent_merge_menu").parent().addClass("disabled");
-						$("a#parent_refactor_menu").parent().addClass("disabled");
-					}
+					$("a[action=do_undo]").parent().addClass("disabled");
+					$("a[action=do_redo]").parent().addClass("disabled");
+					$("button[action=do_redo]").addClass("disabled");
+					$("button[action=do_undo]").addClass("disabled");
+					this.disable_edit_menu();
+					
 				}
 
 				if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
@@ -1008,10 +999,7 @@ goorm.core.window.panel.prototype = {
 			$(core).trigger('contextmenu_all_hide');
 
 			this.activated = true;
-
-			if (this.filetype == "merge") {
-				core.module.layout.outline.clear();
-			}
+			
 		},
 
 		init_title: function() {
@@ -1150,5 +1138,31 @@ goorm.core.window.panel.prototype = {
 
 		plug: function() {
 			$(core).trigger("window_panel_plug", [this.filename, this.filepath, this.filetype, this.title]);
+		},
+
+		disable_edit_menu: function(type) {
+
+			$("a[action=do_delete]").parent().addClass("disabled");
+			$("a[action=select_all]").parent().addClass("disabled");
+			$("a[action=do_go_to_line]").parent().addClass("disabled");
+			$("a#parent_bookmark_menu").parent().addClass("disabled");
+			$("a[action=do_find]").parent().addClass("disabled");
+			$("a[action=do_find_next]").parent().addClass("disabled");
+			$("a[action=do_find_previous]").parent().addClass("disabled");
+			$("a[action=auto_formatting]").parent().addClass("disabled");
+			$("a[action=comment_selected]").parent().addClass("disabled");
+			
+		},
+		enable_edit_menu: function(type) {
+			$("a[action=do_delete]").parent().removeClass("disabled");
+			$("a[action=select_all]").parent().removeClass("disabled");
+			$("a[action=do_go_to_line]").parent().removeClass("disabled");
+			$("a#parent_bookmark_menu").parent().removeClass("disabled");
+			$("a[action=do_find]").parent().removeClass("disabled");
+			$("a[action=do_find_next]").parent().removeClass("disabled");
+			$("a[action=do_find_previous]").parent().removeClass("disabled");
+			$("a[action=auto_formatting]").parent().removeClass("disabled");
+			$("a[action=comment_selected]").parent().removeClass("disabled");
+			
 		}
 	};

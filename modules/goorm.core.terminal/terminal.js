@@ -183,46 +183,49 @@ module.exports = {
 						
 					if (self.term[msg.index] && self.term[msg.index].pty) {
 						target_terminal = self.term[msg.index];
-						self.term[msg.index].pty.destroy();
-						self.term[msg.index].pty.kill('SIGKILL');
 
-						var bashrc = global.__path + 'configs/bash.bashrc'
-						var command = '--rcfile ' + bashrc;
-						var export_path = global.__temp_dir + 'bin/';
+						self.destroy(self.term[msg.index].pty, function () {
+							var bashrc = global.__path + 'configs/bash.bashrc'
+							var command = '--rcfile ' + bashrc;
+							var export_path = global.__temp_dir + 'bin/';
 
-						self.term[msg.index] = {
-							pty: pty.spawn('bash', command.split(' '), {
-								name: 'xterm-color',
-								cols: parseInt(msg.cols, 10),
-								rows: 30,
-								cwd: process.env.HOME,
-								env: process.env
-							}),
-							workspace: msg.workspace,
-							terminal_name: msg.terminal_name
-						};
-						self.term[msg.index].pty.on('exit', function() {
-							io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+							self.term[msg.index] = {
+								pty: pty.spawn('bash', command.split(' '), {
+									name: 'xterm-color',
+									cols: parseInt(msg.cols, 10),
+									rows: 30,
+									cwd: process.env.HOME,
+									env: process.env
+								}),
+								workspace: msg.workspace,
+								terminal_name: msg.terminal_name
+							};
+							self.term[msg.index].pty.on('exit', function() {
+								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+									index: msg.index
+								});
+							});
+
+
+							self.term[msg.index].pty.on('data', function(data) {
+								var result = {};
+								result.stdout = data;
+								result.terminal_name = msg.terminal_name;
+								result.user = msg.user;
+
+								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
+							});
+
+							self.exec(self.term[msg.index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
+
+							socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
+							socket.to().emit('terminal_refresh_complete.' + name, {
 								index: msg.index
 							});
 						});
 
-
-						self.term[msg.index].pty.on('data', function(data) {
-							var result = {};
-							result.stdout = data;
-							result.terminal_name = msg.terminal_name;
-							result.user = msg.user;
-
-							io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
-						});
-
-						self.exec(self.term[msg.index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
-
-						socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
-						socket.to().emit('terminal_refresh_complete.' + name, {
-							index: msg.index
-						});
+						// self.term[msg.index].pty.destroy();
+						// self.term[msg.index].pty.kill('SIGKILL');
 					}
 					
 				} catch (e) {
@@ -237,10 +240,13 @@ module.exports = {
 
 					
 				if (self.term[msg.index] && self.term[msg.index].pty) {
-					self.term[msg.index].pty.destroy();
-					self.term[msg.index].pty.kill('SIGKILL');
+					self.destroy(self.term[msg.index].pty, function () {
+						delete self.term[msg.user][msg.index]; // jeongmin
+					});
 
-					delete self.term[msg.user][msg.index]; // jeongmin
+					// self.term[msg.index].pty.destroy();
+					// self.term[msg.index].pty.kill('SIGKILL');
+
 					//index--; // jeongmin: terminal is deleted, list--
 				}
 				
@@ -292,6 +298,23 @@ module.exports = {
 				}
 			});
 		});
+	},
+
+	destroy: function (pty, callback) {
+		if (pty && pty.socket) {
+			pty.socket.once('close', function () {
+				if (callback && typeof(callback) === 'function') {
+					callback();
+				}
+			});
+			pty.destroy();
+		}
+		else {
+			pty.destroy();
+			if (callback && typeof(callback) === 'function') {
+				callback();
+			}
+		}
 	},
 
 	exec: function(term, command, special_key) {

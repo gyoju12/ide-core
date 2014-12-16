@@ -491,12 +491,19 @@ goorm.core.dialog.explorer.prototype = {
 		if(e) {
 			var current_path = $(e.target).parent("span");
 			var prev_path = current_path.prevAll();
+			var text = current_path.text();
+
 			if(prev_path.length) {
 				prev_path.reverse().each(function(i){
 					path += $(this).text();// + "/";
 				});
 			}
-			path += "/" + current_path.text();
+			
+			if (path && path[path.length - 1] !== '/') {
+				text = '/' + text;
+			}
+
+			path += current_path.text();
 		}
 		else {
 			$("span", this.location_path).each(function(i){

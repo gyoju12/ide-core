@@ -114,6 +114,7 @@ goorm.core.layout = {
 			var layout_state = self.layout.readState();
 			layout_state.south.initClosed = false; //seongho.cha : it must be opened. sometimes plugin close it.
 			layout_state.south.initHidden = false;
+			layout_state.north_step = self.north_step || 3;
 			
 			self.save_layout_tab_activated(layout_state); // add layout tab state
 			localStorage.layout_state = JSON.stringify(layout_state);
@@ -224,7 +225,8 @@ goorm.core.layout = {
 			$(core).trigger('contextmenu_all_hide');
 		});
 		
-			// when mainmenu dropdown, hover can open dropdown menu
+
+		// when mainmenu dropdown, hover can open dropdown menu
 		$('#goorm-mainmenu .dropdown').hover(function(e) {
 			menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
 			if (menu_shown) {
@@ -517,6 +519,8 @@ goorm.core.layout = {
 				$("#goorm_main_toolbar").show();
 				break;
 		}
+
+		this.north_step = step;
 	},
 
 	attach_project_explorer: function(target) {
@@ -567,9 +571,9 @@ goorm.core.layout = {
 	resize_all: function() {
 
 		// -- left --
-		var left_height = $("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - 1;
+		var left_height = $("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - 7;
 		$('#project_explorer').height(left_height - $('#project_selector').outerHeight());
-		$('#share_list_group').height(left_height);
+		$('#share_list_group').height(left_height - 3);
 		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
 
 		var project_selector_width = $("#project_explorer_tab").width() - 40;
@@ -578,8 +582,7 @@ goorm.core.layout = {
 		$('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool
 
 		var layout_right_height = $("div.ui-layout-east").height() - $("#east_tab").height();
-		var goorm_inner_layout_right = $("#goorm_inner_layout_right");
-		goorm_inner_layout_right.find("div.tab-content").height(layout_right_height);
+		$("#goorm_inner_layout_right > div.tab-content").height(layout_right_height);
 		
 		// goorm_inner_layout_right.find("#bookmark_tab_list").css("max-height", layout_right_height / 2 - 33); //jeongmin: the other half is for outline and 33 means bookmark header	// hidden by jeongmin: bookmark tab list is now resizable, so don't need to set height.
 
@@ -630,8 +633,12 @@ goorm.core.layout = {
 			var $toolbar = $(toolbars.get(i));
 			var $bubble_toolbar = $(bubble_toolbars.get(i));
 
+			if (!$toolbar.is(':visible')) { // jeongmin: it is hidden, so don't count this
+				continue;
+			}
+
 			current_toolbar_width += $toolbar.width(); // margin
-			
+
 			if (current_toolbar_width > main_toolbar_width) {
 				$toolbar.fadeOut({
 					'duration': this.more_toolbar_option.duration
@@ -677,7 +684,7 @@ goorm.core.layout = {
 		// self.layout.getUnitByPosition("top").set("height", $("#goorm_mainmenu").height() + $("#goorm_main_toolbar").height() + 55);	
 	},
 
-	select: function(tab_name) {
+	select: function(tab_name, cb) {
 		var $parent = null;
 		var pane = "";
 		var id = "";
@@ -921,6 +928,10 @@ goorm.core.layout = {
 						break;
 				}
 			}
+		}
+
+		if (layout_state.north_step) {
+			this.north_layout_toggle(layout_state.north_step);
 		}
 	},
 
