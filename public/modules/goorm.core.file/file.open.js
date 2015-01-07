@@ -126,6 +126,13 @@ goorm.core.file.open = {
 					return false;
 			}
 		});
+		
+		$("#g_of_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#file_open_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
 
 		// on selecting file view
 		$(files).on("click", "div.file_item", function(){

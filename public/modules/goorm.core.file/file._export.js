@@ -140,6 +140,13 @@ goorm.core.file._export = {
 			}
 		});
 
+		$("#g_ef_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#file_export_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
+		
 		// on selecting file view
 		$(files).on("click", "div.file_item", function() {
 			$(self.dialog_explorer.input_file_name).val($(this).attr("filename"));

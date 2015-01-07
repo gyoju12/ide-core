@@ -97,7 +97,14 @@ goorm.core.file._new.untitled_textfile = {
 	bind: function(){
 		var self = this;
 		var files = this.dialog_explorer.files;
-
+		
+		$("#g_nut_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#text_new_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
+		
 		$(files).on("click", "div.file_item", function(){
 			self.filename = $(this).attr("filename");
 			self.filetype = $(this).attr("filetype");

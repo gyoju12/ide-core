@@ -52,6 +52,7 @@ goorm.core.layout = {
 
 
 		this.layout = $('body#goorm').layout({
+			enableCursorHotkey: false,
 			west__size: 250,
 			north__size: 70,
 			north__resizable: false,
@@ -67,6 +68,7 @@ goorm.core.layout = {
 			spacing_closed: 5,
 			south__spacing_closed: 0, //seongho.cha: It is trick. When show and hide function called togather, sometimes resizer not be hide. It makes resizer looks like hide
 			center__childOptions: {
+				enableCursorHotkey: false,
 				center__paneSelector: ".ui-inner-layout-center",
 				// inset: {
 				// 	top: 4
@@ -470,7 +472,6 @@ goorm.core.layout = {
 				var history_edit = null;
 
 				if (active_window_obj.editor) {
-					console.log(active_window_obj);
 					if (active_window_obj.editor.collaboration) { // jeongmin: use ot_stack
 						history_edit = active_window_obj.history_edit;
 					} else { // jeongmin: use codemirror's original edit history

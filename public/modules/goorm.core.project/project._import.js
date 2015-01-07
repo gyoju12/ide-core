@@ -193,6 +193,7 @@ goorm.core.project._import = {
 				core.module.layout.terminal.resize();
 				$(core).trigger('project_is_created');
 
+				self.is_working = false;
 			} else {
 				alert.show(data.message);
 				self.is_working = false;
@@ -233,7 +234,7 @@ goorm.core.project._import = {
 							no_text: localization_msg.confirmation_no,
 							title: localization_msg.confirmation_title,
 							yes: function() {
-								if(self.is_working === true){
+								if (self.is_working === true) {
 									return false;
 								}
 								self.is_working = true;
@@ -246,14 +247,14 @@ goorm.core.project._import = {
 						confirmation.show();
 						break;
 				}
-				
+
 				self.is_working = false;
 				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
-				
+
 			}
 		});
-		
-		if(self.is_working === true){
+
+		if (self.is_working === true) {
 			return false;
 		}
 		self.is_working = true;
@@ -301,12 +302,12 @@ goorm.core.project._import = {
 				// core.progressbar.set(100);
 
 				if (data.type == 'check') {
-					if (data.result && data.result.type) { // it's goorm project
+					if (data.result && data.result.type && where.find('.select_import_project_type [value=' + data.result.type + ']').length) { // goorm.manifest exists) { // it's goorm project
 						var detailed_type = data.result.detailedtype;
 
 						// do it after list is set. Jeong-Min Im.
 						$(core).one('change_done', function() {
-							if (where.find('.select_import_project_detail_type [value="' + detailed_type + '"]').length > 0) { // jeongmin: only if this detailedtype exists
+							if (where.find('.select_import_project_detail_type [value="' + detailed_type + '"]').length) { // jeongmin: only if this detailedtype exists
 								where.find('.select_import_project_detail_type').val(detailed_type);
 							}
 						});
@@ -332,6 +333,12 @@ goorm.core.project._import = {
 							case 50:
 								alert.show(core.module.localization.msg.alert_limit_file_size);
 								break;
+
+							default:
+								var first_type = $(where.find('.select_import_project_type').children()[0]).val();
+
+								where.find('.select_import_project_type').val(first_type);
+								where.find('.select_import_project_type').change();
 						}
 					}
 				} else {
@@ -444,6 +451,12 @@ goorm.core.project._import = {
 			select_project_detail_type = where.find(".select_import_project_detail_type");
 
 		for (var i = 0; i < type_button.length; i++) {
+			var category = $(type_button[i]).attr('category');
+
+			if (category && ~category.indexOf('examples')) { // jeongmin: examples will be in its own language project
+				continue;
+			}
+
 			var project_name = $(type_button[i]).find('.list-group-item-heading').html(),
 				project_type = $(type_button[i]).attr("project_type");
 

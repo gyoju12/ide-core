@@ -546,7 +546,7 @@
                                     <li>
                                         <a href="#" action="do_transpose" localization_key="edit_transpose">
                                             Transpose
-                                            <em class="helptext">Ctrl + T</em>
+                                            <em class="helptext">Ctrl + Alt + T</em>
                                         </a>
                                     </li>
                                 </ul>
@@ -1327,6 +1327,17 @@
                         </button>
                         <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="debug_step_out" tooltip="debug_step_out">
                             <i class="fa fa-fw fa-expand fa-lg"></i>
+                        </button>
+                    </div>
+                    <div id="main_scm_toolbar" class="btn-group grm_toolbar">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Commit" data-container="body" action="scm_status" tooltip='Commit'>
+                            <i class="fa fa-fw fa-upload fa-lg"></i>COMMIT
+                        </button>
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Update" data-container="body" action="scm_update" tooltip='Update'>
+                            <i class="fa fa-fw fa-download fa-lg"></i>UPDATE
+                        </button>
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Pull" data-container="body" action="scm_status" tooltip='Pull'>
+                            <i class="fa fa-fw fa-download fa-lg"></i>PULL
                         </button>
                     </div>
                     <!--
@@ -4568,9 +4579,9 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.duplicate" localization_key="file_duplicate">Duplicate</label>
+                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.duplicate" localization_key="file_duplicate">Duplicate</label>
                                                 <div class="col-md-8">
-                                                    <input class="shortcut_input form-control" name="preference.shortcut.edit.duplicate" id="preference.shortcut.edit.duplicate" value="Alt+Shift+A"/>
+                                                    <input class="shortcut_input form-control" name="preference.shortcut.file.duplicate" id="preference.shortcut.file.duplicate" value="Ctrl+Shift+A"/>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -5532,7 +5543,7 @@
                                 Copy
                                 <em class="helptext">Ctrl + C</em>
                             </span>
-                            <span name="preference.shortcut.edit.duplicate" localization_key="edit_duplicate">
+                            <span name="preference.shortcut.file.duplicate" localization_key="edit_duplicate">
                                 Duplicate
                                 <em class="helptext">Ctrl + Shift + A</em>
                             </span>
@@ -5570,7 +5581,7 @@
                             </span>
                             <span localization_key="edit_transpose">
                                 Transpose
-                                <em class="helptext">Ctrl + T</em>
+                                <em class="helptext">Ctrl + Alt + T</em>
                             </span>
                             <span localization_key="edit_join_lines">
                                 Join Lines
@@ -5600,7 +5611,7 @@
                                 Select Word
                                 <em class="helptext">Ctrl + D</em>
                             </span>
-                            <span localization_key="edlt_select_line">
+                            <span localization_key="edit_select_line">
                                 Select Line
                                 <em class="helptext">Ctrl + L</em>
                             </span>

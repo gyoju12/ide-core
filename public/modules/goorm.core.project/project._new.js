@@ -613,6 +613,13 @@ goorm.core.project._new = {
 			}
 		});
 
+		$("#g_np_btn_cancel").off("keydown");
+		$("#g_np_btn_cancel").on("keydown", function(e) {
+			if(e.which == 9) 
+				$('#project_new div[class="wizard_step"] .nav-tabs li:first a').focus();
+			e.preventDefault();
+		});
+
 		$("#project_new [name=input_import_project_name]").off("keydown");
 		$("#project_new [name=input_import_project_name]").on("keydown", function(e) {
 			if (e.which == 13 && !$("#g_np_btn_ok_import").prop('disabled'))

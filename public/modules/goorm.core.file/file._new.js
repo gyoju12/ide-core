@@ -148,6 +148,12 @@ goorm.core.file._new = {
 		// var files = this.dialog_explorer.files;
 		// $(files).click();
 		$("#file_new_target_name").focus();
+		$("#g_nf_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#file_new_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
 	},
 
 	expand: function(tree_div, src) {

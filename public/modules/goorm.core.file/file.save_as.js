@@ -159,6 +159,14 @@ goorm.core.file.save_as = {
 					return false;
 			}
 		});
+		
+		$("#g_saf_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#file_save_as_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
+		
 
 		$(files).on("click", "div.file_item", function() {
 			$("#file_save_as_target_name").val($(this).attr("filename"));

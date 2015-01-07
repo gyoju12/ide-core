@@ -138,6 +138,13 @@ goorm.core.file._import = {
 					return false;
 			}
 		});
+		
+		$("#g_if_btn_ok").keydown(function(e) {
+			if(e.keyCode == 9 ) {
+				$("#file_import_dir_tree").find(".jstree-clicked").click();
+			}
+			e.preventDefault();
+		});
 
 		$(files).on("click", "div.file_item", function() {
 			self.filename = $(this).attr("filename");

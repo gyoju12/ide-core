@@ -83,8 +83,8 @@ goorm.core.shortcut.manager = {
 			.replace("Shift", "&#x21E7;")
 			.replace("Backspace", "&#x232b") // jeongmin: backward delete
 			.replace("Del", "&#x2326") // jeongmin: forward delete
-			.replace("Left", "&#8592")//"⇦")
-			.replace("Right", "&#8594")//"⇨")
+			.replace("Left", "&#8592") //"⇦")
+			.replace("Right", "&#8594") //"⇨")
 			.replace("Up", "&#8593")
 			.replace("Down", "&#8595")
 			.replace("Esc", "&#9099")
@@ -380,14 +380,14 @@ goorm.core.shortcut.manager = {
 		// Duplication check 
 		var is_dup = false;
 		if (this.shortcuts.indexOf(new_shortcut) > -1) {
-			if(new_shortcut != old_shortcut){
+			if (new_shortcut != old_shortcut) {
 				is_dup = true;
 				for (var name in this.hotkeys) {
 					if (this.hotkeys[name] == new_shortcut) {
 						is_dup = false;
 					}
 				}
-					
+
 			}
 		}
 
@@ -399,41 +399,41 @@ goorm.core.shortcut.manager = {
 
 		// check duplicate from sublime theme
 		// if (this.theme == 'sublime') {
-			var norm_new_shortcut = new_shortcut.split("+").join("-");
-			
-			if (norm_new_shortcut.indexOf('Meta') != -1) {
+		var norm_new_shortcut = new_shortcut.split("+").join("-");
 
-				var os = this.getOStype();
-				
-				if (os == 'mac') {
-					norm_new_shortcut = norm_new_shortcut.replace("Meta", "Cmd");
-				} else {
-					norm_new_shortcut = norm_new_shortcut.replace("Meta", "Ctrl");
-				}
+		if (norm_new_shortcut.indexOf('Meta') != -1) {
+
+			var os = this.getOStype();
+
+			if (os == 'mac') {
+				norm_new_shortcut = norm_new_shortcut.replace("Meta", "Cmd");
+			} else {
+				norm_new_shortcut = norm_new_shortcut.replace("Meta", "Ctrl");
+			}
+		}
+
+		var duplicate_in_sublime = CodeMirror.keyMap.sublime[norm_new_shortcut];
+
+		if (duplicate_in_sublime) {
+
+			alert.show("[" + new_shortcut + "]\n" + core.module.localization.msg.alert_duplicate_shortcut_sublime);
+
+			if (self.history[new_shortcut_name]) {
+				old_shortcut = self.history[new_shortcut_name];
+			} else if (self.temp_shortcut[new_shortcut]) {
+				old_shortcut = self.temp_shortcut[new_shortcut].old_shortcut;
 			}
 
-			var duplicate_in_sublime = CodeMirror.keyMap.sublime[norm_new_shortcut];
+			$(shortcut_input_obj).val(old_shortcut);
 
-			if (duplicate_in_sublime) {
-
-				alert.show("[" + new_shortcut + "]\n" + core.module.localization.msg.alert_duplicate_shortcut_sublime);
-
-				if(self.history[new_shortcut_name]) {
-					old_shortcut = self.history[new_shortcut_name];
-				} else if (self.temp_shortcut[new_shortcut]) {
-					old_shortcut = self.temp_shortcut[new_shortcut].old_shortcut;
-				}
-
-				$(shortcut_input_obj).val(old_shortcut);
-
-				return;
-			}
+			return;
+		}
 		// }
 
 
 		////// check duplicate shortcut //////
-		if (new_shortcut != "None" && is_dup){
-		// if (new_shortcut != "None" && (this.shortcuts.indexOf(new_shortcut) > -1 || duplicate_in_temp)) { //None can be duplicated
+		if (new_shortcut != "None" && is_dup) {
+			// if (new_shortcut != "None" && (this.shortcuts.indexOf(new_shortcut) > -1 || duplicate_in_temp)) { //None can be duplicated
 			confirmation.init({
 				title: core.module.localization.msg.shortcut_conflict,
 				message: new_shortcut + "<br/>" + core.module.localization.msg.confirmation_shortcut_conflict,
@@ -441,11 +441,10 @@ goorm.core.shortcut.manager = {
 				yes: function() {
 					if (duplicate_in_temp) { //duplicates in the modified shortcuts
 						var exist_shortcut_name = duplicate_in_temp.name, //exist shortcut's name
-						exist_shortcut_obj = $(".shortcut_input[name='" + exist_shortcut_name + "']"); //exist shortcut object
-					}
-					else { //duplicates in already binded shortcuts
+							exist_shortcut_obj = $(".shortcut_input[name='" + exist_shortcut_name + "']"); //exist shortcut object
+					} else { //duplicates in already binded shortcuts
 						var exist_shortcut_obj = $(".shortcut_input[value='" + new_shortcut + "']"), //exist shortcut object
-						exist_shortcut_name = exist_shortcut_obj.attr("name"); //exist shortcut's name
+							exist_shortcut_name = exist_shortcut_obj.attr("name"); //exist shortcut's name
 					}
 
 					////// push to shortcut changing list //////
@@ -486,7 +485,7 @@ goorm.core.shortcut.manager = {
 			var to_be_deleted = null;
 
 			for (var item in self.temp_shortcut) {
-				if(new_shortcut_name == self.temp_shortcut[item].name){
+				if (new_shortcut_name == self.temp_shortcut[item].name) {
 					to_be_deleted = item;
 				}
 			}
@@ -503,53 +502,63 @@ goorm.core.shortcut.manager = {
 		var action = this.change_event(name, new_shortcut, old_shortcut),
 			os = this.getOStype();
 
-		// if (!theme) { ////// set custom shortcut array //////
+		if (action) {
+			// if (!theme) { ////// set custom shortcut array //////
 			if (this.hotkeys[action] == new_shortcut) //custom shortcut is back to default
 				delete this.custom_shortcut[name]; //this shortcut isn't custom anymore
 			else //completely new shortcut
 				this.custom_shortcut[name] = new_shortcut; //save new shortcut to custom shortcut list
-		// } else { ////// set theme shortcut array //////
-		// 	if (this.hotkeys[action] == new_shortcut) //theme shortcut is back to default
-		// 		delete this.theme_shortcut[name]; //this shortcut isn't theme anymore
-		// 	else //completely new shortcut
-		// 		this.theme_shortcut[name] = new_shortcut; //save new shortcut to theme shortcut list
-		// }
+			// } else { ////// set theme shortcut array //////
+			// 	if (this.hotkeys[action] == new_shortcut) //theme shortcut is back to default
+			// 		delete this.theme_shortcut[name]; //this shortcut isn't theme anymore
+			// 	else //completely new shortcut
+			// 		this.theme_shortcut[name] = new_shortcut; //save new shortcut to theme shortcut list
+			// }
+		} else {
+			console.log('change_shortcut error:', arguments);
+		}
 
 		localStorage.setItem('shortcut', JSON.stringify(this.custom_shortcut)); //set shortcut in the localStorage
 	},
 
 	//unbind/bind shortcut key event. Jeong-Min Im.
 	change_event: function(name, new_shortcut, old_shortcut) {
-		var action = $("[name='" + name + "'][action]").attr("action"), //changing shortcut's action -> event namespace
-			os = this.getOStype();
+		var action = false;
+		var os = this.getOStype();
 
-		////// old_shortcut is from this.hotkeys object. This.hotkeys' Meta string is lowercase and this.shortcuts' Meta string is capital. So, match this difference. //////
-		old_shortcut = old_shortcut.replace(/meta/g, 'Meta');
+		if (name && new_shortcut && old_shortcut) {
+			action = $("[name='" + name + "'][action]").attr("action"); //changing shortcut's action -> event namespace
 
-		// these shortcuts aren't binded by jquery. These are binded manually.
-		if (action == 'tile_left' || action == 'tile_right')
-			this.special_shortcut[action] = new_shortcut;
-		else {
-			////// unbind //////
-			if (old_shortcut != "None" && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
-				this.unbind(action, old_shortcut); //unbind old shortcut event
-				this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list	
+			////// old_shortcut is from this.hotkeys object. This.hotkeys' Meta string is lowercase and this.shortcuts' Meta string is capital. So, match this difference. //////
+			old_shortcut = old_shortcut.replace(/meta/g, 'Meta');
+
+			// these shortcuts aren't binded by jquery. These are binded manually.
+			if (action == 'tile_left' || action == 'tile_right')
+				this.special_shortcut[action] = new_shortcut;
+			else {
+				////// unbind //////
+				if (old_shortcut != "None" && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
+					this.unbind(action, old_shortcut); //unbind old shortcut event
+					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list	
+				}
+
+				////// bind //////
+				if (new_shortcut != "None") { //if new shortcut is null -> no need to bind
+					this.bind(action, new_shortcut, this.hotkeys_fn[action]); //bind new shortcut event
+					this.shortcuts.push(new_shortcut); //push new shortcut to the list
+				}
 			}
 
-			////// bind //////
-			if (new_shortcut != "None") { //if new shortcut is null -> no need to bind
-				this.bind(action, new_shortcut, this.hotkeys_fn[action]); //bind new shortcut event
-				this.shortcuts.push(new_shortcut); //push new shortcut to the list
+			////// change value and helptext //////
+			$("input[name='" + name + "']").attr("value", new_shortcut).val(new_shortcut); //change shortcut preference input value to new shortcut
+			if (os == "mac") {
+				new_shortcut = new_shortcut.replace(/Meta/g, 'meta'); // for replacing to image (image only knows 'm'eta)
+				new_shortcut = this.replace_hotkey(new_shortcut);
 			}
+			$("[name='" + name + "'] .helptext").html(new_shortcut);
+		} else {
+			console.log('change_event error:', arguments);
 		}
-
-		////// change value and helptext //////
-		$("input[name='" + name + "']").attr("value", new_shortcut).val(new_shortcut); //change shortcut preference input value to new shortcut
-		if (os == "mac") {
-			new_shortcut = new_shortcut.replace(/Meta/g, 'meta'); // for replacing to image (image only knows 'm'eta)
-			new_shortcut = this.replace_hotkey(new_shortcut);
-		}
-		$("[name='" + name + "'] .helptext").html(new_shortcut);
 
 		return action; //return event_name to change_shortcut function
 	},
@@ -564,7 +573,11 @@ goorm.core.shortcut.manager = {
 		for (var name in this.custom_shortcut) {
 			var action = $("[name='" + name + "'][action]").attr("action"); //changing shortcut's action -> event namespace`
 
-			this.change_event(name, this.custom_shortcut[name], this.hotkeys[action]); //change default shortcut as loaded custom shortcut
+			if (name && this.custom_shortcut[name] && this.hotkeys[action]) {
+				this.change_event(name, this.custom_shortcut[name], this.hotkeys[action]); //change default shortcut as loaded custom shortcut
+			} else {
+				console.log('load_shortcut error:', name, this.custom_shortcut[name], this.hotkeys[action]);
+			}
 		}
 	},
 
@@ -663,7 +676,9 @@ goorm.core.shortcut.manager = {
 
 				// swap_line_down/up: Shift+Ctrl+down(win)	Cmd+Ctrl+down(mac)
 				// scroll_line_down/up: Ctrl+down(win)		Ctrl+Alt+down(mac)
-				switch(action){
+				// do_transpose: Ctrl+Alt+T(win)			Ctrl+T(mac)
+				// select_scope: Shift+Ctrl+Space(win,mac)
+				switch (action) {
 					case "swap_line_down":
 					case "swap_line_up":
 						if (os == "mac") {
@@ -680,6 +695,14 @@ goorm.core.shortcut.manager = {
 							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
 						}
 						break;
+					case "do_transpose":
+						if (os == "mac") {
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim().replace("Alt+", "");
+						} else {
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+						}
+						break;
+					case "select_scope":
 					case "tile_left":
 					case "tile_right":
 					case "bottom_debug_show":
@@ -688,12 +711,12 @@ goorm.core.shortcut.manager = {
 						self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
 						break;
 					default:
-						if (os =='mac') {
-							self.hotkeys[action] = $(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").trim();	
+						if (os == 'mac') {
+							self.hotkeys[action] = $(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").trim();
 						} else {
 							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
 						}
-						
+
 				}
 
 				self.shortcuts.push(self.hotkeys[action].replace(/meta/g, "Meta")); //jeongmin: set total shortcuts list
@@ -701,7 +724,7 @@ goorm.core.shortcut.manager = {
 				$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, "meta").replace(/	/g, "").split(" ").join("").trim()));
 			} else { // for help shortcut dialog
 				if (os == 'mac') {
-					$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").split("+").join("").trim()));	
+					$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").split("+").join("").trim()));
 				}
 			}
 		});
@@ -1212,7 +1235,7 @@ goorm.core.shortcut.manager = {
 			this.hotkeys_fn.do_go_to_line = function(e) {
 
 				$("a[action=do_go_to_line]").get(0).click();
-				
+
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1220,16 +1243,16 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('do_go_to_line', this.hotkeys.do_go_to_line), this.hotkeys.do_go_to_line, this.hotkeys_fn.do_go_to_line);
 		}
-		
+
 		//Toggle Breakpoint (Ctrl+B). 
 		if (this.hotkeys.toggle_breakpoint) {
 			this.hotkeys_fn.toggle_breakpoint = function(e) {
 				$("a[action=toggle_breakpoint").get(0).click();
-				
+
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
-				
+
 			};
 
 			doc_obj.bind('keydown.' + this.make_namespace('toggle_breakpoint', this.hotkeys.toggle_breakpoint), this.hotkeys.toggle_breakpoint, this.hotkeys_fn.toggle_breakpoint);
@@ -1668,8 +1691,7 @@ goorm.core.shortcut.manager = {
 						if (context.dictionary.completable && $(context.dictionary.target).find("ul.dictionary_box").css("display") == "block") {
 							context.dictionary.complete();
 							editor.focus();
-						} 
-						else {
+						} else {
 							var cursor = editor.getCursor();
 							var token = editor.getTokenAt(cursor);
 							context.dictionary.search(token.string);

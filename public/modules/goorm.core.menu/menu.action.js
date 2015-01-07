@@ -608,6 +608,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.delLineLeft(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -620,6 +621,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.delLineRight(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -632,6 +634,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.insertLineBefore(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -644,6 +647,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.insertLineAfter(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -656,6 +660,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.downcaseAtCursor(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -668,6 +673,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.upcaseAtCursor(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -680,6 +686,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.transposeChars(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -692,6 +699,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.joinLines(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -704,6 +712,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.duplicateLine(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -716,6 +725,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.deleteLine(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -728,6 +738,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.swapLineDown(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -740,6 +751,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.swapLineUp(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -752,6 +764,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectNextOccurrence(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -764,6 +777,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectLine(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -776,6 +790,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectScope(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -788,6 +803,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectBetweenBrackets(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -800,6 +816,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectLinesUpward(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -812,6 +829,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.selectLinesDownward(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -824,6 +842,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.singleSelectionTop(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -836,6 +855,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.splitSelectionByLine(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -848,6 +868,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.fold(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -860,6 +881,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.unfold(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -872,6 +894,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.unfoldAll(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -884,6 +907,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.goToBracket(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -896,6 +920,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.goSubwordLeft(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -908,6 +933,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.goSubwordRight(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -920,6 +946,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.scrollLineUp(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -932,6 +959,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.scrollLineDown(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -944,6 +972,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -956,6 +985,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.sortLines(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
@@ -968,6 +998,7 @@ goorm.core.menu.action = {
 			var active_window = window_manager.active_window;
 			if(active_window > -1){
 				CodeMirror.commands.sortLinesInsensitive(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
 			}
 		});
 
