@@ -17,7 +17,7 @@ goorm.core.edit.find_and_replace = {
 	last_query: null,
 	marked: [],
 	match_case: false,
-	ignore_whitespace: false,
+	whole_word: false,
 	use_regexp: false,
 	find_on_workspace: false,
 	replace_cursor: null,
@@ -66,18 +66,30 @@ goorm.core.edit.find_and_replace = {
 				// 	self.handle_replace_and_find();
 				// });
 
+				// find button added - Donguk Kim
+				$('#g_far_btn_find2').click(function() {
+					self.find();
+				});	
+
 				// Replace
 				// aggregated find and replace on this function --heeje
 				$('#g_far_btn_replace').click(function() {
 					//self.handle_replace();
 					self.handle_replace_and_find();
 				});
+				// $('#far_match_case').click(function() {
+				// 	if (!$('#far_match_case').hasClass('disabled')) {
+				// 		$('#far_match_case').addClass('disabled');
+				// 	} else {
+				// 		$('#far_match_case').removeClass('disabled');
+				// 	}
+				// });
 				$('#far_use_regexp').click(function() {
-					if (!$('#far_ignore_whitespace').hasClass('disabled')) {
-						$('#far_ignore_whitespace').addClass('disabled');
+					if (!$('#far_whole_word').hasClass('disabled')) {
+						$('#far_whole_word').addClass('disabled');
 						$('#far_match_case').addClass('disabled');
 					} else {
-						$('#far_ignore_whitespace').removeClass('disabled');
+						$('#far_whole_word').removeClass('disabled');
 						$('#far_match_case').removeClass('disabled');
 					}
 				});
@@ -185,12 +197,12 @@ goorm.core.edit.find_and_replace = {
 	},
 
 	set_options: function() {
-		//	this.match_case = $('#far_match_case').parent().hasClass('checked');
+		// this.match_case = $('#far_match_case').parent().hasClass('checked');
 		//	this.use_regexp = $('#far_use_regexp').parent().hasClass('checked');
-		//	this.ignore_whitespace = $('#far_ignore_whitespace').parent().hasClass('checked');
+		//	this.whole_word = $('#far_whole_word').parent().hasClass('checked');
 		this.use_regexp = $("#far_use_regexp").hasClass("active");
 		this.match_case = $("#far_match_case").hasClass("active");
-		this.ignore_whitespace = $("#far_ignore_whitespace").hasClass("active");
+		this.whole_word = $("#far_whole_word").hasClass("active");
 	},
 
 	find: function() {
@@ -202,7 +214,7 @@ goorm.core.edit.find_and_replace = {
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query of this dialog
 			var keyword = $("#find_query_inputbox").val();
-
+			CodeMirror.commands.clearSearch(editor); // using codemirror search API
 			this.search(keyword, editor);
 			// findNext: do Search
 			// find: clear Search & do Search
@@ -228,19 +240,21 @@ goorm.core.edit.find_and_replace = {
 		this.progress_elements = core.module.loading_bar.start({
 			str: core.module.localization.msg.loading_bar_search
 		});
-		var window_manager = core.module.layout.workspace.window_manager;
+		var window_manager = core.module.layout.workspace.window_manager,
+			keyword;
+		
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window].editor) {
 			// Get current active_window's CodeMirror editor
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query of this dialog
-			var keyword = $("#find_query_inputbox").val();
+			keyword = $("#find_query_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 			this.search_all(keyword, editor);
 		} else {
 			//var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query of this dialog
-			var keyword = $("#find_query_inputbox").val();
+			keyword = $("#find_query_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 			this.search_all(keyword, null);
 		}
@@ -254,10 +268,10 @@ goorm.core.edit.find_and_replace = {
 			// Get current active_window's CodeMirror editor
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query and replacing word of this dialog
-			var keyword1 = $("#find_query_inputbox").val();
-			var keyword2 = $("#replace_query_inputbox").val();
+			var keyword1 = $("#find_query_inputbox").val(),
+				keyword2 = $("#replace_query_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor
-			if (editor.getSelection() == "") {
+			if (editor.getSelection() === "") {
 				this.search(keyword1, editor);
 				this.replace(keyword1, keyword2, editor);
 				return;
@@ -279,8 +293,8 @@ goorm.core.edit.find_and_replace = {
 			// Get current active_window's CodeMirror editor
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query and replacing word of this dialog
-			var keyword1 = $("#find_query_inputbox").val();
-			var keyword2 = $("#replace_query_inputbox").val();
+			var keyword1 = $("#find_query_inputbox").val(),
+				keyword2 = $("#replace_query_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 			this.replace(keyword1, keyword2, editor);
 
@@ -295,8 +309,8 @@ goorm.core.edit.find_and_replace = {
 			// Get current active_window's CodeMirror editor
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
 			// Get input query and replacing word of this dialog
-			var keyword1 = $("#find_query_inputbox").val();
-			var keyword2 = $("#replace_query_inputbox").val();
+			var keyword1 = $("#find_query_inputbox").val(),
+				keyword2 = $("#replace_query_inputbox").val();
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 			this.replace_all(keyword1, keyword2, editor);
 		}
@@ -304,25 +318,41 @@ goorm.core.edit.find_and_replace = {
 	search: function(keyword, editor, direction) {
 		if (!keyword)
 			return;
-		var text = keyword;
-		var caseFold = true;
-		var firstActive;
+		
 		this.set_options();
-
-		if (this.use_regexp === true)
-			try {
-				keyword = keyword.replace('/', '');
-				text = RegExp(keyword, "g");
-				console.log(text);
-			} catch (e) {
-				return;
-			} else {
-				if (this.match_case === true)
-					caseFold = false;
-				if (this.ignore_whitespace === true)
-					text = text.replace(/\s*/g, '');
+		
+		var text = keyword,
+			length = text.length,
+			caseFold = true,
+			options = { "whole_word": this.whole_word,
+					  	"ignore_case": !this.match_case };
+		
+		if(this.use_regexp) {	// special case : regexp
+			text = text.replace('/', '');
+			text = "\/" + text + "\/";
+		}
+		else {	// others.
+			var flag = "g";
+			text = text.replace(/[^\w\d]/g, "\\$&"); // add backslash to non alphbet, underbar, number
+			
+			for(var option in options) {
+				// common handling
+				if(options[option]) {
+					switch(option) {
+						case "whole_word":
+							text = length > 1 ? "\\b" + text + "\\b" : text;
+							break;
+						case "ignore_case":
+							flag += "i";
+							break;
+					}
+				}
 			}
-
+			
+			text = new RegExp(text, flag);
+		}
+		
+		text = text.toString();
 
 		// this.unmark();
 
@@ -335,6 +365,7 @@ goorm.core.edit.find_and_replace = {
 
 		if (direction == "previous") {
 			CodeMirror.commands.findPrev(editor, true, text, caseFold);
+			CodeMirror.commands.showInCenter(editor);
 			// cursor.findPrevious();
 			// if (!cursor.findPrevious()) {
 			// 	//첫번재 match 단어에서 previous 시
@@ -351,7 +382,7 @@ goorm.core.edit.find_and_replace = {
 			// 				if ((window_manager.window[(window_manager.active_window - 1) % window_manager.window.length].filename).indexOf('terminal') != -1) {
 			// 					window_manager.window[(window_manager.active_window - 1) % window_manager.window.length].activate();
 			// 					continue;
-			// 				}
+			// 				}s
 			// 				window_manager.window[(window_manager.active_window - 1) % window_manager.window.length].activate();
 			// 			}
 
@@ -373,6 +404,7 @@ goorm.core.edit.find_and_replace = {
 			// }
 		} else {
 			CodeMirror.commands.find(editor, null, text, caseFold);
+			CodeMirror.commands.showInCenter(editor);
 			// if (!cursor.findNext()) {
 			// 	//마지막 match 단어에서 next 시
 
@@ -418,15 +450,28 @@ goorm.core.edit.find_and_replace = {
 		}
 		var text = keyword;
 		var caseFold = true;
-
-		if (this.use_regexp === true)
-			text = RegExp(keyword, "g");
-		else {
-			if (this.match_case === true)
-				caseFold = false;
-			if (this.ignore_whitespace === true)
+		this.set_options();
+		// if (this.match_case === true)
+		// 	caseFold = false;
+		if (this.whole_word === true)
+			if(this.match_case === true)
 				text = text.replace(/\s*/g, '');
-		}
+			else 
+				text = text.replace(/\s*/gi, '');
+			
+		if (this.use_regexp === true)
+			if(this.match_case === true)
+				text = RegExp(keyword, "g");
+			else 
+				text = RegExp(keyword, "gi");
+
+		if(!(this.whole_word === true || this.use_regexp === true)) {
+			if(this.match_case === true)
+				text = RegExp(keyword, "g");
+			else 
+				text = RegExp(keyword, "gi");
+		}	
+
 		var nodes = {};
 		var window_manager = core.module.layout.workspace.window_manager;
 		var firstActive;
@@ -592,7 +637,7 @@ goorm.core.edit.find_and_replace = {
 		else {
 			if (this.match_case === true)
 				caseFold = false;
-			if (this.ignore_whitespace === true)
+			if (this.whole_word === true)
 				text = text.replace(/\s*/g, '');
 		}
 
@@ -635,7 +680,7 @@ goorm.core.edit.find_and_replace = {
 		else {
 			if (this.match_case === true)
 				caseFold = false;
-			if (this.ignore_whitespace === true)
+			if (this.whole_word === true)
 				text = text.replace(/\s*/g, '');
 		}
 
@@ -665,7 +710,7 @@ goorm.core.edit.find_and_replace = {
 		else {
 			if (this.match_case === true)
 				caseFold = false;
-			if (this.ignore_whitespace === true)
+			if (this.whole_word === true)
 				text = text.replace(/\s*/g, '');
 		}
 
@@ -752,7 +797,7 @@ goorm.core.edit.find_and_replace = {
 
 
 		$("#far_match_case").tooltip();
-		$("#far_ignore_whitespace").tooltip();
+		$("#far_whole_word").tooltip();
 		$("#far_use_regexp").tooltip();
 		$("#g_far_btn_find_prev").tooltip();
 		$("#g_far_btn_find").tooltip();

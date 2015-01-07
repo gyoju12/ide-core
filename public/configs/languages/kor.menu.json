@@ -64,6 +64,9 @@
 			"file_delete": {
 				"value": "삭제"
 			},
+			"file_duplicate": {
+				"value": "복제"
+			},
 			"file_print": {
 				"value": "인쇄"
 			},
@@ -91,7 +94,7 @@
 				"value": "되돌리기"
 			},
 			"edit_redo": {
-				"value": "다시 적용"
+				"value": "다시 실행"
 			},
 			"edit_cut": {
 				"value": "잘라내기"
@@ -102,28 +105,126 @@
 			"edit_paste": {
 				"value": "붙여넣기"
 			},
-			"edit_delete": {
-				"value": "삭제"
-			},
-			"edit_select_all": {
-				"value": "모두 선택"
-			},
-			"edit_font": {
-				"value": "글자 크기",
+			"edit_text": {
+				"value": "텍스트",
 				"children": {
-					"edit_magnify_font": {
-						"value": "글자 크기 확대"
+					"edit_delete": {
+						"value": "삭제"
 					},
-					"edit_minify_font": {
-						"value": "글자 크기 축소"
+					"edit_delete_line_left": {
+						"value": "커서 왼쪽 삭제"
 					},
-					"edit_default_font": {
-						"value": "기본 글 크기"
+					"edit_delete_line_right": {
+						"value": "커서 오른쪽 삭제"
+					},
+					"edit_insert_line_before": {
+						"value": "위에 줄 삽입"
+					},
+					"edit_insert_line_after": {
+						"value": "아래에 줄 삽입"
+					},
+					"edit_downcase_cursor": {
+						"value": "소문자로 전환"
+					},
+					"edit_upcase_cursor": {
+						"value": "대문자로 전환"
+					},
+					"edit_transpose": {
+						"value": "좌우 위치 바꾸기"
 					}
 				}
 			},
-			"edit_go_to_line": {
-				"value": "라인으로 이동"
+			"edit_line": {
+				"value": "줄",
+				"children": {
+					"edit_join_lines": {
+						"value": "줄 합치기"
+					},
+					"edit_duplicate_line": {
+						"value": "줄 복제"
+					},
+					"edit_delete_line": {
+						"value": "줄 삭제"
+					},
+					"edit_swap_line_down": {
+						"value": "아랫줄과 바꾸기"
+					},
+					"edit_swap_line_up": {
+						"value": "윗줄과 바꾸기"
+					}
+				}
+			},
+			"edit_selection": {
+				"value": "선택",
+				"children": {
+					"edit_select_all": {
+						"value": "모두 선택"
+					},
+					"edit_select_word": {
+						"value": "단어 선택"
+					},
+					"edit_select_line": {
+						"value": "줄 선택"
+					},
+					"edit_select_scope": {
+						"value": "영역 선택"
+					},
+					"edit_select_between_brackets": {
+						"value": "괄호 사이 선택"
+					},
+					"edit_select_add_previous_line": {
+						"value": "윗줄 추가 선택"
+					},
+					"edit_select_add_next_line": {
+						"value": "아랫줄 추가 선택"
+					},
+					"edit_single_selection": {
+						"value": "단일 선택으로 전환"
+					},
+					"edit_split_into_lines": {
+						"value": "선택 영역 줄 단위로 나누기"
+					}
+				}
+			},
+			"edit_codefolding": {
+				"value": "코드 접기",
+				"children": {
+					"edit_fold": {
+						"value": "접기"
+					},
+					"edit_unfold": {
+						"value": "펼치기"
+					},
+					"edit_unfold_all": {
+						"value": "모두 펼치기"
+					}
+				}
+			},
+			"edit_goto": {
+				"value": "이동",
+				"children": {
+					"edit_go_to_line": {
+						"value": "줄 번호로 이동"
+					},
+					"edit_go_to_bracket": {
+						"value": "반대편 괄호로 이동"
+					},
+					"edit_go_subword_left": {
+						"value": "단어 왼쪽으로 이동"
+					},
+					"edit_go_subword_right": {
+						"value": "단어 오른쪽으로 이동"
+					},
+					"edit_scroll_line_up": {
+						"value": "한 줄 위로 스크롤"
+					},
+					"edit_scroll_line_down": {
+						"value": "한 줄 아래로 스크롤"
+					},
+					"edit_show_in_center": {
+						"value": "에디터 가운데서 보기"
+					}
+				}
 			},
 			"edit_bookmark": {
 				"value": "북마크",
@@ -142,14 +243,42 @@
 					}
 				}
 			},
-			"edit_find_and_replace": {
-				"value": "찾기/바꾸기"
+			"edit_find": {
+				"value": "찾기",
+				"children": {
+					"edit_find_and_replace": {
+						"value": "찾기/바꾸기"
+					},
+					"edit_find_next": {
+						"value": "다음 찾기"
+					},
+					"edit_find_previous": {
+						"value": "이전 찾기"
+					}
+				}
 			},
-			"edit_find_next": {
-				"value": "다음 찾기"
+			"edit_search": {
+				"value": "검색"
 			},
-			"edit_find_previous": {
-				"value": "이전 찾기"
+			"edit_sort_lines": {
+				"value": "전체 줄 정렬"
+			},
+			"edit_sort_lines_case": {
+				"value": "전체 줄 정렬 (대소문자 구분)"
+			},
+			"edit_font": {
+				"value": "글자 크기",
+				"children": {
+					"edit_magnify_font": {
+						"value": "글자 크기 확대"
+					},
+					"edit_minify_font": {
+						"value": "글자 크기 축소"
+					},
+					"edit_default_font": {
+						"value": "기본 글 크기"
+					}
+				}
 			},
 			"edit_auto_formatting": {
 				"value": "오토 포맷팅"
@@ -163,23 +292,22 @@
 			"edit_share_cursor": {
 				"value": "커서 공유 토글"
 			},
-			"edit_search": {
-				"value": "검색"
-			},
 			"edit_merge": {
-				"value": "코드 병합"
-			},
-			"edit_merge_view": {
-				"value": "코드 병합 창 보기"
-			},
-			"edit_next_diff": {
-				"value": "다음 차이점"
-			},
-			"edit_prev_diff": {
-				"value": "이전 차이점"
-			},
-			"edit_merge_diff": {
-				"value": "차이점 병합"
+				"value": "코드 병합",
+				"children": {
+					"edit_merge_view": {
+						"value": "코드 병합 창 보기"
+					},
+					"edit_next_diff": {
+						"value": "다음 차이점"
+					},
+					"edit_prev_diff": {
+						"value": "이전 차이점"
+					},
+					"edit_merge_diff": {
+						"value": "차이점 병합"
+					}		
+				}
 			},
 			"edit_refactor": {
 				"value": "리팩토링"
@@ -259,6 +387,9 @@
 			},
 			"debug_step_out": {
 				"value": "스텝 아웃"
+			},
+			"debug_toggle_breakpoint": {
+				"value": "중단점 설정/제거"
 			}
 		}
 	},
@@ -436,6 +567,9 @@
 	},
 	"Copy_context": {
 		"value": "복사"
+	},
+	"Duplicate_context": {
+		"value": "복제"
 	},
 	"Paste_context": {
 		"value": "붙여넣기"

@@ -26,6 +26,9 @@
     "alert_file_not_select": {
         "value": "Please, select the file."
     },
+    "alert_folder_duplicate_error": {
+        "value": "Folder can't duplicate."
+    },
     "alert_file_not_opened": {
         "value": "Cannot find opened file."
     },
@@ -531,7 +534,7 @@
         "value": "Filetype save complete!"
     },
     "alert_too_many_editors": {
-        "value": "Too many editors are opened. Adjust workspace panel size."
+        "value": "Too many editors are opened. <br/>Close unnecessary editors."
     },
     "alert_cannot_project_run": {
         "value": "Cannot run the project. Please select a proper project."
@@ -913,6 +916,9 @@
     },
     "confirmation_del_profile_image": {
         "value": "Do you want to delete profile image?"
+    },
+    "confirmation_close_tab": {
+        "value": "Do you want to close goorm?"
     },
     "del_profile_image": {
         "value": "Delete Profile Image"
@@ -1349,8 +1355,8 @@
     "msg_project_match_case_guide": {
         "value": "Case Sensitive"
     },
-    "msg_project_ignore_whitespace_guide": {
-        "value": "Ignore Whitespace"
+    "msg_project_whole_word_guide": {
+        "value": "Whole Word"
     },
     "msg_project_use_regular_expression_guide": {
         "value": "Use regular expression."
@@ -1390,6 +1396,9 @@
     },
     "alert_project_permission_denied": {
         "value": "You do not have permission to Access the project."
+    },
+    "alert_project_plugin_not_loaded": {
+        "value": "The [PLUGIN] plugin is not currently loaded.<br>Do you want to restart goorm to load the [PLUGIN] plugin? (If many plugins are loaded, goorm may slow down slightly.)"
     },
     "alert_positive_value_only": {
         "value": "Only positive values are allowed."
@@ -1519,5 +1528,11 @@
     },
     "alert_select_scm_revision": {
         "value": "Select checkout revision!"
+    },
+    "alert_duplicate_shortcut_sublime": {
+        "value": "You cannot use this shortcut because it is used in sublime keymap theme."
+    },
+    "notice_scm_account_changed": {
+        "value": "SCM account is changed."
     }
 }

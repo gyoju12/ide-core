@@ -125,5 +125,23 @@ goorm.core.fn = {
 		} : function (o) {
 			return (this.indexOf(o) !== -1);
 		});
+
+		var bool_proto = Boolean.prototype;
+
+		bool_proto.normalize = function () {
+			return this;
+		}
+
+		var str_proto = String.prototype;
+
+		str_proto.normalize = function() {
+			if (this == "true" || this == true) {
+				return true;
+			} else if (this == "false" || this == false) {
+				return false;
+			} else {
+				return this;
+			}
+		}
 	}
 };

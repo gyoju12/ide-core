@@ -30,7 +30,7 @@ goorm.core.file._import = {
 			}
 
 			var data = self.dialog_explorer.get_data();
-			this.progress_elements = core.module.loading_bar.start({
+			self.progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.processing
 			});
 
@@ -38,6 +38,7 @@ goorm.core.file._import = {
 
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
+			$("#g_if_btn_ok").attr("disabled",true);
 		};
 
 		self.dialog = new goorm.core.dialog();
@@ -48,7 +49,6 @@ goorm.core.file._import = {
 			show: $.proxy(this.after_show, this),
 			// kind: "import",
 			success: function() {
-
 				$(document).on("click", "li.open.storage", function() {
 					$("button[localization_key=common_target]").blur();
 				});
@@ -71,7 +71,7 @@ goorm.core.file._import = {
 					success: function(data) {
 						self.files_upload(data, function() { // jeongmin: overwrite function
 							$('#myForm').attr('action', 'file/import?is_overwrite=true');
-							this.progress_elements = core.module.loading_bar.start({
+							self.progress_elements = core.module.loading_bar.start({
 								str: core.module.localization.msg.import_in_progress
 							});
 
@@ -85,6 +85,7 @@ goorm.core.file._import = {
 				$('#myForm').ajaxForm(form_options);
 
 				$('#myForm').submit(function() {
+					$("#g_if_btn_ok").attr("disabled",true);
 					return false;
 				});
 			}
@@ -166,6 +167,7 @@ goorm.core.file._import = {
 		var layout = core.module.layout;
 
 		this.progress_elements.stop();
+		$("#g_if_btn_ok").removeAttr("disabled");
 
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
@@ -259,7 +261,7 @@ goorm.core.file._import = {
 			str: core.module.localization.msg.import_in_progress
 		});
 
-		function send(url) {
+		var send = function (url) {
 			jQuery.ajax({
 				url: url,
 				type: 'POST',
@@ -301,12 +303,31 @@ goorm.core.file._import = {
 					else
 						alert.show("Error" + e.status);
 				},
-				complete: function() {
+				complete: function() {					
+					if (files.length == 1) {
+						var filetype = files[0].name.split(".");
+						filetype = filetype[filetype.length - 1];
+						
+						switch (filetype) {		
+							case "c":
+							case "cpp":
+							case "h":
+							case "txt":
+							case "html":
+							case "py":
+							case "js":
+							case "java":
+							case "rb":
+							case "go":
+								core.module.layout.workspace.window_manager.open(self.upload_file_path, files[0].name, filetype);
+						}
+					}
+					
 					if (jQuery.isFunction(callback))
 						callback();
 				}
 			});
-		}
+		};
 
 		send('file/import');
 	}

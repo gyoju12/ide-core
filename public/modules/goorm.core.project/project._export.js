@@ -56,7 +56,7 @@ goorm.core.project._export = {
 
 					$("#download_frame").css('display', 'none');
 
-					
+					//useonly(mode=goorm-standalone,goorm-oss)
 					$("#download_frame").attr('src', "download/?file=" + data.path);
 					
 

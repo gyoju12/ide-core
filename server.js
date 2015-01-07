@@ -38,25 +38,20 @@ RedisStore = null;
 
 VERSION = 3;
 
+SITE_HOST = "goorm.io";
 IDE_HOST = "ide.goorm.io";
 
 
 
 
 
-
-
-
-
-
+//useonly(mode=goorm-standalone,goorm-oss)
 REDIS_HOST = '127.0.0.1';
 REDIS_PORT = 6379;
 
 
-
+//useonly(mode=goorm-oss)
 MONGO_DB_HOST = 'mongodb://localhost/goorm_ide';
-
-
 
 
 
@@ -67,6 +62,8 @@ DASHBOARD_HOST = 'dashboard.goorm.io';
 DASHBOARD_PORT = 3000;
 
 PROJECT_BUCKET = 'grm-project-bucket';
+
+MODE = null; // IDE MODE --> (default:null), [edu], [cpp,java], ...
 
 // Local Variables
 //
@@ -86,7 +83,7 @@ goorm.start = function() {
 	goorm.config();
 	goorm.routing();
 	goorm.load();
-}
+};
 
 goorm.init = function() {
 	var set_global = function() {
@@ -94,7 +91,7 @@ goorm.init = function() {
 		//
 		global.__path = __dirname + "/";
 
-			
+		//useonly(mode=goorm-oss)	
 		global.__redis_mode = false;
 		
 
@@ -104,19 +101,12 @@ goorm.init = function() {
 
 		
 
-		
-
-		
-
-		
-
-		
+		global.__secure = false; // use https ?
 
 		// Session Store
 		//
 		global.store = null;
-
-	}
+	};
 
 	var set_arguments = function() {
 		// Set argv for commander
@@ -125,7 +115,7 @@ goorm.init = function() {
 
 		
 
-			
+		//useonly(mode=goorm-oss)	
 		if (argv[2] > 0 && argv[2] < 100000) {
 			port = argv[2];
 		}
@@ -142,11 +132,10 @@ goorm.init = function() {
 			global.__redis_mode = true;
 		}
 		
-	}
-
+	};
 
 	var set_goorm_config = function() {
-			
+		//useonly(mode=goorm-oss)	
 		var base = process.env.HOME + "/goorm_workspace/";
 
 		if (!fs.existsSync(base)) {
@@ -162,11 +151,9 @@ goorm.init = function() {
 
 		
 
-		
-
 			
 
-			
+		//useonly(mode=goorm-oss)	
 		var temp = process.env.HOME + "/goorm_tempdir/";
 
 		if (!fs.existsSync(temp)) {
@@ -204,8 +191,8 @@ goorm.init = function() {
 	}
 
 	set_global();
-	set_arguments();
 	set_goorm_config();
+	set_arguments();
 
 	// Update Workspace Path 
 	//
@@ -235,10 +222,6 @@ goorm.init = function() {
 	global.__set_redis_client = false;
 }
 
-
-	
-
-	
 
 	
 
@@ -332,7 +315,7 @@ goorm.config = function() {
 	goorm.use(methodOverride());
 	goorm.use(goorm.router);
 	goorm.use(express.static(__dirname + '/public'));
-	goorm.use(express.static(__dirname + '/plugins'));
+	// goorm.use(express.static(__dirname + '/plugins'));
 
 	
 
@@ -369,7 +352,7 @@ goorm.config = function() {
 }
 
 goorm.check_session = function(req, res, next) {
-		
+	//useonly(mode=goorm-oss)	
 	var user = config_data.users[0];
 
 	req.__user = user;
@@ -404,14 +387,32 @@ goorm.routing = function() {
 	var routes = require('./routes');
 	var g_auth_m = require("./modules/goorm.core.auth/auth.manager"); // jeongmin: for update_session
 	var g_port_manager = require("./modules/goorm.core.utility/utility.port_manager");
+	var g_plugin = require("./modules/goorm.plugin/plugin.js");
 
 	
+
+	goorm.get('/goorm.plugin.*', function (req, res) {
+		var params = req.params[0].split('/');
+
+		var plugin_name = params.shift();
+		var path = params.join('/');
+
+		g_plugin.get_resource({
+			'name': plugin_name,
+			'path': path
+		}, function (data) {
+			if (data) {
+				res.sendfile(data);
+			}
+			else {
+				res.json(false);
+			}
+		});
+	});
 
 	// Routes
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	goorm.get('/', routes.index);
-	
-
 	
 
 	
@@ -441,8 +442,12 @@ goorm.routing = function() {
 	
 
 	//for plugin
+
+	
+
+	
+
 	goorm.get('/plugin/new', goorm.check_session, routes.plugin.do_new);
-	goorm.get('/plugin/get_list', routes.plugin.get_list);
 	goorm.post('/plugin/get_dialog', goorm.check_session, routes.plugin.get_dialog);
 	goorm.post('/plugin/check_css', routes.plugin.check_css);
 	goorm.get('/plugin/make_template', goorm.check_session, routes.plugin.make_template);
@@ -496,7 +501,7 @@ goorm.routing = function() {
 	
 	goorm.get('/help/send_to_bug_report', routes.help.send_to_bug_report);
 
-		
+	//useonly(mode=goorm-oss)	
 	goorm.post('/local_login', function(req, res) {
 		var response = {};
 		response.result = false;
@@ -557,6 +562,10 @@ goorm.routing = function() {
 
 	
 
+	
+		
+	
+
 
 	goorm.get('/edit/get_dictionary', routes.edit.get_dictionary);
 	goorm.get('/edit/get_object_explorer', goorm.check_session, routes.edit.get_object_explorer);
@@ -572,7 +581,6 @@ goorm.load = function() {
 	var g_terminal = require("./modules/goorm.core.terminal/terminal");
 	var g_file = require("./modules/goorm.core.file/file");
 	var g_plugin = require("./modules/goorm.plugin/plugin");
-
 	var g_utility = require("./modules/goorm.core.utility/utility");
 	var g_port_manager = require("./modules/goorm.core.utility/utility.port_manager");
 
@@ -583,9 +591,8 @@ goorm.load = function() {
 	var g_ajax = require("./modules/ajax_routing/ajax.js")
 
 	
-	g_plugin.get_list();
 
-	
+	g_plugin.get_list('init');
 
 	
 
@@ -747,7 +754,7 @@ goorm.load = function() {
 
 		
 
-		
+		//useonly(mode=goorm-oss)
 		var set_io = function() {
 			io = socketio.listen(server, {
 				'heartbeatTimeout': 30 * 1000

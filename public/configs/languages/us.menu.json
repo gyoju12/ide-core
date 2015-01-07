@@ -64,6 +64,9 @@
 			"file_delete": {
 				"value": "Delete"
 			},
+			"file_duplicate": {
+				"value": "Duplicate"
+			},
 			"file_print": {
 				"value": "Print"
 			},
@@ -102,28 +105,126 @@
 			"edit_paste": {
 				"value": "Paste"
 			},
-			"edit_delete": {
-				"value": "Delete"
-			},
-			"edit_select_all": {
-				"value": "Select All"
-			},
-			"edit_font": {
-				"value": "Font Size",
+			"edit_text": {
+				"value": "Text",
 				"children": {
-					"edit_magnify_font": {
-						"value": "Magnify Font Size"
+					"edit_delete": {
+						"value": "Delete"
 					},
-					"edit_minify_font": {
-						"value": "Minify Font Size"
+					"edit_delete_line_left": {
+						"value": "Delete Line Left"
 					},
-					"edit_default_font": {
-						"value": "Default Font Size"
+					"edit_delete_line_right": {
+						"value": "Delete Line Right"
+					},
+					"edit_insert_line_before": {
+						"value": "Insert Line Before"
+					},
+					"edit_insert_line_after": {
+						"value": "Insert Line After"
+					},
+					"edit_downcase_cursor": {
+						"value": "Downcase at Cursor"
+					},
+					"edit_upcase_cursor": {
+						"value": "Upcase at Cursor"
+					},
+					"edit_transpose": {
+						"value": "Transpose"
 					}
 				}
 			},
-			"edit_go_to_line": {
-				"value": "Go to Line"
+			"edit_line": {
+				"value": "Line",
+				"children": {
+					"edit_join_lines": {
+						"value": "Join Lines"
+					},
+					"edit_duplicate_line": {
+						"value": "Duplicate Line"
+					},
+					"edit_delete_line": {
+						"value": "Delete Line"
+					},
+					"edit_swap_line_down": {
+						"value": "Swap Line Down"
+					},
+					"edit_swap_line_up": {
+						"value": "Swap Line Up"
+					}
+				}
+			},
+			"edit_selection": {
+				"value": "Selection",
+				"children": {
+					"edit_select_all": {
+						"value": "Select All"
+					},
+					"edit_select_word": {
+						"value": "Select Word"
+					},
+					"edit_select_line": {
+						"value": "Select Line"
+					},
+					"edit_select_scope": {
+						"value": "Select Scope"
+					},
+					"edit_select_between_brackets": {
+						"value": "Select Between Brackets"
+					},
+					"edit_select_add_previous_line": {
+						"value": "Add Previous Line"
+					},
+					"edit_select_add_next_line": {
+						"value": "Add Next Line"
+					},
+					"edit_single_selection": {
+						"value": "Single Selection"
+					},
+					"edit_split_into_lines": {
+						"value": "Split Selection by Line"
+					}
+				}
+			},
+			"edit_codefolding": {
+				"value": "Code Folding",
+				"children": {
+					"edit_fold": {
+						"value": "Fold"
+					},
+					"edit_unfold": {
+						"value": "Unfold"
+					},
+					"edit_unfold_all": {
+						"value": "Unfold All"
+					}
+				}	
+			},
+			"edit_goto": {
+				"value": "Goto",
+				"children": {
+					"edit_go_to_line": {
+						"value": "Go to Line"
+					},
+					"edit_go_to_bracket": {
+						"value": "Go to Bracket"
+					},
+					"edit_go_subword_left": {
+						"value": "Go Subword Left"
+					},
+					"edit_go_subword_right": {
+						"value": "Go Subword Right"
+					},
+					"edit_scroll_line_up": {
+						"value": "Scroll Line Up"
+					},
+					"edit_scroll_line_down": {
+						"value": "Scroll Line Down"
+					},
+					"edit_show_in_center": {
+						"value": "Show in Center"
+					}
+				}
 			},
 			"edit_bookmark": {
 				"value": "Bookmarks",
@@ -142,17 +243,42 @@
 					}
 				}
 			},
-			"edit_find_and_replace": {
-				"value": "Find/Replace"
+			"edit_find": {
+				"value": "Find",
+				"children": {
+					"edit_find_and_replace": {
+						"value": "Find/Replace"
+					},
+					"edit_find_next": {
+						"value": "Find Next"
+					},
+					"edit_find_previous": {
+						"value": "Find Previous"
+					}
+				}
 			},
-			"edit_find_next": {
-				"value": "Find Next"
+			"edit_search": {
+				"value": "Search"
 			},
-			"edit_find_previous": {
-				"value": "Find Previous"
+			"edit_sort_lines": {
+				"value": "Sort Lines"
 			},
-			"edit_preference": {
-				"value": "Preference"
+			"edit_sort_lines_case": {
+				"value": "Sort Lines in Case sensitive"
+			},
+			"edit_font": {
+				"value": "Font Size",
+				"children": {
+					"edit_magnify_font": {
+						"value": "Magnify Font Size"
+					},
+					"edit_minify_font": {
+						"value": "Minify Font Size"
+					},
+					"edit_default_font": {
+						"value": "Default Font Size"
+					}
+				}
 			},
 			"edit_auto_formatting": {
 				"value": "Auto Formatting"
@@ -160,26 +286,28 @@
 			"edit_comment_selected": {
 				"value": "Toggle Comment Selected"
 			},
+			"edit_preference": {
+				"value": "Preference"
+			},
 			"edit_share_cursor": {
 				"value": "Toggle Cursor Sharing"
 			},
-			"edit_search": {
-				"value": "Search"
-			},
 			"edit_merge": {
-				"value": "Merge"
-			},
-			"edit_merge_view": {
-				"value": "Merge View"
-			},
-			"edit_next_diff": {
-				"value": "Next Diff"
-			},
-			"edit_prev_diff": {
-				"value": "Previous Diff"
-			},
-			"edit_merge_diff": {
-				"value": "Merge Diff"
+				"value": "Merge",
+				"children": {
+					"edit_merge_view": {
+						"value": "Merge View"
+					},
+					"edit_next_diff": {
+						"value": "Next Diff"
+					},
+					"edit_prev_diff": {
+						"value": "Previous Diff"
+					},
+					"edit_merge_diff": {
+						"value": "Merge Diff"
+					}
+				}
 			},
 			"edit_refactor": {
 				"value": "Refactor"
@@ -259,6 +387,9 @@
 			},
 			"debug_step_out": {
 				"value": "Step Out"
+			},
+			"debug_toggle_breakpoint": {
+				"value": "Toggle breakpoint"
 			}
 		}
 	},
@@ -436,6 +567,9 @@
 	},
 	"Copy_context": {
 		"value": "Copy"
+	},
+	"Duplicate_context": {
+		"value": "Duplicate"
 	},
 	"Paste_context": {
 		"value": "Paste"

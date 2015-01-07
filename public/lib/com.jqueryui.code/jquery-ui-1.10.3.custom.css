@@ -272,7 +272,7 @@ button.ui-button::-moz-focus-inner {
 	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: 12px;
+	font-size: 11px;
 	padding-right: 45px;
 }
 .ui-dialog .ui-dialog-titlebar-new-window,

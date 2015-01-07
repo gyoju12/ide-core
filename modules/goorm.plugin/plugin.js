@@ -14,42 +14,74 @@ var EventEmitter = require("events").EventEmitter;
 var rimraf = require('rimraf');
 var async = require('async');
 
+var initial_list = {
+	'ide': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.dart", "goorm.plugin.go", "goorm.plugin.jsp", "goorm.plugin.nodejs", "goorm.plugin.php", "goorm.plugin.python", "goorm.plugin.ruby", "goorm.plugin.web"],
+	'edu': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.python", "goorm.plugin.web", "goorm.plugin.edu", "goorm.plugin.lecture"],
+	'dev': ["goorm.plugin.nodejs", "goorm.plugin.dev"],
+	'book': ["goorm.plugin.nodejs", "goorm.plugin.jquery", "goorm.plugin.web"],
+	'cpp': ["goorm.plugin.cpp"],
+	'java': ["goorm.plugin.java"],
+	'nodejs': ["goorm.plugin.nodejs", "goorm.plugin.nodejs", "goorm.plugin.web"],
+	'python': ["goorm.plugin.python", "goorm.plugin.web"],
+	'ruby': ["goorm.plugin.ruby", "goorm.plugin.web"],
+	'go': ["goorm.plugin.go", "goorm.plugin.web"],
+	'dart': ["goorm.plugin.dart", "goorm.plugin.web"],
+	'jsp': ["goorm.plugin.jsp", "goorm.plugin.web"],
+	'php': ["goorm.plugin.php", "goorm.plugin.web"],
+	'web': ["goorm.plugin.web"],
+	'android': ["goorm.plugin.android"],
+	'phonegap': ["goorm.plugin.phonegap"]
+};
+
+var resource_list = [
+	'dialogs/',
+	'images/',
+	'[name].preference.html',
+	'[name].property.html',
+	'localization.json',
+	'plug.css',
+	'plug.js',
+	'preference.json',
+	'tree.json'
+];
+
 module.exports = {
-	get_list: function (evt) {
-		if (global.plugins_list && global.plugins_list.length > 0) {
-			if (evt) {
-				evt.emit("plugin_get_list", global.plugins_list);
+	get_mode_list: function (mode) { // mode --> Array
+		if (mode && typeof(mode) === 'string') {
+			mode = mode.split(',');
+		}
+
+		var list = [];
+
+		if (mode && mode.length > 0) {
+			for (var i=0; i<mode.length; i++) {
+				var item = mode[i];
+
+				list = list.concat(initial_list[item]);
+				list = list.unique();
 			}
 		}
-		else {
+
+		return list || [];
+	},
+
+	get_list: function (mode, evt) {
+		if (mode === 'init') {
 			var plugins = [];
 
-			var options = {
+			var walker = walk.walk(global.__path + "plugins", {
 				followLinks: false
-			};
-
-			var walker = walk.walk(global.__path + "plugins", options);
+			});
 
 			walker.on("directories", function (root, dirStatsArray, next) {
 				if (root == global.__path + "plugins") {
 					for (var i = 0; i < dirStatsArray.length; i++) {
+						var name = dirStatsArray[i].name;
 
-						if (Array.isArray(global.__plugin_exclude_list)) {
-							if (global.__plugin_exclude_list.indexOf(dirStatsArray[i].name) == -1) {
-								//only include plugins except plugin_exclude_list in ~/.goorm/config.json 
-								if (dirStatsArray[i].name != '.svn') {
-									plugins.push({
-										name: dirStatsArray[i].name
-									});
-								}
-							}
-						} else {
-							// there are not exclude plugin list
-							if (dirStatsArray[i].name != '.svn') {
-								plugins.push({
-									name: dirStatsArray[i].name
-								});
-							}
+						if (name !== ".svn") {
+							plugins.push({
+								name: name
+							});
 						}
 					}
 				}
@@ -59,11 +91,87 @@ module.exports = {
 
 			walker.on("end", function () {
 				global.plugins_list = plugins;
+			});
+		}
+		else {
+			var list = this.get_mode_list(mode) || [];
 
+			var plugins = [];
+
+			var walker = walk.walk(global.__path + "plugins", {
+				followLinks: false
+			});
+
+			walker.on("directories", function (root, dirStatsArray, next) {
+				if (root == global.__path + "plugins") {
+					for (var i = 0; i < dirStatsArray.length; i++) {
+						var name = dirStatsArray[i].name;
+
+						if (list.indexOf(name) > -1) {
+							plugins.push({
+								name: name
+							});
+						}
+					}
+				}
+
+				next();
+			});
+
+			walker.on("end", function () {
 				if (evt) {
 					evt.emit("plugin_get_list", plugins);
 				}
 			});
+		}
+	},
+
+	get_resource: function (options, callback) {
+		var name = options.name;
+		var path = options.path;
+
+		var can = false;
+
+		for (var i=0; i<resource_list.length; i++) {
+			var resource = resource_list[i];
+
+			if (resource.indexOf('/') > -1) {
+				if (path.indexOf(resource) === 0) {
+					can = true;
+				}
+			}
+			else if (resource.indexOf('[name]') > -1) {
+				var _path = resource.replace('[name]', name);
+
+				if (path === _path) {
+					can = true;
+				}
+			}
+			else if (path === resource) {
+				can = true;
+			}
+
+			if (can) {
+				break;
+			}
+		}
+
+		if (can) {
+			var fullpath = __path + 'plugins/goorm.plugin.' + name + '/' + path;
+
+			fs.exists(fullpath, function (exists) {
+				if (exists) {
+					callback(fullpath);
+				}
+				else {
+					console.log('plugin.js:get_resource fail - cannot find', name, path);
+					callback(null);
+				}
+			});
+		}
+		else {
+			console.log('plugin.js:get_resource fail - cannot access', name, path);
+			callback(null);
 		}
 	},
 

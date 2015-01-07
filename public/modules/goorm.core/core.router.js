@@ -21,6 +21,8 @@ goorm.core.router = {
 	},
 	project_load: false,
 	project_ready: false,
+	
+	wait_list: [],
 
 	init: function() {
 		this._socket = function() {
@@ -34,7 +36,7 @@ goorm.core.router = {
 
 			
 
-			
+			//useonly(mode=goorm-standalone,goorm-oss)
 			this.fs_url = [];
 			this.project_url = [];
 			
@@ -50,7 +52,7 @@ goorm.core.router = {
 			this.worker = setInterval(function() {
 				self.work();
 			}, this.work_time);
-		}
+		};
 
 		this._socket.prototype = {
 			router: goorm.core.router,
@@ -80,7 +82,7 @@ goorm.core.router = {
 
 			emit: function(url, data) {
 				var s = this.get(url);
-
+				
 				if (s && s.socket && s.socket.connected) {
 					s.emit(url, data);
 				} else {
@@ -164,7 +166,7 @@ goorm.core.router = {
 
 			
 
-			
+			//useonly(mode=goorm-standalone,goorm-oss)
 			this.fs_url = [];
 			this.project_url = [];
 			
@@ -200,12 +202,16 @@ goorm.core.router = {
 					var permission = core.module.layout.project.get_permission();
 					var project_path = core.status.current_project_path;
 
+					if (data) {
+						data.secure_session_id = encodeURIComponent(core.user.fs_session_id);
+					}
+
 					if (this.project_url.indexOf(url) > -1 && project_path && permission && !permission.writable) {
 						host = core.user.project_host;
 						port = core.user.project_port;
 
 						if (data) {
-							data.secure_session_id = core.user.project_session_id;
+							data.secure_session_id = encodeURIComponent(core.user.project_session_id);
 						}
 					}
 
@@ -237,7 +243,7 @@ goorm.core.router = {
 					return false;
 				}
 			}
-		}
+		};
 	},
 
 	get_fs_info: function() {
@@ -353,19 +359,83 @@ goorm.core.router = {
 		if (!this.socket) {
 			this.socket = io.connect();
 		}
-
-		if (this.socket.socket.connected) {
+		
+		this.socket.on('connect', function () {
 			$('#goorm_bottom').find('.connect-icon').show();
 			$('#goorm_bottom').find('.disconnect-icon').hide();
 			$('#goorm_bottom').find('.connect_state').show();
 			$('#goorm_bottom').find('.disconnect_state').hide();
-		}
-
+			
+			
+		});
 		
-
+		
+		
 		this.set_reconnect(this.socket);
 	},
 
+	get_host: function (project_path) {
+		var permission = core.module.layout.project.get_permission(project_path);
+		var url = "";
+
+		if (permission.writable) {
+			var info = this.get_fs_info();
+			var host = (core.user.dns) ? core.user.id+"."+core.user.dns : info.host;
+
+			url = info.protocol+"://"+host+":"+info.port;
+		}
+		else {
+			url = "http://" + core.user.project_host + ":" + core.user.project_port;
+		}
+
+		return {
+			'url': url,
+			'permission': permission
+		};
+	},
+
+	/**
+	 * path: /api/path/
+	 * params : query
+	 */
+	get_url: function (project_path, path, params) {
+		var hostdata = this.get_host(project_path);
+		var url = hostdata.url + path + "?";
+
+		if (params) {
+			for (var key in params) {
+				url += key + '=' + params[key] + '&';
+			}
+
+			url = url.substring(0, url.length - 1); // delete last & or ?
+		}
+
+		if (hostdata.permission.writable) {
+			url += '&secure_session_id=' + encodeURIComponent(core.user.fs_session_id);
+		}
+		else { // readonly
+			url += '&secure_session_id=' + encodeURIComponent(core.user.project_session_id);
+		}
+
+		return url;
+	},
+
+	is_connected: function () {
+		
+
+		
+	},
+		
+	_wait: function (callback) {
+		this.wait_list.push(callback);	
+	},
+		
+	_call: function () {
+		
+
+		
+	},
+		
 	get_socket: function() {
 		return this.socket;
 	}

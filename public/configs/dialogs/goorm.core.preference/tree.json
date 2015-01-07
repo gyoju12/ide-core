@@ -6,10 +6,6 @@
 			"localization_key": "preferences",
 			"expanded": true,
 			"child": [{
-				"label": "System",
-				"id": "System",
-				"localization_key": "system"
-			}, {
 				"label": "Editor",
 				"id": "Editor",
 				"localization_key": "editor"
@@ -40,10 +36,6 @@
 			"localization_key": "preferences",
 			"expanded": true,
 			"child": [{
-				"label": "시스템",
-				"id": "System",
-				"localization_key": "system"
-			}, {
 				"label": "에디터",
 				"id": "Editor",
 				"localization_key": "editor"

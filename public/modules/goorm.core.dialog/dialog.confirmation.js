@@ -152,6 +152,8 @@ goorm.core.dialog.confirmation.prototype = {
 			// 	cfrm_btn_no.click();
 			// }
 		});
+
+		return this;
 	},
 
 	show: function () {

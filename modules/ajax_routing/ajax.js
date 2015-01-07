@@ -20,7 +20,7 @@ var g_project = require("../goorm.core.project/project");
 var g_search = require("../goorm.core.search/search");
 var g_edit = require("../goorm.core.edit/edit");
 var g_secure = require("../goorm.core.secure/secure");
-
+var g_plugin = require("../goorm.plugin/plugin");
 
 var g_auth = require("../goorm.core.auth/auth");
 var g_auth_manager = require("../goorm.core.auth/auth.manager");
@@ -218,7 +218,7 @@ module.exports = {
 						msg.id = user_data.id;
 
 						
-						
+						//useonly(mode=goorm-oss)
 						g_project.do_delete(msg, evt);
 						
 					}
@@ -278,7 +278,7 @@ module.exports = {
 				evt.on("get_property", function(data) {
 					if (data.contents) {
 						
-						
+						//useonly(mode=goorm-oss)
 						socket.emit("/project/get_property", data);
 						
 					} else {
@@ -370,6 +370,67 @@ module.exports = {
 
 			
 
+			socket.on('/project/available', function (msg) {
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						var project_path = msg.project_path;
+
+						if (project_path) {
+							g_auth_project.can_read_project(user_data.id, project_path, function (can) {
+								if (can) {
+									var mode = user_data.mode;
+									var list = g_plugin.get_mode_list(mode);
+
+									g_auth_project.get({
+										'project_path': project_path
+									}, function (project_data) {
+										var project_type = project_data.project_type;
+										var plugin_name = 'goorm.plugin.' + project_type;
+
+										if (list.indexOf(plugin_name) > -1) {
+											socket.to().emit('/project/available', {
+												'result': true
+											});
+										}
+										else {
+											var err_code = 21;
+
+											if (MODE) { // cannot dynamic load
+												err_code = 20;
+											}
+
+											socket.to().emit('/project/available', {
+												'result': false,
+												'err_code': err_code
+											});
+										}
+									});
+								}
+								else {
+									socket.to().emit('/project/available', {
+										'result': false,
+										'err_code': 20
+									});
+								}
+							});
+						}
+						else {
+							socket.to().emit('/project/available', {
+								'result': true
+							});
+						}
+					}
+					else {
+						socket.to().emit('/project/available', {
+							'result': false,
+							'err_code': 20
+						});
+					}
+				});
+			});
+
 			socket.on('/plugin/create', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
@@ -444,13 +505,12 @@ module.exports = {
 										if (err) {
 											console.log('goorm.manifest write err in do_create:', err);
 										}
-										
 
 										
 
 										
 
-										
+										//useonly(mode=goorm-oss)
 										socket.to().emit('/plugin/create', {
 											code: 200,
 											message: "success"
@@ -459,42 +519,9 @@ module.exports = {
 									});
 								});
 							});
-
-							// fse.copy(template, workspace, function (__err) {
-							// 	if (__err) {
-							// 		console.log("do_create error!:", __err);
-							// 	}
-							// 	fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
-							// 		var contents = JSON.parse(file_data);
-
-							// 		contents.plugins = project_data.plugins;
-							// 		contents.detailedtype = project_data.project_detailed_type;
-
-							// 		fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
-							// 			encoding: 'utf-8',
-							// 			mode: 0700
-							// 		}, function(err) {
-							// 			if (err) {
-							// 				console.log(err);
-							// 			}
-							// 			
-
-							// 			
-
-							// 			
-
-							// 			
-							// 			socket.to().emit('/plugin/create', {
-							// 				code: 200,
-							// 				message: "success"
-							// 			});
-							// 			
-							// 		});
-							// 	});
-							// });
 						};
 
-						
+						//useonly(mode=goorm-client,goorm-oss)
 						copy();
 						
 
@@ -534,7 +561,7 @@ module.exports = {
 					});
 				};
 				
-				
+				//useonly(mode=goorm-server,goorm-client,goorm-oss)
 				copy();
 				
 			});
@@ -593,7 +620,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -658,7 +685,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -724,7 +751,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -791,7 +818,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -813,7 +840,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.do_save_as(msg, evt);
 				
 			});
@@ -879,7 +906,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.do_delete(msg, evt);
 				
 			});
@@ -891,7 +918,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.do_delete_all(msg, function(result) {
 					socket.emit("/file/delete_all", result);
 				});
@@ -928,7 +955,7 @@ module.exports = {
 				abs_path = global.__workspace + path;
 				//local -> do not check any thing
 
-				
+				//useonly(mode=goorm-oss)
 				fs.readFile(abs_path, "utf8", function(err, data) {
 					if (!err) {
 						try {
@@ -958,7 +985,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.put_contents(msg, evt);
 				
 			});
@@ -974,7 +1001,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.get_result_ls(msg, evt);
 				
 			});
@@ -999,7 +1026,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				// file validate
 				// 
 				evt.on("check_valid_edit", function(data) {
@@ -1046,7 +1073,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_file.do_move(msg, evt);
 				
 			});
@@ -1113,7 +1140,7 @@ module.exports = {
 
 					
 
-					
+					//useonly(mode=goorm-oss)
 					g_file.do_rename(msg, evt);
 					
 				}
@@ -1141,7 +1168,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				g_search.do_search(msg, evt);
 				
 			});
@@ -1212,9 +1239,7 @@ module.exports = {
 			
 			
 			
-			
-			
-			
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/edit/save_tags', function(msg) {
 				var option = msg;
 
@@ -1223,7 +1248,6 @@ module.exports = {
 				});
 
 			});
-			
 			
 			
 			
@@ -1239,7 +1263,6 @@ module.exports = {
 			
 			
 			/*
-			
 			
 
 			
@@ -1344,6 +1367,7 @@ module.exports = {
 						if (user_data) {
 							try { // jeongmin: try catching
 								user_data = JSON.parse(user_data);
+								user_data.mode = MODE || user_data.mode || ["ide"];
 
 								cb({
 									'result': true,
@@ -1399,6 +1423,7 @@ module.exports = {
 				if (user_data) {
 					try { // jeongmin: try catching
 						user_data = JSON.parse(user_data);
+						user_data.mode = MODE || user_data.mode || ["ide"];
 
 						cb({
 							'result': true,

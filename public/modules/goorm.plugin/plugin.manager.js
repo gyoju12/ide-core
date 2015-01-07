@@ -23,26 +23,19 @@ goorm.plugin.manager = {
 	get: function() {
 		var self = this;
 
-		var m = location.pathname.match(/edu-(.*)|eduView/);
-		if (m) {
-			this.list = [{
-				'name': 'goorm.plugin.edu'
-			}];
+		//useonly(mode=goorm-server,goorm-oss)
+		$.ajax({
+			url: "plugin/get_list",
+			type: "GET",
+			async: false,
+			success: function(data) {
+				self.list = data;
+				$(core).trigger("plugin_loaded");
+			}
+		});
+		
 
-			$(core).trigger("plugin_loaded");
-		} else {
-			var url = "plugin/get_list";
-
-			$.ajax({
-				url: url,
-				type: "GET",
-				async: false,
-				success: function(data) {
-					self.list = data;
-					$(core).trigger("plugin_loaded");
-				}
-			});
-		}
+		
 	},
 
 	load: function(index, is_user) {
@@ -105,61 +98,11 @@ goorm.plugin.manager = {
 			sorted.each(function(i, o) {
 				
 
-				
+				//useonly(mode=goorm-oss)
 				$(o).appendTo(plugin_project_container.siblings('li:eq(' + (i + 2) + ')'));
 				
 			});
 		});
-
-		// if (index == this.list.length && this.list.length !== 0) {
-		// 	if(Boolean(is_user)){//if user plugin is completely init
-		// 		$(core).trigger('user_plugin_init_complete'); // 추후 사용을 위해 만들어놓았음. -chw-
-		// 		console.log('user_plugin_init_complete');
-		// 		return;
-		// 	}
-
-		// 	$(core).one('user_id_loaded',function(){
-		// 		$.get("/plugin/load_userplugin", {id: core.user.id} ,function(result){
-		// 			for(var i = 0; i < result.length ; i++){
-		// 				self.list.push(result[i]);
-		// 				external_json['plugins'][result[i].name] = {
-		// 					'localization.json':result[i].localization,
-		// 					'preference.json': result[i].preference,
-		// 					'tree.json': result[i].tree
-		// 				};
-		// 			}
-
-		// 			self.load(index, true);
-		// 		});
-		// 	});
-
-		// 	$(core).trigger('plugin_load_complete');
-
-		// 	// Sort Plugin Project Menu by youseok.nam
-		// 	//
-		// 	var plugin_project_container = $("li[id='plugin_new_project']");
-		// 	var plugin_projects = $('li.plugin_project a');
-
-		// 	var sorted = plugin_projects.sort(function(a, b) {
-		// 		var string_a = $(a).html();
-		// 		var string_b = $(b).html();
-
-		// 		if (string_a > string_b) return 1;
-		// 		else if (string_b > string_a) return -1;
-		// 		else return 0;
-		// 	});
-
-		// 	sorted.each(function(i, o) {
-		// 		$(o).appendTo(plugin_project_container.siblings('li:eq(' + (i + 3) + ')')); // jeongmin: scm and import project menu is added, so increase to 3
-		// 	});
-
-		// 	$(core).trigger("set_default_compile_type");
-
-		// 	return false;
-		// } else if (this.list.length !== 0) {
-		// 	var plugin_name = this.list[index].name;
-		// 	self.get_plugin_data(plugin_name, is_user);
-		// }
 	},
 	get_plugin_data: function(plugin_name, is_user) {
 		var self = this;
@@ -183,6 +126,7 @@ goorm.plugin.manager = {
 					});
 				}
 			});
+
 			$.getScript(userplugin_path + '/' + plugin_name + '/plug.js', function(plugin) {
 				//Plugin initialization
 				self.plugins[plugin_name] = goorm.plugin[plugin_name.replace("goorm.plugin.", "")];
@@ -214,14 +158,12 @@ goorm.plugin.manager = {
 		}
 		// }
 	},
+
+	
+
 	new_project: function(data) {
-
-		if (data.project_type == "goorm") {
-
-		} else {
-			if ($.isFunction(this.plugins["goorm.plugin." + data.project_type].new_project)) {
-				this.plugins["goorm.plugin." + data.project_type].new_project(data);
-			}
+		if ($.isFunction(this.plugins["goorm.plugin." + data.project_type].new_project)) {
+			this.plugins["goorm.plugin." + data.project_type].new_project(data);
 		}
 	}
 };

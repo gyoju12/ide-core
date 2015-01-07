@@ -269,7 +269,7 @@ goorm.core.localization = {
 				var items = data_key.items;
 				var value = data_key.value;
 				var children = data_key.children;
-
+				
 				if (type && type == 'plugin') {
 					for (var k in data_key) {
 						var v = data_key[k];

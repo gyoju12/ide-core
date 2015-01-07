@@ -14,6 +14,9 @@
     "alert_folder_name_empty": {
         "value": "폴더 이름이 비어 있습니다."
     },
+    "alert_folder_duplicate_error": {
+        "value": "폴더는 복제할 수 없습니다."
+    },
     "alert_filename_empty": {
         "value": "파일 이름이 비어 있습니다."
     },
@@ -536,7 +539,7 @@
         "value": "파일 유형을 저장하였습니다."
     },
     "alert_too_many_editors": {
-        "value": "Workspace의 크기에 비해 Editor가 너무 많이 열려있습니다. Workspace의 크기를 조절해 주십시오."
+        "value": "Editor가 너무 많이 열려있습니다. <br/>불필요한 Editor를 꺼주십시오."
     },
     "alert_cannot_project_run": {
         "value": "프로젝트를 실행할 수 없습니다. 적절한 프로젝트를 선택하여 주십시오."
@@ -924,6 +927,9 @@
     },
     "confirmation_del_profile_image": {
         "value": "프로필 이미지를 지우시겠습니까?"
+    },
+    "confirmation_close_tab": {
+        "value": "구름을 종료하시겠습니까?"
     },
     "del_profile_image": {
         "value": "프로필 이미지 삭제"
@@ -1348,8 +1354,8 @@
     "msg_project_match_case_guide": {
         "value": "대/소문자 일치"
     },
-    "msg_project_ignore_whitespace_guide": {
-        "value": "공백 무시하기"
+    "msg_project_whole_word_guide": {
+        "value": "단어 전체 일치"
     },
     "msg_project_use_regular_expression_guide": {
         "value": "정규식 표현 사용하기"
@@ -1386,6 +1392,9 @@
     },
     "alert_project_permission_denied": {
         "value": "프로젝트에 접근할 권한이 없습니다."
+    },
+    "alert_project_plugin_not_loaded": {
+        "value": "현재 [PLUGIN] 플러그인은 로드되어 있지 않습니다. [PLUGIN] 플러그인을 추가로 로딩하시고 재시작하시겠습니까? (플러그인이 많이 로드되어 있을수록, 구름이 다소 느려질 수도 있습니다.)"
     },
     "alert_positive_value_only": {
         "value": "양수만 입력가능합니다."
@@ -1518,5 +1527,12 @@
     },
     "alert_select_scm_revision": {
         "value": "체크아웃받을 리비전을 선택해주세요!"
+    },
+    "alert_duplicate_shortcut_sublime": {
+        "value": "이 단축키는 Sublime 단축키 테마에서 사용되고 있으므로 사용할 수 없습니다."
+    },
+    "notice_scm_account_changed": {
+        "value": "SCM 계정을 변경하였습니다."
     }
+		
 }

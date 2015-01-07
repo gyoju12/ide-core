@@ -22,7 +22,7 @@ var java_basic_class_arr = [];
 module.exports = {
 
 	
-	
+
 	
 	
 	// tag:
@@ -272,11 +272,7 @@ module.exports = {
 		var self = this;
 		var workspace = option.workspace;
 
-		
 		var base_dir = __workspace;
-		
-
-		
 
 		if (!cb) cb = function() {};
 
@@ -409,11 +405,7 @@ module.exports = {
 		var workspace = option.workspace;
 		var path = option.path || "";
 
-		
 		var base_dir = __workspace;
-		
-
-				
 
 		var absolute_workspace_path = base_dir + workspace;
 		var ctags_command = './.tags_result';

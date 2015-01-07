@@ -22,6 +22,7 @@ goorm.core.search = {
 	treeview: null,
 	query: null,
 	current_options: null,
+	is_working: false,
 
 	init: function() {
 		var self = this;
@@ -57,7 +58,7 @@ goorm.core.search = {
 					var ev = e || event;
 
 					if (ev.keyCode == 13) {
-						self.search();
+						handle_ok();
 
 						e.stopPropagation();
 						e.preventDefault();
@@ -171,8 +172,8 @@ goorm.core.search = {
 
 	},
 	
-	
-	search: function() {
+	//useonly(mode=goorm-oss)
+	search: $.throttle(function() {
 	
 		var self = this;
 		var search_path;
@@ -181,7 +182,7 @@ goorm.core.search = {
 		this.use_regexp = $("#search_use_regexp").hasClass("active");
 		this.ignore_whitespace = $("#search_ignore_whitespace").hasClass("active");
 		
-		
+		//useonly(mode=goorm-oss)
 		if ($("#search_path_input").css('display') != 'none') {
 				search_path = $("#search_path_input").text();
 			} else {
@@ -234,11 +235,11 @@ goorm.core.search = {
 
 		// grep_option += " --exclude={.*,bin,file.list,goorm.manifest}";
 		
-		
+		//useonly(mode=goorm-oss)
 		self.get_matched_file(text, grep_option, search_path);
 		
 		//this.panel.modal('hide');	//jeongmin: when search is done, hide modal
-	},
+	}, 1000),
 
 	convert_data_to_tree: function (json) {
 		var data = [];
@@ -280,7 +281,7 @@ goorm.core.search = {
 		return data;
 	},
 	
-	
+	//useonly(mode=goorm-oss)
 	set_search_treeview: function (data) {
 	
 		var self = this;
@@ -297,7 +298,7 @@ goorm.core.search = {
 		var window_manager = core.module.layout.workspace.window_manager;
 		var firstActivate = window_manager.active_window;
 		
-		
+		//useonly(mode=goorm-oss)
 		var search = function(filename, filetype, filepath, matched_line) {
 		
 			window_manager.open(filepath, filename, filetype, null, null, function(__window) {
@@ -338,12 +339,16 @@ goorm.core.search = {
 
 			var on_dblclick = function (e, node) {
 				if (node.li_attr) {
+
 					var filename = node.li_attr.filename;
 					var filetype = node.li_attr.filetype;
 					var filepath = node.li_attr.filepath;
 					var matched_line = node.li_attr.matched_line;
-
-					search(filename, filetype, filepath, matched_line);
+					if(node.li_attr.badge === undefined) {
+						search(filename, filetype, filepath, matched_line);	
+						$("[action=show_in_center]").click();
+					}
+					
 				}
 			};
 			
@@ -386,7 +391,7 @@ goorm.core.search = {
 			window_manager.window[firstActivate].activate();
 	},
 	
-	
+	//useonly(mode=goorm-oss)
 	get_matched_file: function(text, grep_option, search_path) {
 	
 		var self = this;
@@ -404,8 +409,14 @@ goorm.core.search = {
 		if (search_path == '')
 			postdata.project_path = '';
 
+		if(self.is_working === true){
+			return;
+		}
+		self.is_working = true;
+		$("#dlg_search #g_op_btn_ok").attr("disabled", "disabled");
 		self.matched_file_list = [];
 		// core.module.loading_bar.start("Searching......");
+		//var progress_elements = core.module.loading_bar.start();
 		core.progressbar.set(0);
 
 		core._socket.once("/file/search_on_project", function(res) {
@@ -435,7 +446,7 @@ goorm.core.search = {
 				// if finding success.
 				var data = res.data;
 				
-				
+				//useonly(mode=goorm-oss)
 				self.set_search_treeview(data);
 				
 
@@ -448,8 +459,10 @@ goorm.core.search = {
 
 				self.hide();
 			}
-
 			core.progressbar.set(100);
+			self.is_working = false;
+			$("#dlg_search #g_op_btn_ok").removeAttr("disabled");
+			//progress_elements.stop();
 		}, true); // jeongmin: show loading bar
 		core._socket.emit("/file/search_on_project", postdata);
 

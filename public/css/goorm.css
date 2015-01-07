@@ -35,7 +35,7 @@ CodeMirror CSS
 /* PADDING */
 
 .CodeMirror-lines {
-    margin-left: 12px;
+    /*margin-left: 12px;*/
     padding: 4px 0;
     cursor: text;
     width: 100%;
@@ -341,22 +341,29 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror .highlight_line {
     background-color: #FFFF99;
 }
-.CodeMirror-gutters .breakpoint {
-    width: 18px;
-    margin-right: -10px;
+.CodeMirror-activeline .CodeMirror-gutter-wrapper {
+    border-right: solid #007ee5 2px;
+    background-color: rgba(0, 126, 229, 0.3);
 }
 .CodeMirror-gutters .exception_error {
-    width: 10px;
-    margin-right: -10px;
+    width: 12px;
+}
+.CodeMirror-gutters .breakpoint {
+    width: 8px;
+    margin-left: 1px;
+}
+.CodeMirror-gutters .bookmark {
+    width: 12px;
+}
+.CodeMirror-gutters .fold {
+    width: 12px;
 }
 .CodeMirror-gutter .current_line {
     color: #000;
 }
 .CodeMirror-gutter-elt .breakpoint {
     color: #900;
-    font-size: 8px;
     float: left;
-    margin-top: -1px;
 }
 .CodeMirror-gutter-elt .exception_error {
     width: 12px;
@@ -364,6 +371,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     float: left;
     color: red;
     font-weight: bold;
+    text-align: center;
 }
 .CodeMirror-gutter-elt .bookmark_icon {
     width: 12px;
@@ -374,7 +382,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     background-position: -353px -33px;
     cursor: pointer;
     margin-top: 1px !important;
-    margin-left: -3px !important;
+    margin-left: -1px !important;
 }
 .CodeMirror-gutter-elt .folding_icon {
     width: 12px;
@@ -385,7 +393,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     background-position: -226px -32px;
     cursor: pointer;
     margin-top: -2px;
-    margin-left: -3px;
+    margin-left: -2px;
 }
 .CodeMirror-gutter-elt .folding_icon_minus {
     width: 12px;
@@ -396,7 +404,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     background-position: -242px -32px;
     cursor: pointer;
     margin-top: -2px;
-    margin-left: -3px;
+    margin-left: -2px;
 }
 span.CodeMirror-matchhighlight {
     background-color: #e9e9e9;
@@ -488,6 +496,7 @@ Optimized:Start
 .selected_button {
     color: white;
     background-color: #007ee5;
+	border: none;
 }
 .selector_project .project_list_img {
     width: 64px;
@@ -761,6 +770,7 @@ Optimized:Start
     position: absolute;
     outline: none;
     width: 100%;
+	margin: 5px;
 }
 
 #slideshare_bt_container .inactive {
@@ -831,9 +841,11 @@ Optimized:Start
     width: 100px;
     float: left;
 }
+
 #loading_background {
-    background-color: #eee;
+    background-color: #fff;
 }
+
 div.tooltip {
     z-index: 10000;
 }
@@ -1000,10 +1012,6 @@ div.tooltip {
     overflow: hidden;
 }
 /* outline */
-
-#outline {
-    height: 480px;
-}
 #outline_wrapper {
     display: table;
     height: 100%;
@@ -1044,7 +1052,6 @@ div.tooltip {
 }
 #object_tree {
     height: 100%;
-    padding: 2px;
     overflow: auto;
 }
 #current_outline_wrapper {
@@ -1053,7 +1060,6 @@ div.tooltip {
 #current_outline {
     background-color: #fff;
     border-bottom: 1px solid #eee;
-    height: 32px;
 }
 /* project_share_container */
 
@@ -1062,9 +1068,7 @@ div.tooltip {
     text-align: center;
 } */
 #project_share_container #user_list_container .user_list {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    height: 263px;
+    height: 240px;
     overflow: auto;
 }
 #project_share_container #user_search_result_container ul {
@@ -1103,6 +1107,7 @@ div.tooltip {
     vertical-align: middle;
 }
 #project_share_container .user_item {
+	background-color: #fff;
     border-bottom: 1px solid #ccc;
 	padding-top: 10px; 
 	padding-bottom: 10px; 
@@ -1181,7 +1186,7 @@ div.tooltip {
     margin-right: 5px;
 }
 #project_share_container .display_guide {
-    margin-top: 10px;
+    margin: 10px;
 }
 #project_share_container .ui-autocomplete {
     margin: 0;
@@ -1346,6 +1351,10 @@ div.tooltip {
     color: #CCC;
     margin-right: 5px;
 }
+#chat .join_message, #chat .leave_message, #chat .change_message {
+	margin-top: 17px;
+	margin-bottom: 0px;
+}
 .chat_user_item_context_button, #btn_history_delete {
     float: right;
 }
@@ -1360,40 +1369,32 @@ div.tooltip {
     background-color: #FFFFDF;
 }
 /* tab */
-
-#g_window_tab_list .tab_modified_button {
+#g_window_tab_list .tab_restore_button, #g_window_tab_list .tab_modified_button {
+	top: 6px !important;
+}
+/* #g_window_tab_list .tab_close_button {
+	top: 3px !important;
+} */
+#g_window_tab_list .tab_restore_button, #g_window_tab_list .tab_modified_button, #g_window_tab_list .tab_close_button {
+	font-size: 14px;
+}
+#g_window_tab_list .tab_modified_button, #g_window_tab_list .tab_restore_button {
     display: none;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    -webkit-appearance: none;
-    zoom: 2;
-    color: darkgray;
-    outline: none;
-    top: -3px !important;
-    right: 2px !important;
+    position: absolute;
+	-webkit-appearance: none;
+	padding: 0;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	color: #000;
+	opacity: .2;
+	line-height: 1;
 }
 #g_window_tab_list .tab_restore_button {
-    display: none;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    right: 18px !important;
-    top: 6px !important;
-    background-image: url(../images/sprite.png);
-    background-position: -64px -32px;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    border: 0px;
-    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-    /* Firefox 3.5+ */
-    
-    filter: gray;
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
+	right: 20px !important;
+}
+#g_window_tab_list .tab_restore_button:hover, #g_window_tab_list .tab_close_button:hover {
+	opacity: .5;
 }
 #goorm_top {
     z-index: 11 !important;
@@ -2868,22 +2869,12 @@ Toolbar CSS
     height: 16px;
 }
 .window_tab-toolbar-connect {
-    background: transparent !important;
-    background-image: url(../images/sprite.png) !important;
-    background-repeat: no-repeat !important;
-    background-position: -48px -64px !important;
-    width: 16px;
-    height: 16px;
-    border: 0px;
+    color: #388b41;
+	margin-right: 5px;
 }
 .window_tab-toolbar-disconnect {
-    background: transparent !important;
-    background-image: url(../images/sprite.png) !important;
-    background-repeat: no-repeat !important;
-    background-position: -16px -64px !important;
-    width: 16px;
-    height: 16px;
-    border: 0px;
+    color: #df2227;
+	margin-right: 5px;
 }
 .history-toolbar-play {
     background: transparent !important;
@@ -3074,9 +3065,9 @@ Retina CSS
 .my_message {
     float: right;
 }
-.other_message {
+/* .other_message {
     float: left;
-}
+} */
 .continue_message {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -3167,7 +3158,7 @@ Retina CSS
 /* dlg css start*/
 
 #dlg_alert, #dlg_notice, #dlg_confirmation, #dlg_confirmation_save, #dlg_survey, #dlg_loading_bar, #dlg_toast {
-    z-index: 1041;
+    z-index: 1042;
     word-wrap: break-word;
 }
 #dlg_toast .modal-body .row {
@@ -3465,9 +3456,9 @@ div.goorm_menu_item .dropdown-menu {
     height: inherit;
 }
 #chats #back_to_previous_room {
-    float: right;
+/*     float: right;
     margin-top: -36px;
-    margin-right: 5px;
+    margin-right: 5px; */
     display: none;
 }
 #chat_user_container ul.list-group li {
@@ -3882,23 +3873,18 @@ div:focus {
     zoom: 0.5;
     float: left;
     /*width: 10px;*/
-        /*padding-left: 4px;*/
-    
+	/*padding-left: 4px;*/
     padding-right: 10px;
-    /* jeongmin. 30 -> 10 */
-    /*margin-top: 3px;*/
+    margin-top: 3px;
 }
 #goorm_inner_layout_center .nav-tabs > li > a > button {
     position: absolute;
     right: 5px;
-    top: 2px;
+    top: 5px;
 }
 #goorm_inner_layout_center .title_option {
-    /* jeongmin */
-    
     float: left;
-    /*margin-top: 5px;*/
-        
+    margin-top: 7px;        
     padding-right: 10px;
     zoom: 0.5;
 }
@@ -4000,11 +3986,12 @@ dlg_scm_commit table {
 */
 #dlg_svn tr td:nth-child(2) {   /* jeongmin. For showing each position's status(e.g. M  L  ) */
     white-space: pre;
-}/*
+}
 #dlg_scm_auth {
         
     z-index: 1041;
 }
+/*
 #svn_blame_tab .input-group, #svn_diff_tab .input-group, #svn_log_tab .input-group, #git_blame_tab .input-group, #git_diff_tab .input-group, #git_log_tab .input-group {    
     margin-bottom: 0px;
 }
@@ -4033,9 +4020,10 @@ dlg_scm_commit table {
 }
 
 /* Disabling Responsiveness */
+/* this code will integrate to bootstrap.css */
 
-/*@media (max-width: 768px) {
-    nav {
+@media (min-width: 768px) {
+/*    nav {
         width: 768px;
     }
     .navbar {
@@ -4046,15 +4034,10 @@ dlg_scm_commit table {
     }
     .navbar-toggle {
         display: none;
-    }
-    .navbar-collapse.collapse {
-        display: block !important;
-        height: auto !important;
-        padding-bottom: 0;
-        overflow: visible !important;
-        border-top: 0px;
-    }
-    .navbar-collapse {
+    }	 */
+	
+	
+/*     .navbar-collapse {
         width: auto;
         border-top: 0;
         box-shadow: none;
@@ -4088,8 +4071,11 @@ dlg_scm_commit table {
     }
     #fat-menu {
         margin-right: -1px;
-    }
-}*/
+    } */
+}
+
+
+
 
 #blame_container .CodeMirror, #diff_container .CodeMirror, #blame_container_git .CodeMirror, #diff_container_git .CodeMirror {
     /* jeongmin: set codemirror's height same as container */
@@ -4125,8 +4111,7 @@ dlg_scm_commit table {
     overflow-y: hidden;
 }
 #folder_new_dir_tree {
-    min-height: 180px;
-    max-height: 225px;
+    height: 220px;
     margin-bottom: 10px;
     width: 100%;
     overflow: scroll;
@@ -4301,7 +4286,7 @@ Plugin CSS: jeongmin
 #lecture_view_container #lesson_list_table .title {
     width: 50%;
 }
-#lecture_view_container #lesson_list_table .educator {
+#lecture_view_container #lesson_list_table .instructor {
     width: 20%;
     text-align: center;
 }
@@ -4327,54 +4312,51 @@ label {
 }
 #bookmark_tab {
     /* seongho.cha: for outline height */
-    
     display: table-row;
 }
 #bookmark_tab .panel {
-    /* jeongmin */
-    
-    border-radius: 0px;
+	border: none;
+	border-bottom: 1px solid #ddd;
 }
 #bookmark_tab .panel-heading {
-    /* jeongmin */
-    
-    border-bottom: 1px solid #dddddd;
-    /* gray */
-    
+    border-bottom: 1px solid #ddd;
     cursor: pointer;
-    /* collapse togglable */
-    
-    padding-left: 8px;
+    padding: 10px;
     margin-top: 0;
-    /* remove row's margin */
-    
-    background-color: #ffffff;
+    background-color: #fff;
 }
+
 #bookmark_tab .panel-title {
-    /* jeongmin */
-    
-    font-size: 12px;
+	font-size: 11px;
 }
-#bookmark_tab .panel-default {
-    border: 0px;
+
+#bookmark_table .well {
+    margin: 28px 0px 0px 0px;
+    padding: 5px;
+	background-color: #fff;
+	height: 30px;
+	outline: none;
 }
+/* #bookmark_table .form-control {
+    margin: 28px 5px 5px 5px;
+    padding: 5px;
+	box-sizing: border-box;
+} */
+
 #bookmark_tab_list {
-    /* jeongmin */
-    
     overflow: auto;
     margin-top: -1px;
 }
 #bookmark_tab_list .table {
     margin-bottom: 0px;
     table-layout: fixed;
-        
-    border: 0px;
+    border: none;
 }
 #bookmark_tab_list .table tr td:first-child {
-    border-left: 0px;
+    border-left: none;
 }
 #bookmark_tab_list .table tr td:last-child {
-    border-right: 0px;
+    border-left: none;
 }
 
 #import_label {
@@ -4405,18 +4387,6 @@ label {
     margin: 0 auto;
     border: 1px solid #ddd;
     overflow: hidden;
-}
-#bookmark_table .well {
-    /* jeongmin */
-    
-    margin-bottom: 0px;
-    margin-top: 20px;
-    padding: 0px 0px 0px 5px;
-}
-#bookmark_table .form-control {
-    /* jeongmin */
-    
-    margin-top: 3px;
 }
 
 .bookmark_text {
@@ -4786,7 +4756,7 @@ label {
     color: #000;
 }
 #input_chat_message {
-    height: 65px;
+    height: 70px;
     resize: none;
 }
 #emoticon_button {
@@ -5557,8 +5527,16 @@ label {
 }
 .disconnected {
     text-align: center;
-    color: #aaa;
-	margin-top: 50px;
+    color: #555;
+	padding-top: 70px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 0;
+	background-color: rgba(240,240,240,0.8);
+	z-index: 50;
+	height: 100%;
+	overflow: hidden;
 }
 #project_selector .dropdown-menu {
     overflow: auto;
@@ -5672,4 +5650,25 @@ li.active > #gLayoutTab_Terminal {
 
 #dlg_loading_bar .progress {
     margin-bottom: 0;
+}
+
+.talk {
+	margin-top: 5px !important;
+	margin-bottom: 10px !important;
+}
+
+.user-online {
+	background-color: #4cb749;
+}
+
+.user-offline {
+	background-color: #df2227;
+}
+
+#git_diff_table, #svn_diff_table{
+	width: 100%;
+}
+
+#goorm_main_toolbar {
+	color: #555;
 }

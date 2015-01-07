@@ -120,10 +120,10 @@ goorm.core.project._new = {
 						// }
 						// 	
 					} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test($("#input_project_author_name").val())) {
-						alert.show(core.module.localization.msg.alert_allow_character);
+						alert.show(core.module.localization.title.project_info_author + core.module.localization.msg.alert_allow_character);
 						return false;
 					} else if (!/^[\w-_]*$/.test($("#input_project_name").val())) {
-						alert.show(core.module.localization.msg.alert_allow_character);
+						alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
 						return false;
 					}
 					// else if (use_scm && !/^[\w-_]*$/.test($("#new_project_scm_config .scm_path").val())) {	//jeongmin: check if repository path has unavailable character
@@ -321,7 +321,7 @@ goorm.core.project._new = {
 			},
 			next: function() {
 				
-				
+				//useonly(mode=goorm-oss)
 				if ($("#project_new .project_items .selected_button").length != 1) {
 					alert.show(core.module.localization.msg.alert_project_detailed_type);
 					return false;
@@ -367,7 +367,15 @@ goorm.core.project._new = {
 			$(this).focus();
 
 			$(".all").hide();
-			$("." + $(this).attr("project_type")).show();
+
+			var project_template = $("." + $(this).attr("project_type"));
+			var project_category = $(this).attr('category');
+
+			if (project_category) {
+				project_template = project_template.filter('[category="'+project_category+'"]');
+			}
+
+			project_template.show();			
 		});
 
 		$(document).on('click', '#dlg_new_project .project_wizard_second_button', function() {
@@ -579,7 +587,6 @@ goorm.core.project._new = {
 						$('#g_np_btn_next').trigger('click');
 					}
 			}
-
 			if (next_selected == null) return;
 
 			// scroll setting
@@ -587,10 +594,10 @@ goorm.core.project._new = {
 				// 253.09090912342072 value is heigth (layout showing type items)
 				if (next_selected.position().top > 253.09090912342072) {
 					// item above the layout
-					project_items.parent().scrollTop(project_items.parent().scrollTop() + 136.5); // item size 127 + margin 10
+					project_items.scrollTop(project_items.scrollTop() + 136.5); // item size 127 + margin 10
 				} else if (next_selected.position().top < 0) {
 					// item below the layout
-					project_items.parent().scrollTop(project_items.parent().scrollTop() - 136.5);
+					project_items.scrollTop(project_items.scrollTop() - 136.5);
 				}
 			}
 			e.preventDefault();

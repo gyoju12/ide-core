@@ -131,17 +131,10 @@ module.exports = {
 	
 
 	
-
 	
 
 	
 
-	
-	
-
-	
-
-	
 	
 	
 	
@@ -215,7 +208,6 @@ module.exports = {
 	
 
 	
-	
 	add_group: function(option, callback) {
 		var self = this;
 
@@ -247,17 +239,42 @@ module.exports = {
 		});
 	},
 
+	get_invite_email_content: function(user_data, callback) {
+		var email_content_path = global.__path + 'modules/goorm.core.collaboration/invitation_mail_content_' + user_data.language;
+
+		fs.readFile(email_content_path, "utf8", function(err, data) {
+			var protocol = (global.__secure) ? 'https' : 'http';
+
+			data = data.replace(/\[DEMO_URL\]/gi, protocol+'://'+IDE_HOST+'/').replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, user_data.project_permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
+
+			// this part must be changed to follow localization data....
+			var subject = "";
+			if (user_data.language == "kor") {
+				subject = user_data.invite_user + " 님께서 " + user_data.name + " 님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+			}
+			else if (user_data.language == "us") {
+				subject = user_data.invite_user + " invites you (" + user_data.name + ") to '" + user_data.project_name + "' project.";
+			}
+			else {
+				subject = user_data.invite_user + "님께서 " + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+			}
+			
+// 			var ret = "알려드립니다.\n\n";
+// 			ret += subject;
+// 			var content = "";
+
+// 			if (data) {
+// 				content = ret + data;
+// 			}
+
+			callback(subject, data);
+		});
+	},
+
 	
 
 	
-	
-	
-	
 
-	
-
-	
-	
 	
 	
 	
@@ -285,8 +302,6 @@ module.exports = {
 		// validate manifest and fix it. Jeong-Min Im.
 		function fix_manifest() {
 			if (cur_manifest.author + '_' + cur_manifest.name != project_path) { // wrong goorm.manifest -> fix it!
-				
-				
 				
 			} else { // right goorm.manifest
 				self.manifest_setting(project_path, function() {

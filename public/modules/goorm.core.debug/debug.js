@@ -27,7 +27,7 @@ goorm.core.debug.prototype = {
 
 		this.init_css();
 		this.button_inactive();
-
+		/*
 		//left
 		$('#debug_left').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed" id="debug_left_table" ></table>');
 		this.table_thread = $('#debug_left_table').dataTable({
@@ -50,19 +50,17 @@ goorm.core.debug.prototype = {
 		});
 
 		this.table_thread.find("thead th:last").unbind('mousemove.ColReorder');
-
+		*/
 		//center
 		$('#debug_tab_center').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed" id="debug_tab_center_table" ></table>');
 		this.table_variable = $('#debug_tab_center_table').dataTable({
 			"aaData": [],
 			"aoColumns": [{
-				"sTitle": '<span localization_key="variable">Variable</span>',
-				'sWidth': '100px' // jeongmin: fix width
+				"sTitle": '<span localization_key="variable">Variable</span>'
 			}, {
 				"sTitle": '<span localization_key="value">Value</span>'
 			}, {
-				"sTitle": '<span localization_key="summary">Summary</span>',
-				'sWidth': '100px' // jeongmin: fix width
+				"sTitle": '<span localization_key="summary">Summary</span>'
 			}],
 			"sDom": '<"H"f>Rrt',
 			"bFilter": false,
@@ -75,7 +73,7 @@ goorm.core.debug.prototype = {
 			"iDisplayLength": -1 // jeongmin: no paging
 		});
 
-		$("#debug_left").resizable();
+//		$("#debug_left").resizable();
 
 		// click Event
 		$('#debug_tab_center_table').on('click', 'tbody td', function() {
@@ -103,17 +101,33 @@ goorm.core.debug.prototype = {
 				self.hide_menu();
 			}
 		});
+
+		$(document).on('click', function(e) {
+			var edit_box = self.table_variable.find('.editing');
+			if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
+				var data = edit_box.children().val();
+				var sendData = {};
+				edit_box.html(data);
+				edit_box.removeClass('editing');
+				edit_box.addClass('edit_ready');
+				sendData.variable = edit_box.parent().attr("data-tt-id");
+				sendData.value = data;
+				if (typeof sendData.value != "undefined") {
+					$(core.module.debug).trigger('value_changed', sendData);
+				}
+			}
+		});
 	},
 
 	init_css: function(argument) {
 		var debug_layout = $("#debug_tab");
 		var debug_wrapper = $("#debug_wrapper");
 
-		var layout_bottom_height = $("#goorm_inner_layout_bottom").height();
-		var layout_bottom_width = $("#goorm_inner_layout_bottom").width();
+		var layout_bottom_height = $("#goorm_inner_layout_bottom .tab-content").height();
+		var layout_bottom_width = $("#goorm_inner_layout_bottom .tab-content").width();
 
-		debug_layout.height(parseInt(layout_bottom_height));
-		debug_wrapper.height(parseInt(layout_bottom_height));
+		debug_layout.height(layout_bottom_height);
+		debug_wrapper.height(layout_bottom_height);
 
 		debug_layout.parent().css("overflow", "hidden"); // tab-content
 	},
@@ -127,8 +141,7 @@ goorm.core.debug.prototype = {
 		// }
 
 		//height...
-		var layout_bottom_height = $("#goorm_inner_layout_bottom").height() - 30;
-		layout_bottom_height = parseInt(layout_bottom_height);
+		var layout_bottom_height = $("#goorm_inner_layout_bottom .tab-content").height();
 		$("#debug_tab").css("height", layout_bottom_height + 'px');
 		$('#debug_wrapper').css("height", layout_bottom_height + 'px');
 		$('#debug_wrapper').children().css("height", layout_bottom_height + 'px');
@@ -139,17 +152,21 @@ goorm.core.debug.prototype = {
 		var center_column = debug_tab_center_table.find('.sorting_disabled:nth-child(2)'); // jeongmin: value
 
 		// jeongmin: initialize
-		left_column.css('width', '');
-		center_column.css('width', '');
+// 		left_column.css('width', '');
+// 		center_column.css('width', '');
 
 		debug_tab_center_table.css('table-layout', 'auto'); // jeongmin: automatically adjust column width as fitting its contents width
 
 		var all = $('#debug_tab_center').innerWidth();
 		var left = left_column.outerWidth();
-		var left_padding = parseInt(left_column.css('padding')); // jeongmin: padding should be subtracted, too
+		var left_padding = parseInt(left_column.css('padding'), 10); // jeongmin: padding should be subtracted, too
 		var right = 100; // jeongmin: summary -> should be 100px, always
-		var right_padding = parseInt(debug_tab_center_table.find('.sorting_disabled:nth-child(3)').css('padding')); // jeongmin: padding should be subtracted, too
+		var right_padding = parseInt(debug_tab_center_table.find('.sorting_disabled:nth-child(3)').css('padding'), 10); // jeongmin: padding should be subtracted, too
 		var center = all - left - left_padding - right - right_padding;
+		
+// 		console.log(left);
+// 		console.log(right);
+		
 
 		// jeongmin: set right width
 		left_column.width(left);
@@ -406,11 +423,16 @@ goorm.core.debug.prototype = {
 	show_menu: function() {
 		$('#main-menu-debug').show();
 		$('#main_debug_toolbar').show();
+		$('[href="#debug_tab"]').show();
+
 	},
 
 	hide_menu: function() {
 		$('#main-menu-debug').hide();
 		$('#main_debug_toolbar').hide();
+		$('[href="#debug_tab"]').hide();
+		$('[href="#terminal"]').click();
+
 	},
 
 	/* Debug Table API */
@@ -441,86 +463,80 @@ goorm.core.debug.prototype = {
 		}
 	},
 
-	add_data_table: function(variable, value, summary, parent) { // parent: this row's parent(in struct)
-		var t1 = Number(variable.indexOf("key='")) + 5;
-		var t2 = Number(variable.indexOf("' show="));
-		var id = variable.slice(t1, t2);
-		var sendData = {},
-			ev = {};
-		ev.keyDown = 13;
 
-		value = '<div variable=' + id + ' class="edit_ready" style="width:100%;height:100%;">' + value + '</div>';
+	add_data_table: function(data, parent, draw) { //parent is this rows' parent (in struct)
+		var index;
+		data = (typeof(data[0]) !== "object")? [data] : data; //if it is 1D array, make it 2D array
+		draw = (draw === undefined)? true : draw;
+		
 
 		if (this.table_variable) {
-			if (variable && value && summary)
-				this.table_variable.fnAddData([
-					variable,
-					value,
-					summary
-				]);
+			if (data){
+				index = this.table_variable.fnAddData(data, draw);
+				var nodes = this.table_variable.fnSettings().aoData;
+				for(var i=0; i<index.length; i++){
+					var node = nodes[index[i]].nTr;
+					node.setAttribute('data-tt-id', data[i][0]);
+					if (parent) { // jeongmin: this row has parent(struct)
+						node.setAttribute('data-tt-parent-id', parent); // jeongmin: specify its parent, so connect with its parent as tree
+					}	
+				}				
+			}
+			
 		}
 
-		var edit_box = $("div[variable='" + id + "']");
-
-		if (parent) { // jeongmin: this row has parent(struct)
-			edit_box.parents('tr').attr('data-tt-parent-id', parent).attr('data-tt-id', id); // jeongmin: specify its parent, so connect with its parent as tree
-		} else {
-			edit_box.parents('tr').attr('data-tt-id', id); // jeongmin: all row has its treetable id
+		if(draw){
+			var project_type = core.status.current_project_type;
+			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java') {
+				for(var i=0; i<data.length; i++){
+					var edit_box = this.table_variable.find("tr[data-tt-id='"+data[i][0]+"'] td").eq(1);
+					this.bind_edit_box(edit_box);
+				}
+				
+			}
 		}
+		return index;
+	},
 
-		var project_type = core.status.current_project_type;
-		if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java' || project_type === 'java_examples') {
-			edit_box.parent().click(function() {
-				var data = edit_box.html();
-				if (edit_box.hasClass('edit_ready')) {
-					core.module.terminal.terminal.Terminal.keyDown(ev);
-					edit_box.removeClass('edit_ready');
-					edit_box.addClass('editing');
-					// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
-					edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
+	bind_edit_box: function(edit_boxs){
+		var sendData = {};
+		var ev = {};
+		ev.keyDown = 13;
 
-					edit_box.find('.edit_box').val(data);
 
-					core.status.focus_obj = edit_box;
+		edit_boxs.addClass('edit_ready');
+		edit_boxs.click(function(e) {
+			var edit_box = $(e.target);
+			var data = edit_box.html();
+			if (edit_box.hasClass('edit_ready')) {
+				core.module.terminal.terminal.Terminal.keyDown(ev);
+				edit_box.removeClass('edit_ready');
+				edit_box.addClass('editing');
+				// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
+				edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
+
+				edit_box.find('.edit_box').val(data);
+
+				core.status.focus_obj = edit_box;
+			}
+		});
+		edit_boxs.on('keyup', '.edit_box', function(e) {
+			var edit_box = $(e.target).parent();
+			if (e.keyCode == 13) {
+				var data = $(this).val();
+				edit_box.html(data);
+				edit_box.removeClass('editing');
+				edit_box.addClass('edit_ready');
+				sendData.variable = edit_box.parent().attr("data-tt-id");
+				sendData.value = data;
+				if (typeof sendData.value != "undefined") {
+					$(core.module.debug).trigger('value_changed', sendData);
 				}
-			});
+			} else {
+				core.status.focus_obj = $(this);
+			}
+		});
 
-			$(document).on('click', function(e) {
-				var edit_box = $("div[variable='" + $('.editing').attr("variable") + "']");
-				if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
-					var data = edit_box.children().val();
-					edit_box.html(data);
-					edit_box.removeClass('editing');
-					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("variable");
-					sendData.value = data;
-					if (typeof sendData.value != "undefined") {
-						$(core.module.debug).trigger('value_changed', sendData);
-					}
-				} else if (edit_box.hasClass('edit_ready')) {
-					core.module.terminal.terminal.Terminal.keyDown(ev);
-					edit_box.removeClass('edit_ready');
-					edit_box.addClass('editing');
-					edit_box.html("<input type='text' value='" + data + "' style='width:100%;height:100%'>");
-					core.status.focus_obj = edit_box;
-				}
-			});
-			edit_box.on('keyup', '.edit_box', function(e) {
-				if (e.keyCode == 13) {
-					var data = $(this).val();
-					edit_box.html(data);
-					edit_box.removeClass('editing');
-					edit_box.addClass('edit_ready');
-					sendData.variable = edit_box.attr("variable");
-					sendData.value = data;
-					if (typeof sendData.value != "undefined") {
-						$(core.module.debug).trigger('value_changed', sendData);
-					}
-				} else {
-					core.status.focus_obj = $(this);
-				}
-			});
-		}
 	},
 
 	delete_data_table: function(row) {

@@ -29,7 +29,7 @@ var check_valid_path = function(str) {
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
-var project_limit = 10;
+var project_limit = 30;
 
 module.exports = {
 	get_limit: function() {
@@ -43,7 +43,7 @@ module.exports = {
 		data.message = "Process Done";
 
 		if (query.project_type && query.project_detailed_type && query.project_author && query.project_name) { //jeongmin: remove collaboration comparison (collaboration is disappered)
-			
+			//useonly(mode=goorm-oss)
 			fs.readdir(global.__workspace + '/', function(err, files) {
 				if (err) {
 					data.err_code = 10;
@@ -130,8 +130,6 @@ module.exports = {
 			
 
 			
-
-			
 		} else {
 			data.err_code = 10;
 			data.message = "Invalid query";
@@ -155,9 +153,7 @@ module.exports = {
 
 		
 
-		
-
-		
+		//useonly(mode=goorm-oss)
 		if (query.project_path) {
 			rimraf(global.__workspace + '/' + query.project_path, function(err) {
 				if (err) {
@@ -238,6 +234,13 @@ module.exports = {
 			if (!find && stdout.indexOf('goorm.manifest') > -1) {
 				find = true;
 
+				
+			}
+		});
+
+		check_cmd.on('close', function(code) {
+			
+			if (find) {
 				var file_list = stdout.split('\n');
 				var manifest_path = "";
 
@@ -252,22 +255,21 @@ module.exports = {
 					if (__err) {
 						console.log(__err);
 
-						find = false;
+						
 					} else {
 						try {
 							contents = JSON.parse(manifest_content);
+							data.result = contents;
 						} catch (e) {
-							find = false;
+							console.log(e);
 						}
+						evt.emit('project_do_import_check', data);
 					}
 				});
+			} else {
+				evt.emit('project_do_import_check', data);
 			}
-		});
-
-		check_cmd.on('close', function(code) {
-			data.result = contents;
-			console.log(data);
-			evt.emit('project_do_import_check', data);
+			
 		});
 	},
 
@@ -342,7 +344,7 @@ module.exports = {
 
 										
 
-										
+										//useonly(mode=goorm-oss,goorm-client)
 										delete_macosx();
 										
 
@@ -524,7 +526,7 @@ module.exports = {
 
 		var is_empty = true;
 
-			
+		//useonly(mode=goorm-oss)	
 		fs.readdir(global.__workspace + '/', function(err, files) {
 			if (!err) {
 				var evt_get_project = new EventEmitter();
@@ -867,7 +869,7 @@ module.exports = {
 		var makefile = g_secure.command_filter(__workspace + query.project_path + "/make");
 		
 		
-		
+		//useonly(mode=goorm-oss)
 		fs.exists(makefile, function(exist) {
 			if (!exist) {
 				if (query.project_type == "java" || query.project_type == "java_examples") {
@@ -1096,7 +1098,7 @@ module.exports = {
 					evt.emit('project_exist');
 				} else {
 					
-					
+					//useonly(mode=goorm-oss)
 					evt.emit('project_valid_success');
 					
 				}

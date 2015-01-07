@@ -38,12 +38,14 @@ goorm.core.layout.workspace = {
 		//
 		var ws = $(this.context);
 		ws.on('dragenter', function(e) {
+			ws.css('border', '2px solid #007ee5');
+			
 			e.stopPropagation();
 			e.preventDefault();
 		});
 
 		ws.on('dragover', function(e) {
-			ws.css('border', '2px dashed ##007ee5');
+			ws.css('border', '2px solid #007ee5');
 			self.window_manager.tab_resize_window_relocation();
 
 			e.stopPropagation();

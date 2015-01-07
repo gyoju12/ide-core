@@ -8,9 +8,6 @@
  * version: 2.0.0
  **/
 
-var expire_date = 60 * 60 * 2; // 2h
-// var expire_date = 180; // 3m
-
 
 
 var EventEmitter = require("events").EventEmitter;
@@ -43,8 +40,7 @@ module.exports = {
 		
 		
 		
-		
-		
+		//useonly(mode=goorm-oss)
 		var sha_pw = crypto.createHash('sha1');
 		var sha_pw2 = crypto.createHash('sha1');
 
@@ -73,7 +69,7 @@ module.exports = {
 		exec(['useradd -u ', content.uid, ' ', content.id].join(""), function(err, stdout, stderr) {
 			if (!err) {
 				
-				
+				//useonly(mode=goorm-oss)
 				console.log('Complete : sync-uid [', option, ']');
 
 				if (callback) {
@@ -110,7 +106,7 @@ module.exports = {
 		}
 
 		
-		
+		//useonly(mode=goorm-oss)
 		// Update Session
 		this.update_session(req, user_data);
 
@@ -119,7 +115,6 @@ module.exports = {
 		});
 		
 	},
-	
 	
 	
 
@@ -275,7 +270,7 @@ module.exports = {
 					.write(cropped, function(err) {
 						if (!err) {
 							
-							
+							//useonly(mode=goorm-oss)
 							unlink();
 							callback(true);
 							

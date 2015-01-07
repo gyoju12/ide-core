@@ -66,7 +66,7 @@ goorm.core.window.manager = {
 						var project_path = __file.filepath.split('/')[0];
 
 						
-						
+						//useonly(mode=goorm-oss)
 							if (__file.filename === 'debug' || __file.filetype === 'WebView')
 							
 								return async_callback();
@@ -118,8 +118,8 @@ goorm.core.window.manager = {
 									active_window = current_window;
 								}
 								current_window.move(__file.top, __file.left);
-								current_window.bind_width(__file.width);
-								current_window.bind_height(__file.height);
+// 								current_window.bind_width(__file.width);
+// 								current_window.bind_height(__file.height);
 
 								async_callback();
 							});
@@ -150,7 +150,7 @@ goorm.core.window.manager = {
 							$("a[action=do_find]").parent().addClass("disabled");
 							$("a[action=do_find_next]").parent().addClass("disabled");
 							$("a[action=do_find_previous]").parent().addClass("disabled");
-							$("a[action=auto_formatting]").parent().addClass("disabled");
+							//$("a[action=auto_formatting]").parent().addClass("disabled");
 							$("a[action=comment_selected]").parent().addClass("disabled");
 							$("a#parent_merge_menu").parent().addClass("disabled");
 							$("a#parent_refactor_menu").parent().addClass("disabled");
@@ -208,7 +208,7 @@ goorm.core.window.manager = {
 		var cursor, scroll_top;
 		for (var i = 0; i < this.window.length; i++) {
 			
-			
+			//useonly(mode=goorm-oss)
 				if (this.window[i].filename === 'debug' || this.window[i].filetype == 'WebView') // jeongmin: skip debug window
 				
 					continue;
@@ -271,7 +271,7 @@ goorm.core.window.manager = {
 		// 	return str;
 		// };
 		////// file is good to open, so do it! Jeong-Min Im. //////
-		function do_open() {
+		var do_open = function () {
 			if (filepath !== "/" && filepath !== "") {
 				if (core.module.layout.history)
 					core.module.layout.history.last_init_load = filepath + filename;
@@ -319,11 +319,12 @@ goorm.core.window.manager = {
 				return self.window[self.window.length - 1];
 			}
 
-		}
+		};
 		
 		
 		
-			
+		
+			//useonly(mode=goorm-oss)
 			if (filetype == "bmp" || filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx" || filetype == "avi" || filetype == "mpg" || filetype == "mp4" || filetype == "wmv") {
 				
 				var query = {
@@ -347,7 +348,7 @@ goorm.core.window.manager = {
 
 			} else {
 				
-					
+					//useonly(mode=goorm-oss)
 					if (editor != 'WebView') { // just editor type except WebView(this is temporary file. So difficult to get property)
 						
 						////// check if this file is bigger than 10MB. Jeong-Min Im. //////
@@ -470,7 +471,8 @@ goorm.core.window.manager = {
 					options.title = filepath + filename;
 				}
 
-				if ((this.min_tab_width * (this.tab.length + 1)) > $("#goorm_inner_layout_center").width()) {
+				// if ((this.min_tab_width * (this.tab.length + 1)) > $("#goorm_inner_layout_center").width()) {
+				if(core.module.layout.workspace.window_manager.window.length === 10) {
 					core.module.toast.show(core.module.localization.msg.alert_too_many_editors, 3000);
 
 				} else {
@@ -912,6 +914,69 @@ goorm.core.window.manager = {
 				}
 			},
 
+			close_others: function() {
+				var self = this;
+				var are_saved = true;
+				var modified = [];
+				var not_modifed = [];
+				var msg = "";
+				var clicked_windows = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
+				var clicked_title = clicked_windows.title;
+
+				$(this.window).each(function(i) {
+					if(this.title != clicked_title) {
+						if (!this.is_saved ) {
+							modified.push(this);
+							msg = msg + "\"" + this.filename + "\",";	
+						} else {
+							not_modifed.push(this);
+						}	
+					}
+				});
+
+				if (msg.length > 0) {
+					msg = msg.slice(0, -1);
+				}
+				if (modified.length > 0) {
+					confirmation_save.init({
+						message: msg + " " + core.module.localization.msg.confirmation_save_message,
+						yes_text: core.module.localization.msg.confirmation_yes,
+						cancel_text: core.module.localization.msg.confirmation_cancel,
+						no_text: core.module.localization.msg.confirmation_no,
+						title: "Close...",
+
+						yes: function() {
+							$(modified).each(function(i) {
+								this.editor.save("close");
+							});
+							$(not_modifed).each(function(i) {
+								
+								$("#" + this.tab.tab_list_id + " .tab_close_button").click();
+
+							});
+						},
+						cancel: function() {},
+						no: function() {
+							$(modified).each(function(i) {
+								this.is_saved = true;
+								this.tab.is_saved = true;
+							});
+							self.close_others();
+						}
+
+					});
+					confirmation_save.show();
+
+				} else {
+					for (var i = this.window.length - 1; i >= 0; i--) {
+						var w = this.window[i];
+						if(w.title != clicked_title) {
+							$("#" + w.tab.tab_list_id + " .tab_close_button").click();	
+						}
+					}
+				}
+			},
+
 			get_window: function(filepath, filename) {
 				var __window = null;
 
@@ -929,14 +994,14 @@ goorm.core.window.manager = {
 			check_file_list: function(temp_window_list, callback) {
 				var postdata = {
 					
-					
+					//useonly(mode=goorm-oss)
 					'get_list_type': 'owner_list'
 					
 				};
 
 				//$.get("project/get_list", postdata, function (project_data) {
 				
-						
+						//useonly(mode=goorm-oss)
 						core.socket.once("/project/get_list/owner", function(project_data) {
 							
 							if (!temp_window_list)
@@ -1151,7 +1216,7 @@ goorm.core.window.manager = {
 						return true;
 					},
 
-					refresh_all_title: function() {
+					refresh_all_title: function(current_project_path) {
 						var self = this;
 						var tabs = self.tab;
 						var panels = self.window;
@@ -1165,7 +1230,13 @@ goorm.core.window.manager = {
 								var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + index + '"]');
 								if (temp) { // && index.indexOf('terminal')!=0
 									if (cnt == 1) {
-										temp.html(temp.attr("filename"));
+										var name = temp.attr("filename");
+										var path = temp.attr("filepath").split("/")[0];
+										if(typeof current_project_path == "string" && path != current_project_path) {
+											temp.html(name + " - " + temp.attr("filepath"));
+										} else {
+											temp.html(name);	
+										}
 									} else if (cnt > 1) {
 										temp.each(function(index2) {
 											var path = $(this).attr("filepath");
@@ -1174,7 +1245,7 @@ goorm.core.window.manager = {
 										});
 									}
 								}
-							}
+							} 
 						});
 					},
 

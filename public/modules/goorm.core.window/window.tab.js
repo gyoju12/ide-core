@@ -79,10 +79,10 @@ goorm.core.window.tab.prototype = {
 		}
 				
 		if (typeof core.status.current_opened_list[this.filename] === "undefined") {
-			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name	
+			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'><i class='fa fa-share-alt'></i></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + "</span><button class='tab_restore_button' type='button'><i class='fa fa-square-o'></i></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'><i class='fa fa-times'></i></button><button class='tab_modified_button tab_close_button' type='button'><i class='fa fa-circle'></i></button></a></li>"); // jeongmin: put tab_option before file_name	
 			core.status.current_opened_list[this.filename] = 1;
 		} else {
-			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'>×</button><button class='tab_modified_button tab_close_button' type='button'>●</button></a></li>"); // jeongmin: put tab_option before file_name		
+			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'><i class='fa fa-share-alt'></i></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'><i class='fa fa-square-o'></i></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'><i class='fa fa-times'></i></button><button class='tab_modified_button tab_close_button' type='button'><i class='fa fa-circle'></i></button></a></li>"); // jeongmin: put tab_option before file_name		
 			core.status.current_opened_list[this.filename] ++;
 		}
 
@@ -98,7 +98,14 @@ goorm.core.window.tab.prototype = {
 			var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
-					temp.html(this.filename);
+					var name = temp.attr("filename");
+					var path = temp.attr("filepath").split("/")[0];
+					var current_project_path = core.status.current_project_path;
+					if(path != current_project_path) {
+						temp.html(name + " - " + temp.attr("filepath"));
+					} else {
+						temp.html(name);	
+					}
 				} else if (cnt > 1) {
 					temp.each(function(index) {
 						var path = $(this).attr("filepath");
@@ -238,6 +245,7 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_title: function(title) {
+		console.log("===tab_set_title");
 		if (title) {
 			if (typeof core.status.current_opened_list[this.filename] === "undefined") {
 				$("#" + this.tab_list_id).find('.tab_title').html(title + "-" + this.filepath);
@@ -260,6 +268,7 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_modified: function() {
+		
 		if (this.saved) { // jeongmin: it is saved by panel, so don't modify
 			this.saved = false; // jeongmin: initialize
 
@@ -270,7 +279,7 @@ goorm.core.window.tab.prototype = {
 
 		var morphed_title = this.title.split("/").join("_").split(".").join("_");
 
-		$("#" + this.tab_list_id).find('.tab_option').html("✶");
+		$("#" + this.tab_list_id).find('.tab_option').html("<i class='fa fa-asterisk'></i>");
 
 		$('#' + this.tab_list_id).find('.tab_close_button').hide().end()
 			.find('.tab_modified_button').show();
@@ -290,7 +299,14 @@ goorm.core.window.tab.prototype = {
 				var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + index + '"]');
 				if (temp) {
 					if (cnt == 1) {
-						temp.html(index);
+						var name = temp.attr("filename");
+						var path = temp.attr("filepath").split("/")[0];
+						var current_project_path = core.status.current_project_path;
+						if(path != current_project_path) {
+							temp.html(name + " - " + temp.attr("filepath"));
+						} else {
+							temp.html(name);	
+						}
 					} else if (cnt > 1) {
 						temp.each(function(index2) {
 							var path = $(this).attr("filepath");
@@ -345,7 +361,14 @@ goorm.core.window.tab.prototype = {
 			var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
-					temp.html(this.filename);
+					var name = temp.attr("filename");
+					var path = temp.attr("filepath").split("/")[0];
+					var current_project_path = core.status.current_project_path;
+					if(path != current_project_path) {
+						temp.html(name + " - " + temp.attr("filepath"));
+					} else {
+						temp.html(name);	
+					}
 				} else if (cnt > 1) {
 					temp.each(function(index) {
 						var path = $(this).attr("filepath");
@@ -377,9 +400,29 @@ goorm.core.window.tab.prototype = {
 	},
 
 	activate: function() {
-
-
 		this.tab.tab("show");
+		var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();
+		switch (current_file_type) {
+            case 'c':
+            case 'cpp':
+            case 'java':
+            case 'py':
+            	$("[action=do_jump_to_definition]").parent().show();
+            	$("#gLayoutTab_Outline").show();
+            	break;
+            	
+            case 'html':
+            case 'css':
+            	$("[action=do_jump_to_definition]").parent().hide();
+                $("#gLayoutTab_Outline").show();
+                break;
+
+            default:
+            	$("[action=do_jump_to_definition]").parent().hide();
+            	$("#gLayoutTab_Outline").hide();
+				$("#gLayoutTab_chat").click();
+                break;
+        }
 	},
 
 	resize: function() {

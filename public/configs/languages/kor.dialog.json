@@ -314,8 +314,8 @@
 			"dialog_project_match_case_guide": {
 				"value": "대/소문자 일치"
 			},
-			"dialog_project_ignore_whitespace_guide": {
-				"value": "공백 무시하기"
+			"dialog_project_whole_word_guide": {
+				"value": "단어 전체 일치"
 			},
 			"dialog_project_use_regular_expression_guide": {
 				"value": "정규식 표현 사용하기"
@@ -467,6 +467,9 @@
 			},
 			"dialog_project_property_checkout": {
 				"value": "체크아웃"
+			},
+			"dialog_project_property_change_scm_account": {
+				"value": "계정 변경"
 			}
 		}
 	},

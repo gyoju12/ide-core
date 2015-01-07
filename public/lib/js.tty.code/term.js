@@ -129,17 +129,18 @@ var normal = 0
 /*
   Line  
 */
-//seongho.cha : these class is maded for calculate real length of string and check existence of newLine
+//seongho.cha : these class is maded for calculate real length of string and check wordbreak
+//				wordbreak is flag to check line breaked or not because length is longer than cols
 function Line(blankLine){
   this.chs = blankLine.slice();
   this.blank = this.chs[0].slice();
-  this.newLine = false;
+  this.wordbreak = false;
 }
 
 Line.prototype.getLength = function (){
      var i = this.chs.length - 1;
      while(i>=0){
-        if(this.chs[i][2] == true){
+        if(this.chs[i][1] != ''){
            break;
         }
         i--;
@@ -248,7 +249,7 @@ function Terminal(cols, rows, handler) {
   for (var i=0; i<this.rows; i++) {
     this.lines[i] = this.blankLine();
   }
-
+  
   this.tabs;
   this.setupStops();
 }
@@ -1127,7 +1128,6 @@ Terminal.prototype.write = function(data) {
           case '\n':
           case '\x0b':
           case '\x0c':
-            this.lines[this.y + this.ybase].newLine = true;
             if (this.convertEol) {
               this.x = 0;
             }
@@ -1153,7 +1153,6 @@ Terminal.prototype.write = function(data) {
           // '\t'
           case '\t':
             this.x = this.nextStop();
-            this.lines[this.y + this.ybase].chs[this.x - 1][2] = true;
             break;
 
           // shift out
@@ -1170,22 +1169,23 @@ Terminal.prototype.write = function(data) {
           case '\x1b':
             this.state = escaped;
             break;
-
+          case '':
           default:
             // ' '
-            if (ch >= ' ') {
+            if (ch >= ' ' || ch == '') {
               if (this.charset && this.charset[ch]) {
                 ch = this.charset[ch];
               }
               if (this.x >= this.cols) {
                 this.x = 0;
+				 this.lines[this.y + this.ybase].wordbreak = true;
                 this.y++;
                 if (this.y > this.scrollBottom) {
                   this.y--;
                   this.scroll();
                 }
               }
-              this.lines[this.y + this.ybase].chs[this.x] = [this.curAttr, ch, true];
+              this.lines[this.y + this.ybase].chs[this.x] = [this.curAttr, ch];
               this.x++;
               this.updateRange(this.y);
             }
@@ -2265,7 +2265,7 @@ Terminal.prototype.keyDown = function(ev) {
   this.emit('keydown', ev);
 
   if (key) {
-    this.hookKeys(key, ev);
+    //this.hookKeys(key, ev);
 
     this.showCursor();
     if(key != '\x03' || this.flag_drag < 5){
@@ -2276,7 +2276,7 @@ Terminal.prototype.keyDown = function(ev) {
 
   return true;
 };
-
+/*
 Terminal.prototype.hookKeys = function(key, ev) {
  
   if( ev.ctrlKey && ev.keyCode == 67 ) {
@@ -2287,7 +2287,7 @@ Terminal.prototype.hookKeys = function(key, ev) {
     return true;
   }
 }
-
+*/
 Terminal.prototype.setgLevel = function(g) {
   this.glevel = g;
   this.charset = this.charsets[g];
@@ -2365,16 +2365,6 @@ Terminal.prototype.error = function() {
   window.console.error.apply(window.console, args);
 };
 
-Terminal.prototype.getPureChs = function(chs) {
-
-    for(var i = chs.length; i>0; i--){
-       if(chs[i-1][2] == true){
-         break;
-       }
-       chs.pop();
-     }
-     return chs;
-}
 
 Terminal.prototype.resize = function(x, y) {
 //  if (this.lock == true)
@@ -2386,31 +2376,29 @@ Terminal.prototype.resize = function(x, y) {
     , i
     , j
     , ch;
-  ch = [this.defAttr, ' ', false];
+  ch = [this.defAttr, ''];
   if (x < 1) x = 1;
   if (y < 1) y = 1;
 
   var lastLine = this.lines.length;  //seongho.cha : last line is autumatically dividied, so need to know where it is start
-  while((lastLine > 0) && !(this.lines[lastLine-1].newLine)){
-    lastLine--;
-  }
+  
   // resize cols
   var i=0;
   j = this.cols;
 
   if (j < x) {
     for(i=0; i<lastLine - 1 ; i++){
-      var currentLength = this.lines[i].getLength();
-      if ( (currentLength < x) && (this.lines[i].newLine == false) && (this.lines[i+1] != null) && (this.lines[i+1].getLength() >= 1) ){
+      if (this.lines[i].wordbreak === true) {
+        var currentLength = this.lines[i].getLength();
         var str = this.lines[i+1].chs.splice(0, x - currentLength);
         this.lines[i].chs = this.lines[i].chs.concat(str);
         if(this.lines[i+1].getLength() <= 0){
-          this.lines[i].newLine = this.lines[i+1].newLine;
+          this.lines[i].wordbreak = this.lines[i+1].wordbreak;
           this.lines.splice(i+1, 1);
           if(this.ybase > 0){
-            this.ybase--;
+              this.ybase--;
           }else if(this.y > 0){
-            this.y--;
+              this.y--;
           }
           if(this.ydisp > 0){
             this.ydisp--;
@@ -2425,10 +2413,9 @@ Terminal.prototype.resize = function(x, y) {
     for(i=0; i<lastLine; i++){
       var curLineLength = this.lines[i].getLength();
       if (curLineLength > x){
-        if(this.lines[i+1] == null || this.lines[i].newLine == true || i+1 >= lastLine){
-	  this.lines.splice(i+1, 0, this.blankLine());
-          this.lines[i+1].newLine = this.lines[i].newLine;
-          this.lines[i].newLine = false;
+        if(this.lines[i].wordbreak === false){
+          this.lines[i].wordbreak = true;
+          this.lines.splice(i+1, 0, this.blankLine());
           this.y++;
           if (this.y > this.scrollBottom ){
             this.y--;
@@ -2436,16 +2423,17 @@ Terminal.prototype.resize = function(x, y) {
             if(this.ydisp + this.y > i)
               this.ydisp++;
           }
-          lastLine++;
+          lastLine++;  
         }
         var str = this.lines[i].chs.splice(x);
-        this.lines[i+1].chs = this.getPureChs(str.concat(this.lines[i+1].chs));
-        while(this.lines[i+1].chs.length < x){
-            this.lines[i+1].chs.push(ch);
-        }
+        this.lines[i+1].chs = str.concat(this.lines[i+1].chs);
+        var nextLineLength = this.lines[i+1].getLength();
+        var index = (nextLineLength > x)? nextLineLength : x;
+        this.lines[i+1].chs = this.lines[i+1].chs.slice(0, index);
       }
     }
   }
+    
   for(i=0; i<this.lines.length; i++){
     this.lines[i].setBlank(x);
   }
@@ -2547,12 +2535,12 @@ Terminal.prototype.nextStop = function(x) {
 
 Terminal.prototype.eraseRight = function(x, y) {
   var line = this.lines[this.ybase + y]
-    , ch = [this.curAttr, ' ', false]; // xterm
+    , ch = [this.curAttr, '']; // xterm
   for (; x < this.cols; x++) {
     line.chs[x] = ch;
   }
   if (line.getLength() <= 0){
-    line.newLine = false;
+    //line.newLine = false;
   }
 
 
@@ -2561,7 +2549,7 @@ Terminal.prototype.eraseRight = function(x, y) {
 
 Terminal.prototype.eraseLeft = function(x, y) {
   var line = this.lines[this.ybase + y].chs
-    , ch = [this.curAttr, ' ', false]; // xterm
+    , ch = [this.curAttr, '']; // xterm
 
   x++;
   while (x--) line[x] = ch;
@@ -2578,7 +2566,7 @@ Terminal.prototype.blankLine = function(cur) {
     ? this.curAttr
     : this.defAttr;
 
-  var ch = [attr, ' ', false]
+  var ch = [attr, '']
     , line = []
     , i = 0;
 
@@ -2591,8 +2579,8 @@ Terminal.prototype.blankLine = function(cur) {
 
 Terminal.prototype.ch = function(cur) {
   return cur
-    ? [this.curAttr, ' ', false]
-    : [this.defAttr, ' ', false];
+    ? [this.curAttr, '']
+    : [this.defAttr, ''];
 };
 
 Terminal.prototype.is = function(term) {
@@ -2761,13 +2749,15 @@ Terminal.prototype.eraseInDisplay = function(params) {
       }
       break;
     case 2:
+      /*
       while(this.lines.length > this.rows)
         this.lines.pop();
       this.ybase = 0;
       this.ydisp = 0;
-
+	  */
       j = this.rows;
       while (j--) this.eraseLine(j);
+
 
       break;
     case 3:
@@ -3025,7 +3015,7 @@ Terminal.prototype.insertChars = function(params) {
 
   row = this.y + this.ybase;
   j = this.x;
-  ch = [this.curAttr, ' ', false]; // xterm
+  ch = [this.curAttr, '']; // xterm
 
   while (param-- && j < this.cols) {
     this.lines[row].chs.splice(j++, 0, ch);
@@ -3120,7 +3110,7 @@ Terminal.prototype.deleteChars = function(params) {
   if (param < 1) param = 1;
 
   row = this.y + this.ybase;
-  ch = [this.curAttr, ' ', false]; // xterm
+  ch = [this.curAttr, '']; // xterm
 
   while (param--) {
     this.lines[row].chs.splice(this.x, 1);
@@ -3138,7 +3128,7 @@ Terminal.prototype.eraseChars = function(params) {
 
   row = this.y + this.ybase;
   j = this.x;
-  ch = [this.curAttr, ' ', false]; // xterm
+  ch = [this.curAttr, '']; // xterm
 
   while (param-- && j < this.cols) {
     this.lines[row].chs[j++] = ch;
@@ -3753,7 +3743,7 @@ Terminal.prototype.cursorBackwardTab = function(params) {
 Terminal.prototype.repeatPrecedingCharacter = function(params) {
   var param = params[0] || 1
     , line = this.lines[this.ybase + this.y].chs
-    , ch = line[this.x - 1] || [this.defAttr, ' ', false];
+    , ch = line[this.x - 1] || [this.defAttr, ''];
 
   while (param--) line[this.x++] = ch;
 };
@@ -4160,7 +4150,7 @@ Terminal.prototype.eraseRectangle = function(params) {
     , i
     , ch;
 
-  ch = [this.curAttr, ' ', false]; // xterm?
+  ch = [this.curAttr, '']; // xterm?
 
   for (; t < b + 1; t++) {
     line = this.lines[this.ybase + t].chs;
@@ -4246,7 +4236,7 @@ Terminal.prototype.requestLocatorPosition = function(params) {
 Terminal.prototype.insertColumns = function() {
   var param = params[0]
     , l = this.ybase + this.rows
-    , ch = [this.curAttr, ' ', false] // xterm?
+    , ch = [this.curAttr, ''] // xterm?
     , i;
 
   while (param--) {
@@ -4265,7 +4255,7 @@ Terminal.prototype.insertColumns = function() {
 Terminal.prototype.deleteColumns = function() {
   var param = params[0]
     , l = this.ybase + this.rows
-    , ch = [this.curAttr, ' ', false] // xterm?
+    , ch = [this.curAttr, ''] // xterm?
     , i;
 
   while (param--) {

@@ -165,7 +165,7 @@ goorm.core.project.build.project = {
 		var data = [];
 		for (var name in core.workspace) {
 			
-			
+			//useonly(mode=goorm-oss)
 			if (this.can_build(core.workspace[name].type)) {
 				
 				core.workspace[name].is_check = true; // jeongmin: it means .check is input or not

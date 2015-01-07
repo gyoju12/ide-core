@@ -153,7 +153,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 					}
 				}
 
-					
+				//useonly(mode=goorm-oss)	
 				fs.exists(process.env.HOME + '/.goorm/config.json', function(exists) {
 					if (!exists) {
 						////prepare config.json
@@ -231,10 +231,9 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 			if (options.redisMode) {
 				redis_mode = true;
-				process_options.push(redis_mode);
-			} else {
-				process_options.push(redis_mode);
 			}
+
+			process_options.push(redis_mode);
 
 			start_process();
 		});
@@ -281,7 +280,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 							forever.stop(target_index);
 
-								
+							//useonly(mode=goorm-oss)	
 							fs.exists(process.env.HOME + '/.goorm/config.json', function(exists) {
 								if (!exists) {
 									////prepare config.json
@@ -452,7 +451,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 					if (workspace && workspace[workspace.length - 1] != '/') workspace = workspace + '/';
 					if (temp_dir && temp_dir[temp_dir.length - 1] != '/') temp_dir = temp_dir + '/';
 
-						
+					//useonly(mode=goorm-oss)	
 					var users = config_data.users || [];
 
 					if (options['user']) {

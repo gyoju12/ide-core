@@ -122,7 +122,7 @@ goorm.core.window.panel.prototype = {
 
 		if (options.left !== undefined) {
 			x = options.left;
-		} else if (target_active_window > -1) {
+		} else if (target_active_window > -1 && options.maximized === false) {
 
 			//		var previous_window = window_manager.window[target_active_window].panel;
 
@@ -155,7 +155,7 @@ goorm.core.window.panel.prototype = {
 
 		if (options.top !== undefined) {
 			y = options.top;
-		} else if (target_active_window > -1) {
+		} else if (target_active_window > -1 && options.maximized === false) {
 
 			//		var previous_window = window_manager.window[target_active_window].panel;
 
@@ -220,7 +220,7 @@ goorm.core.window.panel.prototype = {
 			this.title = this.filepath;
 		}
 		
-			
+			//useonly(mode=goorm-oss)
 			else if ((this.filename == "debug" && editor == "Terminal")) {
 				
 				this.title = this.filename;
@@ -241,7 +241,7 @@ goorm.core.window.panel.prototype = {
 			}); // jeongmin: placeholder localization
 		}
 		
-		
+		//useonly(mode=goorm-oss)
 		else if (this.filename == "debug" && editor == "Terminal") {
 			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + this.title + "'></div>");
 			$(this.panel).on("mousedown", $.throttle(function(i, e) {
@@ -265,7 +265,7 @@ goorm.core.window.panel.prototype = {
 					self.type = "Editor";
 
 					
-					
+					//useonly(mode=goorm-oss)
 					mode = core.filetypes[self.inArray(self.filetype)].mode;
 					
 					self.panel.dialog("option", "title", title);
@@ -280,7 +280,7 @@ goorm.core.window.panel.prototype = {
 
 				}
 				
-				
+				//useonly(mode=goorm-oss)
 				else if (this.filename == "debug" && editor == "Terminal") {
 					self.type = "Terminal";
 					// self.title = "debug";
@@ -492,7 +492,7 @@ goorm.core.window.panel.prototype = {
 				resizeStart: function(event, ui) {},
 				resize: $.throttle(function(event, ui) {
 					self.resize_all();
-				}, 350),
+				}, 200),
 				resizeStop: function(event, ui) {
 					self.resize_all();
 				},
@@ -689,10 +689,6 @@ goorm.core.window.panel.prototype = {
 			window_manager.activate(this.index);
 		},
 
-		add_disconnect_window: function() {
-			$('.disconnected').show();
-		},
-
 		set_modified: function(data) {
 			var self = this;
 			var titlebar = this.panel.dialog("option", "title");
@@ -714,7 +710,7 @@ goorm.core.window.panel.prototype = {
 
 			if (this.editor) {
 				
-				
+				//useonly(mode=goorm-oss)
 				if (set_saved_by_original_cm(this.editor.editor)) return;
 				
 			} else if (this.merge) { // jeongmin: use codemirror's original edit history
@@ -724,7 +720,7 @@ goorm.core.window.panel.prototype = {
 			this.panel.dialog("option", "title", titlebar);
 
 			if (this.panel.siblings('.ui-dialog-titlebar').find('.title_option').length === 0)
-				this.panel.siblings('.ui-dialog-titlebar').find('.ui-dialog-title').before("<span class='title_option'>✶</span>").html(titlebar); // jeongmin: put title_option before title
+				this.panel.siblings('.ui-dialog-titlebar').find('.ui-dialog-title').before("<span class='title_option'><i class='fa fa-asterisk'></i></span>").html(titlebar); // jeongmin: put title_option before title
 
 			this.is_saved = false;
 		},
@@ -824,11 +820,11 @@ goorm.core.window.panel.prototype = {
 			$(this.panel).dialog({
 				'height': height
 			});
-			container.css('height', height + 'px').find('.ui-dialog-content').height(container.height() - 38);
+			container.css('height', height + 'px'); //.find('.ui-dialog-content').height(container.height() - 38);
 
 			// window codemirror container
 			//
-			var titlebar_height = this.panel.siblings().first().outerHeight();
+			var titlebar_height = container.find(".ui-dialog-titlebar").height();
 			this.panel.css('height', height - titlebar_height - 12 + 'px');
 
 			// move to top, left
@@ -909,7 +905,7 @@ goorm.core.window.panel.prototype = {
 
 			for (var i = 0; i < window_manager.index; i++) {
 				
-				
+				//useonly(mode=goorm-oss)
 				if (window_manager.window[i].type == "Editor") {
 				
 					editor_exist = true;
@@ -934,7 +930,10 @@ goorm.core.window.panel.prototype = {
 
 				window_manager.activate(window_manager.active_window);
 			} else if (window_manager.window.length > 0) { // jeongmin: only if window exists
-				window_manager.activate(0);
+				var next = (this.index > 1)? this.index - 1 : 0;
+				window_manager.activate(next);
+			} else if (window_manager.window.length <= 0) {
+				window_manager.active_window = -1;
 			}
 
 			$(core).trigger("bookmark_table_refresh"); //jeongmin
@@ -1013,7 +1012,7 @@ goorm.core.window.panel.prototype = {
 
 			// bind tabindex=-1 for TAB KEY
 			//
-			$title_container.prepend("<div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'>")
+			$title_container.prepend("<div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'><i class='fa fa-share-alt'></i></div>")
 				.append('<button class="ui-dialog-titlebar-modified" tabindex="-1">●</button>').find('button').attr('tabindex', -1);
 
 			// append Modifed Button Event
@@ -1036,7 +1035,7 @@ goorm.core.window.panel.prototype = {
 			var wm = core.module.layout.workspace.window_manager;
 			where = where || "resized";
 
-			var width = parseInt((wm.maximized) ? this.workspace.width() : this.panel.parent().width() - 1);
+			var width = parseInt((wm.maximized) ? this.workspace.width() : this.panel.parent().width());
 			var height = parseInt((wm.maximized) ? this.workspace.height() : this.panel.parent().height());
 			var content_height = parseInt((wm.maximized) ? height : height - this.panel.siblings('.ui-dialog-titlebar').outerHeight());
 
@@ -1044,7 +1043,6 @@ goorm.core.window.panel.prototype = {
 			if (this.type === 'Terminal') {
 				width -= 12;
 				content_height -= 12;
-				// call resizing terminal size --heeje
 				this.terminal.resize();
 			}
 
@@ -1069,7 +1067,6 @@ goorm.core.window.panel.prototype = {
 				core.module.merge.refresh(this.filename);
 			}
 
-			//prevent window rolled- up --heeje
 			if (parseInt(this.panel.offsetParent().css('top'), 10) < 0) {
 				this.panel.offsetParent().css('top', 0)
 			}
@@ -1149,7 +1146,7 @@ goorm.core.window.panel.prototype = {
 			$("a[action=do_find]").parent().addClass("disabled");
 			$("a[action=do_find_next]").parent().addClass("disabled");
 			$("a[action=do_find_previous]").parent().addClass("disabled");
-			$("a[action=auto_formatting]").parent().addClass("disabled");
+			//$("a[action=auto_formatting]").parent().addClass("disabled");
 			$("a[action=comment_selected]").parent().addClass("disabled");
 			
 		},
@@ -1161,7 +1158,7 @@ goorm.core.window.panel.prototype = {
 			$("a[action=do_find]").parent().removeClass("disabled");
 			$("a[action=do_find_next]").parent().removeClass("disabled");
 			$("a[action=do_find_previous]").parent().removeClass("disabled");
-			$("a[action=auto_formatting]").parent().removeClass("disabled");
+			//$("a[action=auto_formatting]").parent().removeClass("disabled");
 			$("a[action=comment_selected]").parent().removeClass("disabled");
 			
 		}

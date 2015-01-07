@@ -79,7 +79,7 @@ goorm.core.project.build.all = {
 		var data = [];
 		for (var name in core.workspace) {
 			
-			
+			//useonly(mode=goorm-oss)
 			if (core.module.project.build.project.can_build(core.workspace[name].type)) {
 			
 				core.workspace[name].check = '<span class="project_status_guide">Ready</span>';

@@ -48,16 +48,17 @@ var check_valid_path = function(str) {
  */
 
 exports.index = function(req, res, options) {
-	var mode = "all";
 	var use_terminal = true;
+
 	if (options != null) {
 		if (options.use_terminal !== undefined) {
 			use_terminal = options.use_terminal;
 		}
 	}
-	
 
 	
+
+	//useonly(mode=goorm-standalone,goorm-oss)
 	res.render(__path + 'views/main.html', {
 		use_terminal: use_terminal
 	});
@@ -122,7 +123,7 @@ exports.project.get_list = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_project.get_list(req.query, evt);
 	
 };
@@ -133,7 +134,7 @@ exports.project.get_list = function(req, res) {
 
 
 
-
+//useonly(mode=goorm-oss)
 exports.project.do_import = function(req, res) {
 	var evt = new EventEmitter();
 
@@ -159,7 +160,7 @@ exports.project.do_export = function(req, res) {
 	var evt = new EventEmitter();
 	var data = {};
 
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	evt.on("project_do_export", function(data) {
 		res.json(data);
 	});
@@ -169,7 +170,7 @@ exports.project.do_export = function(req, res) {
 
 	req.query.user = req.__user.id;
 	
-	
+	//useonly(mode=goorm-oss)
 	g_project.do_export(req.query, evt);
 	
 };
@@ -227,15 +228,8 @@ exports.plugin = function(req, res) {
 	res.send(null);
 };
 
-exports.plugin.get_list = function(req, res) {
-	var evt = new EventEmitter();
 
-	evt.on("plugin_get_list", function(data) {
-		res.json(data);
-	});
 
-	g_plugin.get_list(evt);
-};
 
 
 exports.plugin.check_css = function(req, res) {
@@ -334,13 +328,12 @@ exports.plugin.do_create = function(req, res) {
 					if (err) {
 						console.log(err);
 					}
-					
 
 					
 
 					
 
-					
+					//useonly(mode=goorm-oss)
 					res.json({
 						code: 200,
 						message: "success"
@@ -353,7 +346,7 @@ exports.plugin.do_create = function(req, res) {
 
 	
 
-	
+	//useonly(mode=goorm-oss)
 	copy();
 	
 };
@@ -404,7 +397,7 @@ exports.plugin.do_web_run = function(req, res) {
 		});
 	};
 	
-	
+	//useonly(mode=goorm-oss)
 	copy();
 	
 }
@@ -421,7 +414,7 @@ exports.plugin.make_template = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_plugin.make_template(req.query, res);
 	
 };
@@ -461,7 +454,7 @@ exports.file.do_new = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_new(req.query, evt);
 	
 };
@@ -475,7 +468,7 @@ exports.file.do_new_folder = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_new_folder(req.query, evt);
 	
 };
@@ -489,7 +482,7 @@ exports.file.do_new_other = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_new_other(req.query, evt);
 	
 };
@@ -504,7 +497,7 @@ exports.file.do_new_untitled_text_file = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_new_untitled_text_file(req.query, evt);
 	
 };
@@ -523,7 +516,7 @@ exports.file.do_save_as = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_save_as(req.query, evt);
 	
 };
@@ -535,7 +528,7 @@ exports.file.do_delete_all = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_delete_all(req.query, function(result) {
 		res.json(result);
 	});
@@ -549,7 +542,7 @@ exports.file.do_copy_file_paste = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_copy_file_paste(req, function(result) {
 		res.json(result);
 	});
@@ -567,7 +560,7 @@ exports.file.do_delete = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.do_delete(req.query, evt);
 	
 };
@@ -604,7 +597,7 @@ exports.file.get_contents = function(req, res) {
 	abs_path = __workspace + path;
 	//local -> do not check any thing
 
-		
+	//useonly(mode=goorm-oss)	
 	fs.readFile(abs_path, "utf8", function(err, data) {
 		if (err) {
 			res.json(false);
@@ -635,7 +628,7 @@ exports.file.put_contents = function(req, res) {
 
 	
 
-	
+	//useonly(mode=goorm-oss)
 	g_file.put_contents(req.body, evt);
 	
 };
@@ -660,7 +653,7 @@ exports.file.get_nodes = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	var nodes_data = {
 		path: __workspace + '/' + path
 	};
@@ -691,7 +684,7 @@ exports.file.get_dir_nodes = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	req.query.path = __workspace + '/' + path;
 	g_file.get_dir_nodes(req.query, evt);
 	
@@ -708,7 +701,7 @@ exports.file.get_result_ls = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_file.get_result_ls(req.query, evt);
 	
 };
@@ -719,7 +712,7 @@ exports.file.get_file = function(req, res) {
 	var filepath = req.query.filepath;
 	var filename = req.query.filename;
 
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	if (filepath) {
 		filepath = filepath.replace(/\/\//g, "/");
 
@@ -833,7 +826,7 @@ exports.file.do_export = function(req, res) {
 	var path = req.query.path.split('/');
 	var project_path = (path[0] !== "") ? path[0] : path[1];
 
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	evt.on("file_do_export", function(data) {
 		res.json(data);
 	});
@@ -848,7 +841,7 @@ exports.file.do_export = function(req, res) {
 
 	
 
-	
+	//useonly(mode=goorm-oss)
 	g_file.do_export(req.query, evt);
 	
 };
@@ -859,7 +852,7 @@ exports.file.do_export = function(req, res) {
 
 
 
-
+//useonly(mode=goorm-oss)
 exports.file.do_import = function(req, res) {
 	var evt = new EventEmitter();
 
@@ -886,7 +879,7 @@ exports.file.do_search_on_project = function(req, res) {
 
 	
 
-		
+	//useonly(mode=goorm-oss)	
 	g_search.do_search(req.query, evt);
 	
 };
@@ -1188,7 +1181,7 @@ exports.download.exe_file = function(req, res) {
 
 
 
-
+//useonly(mode=goorm-oss)
 exports.upload_file_dd = function(req, res) {
 	var evt = new EventEmitter();
 	var project_path = req.body.project_path;
@@ -1198,8 +1191,6 @@ exports.upload_file_dd = function(req, res) {
 	});
 	g_file.upload_file_dd(req, evt);
 };
-
-
 
 
 
@@ -1231,7 +1222,7 @@ exports.edit.get_dictionary = function(req, res) {
 	res.json({});
 };
 
-
+//useonly(mode=goorm-standalone,goorm-oss)
 exports.edit.get_proposal_java = function(req, res) {
 	var evt = new EventEmitter();
 
@@ -1270,15 +1261,12 @@ exports.edit.get_object_explorer = function(req, res) {
 
 
 
-
 exports.edit.save_tags = function(req, res) {
 	var option = req.body;
 
 	
 
-	
-
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	g_edit.save_tags_data(option, function() {
 		res.json(true);
 	});
@@ -1290,7 +1278,7 @@ exports.edit.load_tags = function(req, res) {
 
 	
 
-	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	g_edit.load_tags_data(option, function(response) {
 		res.json(response);
 	});
@@ -1302,8 +1290,7 @@ exports.edit.load_tags = function(req, res) {
 
 
 
-
-//useonly(mode=dev,edu-on-promise,book,edu,product,product-l2-ide,product-l2-fs)
+//useonly(mode=goorm-standalone,goorm-server,goorm-client)
 exports.load_userplugin = function(req, res) {
 	g_plugin.load_userplugin(req, res, function(has_user_plugin, list) {
 		if (has_user_plugin)

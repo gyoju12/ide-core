@@ -29,7 +29,7 @@ goorm.core.project = {
 
 		
 
-		
+		//useonly(mode=goorm-oss)
 		var socket = io.connect();
 		
 
@@ -50,7 +50,7 @@ goorm.core.project = {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + project_type] !== undefined) {
 				
 				
-				
+				//useonly(mode=goorm-oss)
 				var build = null;
 				var query = null;
 
@@ -153,7 +153,7 @@ goorm.core.project = {
 					}, function(data) {
 						
 
-						
+						//useonly(mode=goorm-oss)
 						//save latest build status on the goorm.manifest --heeje
 						project_data.is_latest_build = true;
 						core.module.project.property.save_property(project_path, project_data, callback);
@@ -255,7 +255,7 @@ goorm.core.project = {
 		} else {
 			if (core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type] !== undefined) {
 				core.status.current_project_absolute_path = core.preference.workspace_path + core.status.current_project_path + "/";
-					
+				//useonly(mode=goorm-oss)	
 				self.send_run_cmd();
 				
 
@@ -277,7 +277,7 @@ goorm.core.project = {
 		// 		// core.module.layout.select('terminal');	// jeongmin: move to plugin
 		// 		//core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
 
-		// 			
+		// 		//useonly(mode=goorm-oss)	
 		// 		self.send_run_cmd();
 		// 		
 
@@ -419,7 +419,7 @@ goorm.core.project = {
 		core._socket.once('/plugin/create', function(result) {
 			
 
-			
+			//useonly(mode=goorm-oss)
 			callback(result);
 			
 		});
@@ -461,39 +461,89 @@ goorm.core.project = {
 				'img': ''
 			}]
 		}); */
-		options.name = options.name || "";
-		options.description = options.description || "";
-		//CSS import
-		var localization = "plugin." + options.type + ".";
-		// Project New 왼쪽에 Project Type 버튼 추가
-		if (!$(".project_wizard_first_button[project_type='" + options.type + "']").length) {
-			$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + options.type + "'><img src='" + options.img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + options.name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + options.description + "</p></a>");
+	
+		var type = options.type;
+		var categories = options.categories;
 
-			// Project New 오른쪽에 새 Project Button 추가
-			for (var i = 0; i < options.items.length; i++) {
-				options.items[i].name = options.items[i].name || "";
-				options.items[i].description = options.items[i].description || "";
-				$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + options.type + " thumbnail' description='" + options.items[i].description + "' localization_key='" + localization + options.items[i].key + ".description'  project_type='" + options.type + "' plugin_name='goorm.plugin." + options.type + "' detail_type='" + options.items[i].detail_type + "'><img src='" + options.items[i].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + options.items[i].key + ".name'>" + options.items[i].name + "</p></div></div>");
+		if (categories && categories.length > 0) {
+			for (var i=0; i<categories.length; i++) {
+				var _category = categories[i];
+
+				var img = _category.img;
+				var items = _category.items;
+				var name = options.name || "";
+				var category = _category.category;
+				var description = options.description || "";
+				var localization = "plugin." + type + "." + category + ".";
+
+				// Project New 왼쪽에 Project Type 버튼 추가
+				if (!$(".project_wizard_first_button[project_type='" + type + "'][category='"+category+"']").length) {
+					$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + type + "' category='"+category+"'><img src='" + img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + description + "</p></a>");
+
+					// Project New 오른쪽에 새 Project Button 추가
+					for (var index = 0; index < items.length; index++) {
+						items[index].name = items[index].name || "";
+						items[index].description = items[index].description || "";
+						$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + type + " thumbnail' category='"+category+"' description='" + items[index].description + "' localization_key='" + localization + items[index].key + ".description'  project_type='" + type + "' plugin_name='goorm.plugin." + type + "' detail_type='" + items[index].detail_type + "'><img src='" + items[index].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + items[index].key + ".name'>" + items[index].name + "</p></div></div>");
+					}
+				}
+
+				// Project Open/Import/Export/Delete에 Project Type Option 추가
+				// if (!$("option [value='" + type + "']").length)
+				// 	$(".project_dialog_type").append("<option value='" + type + "'>" + name + "s</option>").attr("selected", "");
+
+				// add main menu
+				if (!$("li .plugin_project a[action='new_file_" + type + "'][category='"+category+"']").length)
+					$("li[id='plugin_new_project']").after("<li class='plugin_project'><a href='#' action='new_file_" + type + "' category='"+category+"' localization_key='" + localization + "name'>" + name + "</a></li>");
+
+				// add menu action
+				$("a[action=new_file_" + type + "][category='"+category+"']").unbind("click");
+				$("a[action=new_file_" + type + "][category='"+category+"']").click(function() {
+					core.dialog.new_project.show(function() {
+						$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=" + type + "][category='"+category+"']").position().top);
+					});
+					$("#project_new a[href='#new_project_template']").trigger("click");
+					$(".project_wizard_first_button[project_type=" + type + "][category='"+category+"']").trigger("click").trigger("focus");
+				});
 			}
 		}
+		else {
+			var img = options.img;
+			var items = options.items;
+			var name = options.name || "";
+			var localization = "plugin." + type + ".";
+			var description = options.description || "";
 
-		// Project Open/Import/Export/Delete에 Project Type Option 추가
-		// if (!$("option [value='" + options.type + "']").length)
-		// 	$(".project_dialog_type").append("<option value='" + options.type + "'>" + options.name + "s</option>").attr("selected", "");
+			// Project New 왼쪽에 Project Type 버튼 추가
+			if (!$(".project_wizard_first_button[project_type='" + type + "']").length) {
+				$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + type + "'><img src='" + img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + description + "</p></a>");
 
-		// add main menu
-		if (!$("li .plugin_project a[action='new_file_" + options.type + "']").length)
-			$("li[id='plugin_new_project']").after("<li class='plugin_project'><a href='#' action='new_file_" + options.type + "' localization_key='" + localization + "name'>" + options.name + "</a></li>");
+				// Project New 오른쪽에 새 Project Button 추가
+				for (var i = 0; i < items.length; i++) {
+					items[i].name = items[i].name || "";
+					items[i].description = items[i].description || "";
+					$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + type + " thumbnail' description='" + items[i].description + "' localization_key='" + localization + items[i].key + ".description'  project_type='" + type + "' plugin_name='goorm.plugin." + type + "' detail_type='" + items[i].detail_type + "'><img src='" + items[i].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + items[i].key + ".name'>" + items[i].name + "</p></div></div>");
+				}
+			}
 
-		// add menu action
-		$("a[action=new_file_" + options.type + "]").unbind("click");
-		$("a[action=new_file_" + options.type + "]").click(function() {
-			core.dialog.new_project.show(function() {
-				$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=" + options.type + "]").position().top);
+			// Project Open/Import/Export/Delete에 Project Type Option 추가
+			// if (!$("option [value='" + type + "']").length)
+			// 	$(".project_dialog_type").append("<option value='" + type + "'>" + name + "s</option>").attr("selected", "");
+
+			// add main menu
+			if (!$("li .plugin_project a[action='new_file_" + type + "']").length)
+				$("li[id='plugin_new_project']").after("<li class='plugin_project'><a href='#' action='new_file_" + type + "' localization_key='" + localization + "name'>" + name + "</a></li>");
+
+			// add menu action
+			$("a[action=new_file_" + type + "]").unbind("click");
+			$("a[action=new_file_" + type + "]").click(function() {
+				core.dialog.new_project.show(function() {
+					$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=" + type + "]").position().top);
+				});
+				$("#project_new a[href='#new_project_template']").trigger("click");
+				$(".project_wizard_first_button[project_type=" + type + "]").trigger("click").trigger("focus");
 			});
-			$("#project_new a[href='#new_project_template']").trigger("click");
-			$(".project_wizard_first_button[project_type=" + options.type + "]").trigger("click").trigger("focus");
-		});
+		}
 	},
 
 	// save - part of build function -- heeje

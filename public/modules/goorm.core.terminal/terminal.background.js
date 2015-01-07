@@ -26,7 +26,7 @@ goorm.core.terminal.background.prototype = {
 		this.on_message(function on_message(msg) {
 			buffer += msg.stdout;
 			if (/<bg\$>complete/.test(buffer)) {
-				console.log(self.name, "complete");
+// 				console.log(self.name, "complete");
 				self.on_message(function() {});
 				self.on_ready();
 			}

@@ -64,7 +64,10 @@ goorm.core.utility.treeview.prototype = {
 		if (this.create()) { // jeongmin: only making tree successes
 			// unbind keydown event on jstree to customize keydown event
 			var element = this.tree.jstree(true).element || this.tree.jstree(true)._element; // jeongmin: _element is emergency element
-			element.off('keydown.jstree', '.jstree-anchor');
+
+			if (element) {
+				element.off('keydown.jstree', '.jstree-anchor');
+			}
 
 			this.normally_made = true;
 		}
@@ -261,9 +264,9 @@ goorm.core.utility.treeview.prototype = {
 								if (nodes.length) {
 									if (_this._refresh === true) {
 										// console.log("Refresh상태이므로 열린폴더 모두 로딩");
-										_this.options.fetch(nodes[0].li_attr.path, function(data) {
+										_this.options.fetch(nodes[0].li_attr.path, function(_data) {
 											// console.log(data);
-											var data = process_data(data);
+											var data = process_data(_data);
 
 											_this.options.state = null;
 											_this.tree.jstree("_append_json_data", nodes[0], data);
@@ -421,14 +424,18 @@ goorm.core.utility.treeview.prototype = {
 	 */
 	get_state: function() {
 		var state = this.tree.jstree("get_state");
-		for (var i = 0; i < state.core.open.length; i++) {
-			state.core.open[i] = state.core.open[i].replace(this.raw_id + "/", "");
+		
+		if(state && state.core) {
+			for (var i = 0; i < state.core.open.length; i++) {
+				state.core.open[i] = state.core.open[i].replace(this.raw_id + "/", "");
+			}
 		}
+		
 		return state;
 	},
 
-	open_path: function(path) {
-		var path = path.split("/");
+	open_path: function(_path) {
+		var path = _path.split("/");
 		var current_path = path[0];
 		var i = 1;
 		var self = this;
@@ -622,7 +629,6 @@ goorm.core.utility.treeview.prototype = {
 	 * @return {treeview}
 	 */
 	destroy: function() {
-		console.log(this.id, "destroy");
 		this.tree.jstree("destroy");
 		return this;
 	}

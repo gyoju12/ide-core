@@ -188,7 +188,7 @@ goorm.core.project.open = {
 
 			
 
-			
+			//useonly(mode=goorm-oss)
 			core.status.current_project_storage = "goormIDE_Storage";
 			core.status.current_project_path = current_project_path;
 			core.status.current_project_name = current_project_name;
@@ -209,7 +209,7 @@ goorm.core.project.open = {
 				core.module.layout.terminal.refresh_terminal();
 			}
 
-			core.module.layout.workspace.window_manager.refresh_all_title();
+			core.module.layout.workspace.window_manager.refresh_all_title(current_project_path);
 
 			$(core).trigger("on_project_open", {
 				'project_path': current_project_path,

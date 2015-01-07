@@ -12,6 +12,7 @@ goorm.core.edit = function(parent) {
     this.parent = parent;
     this.target = null;
     this.editor = null;
+	this.bookmark = null;
     this.find_and_replace = null;
     this.filepath = null;
     this.filename = null;
@@ -34,6 +35,7 @@ goorm.core.edit = function(parent) {
     this.highlight_current_cursor_line = true;
     this.current_cursor_line = null; // for cursor line
     this.auto_close_brackets = true;
+	this.outline_threshold = 3000;
 
     //pcs
     this.str_selection = "";
@@ -84,6 +86,9 @@ goorm.core.edit.prototype = {
         this.title = title;
         this.options = options;
         this.timestamp = new Date().getTime();
+		
+		this.bookmark = new goorm.core.edit.bookmark();
+		this.bookmark.init(title, self);
 
         this.highlight_current_cursor_line = this.get_editor_preference('highlight_current_cursor_line');
         this.auto_close_brackets = this.get_editor_preference('auto_close_brackets');
@@ -123,7 +128,7 @@ goorm.core.edit.prototype = {
             lineNumbers: true,
             lineWrapping: self.line_wrapping,
             wordWrap: true,
-            matchBrackets: true,
+            matchBrackets: true
         });
 
         //unbind CodeMirror key & shaping searching area --heeje
@@ -196,16 +201,20 @@ goorm.core.edit.prototype = {
         // set searching highlight when drag. Jeong-Min Im.
         $(target).mouseup(function() { // selected string's exist when mouse is up means dragged
             self.str_selection = self.editor.getSelection();
-            if (self.str_selection.length > 0 && /^[a-zA-z0-9- ]*$/.test(self.str_selection)) { // except special character
-                self.is_selection = true;
+            if(!$("#dlg_find_and_replace").hasClass("in") && !($('.cm-matchhighlight:first').html() === self.str_selection) && $("#gLayoutTab_Search").find(".badge").length===0) {
+                
+                if (self.str_selection.length > 0 && /^[a-zA-z0-9-]*$/.test(self.str_selection)) { // except special character
+                    self.is_selectiond = true;
 
-                var ranges = self.editor.listSelections();
-                var cursor = self.editor.getCursor();
-                // if cursor is on the last of the selected word, reverse search direction should be true.
-                var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
+                    var ranges = self.editor.listSelections();
+                    var cursor = self.editor.getCursor();
+                    // if cursor is on the last of the selected word, reverse search direction should be true.
+                    var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
 
-                CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
+                    CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
+                }    
             }
+            
         });
 
         $(target).keypress(function(e) {
@@ -232,6 +241,33 @@ goorm.core.edit.prototype = {
                 }
             });
         });
+
+        // to prevent performing the file upload when the text selection is dragged...
+		$(target).on('dropenter', function (e) {
+			e.stopPropagation(); 
+			e.preventDefault();
+			return false;
+		});
+		
+		$(target).on('dropover', function (e) {
+			e.stopPropagation(); 
+			e.preventDefault();
+			return false;
+		});
+		
+		$(target).on('drop', function (e) {
+			e.stopPropagation(); 
+			e.preventDefault();
+			return false;
+		});
+		
+		$(target).on('dragleave', function (e) {
+			e.stopPropagation(); 
+			e.preventDefault();
+			return false;
+		});
+		
+		
     },
 
     init_modules: function () {
@@ -239,7 +275,7 @@ goorm.core.edit.prototype = {
 
         var options = this.options;
 
-         
+        //useonly(mode=goorm-oss) 
         this.codemirror_events();
         
 
@@ -384,26 +420,31 @@ goorm.core.edit.prototype = {
             var markerHtml;
             var info = codemirror.lineInfo(linenumber);
             self.editor.refresh();
-            switch (self.mode) {
-                case "text/x-csrc":
-                case "text/x-c++src":
-                case "text/x-java":
-                case "text/x-python":
-                case "text/javascript":
-                    //if breakpoint is needed, then add here
+			
+			//set a breakpoint only if a click event is fired by the left mouse button
+			if (clickevent.button === 0) {
+				switch (self.mode) {
+					case "text/x-csrc":
+					case "text/x-c++src":
+					case "text/x-java":
+					case "text/x-python":
+					case "text/javascript":
+						//if breakpoint is needed, then add here
 
-                    // if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
-                    if (gutter !== "fold") { // gutter click event --> breakpoint or fold
-                        markerHtml = "&#x25cf";
-                        cm_editor.setGutterMarker(linenumber, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? self.remove_marker(linenumber, "breakpoint") : self.make_marker(linenumber, "breakpoint", markerHtml));
-                    }
+						// if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
+						if (gutter !== "fold") { // gutter click event --> breakpoint or fold
+							//markerHtml = "&#x25cf";
+						   // cm_editor.setGutterMarker(linenumber, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? self.remove_marker(linenumber, "breakpoint") : self.make_marker(linenumber, "breakpoint", markerHtml));
+							self.set_breakpoint(linenumber);
+						}
 
-                    self.font_manager.refresh();
-                    // window.setTimeout(function(){},);
-                    break;
-                default:
-                    break;
-            }
+						// self.font_manager.refresh();
+						// window.setTimeout(function(){},);
+						break;
+					default:
+						break;
+				}
+			}
 
             self.parent.activate();
 
@@ -453,7 +494,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', { // jeongmin: got at change event
+                $(core).trigger('undo_redo_pressed', { 
                     undo: true,
                     redo: false
                 });
@@ -461,7 +502,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', { // jeongmin: got at change event
+                $(core).trigger('undo_redo_pressed', { 
                     undo: false,
                     redo: true
                 });
@@ -483,7 +524,7 @@ goorm.core.edit.prototype = {
             }
 
             // jeongmin: if sublime theme is applied, 'Ctrl+K' is special shortcut..
-            if (shortcut_manager.theme == 'sublime') {
+            // if (shortcut_manager.theme == 'sublime') {
                 if (shortcut_manager.is_theme_key_pressed) { // special key was pressed -> prevent other key handlers. Special key will handle.
                     shortcut_manager.is_theme_key_pressed = false;
 
@@ -492,7 +533,7 @@ goorm.core.edit.prototype = {
                     return false;
                 } else if ((e.ctrlKey || e.metaKey) && e.keyCode == 75) // special key is now pressed
                     shortcut_manager.is_theme_key_pressed = true;
-            }
+            // }
 
             // dont block ctrl + x,c,v
             if (((e.ctrlKey || e.metaKey) && (e.which === 88 || e.which === 67 || e.which === 86)) || e.which === 8) { // jeongmin: backspace(8) is done by codemirror. So no need to trigger again.
@@ -524,10 +565,10 @@ goorm.core.edit.prototype = {
 
         // set searching hightlight when word is selected. Jeong-Min Im.
         cm_editor.on('dblclick', function() {
-            if (self.editor.somethingSelected()) {
+            if (self.editor.somethingSelected() && !$("#dlg_find_and_replace").hasClass("in") && $("#gLayoutTab_Search").find(".badge").length===0) {
                 self.str_selection = self.editor.getSelection();
-
-                if (self.str_selection.length > 0 && /^[a-zA-z0-9- ]*$/.test(self.str_selection)) // except special character
+                
+                if (self.str_selection.length > 0 && /^[a-zA-z0-9\-]*$/.test(self.str_selection)) // except special character
                     CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
             }
         });
@@ -538,7 +579,7 @@ goorm.core.edit.prototype = {
         marker.innerHTML = markerHtml;
         marker.className = gutter;
         marker.id = gutter + linenumber;
-        $(marker).css("font-size", (this.nowfont) / 2);
+        //$(marker).css("font-size", (this.nowfont) / 2);
 
         if (this.theme && this.theme !== "default" && this.dark_themes.indexOf(this.theme)) {
             $(marker).css('color', '#ffff66');
@@ -571,7 +612,7 @@ goorm.core.edit.prototype = {
 
         return (type) ? type : ((this.preference[preference_type] !== undefined) ? this.preference[preference_type] : true);
     },
-
+    // highlighting for debug
     highlight_line: function(line) {
         if (typeof(line) == "string") line = parseInt(line, 10);
 
@@ -590,6 +631,13 @@ goorm.core.edit.prototype = {
 
         this.highlighted_line = null;
     },
+	
+	set_breakpoint: function(line){
+		var markerHtml = "&#x25cf";
+        var info = this.editor.lineInfo(line);
+        this.editor.setGutterMarker(line, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? this.remove_marker(line, "breakpoint") : this.make_marker(line, "breakpoint", markerHtml));
+// 		this.font_manager.refresh();
+	},
 
     //set bookmark that is saved before. Jeong-Min Im.
     set_bookmark: function(bookmark_list, line) { // line: that we want to set bookmark
@@ -707,8 +755,9 @@ goorm.core.edit.prototype = {
         this.line_wrapping = (options.line_wrapping) ? options.line_wrapping : this.preference["preference.editor.line_wrapping"];
         this.rulers = (options.rulers) ? options.rulers : this.preference["preference.editor.rulers"];
         this.scroll_top = (options.scroll_top) ? options.scroll_top : this.scroll_top; // jeongmin: if scroll_top is null, just maintain it. Don't set as 0.
-        this.shortcut_theme = (options.shortcut_theme) ? options.shortcut_theme : this.preference["preference.shortcut.theme"]; // jeongmin: set codemirror keymap as theme
+        // this.shortcut_theme = (options.shortcut_theme) ? options.shortcut_theme : this.preference["preference.shortcut.theme"]; // jeongmin: set codemirror keymap as theme
         this.readonly = (options.readonly) ? options.readonly : false;
+        this.shortcut_theme = 'sublime';    // sublime keymap is default now
 
         this.auto_close_brackets = self.get_editor_preference('auto_close_brackets');
         this.highlight_current_cursor_line = self.get_editor_preference('highlight_current_cursor_line');
@@ -717,6 +766,10 @@ goorm.core.edit.prototype = {
         this.editor.setOption("lineWrapping", this.line_wrapping); // jeongmin: even if these value are false, option must be set
         this.editor.setOption("lineNumbers", this.show_line_numbers);
         this.editor.setOption("indentWithTabs", this.indent_with_tabs);
+
+        // sublime keymap is default now
+        this.editor.setOption("keyMap", this.shortcut_theme);
+        // core.module.shortcut_manager.select_theme(this.shortcut_theme);
 
         if (this.vim_mode) {
             this.editor.setOption("vimMode", true);
@@ -754,10 +807,10 @@ goorm.core.edit.prototype = {
             this.editor.setOption("vimMode", false);
             this.editor.setOption("disableInput", false);
         }
-        if (this.shortcut_theme) {
-            this.editor.setOption("keyMap", this.shortcut_theme);
-            core.module.shortcut_manager.select_theme(this.shortcut_theme);
-        }
+        // if (this.shortcut_theme) {
+        //     this.editor.setOption("keyMap", this.shortcut_theme);
+        //     core.module.shortcut_manager.select_theme(this.shortcut_theme);
+        // }
         if (this.indent_unit) {
             this.editor.setOption("indentUnit", this.indent_unit);
             this.editor.setOption("tabSize", this.indent_unit);
@@ -781,7 +834,7 @@ goorm.core.edit.prototype = {
             this.editor.setOption("undoDepth", this.undo_depth);
         }
         if (this.theme && this.theme !== "default") {
-            $("<link>").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "/lib/codemirror-4.0/theme/" + this.theme + ".css").appendTo("head");
+            $("<link>").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "/lib/codemirror-4.8/theme/" + this.theme + ".css").appendTo("head");
 
             if (this.dark_themes.indexOf(this.theme) > -1) {
                 this.theme_cursor_highlight_color = 'background-color:#eee8aa !important; opacity:0.1 !important';
@@ -796,7 +849,7 @@ goorm.core.edit.prototype = {
             this.editor.setOption("theme", this.theme);
         }
         if (this.theme == "default") {
-            // $("<link>").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "/lib/codemirror-4.0/lib/codemirror.css").appendTo("head");
+            // $("<link>").attr("rel", "stylesheet").attr("type", "text/css").attr("href", "/lib/codemirror-4.8/lib/codemirror.css").appendTo("head");
 
             this.theme_cursor_highlight_color = 'background-color:#e8f2ff !important;';
             $('.CodeMirror-activeline-background').attr('style', this.theme_cursor_highlight_color);
@@ -865,7 +918,7 @@ goorm.core.edit.prototype = {
         //     return str;
         // };
         
-        
+        //useonly(mode=goorm-oss)
         temp_path = filepath + "/" + filename;
         
         var postdata = {
@@ -904,7 +957,7 @@ goorm.core.edit.prototype = {
                 self.set_cursor();
 
                 
-                
+                //useonly(mode=goorm-oss)
                 self.dictionary.init(self.target, self.editor, self.filetype);
                 
                 if (!is_restore) {
@@ -1050,6 +1103,7 @@ goorm.core.edit.prototype = {
                     }
 
                     
+					goorm.core.edit.bookmark_list.list[self.title] = self.bookmark.bookmarks;
                 });
                 core._socket.emit(url, send_data);
             }
@@ -1350,12 +1404,11 @@ goorm.core.edit.prototype = {
 
     //if line is changed, reset bookmarks. Jeong-Min Im.
     reset_bookmarks: function() {
-        var edit_bookmark = core.module.bookmark; //get bookmark object
 
-        if (edit_bookmark.list[this.target]) { //only when there is bookmark in the list
-            var original_list = edit_bookmark.list[this.target]; //save for comment
+        if (this.bookmark.bookmarks) { //only when there is bookmark
+            var original_list = this.bookmark.bookmarks; //save for comment
 
-            edit_bookmark.list[this.target] = {}; //initialize bookmark list
+            this.bookmark.bookmarks = []; //initialize bookmark list
 
             for (var i = 0; i < this.editor.lineCount(); i++) { //search bookmarks
                 var info = this.editor.lineInfo(i); //get line information
@@ -1364,18 +1417,14 @@ goorm.core.edit.prototype = {
                     var original_line = parseInt($(info.gutterMarkers.bookmark).attr("id").split("bookmark").pop()),
                         comment = original_list[original_line + 1];
 
-                    edit_bookmark.list[this.target][i + 1] = comment; //add bookmark to the window
+                    this.bookmark.bookmarks[i + 1] = comment; //add bookmark to the window
                     $(info.gutterMarkers.bookmark).attr("id", "bookmark" + i); //update bookmark's id -> line and comment use this id for updating, so id should be updated every time
                 }
             }
 
-            ////// there are no bookmarks //////
-            if (Object.keys(edit_bookmark.list[this.target]).length === 0)
-                delete edit_bookmark.list[this.target];
-
             ////// reset others, too //////
-            edit_bookmark.outline_tab();
-            edit_bookmark.store_json();
+            this.bookmark.outline_tab();
+//            edit_bookmark.store_json();
         }
     },
 

@@ -314,8 +314,8 @@
 			"dialog_project_match_case_guide": {
 				"value": "Case Sensitive"
 			},
-			"dialog_project_ignore_whitespace_guide": {
-				"value": "Ignore Whitespace"
+			"dialog_project_whole_word_guide": {
+				"value": "Whole Word"
 			},
 			"dialog_project_use_regular_expression_guide": {
 				"value": "Use regular expression."
@@ -467,6 +467,9 @@
 			},
 			"dialog_project_property_checkout": {
 				"value": "Checkout"
+			},
+			"dialog_project_property_change_scm_account": {
+				"value": "Change account"
 			}
 		}
 	},

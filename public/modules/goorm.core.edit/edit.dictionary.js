@@ -37,7 +37,7 @@ goorm.core.edit.dictionary.prototype = {
 
 		var __target = $(this.target);
 
-		if (__target.length == 0) {	// jeongmin: if there isn't __target, below works doesn't mean anything
+		if (__target.length === 0) {	// jeongmin: if there isn't __target, below works doesn't mean anything
 			return;
 		}
 
@@ -182,9 +182,11 @@ goorm.core.edit.dictionary.prototype = {
 			} else {
 				return false;
 			}
-		}
+		};
 
-		for (var i = 0; i < words.length; i++) {
+		var i = 0;
+		
+		for (i = 0; i < words.length; i++) {
 			// if (!is_duplicated(words[i], this.result)) {
 			this.result.push({
 				'description': "",
@@ -196,7 +198,7 @@ goorm.core.edit.dictionary.prototype = {
 
 		if (this.result.length === 2) {
 			var matched_num = 0;
-			for (var i = 0; i < this.result.length; i++) {
+			for (i = 0; i < this.result.length; i++) {
 				var word = this.result[i].keyword;
 				if (word === keyword) {
 					var content = this.editor.getValue();
@@ -219,13 +221,13 @@ goorm.core.edit.dictionary.prototype = {
 // 			return;
 		}
 
-		if (this.result.length === 0) {
-			var not_data = {
-				'is_not_data': true,
-				'keyword': core.module.localization.msg.alert_no_have_data
-			};
-			this.result.push(not_data);
-		}
+// 		if (this.result.length === 0) {
+// 			var not_data = {
+// 				'is_not_data': true,
+// 				'keyword': core.module.localization.msg.alert_no_have_data
+// 			};
+// 			this.result.push(not_data);
+// 		}
 		
 		if (this.result.length >= 1) {			
 			var dictionary_list_table_array = [];
@@ -253,12 +255,12 @@ goorm.core.edit.dictionary.prototype = {
 						break;
 				}
 
-				return "<div class=" + __class + " style='width:16px;margin: 3px 6px 0px 4px;'></div>";
+				return "<div class=" + __class + " style='width:16px;'></div>";
 			};
 			display_desc = function(ele_target) {
 				if (__target.find('#' + ele_target).hasClass('hovered')) {
 					var desc_target = ele_target + "_desc";
-					if (__target.find('#' + desc_target + ' div').text() == "") {
+					if (__target.find('#' + desc_target + ' div').text() === "") {
 						__target.find(".divider").hide();
 						dictionary_desc.hide();
 						// __target.find('.dictionary_box .yui-resize-handle').hide();
@@ -297,7 +299,7 @@ goorm.core.edit.dictionary.prototype = {
 				
 				var ele_html = "";
 				ele_html += "<tr class='dictionary_element' id='" + ele_id + "'>";
-				ele_html += "<td width='20px' style='font-size:11px;' height='21px' >" + get_element_image(this.type) + "</td><td style='font-size:11px; font-family: " + core.preference["preference.editor.font_family"] + ", monospace;' height='21px'>" + print_key + "</td>";
+				ele_html += "<td width='20px' style='font-size:11px;' >" + get_element_image(this.type) + "</td><td style='font-size:11px; font-family: " + core.preference["preference.editor.font_family"] + ", monospace;'>" + print_key + "</td>";
 				ele_html += "</tr>";
 
 				dictionary_list_table_array.push(ele_html);
@@ -426,7 +428,12 @@ goorm.core.edit.dictionary.prototype = {
 		var dictionary_element = $('tr.dictionary_element', dictionary_list);
 		
 		dictionary_element.removeClass("hovered");
-		dictionary_element.eq(0).mouseover();
+// 		if (this.reversed) {
+// 			dictionary_element.eq(this.result.length - 1).mouseover();
+// 		}
+// 		else {
+			dictionary_element.eq(0).mouseover();
+// 		}
 	},
 
 	get_words: function() {
@@ -448,26 +455,42 @@ goorm.core.edit.dictionary.prototype = {
 			line: cursor.line,
 			ch: cursor.ch
 		}, "local");
+		
 		var scroll = cm.getScrollInfo();
 		var gutter = cm.getGutterElement();
-		var gutter_width = $(gutter).width() + 12;
-
-		var left = cursor_pos.left + gutter_width;
-		var top = cursor_pos.top - scroll.top + 12;
+// 		var gutter_width = $(gutter).width() + parseInt(core.preference["preference.editor.font_size"]);
+		
+		
+		var left = cursor_pos.left + $(gutter).width();// + parseInt(core.preference["preference.editor.font_size"], 10);
+		var top = cursor_pos.top - scroll.top + parseInt(core.preference["preference.editor.font_size"], 10);
 
 		var wrapper = $(cm.getWrapperElement());
-		var wrapper_height = wrapper.height();
-		var wrapper_width = wrapper.width();
+// 		var wrapper_height = wrapper.height();
+// 		var wrapper_width = wrapper.width();
 		var dictionary_box = $("ul.dictionary_box", __target);
 		var workspace = $("#workspace");
 		var dictionary_list = $('li.dictionary_list', __target);
 		var dictionary_list_table = $('ul.dictionary_box table.dictionary_list_table', __target);
 
-		this.hide();
+// 		this.hide();
 
-		if (workspace.offset().top + workspace.height() - 1 < wrapper.offset().top + top + dictionary_box.height() + 95) {
-			var gap = (wrapper.offset().top + top + 126 + 95) - (workspace.offset().top + workspace.height() - 1);
-			top = top - gap;
+		var dictionary_box_height = dictionary_box.height();
+		var dictionary_box_width = dictionary_box.width();
+		var margin = 50; 
+// 		this.reversed = false;
+		
+		if (workspace.offset().top + workspace.height() < wrapper.offset().top + top + dictionary_box_height + margin) {
+// 			this.reversed = true;
+
+			top = top - dictionary_box_height - parseInt(core.preference["preference.editor.font_size"], 10) * 2;
+						
+// 			var list = $('ul.dictionary_box table.dictionary_list_table tbody');
+// 			var listItems = list.children('tr');
+// 			list.append(listItems.get().reverse());
+		}
+		
+		if (workspace.offset().left + workspace.width() < wrapper.offset().left + left + dictionary_box_width + margin) {
+			left = left - dictionary_box_width;
 		}
 
 		dictionary_box.css('left', left);
@@ -484,18 +507,31 @@ goorm.core.edit.dictionary.prototype = {
 			dictionary_box.find('li.dictionary_desc').css('width', this.list_width);
 			dictionary_box.find('div.dictionary_desc_list').css('width', this.list_width);
 		}
-		if (dictionary_list_table.text() !== "") {
-			dictionary_box.show();
-		}
-		dictionary_box.attr("tabindex", -1).focus();
-
-		__target.find(".divider").hide();
-		__target.find("li.dictionary_list tr.hovered").removeClass("hovered");
-
-		this.index = 0;
-		dictionary_list.scrollTop(0);
 		
-		this.completable = true;
+		if (this.result.length > 0) {
+			dictionary_box.show();
+			this.display = true;
+			this.index = 0;
+			dictionary_list.scrollTop(0);
+			this.completable = true;
+		}
+		
+// 		dictionary_box.attr("tabindex", -1).focus();
+
+// 		__target.find(".divider").hide();
+// 		__target.find("li.dictionary_list tr.hovered").removeClass("hovered");
+
+		
+		
+// 		if (this.reversed) {
+// 			this.index = this.result.length - 1;
+// 			dictionary_list.scrollTop(29 * this.result.length);
+// 		}
+// 		else {
+			
+// 		}
+		
+		
 	},
 
 	hide: function() {		
@@ -503,24 +539,28 @@ goorm.core.edit.dictionary.prototype = {
 		__target.find(".dictionary_box").hide();
 		__target.find(".dictionary_desc").hide();
 		this.completable = false;
+		this.display = false;
 	},
 
 	search: function(keyword, type, line_content) {
-
+		if (keyword == "/*" || /^[a-zA-Z0-9\-_+=\[{\]}\\|;:'",<\.>\/?]*$/.test(keyword) === false) {
+			return "";
+		}
+		
 		var self = this;
 		self.result = [];
 
 		var special_characters = ['!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|', '\\'];
+		
 		if (special_characters.indexOf(keyword) > -1) {
 			keyword = '\\' + keyword;
 		}
 
 		var reg_exp = new RegExp('^' + keyword, '');
-		var keyword_object = {};
-		keyword_object.keyword = keyword + "";
-		keyword_object.line_content = line_content + "";
-
-		//self.get_dictionary(keyword_object, function() {
+// 		var keyword_object = {};
+// 		keyword_object.keyword = keyword + "";
+// 		keyword_object.line_content = line_content + "";
+		
 		$(self.contents).each(function(i) {
 			if (reg_exp.test(this.keyword)) {
 				self.result.push(this);
@@ -528,11 +568,9 @@ goorm.core.edit.dictionary.prototype = {
 		});
 
 		self.set(keyword);
-		//});
-
 	},
-	get_dictionary: function(keyword_object, callback) {
-		var self = this;
+// 	get_dictionary: function(keyword_object, callback) {
+// 		var self = this;
 		// var reg_exp = new RegExp('^' + keyword_object.keyword, '');
 
 		// var get_description = function(type, item) {
@@ -629,10 +667,10 @@ goorm.core.edit.dictionary.prototype = {
 		// 		}
 		// 	} //package
 		// 	if (typeof callback === "function") {
-				callback();
+// 				callback();
 		// 	}
 		// });
-	},
+// 	},
 
 	connect: function () {
 		var self = this;
@@ -662,17 +700,19 @@ goorm.core.edit.dictionary.prototype = {
 			if (code == 91 || code == 93) self.metaKey = true;
 			if (code == 18) self.ctrlKey = true;
 			if (code == 17) self.altKey = true;	
-			
-			if ($target.find("ul.dictionary_box").css("display") == "block") {
+						
+			if (self.display) {
 				if (code == 38) { // key 'up arrow'
 					CodeMirror.e_stop(e);
-					cm_editor.focus();
+					
 					self.select(-1);
+					cm_editor.focus();
 				} else if (code == 40) { // key 'down arrow'
 					CodeMirror.e_stop(e);
-					cm_editor.focus();
+					
 					self.select(1);
-				} else if (code == 13) { // key 'enter'
+					cm_editor.focus();
+				} else if (code == 13 || code == 9) { // key 'enter' and 'tab'
 					CodeMirror.e_stop(e);
 
 					self.complete();
@@ -682,26 +722,37 @@ goorm.core.edit.dictionary.prototype = {
 			}
 		});
 		
-		cm_editor.on("keyup", function(i, e) {
+		cm_editor.on("keyup", $.throttle(function(i, e) {
 			var code = e.keyCode;
 			var cursor = cm_editor.getCursor();
 			var token = cm_editor.getTokenAt(cursor);
-			
-			
-			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189) && !self.metaKey && !self.ctrlKey && !self.altKey) {
+									
+			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code >= 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
 				self.search(token.string);
-				self.show();
-				cm_editor.focus();
-				self.select_top();
+				if (self.result.length > 0) {
+					self.show();
+					cm_editor.focus();
+					self.select_top();
+				}
+				else {
+					self.hide();
+					cm_editor.focus();
+				}
+
 			}
 			else if ((self.metaKey || self.ctrlKey || self.altKey) && ((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189)) {
 				self.metaKey = false;
 				self.ctrlKey = false;
 				self.altKey = false;
+				cm_editor.focus();
+			}
+			else if (code < 36 && code > 40 && code != 8 && code != 46 && code != 27 && code != 13 && code != 32 && code != 17 && code != 16) {
+				self.hide();
+				cm_editor.focus();
 			}
 			
 			
-			if ($target.find("ul.dictionary_box").css("display") == "block") {
+			if (self.display) {
 				if (code == 27) { // key 'escape'
 					CodeMirror.e_stop(e);
 
@@ -740,10 +791,10 @@ goorm.core.edit.dictionary.prototype = {
 // 					self.autokey_down = true;
 				}
 			}
-		});
+		}, 200));
 
         cm_editor.on("scroll", $.throttle(function(i, e) {
-            if (dictionary_box.css("display") == "block") {
+            if (self.display) {
                 self.hide();
                 cm_editor.focus();
             }

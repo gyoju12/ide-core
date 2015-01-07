@@ -53,7 +53,7 @@ goorm.core.file._export = {
 					//var _iframe_download=$('<iframe id="download_frame"/>').attr('src',"download/?file=" + data.path).hide().appendTo
 					$("#download_frame").css('display', 'none');
 
-					
+					//useonly(mode=goorm-standalone,goorm-oss)
 					$("#download_frame").attr('src', "download/?file=" + data.path);
 					
 

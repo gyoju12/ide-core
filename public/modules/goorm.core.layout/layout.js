@@ -33,21 +33,27 @@ goorm.core.layout = {
 	
 	outline: null,
 
-	more_toolbar_timer: null,
-	more_toolbar_wait_timer: null,
-	more_toolbar_option: {
-		duration: 800, // fadein, fadeout duration
-		resize_timer: 900 // must be larger than duration
-	},
+// 	more_toolbar_timer: null,
+// 	more_toolbar_wait_timer: null,
+// 	more_toolbar_option: {
+// 		duration: 800, // fadein, fadeout duration
+// 		resize_timer: 900 // must be larger than duration
+// 	},
 	user_pluginList: [],
 
 	init: function(container) {
 
 		var self = this;
+		
+		self.toolbar_width = 20; // default padding value for calling set_more_toolbar()
+
+		var is_hide = false;
+
+
 
 		this.layout = $('body#goorm').layout({
 			west__size: 250,
-			north__size: 80,
+			north__size: 70,
 			north__resizable: false,
 			north__animatePaneSizing: true,
 			north__fxSpeed: 'fast',
@@ -84,28 +90,19 @@ goorm.core.layout = {
 			},
 			onload: function(obj, state, options, name) {
 				$('div.goorm_layout').show();
+				
+				$('#main_toolbar ul.navbar-nav .grm_toolbar').each(function (i) {
+					if ($(this).is(':visible')) { 
+						self.toolbar_width += $(this).outerWidth();
+					}
+				});
 			},
 			onresize: function() {},
-			onresize_end: function() {
-					// Main Toolbar - More Button
-					//				
-					// if (self._f_init_resize) {
-					// 	if (self.more_toolbar_wait_timer) clearTimeout(self.more_toolbar_wait_timer);
-					// 	self.more_toolbar_wait_timer = setTimeout(function() {
-					// 		self._f_init_resize = false;
-					// 		self.set_more_toolbar();
-					// 	}, self.more_toolbar_option.resize_timer + 400);
-					// } else {
+			onresize_end: $.debounce(function() {				
+				if ($(document).width() < self.toolbar_width || $('#toolbar_more_button_group').is(':visible')) {
 					self.set_more_toolbar();
-					// }
 				}
-				// onresize_end: function () {
-				// 	console.log('end');
-
-			// 	self.resize_all();
-
-			// 	return false;
-			// }
+			}, 200, false)
 		});
 
 		this.tab_manager = goorm.core.layout.tab;
@@ -282,7 +279,6 @@ goorm.core.layout = {
 							})
 							.show();
 
-						$(core).trigger("bookmark_hover"); //jeongmin: bookmark hover -> load bookmark
 
 						//correctly calculate submenu height and apply -- heeje
 						var submenu = $('#submenu_container>.dropdown-menu');
@@ -292,9 +288,9 @@ goorm.core.layout = {
 
 						//submenu position move -- Donguk Kim
 						var submenu_width = submenu.width();
-						var pageX = parseInt(submenu.css("left"));
+						var pageX = parseInt(submenu.css("left"), 10);
 						if ($("body#goorm").width() < pageX + submenu_width) {
-							var opened_menu_width = parseInt($('.open >.dropdown-menu>li:first').css("width"));
+							var opened_menu_width = parseInt($('.open >.dropdown-menu>li:first').css("width"), 10);
 							submenu.css("left", pageX - opened_menu_width - submenu_width);
 						}
 
@@ -374,7 +370,8 @@ goorm.core.layout = {
 		// console.log("layout.js:init();");
 		// this.refresh();
 
-		this.set_more_toolbar();
+// 		console.log("2222");
+// 		this.set_more_toolbar();
 		// this.set_scroll_ui();
 
 		$(window).resize(function(event) {
@@ -473,6 +470,7 @@ goorm.core.layout = {
 				var history_edit = null;
 
 				if (active_window_obj.editor) {
+					console.log(active_window_obj);
 					if (active_window_obj.editor.collaboration) { // jeongmin: use ot_stack
 						history_edit = active_window_obj.history_edit;
 					} else { // jeongmin: use codemirror's original edit history
@@ -514,7 +512,7 @@ goorm.core.layout = {
 				break;
 			case 3:
 				// completely open
-				current_layout.sizePane("north", 81);
+				current_layout.sizePane("north", 70);
 				current_layout.open("north");
 				$("#goorm_main_toolbar").show();
 				break;
@@ -571,7 +569,7 @@ goorm.core.layout = {
 	resize_all: function() {
 
 		// -- left --
-		var left_height = $("#goorm_left").height() - $('#west_tab').outerHeight() - $("#goorm_left .nav-pills").outerHeight() - 7;
+		var left_height = $("#goorm_left").height() - $('#west_tab').height() - $("#goorm_left .nav-pills").height() - 7;
 		$('#project_explorer').height(left_height - $('#project_selector').outerHeight());
 		$('#share_list_group').height(left_height - 3);
 		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
@@ -599,8 +597,8 @@ goorm.core.layout = {
 		// workspace
 
 
-		var layout_center_height = $('#goorm_inner_layout_center').height() - 30;
-		$("#workspace").height(layout_center_height - 1);
+		var layout_center_height = $('#goorm_inner_layout_center').height() - 29;
+		$("#workspace").height(layout_center_height);
 
 		var layout_center_width = $('#goorm_inner_layout_center').width() - 2;
 		$("#workspace").width(layout_center_width);
@@ -621,57 +619,39 @@ goorm.core.layout = {
 
 		var $more_button = $('#toolbar_more_button_group');
 
-		var toolbars = $('#main_toolbar ul.navbar-nav').children();
-		var bubble_toolbars = $('#bubble_toolbar ul.navbar-nav').children();
+		var $toolbars = $('#main_toolbar ul.navbar-nav .grm_toolbar');
+		var bubble_toolbars = $('#bubble_toolbar ul.navbar-nav .grm_bubble_toolbar');
 
-		var main_toolbar_width = $('#main_toolbar').width() - 90;
-		var current_toolbar_width = 0;
+		var screen_width = $(document).width();
+		var current_toolbar_width = 30; // because jquery cannot measure hidden width
 
-		var is_hide = false;
 
-		for (var i = 0; i < toolbars.length - 1; i++) { // exclude more-button
-			var $toolbar = $(toolbars.get(i));
+		$toolbars.each(function (i) { 
 			var $bubble_toolbar = $(bubble_toolbars.get(i));
 
-			if (!$toolbar.is(':visible')) { // jeongmin: it is hidden, so don't count this
-				continue;
-			}
+			current_toolbar_width += $(this).outerWidth();
+			
 
-			current_toolbar_width += $toolbar.width(); // margin
-
-			if (current_toolbar_width > main_toolbar_width) {
-				$toolbar.fadeOut({
-					'duration': this.more_toolbar_option.duration
+			if (current_toolbar_width > screen_width) {
+				$(this).fadeOut({
+					'duration': 500
 				});
 
 				$bubble_toolbar.show();
-
-				is_hide = true;
-				$more_button.show();
+				$more_button.fadeIn({
+					'duration': 500
+				});
 			} else {
-				$toolbar.fadeIn({
-					'duration': this.more_toolbar_option.duration
+				$(this).fadeIn({
+					'duration': 500
 				});
 
 				$bubble_toolbar.hide();
+				if (i == $toolbars.length - 1) {
+					$more_button.hide();
+				}
 			}
-		}
-
-		if (!is_hide) {
-			$more_button.hide();
-		}
-
-		// bubble_toolbar hide in resize
-		$('#bubble_toolbar').hide();
-		// if (this.more_toolbar_timer) clearTimeout(this.more_toolbar_timer);
-		// this.more_toolbar_timer = setTimeout(function() {
-		this.more_toolbar_timer = $.debounce(function() {
-			if ($("#goorm_main_toolbar").css('visibility') == "visible") {
-				self._f_init_resize = true;
-				self.layout.sizePane("north");
-			}
-		}, this.more_toolbar_option.resize_timer);
-		this.more_toolbar_timer();
+		});
 	},
 
 	set_scroll_ui: function() {
@@ -755,6 +735,14 @@ goorm.core.layout = {
 			if (tab.length) {
 				tab.click();
 				this.expand(pane);
+				if (tab_name == "terminal") {
+					console.log("layout.select");
+					if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
+						core.module.layout.terminal.Terminal.focus();
+					}
+					
+					$("#terminal").click();
+				}
 			}
 		}
 	},
@@ -1094,7 +1082,7 @@ goorm.core.layout = {
 
 	reposition_bubble_toolbar: function() {
 		var offset = $('#toolbar_more_button').offset();
-		$('#bubble_arrow').css('top', (offset.top + $("#toolbar_more_button").height() + 18) + 'px').css('left', (offset.left + 30) + 'px');
+		$('#bubble_arrow').css('top', (offset.top + $("#toolbar_more_button").height() + 14) + 'px').css('left', (offset.left + 30) + 'px');
 		var toolbar_left_margin = Math.floor($('#toolbar_more_button').offset().left + ($('#toolbar_more_button').outerWidth() / 2) - ($('#bubble_toolbar').outerWidth() / 2));
 		var toolbar_right_margin = $(window).width() - toolbar_left_margin - $('#bubble_toolbar').outerWidth();
 		if (toolbar_right_margin < 25) {

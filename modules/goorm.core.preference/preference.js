@@ -39,7 +39,7 @@ module.exports = {
 
 		
 
-			
+		//useonly(mode=goorm-oss)	
 		get_os_version(function(os_version) {
 			get_node_version(function(node_version) {
 				data.info = {

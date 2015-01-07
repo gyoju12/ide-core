@@ -81,6 +81,7 @@ goorm.core.edit.font_manager.prototype = {
         var resize_background_image = function(target) {
             var container = $(self.target);
             var __target = container.find(target);
+            
             if (__target.length != 0) {
                 self.now_zoom = 1 + (0.05 * delta);
                 self.now_margin_top = -2 + (0.1 * delta);
@@ -98,18 +99,18 @@ goorm.core.edit.font_manager.prototype = {
             $("#goorm_bottom").find(".breadcrumb .zoom_percent").text(self.font_percent + "%");
         }, 100);
 
-        resize_target('.CodeMirror', 'font-size', 11);
-        resize_target('.breakpoint', 'font-size', 11);
-        resize_target('.bookmark', 'font-size', 11); //jeongmin: resize bookmark font
+        resize_target('.CodeMirror', 'font-size', 12);
+        resize_target('.breakpoint', 'font-size', 12);
+        resize_target('.bookmark', 'font-size', 12); //jeongmin: resize bookmark font
 
-        //resize_target('.CodeMirror-gutter-elt', 'height', 14);  
-        //resize_target('.CodeMirror', 'line-height');  
+        resize_target('.CodeMirror-gutter-elt', 'height', 14);  
+        resize_target('.CodeMirror', 'line-height');  
         $('.CodeMirror').css('line-height', parseFloat(self.parent.line_spacing / 10 + 1));
 
 
-        resize_width('.CodeMirror-gutter.fold', 20);
-        resize_width('.CodeMirror-gutter.breakpoint', 18);
-        resize_width('.CodeMirror-gutter.bookmark', 13); //jeongmin: resize bookmark gutter
+        resize_width('.CodeMirror-gutter.fold', 12);
+        resize_width('.CodeMirror-gutter.breakpoint', 8);
+        resize_width('.CodeMirror-gutter.bookmark', 12); //jeongmin: resize bookmark gutter
 
         resize_background_image('div.folding_icon_minus');
         resize_background_image('div.folding_icon');
@@ -128,7 +129,7 @@ goorm.core.edit.font_manager.prototype = {
     user_cursor_resize: function(delta) {
         var self = this;
         var container = $(self.target);
-        var code_mirror = ('div.CodeMirror', container);
+        var code_mirror = $('div.CodeMirror', container);
         var cursors = container.find('.user_cursor');
         if (cursors.length != 0) {
             for (var i = 0; i < cursors.length; i++) {
@@ -155,11 +156,12 @@ goorm.core.edit.font_manager.prototype = {
 
                 $(user_name).css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', fs + 'px').css('height', height + 'px');
                 $(cursor).css('top', (top) + 'px').css('left', (left) + 'px').css('height', height + 'px');
+                // $(cursor).parent().parent().parent().parent().scrollTop(top);
             }
         }
     },
 
-    refresh: function(font_size) {
+    refresh: function(font_size, callback) {
         var self = this;
 
         //var __target = $(self.target);
@@ -168,7 +170,7 @@ goorm.core.edit.font_manager.prototype = {
         if (font_size < this.min_font_size) font_size = this.min_font_size;
         if (font_size > this.max_font_size) font_size = this.max_font_size;
 
-        var delta = font_size - 11;
+        var delta = font_size - 12;
 
         self.font_size = font_size;
         self.resize(delta);

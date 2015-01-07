@@ -97,7 +97,9 @@ goorm.core.menu.context.prototype = {
 				core.module.action.project_explorer_context_menu_init(type);
 			}
 			
-			else {
+			else if (name.indexOf("bookmark.context") > -1 ){
+
+			} else {
 				core.module.action.init();
 			}
 

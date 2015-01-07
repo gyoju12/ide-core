@@ -14,9 +14,7 @@ var g_auth_p = require("../goorm.core.auth/auth.project");
 
 
 
-
-
-
+//useonly(mode=goorm-oss,goorm-client)
 if (/v0.10/.test(process.version)) {
 	pty = require('../../libs/core/pty/ver_0.10/pty.js');
 } else {
@@ -52,9 +50,7 @@ module.exports = {
 
 		
 
-		
-
-			
+		//useonly(mode=goorm-oss,goorm-client)	
 		self.term = {}; // jeongmin: array -> object for easy management
 		
 
@@ -90,7 +86,7 @@ module.exports = {
 
 					term_index = randomStringfunc(27) + (new Date()).getTime(); //index++; jeongmin: new terminal is created, list++
 
-						
+					//useonly(mode=goorm-oss)	
 					var bashrc = global.__path + 'configs/bash.bashrc'
 					var command = '--rcfile ' + bashrc;
 					var export_path = global.__temp_dir + 'bin/';
@@ -142,9 +138,6 @@ module.exports = {
 
 
 					
-
-
-					
 				} catch (e) {
 					console.log('terminal start error:', e);
 				}
@@ -156,7 +149,7 @@ module.exports = {
 
 					
 
-						
+					//useonly(mode=goorm-oss,goorm-client)	
 					if (self.term[msg.index] && self.term[msg.index].pty && self.term[msg.index].pty.readable) {
 						self.term[msg.index].pty.resize(parseInt(msg.cols, 10), parseInt(msg.rows, 10));
 					}
@@ -178,9 +171,7 @@ module.exports = {
 
 					
 
-					
-
-						
+					//useonly(mode=goorm-oss)	
 					if (self.term[msg.index] && self.term[msg.index].pty) {
 						target_terminal = self.term[msg.index];
 
@@ -238,7 +229,7 @@ module.exports = {
 
 				
 
-					
+				//useonly(mode=goorm-oss)	
 				if (self.term[msg.index] && self.term[msg.index].pty) {
 					self.destroy(self.term[msg.index].pty, function () {
 						delete self.term[msg.user][msg.index]; // jeongmin
@@ -258,7 +249,7 @@ module.exports = {
 
 				
 
-				
+				//useonly(mode=goorm-oss)
 				try { // jeongmin: try catching
 					msg = JSON.parse(msg);
 					var do_exec = function(msg) {
@@ -285,9 +276,7 @@ module.exports = {
 
 					
 
-					
-
-						
+					//useonly(mode=goorm-oss)	
 					if (self.term[msg.index] && self.term[msg.index].pty) {
 						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + ";clear\r");
 						socket.to().emit("on_change_project_dir." + name, msg);
@@ -326,8 +315,6 @@ module.exports = {
 			// }
 		} else {}
 	},
-
-	
 
 	
 

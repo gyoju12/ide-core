@@ -89,6 +89,7 @@ goorm.core = function() {
 	};
 
 	this.status = {
+		is_mobile: false,
 		is_login: false,
 		login_complete: false,
 		keydown: false,
@@ -115,17 +116,40 @@ goorm.core = function() {
 	this.workspace = null;
 
 	
+
+	this.force_unload = false;
 };
 
 goorm.core.prototype = {
 	init: function(container) {
 		var self = this;
 
-		
+		this.container = container;
 
 		
 
 		
+
+		
+
+		//useonly(mode=goorm-oss)
+		this.init_load();
+		
+	},
+
+	init_load: function () {
+		var self = this;
+
+		var container = this.container;
+
+		if (core.options.mode && core.options.mode.indexOf('book') > -1) {
+			$('[action="build_project"]').hide();
+			$('[action="build_clean"]').hide();
+			$('[action="build_all"]').hide();
+			$('[action="build_configuration"]').hide();
+
+			$('[action="build_all"]').parent().parent().hide();
+		}
 
 		this.start();
 
@@ -171,7 +195,7 @@ goorm.core.prototype = {
 					$(self).trigger("goorm_load_complete");
 					self.load_complete_flag = true;
 
-						
+					//useonly(mode=goorm-oss)	
 					self.show_local_login_box();
 					
 
@@ -261,20 +285,17 @@ goorm.core.prototype = {
 		});
 
 		$(window).on('beforeunload', function() {
-
-			if (!self.is_login) return;
-			if (!self.force_disconnect) return;
-			if (self.module.auth.open_keep_session_dialog) return;
-			//1. logout
-			if (core.logout) {
-				return "core.logout";
-			}
-			//2. refresh, back button, close button 
-			var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
-			if (unsaved_file) {
-				return unsaved_file + core.module.localization.msg.confirmation_not_saved;
-			} else {
-				return "Goorm IDE close";
+			// if (!self.is_login) return;
+			// if (!self.force_disconnect) return;
+			if (!core.force_unload && !self.module.auth.open_keep_session_dialog && !core.logout) {
+				//2. refresh, back button, close button 
+				var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
+				if (unsaved_file) {
+					return unsaved_file + core.module.localization.msg.confirmation_not_saved;
+				} else {
+					var msg = (core.module.localization && core.module.localization.msg && core.module.localization.msg.confirmation_close_tab) ? core.module.localization.msg.confirmation_close_tab : "Do you want to close goorm?";
+					return msg;
+				}
 			}
 		});
 
@@ -302,6 +323,8 @@ goorm.core.prototype = {
 			this.module.plugin_manager = goorm.plugin.manager;
 			this.module.plugin_manager.init();
 		}
+
+		
 
 		if (goorm.plugin.linter) { // jeongmin
 			this.module.plugin_linter = goorm.plugin.linter;
@@ -364,7 +387,7 @@ goorm.core.prototype = {
 
 		if (goorm.core.tutorial) {
 			// bootstrap tour
-			this.module.tutorial = goorm.core.tutorial_tour;
+			this.module.tutorial = goorm.core.tutorial;
 		}
 
 		//Cloud
@@ -488,9 +511,9 @@ goorm.core.prototype = {
 			this.dialog.find_and_replace.init();
 		}
 
-		if (goorm.core.edit.bookmark) { //jeongmin: connect edit.bookmark and module.bookmark
-			this.module.bookmark = goorm.core.edit.bookmark;
-			this.module.bookmark.init(); //initialize bookmark
+		if (goorm.core.edit.bookmark_list) { //jeongmin: connect edit.bookmark and module.bookmark
+			this.module.bookmark_list = goorm.core.edit.bookmark_list;
+			this.module.bookmark_list.init(); //initialize bookmark
 		}
 
 		if (goorm.core.search) {
@@ -552,16 +575,10 @@ goorm.core.prototype = {
 			this.dialog.preference.init_dialog();
 		}
 
-		
-
 		// for Selenium IDE
 		alert = __alert;
 		alert.init();
 		notice.init();
-	},
-
-	load: function() {
-
 	},
 
 	skin: function(skin_name) {
@@ -598,14 +615,14 @@ goorm.core.prototype = {
 
 		
 
-			
+		//useonly(mode=goorm-oss)	
 		// $('#local_login_box').append("<div id='local_login_user_box'><div id='local_user_area'><label id='local_user_label' for='local_user_input'>ID : </label><input id='local_user_input' /></div><div id='local_user_pw_area'><label id='local_user_pw_label' for='local_user_pw_input'>PW : </label><input id='local_user_pw_input' type='password' /></div></div>");
 		// $('#local_login_box').append("<input type='button' id='goorm_local_mode_button' localization_key='private_mode' value='Access Private Mode' />");
 		$('#login_box').remove();
 		
 
 		
-		
+		//useonly(mode=goorm-oss)
 		$('#goorm_local_mode_button').click(function() {
 			self.access_local_mode();
 		});
@@ -645,7 +662,7 @@ goorm.core.prototype = {
 
 		
 
-		
+		//useonly(mode=goorm-oss)
 		self.socket.emit('access', JSON.stringify({ // jeongmin: join channel code is moved to ajax from collaboration and named 'access' for oss
 			'channel': 'join'
 		}));
@@ -653,7 +670,7 @@ goorm.core.prototype = {
 	},
 
 	
-	
+	//useonly(mode=goorm-oss)
 	show_local_login_box: function() {
 		if (localStorage.user && localStorage.user != "undefined") {
 			var user = JSON.parse(localStorage.user);

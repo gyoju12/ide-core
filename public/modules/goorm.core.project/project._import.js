@@ -16,6 +16,7 @@ goorm.core.project._import = {
 	// dialog_explorer: null,
 	import_list_done: false, // jeongmin: whether project type list is made or not in import dialog
 	new_list_done: false, // jeongmin: whether project type list is made or not in new project dialog
+	is_working: false,
 
 	init: function(where) {
 
@@ -140,13 +141,6 @@ goorm.core.project._import = {
 				// if (where.attr("id") == "dlg_import_project")	// hidden by jeongmin: first of all, project must be opened no matter what type of import
 
 				
-				core.dialog.open_project.open(project_dir, data.project_name, data.project_type);
-
-				//core.module.plugin_manager.new_project(senddata,false);
-				where.find(".project_import_location").val(core.status.current_project_path);
-
-				where.find('.project_import_form').submit();
-				
 				
 
 				// {
@@ -201,6 +195,8 @@ goorm.core.project._import = {
 
 			} else {
 				alert.show(data.message);
+				self.is_working = false;
+				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 				return false;
 			}
 
@@ -237,6 +233,11 @@ goorm.core.project._import = {
 							no_text: localization_msg.confirmation_no,
 							title: localization_msg.confirmation_title,
 							yes: function() {
+								if(self.is_working === true){
+									return false;
+								}
+								self.is_working = true;
+								$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
 								core._socket.once("/project/new", cb);
 								core._socket.emit("/project/new", senddata);
 							},
@@ -245,8 +246,18 @@ goorm.core.project._import = {
 						confirmation.show();
 						break;
 				}
+				
+				self.is_working = false;
+				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
+				
 			}
 		});
+		
+		if(self.is_working === true){
+			return false;
+		}
+		self.is_working = true;
+		$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
 		core._socket.emit("/project/valid", senddata);
 
 		// if (where.attr("id") == "dlg_import_project") {
@@ -278,6 +289,7 @@ goorm.core.project._import = {
 
 			beforeSubmit: function() {
 				// core.progressbar.set(10);
+
 				if (where.find('.project_import_form').attr('action') == 'project/import') { // jeongmin: only when import is really in progress
 					self.progress_elements = core.module.loading_bar.start({
 						str: core.module.localization.msg.import_in_progress
@@ -323,9 +335,12 @@ goorm.core.project._import = {
 						}
 					}
 				} else {
-					this.progress_elements.stop(); // jeongmin: 'import is in progress' loading bar
+
+					self.progress_elements.stop(); // jeongmin: 'import is in progress' loading bar
 					where.modal('hide'); // jeongmin: import project dialog
-					
+					//useonly(mode=goorm-standalone,goorm-oss)
+					self.is_working = false;
+					$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 					if (data.err_code === 0) {
 						// notice.show(data.message);
 						notice.show(core.module.localization.msg.notice_process_done);
@@ -338,11 +353,15 @@ goorm.core.project._import = {
 
 					
 				}
+				self.is_working = false;
+				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 			},
 
 			error: function() {
 				// core.progressbar.set(100);
-				self.stop();
+				self.is_working = false;
+				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
+				self.progress_elements.stop();
 			}
 		};
 

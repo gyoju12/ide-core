@@ -680,7 +680,37 @@ module.exports = {
 					data.err_code = 99;
 					data.message = "exist file";
 					evt.emit("file_do_save_as", data);
-				} else {
+				} 
+				else if (exists && (query.save_anyway == "true" || query.save_anyway == true)) {
+					rimraf(global.__workspace + '/' + path, function(err) {
+						if (err) {
+							data.err_code = 88;
+							data.message = "Can not overwrite file";
+
+							evt.emit("file_do_save_as", data);
+						} else {
+							fs.writeFile(global.__workspace + '/' + path, query.data, function(err) {
+								if (err !== null) {
+									data.err_code = 40;
+									data.message = "Can not save file";
+
+									evt.emit("file_do_save_as", data);
+								} else {
+									
+
+									
+
+									//useonly(mode=goorm-oss)
+									exec('chmod 770 ' + global.__workspace + '/' + path);
+
+									evt.emit("file_do_save_as", data);
+									
+								}
+							});
+						}
+					});
+				}
+				else {
 					fs.writeFile(global.__workspace + '/' + path, query.data, function(err) {
 						if (err !== null) {
 							data.err_code = 40;
@@ -692,7 +722,7 @@ module.exports = {
 
 							
 
-							
+							//useonly(mode=goorm-oss)
 							exec('chmod 770 ' + global.__workspace + '/' + path);
 
 							evt.emit("file_do_save_as", data);
@@ -1115,7 +1145,7 @@ module.exports = {
 		};
 
 		
-		
+		//useonly(mode=goorm-oss)
 		_read_dir();
 		
 	},
@@ -1163,7 +1193,7 @@ module.exports = {
 								file_list.push(file);
 							} else {
 									
-								
+								//useonly(mode=goorm-oss)
 								if (abs_path === "") {
 									file.type = 'folder';
 									file_list.push(file);

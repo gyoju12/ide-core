@@ -30,7 +30,7 @@ module.exports = {
 		var grep_option = query.grep_option || {};
 
 		var nodes = {};
-
+		// console.log("@find_query:", find_query);
 		var make_grep_option = function(options) {
 			var grep = ["-r", "-n", "-R"];
 			var is_true = function(str) {
@@ -38,10 +38,12 @@ module.exports = {
 				if (str && (str === true || str === 'true')) r = true;
 
 				return r;
-			}
+			};
 
 			if (is_true(options.use_regexp)) {
 				grep.push("-E");
+			} else {
+				grep.push("-F");
 			}
 
 			if (!is_true(options.match_case))
@@ -50,11 +52,11 @@ module.exports = {
 			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']); // jeongmin: in spawn, exclude item should be separated
 
 			return grep;
-		}
+		};
 
 		var parser = function(matched_files_list) {
 			var nodes = {};
-			if (matched_files_list.length != 0) {
+			if (matched_files_list.length !== 0) {
 				var idx = 0;
 				var node = {};
 				nodes.total_match = 0;
@@ -107,13 +109,13 @@ module.exports = {
 		var owner_roots = [];
 				
 
-		
+		//useonly(mode=goorm-oss)
 		g_project.get_list(null, null, function(owner_project_data) {
 			for (var i = 0; i < owner_project_data.length; i++) {
 				owner_roots.push('/' + owner_project_data[i].name);
 			}
 
-			if (project_path === "" && owner_roots.length != 0) {
+			if (project_path === "" && owner_roots.length !== 0) {
 				var all_matched_files_list = [];
 				var count = 0;
 
@@ -199,7 +201,7 @@ module.exports = {
 			}
 
 			return matched_files_list;
-		}
+		};
 
 		fs.exists(global.__workspace.slice(0, -1) + project_path, function(exists) {
 			if (exists) {
@@ -207,7 +209,6 @@ module.exports = {
 				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option)),
 					_stdout = '',
 					_stderr = '';
-
 				command.stdout.on('data', function(data) {
 					_stdout += data;
 				});

@@ -83,7 +83,7 @@ goorm.core.dialog.notice.prototype = {
 
 	show: function(message, option_icon, no_image) {
 		var filtered_msg = message || '';
-		filtered_msg = core.module.bookmark.filtering(filtered_msg.replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
+		filtered_msg = core.module.bookmark_list.filtering(filtered_msg.replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
 
 		this.message = filtered_msg;
 		//this.title="Notice";

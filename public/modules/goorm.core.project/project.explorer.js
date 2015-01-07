@@ -86,13 +86,13 @@ goorm.core.project.explorer.prototype = {
 		$(core).on('goorm_login_complete', function() {
 			var postdata = {
 				
-				
+				//useonly(mode=goorm-oss)
 				'get_list_type': 'owner_list'
 				
 			};
 			//$.get("project/get_list", postdata, function (data) {
 			
-				
+				//useonly(mode=goorm-oss)
 			core.socket.once("/project/get_list/owner", function(data) {
 				
 				self.project_data = data;
@@ -154,7 +154,7 @@ goorm.core.project.explorer.prototype = {
 		$("#project_treeview").hide();
 		$("#project_list_table").hide();
 		
-		
+		//useonly(mode=goorm-oss)
 		core.socket.once("/project/get_list/owner", function(data) {
 		
 			self.project_data = data;
@@ -231,7 +231,7 @@ goorm.core.project.explorer.prototype = {
 		});
 		core.socket.emit("/project/get_list", {
 			
-			
+			//useonly(mode=goorm-oss)
 			'get_list_type': 'owner_list'
 			
 		});
@@ -249,7 +249,7 @@ goorm.core.project.explorer.prototype = {
 					this.select_project_name(project_item.contents.name);
 				}
 				
-				
+				//useonly(mode=goorm-oss)
 				$('#my_projects_header').after('<li class="project_item" project_path="' + project_item.name + '" idx="' + project_idx + '"><a href="#">' + project_item.contents.name + '</a></li>');
 				
 				this.project_idx_data[project_item.name] = project_idx;
@@ -324,14 +324,14 @@ goorm.core.project.explorer.prototype = {
 		var self = this;
 		var postdata = {
 			
-			
+			//useonly(mode=goorm-oss)
 			'get_list_type': 'owner_list'
 			
 		};
 
 		//$.get("project/get_list", postdata, function (data) {
 		
-		
+		//useonly(mode=goorm-oss)
 		core.socket.once("/project/get_list/owner", function(data) {
 			self.project_data = data;
 			self.make_project_selectbox();
@@ -438,7 +438,7 @@ goorm.core.project.explorer.prototype = {
 		if (this.clipboard && (core.status.selected_file_type == 'folder' || core.status.selected_file_type == 'root')) {
 
 			var postdata = {
-				source: self.clipboard,
+				source: this.clipboard,
 				target: core.status.selected_file
 			};
 			_$.get("file/copy_file_paste", postdata, function(data) {
@@ -449,6 +449,31 @@ goorm.core.project.explorer.prototype = {
 				self.refresh();
 			});
 		}
+	},
+	duplicate: function() {
+		var self = this;
+		
+		this.copy();
+		var path = this.clipboard.files[0];
+		if(path) {
+			path = path.substring(0,path.lastIndexOf("/"));	
+			if (this.clipboard && path) {
+				var postdata = {
+					source: this.clipboard,
+					target: path
+				};
+				_$.get("file/copy_file_paste", postdata, function(data) {
+					if (data.result) {
+						console.log(data.result);
+					}
+					//self.clipboard = false;
+					self.refresh();
+				});
+			} else {
+				alert.show(core.module.localization.msg.alert_file_not_select);
+			}
+		}
+		else alert.show(core.module.localization.msg.alert_folder_duplicate_error);
 	},
 
 	get_tree_selected_path: function(treeview_id) {	// treeview_id: id of various treeviews

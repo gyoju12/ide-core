@@ -52,7 +52,25 @@ goorm.core.terminal.prototype = {
 			$(self.target).addClass('terminal');
 
 			var terminal_open_complete = function() {
-								
+				if (core.status.is_mobile) {
+					$(self.target).parent().append('<textarea class="inputbox" spellcheck=false style="position:absolute; left: -9999px; z-index:-1; width:98%; height:93%; visibility:none;">');
+					$(self.target).parent().find('textarea.inputbox').keydown(function(e) {
+						if (e.keyCode === 0) {
+							var key = $(this).val();
+							self.Terminal.handler(key);
+							$(this).val("");
+						} else {
+							self.Terminal.keyDown(e);
+						}
+					});
+					core.adapt_smart_pad($(self.target)[0]);
+					$(self.target)[0].addEventListener('touchstart', function(e) {
+						$(self.target).parent().find('textarea.inputbox').focus();
+					});
+
+					$('div#terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
+					$('div.terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
+				}
 
 				$(self.target).parent().css('outline', 'none').css('background-color', 'rgb(70,70,70)').css('overflow', 'hidden');
 
@@ -99,13 +117,6 @@ goorm.core.terminal.prototype = {
 			var init = false;
 			$(self).one('terminal_ready.' + self.terminal_name, function() {
 				if (!init) {
-					// window.setTimeout(function() {
-					
-
-					
-					//$(self.target[0]).prepend('<div>Welcome to goorm terminal :)</div>');
-					
-					// }, 100);
 					init = true;
 					self.ready = true;
 					self.set_environment();
@@ -115,7 +126,7 @@ goorm.core.terminal.prototype = {
 		};
 
 		var init_event = function() {
-			$(window).on('beforeunload', function() { // jeongmin: unload -> beforeunload. For doing necessary works before socket is disconnected
+			$(window).on('unload', function() { // jeongmin: unload -> beforeunload. For doing necessary works before socket is disconnected
 
 				// terminal leave
 				self.Terminal.destroy();
@@ -204,7 +215,7 @@ goorm.core.terminal.prototype = {
 		};
 
 		var init_socket = function() {
-			
+			//useonly(mode=goorm-standalone,goorm-oss)
 			self.socket = io.connect();
 			
 
@@ -256,7 +267,7 @@ goorm.core.terminal.prototype = {
 
 				
 
-					
+				//useonly(mode=goorm-oss)	
 				if (self.terminal_name == msg.terminal_name) {
 					self.work_queue(msg.stdout);
 
@@ -304,7 +315,7 @@ goorm.core.terminal.prototype = {
 				}
 			});
 
-				
+			//useonly(mode=goorm-oss)	
 			// self.socket.on('disconnect', function() {
 			// 	notice.show(core.module.localization.msg.server_is_end);
 			// });
@@ -324,7 +335,7 @@ goorm.core.terminal.prototype = {
 		// initialize socket.io event
 		init_socket();
 
-		
+		//useonly(mode=goorm-standalone,goorm-oss)
 		// attach Terminal Library
 		create_terminal();
 
@@ -337,7 +348,7 @@ goorm.core.terminal.prototype = {
 		var data = options.data;
 		var stringify = options.stringify;
 
-		
+		//useonly(mode=goorm-standalone,goorm-oss)
 		if (this.socket && this.socket.socket && this.socket.socket.connected) {
 			data.name = this.terminal_name
 
@@ -378,7 +389,7 @@ goorm.core.terminal.prototype = {
 			}
 		}
 
-		this.send_command("complete;clear;\r");
+		this.send_command("complete;history -c;clear;\r");
 		
 	},
 

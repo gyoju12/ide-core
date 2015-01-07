@@ -120,7 +120,7 @@ goorm.core.preference.manager = {
 					if(change) {
 						self.treeview.select_node("preference_treeview/Preference/Language");
 					} else {
-						self.treeview.select_node("preference_treeview/Preference/System");
+						self.treeview.select_node("preference_treeview/Preference/Editor");
 					}
 					
 				}

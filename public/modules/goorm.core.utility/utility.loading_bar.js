@@ -9,10 +9,11 @@
  **/
 
 goorm.core.utility.loading_bar = {
+	state: 'hidden',
 	list: {}, // loading bar's progress bar list
 	count: 0, // number of progress bars
-	template: '<div id="progress_wrapper" class="progress_wrapper">\
-					<dt id="progress_title"></dt>\
+	template: '<div id="progress_wrapper" class="progress_wrapper" fingerprint="_fingerprint">\
+					<div id="progress_title" class="row text-muted"></div>\
 						<div class="progress">\
 							<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">\
 							</div>\
@@ -34,7 +35,10 @@ goorm.core.utility.loading_bar = {
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
+			self.state='show';
 		});
+
+
 		// enable key event on dialogs. Jeong-Min Im.
 		this.panel.on('hidden.bs.modal', function() {
 			$('.modal.in').focus();
@@ -43,6 +47,7 @@ goorm.core.utility.loading_bar = {
 			if ($('#dlg_delete_project').attr('class').indexOf('in') >= 0) {
 				$("#project_delete_list").focus();
 			}
+			self.state='hidden';
 		});
 
 		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
@@ -64,29 +69,51 @@ goorm.core.utility.loading_bar = {
 		});
 	},
 
+	get_fingerprint: function (bits) {
+		var chars, rand, i, ret;
+
+		chars = 'abcdefghijklmnopqr12345678abcdefghijklmnopqrstuvwxyz012345678912';
+		ret = '';
+
+		while (bits > 0) {
+			// 32-bit integer
+			rand = Math.floor(Math.random() * 0x100000000);
+			// base 64 means 6 bits per character, so we use the top 30 bits from rand to give 30/6=5 characters.
+			for (i = 26; i > 0 && bits > 0; i -= 6, bits -= 6) {
+				ret += chars[0x3F & rand >>> i];
+			}
+		}
+
+		return ret;
+	},
+
 	// add new progress bar and show loading bar. Jeong-Min Im.
 	// option = {
-	// 	now: current progress percentage
-	// 	kill: cancel current loading
-	// 	str: loading message(means current process)
+	// 	now(Number): current progress percentage
+	// 	kill(Function): cancel current loading
+	// 	str(String): loading message(means current process)
 	// }
 	// return: progress bar elements. For getting logs, progress percentage...
 	start: function(option) {
 		var self = this;
-		var wrapper = 'progress_wrapper_' + this.count;
-		var title = 'progress_title_' + this.count;
-		var bar = 'progress_bar_' + this.count;
-		var kill = 'progress_kill_' + this.count;
-		var contents = 'progress_contents_' + this.count;
+
+		var fingerprint = this.get_fingerprint(54);
+
+		var wrapper = 'progress_wrapper_' + fingerprint;
+		var title = 'progress_title_' + fingerprint;
+		var bar = 'progress_bar_' + fingerprint;
+		var kill = 'progress_kill_' + fingerprint;
+		var contents = 'progress_contents_' + fingerprint;
 
 		option = option || {};
 
 		// count
-		this.list[this.count] = option;
+		this.list[fingerprint] = option;
 		this.count++;
 
 		// make progress bar using template and add to loading bar
-		this.panel.find('.row').append(this.template.replace('progress_wrapper', wrapper)
+		this.panel.find('#loading_bar_row').append(this.template.replace('progress_wrapper', wrapper)
+			.replace('_fingerprint', fingerprint)
 			.replace('progress_title', title)
 			.replace('progress_bar', bar)
 			.replace('progress_kill', kill)
@@ -103,10 +130,10 @@ goorm.core.utility.loading_bar = {
 			kill_button.show();
 
 			kill_button.click(function() {
-				var num = $(this).attr('id').split('_').pop(); // extract process that will be killed
+				var fingerprint = $(this).parents('.progress_wrapper').attr('fingerprint'); // extract process that will be killed
 
-				self.list[num].kill(); // execute kill function
-				self.stop('#progress_wrapper_' + num); // stop this progress
+				self.list[fingerprint].kill(); // execute kill function
+				self.stop('#progress_wrapper_' + fingerprint); // stop this progress
 			});
 		} else {
 			kill_button.hide();
@@ -133,39 +160,54 @@ goorm.core.utility.loading_bar = {
 	},
 
 	// remove progress bar. Jeong-Min Im.
-	// wrapper: progress bar's wrapper
+	// wrapper(String): progress bar's wrapper(id)
 	stop: function(wrapper) {
-		if (Object.keys(this.list).length == 1) { // last one
-			if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
+		self = this;
+
+		var check_hidden = function()  {
+			setTimeout(function() {
+				self.stop(wrapper);
+			}, 50);
+		}
+
+		if (Object.keys(this.list).length == 0) { // last one
+			if (self.state === 'hidden') {
+				check_hidden();		
+			} else {
+				this.hide();	
+			}
+		} else if (Object.keys(this.list).length == 1) { // last one
+			if (self.state === 'hidden') {
+				check_hidden();
+			} else if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
 				this.hide();
 			} else { // in progressbar.. notice user that progress is done
 				this.panel.find('.close').hide(); // cancel shouldn't be clicked by user after process is done. (cancel another process that has same PID as this process)
 				$('#g_lb_btn_ok').show();
 
 				// process done
-				this.show({
-					str: core.module.localization.msg.notice_process_done,
-					now: 100,
-					lock: true
-				});
+				// this.show({
+				// 	str: core.module.localization.msg.notice_process_done,
+				// 	now: 100,
+				// 	lock: true
+				// });
 			}
-
 			// initialize
 			this.panel.find('.progress_wrapper').remove();
 			this.list = {};
 			this.count = 0; // nothing left. Last one is stopped
 		} else if (wrapper) {
-			var num = wrapper.split('_').pop(); // find out which progress is done
+			var fingerprint = $(wrapper).attr('fingerprint'); // find out which progress is done
 
-			delete this.list[num]; // delete it from progress bars list
+			delete this.list[fingerprint]; // delete it from progress bars list
 			$(wrapper).remove();
 		}
 	},
 
 	// show loading bar dialog. Jeong-Min Im.
 	// option = {
-	// 	lock: forbids hiding loading bar
-	// 	str: loading message(means current process)
+	// 	lock(Bool): forbids hiding loading bar
+	// 	str(String): loading message(means current process)
 	// }
 	show: function(option) {
 		if (option) {
