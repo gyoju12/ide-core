@@ -25,7 +25,7 @@ Features
 Installation via npm:
 ---------------------
 
-$ npm install goorm -g
+    $ npm install goorm -g
 
 Installation from source:
 -------------------------
