@@ -1,17 +1,10 @@
 project.goorm
 =========================
 
-goorm is the cloud-based Integrated Development Environment. It is developed in only javascript and using various open source libraries. It is also an open-source project. goorm supports currently C/C++ and Java as well as HTML, CSS, PHP and Javascript. Other languages will be supported with plugin. (future works).
+goorm is an open source cloud-based IDE written in Javascript. goorm currently supports C/C++, Java and PHP, as well as HTML, CSS and Javascript. Support for other languages will be provided in the future through goorm's plugin system.
 
-* **goorm is developing now and this repository provides only beta version.**
-* **please, feedback to us about bugs and feature what you need.** (email: sungtae.ryu@goorm.io)
-
-Installation
-------------
-
-  install using npm :
-
-          $ npm install goorm -g
+* **goorm is currently in its beta stage and still actively developed.**
+* **Please contact us about bugs and feature requests, your feedback is important to us. (email: sungtae.ryu@goorm.io)**
 
 Official Site
 -------------
@@ -21,22 +14,25 @@ Official Site
 Features
 --------
 
-* **Build your own cloud integrated development environment**
-* **Support various plug-ins**
-* **Collaborate on projects in real-time with other developers**
-* **Support syntax highlighting**
-* **Powerful search/replace**
-* **Customize your own goorm**
-* **Manage your project via subversion/git**
-* **Work with the useful terminal**
-* **and so on...**
+* **Host your own custom cloud-based IDE.**
+* **Easily extendable through an integrated plugin system.**
+* **Allows real-time collaboration with other developers**
+* **Supports syntax highlighting for a number of languages**
+* **Powerful search/replace functions**
+* **Git and Subversion integration**
+* **Included terminal utility**
 
-Getting Started
----------------
+Installation via npm:
+---------------------
+
+    $ npm install goorm -g
+
+Installation from source:
+-------------------------
 
 * **node.js installation**
 
-  install node.js :
+  Install node.js:
 
           $ wget http://nodejs.org/dist/v0.10.21/node-v0.10.21.tar.gz
           $ tar -xvzf node-v0.10.21.tar.gz
@@ -45,72 +41,65 @@ Getting Started
           $ make
           $ sudo make install
 
-  check node.js installed successfully :
-  
+  Make sure that node.js is working:
+
           $ node -v
-          
-  if node.js installed successfully, it prints node.js version as below:
-  
+
+  If the installation was successfull, it should print the following string:
+
           $ v0.10.21
 
-  install npm (optional- latest version of node.js automatically install npm, so you may not install npm) :
-  
-  it requires curl to install npm, install curl as below :
-        
-          $ sudo chown -R $USER /usr/local
-          $ apt-get install curl
-  
-  then, install npm :
-  
-          $ curl https://npmjs.org/install.sh > install.sh
-          $ sudo sh install.sh
-  
-* **Download**
+  Install npm (optional - The latest version of node.js includes npm by default):
 
-  clone goorm (git) :
+          $ wget https://npmjs.org/install.sh
+          $ sudo sh install.sh
+
+* **goorm installation**
+
+  Clone goorm (git) :
 
           $ git clone git://github.com/xenoz0718/goorm.git
 
-  checkout goorm (svn) :
-  
-          $ svn checkout svn://svn.code.sf.net/p/goorm/code/trunk goorm 
+  Checkout goorm (svn) :
+
+          $ svn checkout svn://svn.code.sf.net/p/goorm/code/trunk goorm
 
   or using npm :
 
           $ npm install goorm -g
-                 
 
-* **Run**
 
-  run mongodb:
-    
+* **Running goorm**
+
+  Run mongodb:
+
           $ mongod
-          
-  if mongodb installed successfully, it prints information as below:
+
+  The command should print the following information to the console:
 
           ...
           Thu Oct  4 23:26:15 [websvr] admin web console waiting for connections on port 28017
           Thu Oct  4 23:26:15 [initandlisten] waiting for connections on port 27017
           ...
 
-  run goorm.js :
-          
+  Run goorm.js :
+
           $ node goorm.js start
-          
-  run goorm.js (through npm) : 
-  
+
+  Run goorm.js (through npm) :
+
           $ goorm start
-          
-  run goorm daemon :
+
+  Run goorm daemon :
 
           $ node goorm.js start -d
           $ goorm start -d
 
-  config (optional) : 
+  Configuration (optional) :
 
           $ node goorm.js set --workspace ~/workspace/
           $ goorm set -w ~/workspace/
-          
+
           $ node goorm.js set --temp-directory ~/temp_files/
           $ goorm set -t ~/temp_files/
 
@@ -120,13 +109,13 @@ Getting Started
           $ node goorm.js set -u [user_id]
           $ goorm set --user [user_id]
 
-  stop goorm daemon : 
+  Stop goorm daemon :
 
           $ node goorm.js stop
           $ goorm stop
-          
-  if goorm runned successfully, it prints information as below :
-  
+
+  Once started, goorm should display the following information:
+
           goormIDE:: loading config...
           /--------------------------------------------------------
           workspace_path: /Users/goormUser/workspace/
@@ -138,15 +127,17 @@ Getting Started
           Open your browser and connect to
           'http://localhost:9999' or 'http://[YOUR IP/DOMAIN]:9999'
 
-  run goorm.js:
-          
+  Run goorm.js:
+
           $ node goorm.js
-          
-  you can run the goorm as below URL in your web-browser (google chrome is hardly recommended) : 
+
+  Goorm can now be accessed in your webbrowser (Google Chrome highly recommended):
 
           http://localhost:9999
-        
+
 License
 -------
 
-goormIDE fundamentally has a dual license. Currently being released as open source version is the AGPL v3 conforms to the open source project. Modifying the source code must be disclosed the source code using the same license. If you want to use goorm IDE commercially, you must purchase the license.(contact@goorm.io)
+goormIDE is dual licensed under the AGPL v3 and a commercial license. Modified versions of goorm are required to publish their source code using the same license.
+
+If you want to use goorm commercially, please contact us for licensing details: contact@goorm.io
