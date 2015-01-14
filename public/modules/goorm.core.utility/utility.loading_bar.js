@@ -39,18 +39,25 @@ goorm.core.utility.loading_bar = {
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
 
+			if (self.panel.is(':visible')) { // sometimes, shown event isn't triggered after show event automatically
+				self.panel.trigger('shown.bs.modal');
+			}
+
 			if (is_hide) { // modal is hiding now!
 				try_to_show = true; // but we're trying to show!
 			}
 		});
 
 		this.panel.on("shown.bs.modal", function() {
-			// we success to show modal. Initialize all flags.
-			try_to_show = false;
-			is_hide = false;
+			if (self.panel.is(':visible')) { // we success to show modal. Initialize all flags.
+				try_to_show = false;
+				is_hide = false;
 
-			if (Object.keys(self.list).length === 0) {
-				self.hide();
+				if (Object.keys(self.list).length === 0) {
+					self.hide();
+				}
+			} else { // we fail to show modal, try again
+				self.show();
 			}
 		});
 
