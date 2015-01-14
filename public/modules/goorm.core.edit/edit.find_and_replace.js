@@ -15,6 +15,7 @@ goorm.core.edit.find_and_replace = {
 	panel: null,
 	last_pos: null,
 	last_query: null,
+	recent_pos: null,
 	marked: [],
 	match_case: false,
 	whole_word: false,
@@ -35,6 +36,9 @@ goorm.core.edit.find_and_replace = {
 			$("#find_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_find_guide);
 			$("#replace_query_inputbox").attr("placeholder", core.module.localization.msg.msg_project_replace_guide);
 		});
+
+		this.total_count = 0;
+		this.current_count = 0;
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
@@ -137,6 +141,7 @@ goorm.core.edit.find_and_replace = {
 
 				self.panel.on('hide.bs.modal', function() { // this part remove Donguk Kim 
 					self.unmark();
+					$("#find_and_replace_matches").hide();
 					var window_manager = core.module.layout.workspace.window_manager;
 					// Get current active_window's editor
 					if (window_manager.window[window_manager.active_window].editor) {
@@ -147,9 +152,8 @@ goorm.core.edit.find_and_replace = {
 						CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
 						editor.focus(); // jeongmin: user can edit source code right after finding
 					}
+					self.current_count = 0;
 				});
-
-
 
 				//
 				self.panel.on('shown.bs.modal', function() {
@@ -324,6 +328,7 @@ goorm.core.edit.find_and_replace = {
 		var text = keyword,
 			length = text.length,
 			caseFold = true,
+			start,
 			options = { "whole_word": this.whole_word,
 					  	"ignore_case": !this.match_case };
 		
@@ -363,9 +368,45 @@ goorm.core.edit.find_and_replace = {
 		// var window_manager = core.module.layout.workspace.window_manager;
 		// firstActive = window_manager.active_window;
 
+		// reset coount
+		
+		if ((this.last_query != text) || this.total_count === 0 || this.current_count === 0) {
+			this.total_count = 0;
+			this.current_count = 0;
+
+			var cursor;		// iterator - search positions
+			start = editor.getSearchCursor(keyword, {line:editor.getCursor().line, ch:editor.getCursor().ch}, true);	// cursor position before search
+			if (direction == "previous") {
+				start.findPrevious();
+			} else {
+				start.findNext();
+			}
+			// iterate
+			for (cursor = editor.getSearchCursor(keyword, null, true); cursor.findNext();) {
+				this.total_count++;
+				if (cursor.pos.from.line == start.pos.from.line && cursor.pos.from.ch == start.pos.from.ch) {
+					if (direction == "previous") {
+						this.current_count = this.total_count + 1;
+					} else {
+						this.current_count = this.total_count - 1;
+					}
+				}
+				
+			}
+			
+		}
+		
 		if (direction == "previous") {
 			CodeMirror.commands.findPrev(editor, true, text, caseFold);
 			CodeMirror.commands.showInCenter(editor);
+			
+			if (this.total_count > 0) {
+				this.current_count--;
+				if (this.current_count < 1) {
+					this.current_count = this.total_count;
+				}
+			}
+			
 			// cursor.findPrevious();
 			// if (!cursor.findPrevious()) {
 			// 	//첫번재 match 단어에서 previous 시
@@ -405,6 +446,14 @@ goorm.core.edit.find_and_replace = {
 		} else {
 			CodeMirror.commands.find(editor, null, text, caseFold);
 			CodeMirror.commands.showInCenter(editor);
+			
+			if (this.total_count > 0) {
+				this.current_count++;
+				if (this.current_count > this.total_count) {
+					this.current_count = 1;
+				}
+			}
+			
 			// if (!cursor.findNext()) {
 			// 	//마지막 match 단어에서 next 시
 
@@ -436,10 +485,13 @@ goorm.core.edit.find_and_replace = {
 
 			// }
 		}
+		$("#find_and_replace_matches").html(this.current_count + " / " + this.total_count);
+		$("#find_and_replace_matches").show();
 		// window_manager.window[firstActive].activate();
 		// editor.setSelection(cursor.from(), cursor.to());
 		// this.replace_cursor = cursor;
-		// this.last_query = text;
+		this.last_query = text;
+		this.recent_pos = start;
 		// this.last_pos = cursor.to();
 	},
 	/* 트리뷰 만들어줘야됌 */
@@ -472,24 +524,24 @@ goorm.core.edit.find_and_replace = {
 				text = RegExp(keyword, "gi");
 		}	
 
-		var nodes = {};
-		var window_manager = core.module.layout.workspace.window_manager;
-		var firstActive;
-		var searchedWords = [];
+		var nodes = {}, node = {}, i,
+			window_manager = core.module.layout.workspace.window_manager,
+			firstActive, cursor, key,
+			searchedWords = [];
 
 		this.unmark();
 		core.dialog.search.query = keyword;
 		firstActive = window_manager.active_window;
 
 		if (this.find_on_workspace === true) {
-			for (var i = 0; i < window_manager.window.length; i++) {
+			for (i = 0; i < window_manager.window.length; i++) {
 				if ((window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].filename).indexOf('terminal') != -1) {
 					window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].activate();
 					continue;
 				}
 				window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].activate();
 
-				var node = {};
+				node = {};
 				node.filename = window_manager.window[window_manager.active_window].filename;
 				node.filetype = window_manager.window[window_manager.active_window].filetype;
 				node.filepath = window_manager.window[window_manager.active_window].filepath;
@@ -502,7 +554,7 @@ goorm.core.edit.find_and_replace = {
 				nodes[node.filepath + node.filename] = node;
 			}
 
-			for (var i = 0; i < window_manager.window.length; i++) {
+			for (i = 0; i < window_manager.window.length; i++) {
 				if ((window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].filename).indexOf('terminal') != -1) {
 					window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].activate();
 					continue;
@@ -510,7 +562,7 @@ goorm.core.edit.find_and_replace = {
 				window_manager.window[(window_manager.active_window + 1) % window_manager.window.length].activate();
 				editor = window_manager.window[window_manager.active_window].editor.editor;
 
-				var cursor = editor.getSearchCursor(text, null, caseFold);
+				cursor = editor.getSearchCursor(text, null, caseFold);
 				if (!cursor.findNext()) {
 					delete nodes[window_manager.window[window_manager.active_window].filepath + window_manager.window[window_manager.active_window].filename];
 					continue;
@@ -521,7 +573,7 @@ goorm.core.edit.find_and_replace = {
 						'className': 'cm-searched'
 					}));
 
-					var node = {};
+					node = {};
 
 					node.filename = window_manager.window[window_manager.active_window].filename;
 					node.filetype = window_manager.window[window_manager.active_window].filetype;
@@ -542,7 +594,7 @@ goorm.core.edit.find_and_replace = {
 
 			core.dialog.search.set_search_treeview($.isEmptyObject(nodes) ? null : nodes);
 		} else if (editor) {
-			var node = {};
+			node = {};
 			node.filename = window_manager.window[window_manager.active_window].filename;
 			node.filetype = window_manager.window[window_manager.active_window].filetype;
 			node.filepath = window_manager.window[window_manager.active_window].filepath;
@@ -554,7 +606,7 @@ goorm.core.edit.find_and_replace = {
 
 			nodes[node.filepath + node.filename] = node;
 
-			var cursor = editor.getSearchCursor(text, null, caseFold);
+			cursor = editor.getSearchCursor(text, null, caseFold);
 			if (!cursor.findNext()) {
 				core.dialog.search.set_search_treeview(null);
 				this.progress_elements.stop();
@@ -572,7 +624,7 @@ goorm.core.edit.find_and_replace = {
 					tch: cursor.to().ch
 				};
 
-				var node = {};
+				node = {};
 
 				node.filename = window_manager.window[window_manager.active_window].filename;
 				node.filetype = window_manager.window[window_manager.active_window].filetype;
@@ -595,7 +647,7 @@ goorm.core.edit.find_and_replace = {
 			core.dialog.search.set_search_treeview(nodes);
 		}
 		// print messages in reverse order (becuase getSearchCursor search text from the end to the start of the document)
-		for (var i = searchedWords.length - 1; i > -1; i--) {
+		for (i = searchedWords.length - 1; i > -1; i--) {
 			core.module.search.m(searchedWords[i].fline, searchedWords[i].fch, searchedWords[i].tline, searchedWords[i].tch, editor.getLine(searchedWords[i].fline));
 		}
 
@@ -652,7 +704,7 @@ goorm.core.edit.find_and_replace = {
 		if (this.last_query != text)
 			this.last_pos = null;
 
-		var cursor = editor.getSearchCursor(text, editor.getCursor() || this.last_pos, caseFold);
+		cursor = editor.getSearchCursor(text, editor.getCursor() || this.last_pos, caseFold);
 
 		if (!cursor.findNext()) {
 			cursor = editor.getSearchCursor(text, null, caseFold);
@@ -685,11 +737,11 @@ goorm.core.edit.find_and_replace = {
 		}
 
 		this.unmark();
-		if (editor.getSelection() == "")
+		if (editor.getSelection() === "")
 			return;
 		this.search(keyword1, editor);
 		this.search(keyword1, editor, "previous");
-		if (editor.getSelection() == "")
+		if (editor.getSelection() === "")
 			return;
 		var cursor = editor.getSearchCursor(text, editor.getCursor(), caseFold);
 		if (!cursor.findPrevious())
@@ -734,8 +786,10 @@ goorm.core.edit.find_and_replace = {
 				no_text: core.module.localization.msg.confirmation_no,
 				yes: function() {
 					for (var cursor = editor.getSearchCursor(text, null, caseFold); cursor.findNext();) {
-						editor.replaceRange(replace, cursor.from(), cursor.to());
-						core.module.search.replace_all(cursor.from().line, cursor.from().ch, cursor.to().line, cursor.to().ch, text, replace);
+						// hidden - This causes infinite loop when replace 'a' to 'aa'
+// 						editor.replaceRange(replace, cursor.from(), cursor.to());
+// 						core.module.search.replace_all(cursor.from().line, cursor.from().ch, cursor.to().line, cursor.to().ch, text, replace);
+						cursor.replace(replace);
 					}
 
 					self.panel.modal('hide');
@@ -777,7 +831,7 @@ goorm.core.edit.find_and_replace = {
 
 		var window_manager = core.module.layout.workspace.window_manager;
 
-		$("#find_query_inputbox").val("");
+		// $("#find_query_inputbox").val("");
 		$("#replace_query_inputbox").val("");
 
 		// Get current active_window's editor

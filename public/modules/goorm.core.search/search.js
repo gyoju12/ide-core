@@ -22,7 +22,6 @@ goorm.core.search = {
 	treeview: null,
 	query: null,
 	current_options: null,
-	is_working: false,
 
 	init: function() {
 		var self = this;
@@ -345,8 +344,14 @@ goorm.core.search = {
 					var filepath = node.li_attr.filepath;
 					var matched_line = node.li_attr.matched_line;
 					if(node.li_attr.badge === undefined) {
-						search(filename, filetype, filepath, matched_line);	
-						$("[action=show_in_center]").click();
+						search(filename, filetype, filepath, matched_line, function() {
+							var window_manager = core.module.layout.workspace.window_manager;
+							var active_window = window_manager.active_window;
+							if (active_window > -1) {
+								CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+								window_manager.window[active_window].editor.focus();
+							}
+						});	
 					}
 					
 				}
@@ -408,19 +413,26 @@ goorm.core.search = {
 		// jeongmin: all projects
 		if (search_path == '')
 			postdata.project_path = '';
-
-		if(self.is_working === true){
-			return;
+		
+		var progress_elements = core.module.loading_bar.start({
+			now: 0,
+			unique: "search",
+			beforeStop: function(){
+				$("#dlg_search #g_op_btn_ok").removeAttr("disabled");
+			}
+		});
+		if(!progress_elements){
+			return false;
 		}
-		self.is_working = true;
+		this.progress_elements = progress_elements;
 		$("#dlg_search #g_op_btn_ok").attr("disabled", "disabled");
 		self.matched_file_list = [];
-		// core.module.loading_bar.start("Searching......");
 		//var progress_elements = core.module.loading_bar.start();
-		core.progressbar.set(0);
 
 		core._socket.once("/file/search_on_project", function(res) {
-			core.progressbar.set(80);
+			console.log("A");
+			console.log(self.progress_elements.bar);
+			core.progressbar.set(80, self.progress_elements.bar);
 
 			// var length = 0;
 			// if (!res.error) {
@@ -459,11 +471,9 @@ goorm.core.search = {
 
 				self.hide();
 			}
-			core.progressbar.set(100);
-			self.is_working = false;
-			$("#dlg_search #g_op_btn_ok").removeAttr("disabled");
+			self.progress_elements.stop();
 			//progress_elements.stop();
-		}, true); // jeongmin: show loading bar
+		});
 		core._socket.emit("/file/search_on_project", postdata);
 
 	},

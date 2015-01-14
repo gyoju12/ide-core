@@ -34,11 +34,6 @@ var g_edit = require("../modules/goorm.core.edit/edit");
 
 
 
-var check_special_characters = function(str) {
-	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
-	return str;
-};
-
 var check_valid_path = function(str) {
 	if (!str) return false;
 	return !(/\.\.|~|;|&|\|/.test(str));

@@ -14,7 +14,6 @@ goorm.core.utility.progressbar = {
 
 	set: function(value, id) { //value: progress percentage, id: loading bar's progress bar
 		this.container = id ? id : "#goorm_progress_bar"; //jeongmin: decide where this progress bar is in
-
 		if (value < 100) {
 			this.be_active();
 		} else {
@@ -28,6 +27,12 @@ goorm.core.utility.progressbar = {
 			$(this.container).addClass("hide");
 			$(this.container).removeClass("active");
 		}
+	},
+	
+	str: function(str, title) {
+		title = title ? title : "goorm_progress_bar";
+		$(title).html(src || core.module.localization.msg.please_wait);
+		
 	},
 
 	be_active: function() {

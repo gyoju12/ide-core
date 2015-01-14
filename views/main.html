@@ -366,8 +366,8 @@
                                     <li>
                                         <a href="#" action="new_project_import" localization_key="project_import">Import</a>
                                     </li>
-                                    <li class="divider" id="plugin_new_project"></li>
                                     <li class="divider"></li>
+                                    <li class="divider" id="plugin_new_project"></li>
                                     <li>
                                         <a href="#" action="new_file_file" localization_key="file_new_file">File</a>
                                     </li>
@@ -519,19 +519,6 @@
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="#" action="insert_line_before" localization_key="edit_insert_line_before">
-                                            Insert Line Before
-                                            <em class="helptext">Shift + Ctrl + Enter</em>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" action="insert_line_after" localization_key="edit_insert_line_after">
-                                            Insert Line After
-                                            <em class="helptext">Ctrl + Enter</em>
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
                                         <a href="#" action="do_downcase_cursor" localization_key="edit_downcase_cursor">
                                             Downcase at Cursor
                                             <em class="helptext">Ctrl + K + L</em>
@@ -581,6 +568,19 @@
                                         <a href="#" action="do_delete_line" localization_key="edit_delete_line">
                                             Delete Line
                                             <em class="helptext">Shift + Ctrl + K</em>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#" action="insert_line_before" localization_key="edit_insert_line_before">
+                                            Insert Line Before
+                                            <em class="helptext">Shift + Ctrl + Enter</em>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" action="insert_line_after" localization_key="edit_insert_line_after">
+                                            Insert Line After
+                                            <em class="helptext">Ctrl + Enter</em>
                                         </a>
                                     </li>
                                     <li class="divider"></li>
@@ -1329,17 +1329,7 @@
                             <i class="fa fa-fw fa-expand fa-lg"></i>
                         </button>
                     </div>
-                    <div id="main_scm_toolbar" class="btn-group grm_toolbar">
-                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Commit" data-container="body" action="scm_status" tooltip='Commit'>
-                            <i class="fa fa-fw fa-upload fa-lg"></i>COMMIT
-                        </button>
-                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Update" data-container="body" action="scm_update" tooltip='Update'>
-                            <i class="fa fa-fw fa-download fa-lg"></i>UPDATE
-                        </button>
-                        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Pull" data-container="body" action="scm_status" tooltip='Pull'>
-                            <i class="fa fa-fw fa-download fa-lg"></i>PULL
-                        </button>
-                    </div>
+                    <!--  -->
                     <!--
                     <div id="main_window_toolbar" class="btn-group">
                         <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="cascade" tooltip="window_cascade">
@@ -1496,6 +1486,7 @@
                             <i class="fa fa-fw fa-expand fa-lg"></i>
                         </button>
                     </div>
+                    <!--  -->
                     <!--
                     <div id="bubble_window_toolbar" class="btn-group bubble_window_toolbar" style="display:none;">
                         <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="cascade" tooltip="window_cascade">
@@ -2097,13 +2088,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="project_author row">
-                                            <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author">Author ID</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" name="input_import_project_author" class="input_import_project_author form-control" />
-                                            </div>
-                                        </div>
-
                                         <div class="project_author_name row">
                                             <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
                                             <div class="col-sm-10">
@@ -2176,12 +2160,6 @@
                                 </div>
                             </div>
 
-                            <div class="row project_author">
-                                <label for="input_project_author" class="col-md-2 control-label" localization_key='dialog_new_project_author'>Author ID</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" id="input_project_author" placeholder="Author ID" />
-                                </div>
-                            </div>
                             <div class="row project_author_name">
                                 <label for="input_project_author_name" class="col-md-2 control-label" localization_key='dialog_new_project_author_name'>Author Name</label>
                                 <div class="col-md-10">
@@ -3253,13 +3231,6 @@
                                     </div>
                                 </div>
 
-                                <div class="project_author row">
-                                    <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author">Author ID</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="input_import_project_author" class="input_import_project_author form-control" />
-                                    </div>
-                                </div>
-
                                 <div class="project_author_name row">
                                     <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
                                     <div class="col-sm-10">
@@ -3552,7 +3523,7 @@
      DIALOG : find_and_replace
     -->
         <div class="modal fade" id="dlg_find_and_replace" tabindex="-1" role="dialog" aria-labelledby="modal_find_and_replace" aria-hidden="true" data-backdrop="false">
-            <div class="modal-dialog" style="width: 400px;">
+            <div class="modal-dialog" style="width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -3571,22 +3542,32 @@
                             </div>
 
                             <div class="col-xs-4">
-                                <div class="btn-group btn-group-sm" style="margin-bottom: 13px; width: 100%">
-                                    <button id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
-                                    <button id="far_whole_word" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Whole Word" tooltip="msg_project_whole_word_guide" data-container="body" tabindex="-1">"  "</button>
-                                    <button id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
+                                <div class="row">
+                                    <div class="btn-group btn-group-sm" style="margin-bottom: 5px; width: 100%">
+                                        <button id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
+                                        <button id="far_whole_word" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="msg_project_whole_word_guide" data-container="body" tabindex="-1">"  "</button>
+                                        <button id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
+                                    </div>
                                 </div>
-                                <div class="btn-group btn-group-sm" style="width: 100%">
-                                    <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
-                                        <div class="find_replace_prev" style="margin: 0px 5px 0px 7px"></div>
-                                    </button>
-                                    <button id="g_far_btn_find" type="button" class="btn btn-default" style="width:50%" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
-                                        <div class="find_replace_next" style="margin: 0px 5px 0px 10px"></div>
-                                    </button>
+                                <div class="row" style="height:29px; margin-bottom:0px;">
+                                    
+                                    <div class="btn-group btn-group-sm" style="">
+                                        <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="left" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
+                                            <div class="find_replace_prev"></div>
+                                        </button>
+                                        <button id="g_far_btn_find" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="right" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
+                                            <div class="find_replace_next"></div>
+                                        </button>
+                                    </div>
+                                    <span id="find_and_replace_matches" style="vertical-align:middle; margin-left:5px"></span>
                                 </div>
-
                             </div>
                         </div>
+                        <!-- <div class="row">
+                            <div id="find_and_replace_matches" class="col-xs-4 col-xs-offset-8" style="text-align:center;">
+                                <span id="find_and_replace_current">0</span> / <span id="find_and_replace_total">0</span>
+                            </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer" style="padding:13px 13px 13px;">
                         <!-- depreciated -heeje -->
@@ -4062,11 +4043,7 @@
                                     <li target="Shortcut" style="display:none;">    
                                         <a href="#shortcut_debug_tab" data-toggle="tab" localization_key="debug" id='shortcut_debug'>Debug</a>
                                     </li>
-                                    <!--
-                                    <li target="Shortcut" style="display:none;">    jeongmin: add shortcut tabview
-                                        <a href="#shortcut_scm_tab" data-toggle="tab" localization_key="scm" id='shortcut_scm'>SCM</a>
-                                    </li>
-                                    -->
+                                    <!--  -->
                                     <!--
                                     <li target="Shortcut" style="display:none;">    jeongmin: add shortcut tabview
                                         <a href="#shortcut_cloud_tab" data-toggle="tab" localization_key="cloud" id='shortcut_cloud'>Cloud</a>
@@ -4747,22 +4724,7 @@
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
                                     </div>
-                                    <!--
-                                    <div class="tab-pane fade" id="shortcut_scm_tab" class="shortcut_tab" plugin="null">
-                                        <legend localization_key="dialog_preference_shortcut_scm_guide">Change SCM Menu Shortcut</legend>
-                                        <fieldset>
-
-
-                                                <div class="shortcut_menu col-md-4 control-label" localization_key="??">???</div>
-                                                <input class="shortcut_input" name="preference.shortcut.??" id="preference.shortcut.??" value="??"/>
-                                            </div>
-                                        </fieldset>
-                                        <div class="text-right">
-                                            <button class="btn btn-default restore_default">Restore</button>
-                                            <button class="btn btn-default apply">Apply</button>
-                                        </div>
-                                    </div>
-                                    -->
+                                    <!--  -->
                                     <!--
                                     <div class="tab-pane fade" id="shortcut_cloud_tab" plugin="null">
                                         <legend localization_key="dialog_preference_shortcut_cloud_guide">Change Cloud Menu Shortcut</legend>
@@ -5778,7 +5740,7 @@
                                 Step out
                                 <em class="helptext">F8</em>
                             </span>
-                        
+                            <!--  -->
                             <h5 localization_key="window">Window</h5>
                             <span name="preference.shortcut.window.new_terminal_window" localization_key="window_new_terminal_window">
                                 New Terminal Window

@@ -8,9 +8,12 @@
  * version: 2.0.0
  **/
 
+var is_hide = false, // is hide called before shown
+	try_to_show = false; // someone tries to show modal
+
 goorm.core.utility.loading_bar = {
-	state: 'hidden',
 	list: {}, // loading bar's progress bar list
+	unique: [], //if progress has unique, compare with it. if in here, ignore start 
 	count: 0, // number of progress bars
 	template: '<div id="progress_wrapper" class="progress_wrapper" fingerprint="_fingerprint">\
 					<div id="progress_title" class="row text-muted"></div>\
@@ -35,19 +38,39 @@ goorm.core.utility.loading_bar = {
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
-			self.state='show';
+
+			if (is_hide) { // modal is hiding now!
+				try_to_show = true; // but we're trying to show!
+			}
 		});
 
+		this.panel.on("shown.bs.modal", function() {
+			// we success to show modal. Initialize all flags.
+			try_to_show = false;
+			is_hide = false;
+
+			if (Object.keys(self.list).length === 0) {
+				self.hide();
+			}
+		});
 
 		// enable key event on dialogs. Jeong-Min Im.
-		this.panel.on('hidden.bs.modal', function() {
-			$('.modal.in').focus();
+		// this.panel.on('hidden.bs.modal', function() {
+		// $('.modal.in').focus();
 
-			// fix deleting project
-			if ($('#dlg_delete_project').attr('class').indexOf('in') >= 0) {
-				$("#project_delete_list").focus();
+		// fix deleting project
+		// if ($('#dlg_delete_project').attr('class').indexOf('in') >= 0) {
+		// 	$("#project_delete_list").focus();
+		// }
+		// self.state = 'hidden';
+		// });
+
+		this.panel.on('hide.bs.modal', function() {
+			if (try_to_show) { // wait, someone tries to show! Let him do that
+				return false;
+			} else { // we're going to hide
+				is_hide = true;
 			}
-			self.state='hidden';
 		});
 
 		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
@@ -69,7 +92,7 @@ goorm.core.utility.loading_bar = {
 		});
 	},
 
-	get_fingerprint: function (bits) {
+	get_fingerprint: function(bits) {
 		var chars, rand, i, ret;
 
 		chars = 'abcdefghijklmnopqr12345678abcdefghijklmnopqrstuvwxyz012345678912';
@@ -94,8 +117,17 @@ goorm.core.utility.loading_bar = {
 	// 	str(String): loading message(means current process)
 	// }
 	// return: progress bar elements. For getting logs, progress percentage...
-	start: function(option) {
+	start: function(option, callback) {
 		var self = this;
+		option = option || {};
+
+		if (option.unique) {
+			if (this.unique.indexOf(option.unique) >= 0) {
+				return false;
+			} else {
+				this.unique.push(option.unique);
+			}
+		}
 
 		var fingerprint = this.get_fingerprint(54);
 
@@ -105,7 +137,7 @@ goorm.core.utility.loading_bar = {
 		var kill = 'progress_kill_' + fingerprint;
 		var contents = 'progress_contents_' + fingerprint;
 
-		option = option || {};
+
 
 		// count
 		this.list[fingerprint] = option;
@@ -133,6 +165,13 @@ goorm.core.utility.loading_bar = {
 				var fingerprint = $(this).parents('.progress_wrapper').attr('fingerprint'); // extract process that will be killed
 
 				self.list[fingerprint].kill(); // execute kill function
+
+				if (typeof(option.beforeStop) === "function") {
+					option.beforeStop();
+				}
+				if (option.unique) {
+					self.unique.splice(self.unique.indexOf(option.unique), 1);
+				}
 				self.stop('#progress_wrapper_' + fingerprint); // stop this progress
 			});
 		} else {
@@ -143,9 +182,13 @@ goorm.core.utility.loading_bar = {
 		$('#g_lb_btn_ok').hide(); // ok button is for done loading bar
 		this.goorm_progress_bar.css('cursor', ''); // loading bar is showing, so set goorm progress bar non-clickable
 
-		$.debounce(function() { // jeongmin: continuous dialog showing makes error. So give some delay
-			self.panel.modal('show');
-		}, 100)();
+		// setTimeout(function() { // jeongmin: continuous dialog showing makes error. So give some delay
+		self.panel.modal('show');
+		// }, 150);
+
+		if (typeof(callback) === "function") {
+			callback();
+		}
 
 		return {
 			wrapper: '#' + wrapper,
@@ -153,7 +196,16 @@ goorm.core.utility.loading_bar = {
 			bar: '#' + bar,
 			kill: "#" + kill,
 			contents: '#' + contents,
+			str: function(str) {
+				$(this.title).html(str);
+			},
 			stop: function() { // stops 'this' progress
+				if (typeof(option.beforeStop) === "function") {
+					option.beforeStop();
+				}
+				if (option.unique) {
+					self.unique.splice(self.unique.indexOf(option.unique), 1);
+				}
 				self.stop(this.wrapper); // this -> returned object
 			}
 		};
@@ -162,25 +214,17 @@ goorm.core.utility.loading_bar = {
 	// remove progress bar. Jeong-Min Im.
 	// wrapper(String): progress bar's wrapper(id)
 	stop: function(wrapper) {
-		self = this;
+		var self = this;
 
-		var check_hidden = function()  {
-			setTimeout(function() {
-				self.stop(wrapper);
-			}, 50);
-		}
-
-		if (Object.keys(this.list).length == 0) { // last one
-			if (self.state === 'hidden') {
-				check_hidden();		
-			} else {
-				this.hide();	
-			}
-		} else if (Object.keys(this.list).length == 1) { // last one
-			if (self.state === 'hidden') {
-				check_hidden();
-			} else if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
-				this.hide();
+		if (Object.keys(this.list).length == 1) { // last one
+			// initialize
+			this.list = {};
+			this.count = 0; // nothing left. Last one is stopped
+			$(wrapper).remove();
+			if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
+				if (Object.keys(self.list).length == 0) {
+					self.hide();
+				}
 			} else { // in progressbar.. notice user that progress is done
 				this.panel.find('.close').hide(); // cancel shouldn't be clicked by user after process is done. (cancel another process that has same PID as this process)
 				$('#g_lb_btn_ok').show();
@@ -192,10 +236,6 @@ goorm.core.utility.loading_bar = {
 				// 	lock: true
 				// });
 			}
-			// initialize
-			this.panel.find('.progress_wrapper').remove();
-			this.list = {};
-			this.count = 0; // nothing left. Last one is stopped
 		} else if (wrapper) {
 			var fingerprint = $(wrapper).attr('fingerprint'); // find out which progress is done
 

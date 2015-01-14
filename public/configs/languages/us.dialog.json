@@ -63,7 +63,7 @@
 				"value": "Select a folder to import."
 			},
 			"dialog_folder_import_folder": {
-				"value": "Upload the folder to import.<br/>Empty folders will not be uploaded."
+				"value": "Select a folder to upload.<br/>Empty folders will not be uploaded."
 			}
 		}
 	},
@@ -201,9 +201,6 @@
 			},
 			"dialog_new_project_guide2": {
 				"value": "Add information for new project."
-			},
-			"dialog_new_project_author": {
-				"value": "Author ID"
 			},
 			"dialog_new_project_author_name": {
 				"value": "Author Name"

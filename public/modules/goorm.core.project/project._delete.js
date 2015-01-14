@@ -68,7 +68,7 @@ goorm.core.project._delete = {
 							}
 							
 							core.module.debug.button_inactive();
-							
+							$("#project_delete_list .selected_button").blur();
 							notice.show(core.module.localization.msg.notice_project_delete_done);
 
 							// project list focusing is needed for enable key event. Jeong-Min Im.

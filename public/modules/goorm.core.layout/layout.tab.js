@@ -380,7 +380,6 @@ goorm.core.layout.tab = {
 		var key = this.tab_key[position] + this.tab_index[position] ++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
 		var html_key = (os === 'mac') ? sm.replace_hotkey(key).replace(/ /g, '') : key;
 		var content = (core.module.localization && core.module.localization.msg && core.module.localization.msg[tab.localization.menu]) ? core.module.localization.msg[tab.localization.menu] : tab.content;
-
 		// Bind Event
 		//
 		core.module.shortcut_manager.bind(action, key, fn);
@@ -397,7 +396,7 @@ goorm.core.layout.tab = {
 		var span = '<span class="' + action + '" localization_key="' + tab.localization.menu + '"> \
                         ' + content + ' \
                         <em class="helptext">' + html_key + '</em> \
-                    </span>'
+                    </span>';
 
 		$('li.goorm_perspectives_menu_end[position="' + position + '"]').before(li);
 		$('span.goorm_perspectives_menu_end[position="' + position + '"]').before(span);
@@ -498,7 +497,7 @@ goorm.core.layout.tab = {
 			core.module.layout.select(tab_id);
 		// }
 
-	},
+	}
 
 
 };

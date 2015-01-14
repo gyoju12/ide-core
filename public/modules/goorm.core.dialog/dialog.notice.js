@@ -26,6 +26,7 @@ goorm.core.dialog.notice.prototype = {
 	init: function() {
 		var self = this;
 
+
 		// this.title = "Notice";
 		this.panel = $('#dlg_notice');
 
@@ -35,21 +36,22 @@ goorm.core.dialog.notice.prototype = {
 			self.panel.modal('hide');
 		});
 
-		this.panel.keydown(function(e) {
+		this.panel.bind('keydown', function(e) {
 			switch (e.keyCode) {
-				case 13: // enter key
-					self.panel.modal('hide');
+				case 13:  // enter key
+					$("#dlg_notice").modal('hide');	
+					e.stopPropagation();
+					e.preventDefault();
+					break;
 			}
 		});
 
 		this.panel.on('hidden.bs.modal', function() {
-			
 			$('.modal.in').focus();
 
 			//fix deleting project
 			if($('#dlg_delete_project').attr('class').indexOf('in') >= 0)
 				$("#project_delete_list").focus();
-			
 		});
 
 		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
@@ -59,6 +61,12 @@ goorm.core.dialog.notice.prototype = {
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
+		});
+
+		this.panel.on('shown.bs.modal', function () {
+			$("#project_delete_list").blur();
+			$(this).focus();
+			console.log(document.activeElement);
 		});
 
 		// this.panel.on("show.bs.modal", function (){	//jeongmin: done at dialog.js

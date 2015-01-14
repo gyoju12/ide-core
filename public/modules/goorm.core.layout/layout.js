@@ -737,7 +737,6 @@ goorm.core.layout = {
 				tab.click();
 				this.expand(pane);
 				if (tab_name == "terminal") {
-					console.log("layout.select");
 					if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
 						core.module.layout.terminal.Terminal.focus();
 					}

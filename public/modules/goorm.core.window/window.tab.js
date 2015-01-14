@@ -44,12 +44,6 @@ goorm.core.window.tab.prototype = {
 		this.filename = options.filename || options.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 		this.filepath = options.filepath;
 
-
-		// var check_special_characters = function(str) {
-		// 	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
-		// 	return str;
-		// };
-
 		//bootstrap start
 		//var morphed_title = this.title.split("/").join("_").split(".").join("_").split(":").join("_");
 

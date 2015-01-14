@@ -53,7 +53,7 @@ goorm.core.dialog.confirmation.prototype = {
 		this.no = option.no;
 		this.close = option.close;
 
-		if(this.title != "" && this.title != undefined) {
+		if(this.title !== "" && this.title !== undefined) {
 			this.title_id = this.title.replace('?', "");
 			$("#confirmation_title").html(this.title);
 		}	

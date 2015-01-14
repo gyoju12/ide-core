@@ -23,6 +23,8 @@
 	"preference.shortcut.debug.continue": "Ctrl+Shift+Y",
 	"preference.shortcut.debug.terminate": "F4",
 	"preference.shortcut.debug.toggle_breakpoint": "Ctrl+B",
+	"preference.shortcut.scm.commit": "Alt+Shift+C",
+	"preference.shortcut.scm.update": "Alt+Shift+U",
 	"preference.shortcut.edit.auto_formatting": "Ctrl+K",
 	"preference.shortcut.edit.comment_selected": "Ctrl+/",
 	"preference.shortcut.edit.copy": "Ctrl+C",

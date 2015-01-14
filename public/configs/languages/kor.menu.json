@@ -117,17 +117,11 @@
 					"edit_delete_line_right": {
 						"value": "커서 오른쪽 삭제"
 					},
-					"edit_insert_line_before": {
-						"value": "위에 줄 삽입"
-					},
-					"edit_insert_line_after": {
-						"value": "아래에 줄 삽입"
-					},
 					"edit_downcase_cursor": {
-						"value": "소문자로 전환"
+						"value": "소문자로 변경"
 					},
 					"edit_upcase_cursor": {
-						"value": "대문자로 전환"
+						"value": "대문자로 변경"
 					},
 					"edit_transpose": {
 						"value": "좌우 위치 바꾸기"
@@ -145,6 +139,12 @@
 					},
 					"edit_delete_line": {
 						"value": "줄 삭제"
+					},
+					"edit_insert_line_before": {
+						"value": "위에 줄 삽입"
+					},
+					"edit_insert_line_after": {
+						"value": "아래에 줄 삽입"
 					},
 					"edit_swap_line_down": {
 						"value": "아랫줄과 바꾸기"
@@ -179,7 +179,7 @@
 						"value": "아랫줄 추가 선택"
 					},
 					"edit_single_selection": {
-						"value": "단일 선택으로 전환"
+						"value": "다중 커서/선택 해"
 					},
 					"edit_split_into_lines": {
 						"value": "선택 영역 줄 단위로 나누기"
@@ -222,7 +222,7 @@
 						"value": "한 줄 아래로 스크롤"
 					},
 					"edit_show_in_center": {
-						"value": "에디터 가운데서 보기"
+						"value": "현재 라인 중앙에서 보기"
 					}
 				}
 			},

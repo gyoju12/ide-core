@@ -418,6 +418,7 @@ goorm.core.project.list.prototype = {
 			var selected_project = $(self.list).find(".selected_button");
 			var project_list = $(self.list).children();
 			var target = null;
+			var next_selected = null;
 			//$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=cpp]").position().top);
 			for (var i = 0; i < project_list.length; i++) {
 				// set target = current selected project index
@@ -441,31 +442,46 @@ goorm.core.project.list.prototype = {
 				case 38: // up key
 					if (project_list.length) {
 						if (target > 0) {
-							project_list[target - 1].click();
+							next_selected = project_list[target - 1];
+							next_selected.click();
 						}
 					}
 					break;
 				case 40: // down key
 					if (project_list.length) {
 						if (target < project_list.length - 1) {
-							project_list[target + 1].click();
+							next_selected = project_list[target + 1];
+							next_selected.click();
 						}
 					}
 					break;
 			}
+			
+			if (next_selected == null) return;
+
+			if (project_list.length) {
+				// 253.09090912342072 value is heigth (layout showing type items)
+				if ($(next_selected).position().top > 235.984) {
+					// item above the layout
+					$(self.list).scrollTop($(self.list).scrollTop() + 79.5); // item size 127 + margin 10
+				} else if ($(next_selected).position().top < 0) {
+					// item below the layout
+					$(self.list).scrollTop($(self.list).scrollTop() - 79.5);
+				}
+			}
 			e.preventDefault();
 
-			var list = $(self.list),
-				selected = list.find('.selected_button'),
-				scroll = list.scrollTop();
+			// var list = $(self.list),
+			// 	selected = list.find('.selected_button'),
+			// 	scroll = list.scrollTop();
 
-			selected.focus();
+			// selected.focus();
 
-			if (selected && selected.position()) {
-				scroll += selected.position().top;
-			}
+			// if (selected && selected.position()) {
+			// 	scroll += selected.position().top;
+			// }
 
-			list.scrollTop(scroll);
+			// list.scrollTop(scroll);
 
 			// $(self.list).scrollTop($(self.list).scrollTop() + $(self.list).find(".selected_button").position().top);
 		});

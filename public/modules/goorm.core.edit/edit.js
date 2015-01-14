@@ -338,7 +338,7 @@ goorm.core.edit.prototype = {
             for (var j = 0; j < cursors.length; j++) {
                 var user_cursor = $(cursors[j]);
 
-                var target_id = $(user_cursor).attr('class').split(' ')[0].replace('user_cursor', 'user_name'); // user_cursor_[ID]
+                var target_id = $(user_cursor).attr('class').split(' ')[0].replace('user_cursor', 'user'); // user_cursor_[ID]
                 var user_name = $('.' + target_id);
 
                 var user_cursor_top = parseInt(user_cursor.css('top').split('px')[0], 10);
@@ -913,10 +913,6 @@ goorm.core.edit.prototype = {
 
         var temp_path = "";
 
-        // var check_special_characters = function(str) {
-        //     str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
-        //     return str;
-        // };
         
         //useonly(mode=goorm-oss)
         temp_path = filepath + "/" + filename;
@@ -1408,7 +1404,7 @@ goorm.core.edit.prototype = {
         if (this.bookmark.bookmarks) { //only when there is bookmark
             var original_list = this.bookmark.bookmarks; //save for comment
 
-            this.bookmark.bookmarks = []; //initialize bookmark list
+            this.bookmark.bookmarks = {}; //initialize bookmark list
 
             for (var i = 0; i < this.editor.lineCount(); i++) { //search bookmarks
                 var info = this.editor.lineInfo(i); //get line information

@@ -205,14 +205,14 @@ goorm.core.menu.action = {
 				if (core.module.layout.workspace.window_manager.active_window > -1) {
 					core.dialog.rename_file.show();
 				} else {
-					alert.show(core.module.localization.msg.alert_select_file);	
+					alert.show(core.module.localization.msg.alert_select_file);
 				}
 			} else {
 				core.dialog.rename_file.show('context');
 			}
 		});
 
-		
+
 
 		$("[action=delete_file]").off("click").tooltip();
 		$("[action=delete_file]").click(function() {
@@ -525,11 +525,11 @@ goorm.core.menu.action = {
 		$("[action=do_go_to_line]").click(function() {
 			core.module.layout.edit_toolbar.option("go_to_line"); //jeongmin: show go to line edit toolbar
 		});
-		
+
 		$("[action=toggle_bookmark]").off("click").tooltip(); //jeongmin: add toggle bookmark menu action
 		$("[action=toggle_bookmark]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.toggle();
 			}
 		});
@@ -537,7 +537,7 @@ goorm.core.menu.action = {
 		$("[action=next_bookmark]").off("click").tooltip(); //jeongmin: add next bookmark menu action
 		$("[action=next_bookmark]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.next();
 			}
 		});
@@ -545,7 +545,7 @@ goorm.core.menu.action = {
 		$("[action=prev_bookmark]").off("click").tooltip(); //jeongmin: add prev bookmark menu action
 		$("[action=prev_bookmark]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.prev();
 			}
 		});
@@ -553,7 +553,7 @@ goorm.core.menu.action = {
 		$("[action=clear_bookmark]").off("click").tooltip(); //jeongmin: add clear bookmark menu action
 		$("[action=clear_bookmark]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.clear();
 			}
 		});
@@ -606,7 +606,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.delLineLeft(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -619,7 +619,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.delLineRight(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -632,7 +632,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.insertLineBefore(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -645,7 +645,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.insertLineAfter(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -658,7 +658,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.downcaseAtCursor(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -671,7 +671,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.upcaseAtCursor(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -684,7 +684,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.transposeChars(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -697,7 +697,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.joinLines(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -710,7 +710,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.duplicateLine(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -723,7 +723,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.deleteLine(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -736,7 +736,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.swapLineDown(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -749,7 +749,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.swapLineUp(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -762,7 +762,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectNextOccurrence(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -775,7 +775,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectLine(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -788,7 +788,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectScope(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -801,7 +801,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectBetweenBrackets(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -814,7 +814,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectLinesUpward(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -827,7 +827,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.selectLinesDownward(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -840,7 +840,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.singleSelectionTop(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -853,7 +853,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.splitSelectionByLine(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -866,7 +866,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.fold(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -879,7 +879,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.unfold(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -892,7 +892,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.unfoldAll(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -905,7 +905,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.goToBracket(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -918,7 +918,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.goSubwordLeft(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -931,7 +931,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.goSubwordRight(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -944,7 +944,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.scrollLineUp(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -957,7 +957,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.scrollLineDown(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -970,7 +970,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -983,7 +983,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.sortLines(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -996,7 +996,7 @@ goorm.core.menu.action = {
 			}
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
-			if(active_window > -1){
+			if (active_window > -1) {
 				CodeMirror.commands.sortLinesInsensitive(window_manager.window[active_window].editor.editor);
 				window_manager.window[active_window].editor.focus();
 			}
@@ -1139,7 +1139,7 @@ goorm.core.menu.action = {
 		$("[action=delete_bookmark_comment]").off("click").tooltip();
 		$("[action=delete_bookmark_comment]").click(function(e) {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.delete_comment();
 			}
 		});
@@ -1441,23 +1441,23 @@ goorm.core.menu.action = {
 				}
 			}
 		});
-		
+
 		$("[action=toggle_breakpoint]").off("click").tooltip();
 		$("[action=toggle_breakpoint]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.set_breakpoint(editor.editor.getCursor().line);
 			}
 		});
-		
+
 		$("[action=toggle_bookmark]").off("click").tooltip(); //jeongmin: add toggle bookmark menu action
 		$("[action=toggle_bookmark]").click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if(editor != null){
+			if (editor != null) {
 				editor.bookmark.toggle();
 			}
 		});
-		
+
 		
 		// Go to Line in Editor
 		$("[action=do_go_to_line]").off("click").tooltip();

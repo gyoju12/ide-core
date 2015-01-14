@@ -66,7 +66,7 @@ goorm.core.preference = {
 			$('#use_line_wrapping').css('visibility', 'hidden');
 		}
 
-		var v = core.preference['preference.editor.rulers'];
+		v = core.preference['preference.editor.rulers'];
 
 		if (v === true || v === 'true') {
 			v = true;
@@ -219,22 +219,29 @@ goorm.core.preference = {
 	apply: function(id) {
 		// core.module.theme.load_css();
 		this.read_dialog(core.preference);
-		switch (id) {
-			case 'line_wrapping':
-			case 'rulers':
-				$(core).trigger("on_global_preference_confirmed");
-				break;
-			default:
-				$(core).trigger("on_preference_confirmed");
-				break;
+		if(id === 'line_wrapping' || id === 'rulers') {
+			$(core).trigger("on_global_preference_confirmed");
+		} else if(Number(id)>=3 && Number(id)<=9) {
+			console.log("==");
+			$(core).trigger("on_preference_shortcut_apply");
+		} else {
+			$(core).trigger("on_preference_confirmed");
 		}
-
+		
 		this.update_ui();
 		//$(core).trigger('renew_stack');
 		core.module.layout.workspace.window_manager.resize_all();
 	},
 
 	restore_default: function(tabName) {
+		var temp_tab = tabName.split("_")[0];
+		if(temp_tab === 'shortcut') {
+			$("#preference_tabview").find(".apply").each(function(i) {	
+				if(i>=3 && i<=9) {
+					$(this).removeAttr("disabled");
+				}
+			});
+		}
 		this.fill_dialog(this.preference_default, tabName);
 		$(core).trigger("on_preference_restored"); //jeongmin: for shortcut -> empty temporary modified shortcut
 	},
@@ -356,7 +363,7 @@ goorm.core.preference = {
 		var self = this;
 		var handle_ok = function(panel) {
 			var check_input_string = check_input();
-			if (check_input_string.length == 0) {
+			if (check_input_string.length === 0) {
 				self.apply();
 				// self.save();	//jeongmin: this function is merged with apply function 
 
@@ -398,10 +405,20 @@ goorm.core.preference = {
 
 		var set_dialog_button = function() {
 			// set Apply, restore_default Button
-			$("#preference_tabview").find(".apply").click(function() {
-				self.apply();
-			}).each(function(i) {
-				$(this).attr("id", "preference_applyBt_" + i);
+			// $("#preference_tabview").find(".apply").click(function() {
+			// 	self.apply();
+			// }).each(function(i) {
+			// 	$(this).attr("id", "preference_applyBt_" + i);
+			// });
+			$("#preference_tabview").find(".apply").each(function(i) {	
+				if(i>=3 && i<=9) {
+					$(this).attr("id", "preference_applyBt_" + i).attr("disabled", "disabled");
+				} else {
+					$(this).attr("id", "preference_applyBt_" + i);
+				}
+				$(this).click(function() {
+					self.apply(i);
+				});
 			});
 
 			$("#preference_tabview").find(".restore_default").click(function(e) {

@@ -311,6 +311,50 @@ goorm.core.project = {
 		// 	}
 		// }
 	},
+	script_run: function(current_project_path) { // Donguk_Kim : 2015.01.13
+		var self = this;
+		var wm = core.module.layout.workspace.window_manager;
+		var current = current_project_path;
+		var project_window = [];
+
+		for (var i = 0; i < wm.window.length; i++) {
+			if (wm.window[i].project === current) {
+				if (wm.window[i].alive && wm.window[i].editor && !wm.window[i].is_saved) { //sort files that have to be saved
+					project_window.push(wm.window[i]);
+				}
+			}
+		}
+		var project_save = function(callback) {
+			for (var i = 0; i < project_window.length; i++) {
+				project_window[i].editor.save();
+			}
+			if(callback) {
+				callback();
+			}
+		}
+
+		if (project_window && project_window.length > 0) {
+			confirmation.init({
+				title: core.module.localization.msg.confirmation_not_save,
+				message: core.module.localization.msg.confirmation_not_save_msg,
+				yes_text: core.module.localization.msg.confirmation_save_run,
+				no_text: core.module.localization.msg.confirmation_run, // jeongmin
+				//yes_localization: "confirmation_build_and_run",
+
+				yes: function() {
+					project_save(function() {
+						self.send_run_cmd();
+					})
+				},
+				no: function() {
+					self.send_run_cmd();
+				}
+			});
+			confirmation.show();
+		} else {
+			self.send_run_cmd();
+		}
+	},
 
 	run_latest_bin: function(is_build_fail, type) {
 		var self = this;
@@ -466,6 +510,7 @@ goorm.core.project = {
 		var categories = options.categories;
 
 		if (categories && categories.length > 0) {
+			// for (var i=0; i<categories.length; i++) {
 			for (var i=0; i<categories.length; i++) {
 				var _category = categories[i];
 
@@ -494,7 +539,7 @@ goorm.core.project = {
 
 				// add main menu
 				if (!$("li .plugin_project a[action='new_file_" + type + "'][category='"+category+"']").length)
-					$("li[id='plugin_new_project']").after("<li class='plugin_project'><a href='#' action='new_file_" + type + "' category='"+category+"' localization_key='" + localization + "name'>" + name + "</a></li>");
+					$("li[id='plugin_new_project']").before("<li class='plugin_project'><a href='#' action='new_file_" + type + "' category='"+category+"' localization_key='" + localization + "name'>" + name + "</a></li>");
 
 				// add menu action
 				$("a[action=new_file_" + type + "][category='"+category+"']").unbind("click");
@@ -532,7 +577,7 @@ goorm.core.project = {
 
 			// add main menu
 			if (!$("li .plugin_project a[action='new_file_" + type + "']").length)
-				$("li[id='plugin_new_project']").after("<li class='plugin_project'><a href='#' action='new_file_" + type + "' localization_key='" + localization + "name'>" + name + "</a></li>");
+				$("li[id='plugin_new_project']").before("<li class='plugin_project'><a href='#' action='new_file_" + type + "' localization_key='" + localization + "name'>" + name + "</a></li>");
 
 			// add menu action
 			$("a[action=new_file_" + type + "]").unbind("click");

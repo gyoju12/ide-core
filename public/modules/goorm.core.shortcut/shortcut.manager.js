@@ -142,7 +142,13 @@ goorm.core.shortcut.manager = {
 		});
 
 		//when user clicked apply or ok button, change shortcut. Jeong-Min Im.
-		$(core).on("on_preference_confirmed", function() {
+		$(core).on("on_preference_shortcut_apply", function() {
+			var progress_elements = core.module.loading_bar.start();
+			$("#preference_tabview").find(".apply").each(function(i) {	
+				if(i>=3 && i<=9) {
+					$(this).attr("disabled", "disabled");
+				}
+			});
 			if (Object.keys(self.temp_shortcut).length === 0) { // jeongmin: no temp shortcut -> maybe default
 				for (var i = shortcut_input_obj.length - 1; 0 <= i; i--) {
 					if ($(shortcut_input_obj[i]).val() != $(shortcut_input_obj[i]).attr('value')) { // jeongmin: check modified shortcut
@@ -159,6 +165,8 @@ goorm.core.shortcut.manager = {
 			}
 
 			self.temp_shortcut = {}; //initialize
+			progress_elements.stop();
+			alert.show(core.module.localization.msg.alert_shortcut_modified);
 		});
 
 		//scenario: user clicked restore button and clicked ok button -> current modified shortcut will be applied... -> prevent this problem. Jeong-Min Im.
@@ -383,7 +391,7 @@ goorm.core.shortcut.manager = {
 			if (new_shortcut != old_shortcut) {
 				is_dup = true;
 				for (var name in this.hotkeys) {
-					if (this.hotkeys[name] == new_shortcut) {
+					if (this.hotkeys[name] == new_shortcut && name == new_shortcut_name) {
 						is_dup = false;
 					}
 				}
@@ -493,6 +501,12 @@ goorm.core.shortcut.manager = {
 			delete self.temp_shortcut[to_be_deleted];
 
 			self.temp_shortcut[new_shortcut] = set; // update new shortcuts
+
+			$("#preference_tabview").find(".apply").each(function(i) {	
+				if(i>=3 && i<=9) {
+					$(this).removeAttr("disabled");
+				}
+			});
 		}
 	},
 
@@ -1501,7 +1515,7 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('debug_step_out', this.hotkeys.debug_step_out), this.hotkeys.debug_step_out, this.hotkeys_fn.debug_step_out);
 		}
-
+		
 		var key_event_lock = false;
 
 		//Build Current Project - F5

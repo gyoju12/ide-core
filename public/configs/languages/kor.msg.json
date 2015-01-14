@@ -14,6 +14,9 @@
     "alert_folder_name_empty": {
         "value": "폴더 이름이 비어 있습니다."
     },
+    "alert_shortcut_modified": {
+        "value": "변경이 완료되었습니다!"
+    },
     "alert_folder_duplicate_error": {
         "value": "폴더는 복제할 수 없습니다."
     },
@@ -282,9 +285,6 @@
     },
     "alert_project_detailed_type": {
         "value": "프로젝트 세부 유형을 선택해 주세요."
-    },
-    "alert_project_author": {
-        "value": "프로젝트 작성자를 작성해 주세요."
     },
     "alert_project_name": {
         "value": "프로젝트 이름을 작성해 주세요."
@@ -1533,6 +1533,11 @@
     },
     "notice_scm_account_changed": {
         "value": "SCM 계정을 변경하였습니다."
+    },
+    "alert_upload_folder_not_selected": {
+        "value": "업로드 할 폴더를 선택해 주세요.<br/>빈 폴더는 업로드되지 않습니다."
+    },
+    "confirmation_commit_merged_files": {
+        "value": "아무것도 선택되지 않았습니다. 병합된 상태를 커밋하고 싶으십니까?"
     }
-		
 }

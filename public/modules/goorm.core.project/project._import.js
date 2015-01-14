@@ -16,7 +16,6 @@ goorm.core.project._import = {
 	// dialog_explorer: null,
 	import_list_done: false, // jeongmin: whether project type list is made or not in import dialog
 	new_list_done: false, // jeongmin: whether project type list is made or not in new project dialog
-	is_working: false,
 
 	init: function(where) {
 
@@ -58,11 +57,7 @@ goorm.core.project._import = {
 		// input_import_project_name
 		// input_import_project_desc
 		// project_import_file
-		if (where.find(".input_import_project_author").val() === "") {
-
-			alert.show(localization_msg.alert_project_author);
-			return false;
-		} else if (where.find(".input_import_project_author_name").val() === "") {
+		if (where.find(".input_import_project_author_name").val() === "") {
 			alert.show(localization_msg.alert_project_author);
 			return false;
 		} else if (where.find(".select_import_project_detail_type").val() === "") {
@@ -84,10 +79,7 @@ goorm.core.project._import = {
 		} else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
 			alert.show(localization_msg.alert_unsupported_file_type);
 			return false;
-		} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test(where.find(".input_import_project_author").val())) {
-			alert.show(localization_msg.alert_allow_character);
-			return false;
-		}
+		} 
 		//check end
 
 		for (var i = 0; i < self.project_detailed_type_list.length; i++) {
@@ -119,19 +111,16 @@ goorm.core.project._import = {
 			//
 			project_detailed_type: where.find(".select_import_project_detail_type").attr("project_detailed_type"),
 
-			project_author: where.find(".input_import_project_author").val(),
-			project_author_name: where.find(".input_import_project_author_name").val(),
+			// project_author: where.find(".input_import_project_author").val(),
+			// project_author_name: where.find(".input_import_project_author_name").val(),
 			project_name: where.find(".input_import_project_name").val(),
 			project_desc: project_desc,
 			plugins: plugin,
 
 		};
-
 		//$.get("project/new", senddata, function(data) {	// jeongmin: current new project uses socket
 		var cb = function(data) {
 			if (data.err_code === 0) {
-
-
 				var project_dir = core.user.id + '_' + data.project_name;
 
 				//core.status.current_project_path = project_dir;
@@ -192,12 +181,9 @@ goorm.core.project._import = {
 
 				core.module.layout.terminal.resize();
 				$(core).trigger('project_is_created');
-
-				self.is_working = false;
 			} else {
+				goorm.core.project._import.progress_elements.stop();
 				alert.show(data.message);
-				self.is_working = false;
-				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 				return false;
 			}
 
@@ -207,9 +193,26 @@ goorm.core.project._import = {
 
 		////// check imported project is valid. Jeong-Min Im. -> same as new project //////
 		core._socket.once("/project/valid", function(valid) {
+			function project_new(){
+				if (where.find('.project_import_form').attr('action') == 'project/import') { // jeongmin: only when import is really in progress
+					var progress_elements = core.module.loading_bar.start({
+						str: core.module.localization.msg.import_in_progress,
+						unique: "project.import",
+						beforeStop: function(){
+							$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
+						}
+					});
+					if(!progress_elements){
+						return false;
+					}
+					goorm.core.project._import.progress_elements = progress_elements;
+					$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
+					core._socket.once("/project/new", cb);
+					core._socket.emit("/project/new", senddata);
+				}	
+			}
 			if (valid.result) {
-				core._socket.once("/project/new", cb);
-				core._socket.emit("/project/new", senddata);
+				project_new();
 			} else {
 				switch (valid.err_code) {
 					// Over Limit...
@@ -233,14 +236,8 @@ goorm.core.project._import = {
 							yes_text: localization_msg.confirmation_yes,
 							no_text: localization_msg.confirmation_no,
 							title: localization_msg.confirmation_title,
-							yes: function() {
-								if (self.is_working === true) {
-									return false;
-								}
-								self.is_working = true;
-								$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
-								core._socket.once("/project/new", cb);
-								core._socket.emit("/project/new", senddata);
+							yes: function() {	
+								project_new();
 							},
 							no: null
 						});
@@ -248,17 +245,9 @@ goorm.core.project._import = {
 						break;
 				}
 
-				self.is_working = false;
-				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
-
 			}
 		});
 
-		if (self.is_working === true) {
-			return false;
-		}
-		self.is_working = true;
-		$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
 		core._socket.emit("/project/valid", senddata);
 
 		// if (where.attr("id") == "dlg_import_project") {
@@ -275,7 +264,6 @@ goorm.core.project._import = {
 	//make submit options. Jeong-Min Im.
 	success: function(where) { //where(jQuery object): undefined or new project -> in import project dialog, there is no parameter
 		var self = this;
-
 		if (!where) //import project dialog
 			where = $("#dlg_import_project");
 
@@ -287,16 +275,6 @@ goorm.core.project._import = {
 
 		var form_options = {
 			target: where.find(".project_import_upload_output"),
-
-			beforeSubmit: function() {
-				// core.progressbar.set(10);
-
-				if (where.find('.project_import_form').attr('action') == 'project/import') { // jeongmin: only when import is really in progress
-					self.progress_elements = core.module.loading_bar.start({
-						str: core.module.localization.msg.import_in_progress
-					});
-				}
-			},
 
 			success: function(data) {
 				// core.progressbar.set(100);
@@ -327,8 +305,8 @@ goorm.core.project._import = {
 							case 10:
 								alert.show(core.module.localization.msg.alert_invalid_project_file);
 								where.find('.project_import_form').resetForm();
-								where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
-								where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
+								// where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
+								// where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
 								break;
 							case 50:
 								alert.show(core.module.localization.msg.alert_limit_file_size);
@@ -342,12 +320,9 @@ goorm.core.project._import = {
 						}
 					}
 				} else {
-
-					self.progress_elements.stop(); // jeongmin: 'import is in progress' loading bar
+					core.module.project._import.progress_elements.stop(); // jeongmin: 'import is in progress' loading bar
 					where.modal('hide'); // jeongmin: import project dialog
 					//useonly(mode=goorm-standalone,goorm-oss)
-					self.is_working = false;
-					$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 					if (data.err_code === 0) {
 						// notice.show(data.message);
 						notice.show(core.module.localization.msg.notice_process_done);
@@ -360,19 +335,13 @@ goorm.core.project._import = {
 
 					
 				}
-				self.is_working = false;
-				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 			},
 
 			error: function() {
 				// core.progressbar.set(100);
-				self.is_working = false;
-				$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 				self.progress_elements.stop();
 			}
 		};
-
-
 
 		where.find('.project_import_form').ajaxForm(form_options);
 		where.find('.project_import_form').submit(function() {
@@ -404,9 +373,6 @@ goorm.core.project._import = {
 		// if (where.attr("id") == "dlg_import_project")
 		// this.dialog_explorer.init(true, true);
 		//for init
-		where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
-		where.find(".input_import_project_author").attr('readonly', 'readonly');
-		where.find(".input_import_project_author").addClass('readonly');
 
 		where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
 		where.find(".input_import_project_author_name").attr('readonly', 'readonly');

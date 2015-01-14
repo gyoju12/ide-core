@@ -63,7 +63,7 @@
 				"value": "가져오고 싶은 폴더를 선택해주세요."
 			},
 			"dialog_folder_import_folder": {
-				"value": "업로드 할 폴더를 선택 해 주세요.<br/>빈 폴더는 업로드되지 않습니다."
+				"value": "업로드 할 폴더를 선택해 주세요.<br/>빈 폴더는 업로드되지 않습니다."
 			}
 		}
 	},
@@ -201,9 +201,6 @@
 			},
 			"dialog_new_project_guide2": {
 				"value": "새 프로젝트의 내용을 추가하세요."
-			},
-			"dialog_new_project_author": {
-				"value": "생성자 아이디"
 			},
 			"dialog_new_project_author_name": {
 				"value": "생성자 이름"
@@ -368,7 +365,7 @@
 				"value": "자동 괄호(',\",(,[) 닫기 사용"
 			},
 			"dialog_preference_editor_line_wrapping": {
-				"value": "자동 줄바꿈 사용"
+				"value": "자동 줄바꿈"
 			},
 			"dialog_preference_editor_rulers": {
 				"value": "격자선 보이기"

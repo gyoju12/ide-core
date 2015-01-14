@@ -26,37 +26,6 @@ goorm.core.project._new = {
 			id: "dlg_new_project",
 			// handle_ok: handle_ok,	//jeongmin: there are three ok buttons for each tab, so can't assign one handler
 			success: function() {
-				//		self.add_project_item();
-
-				// var form_options = {	//jeongmin: gonna use project._import.js
-				// 	target: "#project_new_import_upload_output",
-				// 	beforeSubmit : function(){
-				// 		core.module.loading_bar.start("Import processing...");
-				// 	},
-
-				// 	success: function (data) {
-				// 		self.panel.modal('hide');
-				// 		core.module.loading_bar.stop();
-				// 		if (data.err_code === 0) {
-				// 			notice.show(data.message);
-				// 			core.module.layout.project_explorer.refresh();
-				// 		} else {
-				// 			alert.show(data.message);
-				// 		}
-				// 	},
-
-				// 	error : function(){
-				// 		core.module.loading_bar.stop();
-				// 	}
-				// };
-
-				// $('#project_new_import_form').ajaxForm(form_options);
-
-				// $('#project_new_import_form').submit(function () {
-				// 	// return false to prevent normal browser submit and page navigation
-				// 	return false;
-				// });
-
 				var $next_btn = $("#g_np_btn_next"),
 					$ok_btn = $(".g_np_btn_ok"),
 					_import = core.module.project._import;
@@ -91,45 +60,14 @@ goorm.core.project._new = {
 				var handle_ok = function(data, callback) {
 					/* TODO : make new function or module for validation */
 
-					// var use_scm = false;	//jeongmin: whether or not use scm for getting scm
-					// if($("#scm_get_bt").hasClass("active")) use_scm = true;	//jeongmin: check user uses scm
-
-					// project create
-					// else if ($("#inputProjectSource").attr("value") === "") {	//jeongmin: is nowhere
-					// 	alert.show(core.module.localization.msg.alert_project_source);
-					// 	return false;
-					// } 
-
 					////// value validation check //////
-					if ($("#input_project_author").val() === "") {
-						alert.show(core.module.localization.msg.alert_project_author);
-						return false;
-					} else if ($("#input_project_author_name").val() === "") {
-						alert.show(core.module.localization.msg.alert_project_author_name);
-						return false;
-					} else if ($("#input_project_name").val() === "") {
+					if ($("#input_project_name").val() === "") {
 						alert.show(core.module.localization.msg.alert_project_name);
-						return false;
-						// } else if ($("#input_project_desc").val() === "") {	//jeongmin: no need to check this -> if check this, below condition will never be checked
-						// alert.show(core.module.localization.msg.alert_project_desc);
-						// return false;
-						// } else if ($("#check_project_new_import").is(":checked")) {	//jeongmin: import is changed to tab page
-						// if ($("#project_new_import_file").val().substr($("#project_new_import_file").val().length - 3, 3).toLowerCase() != "zip") {
-						// 	alert.show(core.module.localization.msg.alert_only_zip_allowed);
-						// 	return false;
-						// }
-						// 	
-					} else if (!/^[\w가-힣 0-9a-zA-Z._-]*$/.test($("#input_project_author_name").val())) {
-						alert.show(core.module.localization.title.project_info_author + core.module.localization.msg.alert_allow_character);
 						return false;
 					} else if (!/^[\w-_]*$/.test($("#input_project_name").val())) {
 						alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
 						return false;
 					}
-					// else if (use_scm && !/^[\w-_]*$/.test($("#new_project_scm_config .scm_path").val())) {	//jeongmin: check if repository path has unavailable character
-					// 	alert.show(core.module.localization.msg.alert_allow_character);	//scm_path is changed to project name
-					// 	return false;
-					// }
 
 					////// make basic project information //////
 					var project_desc = $("#input_project_desc").val();
@@ -141,8 +79,8 @@ goorm.core.project._new = {
 					var senddata = {
 						project_type: data.type,
 						project_detailed_type: data.detailed_type,
-						project_author: $("#input_project_author").val(),
-						project_author_name: $("#input_project_author_name").val(),
+						// project_author: $("#input_project_author").val(),
+						// project_author_name: $("#input_project_author_name").val(),
 						project_name: $("#input_project_name").val(),
 						project_desc: project_desc,
 						plugins: data.plugins
@@ -152,29 +90,10 @@ goorm.core.project._new = {
 					////// communicate with server //////
 					var cb = function(data) {
 						if (data.err_code === 0) {
-
-							
-
-							/*
-							 * for plugin, moyara 12.8.6
-							 */
-
 							senddata.project_dir = data.project_dir;
-
-							//core.status.current_project_path = data.project_dir;
-							//core.status.current_project_name = data.project_name;
-							//core.status.current_project_type = data.project_type;
 
 							core.dialog.open_project.open(data.project_dir, data.project_name, data.project_type);
 
-							// new project with import -> jeongmin: import is changed to tab page
-							// if ($("#check_project_new_import").is(":checked")) {
-							// 	$("#project_new_location").val(core.status.current_project_path);
-							// 	$('#project_new_import_form').submit();
-							// 	core.module.layout.terminal.resize_terminal();
-							// }
-							// new project without import
-							// else{
 							$(core).trigger('project_is_created');
 
 							callback(senddata); // jeongmin: do template or scm callback
@@ -186,8 +105,6 @@ goorm.core.project._new = {
 
 							return false;
 						}
-
-						//self.dialog.panel.hide();
 
 						$ok_btn.prop('disabled', false); // jeongmin: making directory is done
 						self.panel.modal('hide');
@@ -326,12 +243,6 @@ goorm.core.project._new = {
 					alert.show(core.module.localization.msg.alert_project_detailed_type);
 					return false;
 				} else {
-					// if ($("#project_new .project_items .selected_button").attr('project_type').indexOf('examples') >= 0) {	//jeongmin: import is changed to tab page
-					// 	$("#import_field").hide();
-					// } else {
-					// 	$("#import_field").show();
-					// }
-
 					$(".next_wizard_step .project_type").hide(); //template doesn't need project_type input
 					$("#g_np_btn_ok_template").show();
 					// window.setTimeout(function() {
@@ -395,15 +306,6 @@ goorm.core.project._new = {
 
 			var description = $(this).attr('description');
 			$("#text_project_description").append(description);
-
-			var self = this;
-			$("#new_projectExpansionContainer").children().each(function(i) {
-				if ($(this).attr("expansion") == $(self).attr("expansion")) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-			});
 		});
 
 
@@ -430,7 +332,6 @@ goorm.core.project._new = {
 			};
 			handle_next();
 		});
-
 	},
 
 	show: function(option, callback) { //jeongmin: this callback is setting scrollTop
@@ -445,9 +346,6 @@ goorm.core.project._new = {
 		$("#input_project_type").attr("value", "");
 		$("#input_project_detailed_type").val("");
 		$("#input_project_plugin").val("");
-		$("#input_project_author").val(core.user.id.replace(/ /g, "_"));
-		$("#input_project_author").attr('readonly', 'readonly');
-		$("#input_project_author").addClass('readonly');
 		$("#input_project_author_name").attr('readonly', 'readonly');
 		$("#input_project_author_name").addClass('readonly');
 		$("#input_project_author_name").val(core.user.name.replace(/ /g, "_"));
@@ -464,10 +362,6 @@ goorm.core.project._new = {
 
 		$("#dlg_new_project").modal('show');
 		this.set_keydown_event();
-	},
-
-	add_project_item: function() {
-
 	},
 
 	set_keydown_event: function() {
@@ -602,6 +496,7 @@ goorm.core.project._new = {
 			}
 			e.preventDefault();
 		});
+
 		$("#input_project_name").off("keydown");
 		$("#input_project_name").on("keydown", function(e) {
 			if (e.which == 13) {

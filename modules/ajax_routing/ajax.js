@@ -30,11 +30,6 @@ var g_auth_project = require("../goorm.core.auth/auth.project");
 
 
 
-var check_special_characters = function(str) {
-	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
-	return str;
-};
-
 var check_valid_path = function(str) {
 	if (!str) return false;
 	return !(/\.\.|~|;|&|\|/.test(str));
@@ -196,7 +191,7 @@ module.exports = {
 					if (user_data.result) {
 						user_data = user_data.data;
 
-						msg.user_id = user_data.id;
+						msg.project_author = user_data.id;
 						g_project.do_new(msg, evt);
 					}
 				});

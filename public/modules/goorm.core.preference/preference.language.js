@@ -14,12 +14,17 @@ goorm.core.preference.language = {
 	init: function () {
 
 		var language = "";
+		var progress_elements = core.module.loading_bar;
 		$('[id="preference.language.select"]').change(function(){
 			var selected = $(this).find(':selected').val();
-
+			progress_elements.start();
+			
 			core.module.localization.change_language(selected, true, true);
 		});
 
+		$(core).on('language_change', function() {		
+			progress_elements.stop();
+		});
 
 		if (localStorage.getItem("language") === null) {
 			if (core.server_language == "client") {

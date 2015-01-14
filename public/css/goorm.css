@@ -5614,7 +5614,9 @@ li.active > #gLayoutTab_Terminal {
     /*table-layout: fixed;*/
 }
 
-#debug_tab_center_table td:nth-child(1) {   /* jeongmin. For showing variable and indenter in line */
+#debug_tab_center_table td:nth-child(1),
+#svn_log_contents td:nth-child(1),
+#git_log_contents td:nth-child(1) {   /* jeongmin. For showing variable and indenter in line */
     white-space: nowrap;
 }
 #debug_tab_center_table td:nth-child(2) {   /* jeongmin. For preventing word goes over line */
@@ -5640,6 +5642,7 @@ li.active > #gLayoutTab_Terminal {
 
 .canvas_container canvas {
     display: none;
+    outline: none;
 }
 
 .canvas_shadow {
@@ -5671,4 +5674,12 @@ li.active > #gLayoutTab_Terminal {
 
 #goorm_main_toolbar {
 	color: #555;
+}
+
+#loading_bar_row .close {
+    bottom: 0.015px;
+    opacity: initial;
+    position: absolute;
+    right: 10px;
+    text-shadow: initial;
 }

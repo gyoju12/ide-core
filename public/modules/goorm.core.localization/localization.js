@@ -13,6 +13,7 @@ goorm.core.localization = {
 	before_language: null,
 	msg: {},
 	tutorial: {},
+	title:{},
 	plugin: {},
 	language_data: {},
 	is_first: true,
@@ -26,80 +27,28 @@ goorm.core.localization = {
 
 	get_version: function() {
 		var self = this;
-
-		var data = JSON.parse(external_json['public']['configs']['languages']['version.json']);
-		// $.getJSON("configs/languages/version.json", function (data) {
-		self.version = data;
-
 		var broswer_language = navigator.language || navigator.userLanguage;
 		broswer_language = (/ko/.test(broswer_language)) ? 'kor' : 'us';
 
-		var local_version = self.parse_version(localStorage.getItem('language.version'));
 		var language = (localStorage.getItem("language") && (localStorage.getItem("language") != 'null') && (localStorage.getItem("language") != 'undefined')) ? localStorage.getItem("language") : broswer_language;
-		var version_up = false;
 
 		self.language = language;
 		self.load_json();
-
-		if (!$.isEmptyObject(local_version)) {
-			if (!$.isEmptyObject(data)) {
-				var local_version = self.parse_version(localStorage.getItem('language.version'));
-				var current_language_version = (local_version[language]) ? local_version[language] : {};
-				var server_version = data;
-
-				//clear all previous language data to prevent not successfully updating non-current side language --heeje
-				for (var key in server_version) {
-
-					var local_key_version = (!current_language_version[key]) ? 0 : current_language_version[key];
-
-					if (server_version[key] > local_key_version) {
-						if (!version_up) {
-							self.language_data = {};
-							version_up = true;
-						}
-					}
-				}
-
-				// key : dialog, dict, menu, msg, tutorial, title
-				for (var key in server_version) {
-
-					if (version_up) {
-						self.get_json(language, key);
-
-					} else {
-						if (!self.language_data[language])
-							self.language_data[language] = {};
-						if (self.language_data[language][key])
-							self.apply_language(language, key);
-						else
-							self.get_json(language, key);
-					}
-				}
-
-				localStorage.setItem('language.version', self.stringify_version(language, data));
-			} else {
-				var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
-
-				for (var i = 0; i < get_type_list.length; i++)
-					self.get_json(language, get_type_list[i]);
-
-				console.log('[Error] Fail to get server version');
-			}
-		} else {
-			var server_version = data;
-
-			if (!$.isEmptyObject(data)) {
-
-				for (var key in server_version)
-					self.get_json(language, key);
-
-				localStorage.setItem('language.version', self.stringify_version(language, data));
-			}
+		
+		var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
+	
+		for (var i = 0; i < get_type_list.length; i++){
+			if (!self.language_data[language])
+				self.language_data[language] = {};
+			if (self.language_data[language][get_type_list[i]])
+				self.apply_language(language, get_type_list[i]);
+			else
+				self.get_json(language, get_type_list[i]);
 		}
-
+		
 		self.get_plugin_language(language);
 	},
-
+/*
 	parse_version: function(data) {
 		var version = {};
 
@@ -120,7 +69,7 @@ goorm.core.localization = {
 
 		return JSON.stringify(current_language_version);
 	},
-
+*/
 	get_json: function(language, type, length, callback) { // jeongmin: getJSON is async
 		var self = this;
 
@@ -174,7 +123,7 @@ goorm.core.localization = {
 			self.apply(self.language_data[language][type], 'plugin');
 		else self.apply(self.language_data[language][type]);
 
-		if (type == 'msg' || type == 'tutorial' || type == 'plugin') {
+		if (type == 'msg' || type == 'tutorial' || type == 'plugin' || type == 'title') {
 			self.apply_message(self.language_data[language][type], type);
 		}
 
@@ -215,6 +164,7 @@ goorm.core.localization = {
 				$('[id="preference.language.select"]').val(self.language);
 				core.preference['preference.language.select'] = self.language;
 				$(core).trigger('language_loaded', change_flag);
+				$(core).trigger('language_change');
 			}
 
 			if (self.language_data[__language]) {
@@ -229,9 +179,9 @@ goorm.core.localization = {
 						self.apply_message(data, key);
 					}
 				}
-
+				
 				core.dialog.help_contents.load();
-
+				
 				callback();
 			} else {
 				var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
@@ -244,10 +194,11 @@ goorm.core.localization = {
 
 				self.get_plugin_language(__language);
 
-				localStorage.setItem('language.version', self.stringify_version(__language, self.version));
+				//localStorage.setItem('language.version', self.stringify_version(__language, self.version));
 				core.dialog.help_contents.load();
+				$(core).trigger('language_change');
 			}
-		}
+		};
 
 		if (!flag) {
 			if (this.t) clearTimeout(this.t);

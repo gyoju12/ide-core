@@ -192,6 +192,7 @@ goorm.core.prototype = {
 				self.loading_count++;
 			} else {
 				if (!self.load_complete_flag) {
+					self.check_localStorage_version();
 					$(self).trigger("goorm_load_complete");
 					self.load_complete_flag = true;
 
@@ -562,6 +563,11 @@ goorm.core.prototype = {
 			this.module.loading_bar = goorm.core.utility.loading_bar;
 			this.module.loading_bar.init();
 		}
+		
+		if (goorm.core.utility.progress_manager) {
+			this.module.progress_manager = goorm.core.utility.progress_manager;
+			this.module.progress_manager.init();
+		}
 
 		if (goorm.core.utility.toast) {
 			this.module.toast = goorm.core.utility.toast;
@@ -823,5 +829,17 @@ goorm.core.prototype = {
 		if (this.status.focus_obj !== null && this.status.focus_obj !== undefined && this.status.focus_obj !== "") {
 			this.status.focus_obj.focus();
 		}
+	},
+	
+	check_localStorage_version: function() {
+		var server_version = JSON.parse(external_json['public']['configs']['version']['version.json']);
+		var current_version = (localStorage.version)? JSON.parse(localStorage.version) : {};
+		for(var key in server_version){
+			if(current_version[key] === undefined || current_version[key] < server_version[key]){
+				localStorage.removeItem(key);
+			}
+		}
+		localStorage.setItem('version', JSON.stringify(server_version));
+		
 	}
 };

@@ -23,6 +23,9 @@
     "alert_scm_permission": {
         "value": "You do not have permission to access the SCM."
     },
+    "alert_shortcut_modified": {
+        "value": "Preference modification have been completed!"
+    },
     "alert_file_not_select": {
         "value": "Please, select the file."
     },
@@ -265,9 +268,6 @@
     },
     "alert_project_detailed_type": {
         "value": "Select the project detailed type."
-    },
-    "alert_project_author": {
-        "value": "Insert the project author."
     },
     "alert_project_name": {
         "value": "Insert the project name."
@@ -817,6 +817,15 @@
     },
     "confirmation_build_and_debug": {
         "value": "Build and Debug"
+    },
+    "confirmation_not_save": {
+        "value": "It is not the latest code."
+    },
+    "confirmation_not_save_msg": {
+        "value": "Do you want to save after run, <br>click [Save and Run] button or [Run] button."
+    },
+    "confirmation_save_run": {
+        "value": "Save and Run"
     },
     "confirmation_run": {
         "value": "Run"
@@ -1534,5 +1543,11 @@
     },
     "notice_scm_account_changed": {
         "value": "SCM account is changed."
+    },
+    "alert_upload_folder_not_selected": {
+        "value": "Select the folder to upload.<br/>Empty folders will not be uploaded."
+    },
+    "confirmation_commit_merged_files": {
+        "value": "Nothing is checked. Do you want to commit merged state?"
     }
 }

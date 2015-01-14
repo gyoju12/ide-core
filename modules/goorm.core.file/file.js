@@ -31,26 +31,6 @@ var check_valid_path = function(str) {
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
-
-var check_special_characters = function(str) {
-	var regex = ['~', '!', '#', '$', '^', '&', '*', '=', '+', '|', ':', ';', '?', '"', '<', '.', '>', ' '];
-	var modify_regex = ['\~', '\!', '\#', '\$', '\^', '\&', '\*', '\=', '\+', '\|', '\:', '\;', '\?', '\"', '\<', '\.', '\>', '\ '];
-
-	if (str) {
-		var index = 0;
-
-		for (index = 0; index < regex.length; index++) {
-			var ch = regex[index];
-			var modify_ch = regex[index];
-
-			str = str.split(ch).join(modify_ch);
-		}
-	}
-
-	return str;
-};
-
-
 module.exports = {
 	
 	do_new: function(query, evt) {

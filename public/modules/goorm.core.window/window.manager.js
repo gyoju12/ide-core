@@ -265,11 +265,6 @@ goorm.core.window.manager = {
 		var self = this;
 		var options = __options || {};
 
-
-		// var check_special_characters = function(str) {
-		// 	str = str.replace(/([\~\!\@\#\$\%\^\&\*\=\+\|\:\;\?\"\<\>\(\)\[\]\{\}])/g, "\\$1");
-		// 	return str;
-		// };
 		////// file is good to open, so do it! Jeong-Min Im. //////
 		var do_open = function () {
 			if (filepath !== "/" && filepath !== "") {
