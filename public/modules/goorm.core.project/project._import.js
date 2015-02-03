@@ -79,7 +79,7 @@ goorm.core.project._import = {
 		} else if (where.find(".project_import_file").val().split('.').pop() !== "zip" && where.find(".project_import_file").val().split('.').pop() !== "tar" && where.find(".project_import_file").val().split('.').pop() !== "gz") {
 			alert.show(localization_msg.alert_unsupported_file_type);
 			return false;
-		} 
+		}
 		//check end
 
 		for (var i = 0; i < self.project_detailed_type_list.length; i++) {
@@ -193,23 +193,23 @@ goorm.core.project._import = {
 
 		////// check imported project is valid. Jeong-Min Im. -> same as new project //////
 		core._socket.once("/project/valid", function(valid) {
-			function project_new(){
+			function project_new() {
 				if (where.find('.project_import_form').attr('action') == 'project/import') { // jeongmin: only when import is really in progress
 					var progress_elements = core.module.loading_bar.start({
 						str: core.module.localization.msg.import_in_progress,
 						unique: "project.import",
-						beforeStop: function(){
+						beforeStop: function() {
 							$("#dlg_import_project #g_ip_btn_ok").removeAttr("disabled");
 						}
 					});
-					if(!progress_elements){
+					if (!progress_elements) {
 						return false;
 					}
 					goorm.core.project._import.progress_elements = progress_elements;
 					$("#dlg_import_project #g_ip_btn_ok").attr("disabled", "disabled");
 					core._socket.once("/project/new", cb);
 					core._socket.emit("/project/new", senddata);
-				}	
+				}
 			}
 			if (valid.result) {
 				project_new();
@@ -236,7 +236,7 @@ goorm.core.project._import = {
 							yes_text: localization_msg.confirmation_yes,
 							no_text: localization_msg.confirmation_no,
 							title: localization_msg.confirmation_title,
-							yes: function() {	
+							yes: function() {
 								project_new();
 							},
 							no: null
@@ -298,7 +298,8 @@ goorm.core.project._import = {
 					} else {
 						// There is no goorm.manifest in zip/tar file
 						switch (data.err_code) {
-							case 1:
+							case 1: // on Mac
+							case 2: // on Linux
 								alert.show(core.module.localization.msg.alert_invalid_compressed_file);
 								break;
 							case 9:
