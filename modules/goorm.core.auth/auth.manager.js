@@ -172,44 +172,89 @@ module.exports = {
 		
 	},
 
-	destroy_session: function(req, callback) {
+	destroy_session: function(options, callback) {
 		var self = this;
-		
-		var data = req.body.data;
-		var list = [];
 
-		if (data) {
-			try { // jeongmin: try catching
-				data = JSON.parse(data);
-				list = data.list;
-			} catch (e) {
-				console.log('destroy session error:', e);
+		var io = this.g_collaboration.get_io();
+
+		var sessionID = options.session_id;
+		var user_id = options.user_id;
+
+		console.log('auth.manager.js:destroy_session try - ', user_id, sessionID);
+
+		store.client.get(sessionID, function(null_obj, session) {
+			if (session) {
+				try { // jeongmin: try catching
+					session = JSON.parse(session);
+
+					if (session.id === user_id) {
+						self.g_collaboration_chat.is_connected(io, [{
+							'id': session.id
+						}], function(data) {
+							io.sockets.sockets[data.client.id].emit("force_disconnect");
+							io.sockets.sockets[data.client.id].disconnect();
+						});
+
+						
+
+						store.destroy(sessionID, function() {
+							store.client.del('session_'+IDE_HOST+'_' + session.id, function() {
+								store.client.del('sess:'+sessionID, function() {
+									store.client.del('socket_'+sessionID, function() {
+										callback(true);
+									});
+								});
+							});
+						});
+					}
+					else {
+						console.log('auth.manager.js:destroy_session fail user id is not same', session.id, user_id);
+						callback(false);
+					}
+				} catch (e) {
+
+					// session is string (is not object)
+					//
+					store.client.get(session, function(null_obj, inner_session) {
+						try {
+							inner_session = JSON.parse(inner_session);
+
+							if (inner_session.id === user_id) {
+								self.g_collaboration_chat.is_connected(io, [{
+									'id': inner_session.id
+								}], function(data) {
+									io.sockets.sockets[data.client.id].emit("force_disconnect");
+									io.sockets.sockets[data.client.id].disconnect();
+								});
+
+								
+
+								store.destroy(sessionID, function() {
+									store.client.del('session_'+IDE_HOST+'_' + inner_session.id, function() {
+										store.client.del(sessionID, function() {
+											store.client.del('socket_'+sessionID, function() {
+												callback(true);
+											});
+										});
+									});
+								});
+							}
+							else {
+								console.log('auth.manager.js:destroy_session fail user id is not same', inner_session.id, user_id);
+								callback(false);
+							}
+						} catch (e) {
+							console.log('auth.manager.js:destroy_session fail', e);
+							callback(false);
+						}
+					});
+				}
+			}
+			else {
+				console.log('auth.manager.js:destroy_session fail - cannot find sessionData', user_id, sessionID);
 				callback(false);
 			}
-		}
-
-		if (list.length > 0) {
-
-			var count = 0;
-
-			var len = list.length; //jeongmin: prevent calculating length at each loop
-			for (var i = len - 1; 0 <= i; i--) { //jeongmin: conditional evaluation using 0(false)
-				(function(index) {
-					var item = list[i];
-
-					var session = item.session_id;
-
-					session = g_secure.command_filter(session);
-
-					if (global.__redis_mode) {
-						store.client.del(session);
-					}
-
-					
-					
-				})(i);
-			}
-		}
+		});
 	},
 
 	get_user_schema: function() {
@@ -297,7 +342,6 @@ module.exports = {
 			socket.on('disconnect', function(socket) {
 				console.log('auth disconnect', socket);
 			});
-
 		});
 
 	},

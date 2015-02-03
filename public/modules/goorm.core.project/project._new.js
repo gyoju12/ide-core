@@ -33,13 +33,17 @@ goorm.core.project._new = {
 				$ok_btn.hide();
 				////// show/hide buttons for each tab. Jeong-Min Im. //////
 				$("a[href='#new_project_template']").click(function() {
+
 					$next_btn.show();
 					$ok_btn.hide();
+
+					// $('.project_types.list-group').children(':first').click();
 				});
 				
 				$("a[href='#new_project_import']").click(function() {
 					$next_btn.hide();
 					$ok_btn.hide();
+
 					$("#g_np_btn_ok_import").show();
 
 					if ($("#new_project_import.active.in").length > 0) {
@@ -51,6 +55,7 @@ goorm.core.project._new = {
 						////// after shown import tab, make project type list. Jeong-Min Im. //////
 						$(this).one('shown.bs.tab', function() {
 							_import.show(self.panel);
+							// $(".input_import_project_name.form-control").click();
 						});
 					}
 
@@ -180,17 +185,17 @@ goorm.core.project._new = {
 					};
 
 					////// local or dropbox storage //////
-					var selected_storage = $("#new_project_storage").val().toString();
+					// var selected_storage = $("#new_project_storage").val().toString();	// hidden: storage is deprecated
 
-					if (selected_storage == "goormIDE_Storage") {
-						var callback = function(senddata) {
-							core.module.plugin_manager.new_project(senddata);
-						};
+					// if (selected_storage == "goormIDE_Storage") {
+					var callback = function(senddata) {
+						core.module.plugin_manager.new_project(senddata);
+					};
 
-						////// communicate with server //////
-						if (!handle_ok(project_info, callback))
-							return false;
-					}
+					////// communicate with server //////
+					if (!handle_ok(project_info, callback))
+						return false;
+					// }
 					// else if (selected_storage == "Dropbox") {
 					// 	goorm.core.cloud.dropbox.make_new_project(project_info);
 
@@ -283,17 +288,17 @@ goorm.core.project._new = {
 			var project_category = $(this).attr('category');
 
 			if (project_category) {
-				project_template = project_template.filter('[category="'+project_category+'"]');
+				project_template = project_template.filter('[category="' + project_category + '"]');
 			}
 
-			project_template.show();			
+			project_template.show();
 		});
 
 		$(document).on('click', '#dlg_new_project .project_wizard_second_button', function() {
 			$(".project_wizard_second_button").removeClass("selected_button");
 			$(this).addClass("selected_button");
 			$("#project_new").find(".project_items").focus();
-			
+
 			$("#input_project_type").attr("value", "");
 			$("#input_project_detailed_type").attr("value", "");
 			$("#input_project_plugin").attr("value", "");
@@ -361,6 +366,7 @@ goorm.core.project._new = {
 		this.dialog.set_start(option);
 
 		$("#dlg_new_project").modal('show');
+
 		this.set_keydown_event();
 	},
 
@@ -391,6 +397,17 @@ goorm.core.project._new = {
 					break;
 			}
 		});
+
+		// $(".next_wizard_step").off("keydown");
+		// $(".next_wizard_step").bind("keydown", function(e) {
+		// 	switch(e.which) {
+		// 		case 9: // tab key
+		// 			// when press tab key, focusing move to project items
+		// 			console.log(e);
+		// 			break;
+		// 	}
+		// 	e.preventDefault();
+		// });
 
 		//$("#project_new").find(".dialog_left_inner").bind("click mousedown", function(e){
 		// $(project_types).bind("click", function(e){
@@ -499,25 +516,52 @@ goorm.core.project._new = {
 
 		$("#input_project_name").off("keydown");
 		$("#input_project_name").on("keydown", function(e) {
-			if (e.which == 13) {
+			if (e.which === 13) {
 				if ($("#g_np_btn_ok_template").css("display") != "none" && !$("#g_np_btn_ok_template").prop('disabled'))
 					$("#g_np_btn_ok_template").click();
 				
-			} else if (e.which == 27) {
+			} else if (e.which === 27) {
 				$("#g_np_btn_cancel").click();
 			}
 		});
 
 		$("#g_np_btn_cancel").off("keydown");
 		$("#g_np_btn_cancel").on("keydown", function(e) {
-			if(e.which == 9) 
-				$('#project_new div[class="wizard_step"] .nav-tabs li:first a').focus();
+			if (e.which === 9) {
+				var flag = true,
+					temp_value;
+				$.each($("#dlg_new_project").find(".btn-primary.g_np_btn_ok"), function(index, value) {
+					if ($(value).css("display") !== "none") {
+						flag = false;
+						temp_value = value;
+					}
+				});
+
+				if (flag) {
+					$('#project_new div[class="wizard_step"] .nav-tabs li:first a').focus();
+				} else {
+					$(temp_value).focus();
+				}
+			}
+			e.preventDefault();
+		});
+		$("#dlg_new_project").find(".btn-primary.g_np_btn_ok").off("keydown");
+		$("#dlg_new_project").find(".btn-primary.g_np_btn_ok").on("keydown", function(e) {
+			if (e.which === 9) {
+				if (e.target.id === 'g_np_btn_ok_import') {
+					$('#project_new div[class="wizard_step"] .nav-tabs li:first a').focus();
+				} else {
+					$(".next_wizard_step").find("#input_project_name").focus();
+				}
+			} else if (e.which === 13) {
+				$("#" + e.target.id).click();
+			}
 			e.preventDefault();
 		});
 
 		$("#project_new [name=input_import_project_name]").off("keydown");
 		$("#project_new [name=input_import_project_name]").on("keydown", function(e) {
-			if (e.which == 13 && !$("#g_np_btn_ok_import").prop('disabled'))
+			if (e.which === 13 && !$("#g_np_btn_ok_import").prop('disabled'))
 				$("#g_np_btn_ok_import").click();
 		});
 	}

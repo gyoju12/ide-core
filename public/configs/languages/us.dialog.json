@@ -701,5 +701,11 @@
 	},
 	"dialog_scm_selected_path": {
 		"value": "Path: "
+	},
+	"dialog_scm_ignore_title": {
+		"value": "Ignore Setting"
+	},
+	"dialog_scm_ignore_guide": {
+		"value": "You can explore and manage the ignore list."
 	}
 }

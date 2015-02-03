@@ -22,9 +22,9 @@ goorm.core.project.open = {
 		var self = this;
 
 		this.panel = $("#dlg_open_project");
-		this.panel.click(function() {
-			$("button[localization_key=common_target]").blur();
-		});
+		// this.panel.click(function() {	// hidden: storage is deprecated
+		// 	$("button[localization_key=common_target]").blur();
+		// });
 
 		this.__handle_open = function() {
 			var data = self.project_list.get_data();
@@ -33,10 +33,10 @@ goorm.core.project.open = {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return false;
 			} else {
-				var storage = $("#project_open_storage").find("span").html().toString();
-				if (storage == "goormIDE Storage") {
-					self.open(data.path, data.name, data.type);
-				}
+				// var storage = $("#project_open_storage").find("span").html().toString();	// hidden: storage is deprecated
+				// if (storage == "goormIDE Storage") {
+				self.open(data.path, data.name, data.type);
+				// }
 				// else if (storage == "Google Drive") {
 
 				// } else if (storage == "Dropbox") {
@@ -54,28 +54,28 @@ goorm.core.project.open = {
 			id: "dlg_open_project",
 			handle_ok: this.__handle_open,
 			show: $.proxy(this.after_show, this),
-			success: function() {
-				$("#project_open_storage").find("span").html("goormIDE_Storage");
-				$(document).on("click", "li.open.storage", function() {
-					var storage = $(this).find("a").html();
-					$("button[localization_key=common_target]").blur();
-					$("#project_open_storage").find("span").html(storage);
-					if (storage == "goormIDE Storage") {
-						$("#project_open_list").empty();
-						$("#project_open_information").empty();
-						self.project_list = new goorm.core.project.list();
-						self.project_list.init("#project_open");
-					}
-					// else if (storage == "Google Drive") {
+			// success: function() {	// hidden: storage is deprecated
+			// 	$("#project_open_storage").find("span").html("goormIDE_Storage");
+			// 	$(document).on("click", "li.open.storage", function() {
+			// 		var storage = $(this).find("a").html();
+			// 		$("button[localization_key=common_target]").blur();
+			// 		$("#project_open_storage").find("span").html(storage);
+			// 		if (storage == "goormIDE Storage") {
+			// 			$("#project_open_list").empty();
+			// 			$("#project_open_information").empty();
+			// 			self.project_list = new goorm.core.project.list();
+			// 			self.project_list.init("#project_open");
+			// 		}
+			// 		// else if (storage == "Google Drive") {
 
-					// } else if (storage == "Dropbox") {
-					// 	$("#project_open_list").empty();
-					// 	$("#project_open_information").empty();
-					// 	self.project_list = new goorm.core.cloud.dropbox.project.list();
-					// 	self.project_list.init("#project_open");
-					// }
-				});
-			}
+			// 		// } else if (storage == "Dropbox") {
+			// 		// 	$("#project_open_list").empty();
+			// 		// 	$("#project_open_information").empty();
+			// 		// 	self.project_list = new goorm.core.cloud.dropbox.project.list();
+			// 		// 	self.project_list.init("#project_open");
+			// 		// }
+			// 	});
+			// }
 
 		});
 
@@ -189,7 +189,7 @@ goorm.core.project.open = {
 			
 
 			//useonly(mode=goorm-oss)
-			core.status.current_project_storage = "goormIDE_Storage";
+			// core.status.current_project_storage = "goormIDE_Storage";
 			core.status.current_project_path = current_project_path;
 			core.status.current_project_name = current_project_name;
 			core.status.current_project_type = current_project_type;
@@ -221,6 +221,16 @@ goorm.core.project.open = {
 		if (this.handler && this.handler[core.status.current_project_type] && this.handler[core.status.current_project_type].before) {
 			this.handler[core.status.current_project_type].before();
 		} else {
+			$(core).one('on_project_open', function() {
+				var output_list = core.module.plugin_linter.output_tab_list;
+				var output_index = output_list.indexOf(core.status.current_project_type);
+
+				core.module.layout.tab_manager.del_by_tab_name('south', 'output');
+				if (output_index >= 0) {
+					core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
+				}
+			});
+
 			$(core).trigger('do_open');
 		}
 	},

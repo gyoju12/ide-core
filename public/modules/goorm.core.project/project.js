@@ -9,14 +9,323 @@
  **/
 
 goorm.core.project = {
-	treeview: null,
+	tab: {},
+	configs: {
+		'build': {
+			tab_manager: {
+				tab: {
+					content: 'Build'
+				},
+				tab_content: {
+					fade: false,
+					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_build_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-sm rebuild_btn" style="float: left; margin-right:5px">Rebuild</button></div><div class="inner_content rst_view terminal_style user-select-available"></div>'
+				}
+			},
+			terminal: {
+				fix_scroll: true
+			},
+			hide: function(_tab) {
+				var terminal = _tab.terminal.get_terminal();
+
+				terminal.flush_command_queue();
+				terminal.send_command('\x03\r');
+			},
+			data: {}
+		},
+		'run': {
+			tab_manager: {
+				tab: {
+					content: 'Run'
+				},
+				tab_content: {
+					fade: false,
+					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_run_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-sm restart_btn" style="float: left; margin-right:5px">Restart</button></div><div id="run_inner_content" class="inner_content rst_view terminal_style user-select-available"></div>'
+				}
+			},
+			terminal: {
+				type: 'terminal',
+				fix_scroll: true,
+				target: '#run_inner_content'
+			},
+			hide: function(_tab) {
+				var terminal = _tab.terminal;
+
+				terminal.flush_command_queue();
+				terminal.send_command('\x03\r');
+			},
+			data: {}
+		}
+	},
+
 	is_building: false,
 	is_running: false,
 
-	load_build: function(options, callback) {
+	show: function(name) {
+		if (name === 'configuration') {
+			var panel = core.dialog.project_property;
 
-		if (this.is_building) return;
-		else {
+			var plugin_data = panel.manager.plugin_data;
+			var plugin = null;
+
+			if (core.status.current_project_path !== "") {
+
+				// find plugin_data...
+				//
+				plugin_data.map(function(o) {
+					if (o.text.toLowerCase() == core.property.type.toLowerCase()) {
+						plugin = o;
+					}
+				});
+
+				// check treeview...
+				//
+				if (plugin && $('#property_tabview .tab-content > div[plugin="goorm.plugin.' + core.property.type + '"]').length > 0) {
+					$('#property_treeview').find("li[path='Plugin/" + plugin.text + "'] > a.jstree-anchor").first().click();
+				}
+
+				panel.show();
+			} else {
+				var result = {
+					result: false,
+					code: 5
+				};
+				core.module.project.display_error_message(result, 'alert');
+			}
+		} else if (this.tab[name]) {
+			this.tab[name].tab.click()
+		}
+	},
+
+	get_tab: function(name, callback) {
+		var self = this;
+
+		if (!this.tab[name]) {
+			if (name === 'build') {
+				var on_click = function() {
+					if (self.tab.build) {
+						var content = self.tab.build.tab_content;
+						var inner_content = self.tab.build.tab_inner_content;
+
+						if (!content.hasClass('active')) {
+							content.addClass('active');
+						}
+
+						inner_content.scrollTop(inner_content.get(0).scrollHeight);
+					}
+				};
+
+				var on_clear = function() {
+					if (self.tab.build) {
+						self.tab.build.tab_inner_content.html('');
+					}
+				}
+
+				var build_configs = $.extend(true, this.configs.build, {
+					tab_manager: {
+						fn: function() {
+							on_click();
+						}
+					},
+					success: function(_tab) {
+						$(core).on('on_project_open', function() {
+							_tab.terminal.refresh_terminal();
+						});
+
+						_tab.tab_content.on("click", ".clear_build_log_btn", function() {
+							on_clear();
+						});
+
+						_tab.tab_content.on("click", ".rebuild_btn", function() {
+							var data = self.configs.build.data;
+
+							if (data.cmd) {
+								self._build(data.cmd, data.options, data.callback);
+							}
+						});
+
+						_tab.tab.click(function() {
+							on_click();
+						});
+
+						callback(_tab);
+					}
+				});
+
+				this.tab.build = core.module.layout.tab_manager.terminal_manager.load('build', build_configs);
+			} else if (name === 'run') {
+				var on_click = function() {
+					if (self.tab.run) {
+						var content = self.tab.run.tab_content;
+						var inner_content = self.tab.run.tab_inner_content;
+
+						if (!content.hasClass('active')) {
+							content.addClass('active');
+						}
+
+						inner_content.scrollTop(inner_content.get(0).scrollHeight);
+					}
+				};
+
+				var on_clear = function() {
+					if (self.tab.run) {
+						self.tab.run.terminal.send_command('clear\r');
+					}
+				}
+
+				var run_configs = $.extend(true, this.configs.run, {
+					tab_manager: {
+						fn: function() {
+							on_click();
+						}
+					},
+					success: function(_tab) {
+						$(core).on('on_project_open', function() {
+							_tab.terminal.refresh_terminal();
+						});
+
+						_tab.tab_content.on("click", ".clear_run_log_btn", function() {
+							on_clear();
+						});
+
+						_tab.tab_content.on("click", ".restart_btn", function() {
+							var data = self.configs.run.data;
+
+							if (data.cmd) {
+								self._run(data.cmd, data.options, data.callback);
+							}
+						});
+
+						_tab.tab.click(function() {
+							on_click();
+						});
+
+						callback(_tab);
+					}
+				});
+
+				this.tab.run = core.module.layout.tab_manager.terminal_manager.load('run', run_configs);
+			}
+		} else {
+			callback(this.tab[name]);
+		}
+	},
+
+	build: function(cmd, options, callback) {
+		var self = this;
+
+		if (typeof(options) === 'function') {
+			callback = options;
+			options = null;
+		}
+
+		
+
+		//save current project files before save --heeje
+		var wm = core.module.layout.workspace.window_manager;
+		var current = core.status.current_project_path;
+		var project_window = [];
+
+		for (var i = 0; i < wm.window.length; i++) {
+			if (wm.window[i].project === current) {
+				if (wm.window[i].alive && wm.window[i].editor && !wm.window[i].is_saved) { //sort files that have to be saved
+					project_window.push(wm.window[i]);
+				}
+			}
+		}
+
+		if (project_window && project_window.length > 0) {
+			var _save = function(w, cb) {
+				w.editor.save("build", function() {
+					cb(true);
+				});
+			};
+
+			async.map(project_window, _save, function() {
+				self._build(cmd, options, callback);
+			});
+		} else {
+			this._build(cmd, options, callback);
+		}
+	},
+
+	background_build: function(cmd, options, callback) {
+		// If parameter number is 2, only cmd and callback. options is null
+		if (typeof(options) === 'function') {
+			callback = options;
+			options = null;
+		}
+
+		var background_terminal = core.module.terminal.terminal;
+
+		background_terminal.send_command(cmd + '\r', options, function(result) {
+			// background_terminal.flush_command_queue();
+
+			if (callback && typeof(callback) === 'function') {
+				callback(result);
+			}
+		});
+	},
+
+	_build: function(cmd, options, callback) {
+		var self = this;
+
+		this.configs.build.data = {
+			cmd: cmd,
+			options: options,
+			callback: callback
+		};
+
+		this.get_tab('build', function(tab) {
+			self.show('build');
+
+			var terminal = tab.terminal.terminal;
+
+			terminal.flush_command_queue();
+			terminal.send_command('\x03\r', function() {
+				terminal.send_command(cmd + '\r', options, function(result) {
+					terminal.flush_command_queue();
+
+					if (callback && typeof(callback) === 'function') {
+						callback(result);
+					}
+				});
+			});
+		});
+	},
+
+	_run: function(cmd, options, callback) {
+		var self = this;
+
+		options = options || null;
+
+		this.configs.run.data = {
+			cmd: cmd,
+			options: options,
+			callback: callback
+		};
+
+		this.get_tab('run', function(tab) {
+			self.show('run');
+
+			var terminal = tab.terminal;
+
+			terminal.flush_command_queue();
+			terminal.send_command('\x03\r', function() {
+				terminal.send_command(cmd + '\r', options, function(result) {
+					terminal.flush_command_queue();
+
+					if (callback && typeof(callback) === 'function') {
+						callback(result);
+					}
+				});
+			});
+		});
+	},
+
+	load_build: function(options, callback) {
+		if (this.is_building) {
+			return;
+		} else {
 			this.is_building = true;
 		}
 
@@ -166,7 +475,6 @@ goorm.core.project = {
 	},
 
 	display_error_message: function(result, type) {
-
 		function display_message(message) {
 			if (type == 'toast') {
 				core.module.toast.show(message);
@@ -217,7 +525,7 @@ goorm.core.project = {
 
 			if (options.type == 'Native') {
 				if (Boolean(options.cmd)) {
-					core.module.layout.terminal.send_command(options.cmd + '\r', null, function() {
+					this._run(options.cmd, options.options, function() {
 						if (callback && typeof(callback)) {
 							callback(true);
 						}
@@ -246,7 +554,7 @@ goorm.core.project = {
 				core._socket.emit('/plugin/do_web_run', options);
 
 			} else if (options.cmd) {
-				core.module.layout.terminal.send_command(options.cmd + '\r', function(result) {
+				this._run(options.cmd, options.options, function(result) {
 					if (callback && typeof(callback)) {
 						callback(result);
 					}
@@ -270,47 +578,8 @@ goorm.core.project = {
 				core.module.project.display_error_message(result, 'alert');
 			}
 		}
-
-		// if (!options) {
-		// 	if (core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type] !== undefined) {
-		// 		core.status.current_project_absolute_path = core.preference.workspace_path + core.status.current_project_path + "/";
-		// 		// core.module.layout.select('terminal');	// jeongmin: move to plugin
-		// 		//core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
-
-		// 		//useonly(mode=goorm-oss)	
-		// 		self.send_run_cmd();
-		// 		
-
-		// 		
-
-		// 	} else {
-		// 		var result = {
-		// 			result: false,
-		// 			code: 0
-		// 		};
-		// 		core.module.project.display_error_message(result, 'alert');
-
-		// 	}
-		// }
-		// else {
-		// 	var type = options.type;
-
-		// 	if (type === 'Web') {
-		// 		$.post('/plugin/do_web_run', options, function(result) {
-		// 			if (result.code == 200) {
-		// 				if (callback && typeof(callback)) {
-		// 					callback(result);
-		// 				}
-		// 			}
-		// 			else {
-		// 				if (callback && typeof(callback)) {
-		// 					callback(false);
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// }
 	},
+
 	script_run: function(current_project_path) { // Donguk_Kim : 2015.01.13
 		var self = this;
 		var wm = core.module.layout.workspace.window_manager;
@@ -328,7 +597,7 @@ goorm.core.project = {
 			for (var i = 0; i < project_window.length; i++) {
 				project_window[i].editor.save();
 			}
-			if(callback) {
+			if (callback) {
 				callback();
 			}
 		}
@@ -505,13 +774,13 @@ goorm.core.project = {
 				'img': ''
 			}]
 		}); */
-	
+
 		var type = options.type;
 		var categories = options.categories;
 
 		if (categories && categories.length > 0) {
 			// for (var i=0; i<categories.length; i++) {
-			for (var i=0; i<categories.length; i++) {
+			for (var i = 0; i < categories.length; i++) {
 				var _category = categories[i];
 
 				var img = _category.img;
@@ -522,14 +791,14 @@ goorm.core.project = {
 				var localization = "plugin." + type + "." + category + ".";
 
 				// Project New 왼쪽에 Project Type 버튼 추가
-				if (!$(".project_wizard_first_button[project_type='" + type + "'][category='"+category+"']").length) {
-					$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + type + "' category='"+category+"'><img src='" + img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + description + "</p></a>");
+				if (!$(".project_wizard_first_button[project_type='" + type + "'][category='" + category + "']").length) {
+					$("div[id='project_new']").find(".project_types").append("<a href='#' class='list-group-item project_wizard_first_button' project_type='" + type + "' category='" + category + "'><img src='" + img + "' class='project_icon' /><h4 class='list-group-item-heading' class='project_type_title' localization_key='" + localization + "name'>" + name + "</h4><p class='list-group-item-text' class='project_type_description' localization_key='" + localization + "description'>" + description + "</p></a>");
 
 					// Project New 오른쪽에 새 Project Button 추가
 					for (var index = 0; index < items.length; index++) {
 						items[index].name = items[index].name || "";
 						items[index].description = items[index].description || "";
-						$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + type + " thumbnail' category='"+category+"' description='" + items[index].description + "' localization_key='" + localization + items[index].key + ".description'  project_type='" + type + "' plugin_name='goorm.plugin." + type + "' detail_type='" + items[index].detail_type + "'><img src='" + items[index].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + items[index].key + ".name'>" + items[index].name + "</p></div></div>");
+						$("div[id='project_new']").find(".project_items").append("<div class='col-sm-6 col-md-3 project_wizard_second_button all " + type + " thumbnail' category='" + category + "' description='" + items[index].description + "' localization_key='" + localization + items[index].key + ".description'  project_type='" + type + "' plugin_name='goorm.plugin." + type + "' detail_type='" + items[index].detail_type + "'><img src='" + items[index].img + "' class='project_item_icon'><div class='caption'><p localization_key='" + localization + items[index].key + ".name'>" + items[index].name + "</p></div></div>");
 					}
 				}
 
@@ -538,21 +807,22 @@ goorm.core.project = {
 				// 	$(".project_dialog_type").append("<option value='" + type + "'>" + name + "s</option>").attr("selected", "");
 
 				// add main menu
-				if (!$("li .plugin_project a[action='new_file_" + type + "'][category='"+category+"']").length)
-					$("li[id='plugin_new_project']").before("<li class='plugin_project'><a href='#' action='new_file_" + type + "' category='"+category+"' localization_key='" + localization + "name'>" + name + "</a></li>");
+				if (!$("li .plugin_project a[action='new_file_" + type + "'][category='" + category + "']").length)
+					$("li[id='plugin_new_project']").before("<li class='plugin_project'><a href='#' action='new_file_" + type + "' category='" + category + "' localization_key='" + localization + "name'>" + name + "</a></li>");
 
 				// add menu action
-				$("a[action=new_file_" + type + "][category='"+category+"']").unbind("click");
-				$("a[action=new_file_" + type + "][category='"+category+"']").click(function() {
+				$("a[action=new_file_" + type + "][category='" + category + "']").unbind("click");
+				$("a[action=new_file_" + type + "][category='" + category + "']").click(function() {
+					var temp_type = $(this).attr('action').split("_")[2],
+						temp_category = $(this).attr('category');
 					core.dialog.new_project.show(function() {
-						$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=" + type + "][category='"+category+"']").position().top);
+						$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=" + temp_type + "][category='" + temp_category + "']").position().top);
 					});
 					$("#project_new a[href='#new_project_template']").trigger("click");
-					$(".project_wizard_first_button[project_type=" + type + "][category='"+category+"']").trigger("click").trigger("focus");
+					$(".project_wizard_first_button[project_type='" + temp_type + "'][category='" + temp_category + "']").trigger("click").trigger("focus");
 				});
 			}
-		}
-		else {
+		} else {
 			var img = options.img;
 			var items = options.items;
 			var name = options.name || "";
@@ -589,30 +859,5 @@ goorm.core.project = {
 				$(".project_wizard_first_button[project_type=" + type + "]").trigger("click").trigger("focus");
 			});
 		}
-	},
-
-	// save - part of build function -- heeje
-	// __save: function(project) {
-	// 	console.log("save function run");
-
-	// 	var wm = core.module.layout.workspace.window_manager;
-	// 	var current = core.status.current_project_path;
-	// 	if(project) current = project.path;
-
-	// 	for(var i=0; i<wm.window.length; i++) {
-	// 		if(wm.window[i].project == current) {
-	// 			if (wm.window[i].alive) {
-
-	// 				if (wm.window[i].editor) {
-	// 					wm.window[i].editor.save();
-	// 				}
-
-	// 				wm.window[i].set_saved();
-	// 				wm.tab[i].set_saved();
-	// 			}
-	// 		}
-	// 	}
-
-	// 	//save done -- heeje
-	// }
+	}
 };

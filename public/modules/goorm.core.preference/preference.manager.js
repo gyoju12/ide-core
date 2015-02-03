@@ -16,13 +16,13 @@ goorm.core.preference.manager = {
 	json: {},
 	plugin_data: [],
 
-	init: function (option) {
+	init: function(option) {
 		this.preferences = [];
 	},
 
 	// get default preference file
-	get_default_file: function (path, callback) {
-		$.getJSON(path, function (json) {
+	get_default_file: function(path, callback) {
+		$.getJSON(path, function(json) {
 			if ($.isFunction(callback)) {
 				callback(json);
 			}
@@ -31,13 +31,13 @@ goorm.core.preference.manager = {
 
 	convert_json_to_tree: function(parent, json) {
 		var data = [];
-		if(!$.isArray(json)) json = [json];
-		json.map(function(obj){
+		if (!$.isArray(json)) json = [json];
+		json.map(function(obj) {
 			// console.log(obj);
-			if(!obj.id) obj.id = obj.label;
+			if (!obj.id) obj.id = obj.label;
 			var d = {};
 			d.text = obj.label;
-			d.id = parent+"/"+obj.id;
+			d.id = parent + "/" + obj.id;
 			d.type = "file";
 			d.parent = parent;
 			d.icon = false;
@@ -61,39 +61,46 @@ goorm.core.preference.manager = {
 	// },
 
 	// create treeview structure
-	create_treeview: function (json, change) {
+	create_treeview: function(json, change) {
 		var self = this;
-		var on_select = function(e, node){
-			if(node.type === "file") {
+		var on_select = function(e, node) {
+			if (node.type === "file") {
 				var id = node.li_attr.id;
-				var $tabview = $("#"+self.tabview_id);
+				var $tabview = $("#" + self.tabview_id);
 				$tabview.find(".nav-tabs > li").hide();
-				$tabview.find(".nav-tabs > li[target='"+id+"']").show();
-				$tabview.find(".nav-tabs > li[target='"+id+"'] > a").first().click();
+				$tabview.find(".nav-tabs > li[target='" + id + "']").show();
+				$tabview.find(".nav-tabs > li[target='" + id + "'] > a").first().click();
 			}
 		};
 
 		var project_root = [{
-			text: json.core.label,
-			state: {"opened": true},
-			type: "root",
-			li_attr: {"path": "Preference", "folder_only": false},
-			a_attr: {"localization_key": "preference"},
-			parent: "#",
-			icon: false,
-			id: this.treeview_id+"/Preference"
-		}
-		// , 
-		// {
-		// 	text: json.plugin.label,
-		// 	state: {"opened": true},
-		// 	type: "root",
-		// 	li_attr: {"path": "Plugin", "folder_only": false},
-		// 	a_attr: {"localization_key": "plugin"},
-		// 	parent: "#",
-		// 	icon: false,
-		// 	id: this.treeview_id+"/Plugin"
-		// }
+				text: json.core.label,
+				state: {
+					"opened": true
+				},
+				type: "root",
+				li_attr: {
+					"path": "Preference",
+					"folder_only": false
+				},
+				a_attr: {
+					"localization_key": "preference"
+				},
+				parent: "#",
+				icon: false,
+				id: this.treeview_id + "/Preference"
+			}
+			// , 
+			// {
+			// 	text: json.plugin.label,
+			// 	state: {"opened": true},
+			// 	type: "root",
+			// 	li_attr: {"path": "Plugin", "folder_only": false},
+			// 	a_attr: {"localization_key": "plugin"},
+			// 	parent: "#",
+			// 	icon: false,
+			// 	id: this.treeview_id+"/Plugin"
+			// }
 		];
 
 		this.json.core = self.convert_json_to_tree("Preference", json.core.child);
@@ -104,35 +111,34 @@ goorm.core.preference.manager = {
 		}
 
 		// Create treeview
-		this.treeview = new goorm.core.utility.treeview("#"+this.treeview_id, {
+		this.treeview = new goorm.core.utility.treeview("#" + this.treeview_id, {
 			project_path: "preference",
 			on_select: on_select,
 			root_node: project_root,
-			wholerow: false,
+			// wholerow: false,	// hidden: want to show wholerow
 			sort: false,
-			on_ready: function(){
+			on_ready: function() {
+				if (change) { // this should be selected after loading is done
+					self.treeview.select_node("preference_treeview/Preference/Language");
+				} else {
+					self.treeview.select_node("preference_treeview/Preference/Editor");
+				}
 			},
-			fetch: function(path, callback){
-				if(path === "Preference") {
+			fetch: function(path, callback) {
+				if (path === "Preference") {
 					//console.log(self.json.core);
 					callback(self.json.core);
 					// self.treeview.tree.jstree("redraw", true);
-					if(change) {
-						self.treeview.select_node("preference_treeview/Preference/Language");
-					} else {
-						self.treeview.select_node("preference_treeview/Preference/Editor");
-					}
-					
 				}
 				// else if(path === "Plugin") {
 				// 	callback(self.plugin_data);
 				// }
 				else callback(null);
 			}
-		});		
+		});
 	},
 
-	plugin: function (plugin_name) {
+	plugin: function(plugin_name) {
 		this.plugin_name = null;
 		this.xml = null;
 		this.version = null;

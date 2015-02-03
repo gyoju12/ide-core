@@ -401,6 +401,7 @@ goorm.core.window.tab.prototype = {
             case 'cpp':
             case 'java':
             case 'py':
+            case 'js':
             	$("[action=do_jump_to_definition]").parent().show();
             	$("#gLayoutTab_Outline").show();
             	break;

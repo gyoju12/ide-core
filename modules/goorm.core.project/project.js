@@ -223,9 +223,10 @@ module.exports = {
 
 		var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
 
-		var stdout = "";
-		var find = false;
-		var contents = null;
+		var stdout = "",
+			stderr = '',
+			find = false,
+			contents = null;
 
 		check_cmd.stdout.on('data', function(data) {
 			var buf = new Buffer(data);
@@ -234,42 +235,45 @@ module.exports = {
 			if (!find && stdout.indexOf('goorm.manifest') > -1) {
 				find = true;
 
-				
+
 			}
 		});
-
 		check_cmd.on('close', function(code) {
-			
-			if (find) {
-				var file_list = stdout.split('\n');
-				var manifest_path = "";
+			if (code) { // invalid compressed file
+				data.err_code = code;
 
-				for (var i = 0; i < file_list.length; i++) {
-					if (file_list[i].indexOf('goorm.manifest') != -1) {
-						manifest_path = file_list[i];
-						break;
-					}
-				}
-
-				exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
-					if (__err) {
-						console.log(__err);
-
-						
-					} else {
-						try {
-							contents = JSON.parse(manifest_content);
-							data.result = contents;
-						} catch (e) {
-							console.log(e);
-						}
-						evt.emit('project_do_import_check', data);
-					}
-				});
-			} else {
 				evt.emit('project_do_import_check', data);
+			} else {
+				if (find) {
+					var file_list = stdout.split('\n');
+					var manifest_path = "";
+
+					for (var i = 0; i < file_list.length; i++) {
+						if (file_list[i].indexOf('goorm.manifest') != -1) {
+							manifest_path = file_list[i];
+							break;
+						}
+					}
+
+					exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
+						if (__err) {
+							console.log(__err);
+
+
+						} else {
+							try {
+								contents = JSON.parse(manifest_content);
+								data.result = contents;
+							} catch (e) {
+								console.log(e);
+							}
+							evt.emit('project_do_import_check', data);
+						}
+					});
+				} else {
+					evt.emit('project_do_import_check', data);
+				}
 			}
-			
 		});
 	},
 
@@ -354,18 +358,18 @@ module.exports = {
 												flag: 'w'
 											}, function(err) {});
 										};
-										
+
 										var lostfound = stdout.indexOf("lost+found");
 										var manifest = stdout.indexOf("goorm.manifest");
-										
-										if (lostfound !== -1){
+
+										if (lostfound !== -1) {
 											stdout.splice(lostfound, 1);
 										}
-										if (manifest !== -1){
+										if (manifest !== -1) {
 											stdout.splice(manifest, 1);
 										}
-										
-										
+
+
 										if (stdout.length == 1) {
 											fs.exists(project_abs_path + "/" + stdout[0] + "/goorm.manifest", function(exists) {
 												if (exists) {

@@ -159,6 +159,7 @@ exports.project.do_export = function(req, res) {
 	evt.on("project_do_export", function(data) {
 		res.json(data);
 	});
+
 	
 
 	
@@ -1026,6 +1027,144 @@ exports.project.get_contents = function(req, res) {
 
 
 
+exports.user.project.collaboration.invitation.pull = function(req, res) {
+	var project_path = req.body.project_path;
+
+	g_auth_p.can_read_project(req.__user.id, project_path, function(can_read) {
+		if (can_read) {
+			var user_list = [];
+
+			if (req.body.type != 'other') {
+				req.body.target_id = req.__user.id;
+				req.body.target_type = req.__user.type;
+
+				user_list = [{
+					'id': req.body.target_id
+				}];
+			} else {
+				user_list = [{
+					'id': req.__user.id
+				}, {
+					'id': req.body.target_id
+				}];
+			}
+
+			g_auth_p.invitation_pull(req.body, function(data) {
+				var io = g_collaboration.__io;
+
+				g_collaboration_chat.is_connected(io, user_list, function(__data) {
+					g_collaboration_project.refresh_message({
+						'user': __data.user.id
+					}, function(invitation_list, waiting_list, share_list, sharing_project) {
+						io.sockets.sockets[__data.client.id].emit('refresh_project_message', invitation_list, waiting_list, share_list, sharing_project, {
+							'refresh': {
+								'project': true,
+								'terminal': true
+							},
+							project_path: ''
+						});
+					});
+				});
+
+				res.json(data);
+			});
+		} else {
+			console.log('index.js:exports.user.project.collaboration.invitation.pull fail - permission denied', req.body);
+			res.json(false);
+		}
+	});
+}
+
+exports.user.preference = function(req, res) {
+	res.json(null);
+}
+
+exports.user.preference.save = function(req, res) {
+	g_auth.get_user_data(req, function(user_data) {
+		req.body.id = user_data.id;
+		req.body.type = user_data.type;
+
+		g_auth_m.save_preference(req.body, function(data) {
+			res.json(data);
+		})
+	})
+}
+
+exports.user.preference.load = function(req, res) {
+	g_auth.get_user_data(req, function(user_data) {
+		req.body.id = user_data.id;
+		req.body.type = user_data.type;
+
+		g_auth_m.load_preference(req.body, function(data) {
+			res.json(data);
+		})
+	})
+}
+
+
+// exports.message = function(req, res){
+// 	res.json(null);
+// }
+
+// exports.message.get = function(req, res){
+// 	g_auth.get_user_data(req, function(user_data){
+// 		req.query.user_id = user_data.id;
+// 		req.query.user_type = user_data.type;
+
+// 		g_message.get(req.query, function(data){
+// 			res.json(data);
+// 		});
+// 	})
+// }
+
+// exports.message.list = function(req, res){
+// 	g_auth.get_user_data(req, function(user_data){
+// 		req.query.user_id = user_data.id;
+// 		req.query.user_type = user_data.type;
+
+// 		g_message.get_list(req.query, function(data){
+// 			res.json(data);
+// 		});
+// 	})
+// }
+
+// exports.message.list.receive = function(req, res){
+// 	g_auth.get_user_data(req, function(user_data){
+// 		req.query.user_id = user_data.id;
+// 		req.query.user_type = user_data.type;
+
+// 		g_message.get_receive_list(req.query, function(data){
+// 			res.json(data);
+// 		});
+// 	})
+// }
+
+// exports.message.list.unchecked = function(req, res){
+// 	g_auth.get_user_data(req, function(user_data){
+// 		req.query.user_id = user_data.id;
+// 		req.query.user_type = user_data.type;
+
+// 		g_message.get_unchecked(req.query, function(data){
+// 			res.json(data);
+// 		});
+// 	})
+// }
+
+// exports.message.edit = function(req, res){
+// 	g_message.edit(req.body, function(data){
+// 		res.json(data);
+// 	});
+// }
+
+// exports.message.check = function(req, res){
+// 	req.body.checked = true;
+
+// 	g_message.edit(req.body, function(data){
+// 		res.json(data);
+// 	});
+// }
+
+
 
 /*
  * Download and Upload
@@ -1285,7 +1424,7 @@ exports.edit.load_tags = function(req, res) {
 
 
 
-//useonly(mode=goorm-standalone,goorm-server,goorm-client)
+	//useonly(mode=goorm-standalone,goorm-server,goorm-client)
 exports.load_userplugin = function(req, res) {
 	g_plugin.load_userplugin(req, res, function(has_user_plugin, list) {
 		if (has_user_plugin)

@@ -64,5 +64,85 @@
 		"keyword":"package",
 		"type":"key",
 		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : package modifier"
+	},
+	{
+		"keyword":"abstract",
+		"type": "modi",
+		"description": "<b>Type</b> : Class Modifier<br /><b>Description</b> : abstract modifier"
+	},
+	{
+		"keyword":"final",
+		"type": "modi",
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : modifier"
+	},
+	{
+		"keyword":"strictfp",
+		"type": "modi",
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : strictfp modifier"
+	},
+	{
+		"keyword":"static",
+		"type": "modi",
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : static modifier"
+	},
+	{
+		"keyword":"transient",
+		"type": "modi",
+		"description": "<b>Type</b> : Field Modifier<br /><b>Description</b> : transient modifier"
+	},
+	{
+		"keyword":"volatile",
+		"type": "modi",
+		"description": "<b>Type</b> : Field Modifier<br /><b>Description</b> : volatile modifier"
+	},
+	{
+		"keyword": "interface",
+		"type": "key",
+		"description": "<b>Type</b> : Interface <br /><b>Description</b> : reference type"
+	},
+	{
+		"keyword": "implements",
+		"type": "clause",
+		"description": "<b>Type</b> : Declaration clause <br /><b>Description</b> : Implements. Class declaration clause"
+	},
+	{
+		"keyword": "extends",
+		"type": "clause",
+		"description": "<b>Type</b> : Declaration clause <br /><b>Description</b> : Extends. Class/interface declaration clause"
+	},
+	{
+		"keyword": "byte",
+		"type": "key",
+		"description": "<b>Type</b> : Byte Type<br /><b>Description</b> : 8-bit integer type"
+	},
+	{
+		"keyword": "boolean",
+		"type": "key",
+		"description": "<b>Type</b> : Boolean Type<br /><b>Description</b> : Only can be assigned true of false."
+	},
+	{
+		"keyword": "long",
+		"type": "key",
+		"description": "<b>Type</b> : Byte Type<br /><b>Description</b> : 64-bit integer type"
+	},
+	{
+		"keyword": "native",
+		"type": "modi",
+		"description": "<b>Type</b> : Modifier<br /><b>Description</b> : native modifier"
+	},
+	{
+		"keyword": "true",
+		"type": "literal",
+		"description": "<b>Type</b> : Literal<br /><b>Description</b> : True"
+	},
+	{
+		"keyword": "false",
+		"type": "literal",
+		"description": "<b>Type</b> : Literal<br /><b>Description</b> : False"
+	},
+	{
+		"keyword": "instanceof",
+		"type": "Operator",
+		"description": "<b>Type</b> : Operator<br /><b>Description</b> : InstanceOf Operator"
 	}
 ]

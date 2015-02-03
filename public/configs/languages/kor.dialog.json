@@ -701,5 +701,11 @@
 	},
 	"dialog_scm_selected_path": {
 		"value": "경로: "
+	},
+	"dialog_scm_ignore_title": {
+		"value": "Ignore 설정"
+	},
+	"dialog_scm_ignore_guide": {
+		"value": "Ignore 목록을 살펴보고 관리합니다."
 	}
 }

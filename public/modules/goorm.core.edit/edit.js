@@ -12,7 +12,7 @@ goorm.core.edit = function(parent) {
     this.parent = parent;
     this.target = null;
     this.editor = null;
-	this.bookmark = null;
+    this.bookmark = null;
     this.find_and_replace = null;
     this.filepath = null;
     this.filename = null;
@@ -35,7 +35,7 @@ goorm.core.edit = function(parent) {
     this.highlight_current_cursor_line = true;
     this.current_cursor_line = null; // for cursor line
     this.auto_close_brackets = true;
-	this.outline_threshold = 3000;
+    this.outline_threshold = 3000;
 
     //pcs
     this.str_selection = "";
@@ -86,9 +86,9 @@ goorm.core.edit.prototype = {
         this.title = title;
         this.options = options;
         this.timestamp = new Date().getTime();
-		
-		this.bookmark = new goorm.core.edit.bookmark();
-		this.bookmark.init(title, self);
+
+        this.bookmark = new goorm.core.edit.bookmark();
+        this.bookmark.init(title, self);
 
         this.highlight_current_cursor_line = this.get_editor_preference('highlight_current_cursor_line');
         this.auto_close_brackets = this.get_editor_preference('auto_close_brackets');
@@ -104,7 +104,7 @@ goorm.core.edit.prototype = {
         this.set_option(this.options);
     },
 
-    init_events: function () {
+    init_events: function() {
         var self = this;
 
         var target = this.target;
@@ -187,7 +187,7 @@ goorm.core.edit.prototype = {
             var window_manager = core.module.layout.workspace.window_manager;
 
             // jeongmin: remove searching highlight
-            if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) {// jeongmin: if doing find and replace, don't remove
+            if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
                 CodeMirror.commands.clearSearch(self.editor);
             }
 
@@ -201,9 +201,9 @@ goorm.core.edit.prototype = {
         // set searching highlight when drag. Jeong-Min Im.
         $(target).mouseup(function() { // selected string's exist when mouse is up means dragged
             self.str_selection = self.editor.getSelection();
-            if(!$("#dlg_find_and_replace").hasClass("in") && !($('.cm-matchhighlight:first').html() === self.str_selection) && $("#gLayoutTab_Search").find(".badge").length===0) {
-                
-                if (self.str_selection.length > 0 && /^[a-zA-z0-9-]*$/.test(self.str_selection)) { // except special character
+            if (!$("#dlg_find_and_replace").hasClass("in") && !($('.cm-matchhighlight:first').html() === self.str_selection) && $("#gLayoutTab_Search").find(".badge").length === 0) {
+
+                if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
                     self.is_selectiond = true;
 
                     var ranges = self.editor.listSelections();
@@ -212,9 +212,9 @@ goorm.core.edit.prototype = {
                     var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
 
                     CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
-                }    
+                }
             }
-            
+
         });
 
         $(target).keypress(function(e) {
@@ -243,34 +243,34 @@ goorm.core.edit.prototype = {
         });
 
         // to prevent performing the file upload when the text selection is dragged...
-		$(target).on('dropenter', function (e) {
-			e.stopPropagation(); 
-			e.preventDefault();
-			return false;
-		});
-		
-		$(target).on('dropover', function (e) {
-			e.stopPropagation(); 
-			e.preventDefault();
-			return false;
-		});
-		
-		$(target).on('drop', function (e) {
-			e.stopPropagation(); 
-			e.preventDefault();
-			return false;
-		});
-		
-		$(target).on('dragleave', function (e) {
-			e.stopPropagation(); 
-			e.preventDefault();
-			return false;
-		});
-		
-		
+        $(target).on('dropenter', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        });
+
+        $(target).on('dropover', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        });
+
+        $(target).on('drop', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        });
+
+        $(target).on('dragleave', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        });
+
+
     },
 
-    init_modules: function () {
+    init_modules: function() {
         var self = this;
 
         var options = this.options;
@@ -333,7 +333,7 @@ goorm.core.edit.prototype = {
             var last_scroll_top = self.scroll_top;
             var scroll_top = cm_editor.getScrollInfo().top;
             var changed_scroll_top_val = last_scroll_top - scroll_top;
-            var cursors = $('span.user_cursor');
+            var cursors = __target.find('span.user_cursor');
 
             for (var j = 0; j < cursors.length; j++) {
                 var user_cursor = $(cursors[j]);
@@ -346,13 +346,13 @@ goorm.core.edit.prototype = {
 
                 user_cursor.css('top', (user_cursor_top + changed_scroll_top_val) + 'px');
                 user_name.css('top', (user_name_top + changed_scroll_top_val) + 'px');
-
             }
 
             self.scroll_top = scroll_top;
+        }, 100));
 
+        cm_editor.on("scroll", $.throttle(function(i, e) {
             self.resize_rulers();
-
         }, 200));
 
         var linter_timer = $.debounce(function() {
@@ -367,23 +367,30 @@ goorm.core.edit.prototype = {
 
             
 
-            var window_manager = core.module.layout.workspace.window_manager;
             var my_idx = self.get_editor_idx(self.filepath + self.filename);
-            if (self.init_change && my_idx != -1) {
-                if (e.origin || self.special_pressed) { // jeongmin: no problem
-                    window_manager.window[my_idx].set_modified();
-                    window_manager.tab[my_idx].set_modified();
-                } else { // jeongmin: change event is occurred before keydown, so wait for coming keydown event
-                    $(core).one('undo_redo_pressed', function(e, data) { // data: undo or redo
-                        window_manager.window[my_idx].set_modified(data);
-                        window_manager.tab[my_idx].set_modified();
-                    });
+
+            if (self.init_change && ~my_idx) {
+                var target_window = core.module.layout.workspace.window_manager.window[my_idx],
+                    target_tab = core.module.layout.workspace.window_manager.tab[my_idx];
+
+                if (target_window && target_tab) {
+                    if (e.origin || self.special_pressed) { // jeongmin: no problem
+                        target_window.set_modified();
+                        target_tab.set_modified();
+                    } else { // jeongmin: change event is occurred before keydown, so wait for coming keydown event
+                        $(core).one('undo_redo_pressed', function(e, data) { // data: undo or redo
+                            target_window.set_modified(data);
+                            target_tab.set_modified();
+                        });
+                    }
                 }
             } else {
                 self.init_change = true;
             }
 
-            linter_timer();
+            if (self.filetype !== "c" && self.filetype !== "cpp" && self.filetype !== "java") {
+                linter_timer();
+            }
 
             // jeongmin: remove searching highlight
             if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) // jeongmin: if doing find and replace, don't remove
@@ -420,31 +427,31 @@ goorm.core.edit.prototype = {
             var markerHtml;
             var info = codemirror.lineInfo(linenumber);
             self.editor.refresh();
-			
-			//set a breakpoint only if a click event is fired by the left mouse button
-			if (clickevent.button === 0) {
-				switch (self.mode) {
-					case "text/x-csrc":
-					case "text/x-c++src":
-					case "text/x-java":
-					case "text/x-python":
-					case "text/javascript":
-						//if breakpoint is needed, then add here
+            //set a breakpoint only if a click event is fired by the left mouse button
+            if (clickevent.button === 0) {
+                switch (self.mode) {
+                    case "text/x-csrc":
+                    case "text/x-c++src":
+                    case "text/x-java":
+                    case "text/x-python":
+                    case "text/x-ruby":
+                    case "text/javascript":
+                        //if breakpoint is needed, then add here
 
-						// if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
-						if (gutter !== "fold") { // gutter click event --> breakpoint or fold
-							//markerHtml = "&#x25cf";
-						   // cm_editor.setGutterMarker(linenumber, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? self.remove_marker(linenumber, "breakpoint") : self.make_marker(linenumber, "breakpoint", markerHtml));
-							self.set_breakpoint(linenumber);
-						}
+                        // if (gutter == "breakpoint" || gutter == "CodeMirror-linenumbers") {
+                        if (gutter !== "fold") { // gutter click event --> breakpoint or fold
+                            //markerHtml = "&#x25cf";
+                            // cm_editor.setGutterMarker(linenumber, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? self.remove_marker(linenumber, "breakpoint") : self.make_marker(linenumber, "breakpoint", markerHtml));
+                            self.set_breakpoint(linenumber);
+                        }
 
-						// self.font_manager.refresh();
-						// window.setTimeout(function(){},);
-						break;
-					default:
-						break;
-				}
-			}
+                        // self.font_manager.refresh();
+                        // window.setTimeout(function(){},);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             self.parent.activate();
 
@@ -452,7 +459,7 @@ goorm.core.edit.prototype = {
 
         var debounce = $.debounce(function() {
             // console.log("trigger", self.filepath + '/' + self.filename + self.options.index + '.window_loaded');
-            $(core).trigger(self.filepath + '/' + self.filename + self.options.index + '.window_loaded', self.parent);
+            $(core).trigger(self.filepath + '/' + self.filename + '.window_loaded', self.parent); // remove index: no need
             debounce = function() {};
         }, 250);
 
@@ -494,7 +501,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', { 
+                $(core).trigger('undo_redo_pressed', {
                     undo: true,
                     redo: false
                 });
@@ -502,7 +509,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', { 
+                $(core).trigger('undo_redo_pressed', {
                     undo: false,
                     redo: true
                 });
@@ -525,14 +532,14 @@ goorm.core.edit.prototype = {
 
             // jeongmin: if sublime theme is applied, 'Ctrl+K' is special shortcut..
             // if (shortcut_manager.theme == 'sublime') {
-                if (shortcut_manager.is_theme_key_pressed) { // special key was pressed -> prevent other key handlers. Special key will handle.
-                    shortcut_manager.is_theme_key_pressed = false;
+            if (shortcut_manager.is_theme_key_pressed) { // special key was pressed -> prevent other key handlers. Special key will handle.
+                shortcut_manager.is_theme_key_pressed = false;
 
-                    e.stopPropagation();
-                    e.preventDefault();
-                    return false;
-                } else if ((e.ctrlKey || e.metaKey) && e.keyCode == 75) // special key is now pressed
-                    shortcut_manager.is_theme_key_pressed = true;
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            } else if (!e.shiftKey && (e.ctrlKey || e.metaKey) && e.keyCode == 75) // special key is now pressed
+                shortcut_manager.is_theme_key_pressed = true;
             // }
 
             // dont block ctrl + x,c,v
@@ -565,10 +572,9 @@ goorm.core.edit.prototype = {
 
         // set searching hightlight when word is selected. Jeong-Min Im.
         cm_editor.on('dblclick', function() {
-            if (self.editor.somethingSelected() && !$("#dlg_find_and_replace").hasClass("in") && $("#gLayoutTab_Search").find(".badge").length===0) {
+            if (self.editor.somethingSelected() && !$("#dlg_find_and_replace").hasClass("in") && $("#gLayoutTab_Search").find(".badge").length === 0) {
                 self.str_selection = self.editor.getSelection();
-                
-                if (self.str_selection.length > 0 && /^[a-zA-z0-9\-]*$/.test(self.str_selection)) // except special character
+                if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) // except special character
                     CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
             }
         });
@@ -631,13 +637,13 @@ goorm.core.edit.prototype = {
 
         this.highlighted_line = null;
     },
-	
-	set_breakpoint: function(line){
-		var markerHtml = "&#x25cf";
+
+    set_breakpoint: function(line) {
+        var markerHtml = "&#x25cf";
         var info = this.editor.lineInfo(line);
         this.editor.setGutterMarker(line, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? this.remove_marker(line, "breakpoint") : this.make_marker(line, "breakpoint", markerHtml));
-// 		this.font_manager.refresh();
-	},
+        // 		this.font_manager.refresh();
+    },
 
     //set bookmark that is saved before. Jeong-Min Im.
     set_bookmark: function(bookmark_list, line) { // line: that we want to set bookmark
@@ -702,7 +708,7 @@ goorm.core.edit.prototype = {
         var code_width = $(this.target).find(".CodeMirror-code").width();
         var left = this.editor.charCoords(CodeMirror.Pos(this.editor.firstLine(), 0), "div").left;
 
-		
+
         for (var i = 0; i < code_width / tab_width; i++) {
             var elt = document.createElement("div");
 
@@ -732,11 +738,10 @@ goorm.core.edit.prototype = {
 
     set_option: function(options) {
         var self = this;
-        var parse_boolean = function (str) {
+        var parse_boolean = function(str) {
             if (str === true || str === 'true') {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         };
@@ -757,7 +762,7 @@ goorm.core.edit.prototype = {
         this.scroll_top = (options.scroll_top) ? options.scroll_top : this.scroll_top; // jeongmin: if scroll_top is null, just maintain it. Don't set as 0.
         // this.shortcut_theme = (options.shortcut_theme) ? options.shortcut_theme : this.preference["preference.shortcut.theme"]; // jeongmin: set codemirror keymap as theme
         this.readonly = (options.readonly) ? options.readonly : false;
-        this.shortcut_theme = 'sublime';    // sublime keymap is default now
+        this.shortcut_theme = 'sublime'; // sublime keymap is default now
 
         this.auto_close_brackets = self.get_editor_preference('auto_close_brackets');
         this.highlight_current_cursor_line = self.get_editor_preference('highlight_current_cursor_line');
@@ -1010,6 +1015,7 @@ goorm.core.edit.prototype = {
     },
 
     save: function(option, callback) {
+
         var self = this;
         var url = "/file/put_contents";
         var path = this.filepath + "/" + this.filename;
@@ -1069,8 +1075,10 @@ goorm.core.edit.prototype = {
                         __window.close();
                     }
 
+
+
                     linter_timer = $.debounce(function() {
-                        core.module.plugin_linter.__lint(self.parent);
+                        core.module.plugin_linter.lint(self.parent);
                     }, 500);
                     linter_timer();
 
@@ -1093,13 +1101,13 @@ goorm.core.edit.prototype = {
 
                     
 
-                    if (option == "build" || option == 'merge' || option == 'logout') {
-                        if (callback && typeof(callback) == 'function')
-                            callback();
+                    if (callback && typeof(callback) == 'function') {
+                        callback();
                     }
 
                     
-					goorm.core.edit.bookmark_list.list[self.title] = self.bookmark.bookmarks;
+
+                    goorm.core.edit.bookmark_list.list[self.title] = self.bookmark.bookmarks;
                 });
                 core._socket.emit(url, send_data);
             }
@@ -1244,8 +1252,7 @@ goorm.core.edit.prototype = {
         // this.editor.undo(); // jeongmin: just do codemirror undo
         if (this.editor.collaboration) {
             this.editor.collaboration.cmClient.undo();
-        }
-        else {
+        } else {
             this.editor.undo();
         }
 
@@ -1257,8 +1264,7 @@ goorm.core.edit.prototype = {
         // this.editor.redo(); // jeongmin: just do codemirror redo
         if (this.editor.collaboration) {
             this.editor.collaboration.cmClient.redo();
-        }
-        else {
+        } else {
             this.editor.redo();
         }
 
@@ -1297,7 +1303,9 @@ goorm.core.edit.prototype = {
         }, {
             "line": this.editor.lineCount(),
             "ch": 0
-        }, {scroll: false});
+        }, {
+            scroll: false
+        });
     },
 
     get_selected_range: function() {
@@ -1420,7 +1428,7 @@ goorm.core.edit.prototype = {
 
             ////// reset others, too //////
             this.bookmark.outline_tab();
-//            edit_bookmark.store_json();
+            //            edit_bookmark.store_json();
         }
     },
 

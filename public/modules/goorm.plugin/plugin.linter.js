@@ -10,42 +10,60 @@
 
 // language error checker (linter). Jeong-Min Im.
 goorm.plugin.linter = {
+
+	output_tab_list:[],
+
 	init: function(plugin_name) {
 		var self = this;
-
 		// make output tab for lint
-		$(core).on('on_project_open', function() {
-			if (core.status.current_project_type === plugin_name) { // jeongmin: this event is handled by all plugins. But, function should be called only once by current project type
-				core.module.layout.tab_manager.del_by_tab_name('south', 'output'); // jeongmin: delete current output tab no matter what plugin's output tab is
-				core.module.layout.tab_manager.make_output_tab(plugin_name);
-			}
-		});
+		self.output_tab_list.push(plugin_name);
 	},
 
-	lint: function(__window, callback) {
+	lint: function(__window) {
+		if(core.realtime_lint === false) return;
+
 		var window_manager = core.module.layout.workspace.window_manager;
 		var result = null;
+		var project_type = core.status.current_project_type;
+
 		if (window_manager.window.indexOf(__window) > -1 && __window.editor && __window.editor.editor.getValue() !== "") {
-			switch (__window.editor.mode) {
-				case 'text/javascript':
-					result = CodeMirror.lint.javascript(__window.editor.editor.getValue());
+			switch (__window.editor.filetype) {
+				case 'js':
+					this.lint_codemirror(__window, "javascript");
 					break;
-				case 'text/css':
-					result = CodeMirror.lint.css(__window.editor.editor.getValue());
+				case 'css':
+					this.lint_codemirror(__window, "css");
+					break;
+				case 'c':
+				case 'cpp':
+					this.lint_cpp(__window);
+					break;
+				case 'java':
+					if (project_type === "java") {
+						this.lint_build(__window, project_type);
+					}
+					break;
+				case 'py':
+					this.lint_python(__window);
+					break;
+				case 'rb':
+					this.lint_ruby(__window);
+					break;
+				case 'php':
+					this.lint_php(__window);
 					break;
 				default:
 					return;
 			}
-
+/*
 			if (callback && typeof(callback) === "function") {
 				callback(result);
-			} else {
-				this.lint_parse(__window, result);
-			}
+			} 
+			*/
 		}
 	},
 
-	lint_parse: function(__window, lint_result) {
+	lint_codemirror: function(__window, type) {
 		var self = this;
 		var error_data, output_data;
 		var error_manager = __window.editor.error_manager;
@@ -56,6 +74,7 @@ goorm.plugin.linter = {
 		// output_manager.clear();
 
 		// add error message in editor & output tab
+		var lint_result = CodeMirror.lint[type](__window.editor.editor.getValue());
 		if (!lint_result) return;
 		for (var i = 0; i < lint_result.length; i++) {
 
@@ -66,7 +85,7 @@ goorm.plugin.linter = {
 			//
 
 			error_data = {
-				'line_number': lint_result[i].from.line,
+				'line_number': (isNaN(lint_result[i].from.line))? 0 : lint_result[i].from.line,
 				'error_message': lint_result[i].message,
 				'error_syntax': lint_result[i].severity
 			};
@@ -88,59 +107,52 @@ goorm.plugin.linter = {
 
 	// to provide linter function in C, C++, Java
 	// after build in background terminal, parsing result.
-	__lint: function(__window) {
+	lint_build: function(__window, type) {
 		var self = this;
 
-		var active_file_type = __window.filetype;
-		var check_flag = (active_file_type === 'c' || active_file_type === 'cpp' || active_file_type === 'java');
-		if (!check_flag) {
-			return false;
-		}
 
-		if (__window.project === core.status.current_project_path) {
-			var project_type = core.status.current_project_type;
-			if (project_type === "cpp" || project_type === "c_examples" || project_type === "java" || project_type === "java_examples") {
-				var property = core.property.plugins["goorm.plugin." + project_type];
-				var compiler_type = property["plugin." + project_type + ".compiler_type"];
-				var build_options = " " + property["plugin." + project_type + ".build_option"];
-				var project_path = core.preference.workspace_path + core.status.current_project_path + "/";
-				var path = {
-					'source_path': " " + project_path + property["plugin." + project_type + ".source_path"],
-					'build_path': " " + project_path + property["plugin." + project_type + ".build_path"],
-					'main': property["plugin." + project_type + ".main"]
-				};
-				var cmd = "";
-				if (project_type === "cpp" || project_type === "c_examples") {
-					if (compiler_type === 'clang' || compiler_type === 'clang++') {
-						build_options += ' -fno-color-diagnostics';
-					}
-					cmd = project_path + "/make " + compiler_type + path.source_path + path.build_path + path.main + build_options;
-				} else if (project_type === "java" || "java_examples") {
-					path.main += ".class";
-					cmd = project_path + "/make " + path.source_path + path.build_path + build_options;
-				}
-				core.module.project.background_build(cmd, function(result) {
-					if (result) {
-						var build_success = (result.indexOf("Build Complete") > -1) ? true : false;
-						var window_manager = core.module.layout.workspace.window_manager;
-						var output_manager = core.module.layout.tab_manager.output_manager;
+		var active_file_type = __window.filetype;		
 
-						window_manager.all_clear();
-						output_manager.clear();
-
-						if (!build_success) {
-
-							self.__lint_parse(result, project_type);
-							core.module.layout.select('gLayoutOutput_' + project_type);
-						}
-					}
-				});
+		var property = core.property.plugins["goorm.plugin." + type];
+		var compiler_type = property["plugin." + type + ".compiler_type"];
+		var build_options = " " + property["plugin." + type + ".build_option"];
+		var project_path = core.preference.workspace_path + core.status.current_project_path + "/";
+		var path = {
+			'source_path': " " + project_path + property["plugin." + type + ".source_path"],
+			'build_path': " " + project_path + property["plugin." + type + ".build_path"],
+			'main': property["plugin." + type + ".main"]
+		};
+		var cmd = "";
+		if (type === "cpp") {
+			if (compiler_type === 'clang' || compiler_type === 'clang++') {
+				build_options += ' -fno-color-diagnostics';
 			}
+			cmd = project_path + "/make " + compiler_type + path.source_path + path.build_path + path.main + build_options;
+		} else if (type === "java") {
+			path.main += ".class";
+			cmd = project_path + "/make " + path.source_path + path.build_path + build_options;
+
 		}
+		core.module.project.background_build(cmd, function(result) {
+			if (result) {
+				var build_success = (result.indexOf("Build Complete") > -1) ? true : false;
+				var window_manager = core.module.layout.workspace.window_manager;
+				var output_manager = core.module.layout.tab_manager.output_manager;
+
+				window_manager.all_clear();
+				output_manager.clear();
+
+				if (!build_success) {
+
+					self.lint_build_parse(result, type);
+					core.module.layout.select('gLayoutOutput_' + type);
+				}
+			}
+		});
 
 	},
 
-	__lint_parse: function(result, type) {
+	lint_build_parse: function(result, type) {
 
 		core.module.layout.project_explorer.refresh();
 
@@ -186,12 +198,200 @@ goorm.plugin.linter = {
 
 			data.content = error_message;
 			om.push(data);
-		}
+		};
 
 		if (parsed_data && parsed_data.length > 0) {
 			for (var i = 0; i < parsed_data.length; i++) {
 				parsing(parsed_data[i]);
 			}
 		}
+
+	},
+		
+	lint_cpp: function(__window, type){
+		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
+		var self = this;
+		
+		core.module.terminal.terminal.send_command("/usr/share/clang/scan-build/scan-build gcc -c " + path + "\r", function(output){
+			var wm = core.module.layout.workspace.window_manager;
+			var om = core.module.layout.tab_manager.output_manager;
+			
+			var editor = __window.editor;
+			var error_manager = editor.error_manager;
+			
+			output = output.split("\n");
+			output.pop();
+			output.shift();
+			output.shift();
+			output = output.join("\n");
+			
+			var index = output.indexOf("scan-build");
+			if(index > -1){
+				output = output.substring(0, index);
+			}
+			
+			output = output.split(path);
+
+			om.clear();
+			wm.all_clear();
+			
+			var table = [];
+		
+			
+			for(var i=0; i<output.length; i++){
+				var line = output[i].split(":");
+				if(isNaN(line[1])){
+					continue;
+				}
+				
+				var error_data = {
+					'line_number': parseInt(line[1], 10) - 1,
+					'error_syntax': "",
+					'error_message': line[line.length - 1].split("\r\n")[0]
+				};
+				
+				error_manager.add_line(error_data);
+				if (i === 0) error_manager.error_message_box.add(editor.target);
+				error_manager.init_event();
+				
+				table.push({
+					line: error_data.line_number,
+					content: error_data.error_message.split("<br />").shift(),
+					file: editor.filepath + editor.filename
+				});
+			}
+			om.push(table);
+			core.module.layout.select('gLayoutOutput_cpp');
+		});
+	},
+
+	lint_python: function(__window, type){
+		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
+		core.module.terminal.terminal.send_command("pyflakes " + path + "\r", function(output){
+			var wm = core.module.layout.workspace.window_manager;
+			var om = core.module.layout.tab_manager.output_manager;
+			
+			var editor = __window.editor;
+			var error_manager = editor.error_manager;
+			
+			om.clear();
+			wm.all_clear();
+			
+			output = output.split("\n");
+			output.pop();
+			output.shift();
+				
+			output = output.join("\n").split(path);
+			output.shift();
+			
+			for(var i=0; i<output.length; i++){
+				var line = output[i].split(":");
+				
+				var error_data = {
+					'line_number': parseInt(line[1], 10) - 1,
+					'error_syntax': "",
+					'error_message': line[line.length - 1].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
+				};
+				
+				error_manager.add_line(error_data);
+				if (i === 0) error_manager.error_message_box.add(editor.target);
+				error_manager.init_event();
+				om.push({
+					line: error_data.line_number,
+					content: error_data.error_message.split("<br />").shift(),
+					file: editor.filepath + editor.filename
+				});
+			}
+		});
+	},
+
+	lint_ruby: function(__window, type) {
+
+		var om = core.module.layout.tab_manager.output_manager;
+		var wm = core.module.layout.workspace.window_manager;
+
+		// var parsed_data = om.parse(result, type);
+
+		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
+		core.module.terminal.terminal.send_command("ruby-lint " + path + "\r", function(output){
+
+			om.clear();
+			wm.all_clear();
+
+			output = output.split("\n");
+			output.pop();
+			output.shift();
+			for(var i=0; i<output.length; i++) {
+				// parsing(output[i], i);
+				var line = output[i].split(":");
+
+				e = __window.editor;
+				e_m = e.error_manager;
+				line[line.length-1] = line[line.length-1].slice(1, line[line.length-1].length-1);
+				
+				var error_data = {
+					'line_number': parseInt(line[2].split(",")[0].replace("line ", ""), 10) - 1,
+					'error_syntax': '',
+					'error_message': line[line.length - 1]
+				};
+
+				e_m.add_line(error_data);
+				if (i === 0) e.error_manager.error_message_box.add(e.target);
+				e_m.init_event();
+			
+
+				// data.content = line[line.length - 1];
+				om.push({
+					'file': __window.editor.filepath+__window.editor.filename,
+					'line': parseInt(line[2].split(",")[0].replace("line ", "") , 10),
+					'content': line[line.length - 1]
+				});
+				
+			}
+			core.module.layout.select('gLayoutOutput_ruby');
+		});
+	},
+	
+	lint_php : function(__window, type) {
+
+		var om = core.module.layout.tab_manager.output_manager;
+		var wm = core.module.layout.workspace.window_manager;
+
+		// var parsed_data = om.parse(result, type);
+
+		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
+		core.module.terminal.terminal.send_command("phpcs --report=json " + path + "\r", function(output){
+
+			om.clear();
+			wm.all_clear();
+
+			var result = JSON.parse(output.split("\n")[1].replace("<bg$>", ""));
+			var message = result.files[path].messages;
+			
+			for(var i=0; i<message.length; i++) {
+				var line = message[i].line;
+
+				e = __window.editor;
+				e_m = e.error_manager;
+				
+				var error_data = {
+					'line_number': line - 1,
+					'error_syntax': '',
+					'error_message': message[i].message
+				};
+
+				e_m.add_line(error_data);
+				if (i === 0) e.error_manager.error_message_box.add(e.target);
+				e_m.init_event();
+			
+				om.push({
+					'file': __window.editor.filepath+__window.editor.filename,
+					'line': line,
+					'content': message[i].message
+				});
+				
+			}
+			core.module.layout.select('gLayoutOutput_php');
+		});
 	}
 };

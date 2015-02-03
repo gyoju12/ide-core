@@ -18,18 +18,18 @@ goorm.core.file._new = {
 		var self = this;
 
 		this.panel = $("#dlg_new_file");
-		this.panel.click(function() {
-			$("button[localization_key=common_target]").blur();
-		});
+		// this.panel.click(function() {	// hidden: storage is deprecated
+		// 	$("button[localization_key=common_target]").blur();
+		// });
 
 		var dst_name_check = function(dst_name) {
 			/*var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/";
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
 			return true;*/
-			if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)){
+			if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)) {
 				return false;
-			}else{
+			} else {
 				return true;
 			}
 		};
@@ -115,11 +115,11 @@ goorm.core.file._new = {
 			// localization_key: "title_new_file",
 			id: "dlg_new_file",
 			handle_ok: handle_ok,
-			success: function() {
-				$(document).on("click", "li.open.storage", function() {
-					$("button[localization_key=common_target]").blur();
-				});
-			},
+			// success: function() {
+			// 	$(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
+			// 		$("button[localization_key=common_target]").blur();
+			// 	});
+			// },
 			show: $.proxy(this.after_show, this)
 		});
 
@@ -149,7 +149,7 @@ goorm.core.file._new = {
 		// $(files).click();
 		$("#file_new_target_name").focus();
 		$("#g_nf_btn_ok").keydown(function(e) {
-			if(e.keyCode == 9 ) {
+			if (e.keyCode == 9) {
 				$("#file_new_dir_tree").find(".jstree-clicked").click();
 			}
 			e.preventDefault();

@@ -190,6 +190,8 @@ goorm.core.router = {
 			},
 
 			get: function(url, data, fn) {
+				var self = this;
+
 				if (data && typeof(data) === 'function') {
 					fn = data;
 					data = null;
@@ -202,28 +204,53 @@ goorm.core.router = {
 					var permission = core.module.layout.project.get_permission();
 					var project_path = core.status.current_project_path;
 
+					var _send = function (_permission) {
+						if (self.project_url.indexOf(url) > -1 && project_path && _permission && !_permission.writable) {
+							host = core.user.project_host;
+							port = core.user.project_port;
+
+							if (data) {
+								data.secure_session_id = encodeURIComponent(core.user.project_session_id);
+							}
+						}
+
+						if (url[0] === '/') url = url.substr(1);
+
+						$.ajax({
+							url: 'http://' + host + ":" + port + '/' + url,
+							data: data,
+							dataType: "jsonp",
+							jsonp: 'callback',
+							success: fn
+						});
+					};
+
 					if (data) {
 						data.secure_session_id = encodeURIComponent(core.user.fs_session_id);
-					}
 
-					if (this.project_url.indexOf(url) > -1 && project_path && permission && !permission.writable) {
-						host = core.user.project_host;
-						port = core.user.project_port;
+						if (data.project_path) {
+							project_path = data.project_path;
 
-						if (data) {
-							data.secure_session_id = encodeURIComponent(core.user.project_session_id);
+							if (core.module.layout.project.permission[project_path]) {
+								permission = core.module.layout.project.get_permission(project_path);
+
+								// sync
+								_send(permission);
+							}
+							else {
+								// async
+								core.module.layout.project.get_permission(project_path, function (_permission) {
+									_send(_permission);
+								});
+							}
+						}
+						else {
+							_send(permission);
 						}
 					}
-
-					if (url[0] === '/') url = url.substr(1);
-
-					$.ajax({
-						url: 'http://' + host + ":" + port + '/' + url,
-						data: data,
-						dataType: "jsonp",
-						jsonp: 'callback',
-						success: fn
-					});
+					else {
+						_send(permission);
+					}
 				} else {
 					$.get(url, data, fn);
 				}
@@ -285,7 +312,7 @@ goorm.core.router = {
 		};
 
 		var reconnect = function(socket) {
-			if (!core.force_disconnect) {
+			if (!core.force_unload) {
 				var wm = core.module.layout.workspace.window_manager;
 
 				// set User Data to Socket...

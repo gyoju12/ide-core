@@ -205,6 +205,9 @@
                 <li>
                     <a href="#outline" data-toggle="tab" id='gLayoutTab_Outline' localization_key='outline'>Outline</a>
                 </li>
+                <li>
+                    <a href="#bookmark" data-toggle="tab" id='gLayoutTab_Bookmark' localization_key='bookmark'>Bookmark</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -214,30 +217,32 @@
                 <!--  -->
                 <div class="tab-pane fade" id="outline">
                     <div id="outline_wrapper">
-                        <div class="panel-group" id="bookmark_tab"> 
-                            <div class="panel panel-default">
-                                <div class="panel-heading" data-toggle="collapse" data-parent="#bookmark_tab" data-target="#bookmark_tab_list">
-                                    <span class="panel-title">
-                                        <a href="#" localization_key="edit_bookmark">
-                                            Bookmarks
-                                        </a>
-                                        <span class="caret caret_reverse"></span>
-                                    </span>
-                                </div>
-                                <div id="bookmark_contents">
-                                    <div id="bookmark_tab_list" class="panel-collapse collapse in force_full_height">
-                                        <table class="table table-hover table-condensed">
-                                            <tbody id="bookmark_table" class="cm-s-default">   <!-- for codemirror highlighting -->
-                                                <tr>
-                                                    <td class="padding-10px" localization_key="edit_no_bookmark">No Bookmarks</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <!--  -->
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="bookmark">
+                    <div class="panel-group" id="bookmark_tab"> 
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#bookmark_tab" data-target="#bookmark_tab_list">
+                                <span class="panel-title">
+                                    <a href="#" localization_key="edit_bookmark">
+                                        Bookmarks
+                                    </a>
+                                    <span class="caret caret_reverse"></span>
+                                </span>
+                            </div>
+                            <div id="bookmark_contents">
+                                <div id="bookmark_tab_list" class="panel-collapse collapse in force_full_height">
+                                    <table class="table table-hover table-condensed">
+                                        <tbody id="bookmark_table" class="cm-s-default">   <!-- for codemirror highlighting -->
+                                            <tr>
+                                                <td class="padding-10px" localization_key="edit_no_bookmark">No Bookmarks</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <!--  -->
                     </div>
                 </div>
             </div>
@@ -249,7 +254,7 @@
                     <a href="#debug_tab" data-toggle="tab" id='gLayoutTab_Debug' localization_key='debug'>Debug</a>
                 </li>
                 <li>
-                    <a href="#terminal" data-toggle="tab" id='gLayoutTab_Terminal' localization_key='terminal'>Terminal</a>
+                    <a href="#terminal" data-toggle="tab" id='gLayoutTab_Terminal' localization_key='terminal'>Terminal<span class="badge cursor-pointer" action="refresh_bottom_terminal" style="margin-bottom:-1px"><span class="glyphicon glyphicon-refresh"></span></span></a>
                 </li>
                 <li>
                     <a href="#search_treeview" data-toggle="tab" id='gLayoutTab_Search' localization_key='search'>Search</a>
@@ -268,6 +273,7 @@
                 <div class="tab-pane fade" id="search_treeview">
                     <div id="search_clear" class="clr_view">
                         <button class="btn btn-primary btn-sm clr-btn" disabled="disabled">Clear Results</button>
+                        <button class="btn btn-primary btn-sm refresh-btn" disabled="disabled">Refresh</button>
                     </div>
                     <div id="search_result" class="rst_view"></div>
                 </div>
@@ -760,7 +766,6 @@
                                             Clear Bookmarks <em class="helptext">Ctrl + Shift + F2</em>
                                         </a>
                                     </li>
-                                    <li class="divider" id="bookmark_list"></li>
                                 </ul>
                             </li>
                             <li class="divider"></li>
@@ -1193,6 +1198,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="account_menu_dropdown">
                             <!--  -->
+							<!--  -->
                             <li>
                                 <a role="menuitem" tabindex="-1" href="#" action='account_logout' localization_key='account_logout'>Logout</a>
                             </li>
@@ -2077,15 +2083,16 @@
                                         <div class="project_import">
                                             <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
 
-                                            <div class="row">
-                                            <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
-                                            <div class="col-md-10">
-                                                <select class="import_storage form-control">
-                                                    <option value="goormIDE_Storage">goorm Storage</option>
-                                                    <!-- <option value="Dropbox" disabled>Dropbox</option>
-                                                            <option value="Google_Drive" disabled>Google Drive</option> -->
-                                                </select>
-                                            </div>
+                                            <!-- <div class="row">
+                                                <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
+                                                <div class="col-md-10">
+                                                    <select class="import_storage form-control">
+                                                        <option value="goormIDE_Storage">goorm Storage</option>
+                                                        <option value="Dropbox" disabled>Dropbox</option>
+                                                                <option value="Google_Drive" disabled>Google Drive</option>
+                                                    </select>
+                                                </div>
+                                            </div>-->
                                         </div>
 
                                         <div class="project_author_name row">
@@ -2138,8 +2145,6 @@
 
                                         <input type="hidden" class="import_project_using_plugin" value="no" />
                                         <div class="import_project_expansion_container" style="width:770px;"></div>
-
-                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -2149,16 +2154,16 @@
                         <div class="wizard_step next_wizard_step" step="2">
                             <div class="well well-sm" localization_key='dialog_new_project_guide2'>Input Information for New Project</div>
 
-                            <div class="row">
+                            <!-- <div class="row">
                                 <label for="new_project_storage" class="col-md-2 control-label" localization_key='dialog_storage'>Storage</label>
                                 <div class="col-md-10">
                                     <select id="new_project_storage" class="form-control">
                                         <option value="goormIDE_Storage">goorm Storage</option>
-                                        <!-- <option value="Dropbox" disabled>Dropbox</option>
-                                                                        <option value="Google_Drive" disabled>Google Drive</option> -->
+                                        <option value="Dropbox" disabled>Dropbox</option>
+                                                                        <option value="Google_Drive" disabled>Google Drive</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="row project_author_name">
                                 <label for="input_project_author_name" class="col-md-2 control-label" localization_key='dialog_new_project_author_name'>Author Name</label>
@@ -2223,7 +2228,7 @@
                         <div class="well well-sm" localization_key='dialog_project_open_guide'>Select a project to open</div>
 
                         <div id="project_open">
-                            <nav class="navbar navbar-default" role="navigation">
+                            <!-- <nav class="navbar navbar-default" role="navigation">
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav">
                                         <li></li>
@@ -2238,7 +2243,7 @@
                                                     <li class="open storage">
                                                         <a href="#">goorm Storage</a>
                                                     </li>
-                                                    <!-- <li class="divider"></li>
+                                                    <li class="divider"></li>
                                                     <li class="disabled">
                                                         <a href="#">Google Drive</a>
                                                     </li>
@@ -2251,13 +2256,13 @@
                                                     </li>
                                                     <li>
                                                         <a href="#">Git Repository</a>
-                                                    </li> -->
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                            </nav>
+                            </nav> -->
                             <div class="row">
                                 <div id="project_open_list" class="col-md-4 dialog_left_inner" tabindex="-1"></div>
                                 <div id="project_open_dialog_center" class="col-md-8 dialog_center">
@@ -2299,7 +2304,7 @@
                                         <ol class="breadcrumb" id="file_new_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2310,7 +2315,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2323,12 +2328,12 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
 
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
 
@@ -2465,7 +2470,7 @@
                                         <ol class="breadcrumb" id="folder_new_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2476,7 +2481,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2489,11 +2494,11 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
 
@@ -2534,7 +2539,7 @@
                                         <ol class="breadcrumb" id="text_new_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2545,7 +2550,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2558,12 +2563,12 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
 
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
 
@@ -2596,7 +2601,7 @@
                                         <ol class="breadcrumb" id="file_open_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2607,7 +2612,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2620,12 +2625,12 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
 
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
                         <div class="row">
@@ -2674,7 +2679,7 @@
                                             <ol class="breadcrumb" id="file_cloud_upload_location_path"></ol>
                                         </li>
                                     </ul>
-                                    <ul class="nav navbar-nav navbar-right">
+                                    <!-- <ul class="nav navbar-nav navbar-right">
                                         <li>
                                             <div class="btn-group">
                                                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2685,7 +2690,7 @@
                                                     <li>
                                                         <a href="#">goorm Storage</a>
                                                     </li>
-                                                    <!-- <li class="divider"></li>
+                                                    <li class="divider"></li>
                                                     <li class="disabled">
                                                         <a href="#">Google Drive</a>
                                                     </li>
@@ -2698,11 +2703,11 @@
                                                     </li>
                                                     <li>
                                                         <a href="#">Git Repository</a>
-                                                    </li> -->
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                             </nav>
                             <div id="file_cloud_upload_dialog_middle" class="row">
@@ -2759,7 +2764,7 @@
                                         <ol class="breadcrumb" id="file_save_as_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2770,7 +2775,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2783,11 +2788,11 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
 
@@ -2865,7 +2870,7 @@
                                         <ol class="breadcrumb" id="file_move_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2876,7 +2881,7 @@
                                                 <li>
                                                     <a href="#">goorm Storage</a>
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -2889,11 +2894,11 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </nav>
                         <div id="move_dialog_middle" class="row">
@@ -2965,7 +2970,7 @@
                                                 <ol class="breadcrumb" id="file_import_location_path"></ol>
                                             </li>
                                         </ul>
-                                        <ul class="nav navbar-nav navbar-right">
+                                        <!-- <ul class="nav navbar-nav navbar-right">
                                             <li>
                                                 <div class="btn-group">
                                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -2975,9 +2980,8 @@
                                                     <ul class="dropdown-menu">
                                                         <li>
                                                             <a href="#">goorm Storage</a>
-                                                            <!-- jeongmin: typographic error fix -->
                                                         </li>
-                                                        <!-- <li class="divider"></li>
+                                                        <li class="divider"></li>
                                                         <li class="disabled">
                                                             <a href="#">Google Drive</a>
                                                         </li>
@@ -2990,11 +2994,11 @@
                                                         </li>
                                                         <li>
                                                             <a href="#">Git Repository</a>
-                                                        </li> -->
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </nav>
 
                                     <div id="import_dialog_middle">
@@ -3047,7 +3051,7 @@
                                         <ol class="breadcrumb" id="file_export_location_path"></ol>
                                     </li>
                                 </ul>
-                                <ul class="nav navbar-nav navbar-right">
+                                <!-- <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -3057,9 +3061,8 @@
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a href="#">goorm Storage</a>
-                                                    <!-- jeongmin: typographic error fix -->
                                                 </li>
-                                                <!-- <li class="divider"></li>
+                                                <li class="divider"></li>
                                                 <li class="disabled">
                                                     <a href="#">Google Drive</a>
                                                 </li>
@@ -3072,11 +3075,11 @@
                                                 </li>
                                                 <li>
                                                     <a href="#">Git Repository</a>
-                                                </li> -->
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </nav>
 
                             <iframe id="download_frame" style='display:none;'></iframe>
@@ -3136,7 +3139,7 @@
                                             <!-- jeongminF: add id for print out path -->
                                         </li>
                                     </ul>
-                                    <ul class="nav navbar-nav navbar-right">
+                                    <!-- <ul class="nav navbar-nav navbar-right">
                                         <li>
                                             <div class="btn-group">
                                                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target' tabindex="-1">
@@ -3147,7 +3150,7 @@
                                                     <li>
                                                         <a href="#">goorm Storage</a>
                                                     </li>
-                                                    <!-- <li class="divider"></li>
+                                                    <li class="divider"></li>
                                                     <li class="disabled">
                                                         <a href="#">Google Drive</a>
                                                     </li>
@@ -3160,11 +3163,11 @@
                                                     </li>
                                                     <li>
                                                         <a href="#">Git Repository</a>
-                                                    </li> -->
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                             </nav>
 
@@ -3220,16 +3223,16 @@
                             <div class="project_import">
                                 <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
                                     <div class="col-md-10">
                                         <select class="import_storage form-control">
                                             <option value="goormIDE_Storage">goorm Storage</option>
-                                            <!-- <option value="Dropbox" disabled>Dropbox</option>
-                                            <option value="Google_Drive" disabled>Google Drive</option> -->
+                                            <option value="Dropbox" disabled>Dropbox</option>
+                                            <option value="Google_Drive" disabled>Google Drive</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="project_author_name row">
                                     <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
@@ -3325,7 +3328,7 @@
                                             <ol class="breadcrumb" id="project_delete_location"></ol>    
                                         </li>
                                     </ul>
-                                    <ul class="nav navbar-nav navbar-right">
+                                    <!-- <ul class="nav navbar-nav navbar-right">
                                         <li>
                                             <div class="btn-group">
                                                 <button id="project_delete_storage" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" localization_key='common_target'>
@@ -3336,7 +3339,7 @@
                                                     <li class="delete storage">
                                                         <a href="#">goorm Storage</a>
                                                     </li>
-                                                    <!-- <li class="divider"></li>
+                                                    <li class="divider"></li>
                                                     <li class="disabled">
                                                         <a href="#">Google Drive</a>
                                                     </li>
@@ -3349,12 +3352,12 @@
                                                     </li>
                                                     <li>
                                                         <a href="#">Git Repository</a>
-                                                    </li> -->
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
 
-                                    </ul>
+                                    </ul> -->
                                 </div>
                             </nav>
                             <div class="row">
@@ -3533,7 +3536,8 @@
 
                         <div class="row">
                             <div class="col-xs-8">
-                                <div style="margin-bottom: 8px">
+                                <div style="margin-bottom: 8px;position: relative">
+                                    <input class="form-control" id="find_query_inputbox_background" />
                                     <input class="form-control" id="find_query_inputbox" type="text" class="form-control" placeholder="Find" />
                                 </div>
                                 <div>
@@ -3746,7 +3750,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="g_pp_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button id="g_pp_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_pp_btn_ok" class="btn btn-primary" data-dismiss="modal" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -3860,12 +3864,12 @@
                                 <li class='list-group-item'>
                                     <p><b id='node_oss_version'>NodeJS 0.10.18</b></p>
                                     <ul>
-                                        <li>Modules: colors, commander, connect-redis, css-parse, ejs, everyauth, express, forever, htmlparser, jade, markdown, mongoose, nodemailer, octonode, q, querystring, rimraf, simple-git, socket.io, walk, xml2json, xss<br></li>
+                                        <li>Modules: async, body-parser, colors, commander, connect-redis, cookie-parser, css-parse, ejs, express, forever, fs-extra, htmlparser, method-override, mongoose, multer, nodemailer, octonode, ot, q, querystring, rimraf, simple-git, socket.io, walk, xml2json, xss<br></li>
                                         <li>License: MIT (<a href='https://raw.githubusercontent.com/joyent/node/v0.10.29/LICENSE' target='_blank'>https://raw.githubusercontent.com/joyent/node/v0.10.29/LICENSE</a>)</li>
                                     </ul>
                                 </li>
                                 <li class='list-group-item'>
-                                    <p><b id='codemirror_oss_version'>CodeMirror 4.0.3</b></p>
+                                    <p><b id='codemirror_oss_version'>CodeMirror 4.8.0</b></p>
                                     <ul>
                                         <li>License: MIT (<a href='http://codemirror.net/LICENSE' target='_blank'>http://codemirror.net/LICENSE</a>)</li>
                                     </ul>
@@ -3877,15 +3881,9 @@
                                     </ul>
                                 </li>
                                 <li class='list-group-item'>
-                                    <p><b id='bootstrap_oss_version'>Bootstrap 3.0.2</b></p>
+                                    <p><b id='bootstrap_oss_version'>Bootstrap 3.3.1</b></p>
                                     <ul>
                                         <li>License: MIT (<a href='https://github.com/twbs/bootstrap/blob/master/LICENSE' target='_blank'>https://github.com/twbs/bootstrap/blob/master/LICENSE</a>)</li>
-                                    </ul>
-                                </li>
-                                <li class='list-group-item'>
-                                    <p><b id='bootstrap_tour_oss_version'>Bootstrap-tour 0.9.1</b></p>
-                                    <ul>
-                                        <li>License: Apache (<a href='http://www.apache.org/licenses/LICENSE-2.0' target='_blank'>http://www.apache.org/licenses/LICENSE-2.0</a>)</li>
                                     </ul>
                                 </li>
                                 <li class='list-group-item'>
@@ -3913,9 +3911,9 @@
                                     </ul>
                                 </li>
                                 <li class='list-group-item'>
-                                    <p><b id='require_oss_version'>RequireJs 2.1.9</b></p>
+                                    <p><b id='require_oss_version'>OT.js 0.0.14</b></p>
                                     <ul>
-                                        <li>License: new BSD and MIT(<a href='https://github.com/jrburke/requirejs/blob/master/LICENSE' target='_blank'>https://github.com/jrburke/requirejs/blob/master/LICENSE</a>)</li>
+                                        <li>License: MIT(<a href='https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE' target='_blank'>https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE</a>)</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -4765,12 +4763,6 @@
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.window.left_layout_show_hide" localization_key="window_left_layout_show_hide">Left Pane Show/Hide</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.window.left_layout_show_hide" id="preference.shortcut.window.left_layout_show_hide" value="Alt+Shift+L"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.window.left_layout_toggle_project_explorer" localization_key="window_left_layout_toggle_project_explorer">Show Project Explorer</label>
-                                                <div class="col-md-8">
-                                                    <input class="shortcut_input form-control" name="preference.shortcut.window.left_layout_toggle_project_explorer" id="preference.shortcut.window.left_layout_toggle_project_explorer" value="Alt+Shift+1"/>
                                                 </div>
                                             </div>
                                                 <!--
@@ -5758,10 +5750,6 @@
                                 Left Pane Show/Hide
                                 <em class="helptext">Alt + Shift + L</em>
                             </span>
-                            <span name="preference.shortcut.window.left_layout_toggle_project_explorer" localization_key="window_left_layout_toggle_project_explorer">
-                                Show Project Explorer
-                                <em class="helptext">Alt + Shift + 1</em>
-                            </span>
                                 <!--
                                 <span name="preference.shortcut.window.left_layout_toggle_packages" localization_key="window_left_layout_toggle_packages">
                                     Show Packages
@@ -5890,7 +5878,7 @@
     <script type="text/javascript" src="/lib/com.jqueryui.code/jquery.debounce.js"></script>
     <script type="text/javascript" src="/lib/com.jqueryui.code/jquery.Jcrop.min.js"></script>
 
-    <script type="text/javascript" src="lib/com.jquery.code/plugins/jquery.treetable.js"></script>  <!-- jeongmin: debug tab's treetable for expressing struct -->
+    <script type="text/javascript" src="/lib/com.jquery.code/plugins/jquery.treetable.js"></script>  <!-- jeongmin: debug tab's treetable for expressing struct -->
 
     <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/js/bootstrap-formhelpers.min.js"></script>
@@ -5942,26 +5930,21 @@
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/tern/lib/comment.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/tern/lib/infer.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/tern/lib/doc_comment.js"></script> -->
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/markdown/markdown.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/clike/clike.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/css/css.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/diff/diff.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/haskell/haskell.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.8/mode/django/django.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.8/mode/go/go.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/htmlmixed/htmlmixed.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/javascript/javascript.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/lua/lua.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.8/mode/markdown/markdown.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/php/php.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/python/python.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.8/mode/rpm/rpm.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/ruby/ruby.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/rst/rst.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/scheme/scheme.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/smalltalk/smalltalk.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/sparql/sparql.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/stex/stex.js"></script>
+    <script type="text/javascript" src="/lib/codemirror-4.8/mode/shell/shell.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/mode/xml/xml.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/yaml/yaml.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/mode/go/go.js"></script>
-<!--     <script type="text/javascript" src="/lib/codemirror-4.8/mode/dart/dart.js"></script> -->
+    <!--  <script type="text/javascript" src="/lib/codemirror-4.8/mode/dart/dart.js"></script> -->
     <script type="text/javascript" src="/lib/codemirror-4.8/keymap/vim.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/keymap/sublime.js"></script>
     <!--JS : tty.js-->
@@ -5979,7 +5962,9 @@
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.toolbar.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.layout/layout.workspace.js"></script>
+    <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.output_manager.js"></script>
+    <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.terminal_manager.js"></script>
+	<script type="text/javascript" src="/modules/goorm.core.layout/layout.workspace.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.loading_bar.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.toast.js"></script>
@@ -6026,12 +6011,6 @@
     <script type="text/javascript" src="/modules/goorm.core.project/project._export.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.project/project._import.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.project/project._delete.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.build.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.build.all.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.build.project.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.build.clean.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.build.configuration.js"></script>
-    <script type="text/javascript" src="/modules/goorm.core.project/project.background_build.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.project/project.list.js"></script>
     <!--  -->
     <script type="text/javascript" src="/modules/goorm.core.file/file.js"></script>

@@ -131,10 +131,13 @@ goorm.core.edit.font_manager.prototype = {
         var container = $(self.target);
         var code_mirror = $('div.CodeMirror', container);
         var cursors = container.find('.user_cursor');
-        if (cursors.length != 0) {
+		
+	var height = container.find('.CodeMirror-activeline').height();
+		
+        if (cursors.length > 0) {
             for (var i = 0; i < cursors.length; i++) {
                 var cursor = cursors[i];
-                var target_id = $(cursor).attr('class').split(' ')[0].replace('user_cursor', 'user_name') // user_cursor_[ID]
+                var target_id = $(cursor).attr('class').split(' ')[0].replace('user_cursor', 'user'); // user_cursor_[ID]
                 var user_name = $('.' + target_id);
 
                 var line = $(cursor).attr('line');
@@ -144,20 +147,18 @@ goorm.core.edit.font_manager.prototype = {
                     line: line,
                     ch: ch
                 });
-                var scroll = self.editor.getScrollInfo();
+                
+                var top = parseInt(coords.top, 10) - parseInt(code_mirror.offset().top, 10);
+                var left = parseInt(coords.left, 10) - parseInt(code_mirror.offset().left, 10);
 
-                var top = parseInt(coords.top, 10) - parseInt(code_mirror.offset().top, 10) + scroll.top;
-                var left = parseInt(coords.left, 10) - parseInt(code_mirror.offset().left, 10) + scroll.left;
-
-                var fs = 11 + delta;
                 //parseInt($(user_name).css('font-size').replace('px', ""), 10) + delta;
-                var height = 14 + delta;
+                
                 //parseInt($(user_name).css('height').replace('px', ""), 10) + delta;
 
-                $(user_name).css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', fs + 'px').css('height', height + 'px');
+                user_name.css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', core.preference["preference.editor.font_size"] + 'px').css('height', height + 'px');
                 $(cursor).css('top', (top) + 'px').css('left', (left) + 'px').css('height', height + 'px');
-                // $(cursor).parent().parent().parent().parent().scrollTop(top);
             }
+            
         }
     },
 

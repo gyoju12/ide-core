@@ -15,20 +15,19 @@ var rimraf = require('rimraf');
 var async = require('async');
 
 var initial_list = {
-	'ide': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.dart", "goorm.plugin.go", "goorm.plugin.jsp", "goorm.plugin.nodejs", "goorm.plugin.php", "goorm.plugin.python", "goorm.plugin.ruby", "goorm.plugin.web"],
-	'edu': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.python", "goorm.plugin.web", "goorm.plugin.edu", "goorm.plugin.lecture"],
+	'ide': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.dart", "goorm.plugin.go", "goorm.plugin.jsp", "goorm.plugin.nodejs", "goorm.plugin.php", "goorm.plugin.python", "goorm.plugin.ruby"],
+	'edu': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.python", "goorm.plugin.edu", "goorm.plugin.lecture"],
 	'dev': ["goorm.plugin.nodejs", "goorm.plugin.dev"],
-	'book': ["goorm.plugin.nodejs", "goorm.plugin.jquery", "goorm.plugin.web"],
+	'book': ["goorm.plugin.nodejs", "goorm.plugin.jquery"],
 	'cpp': ["goorm.plugin.cpp"],
 	'java': ["goorm.plugin.java"],
-	'nodejs': ["goorm.plugin.nodejs", "goorm.plugin.nodejs", "goorm.plugin.web"],
-	'python': ["goorm.plugin.python", "goorm.plugin.web"],
-	'ruby': ["goorm.plugin.ruby", "goorm.plugin.web"],
-	'go': ["goorm.plugin.go", "goorm.plugin.web"],
-	'dart': ["goorm.plugin.dart", "goorm.plugin.web"],
-	'jsp': ["goorm.plugin.jsp", "goorm.plugin.web"],
-	'php': ["goorm.plugin.php", "goorm.plugin.web"],
-	'web': ["goorm.plugin.web"],
+	'nodejs': ["goorm.plugin.nodejs", "goorm.plugin.nodejs"],
+	'python': ["goorm.plugin.python"],
+	'ruby': ["goorm.plugin.ruby"],
+	'go': ["goorm.plugin.go"],
+	'dart': ["goorm.plugin.dart"],
+	'jsp': ["goorm.plugin.jsp"],
+	'php': ["goorm.plugin.php"],
 	'android': ["goorm.plugin.android"],
 	'phonegap': ["goorm.plugin.phonegap"]
 };

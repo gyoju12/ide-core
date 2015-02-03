@@ -14,16 +14,20 @@ goorm.core.preference.language = {
 	init: function () {
 
 		var language = "";
-		var progress_elements = core.module.loading_bar;
+		var progress_elements = null;
+		
 		$('[id="preference.language.select"]').change(function(){
 			var selected = $(this).find(':selected').val();
-			progress_elements.start();
+			progress_elements = core.module.loading_bar.start();
 			
 			core.module.localization.change_language(selected, true, true);
 		});
 
 		$(core).on('language_change', function() {		
-			progress_elements.stop();
+			if (progress_elements) {
+				progress_elements.stop();
+				progress_elements = null;
+			}
 		});
 
 		if (localStorage.getItem("language") === null) {

@@ -304,6 +304,12 @@ goorm.core.project.explorer.prototype = {
 			self.select_project_name(project_name);
 			self.on_project_selectbox_change(idx);
 		});
+
+		// $("#goorm_center_inner_layout").focusin(function() {
+		// 	if($("#project_selectbox").attr("aria-expanded")) {
+		// 		$('#project_selector').find('.dropdown-menu').dropdown('toggle')
+		// 	}
+		// });
 	},
 
 	set_default_project_list: function() { // default: DataTable
@@ -1304,8 +1310,9 @@ goorm.core.project.explorer.prototype = {
 				}
 		};
 
-		if (state) option.state = state;
-
+		if (state) {
+			option.state = state;
+		}
 		this.treeview = new goorm.core.utility.treeview("#project_treeview", option);
 	}
 };

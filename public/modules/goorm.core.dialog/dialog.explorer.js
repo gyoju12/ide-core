@@ -82,7 +82,7 @@ goorm.core.dialog.explorer.prototype = {
 			data.type = self.filetype;
 			data.path = self.filepath.replace(data.name, "");
 		} else {
-			//data.path = $(self.location_path).val();
+			//data.path = $(self.location_path).val(;
 			data.path = self.current_path;
 			data.name = $(self.input_file_name).val();
 			data.type = $(self.file_type).val();
@@ -102,11 +102,13 @@ goorm.core.dialog.explorer.prototype = {
 			data.path = "/";
 		}
 
-		if (data.path.indexOf(" ") == -1 && data.name.indexOf(" ") == -1 && data.type.indexOf(" ") == -1) {
-			return data;
-		} else {
-			return false;
-		}
+		return data;
+
+		// if (data.path.indexOf(" ") == -1 && data.name.indexOf(" ") == -1 && data.type.indexOf(" ") == -1) {
+		// 	return data;
+		// } else {
+		// 	return false;
+		// }
 	},
 
 

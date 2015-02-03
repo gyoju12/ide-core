@@ -1,21 +1,56 @@
 {
-	"core" : {
-		"label" : "<span localization_key='property'>Property</span>",
-		"expanded" : true,
-		"child" : [
-			{	"label" : "<span localization_key='information' tab_action='Information'>Information</span>",
-				"id" : "Information",
-				"tab" : [
-					{	"label" : "<span localization_key='information'>Information</span>",
-						"html"	: "configs/project/default/project.general.html"
-					}
-				]
-			}
-			
-		]
+	"us": {
+		"core": {
+			"label": "Property",
+			"id": "Property",
+			"localization_key": "property",
+			"expanded": true,
+			"child": [{
+					"label": "Information",
+					"id": "Information",
+					"localization_key": "information",
+					"tab": [{
+						"label": "Information",
+						"id": "Information",
+						"localization_key": "information",
+						"html": "configs/project/default/project.general.html"
+					}]
+				}
+				
+			]
+		},
+		"plugin": {
+			"label": "Plugin",
+			"id": "Plugin",
+			"localization_key": "plugin",
+			"child": []
+		}
 	},
-	"plugin" : {
-		"label" : "<span localization_key='plugin'>Plugin</span>",
-		"child" : []
+	"kor": {
+		"core": {
+			"label": "속성",
+			"id": "Property",
+			"localization_key": "property",
+			"expanded": true,
+			"child": [{
+					"label": "정보",
+					"id": "Information",
+					"localization_key": "information",
+					"tab": [{
+						"label": "정보",
+						"id": "Information",
+						"localization_key": "information",
+						"html": "configs/project/default/project.general.html"
+					}]
+				}
+				
+			]
+		},
+		"plugin": {
+			"label": "플러그인",
+			"id": "Plugin",
+			"localization_key": "plugin",
+			"child": []
+		}
 	}
 }

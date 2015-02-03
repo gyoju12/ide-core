@@ -22,6 +22,7 @@ goorm.core.search = {
 	treeview: null,
 	query: null,
 	current_options: null,
+	last_option: null,
 
 	init: function() {
 		var self = this;
@@ -33,13 +34,36 @@ goorm.core.search = {
 			// self.panel.modal('hide');
 		};
 
+
 		//clear button roles --heeje
 		$('#search_clear>.clr-btn').click(function () {
 
 			$("#search_clear .clr-btn").attr('disabled', 'disabled');
+			$("#search_clear .refresh-btn").attr('disabled', 'disabled');
 			$('#search_result').empty();
 			$("#gLayoutTab_Search .badge").remove();
+			self.last_option = null;
 			self.unmark();
+		});
+
+		$('#search_clear>.refresh-btn').click(function () {
+			$(core).one("event_save_all", function(e) {
+				if(self.last_option != null) {
+					self.search(self.last_option);
+				} else {
+					self.refresh();
+				}
+			});
+
+			var save_cnt = 0;
+			core.module.layout.workspace.window_manager.save_all(function() {
+				if(save_cnt === (core.module.layout.workspace.window_manager.window.length-1)) {
+					$(core).trigger("event_save_all");
+					$('#south_tab #gLayoutTab_Search').click();
+				} else {
+					save_cnt++;
+				}
+			});
 		});
 
 		this.dialog = new goorm.core.dialog();
@@ -115,6 +139,7 @@ goorm.core.search = {
 
 				self.panel.on('shown.bs.modal', function() {
 					$("#find_query_inputbox").focus();
+					$("#find_query_inputbox").select();
 					// cut modal fade (dialog size)
 
 					var goorm_dialog_container = $("#dlg_search");
@@ -176,6 +201,7 @@ goorm.core.search = {
 	
 		var self = this;
 		var search_path;
+		
 
 		this.match_case = $("#search_match_case").hasClass("active");
 		this.use_regexp = $("#search_use_regexp").hasClass("active");
@@ -364,7 +390,7 @@ goorm.core.search = {
 				project_path: "search",
 				// on_select: on_select,
 				root_node: project_root,
-				wholerow: false,
+				// wholerow: false,	// hidden: want to show wholerow
 				sort: false,
 				auto_load_root: false,
 				on_ready: function() {},
@@ -430,8 +456,8 @@ goorm.core.search = {
 		//var progress_elements = core.module.loading_bar.start();
 
 		core._socket.once("/file/search_on_project", function(res) {
-			console.log("A");
-			console.log(self.progress_elements.bar);
+			// console.log("A");
+			// console.log(self.progress_elements.bar);
 			core.progressbar.set(80, self.progress_elements.bar);
 
 			// var length = 0;
@@ -468,6 +494,7 @@ goorm.core.search = {
 					$("#gLayoutTab_Search").prepend("<span class='badge pull-right'>" + data.total_match + "</span>"); //then attach badge next to the search tab
 
 				$("#search_clear>.clr-btn").removeAttr('disabled');
+				$("#search_clear>.refresh-btn").removeAttr('disabled');
 
 				self.hide();
 			}
@@ -475,6 +502,7 @@ goorm.core.search = {
 			//progress_elements.stop();
 		});
 		core._socket.emit("/file/search_on_project", postdata);
+
 
 	},
 

@@ -149,7 +149,7 @@ goorm.core.edit.dictionary.prototype = {
 
 		if (keyword !== "") {
 			all_words = all_words.filter(function(o) {
-				if (o.indexOf(keyword) == 0) {
+				if (o.indexOf(keyword) === 0) {
 					return true;
 				} else {
 					return false;
@@ -542,19 +542,23 @@ goorm.core.edit.dictionary.prototype = {
 		this.display = false;
 	},
 
-	search: function(keyword, type, line_content) {
-		if (keyword == "/*" || /^[a-zA-Z0-9\-_+=\[{\]}\\|;:'",<\.>\/?]*$/.test(keyword) === false) {
-			return "";
+	search: function(keyword, type, line_content) {		
+		if (keyword == "/*" || /[^\-\+=\[{\]}\\\|\;\:\'\"\,<\.>\/\?\!\@#\$%\^&\*\(\)~\`]+/g.test(keyword) === false) {
+			return false;
 		}
 		
 		var self = this;
 		self.result = [];
 
-		var special_characters = ['!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|', '\\'];
+		var special_characters = ['!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|', '\\'];
 		
-		if (special_characters.indexOf(keyword) > -1) {
-			keyword = '\\' + keyword;
-		}
+		
+		$(special_characters).each(function (i) {
+			keyword.split(this).join("\\" + this);
+		});
+// 		if (special_characters.indexOf(keyword) > -1) {
+// 			keyword = '\\' + keyword;
+// 		}
 
 		var reg_exp = new RegExp('^' + keyword, '');
 // 		var keyword_object = {};
@@ -568,6 +572,8 @@ goorm.core.edit.dictionary.prototype = {
 		});
 
 		self.set(keyword);
+		
+		return true;
 	},
 // 	get_dictionary: function(keyword_object, callback) {
 // 		var self = this;
@@ -726,9 +732,10 @@ goorm.core.edit.dictionary.prototype = {
 			var code = e.keyCode;
 			var cursor = cm_editor.getCursor();
 			var token = cm_editor.getTokenAt(cursor);
-									
-			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code >= 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
-				self.search(token.string);
+/*									
+			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code > 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
+				console.log("keycode = " + code);
+				console.log(self.search(token.string));
 				if (self.result.length > 0) {
 					self.show();
 					cm_editor.focus();
@@ -746,9 +753,37 @@ goorm.core.edit.dictionary.prototype = {
 				self.altKey = false;
 				cm_editor.focus();
 			}
-			else if (code < 36 && code > 40 && code != 8 && code != 46 && code != 27 && code != 13 && code != 32 && code != 17 && code != 16) {
+			else { //if (code < 36 && code > 40 && code != 8 && code != 46 && code != 27 && code != 13 && code != 32 && code != 17 && code != 16) {
 				self.hide();
 				cm_editor.focus();
+			}
+*/		
+// 			console.log(token.string);
+			
+			//All new code...
+			if (code != 38 && code != 40){//key 'up', 'down'
+				if (self.search(token.string) && code != 13 && code != 9  && !self.metaKey && !self.ctrlKey && !self.altKey) {
+					//console.log("keycode = " + code);
+					if (self.result.length > 0) {
+						self.show();
+						cm_editor.focus();
+						self.select_top();
+					}
+					else {
+						self.hide();
+						cm_editor.focus();
+					}
+				}
+				else if ((self.metaKey || self.ctrlKey || self.altKey) && ((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189)) {
+					self.metaKey = false;
+					self.ctrlKey = false;
+					self.altKey = false;
+					cm_editor.focus();
+				}
+				else {
+					self.hide();
+					cm_editor.focus();
+				}
 			}
 			
 			

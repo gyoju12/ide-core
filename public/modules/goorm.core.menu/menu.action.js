@@ -220,97 +220,97 @@ goorm.core.menu.action = {
 				return false;
 			}
 
-			if (core.status.current_project_storage == "goormIDE_Storage") {
-				// jeongmin: get real selected file
-				var selected_path = core.module.layout.project_explorer.get_tree_selected_path();
+			// if (core.status.current_project_storage == "goormIDE_Storage") {	// hidden: storage is deprecated
+			// jeongmin: get real selected file
+			var selected_path = core.module.layout.project_explorer.get_tree_selected_path();
 
-				if (selected_path.files.length == 0 && selected_path.directorys.length == 0) {
-					alert.show(core.module.localization.msg.alert_select_file);
-				} else {
-					if (core.status.current_project_path === "") { //case select project
-						var tmp = core.status.selected_file.substring(1); //and select project root
-						if (tmp.indexOf('/') == -1) {
-							core.dialog.delete_project.show(function() {
-								$("#project_delete_list #selector_" + tmp.replace(core.user.id + "_", "")).click();
-							});
-							return;
-						}
-					}
-
-					if (core.status.current_project_path === core.status.selected_file) { //each root
+			if (selected_path.files.length == 0 && selected_path.directorys.length == 0) {
+				alert.show(core.module.localization.msg.alert_select_file);
+			} else {
+				if (core.status.current_project_path === "") { //case select project
+					var tmp = core.status.selected_file.substring(1); //and select project root
+					if (tmp.indexOf('/') == -1) {
 						core.dialog.delete_project.show(function() {
-							$("#project_delete_list #selector_" + core.status.current_project_name).click();
+							$("#project_delete_list #selector_" + tmp.replace(core.user.id + "_", "")).click();
 						});
 						return;
 					}
-
-					var localization = core.module.localization.msg;
-
-					var window_manager = core.module.layout.workspace.window_manager;
-					var window_list = window_manager.window;
-					var opened_window = false; // jeongmin: selected file is opened or not
-
-					// jeongmin: check if selected file is opened or in collaboration
-					for (var i = window_list.length - 1; 0 <= i; i--) {
-						if ((window_list[i].title).indexOf(core.status.selected_file) > -1) { // jeongmin: selected file is opened
-							opened_window = i;
-
-							
-						}
-					}
-
-					function close_window() {
-						if (opened_window) {
-							window_list[opened_window].is_saved = true;
-							window_list[opened_window].tab.is_saved = true;
-							// window_list[i].close();
-
-							window_manager.close_by_index(opened_window, opened_window);
-
-							// jeongmin: these are should be done after deleting selected file
-							core.status.selected_file = "";
-							core.status.selected_file_type = "";
-						}
-					}
-
-					confirmation.init({
-						title: core.module.localization.msg.confirmation_delete_title,
-						message: core.module.localization.msg.confirmation_delete_file,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
-						yes: function() {
-							var postdata = {
-								filename: core.status.selected_file
-							};
-							// console.log(postdata);
-
-							// if (core.module.terminal.terminal) {
-							// 	core.module.terminal.fs_rm(core.status.selected_file, function on_delete_file() {
-
-							// 		core.module.layout.project_explorer.refresh();
-
-							// 		close_window();
-							// 	});
-							// } else {
-							core._socket.once("/file/delete", function(data) {
-								// m.s("delete: " + core.status.selected_file);
-								if (data.err_code == 20) {
-									alert.show(data.message);
-								}
-
-								core.module.layout.project_explorer.refresh();
-
-								close_window();
-							}, true);
-							core._socket.emit("/file/delete", postdata);
-							// }
-						},
-						no: null
-					});
-
-					confirmation.show();
 				}
+
+				if (core.status.current_project_path === core.status.selected_file) { //each root
+					core.dialog.delete_project.show(function() {
+						$("#project_delete_list #selector_" + core.status.current_project_name).click();
+					});
+					return;
+				}
+
+				var localization = core.module.localization.msg;
+
+				var window_manager = core.module.layout.workspace.window_manager;
+				var window_list = window_manager.window;
+				var opened_window = false; // jeongmin: selected file is opened or not
+
+				// jeongmin: check if selected file is opened or in collaboration
+				for (var i = window_list.length - 1; 0 <= i; i--) {
+					if ((window_list[i].title).indexOf(core.status.selected_file) > -1) { // jeongmin: selected file is opened
+						opened_window = i;
+
+						
+					}
+				}
+
+				function close_window() {
+					if (opened_window) {
+						window_list[opened_window].is_saved = true;
+						window_list[opened_window].tab.is_saved = true;
+						// window_list[i].close();
+
+						window_manager.close_by_index(opened_window, opened_window);
+
+						// jeongmin: these are should be done after deleting selected file
+						core.status.selected_file = "";
+						core.status.selected_file_type = "";
+					}
+				}
+
+				confirmation.init({
+					title: core.module.localization.msg.confirmation_delete_title,
+					message: core.module.localization.msg.confirmation_delete_file,
+					yes_text: core.module.localization.msg.confirmation_yes,
+					no_text: core.module.localization.msg.confirmation_no,
+					yes: function() {
+						var postdata = {
+							filename: core.status.selected_file
+						};
+						// console.log(postdata);
+
+						// if (core.module.terminal.terminal) {
+						// 	core.module.terminal.fs_rm(core.status.selected_file, function on_delete_file() {
+
+						// 		core.module.layout.project_explorer.refresh();
+
+						// 		close_window();
+						// 	});
+						// } else {
+						core._socket.once("/file/delete", function(data) {
+							// m.s("delete: " + core.status.selected_file);
+							if (data.err_code == 20) {
+								alert.show(data.message);
+							}
+
+							core.module.layout.project_explorer.refresh();
+
+							close_window();
+						}, true);
+						core._socket.emit("/file/delete", postdata);
+						// }
+					},
+					no: null
+				});
+
+				confirmation.show();
 			}
+			// }
 			// else if ("Dropbox") {
 			// if (core.status.selected_file) {
 			// 	if ("/" + core.status.current_project_path == core.status.selected_file) {
@@ -1119,10 +1119,10 @@ goorm.core.menu.action = {
 			window.open("https://www.facebook.com/goormIDE");
 		});
 
-		$("a[action=help_about_private_url]").off("click");
-		$("a[action=help_about_private_url]").click(function() {
-			core.dialog.help_about_private_url.show();
-		});
+		// $("a[action=help_about_private_url]").off("click");
+		// $("a[action=help_about_private_url]").click(function() {
+		// 	core.dialog.help_about_private_url.show();
+		// });
 
 		//Context Menu : File
 		$("[action=open_text_editor]").off("click").tooltip();
@@ -1145,7 +1145,7 @@ goorm.core.menu.action = {
 		});
 
 		
-
+		
 		$("a[action=account_logout]").off("click").tooltip();
 		$("a[action=account_logout]").click(function(e) {
 			var msg = "";
@@ -1217,9 +1217,9 @@ goorm.core.menu.action = {
 			confirmation.show();
 		});
 
-		$("a[action=do_terminal_clear]").off('click');
-		$("a[action=do_terminal_clear]").click(function() {
-			core.module.layout.terminal.Terminal.handler('\x0C');
+		$(document).off('mousedown', 'span[action=refresh_bottom_terminal]');
+		$(document).on('mousedown', 'span[action=refresh_bottom_terminal]', function() {
+			core.module.layout.terminal.refresh_terminal();
 		});
 
 		// NPM ACTION
@@ -1293,23 +1293,23 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=build_dialog]").off("click").tooltip();
-		$("[action=build_dialog]").click(function() {
+		// $("[action=build_dialog]").off("click").tooltip();
+		// $("[action=build_dialog]").click(function() {
 
-			var build_lock = $(this);
-			if (build_lock.data('disable') === true) {
-				return false;
-			}
-			build_lock.data('disable', true);
-			// window.setTimeout(function() {
-			var temp = $.debounce(function() {
-				build_lock.data('disable', false);
-			}, 500);
-			temp();
+		// 	var build_lock = $(this);
+		// 	if (build_lock.data('disable') === true) {
+		// 		return false;
+		// 	}
+		// 	build_lock.data('disable', true);
+		// 	// window.setTimeout(function() {
+		// 	var temp = $.debounce(function() {
+		// 		build_lock.data('disable', false);
+		// 	}, 500);
+		// 	temp();
 
-			core.module.layout.select('terminal');
-			core.dialog.build_project.show();
-		});
+		// 	core.module.layout.select('terminal');
+		// 	core.dialog.build_project.show();
+		// });
 
 		$("[action=build_project]").off("click").tooltip();
 		$("[action=build_project]").click(function() {
@@ -1322,21 +1322,22 @@ goorm.core.menu.action = {
 			});
 		});
 
-		$("[action=build_all]").off("click").tooltip();
-		$("[action=build_all]").click(function() {
-			core.module.layout.select('terminal');
-			core.dialog.build_all.show();
-		});
+		// $("[action=build_all]").off("click").tooltip();
+		// $("[action=build_all]").click(function() {
+		// 	core.module.layout.select('terminal');
+		// 	core.dialog.build_all.show();
+		// });
 
-		$("[action=build_clean]").off("click").tooltip();
-		$("[action=build_clean]").click(function() {
-			core.module.layout.select('terminal');
-			core.dialog.build_clean.show();
-		});
+		// $("[action=build_clean]").off("click").tooltip();
+		// $("[action=build_clean]").click(function() {
+		// 	core.module.layout.select('terminal');
+		// 	core.dialog.build_clean.show();
+		// });
 
 		$("[action=build_configuration]").off("click").tooltip();
 		$("[action=build_configuration]").click(function() {
-			core.dialog.build_configuration.show();
+			// core.dialog.build_configuration.show();
+			core.module.project.show('configuration');
 		});
 
 		$("[action=import_project]").off("click").tooltip();
@@ -1482,6 +1483,7 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				if (window_manager.window[window_manager.active_window].editor) {
 					window_manager.window[window_manager.active_window].editor.select_all();
+					window_manager.window[window_manager.active_window].editor.focus();
 				}
 			}
 		});

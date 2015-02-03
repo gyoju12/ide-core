@@ -52,6 +52,7 @@ goorm.core.project.property = {
 						$('[action="help_about_private_url"]').hide();
 						break;
 				}
+				$('[action="run"]').show();
 
 				self.property.plugins || (self.property.plugins = {});
 				if (contents) {
@@ -71,8 +72,8 @@ goorm.core.project.property = {
 							// hide plugin root
 						}
 					});
-					self.manager.append_data(self.manager.treeview_id + "/Plugin", plugins);
 
+					self.manager.append_data(self.manager.treeview_id + "/Plugin", plugins);
 
 					// var node = self.manager.treeview.getNodeByProperty("html", "<span localization_key='plugin'>Plugin</span>");
 					// var last_node;
@@ -95,6 +96,10 @@ goorm.core.project.property = {
 					// }
 				}
 			});
+			if (core.status.current_project_type === "") {
+				$('[action="run"]').css('display', 'none');
+				$('[action="build_project"]').css('display', 'none');
+			}
 
 			//output tab empty fix
 			if ($('#goorm_inner_layout_bottom>.tab-content .active').length <= 0) {
@@ -169,6 +174,10 @@ goorm.core.project.property = {
 			if (core.property.plugins["goorm.plugin.dev"]['plugin.dev.plugin_name'] != previous_property.plugins["goorm.plugin.dev"]['plugin.dev.plugin_name'])
 				$(core).trigger("on_property_confirmed", previous_property);
 		}
+
+		this.save(function() {
+			core.module.layout.project_explorer.refresh();
+		});
 	},
 
 	restore_default: function() {
@@ -398,11 +407,11 @@ goorm.core.project.property = {
 		// Handler for OK button
 		var handle_ok = function(panel) {
 			self.apply();
-			self.save(function() {
-				core.module.layout.project_explorer.refresh();
-			});
+			// self.save(function() {	// hidden: this will be done at apply
+			// 	core.module.layout.project_explorer.refresh();
+			// });
 
-			self.panel.modal('hide');
+			// self.panel.modal('hide');	// hidden: this will be done data-dismiss in html
 
 			self.fill_dialog(core.property);
 		};
@@ -411,7 +420,7 @@ goorm.core.project.property = {
 			// self.set_before();
 			self.fill_dialog(self.property); // jeongmin: set_before is same as fill_dialog and fill_dialog is right
 
-			self.panel.modal('hide');
+			// self.panel.modal('hide');	// hidden: this will be done data-dismiss in html
 		};
 
 		var set_dialog_button = function() {
@@ -473,7 +482,11 @@ goorm.core.project.property = {
 				load_plugin_tree();
 
 				// construct basic tree structure
-				self.manager.create_treeview(json);
+				// self.manager.create_treeview(json);
+
+				$(core).on("language_loaded", function(event, change) {
+					self.manager.create_treeview(json[core.module.localization.language], change);
+				});
 			}
 		});
 

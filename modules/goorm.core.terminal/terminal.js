@@ -89,7 +89,6 @@ module.exports = {
 					//useonly(mode=goorm-oss)	
 					var bashrc = global.__path + 'configs/bash.bashrc'
 					var command = '--rcfile ' + bashrc;
-					var export_path = global.__temp_dir + 'bin/';
 
 					self.term[term_index] = {
 						pty: pty.spawn('bash', command.split(' '), {
@@ -115,17 +114,15 @@ module.exports = {
 						result.stdout = data;
 						result.terminal_name = msg.terminal_name;
 						result.user = msg.user;
+						
 						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
 					});
 
 					data = {
 						index: term_index,
-						timestamp: msg.timestamp,
-						export_path: export_path
+						timestamp: msg.timestamp
 					};
 					msg.index = data.index;
-
-					self.exec(self.term[term_index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
 
 					socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
 					socket.to().emit("terminal_index." + name, JSON.stringify(data));
@@ -178,7 +175,6 @@ module.exports = {
 						self.destroy(self.term[msg.index].pty, function () {
 							var bashrc = global.__path + 'configs/bash.bashrc'
 							var command = '--rcfile ' + bashrc;
-							var export_path = global.__temp_dir + 'bin/';
 
 							self.term[msg.index] = {
 								pty: pty.spawn('bash', command.split(' '), {
@@ -191,12 +187,12 @@ module.exports = {
 								workspace: msg.workspace,
 								terminal_name: msg.terminal_name
 							};
+							
 							self.term[msg.index].pty.on('exit', function() {
 								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
 									index: msg.index
 								});
 							});
-
 
 							self.term[msg.index].pty.on('data', function(data) {
 								var result = {};
@@ -206,8 +202,6 @@ module.exports = {
 
 								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
 							});
-
-							self.exec(self.term[msg.index].pty, "export PATH=${PATH}:" + export_path + ";clear\r");
 
 							socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
 							socket.to().emit('terminal_refresh_complete.' + name, {

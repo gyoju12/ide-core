@@ -102,6 +102,9 @@
 			"edit_copy": {
 				"value": "Copy"
 			},
+			"edit_duplicate": {
+				"value": "Duplicate"
+			},
 			"edit_paste": {
 				"value": "Paste"
 			},
@@ -291,6 +294,9 @@
 			},
 			"edit_share_cursor": {
 				"value": "Toggle Cursor Sharing"
+			},
+			"edit_realtime_lint": {
+				"value": "Toggle Real-time Lint"
 			},
 			"edit_merge": {
 				"value": "Merge",
@@ -536,6 +542,9 @@
 			},
 			"account_logout": {
 				"value": "Logout"
+			},
+			"account_go_mygoorm": {
+				"value": "Go to my.goorm.io"
 			}
 		}
 	},
@@ -785,5 +794,14 @@
 	},
 	"History Delete All": {
 		"value": "History Delete All"
+	},
+	"scm_commit": {
+		"value": "Commit"
+	},
+	"scm_update": {
+		"value": "Update"
+	},
+	"scm_pull": {
+		"value": "Pull"
 	}
 }

@@ -105,6 +105,9 @@
 			"edit_paste": {
 				"value": "붙여넣기"
 			},
+			"edit_duplicate": {
+				"value": "복제"
+			},
 			"edit_text": {
 				"value": "텍스트",
 				"children": {
@@ -291,6 +294,9 @@
 			},
 			"edit_share_cursor": {
 				"value": "커서 공유 토글"
+			},
+			"edit_realtime_lint": {
+				"value": "실시간 린트 토글"
 			},
 			"edit_merge": {
 				"value": "코드 병합",
@@ -536,6 +542,9 @@
 			},
 			"account_logout": {
 				"value": "로그아웃"
+			},
+			"account_go_mygoorm": {
+				"value": "my.goorm.io로 이동"
 			}
 		}
 	},
@@ -785,5 +794,14 @@
 	},
 	"History Delete All": {
 		"value": "작업내역 모두 삭제"
+	},
+	"scm_commit": {
+		"value": "커밋"
+	},
+	"scm_update": {
+		"value": "업데이트"
+	},
+	"scm_pull": {
+		"value": "풀"
 	}
 }

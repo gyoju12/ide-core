@@ -30,7 +30,6 @@ goorm.core.layout = {
 	tab_toolbox: null,
 	project_explorer: null,
 	tab_cloud: null,
-	
 	outline: null,
 
 // 	more_toolbar_timer: null,
@@ -108,6 +107,7 @@ goorm.core.layout = {
 		});
 
 		this.tab_manager = goorm.core.layout.tab;
+		this.tab_manager.init();
 
 		$(window).on('unload', function() {
 			var layout_state = self.layout.readState();

@@ -7,30 +7,47 @@
  * project_name : goormIDE
  * version: 2.0.0
  **/
-goorm.core.terminal.background = function(name) {
+goorm.core.terminal.background = function(name, target) {
 	if (name !== "background") {
 		name = "background_" + name;
 	}
+
 	this.terminal = null;
+	this.target = target;
 	this.name = name;
 
-	this.init(name);
+	this.configs = {
+		on_ready: function () {},
+		on_message: function (msg) {
+			return msg;
+		}
+	};
+
+	this.init(name, target);
 };
 goorm.core.terminal.background.prototype = {
-	init: function(name) {
+	init: function(name, target) {
 		var self = this;
+
+		if (!target) {
+			target = $("<div>");
+		}
+
 		this.terminal = new goorm.core.terminal();
-		this.terminal.init($("<div>"), name, false);
+		this.terminal.init(target, name, false);
 
 		var buffer = "";
-		this.on_message(function on_message(msg) {
+		this.terminal.on_message = function (msg) {
 			buffer += msg.stdout;
+
 			if (/<bg\$>complete/.test(buffer)) {
-// 				console.log(self.name, "complete");
-				self.on_message(function() {});
-				self.on_ready();
+				self.complete();
 			}
-		});
+		};
+	},
+	
+	get_terminal: function () {
+		return this.terminal;	
 	},
 
 	/**
@@ -84,10 +101,30 @@ goorm.core.terminal.background.prototype = {
 		}
 	},
 
-	on_message: function(on_message) {
-		if (!on_message) on_message = function() {};
-		this.terminal.on_message = on_message;
+	complete: function () {
+		var configs = this.configs;
+
+		if (configs.on_message && typeof(configs.on_message) === 'function') {
+			this.terminal.on_message = configs.on_message;
+		}
+
+		if (configs.on_ready && typeof(configs.on_ready) === 'function') {
+			configs.on_ready();
+		}
 	},
 
-	on_ready: function() {}
+	on_ready: function (on_ready) {
+		if (!on_ready) on_ready = function() {};
+		this.configs.on_ready = on_ready;
+	},
+
+	on_message: function(on_message) {
+		if (!on_message) {
+			on_message = function(msg) {
+				return msg;
+			};
+		}
+		
+		this.configs.on_message = on_message;
+	},
 };

@@ -65,6 +65,8 @@ PROJECT_BUCKET = 'grm-project-bucket';
 
 MODE = null; // IDE MODE --> (default:null), [edu], [cpp,java], ...
 
+LIMIT_FILE_SIZE = 50; // mb
+
 // Local Variables
 //
 var home = null;
@@ -86,150 +88,150 @@ goorm.start = function() {
 };
 
 goorm.init = function() {
-	var set_global = function() {
-		// Set global
-		//
-		global.__path = __dirname + "/";
+		var set_global = function() {
+			// Set global
+			//
+			global.__path = __dirname + "/";
 
-		//useonly(mode=goorm-oss)	
-		global.__redis_mode = false;
-		
-
-		
-
-		
-
-		
-
-		global.__secure = false; // use https ?
-
-		// Session Store
-		//
-		global.store = null;
-	};
-
-	var set_arguments = function() {
-		// Set argv for commander
-		//
-		var argv = process.argv;
-
-		
-
-		//useonly(mode=goorm-oss)	
-		if (argv[2] > 0 && argv[2] < 100000) {
-			port = argv[2];
-		}
-
-		if (fs.existsSync(argv[3])) {
-			home = argv[3];
-		}
-
-		if (fs.existsSync(argv[4])) {
-			workspace = argv[4];
-		}
-
-		if (argv[5] && argv[5] == 'true') {
-			global.__redis_mode = true;
-		}
-		
-	};
-
-	var set_goorm_config = function() {
-		//useonly(mode=goorm-oss)	
-		var base = process.env.HOME + "/goorm_workspace/";
-
-		if (!fs.existsSync(base)) {
-			fs.mkdir(base, 0755, function(err) {
-				if (err) {
-					console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
-				}
-			});
-		}
-
-		global.__workspace = process.env.HOME + "/goorm_workspace/";
-		
-
-		
+			//useonly(mode=goorm-oss)	
+			global.__redis_mode = false;
+			
 
 			
 
-		//useonly(mode=goorm-oss)	
-		var temp = process.env.HOME + "/goorm_tempdir/";
+			
 
-		if (!fs.existsSync(temp)) {
-			fs.mkdir(temp, 0755, function(err) {
-				if (err) {
-					console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
+			
+
+			global.__secure = false; // use https ?
+
+			// Session Store
+			//
+			global.store = null;
+		};
+
+		var set_arguments = function() {
+			// Set argv for commander
+			//
+			var argv = process.argv;
+
+			
+
+			//useonly(mode=goorm-oss)	
+			if (argv[2] > 0 && argv[2] < 100000) {
+				port = argv[2];
+			}
+
+			if (fs.existsSync(argv[3])) {
+				home = argv[3];
+			}
+
+			if (fs.existsSync(argv[4])) {
+				workspace = argv[4];
+			}
+
+			if (argv[5] && argv[5] == 'true') {
+				global.__redis_mode = true;
+			}
+			
+		};
+
+		var set_goorm_config = function() {
+			//useonly(mode=goorm-oss)	
+			var base = process.env.HOME + "/goorm_workspace/";
+
+			if (!fs.existsSync(base)) {
+				fs.mkdir(base, 0755, function(err) {
+					if (err) {
+						console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
+					}
+				});
+			}
+
+			global.__workspace = process.env.HOME + "/goorm_workspace/";
+			
+
+			
+
+				
+
+			//useonly(mode=goorm-oss)	
+			var temp = process.env.HOME + "/goorm_tempdir/";
+
+			if (!fs.existsSync(temp)) {
+				fs.mkdir(temp, 0755, function(err) {
+					if (err) {
+						console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
+					}
+				});
+			}
+
+			global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
+			
+
+			
+
+			if (!home) home = process.env.HOME;
+			if (fs.existsSync(home + '/.goorm/config.json')) {
+				var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
+				if (data !== "") {
+					config_data = JSON.parse(data);
 				}
+
+				if (config_data) {
+					for (var attr in config_data) {
+						if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
+							continue;
+						}
+
+						if (config_data[attr] && config_data[attr] !== 'undefined') {
+							global[attr] = config_data[attr];
+						}
+					}
+				}
+			}
+		}
+
+		set_global();
+		set_goorm_config();
+		set_arguments();
+
+		// Update Workspace Path 
+		//
+		if (workspace && workspace !== 'undefined') {
+			global.__workspace = workspace;
+		}
+
+		if (global.__workspace && global.__workspace !== "") {
+			if (global.__workspace[global.__workspace.length - 1] !== '/') {
+				global.__workspace = global.__workspace + '/';
+			}
+		}
+
+		// Update Store
+		//
+		if (global.__redis_mode) {
+			RedisStore = require('connect-redis')(express)
+			global.store = new RedisStore({
+				'host': REDIS_HOST,
+				'port': REDIS_PORT
 			});
+			// global.store = new RedisStore
+		} else {
+			global.store = new express.session.MemoryStore;
 		}
 
-		global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
+		global.__set_redis_client = false;
+	}
+	
+
 		
 
 		
 
-		if (!home) home = process.env.HOME;
-		if (fs.existsSync(home + '/.goorm/config.json')) {
-			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
-			if (data !== "") {
-				config_data = JSON.parse(data);
-			}
-
-			if (config_data) {
-				for (var attr in config_data) {
-					if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
-						continue;
-					}
-
-					if (config_data[attr] && config_data[attr] !== 'undefined') {
-						global[attr] = config_data[attr];
-					}
-				}
-			}
-		}
+		
 	}
-
-	set_global();
-	set_goorm_config();
-	set_arguments();
-
-	// Update Workspace Path 
-	//
-	if (workspace && workspace !== 'undefined') {
-		global.__workspace = workspace;
-	}
-
-	if (global.__workspace && global.__workspace !== "") {
-		if (global.__workspace[global.__workspace.length - 1] !== '/') {
-			global.__workspace = global.__workspace + '/';
-		}
-	}
-
-	// Update Store
-	//
-	if (global.__redis_mode) {
-		RedisStore = require('connect-redis')(express)
-		global.store = new RedisStore({
-			'host': REDIS_HOST,
-			'port': REDIS_PORT
-		});
-		// global.store = new RedisStore
-	} else {
-		global.store = new express.session.MemoryStore;
-	}
-
-	global.__set_redis_client = false;
-}
-
-
 	
-
-	
-
-	
-}
-
 goorm.config = function() {
 	// Configuration
 	goorm.set('views', __dirname + '/views');
@@ -242,14 +244,14 @@ goorm.config = function() {
 	/**
 	 * limit 50mb
 	 */
-	goorm.use(multer({ 
+	goorm.use(multer({
 		limits: {
-			fileSize: 1024 * 1024 * 50
+			fileSize: 1024 * 1024 * LIMIT_FILE_SIZE
 		},
-		rename: function (fieldname, filename) {
-			return filename;
-		},
-		onFileSizeLimit: function (req, file) {
+		// rename: function (fieldname, filename) {	// hidden: it causes overlapping files that have same name
+		// 	return filename;
+		// },
+		onFileSizeLimit: function(req, file) {
 			req.__upload_err = true;
 
 			if (!req.file) {
@@ -258,7 +260,7 @@ goorm.config = function() {
 
 			req.__upload_err_files.push(file);
 		},
-		onParseEnd: function (req, res, next) {
+		onParseEnd: function(req, res, next) {
 			if (req.__upload_err) {
 				if (req.files) {
 					var files = req.files.file;
@@ -267,8 +269,7 @@ goorm.config = function() {
 						for (var i = files.length - 1; 0 <= i; i--) {
 							fs.unlink(files[i].path);
 						}
-					}
-					else {
+					} else {
 						fs.unlink(files.path);
 					}
 				}
@@ -279,8 +280,7 @@ goorm.config = function() {
 					message: "You cannot upload large files with a size bigger than 50MB.",
 					file: req.__upload_err_files
 				});
-			}
-			else {
+			} else {
 				next();
 			}
 		},
@@ -297,7 +297,7 @@ goorm.config = function() {
 	}));
 
 	if (__jx_mode) {
-		http.setMaxHeaderLength( 1024 * 1024 * 50 );
+		http.setMaxHeaderLength(1024 * 1024 * 50);
 	}
 
 	goorm.use(cookieParser());
@@ -328,8 +328,7 @@ goorm.config = function() {
 			dumpExceptions: true,
 			showStack: true
 		}));
-	}
-	else { // production
+	} else { // production
 		goorm.use(express.errorHandler());
 	}
 
@@ -391,7 +390,7 @@ goorm.routing = function() {
 
 	
 
-	goorm.get('/goorm.plugin.*', function (req, res) {
+	goorm.get('/goorm.plugin.*', function(req, res) {
 		var params = req.params[0].split('/');
 
 		var plugin_name = params.shift();
@@ -400,11 +399,10 @@ goorm.routing = function() {
 		g_plugin.get_resource({
 			'name': plugin_name,
 			'path': path
-		}, function (data) {
+		}, function(data) {
 			if (data) {
 				res.sendfile(data);
-			}
-			else {
+			} else {
 				res.json(false);
 			}
 		});
@@ -530,10 +528,17 @@ goorm.routing = function() {
 		res.json(response);
 	});
 	goorm.post('/local_logout', function(req, res) {
-		
+
 	});
 	
 
+	
+	goorm.post('/user/project/collaboration/invitation/pull', goorm.check_session, routes.user.project.collaboration.invitation.pull);
+	goorm.post('/user/preference/save', goorm.check_session, routes.user.preference.save);
+	goorm.get('/user/preference/load', goorm.check_session, routes.user.preference.load);
+
+	goorm.post('/session/save', routes.session.save);
+	goorm.post('/session/destroy', routes.session.destroy);
 	
 
 	//for download and upload
@@ -563,7 +568,7 @@ goorm.routing = function() {
 	
 
 	
-		
+
 	
 
 
@@ -692,14 +697,14 @@ goorm.load = function() {
 							'redisClient': global.__redis.store
 						}));
 
-						io.set('authorization', function (handshakeData, accept) {
+						io.set('authorization', function(handshakeData, accept) {
 							if (handshakeData.headers.cookie) {
-							    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-							    handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+								handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+								handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
 
-							    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+								if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
 									return accept('Cookie is invalid.', false);
-							    }
+								}
 							}
 
 							accept(null, true);
@@ -729,8 +734,7 @@ goorm.load = function() {
 
 			
 		}
-	} 
-	else {
+	} else {
 		set_main_log();
 
 		global.__set_redis_client = true;
@@ -770,14 +774,14 @@ goorm.load = function() {
 					}));
 				});
 
-				io.set('authorization', function (handshakeData, accept) {
+				io.set('authorization', function(handshakeData, accept) {
 					if (handshakeData.headers.cookie) {
-					    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-					    handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+						handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+						handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
 
-					    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+						if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
 							return accept('Cookie is invalid.', false);
-					    }
+						}
 					}
 
 					accept(null, true);

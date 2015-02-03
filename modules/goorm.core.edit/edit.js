@@ -410,11 +410,12 @@ module.exports = {
 		var absolute_workspace_path = base_dir + workspace;
 		var ctags_command = './.tags_result';
 		var ctags_result = "";
-
 		var make_response = function() {
 			if (ctags_result) {
 				try { // jeongmin: try catching
-					if (typeof ctags_result === "string") ctags_result = JSON.parse(ctags_result);
+					if (typeof ctags_result === "string") {
+						ctags_result = JSON.parse(ctags_result);
+					}
 					if (ctags_result && ctags_result[workspace]) {
 						var parsed_data = "";
 						if (path) {

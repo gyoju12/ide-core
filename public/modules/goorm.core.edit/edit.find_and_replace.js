@@ -96,12 +96,19 @@ goorm.core.edit.find_and_replace = {
 						$('#far_whole_word').removeClass('disabled');
 						$('#far_match_case').removeClass('disabled');
 					}
+					if (!$('#far_use_regexp').hasClass('active')) {
+						$("#find_query_inputbox").trigger("change");
+					} else {
+						$("#find_query_inputbox_background").val('');
+					}
+
 				});
 				// Replace All
 				//
 				$('#g_far_btn_replace_all').click(function() {
 					self.handle_replace_all();
 				});
+
 				$("#find_query_inputbox, #replace_query_inputbox").keydown(function(e) {
 					var ev = e || event;
 
@@ -114,30 +121,52 @@ goorm.core.edit.find_and_replace = {
 					}
 				});
 
-				// focus find inputbox by native javascript
-				var moveCaretToEnd = function(el) {
-					if (typeof el.selectionStart == "number") {
-						el.selectionStart = el.selectionEnd = el.value.length;
-					} else if (typeof el.createTextRange != "undefined") {
-						el.focus();
-
-						var range = el.createTextRange();
-						range.collapse(false);
-						range.select();
+				var inputbox = $("#find_query_inputbox");
+				var inputbox_background = $("#find_query_inputbox_background");
+				inputbox.bind("keydown keyup keypress change select", function(e){
+					if($('#far_use_regexp').hasClass('active')){
+						var value = inputbox.val();
+						var scroll = inputbox.scrollLeft();
+						if(value.length > 0){
+							if(scroll > 0){
+								inputbox_background.css('padding-left', '8px');
+							}else{
+								inputbox_background.css('padding-left', '4px');
+								value = "/" + value; 
+							}
+							value = value + "/";
+						}
+						inputbox_background.val(value);
+						inputbox_background.scrollLeft(scroll);
 					}
-				};
 
-				var input_box = document.getElementById("find_query_inputbox");
-				var input_box_onfocus = $.debounce(function() {
-					moveCaretToEnd(input_box);
-				}, 5);
-				input_box.onfocus = function() {
-					moveCaretToEnd(input_box);
+				});
 
-					// Work around Chrome's little problem
-					// window.setTimeout(function () {
-					input_box_onfocus();
-				};
+				// Donguk.kim
+				// // focus find inputbox by native javascript
+				// var moveCaretToEnd = function(el) {
+				// 	if (typeof el.selectionStart == "number") {
+				// 		el.selectionStart = el.selectionEnd = el.value.length;
+				// 	} else if (typeof el.createTextRange != "undefined") {
+				// 		el.focus();
+
+				// 		var range = el.createTextRange();
+				// 		range.collapse(false);
+				// 		range.select();
+				// 	}
+				// };
+
+				// var input_box = document.getElementById("find_query_inputbox");
+				// var input_box_onfocus = $.debounce(function() {
+				// 	moveCaretToEnd(input_box);
+				// }, 5);
+				// input_box.onfocus = function() {
+				// 	moveCaretToEnd(input_box);
+
+				// 	// Work around Chrome's little problem
+				// 	// window.setTimeout(function () {
+				// 	input_box_onfocus();
+				// };
 
 				self.panel.on('hide.bs.modal', function() { // this part remove Donguk Kim 
 					self.unmark();
@@ -163,6 +192,7 @@ goorm.core.edit.find_and_replace = {
 						core.dialog.search.unmark(); // jeongmin: remove search highlight
 
 					$("#find_query_inputbox").focus();
+					$("#find_query_inputbox").select();
 					// 	var window_manager = core.module.layout.workspace.window_manager;  // this part remove Donguk Kim
 
 					// cut modal fade (dialog size)
@@ -333,7 +363,6 @@ goorm.core.edit.find_and_replace = {
 					  	"ignore_case": !this.match_case };
 		
 		if(this.use_regexp) {	// special case : regexp
-			text = text.replace('/', '');
 			text = "\/" + text + "\/";
 		}
 		else {	// others.
@@ -357,8 +386,6 @@ goorm.core.edit.find_and_replace = {
 			text = new RegExp(text, flag);
 		}
 		
-		text = text.toString();
-
 		// this.unmark();
 
 		// if (this.last_query != text)
@@ -370,19 +397,19 @@ goorm.core.edit.find_and_replace = {
 
 		// reset coount
 		
-		if ((this.last_query != text) || this.total_count === 0 || this.current_count === 0) {
+		if ((this.last_query != text.toString()) || this.total_count === 0 || this.current_count === 0) {
 			this.total_count = 0;
 			this.current_count = 0;
 
 			var cursor;		// iterator - search positions
-			start = editor.getSearchCursor(keyword, {line:editor.getCursor().line, ch:editor.getCursor().ch}, true);	// cursor position before search
+			start = editor.getSearchCursor(text, {line:editor.getCursor().line, ch:editor.getCursor().ch}, true);	// cursor position before search
 			if (direction == "previous") {
 				start.findPrevious();
 			} else {
 				start.findNext();
 			}
 			// iterate
-			for (cursor = editor.getSearchCursor(keyword, null, true); cursor.findNext();) {
+			for (cursor = editor.getSearchCursor(text, null, true); cursor.findNext();) {
 				this.total_count++;
 				if (cursor.pos.from.line == start.pos.from.line && cursor.pos.from.ch == start.pos.from.ch) {
 					if (direction == "previous") {
@@ -395,7 +422,9 @@ goorm.core.edit.find_and_replace = {
 			}
 			
 		}
-		
+
+		text = text.toString();
+
 		if (direction == "previous") {
 			CodeMirror.commands.findPrev(editor, true, text, caseFold);
 			CodeMirror.commands.showInCenter(editor);
@@ -493,6 +522,14 @@ goorm.core.edit.find_and_replace = {
 		this.last_query = text;
 		this.recent_pos = start;
 		// this.last_pos = cursor.to();
+
+		if (this.total_count === 0) { // no such words in text.
+			core.status.focus_obj = null; 
+			core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, 550, function () {
+				$("#find_query_inputbox").focus();
+				$("#find_query_inputbox").select();
+			});
+		}
 	},
 	/* 트리뷰 만들어줘야됌 */
 	search_all: function(keyword, editor) {
@@ -856,6 +893,7 @@ goorm.core.edit.find_and_replace = {
 		$("#g_far_btn_find_prev").tooltip();
 		$("#g_far_btn_find").tooltip();
 		$("#find_query_inputbox").focus();
+		$("#find_query_inputbox").select();
 
 	}
 };

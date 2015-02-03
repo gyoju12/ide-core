@@ -21,9 +21,9 @@ goorm.core.project._export = {
 
 		this.panel = $("#dlg_export_project");
 
-		this.panel.click(function() {
-			$("button[localization_key=common_target]").blur();
-		});
+		// this.panel.click(function() {	// hidden: storage is deprecated
+		// 	$("button[localization_key=common_target]").blur();
+		// });
 
 
 
@@ -48,7 +48,12 @@ goorm.core.project._export = {
 			var progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.loading_bar_export
 			});
-			_$.get("project/export", postdata, function(data) {
+			core._socket.on("/project/do_export", function(data) {
+				progress_elements.contents(data);
+			});
+			core._socket.emit("/project/do_export", postdata);
+
+			core._socket.once("/project/done_export", function(data) {
 				progress_elements.stop();
 
 				if (data.err_code === 0) {
@@ -65,6 +70,23 @@ goorm.core.project._export = {
 					alert.show(data.message);
 				}
 			});
+			// _$.get("project/export", postdata, function(data) {
+			// 	progress_elements.stop();
+
+			// 	if (data.err_code === 0) {
+			// 		self.panel.modal('hide');
+
+			// 		$("#download_frame").css('display', 'none');
+
+			// 		//useonly(mode=goorm-standalone,goorm-oss)
+			// 		$("#download_frame").attr('src', "download/?file=" + data.path);
+			// 		
+
+			// 		
+			// 	} else {
+			// 		alert.show(data.message);
+			// 	}
+			// });
 		}, 200, true); // jeongmin: true means invokeAsap
 
 		this.project_list = new goorm.core.project.list();
@@ -82,9 +104,9 @@ goorm.core.project._export = {
 					$(this).parent().parent().addClass('active'); // set active this button (hierarchy: label > iCheck > input)
 				});
 
-				$(document).on("click", "li.open.storage", function() {
-					$("button[localization_key=common_target]").blur();
-				});
+				// $(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
+				// 	$("button[localization_key=common_target]").blur();
+				// });
 			},
 
 			//the modal has been made visible to the user! Jeong-min Im.

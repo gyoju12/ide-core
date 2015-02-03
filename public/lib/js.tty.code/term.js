@@ -313,6 +313,25 @@ Terminal.colors = (function() {
 
   return colors;
 })();
+	
+//seongho.cha : Make color more brighterly. color_brighter = 1.2 mean making color 20% more brightly
+function hex(c) {
+	c = Math.floor(c).toString(16);
+	return c.length < 2 ? '0' + c : c;
+ }
+	
+for(var i=0; i<Terminal.colors.length; i++){
+	var r = parseInt(Terminal.colors[i].substring(1, 3), 16);
+	var g = parseInt(Terminal.colors[i].substring(3, 5), 16);
+	var b = parseInt(Terminal.colors[i].substring(5, 7), 16);
+	
+	var color_brighter = 1.2;
+	
+	if(r * color_brighter < 256 && b * color_brighter < 256 && g * color_brighter < 256){
+		Terminal.colors[i] = '#' + hex(r * color_brighter) + hex(g * color_brighter) + hex(b * color_brighter);
+	}
+	
+}
 
 // Default BG/FG
 Terminal.defaultColors = {

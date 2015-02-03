@@ -144,8 +144,8 @@ goorm.core.shortcut.manager = {
 		//when user clicked apply or ok button, change shortcut. Jeong-Min Im.
 		$(core).on("on_preference_shortcut_apply", function() {
 			var progress_elements = core.module.loading_bar.start();
-			$("#preference_tabview").find(".apply").each(function(i) {	
-				if(i>=3 && i<=9) {
+			$("#preference_tabview").find(".apply").each(function(i) {
+				if (i >= 3 && i <= 9) {
 					$(this).attr("disabled", "disabled");
 				}
 			});
@@ -299,7 +299,7 @@ goorm.core.shortcut.manager = {
 				case 47:
 				case 111:
 				case 191: //this key codes differ Opera and other browsers and also number pad
-					shortcut_input += "/"
+					shortcut_input += "/";
 					break;
 
 				case 59:
@@ -310,7 +310,7 @@ goorm.core.shortcut.manager = {
 				case 61:
 				case 107:
 				case 187: //this key codes differ Opera and other browsers
-					shortcut_input += "="
+					shortcut_input += "=";
 					break;
 
 					// case 91: 	//this keyCode is same as Meta Key
@@ -502,8 +502,8 @@ goorm.core.shortcut.manager = {
 
 			self.temp_shortcut[new_shortcut] = set; // update new shortcuts
 
-			$("#preference_tabview").find(".apply").each(function(i) {	
-				if(i>=3 && i<=9) {
+			$("#preference_tabview").find(".apply").each(function(i) {
+				if (i >= 3 && i <= 9) {
 					$(this).removeAttr("disabled");
 				}
 			});
@@ -838,8 +838,11 @@ goorm.core.shortcut.manager = {
 		//Open File (Ctrl+O)
 		if (this.hotkeys.open_file) {
 			this.hotkeys_fn.open_file = function(e) {
-
-				core.dialog.open_file.show();
+				if (core.status.current_project_path === "") {
+					alert.show(core.module.localization.msg.alert_project_not_selected);
+				} else {
+					core.dialog.open_file.show();
+				}
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -961,29 +964,16 @@ goorm.core.shortcut.manager = {
 			var ctrlsEventLock = false;
 
 			this.hotkeys_fn.save_file = function(e) {
-				if (self.prevent($('a[action="save_file"]').get(0))) {
-					return false;
-				}
-
-				//console.log("asdasdasd");
-				if (ctrlsEventLock === false) {
+				if (!self.prevent($('a[action="save_file"]').get(0)) && !ctrlsEventLock) {
 					ctrlsEventLock = true;
 
-					var window_manager = core.module.layout.workspace.window_manager;
+					$('a[action=save_file]').click();
 
-
-					if (window_manager.window[window_manager.active_window].editor) {
-						window_manager.window[window_manager.active_window].editor.save(true, true);
-					}
-					
-					// window.setTimeout(function() {
-					var temp = $.debounce(function() {
+					$.debounce(function() {
 						ctrlsEventLock = false;
-					}, 500);
-					temp();
-					e.stopPropagation();
-					e.preventDefault();
+					}, 500)();
 				}
+
 				return false;
 			};
 
@@ -1870,26 +1860,26 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('left_layout_toggle', this.hotkeys.left_layout_toggle), this.hotkeys.left_layout_toggle, this.hotkeys_fn.left_layout_toggle);
 		}
 
-		//Show Project Explorer (Alt+Shift+1)
-		if (this.hotkeys.left_project_explorer_show) {
-			this.hotkeys_fn.left_project_explorer_show = function(e) {
-				if (!core.status.keydown) {
-					// if (core.module.layout.layout.getUnitByPosition("left")._collapsed) {
-					// 	core.module.layout.layout.getUnitByPosition("left").expand();
-					// }
-					// core.module.layout.left_tabview.selectTab(0);
-					core.module.layout.select('project');
-				}
+		// //Show Project Explorer (Alt+Shift+1)
+		// if (this.hotkeys.left_project_explorer_show) {
+		// 	this.hotkeys_fn.left_project_explorer_show = function(e) {
+		// 		if (!core.status.keydown) {
+		// 			// if (core.module.layout.layout.getUnitByPosition("left")._collapsed) {
+		// 			// 	core.module.layout.layout.getUnitByPosition("left").expand();
+		// 			// }
+		// 			// core.module.layout.left_tabview.selectTab(0);
+		// 			core.module.layout.select('project');
+		// 		}
 
 
 
-				e.stopPropagation();
-				e.preventDefault();
-				return false;
-			};
+		// 		e.stopPropagation();
+		// 		e.preventDefault();
+		// 		return false;
+		// 	};
 
-			doc_obj.bind('keydown.' + this.make_namespace('left_project_explorer_show', this.hotkeys.left_project_explorer_show), this.hotkeys.left_project_explorer_show, this.hotkeys_fn.left_project_explorer_show);
-		}
+		// 	doc_obj.bind('keydown.' + this.make_namespace('left_project_explorer_show', this.hotkeys.left_project_explorer_show), this.hotkeys.left_project_explorer_show, this.hotkeys_fn.left_project_explorer_show);
+		// }
 
 		//Show Packages (Alt+Shift+2)
 		/*
@@ -2090,19 +2080,11 @@ goorm.core.shortcut.manager = {
 
 		//View all shortcuts (Ctrl+H)
 		if (this.hotkeys.view_all_shortcuts) {
-			this.hotkeys_fn.view_all_shortcuts_down = function(e) {
-				core.dialog.help_shortcuts.show();
-
-				e.stopPropagation();
-				e.preventDefault();
-				return false;
-			};
-
-			doc_obj.bind('keydown.' + this.make_namespace('view_all_shortcuts', this.hotkeys.view_all_shortcuts), this.hotkeys.view_all_shortcuts, this.hotkeys_fn.view_all_shortcuts_down);
-
-			this.hotkeys_fn.view_all_shortcuts_up = function(e) {
+			this.hotkeys_fn.view_all_shortcuts = function(e) {
 				if (core.dialog.help_shortcuts.visible) {
 					core.dialog.help_shortcuts.hide();
+				} else {
+					core.dialog.help_shortcuts.show();
 				}
 
 				e.stopPropagation();
@@ -2110,7 +2092,21 @@ goorm.core.shortcut.manager = {
 				return false;
 			};
 
-			doc_obj.bind('keyup.' + this.make_namespace('view_all_shortcuts', this.hotkeys.view_all_shortcuts), this.hotkeys.view_all_shortcuts, this.hotkeys_fn.view_all_shortcuts_up);
+			doc_obj.bind('keydown.' + this.make_namespace('view_all_shortcuts', this.hotkeys.view_all_shortcuts), this.hotkeys.view_all_shortcuts, this.hotkeys_fn.view_all_shortcuts);
+
+			// this.hotkeys_fn.view_all_shortcuts_up = function(e) {
+			// 	if (core.dialog.help_shortcuts.visible) {
+			// 		core.dialog.help_shortcuts.hide();
+			// 	} else {
+			// 		core.dialog.help_shortcuts.show();
+			// 	}
+
+			// 	e.stopPropagation();
+			// 	e.preventDefault();
+			// 	return false;
+			// };
+
+			// doc_obj.bind('keyup.' + this.make_namespace('view_all_shortcuts', this.hotkeys.view_all_shortcuts), this.hotkeys.view_all_shortcuts, this.hotkeys_fn.view_all_shortcuts_up);
 		}
 
 		// //Alt + Tab

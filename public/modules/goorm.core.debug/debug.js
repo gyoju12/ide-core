@@ -148,31 +148,24 @@ goorm.core.debug.prototype = {
 
 		// jeongmin: adjust width
 		var debug_tab_center_table = $('#debug_tab_center_table');
-		var left_column = debug_tab_center_table.find('.sorting_disabled:nth-child(1)'); // jeongmin: variable
-		var center_column = debug_tab_center_table.find('.sorting_disabled:nth-child(2)'); // jeongmin: value
+		var left_column = debug_tab_center_table.find('.sorting_disabled:nth-child(1)');
+		var center_column = debug_tab_center_table.find('.sorting_disabled:nth-child(2)');
 
-		// jeongmin: initialize
-// 		left_column.css('width', '');
-// 		center_column.css('width', '');
+		debug_tab_center_table.css('table-layout', 'auto');
 
-		debug_tab_center_table.css('table-layout', 'auto'); // jeongmin: automatically adjust column width as fitting its contents width
 
+		//seongho.cha : table automatically be resized. but if did't set width, bug occur when user resize table by theirselves.
 		var all = $('#debug_tab_center').innerWidth();
-		var left = left_column.outerWidth();
+		var left = left_column.width();
 		var left_padding = parseInt(left_column.css('padding'), 10); // jeongmin: padding should be subtracted, too
-		var right = 100; // jeongmin: summary -> should be 100px, always
-		var right_padding = parseInt(debug_tab_center_table.find('.sorting_disabled:nth-child(3)').css('padding'), 10); // jeongmin: padding should be subtracted, too
-		var center = all - left - left_padding - right - right_padding;
+		var right = debug_tab_center_table.find('.sorting_disabled:nth-child(3)').outerWidth;
+		var center = all - left - left_padding - right;
 		
-// 		console.log(left);
-// 		console.log(right);
-		
-
-		// jeongmin: set right width
 		left_column.width(left);
 		center_column.width(center);
 
 		debug_tab_center_table.css('table-layout', 'fixed'); // jeongmin: fix width
+		
 	},
 
 	//function for debug
@@ -487,7 +480,7 @@ goorm.core.debug.prototype = {
 
 		if(draw){
 			var project_type = core.status.current_project_type;
-			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java') {
+			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java' || project_type === 'ruby') {
 				for(var i=0; i<data.length; i++){
 					var edit_box = this.table_variable.find("tr[data-tt-id='"+data[i][0]+"'] td").eq(1);
 					this.bind_edit_box(edit_box);
@@ -514,7 +507,7 @@ goorm.core.debug.prototype = {
 				edit_box.addClass('editing');
 				// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
 				edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
-
+				data=data.replace(/&gt;/g, '>');
 				edit_box.find('.edit_box').val(data);
 
 				core.status.focus_obj = edit_box;

@@ -35,6 +35,7 @@ goorm.core.utility.loading_bar = {
 		this.panel.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
 			$(this).css('display', 'block');
 			var $dialog = $(this).find(".modal-dialog");
+			$dialog.width(336);
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
@@ -160,7 +161,7 @@ goorm.core.utility.loading_bar = {
 
 		// set options
 		$('#modal_loading_bar').html(core.module.localization.msg.please_wait);
-		$('#' + title).html(option.str || core.module.localization.msg.please_wait);
+		$('#' + title).html(option.str || "");
 		core.progressbar.set(option.now || 99.9, '#' + bar);
 
 		// bind kill event
@@ -202,7 +203,15 @@ goorm.core.utility.loading_bar = {
 			title: '#' + title,
 			bar: '#' + bar,
 			kill: "#" + kill,
-			contents: '#' + contents,
+			contents: function(str) {
+				if (str.length > 45) {
+					var front = str.slice(0, 22);
+					var back = str.slice(str.length - 22, str.length);
+
+					str = front + '...' + back;
+				}
+				$('#' + contents).html(str);
+			},
 			str: function(str) {
 				$(this.title).html(str);
 			},

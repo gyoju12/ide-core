@@ -9,7 +9,7 @@
  **/
 
 //jeongmin: bookmark the line
-goorm.core.edit.bookmark = function (){
+goorm.core.edit.bookmark = function() {
 	this.bookmarks = null;
 	this.editor = null;
 };
@@ -23,30 +23,27 @@ goorm.core.edit.bookmark.prototype = {
 
 	//toggle bookmark. Jeong-Min Im.
 	toggle: function(new_bookmark_line) { // line that we want to set bookmark
-			var is_added = true; // jeongmin: whether bookmark will be added or not
+		var is_added = true, // jeongmin: whether bookmark will be added or not
+			line = this.editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
 
-			var line = this.editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
+		if (this.bookmarks[line] == undefined) //if bookmark line isn't in the list
+			this.bookmarks[line] = ""; //add new bookmark to the window
+		else {
+			delete this.bookmarks[line];
+			is_added = false;
+		}
 
-			if (this.bookmarks[line] == undefined) //if bookmark line isn't in the list
-				this.bookmarks[line] = ""; //add new bookmark to the window
-			else {
-				delete this.bookmarks[line]; 
-				is_added = false;
-			}
-
-			this.editor.parent.set_modified();
-			this.editor.parent.tab.set_modified();
-			this.outline_tab(is_added, line);
-		
+		this.set_modified();
+		this.outline_tab(is_added, line);
 	},
 
 	//find next bookmark. Jeong-Min Im.
 	next: function() {
 		var current_line = this.editor.editor.getCursor().line + 1; //get current cursor line
+		////// extract only line from list //////
+		var lines = Object.keys(this.bookmarks);
 
-		if (this.bookmarks) { //only current bookmark list is not undefined
-			////// extract only line from list //////
-			var lines = Object.keys(this.bookmarks);
+		if (lines.length) { //only current bookmark list is not undefined
 			////// move to next line //////
 			var index = lines.indexOf(current_line); //current line is in the list or not
 			var length = lines.length; //number of active window's bookmarks
@@ -67,17 +64,16 @@ goorm.core.edit.bookmark.prototype = {
 				this.move(lines[index + 1]); //move to next index of the list
 			}
 		}
-		
+
 	},
 
 	//find previous bookmark. Jeong-Min Im.
 	prev: function() {
 		var current_line = this.editor.editor.getCursor().line + 1; //get current cursor line
+		////// extract only line from list //////
+		var lines = Object.keys(this.bookmarks);
 
-		if (this.bookmarks) { //only current bookmark list is not undefined
-				////// extract only line from list //////
-			var lines = Object.keys(this.bookmarks);
-		
+		if (lines.length) { //only current bookmark list is not undefined
 			////// move to next line //////
 			var index = lines.indexOf(current_line); //current line is in the list or not
 			var length = lines.length; //number of active window's bookmarks
@@ -98,7 +94,7 @@ goorm.core.edit.bookmark.prototype = {
 				this.move(lines[index - 1]); //move to previous index of the list
 			}
 		}
-		
+
 	},
 
 	//clear all bookmarks. Jeong-Min Im.
@@ -106,13 +102,25 @@ goorm.core.edit.bookmark.prototype = {
 		this.editor.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
 		this.bookmarks = {}; //delete this window from the list
 
-		this.editor.parent.set_modified();
-		this.editor.parent.tab.set_modified();
+		this.set_modified();
 		this.outline_tab();
 	},
 
 	//move cursor to bookmark. Jeong-Min Im.
 	move: function(linenumber) {
+		var bookmark_rows = $('#bookmark_table').children();
+		var current_row = bookmark_rows.has("#bookmark_line_" + linenumber);
+
+		bookmark_rows.removeClass('current_bookmark_row');
+		current_row.addClass('current_bookmark_row');
+
+		$(document).off('mousedown.bookmark');
+		$(document).one('mousedown.bookmark', function() {
+			bookmark_rows.removeClass('current_bookmark_row');
+		});
+
+		$("#bookmark_tab_list").scrollTop(current_row[0].offsetTop);
+
 		if (typeof(linenumber) == "string") { //if linenumber is string type
 			var keyword = linenumber.split("_").pop(); //find real line number from the string
 
@@ -123,34 +131,33 @@ goorm.core.edit.bookmark.prototype = {
 
 
 
-
 	//make bookmark list in the outline tab. Jeong-Min Im.
 	outline_tab: function(is_added, target_line) {
 		var is_there = false, //'No Bookmark' sign is in the list or not
 			self = this;
 		var lines = Object.keys(this.bookmarks);
-		var bookmark_table = $("#bookmark_table");		
+		var bookmark_table = $("#bookmark_table");
 		var cm = this.editor.editor;
 		var font_family = core.preference["preference.editor.font_family"];
-				
+
 		if (lines.length > 0) {
 			// make outline form and append it to outline tab. Jeong-Min Im.
-			var add_bookmark_to_outline = function (line) {
+			var add_bookmark_to_outline = function(line) {
 				var comment = self.bookmarks[line];
 				var text = cm.getLine(line - 1);
-				
+
 				if (line) {
 					////// making row //////
 					var i = lines.indexOf(line.toString());
-					
+
 					var bookmark_elmnt = '<tr><td id="bookmark_line_' + line + '" class="bookmark_line" style="font-family:' + font_family + '">' + line + '</td><td><div id="bookmark_text_' + line + '" class="bookmark_text col-md-11 margin-0px padding-0px" style="font-family:' + font_family + '"></div><button type="button" id="delete_bookmark_' + line + '" class="close" aria-hidden="true">&times;</button></td></tr>';
-					
+
 					if (i === 0) {
 						bookmark_table.prepend(bookmark_elmnt);
 					} else {
 						bookmark_table.children().eq(i - 1).after(bookmark_elmnt);
 					}
-					
+
 
 					////// delete bookmark button handler //////
 					$('#delete_bookmark_' + line).click(function() {
@@ -197,14 +204,14 @@ goorm.core.edit.bookmark.prototype = {
 					bookmark_table.find('#bookmark_line_' + target_line).parent().remove(); // delete row
 				}
 			} else {
-					bookmark_table.empty();
-					var keys = Object.keys(this.bookmarks);
-					for(var i=0; i<keys.length; i++) {
-						add_bookmark_to_outline(keys[i]);
-					}
-					$(".bookmark_text").css("font-family", font_family);
+				bookmark_table.empty();
+				var keys = Object.keys(this.bookmarks);
+				for (var i = 0; i < keys.length; i++) {
+					add_bookmark_to_outline(keys[i]);
 				}
-			
+				$(".bookmark_text").css("font-family", font_family);
+			}
+
 		} else {
 			goorm.core.edit.bookmark_list.clear_outline_tab();
 		}
@@ -225,7 +232,7 @@ goorm.core.edit.bookmark.prototype = {
 			comment_place.html(this.filtering(new_comment));
 		else
 			comment_place.html(this.filtering(placeholder));
-		
+
 		////// comment place click event handler //////
 		comment_place.mousedown(function(e) {
 			if (e.which == 1) { // left click
@@ -233,14 +240,14 @@ goorm.core.edit.bookmark.prototype = {
 				$(this).parent().append('<input type="text" class="well form-control" placeholder="Comment"/>');
 
 				var $form_control = $(this).siblings('.form-control'); // comment input space
-				var	comment = "";
+				var comment = "";
 
 				////// make it editable //////
 				if ($(this).html() == placeholder)
 					comment = ''; // no comment
 				else
 					comment = $(this).html(); //old comment
-				
+
 				$form_control.val(self.de_filtering(comment));
 
 				////// remove //////
@@ -262,8 +269,7 @@ goorm.core.edit.bookmark.prototype = {
 				////// disappearing input space. Jeong-Min Im. //////
 				$form_control.blur(function() {
 					self.bookmarks[line] = comment;
-					self.editor.parent.set_modified();
-					self.editor.parent.tab.set_modified();
+					self.set_modified();
 
 					$(this).remove(); //commentary done
 
@@ -286,9 +292,7 @@ goorm.core.edit.bookmark.prototype = {
 		var line = $(this.who_clicked).attr('id').split('_').pop(); // get checked line
 
 		this.bookmarks[line] = "";
-		this.editor.parent.set_modified();
-		this.editor.parent.tab.set_modified();
-
+		this.set_modified();
 
 		$('#comment_text_' + line).html('Comment...'); // initialize well
 
@@ -314,5 +318,14 @@ goorm.core.edit.bookmark.prototype = {
 		}
 
 		return data;
+	},
+
+	set_modified: function() {
+		var editor_parent = this.editor.parent;
+
+		if (editor_parent && editor_parent.tab) {
+			editor_parent.set_modified();
+			editor_parent.tab.set_modified();
+		}
 	}
 };

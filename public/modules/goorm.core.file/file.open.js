@@ -16,21 +16,21 @@ goorm.core.file.open = {
 	filepath: null,
 	dialog_explorer: null,
 
-	init: function () {
+	init: function() {
 
 		var self = this;
 
 		this.panel = $("#dlg_open_file");
 
-		this.panel.click(function() {
-			$("button[localization_key=common_target]").blur();
-		});
+		// this.panel.click(function() {	// hidden: storage is deprecated
+		// 	$("button[localization_key=common_target]").blur();
+		// });
 
-		$(document).on("click", "li.open.storage", function() {
-			$("button[localization_key=common_target]").blur();
-		});
+		// $(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
+		// 	$("button[localization_key=common_target]").blur();
+		// });
 
-		var handle_ok = function (panel) {
+		var handle_ok = function(panel) {
 
 			var data = self.dialog_explorer.get_data();
 
@@ -48,8 +48,7 @@ goorm.core.file.open = {
 
 			if (typeof(this.hide) !== 'function' && panel) {
 				self.panel.modal('hide');
-			}
-			else{
+			} else {
 				self.panel.modal('hide');
 			}
 		};
@@ -61,19 +60,19 @@ goorm.core.file.open = {
 			show: $.proxy(this.after_show, this),
 			success: null
 		});
-		
+
 
 		this.dialog_explorer = new goorm.core.dialog.explorer("#file_open", this);
 		this.bind();
 	},
 
-	show: function () {
+	show: function() {
 		this.dialog_explorer.init(true, true, false);
 
 		this.panel.modal('show');
 	},
 
-	after_show: function(){
+	after_show: function() {
 		// var files = this.dialog_explorer.files;
 		// $(files).click();
 		$("#file_open_dir_tree").find(".jstree-clicked").click();
@@ -88,64 +87,64 @@ goorm.core.file.open = {
 				yes_text: core.module.localization.msg.confirmation_yes,
 				no_text: core.module.localization.msg.confirmation_no,
 				yes: function() {
-						var query = {
-							filepath: filepath,
-							filename: filename
-						};
-						_$.get("file/get_file", query, function() {
-							
-							
-						});
-				},	
+					var query = {
+						filepath: filepath,
+						filename: filename
+					};
+					_$.get("file/get_file", query, function() {
+						
+						
+					});
+				},
 				no: null
 			});
 			confirmation.show();
-		} else {	
+		} else {
 			alert.show(core.module.localization.msg.alert_select_file);
 		}
 	},
 
-	bind: function(){
+	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
 
 		// when enter 'enter' key, dialog OK.
-		this.panel.keydown(function (e) {
+		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
-				case 13: 	// 'enter' key
+				case 13: // 'enter' key
 					$("#g_of_btn_ok").click();
 					break;
 			}
 		});
 
 		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_open_dir_tree").keydown(function (e) {
+		$("#file_open_dir_tree").keydown(function(e) {
 			switch (e.keyCode) {
-				case 9: 	// 'tab' key
+				case 9: // 'tab' key
 					$(files).find("div")[0].click();
 					return false;
 			}
 		});
-		
+
 		$("#g_of_btn_ok").keydown(function(e) {
-			if(e.keyCode == 9 ) {
+			if (e.keyCode == 9) {
 				$("#file_open_dir_tree").find(".jstree-clicked").click();
 			}
 			e.preventDefault();
 		});
 
 		// on selecting file view
-		$(files).on("click", "div.file_item", function(){
+		$(files).on("click", "div.file_item", function() {
 			$(self.dialog_explorer.input_file_name).val($(this).attr("filename"));
 
 			self.filename = $(this).attr("filename");
 			self.filetype = $(this).attr("filetype");
 			self.filepath = $(this).attr("filepath");
-		}).on("dblclick", "div.file_item", function(){
+		}).on("dblclick", "div.file_item", function() {
 			core.module.layout.workspace.window_manager.open(self.filepath.replace(self.filename, ""), self.filename, self.filetype);
 			core.dialog.open_file.panel.modal('hide');
 		});
-		$(files).on("click", "div.folder_item", function(){
+		$(files).on("click", "div.folder_item", function() {
 			$(self.dialog_explorer.input_file_name).val("");
 			self.filename = "";
 			self.filetype = "";

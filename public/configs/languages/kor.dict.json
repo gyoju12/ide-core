@@ -254,6 +254,9 @@
 	"type_message":{
 		"value": "메세지를 입력해주세요..."
 	},
+	"invitation_type_message": {
+		"value": "초대 메시지를 입력해 주세요..."
+	},
 	"repository_path":{
 		"value": "저장소 경로"
 	},
@@ -301,5 +304,8 @@
 	},
 	"license": {
 		"value": "라이센스"
+	},
+	"collaboration": {
+		"value": "협업"
 	}
 }

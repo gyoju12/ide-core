@@ -41,21 +41,23 @@ goorm.core.edit.error_manager.prototype = {
             }));
 
             //error_syntax = error_syntax.trim(); // delete whitespace
-            error_syntax = editor.getDoc().getLine(line_number).trim();
-            var ch_start = editor.getDoc().getLine(line_number).indexOf(error_syntax);
-            var ch_end = ch_start + error_syntax.length;
+            if (editor.getDoc().getLine(line_number)) {
+                error_syntax = editor.getDoc().getLine(line_number).trim();
+                var ch_start = editor.getDoc().getLine(line_number).indexOf(error_syntax);
+                var ch_end = ch_start + error_syntax.length;
 
-            var marker = editor.getDoc().markText({
-                'line': line_number,
-                'ch': ch_start
-            }, {
-                'line': line_number,
-                'ch': ch_end
-            }, {
-                'className': "cm-syntax-error cm-syntax-error-line-" + line_number
-            });
+                var marker = editor.getDoc().markText({
+                    'line': line_number,
+                    'ch': ch_start
+                }, {
+                    'line': line_number,
+                    'ch': ch_end
+                }, {
+                    'className': "cm-syntax-error cm-syntax-error-line-" + line_number
+                });
 
-            this.marker.push(marker);
+                this.marker.push(marker);
+            }
         }
 
         this.storage.push(error_data);
@@ -103,7 +105,6 @@ goorm.core.edit.error_manager.prototype = {
             mouseover: function(e) {
                 var line_number = $(this).attr('line_number');
                 var message = "";
-
                 for (var i = 0; i < self.storage.length; i++) {
                     var data = self.storage[i];
 

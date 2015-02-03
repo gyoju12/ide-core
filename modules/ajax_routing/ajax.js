@@ -173,6 +173,7 @@ module.exports = {
 				});
 			});
 
+
 			socket.on('/project/new', function(msg) {
 				var evt = new EventEmitter();
 
@@ -255,7 +256,23 @@ module.exports = {
 			//cannot file
 			socket.on('/project/import', function(msg) {});
 			//cannot file
-			socket.on('/project/export', function(msg) {});
+			socket.on("/project/do_export", function(postdata) {
+				var evt = new EventEmitter();
+				var data = {};
+
+				evt.on("project_doing_export", function(data) { 
+					socket.emit("/project/do_export", data);
+				});	
+
+				evt.on("project_do_export", function(data) {
+					socket.emit("/project/done_export", data);
+				});
+				
+				
+				//useonly(mode=goorm-oss)
+				g_project.do_export(postdata, evt);
+				
+			});
 
 			//not used
 			socket.on('/project/clean', function(msg) {
@@ -365,7 +382,7 @@ module.exports = {
 
 			
 
-			socket.on('/project/available', function (msg) {
+			socket.on('/project/available', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -373,14 +390,14 @@ module.exports = {
 						var project_path = msg.project_path;
 
 						if (project_path) {
-							g_auth_project.can_read_project(user_data.id, project_path, function (can) {
+							g_auth_project.can_read_project(user_data.id, project_path, function(can) {
 								if (can) {
 									var mode = user_data.mode;
 									var list = g_plugin.get_mode_list(mode);
 
 									g_auth_project.get({
 										'project_path': project_path
-									}, function (project_data) {
+									}, function(project_data) {
 										var project_type = project_data.project_type;
 										var plugin_name = 'goorm.plugin.' + project_type;
 
@@ -388,8 +405,7 @@ module.exports = {
 											socket.to().emit('/project/available', {
 												'result': true
 											});
-										}
-										else {
+										} else {
 											var err_code = 21;
 
 											if (MODE) { // cannot dynamic load
@@ -402,22 +418,19 @@ module.exports = {
 											});
 										}
 									});
-								}
-								else {
+								} else {
 									socket.to().emit('/project/available', {
 										'result': false,
 										'err_code': 20
 									});
 								}
 							});
-						}
-						else {
+						} else {
 							socket.to().emit('/project/available', {
 								'result': true
 							});
 						}
-					}
-					else {
+					} else {
 						socket.to().emit('/project/available', {
 							'result': false,
 							'err_code': 20
@@ -487,32 +500,69 @@ module.exports = {
 							});
 
 							copy_progress.on('close', function(code, signal) {
-								fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
-									var contents = JSON.parse(file_data);
+								var make_manifest = function() {
+									fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+										var contents = JSON.parse(file_data);
 
-									contents.plugins = project_data.plugins;
-									contents.detailedtype = project_data.project_detailed_type;
+										contents.plugins = project_data.plugins;
+										contents.detailedtype = project_data.project_detailed_type;
 
-									fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
-										encoding: 'utf-8',
-										mode: 0700
-									}, function(err) {
-										if (err) {
-											console.log('goorm.manifest write err in do_create:', err);
-										}
+										fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+											encoding: 'utf-8',
+											mode: 0700
+										}, function(err) {
+											if (err) {
+												console.log('goorm.manifest write err in do_create:', err);
+											}
 
-										
+											
 
-										
+											
 
-										//useonly(mode=goorm-oss)
-										socket.to().emit('/plugin/create', {
-											code: 200,
-											message: "success"
+											//useonly(mode=goorm-oss)
+											socket.to().emit('/plugin/create', {
+												code: 200,
+												message: "success"
+											});
+											
 										});
-										
 									});
-								});
+								};
+
+								var _replace = function(item, cb) {
+									var _path = item.path;
+									var _data = item.data;
+
+									fs.exists(workspace + '/' + _path, function(exists) {
+										if (exists) {
+											var cmd = "sed -i \"\"";
+
+											for (var key in _data) {
+												cmd += " -e \"s#" + key + "#" + _data[key] + "#g\"";
+											}
+
+											cmd += " ./" + _path;
+
+											exec(cmd, {
+												'cwd': workspace
+											}, function() {
+												cb(true);
+											});
+										} else {
+											cb(true);
+										}
+									});
+								};
+
+								if (msg.replace) {
+									var replace = msg.replace;
+
+									async.map(msg.replace, _replace, function() {
+										make_manifest();
+									});
+								} else {
+									make_manifest();
+								}
 							});
 						};
 
@@ -540,17 +590,37 @@ module.exports = {
 								console.log('do_web_run Err:', __err1, __err2);
 								socket.to().emit('/plugin/do_web_run', {
 									code: 500,
-									message: "Copy Error",
+									message: "Copy Error"
 								});
 							} else {
-
 								
 
-								socket.to().emit('/plugin/do_web_run', {
-									code: 200,
-									message: "success",
-									run_path: run_path
-								});
+								//useonly(mode=goorm-server,goorm-client,goorm-oss)
+								var cmd = '';
+								if (msg.chown) {
+									cmd = 'chown -R ' + msg.chown + ' ' + target_path;
+								}
+
+								if (msg.chmod) {
+									cmd += '; chmod -R ' + msg.chmod + ' ' + target_path;
+								}
+
+								if (!cmd) {
+									socket.to().emit('/plugin/do_web_run', {
+										code: 200,
+										message: "success",
+										run_path: run_path
+									});
+								} else {
+									exec(cmd, function() {
+										socket.to().emit('/plugin/do_web_run', {
+											code: 200,
+											message: "success",
+											run_path: run_path
+										});
+									});
+								}
+								
 							}
 						});
 					});
@@ -1244,6 +1314,7 @@ module.exports = {
 
 			});
 			
+
 			
 			
 

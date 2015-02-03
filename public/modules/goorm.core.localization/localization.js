@@ -13,7 +13,7 @@ goorm.core.localization = {
 	before_language: null,
 	msg: {},
 	tutorial: {},
-	title:{},
+	title: {},
 	plugin: {},
 	language_data: {},
 	is_first: true,
@@ -34,10 +34,10 @@ goorm.core.localization = {
 
 		self.language = language;
 		self.load_json();
-		
+
 		var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
-	
-		for (var i = 0; i < get_type_list.length; i++){
+
+		for (var i = 0; i < get_type_list.length; i++) {
 			if (!self.language_data[language])
 				self.language_data[language] = {};
 			if (self.language_data[language][get_type_list[i]])
@@ -45,31 +45,31 @@ goorm.core.localization = {
 			else
 				self.get_json(language, get_type_list[i]);
 		}
-		
+
 		self.get_plugin_language(language);
 	},
-/*
-	parse_version: function(data) {
-		var version = {};
+	/*
+		parse_version: function(data) {
+			var version = {};
 
-		if (data) {
-			if (data != 'undefined' && data != 'null') {
-				return JSON.parse(data);
+			if (data) {
+				if (data != 'undefined' && data != 'null') {
+					return JSON.parse(data);
+				} else {
+					return version;
+				}
 			} else {
 				return version;
 			}
-		} else {
-			return version;
-		}
-	},
+		},
 
-	stringify_version: function(language, data) {
-		var current_language_version = this.parse_version(localStorage.getItem('language.version'));
-		current_language_version[language] = data;
+		stringify_version: function(language, data) {
+			var current_language_version = this.parse_version(localStorage.getItem('language.version'));
+			current_language_version[language] = data;
 
-		return JSON.stringify(current_language_version);
-	},
-*/
+			return JSON.stringify(current_language_version);
+		},
+	*/
 	get_json: function(language, type, length, callback) { // jeongmin: getJSON is async
 		var self = this;
 
@@ -119,9 +119,11 @@ goorm.core.localization = {
 	apply_language: function(language, type) {
 		var self = this;
 
-		if (type == 'plugin')
+		if (type == 'plugin') {
 			self.apply(self.language_data[language][type], 'plugin');
-		else self.apply(self.language_data[language][type]);
+		} else { 
+			self.apply(self.language_data[language][type]); 
+		}
 
 		if (type == 'msg' || type == 'tutorial' || type == 'plugin' || type == 'title') {
 			self.apply_message(self.language_data[language][type], type);
@@ -179,9 +181,9 @@ goorm.core.localization = {
 						self.apply_message(data, key);
 					}
 				}
-				
+
 				core.dialog.help_contents.load();
-				
+
 				callback();
 			} else {
 				var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
@@ -220,7 +222,7 @@ goorm.core.localization = {
 				var items = data_key.items;
 				var value = data_key.value;
 				var children = data_key.children;
-				
+
 				if (type && type == 'plugin') {
 					for (var k in data_key) {
 						var v = data_key[k];
@@ -285,11 +287,11 @@ goorm.core.localization = {
 					}
 
 					if (caret) {
-
-						if (key != "common_target") //jeongmin: if key isn't about target
-							$("[localization_key='" + key + "'].dropdown-toggle").append("<b class='caret'></b>");
-						else //jeongmin: if key is about target
-							$("[localization_key='" + key + "'].dropdown-toggle").append("<span>goormIDE Storage</span><b class='caret'></b>"); //jeongmin: add default target
+						// hidden: storage is deprecated
+						// if (key != "common_target") //jeongmin: if key isn't about target
+						$("[localization_key='" + key + "'].dropdown-toggle").append("<b class='caret'></b>");
+						// else //jeongmin: if key is about target
+						// $("[localization_key='" + key + "'].dropdown-toggle").append("<span>goormIDE Storage</span><b class='caret'></b>"); //jeongmin: add default target
 					}
 
 					if (badge) {
@@ -311,7 +313,7 @@ goorm.core.localization = {
 
 					// attach tooltip
 					//$("[tooltip='" + key + "']").attr("title", value);
-
+					
 					//for bootstrap tooltip
 					$("[tooltip='" + key + "']").attr("data-original-title", value);
 

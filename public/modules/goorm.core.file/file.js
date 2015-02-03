@@ -8,10 +8,22 @@
  * version: 2.0.0
  **/
 
-goorm.core.file = function () {
+goorm.core.file = {
+	name_regex: /[^a-zA-Z0-9_\ \/\-\.\(\)\[\]]/,
 
-};
+	filter: function (_str) {
+		var str = _str || "";
 
-goorm.core.file.prototype = {
+		return str.replace(/([\.\ \(\)\[\]])/g, "\\$1");
+	},
 
-};
+	get_regex: function () {
+		return this.name_regex;
+	},
+
+	test: function (str, _regex) {
+		var regex = _regex || this.name_regex;
+
+		return regex.test(str);
+	}
+}

@@ -8,9 +8,15 @@
  * version: 2.0.0
  **/
 
-var regexp_filter = /^([가-힣0-9a-zA-Z \/._-{-}]|\:\/\/)*/g // jeongmin: add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}).
+var regexp_filter = /^([가-힣0-9a-zA-Z \\\/._-{-}\(\)\/\/]|\:)*/g // jeongmin: add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}).
 
 module.exports = {
+	filepath_filter: function (_str) {
+		var str = _str || "";
+
+		return str.replace(/([\.\ \(\)\[\]])/g, "\\$1");
+	},
+
 	command_filter: function(str) {
 		// if (str.indexOf("rm ") > -1) {
 		// 	str = "";

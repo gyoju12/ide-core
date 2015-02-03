@@ -37,6 +37,7 @@ goorm.core = function() {
 		debug: null,
 		preference: null,
 		project: null,
+		file: null,
 		layout: null,
 		localization: null,
 		action: null,
@@ -72,10 +73,10 @@ goorm.core = function() {
 		export_project: null,
 		import_project: null,
 		delete_project: null,
-		build_all: null,
-		build_project: null,
-		build_clean: null,
-		build_configuration: null,
+		// build_all: null,
+		// build_project: null,
+		// build_clean: null,
+		// build_configuration: null,
 		
 		find_and_replace: null,
 		search: null,
@@ -102,7 +103,8 @@ goorm.core = function() {
 		current_project_path: "",
 		current_project_name: "",
 		current_project_type: "",
-		current_opened_list: {}
+		current_opened_list: {},
+		current_running_server: {}
 	};
 
 	this.socket = null;
@@ -319,6 +321,9 @@ goorm.core.prototype = {
 		//Project
 		this.module.project = goorm.core.project;
 
+		//File
+		this.module.file = goorm.core.file;
+
 		//Plugin Loading Aspects
 		if (goorm.plugin.manager) {
 			this.module.plugin_manager = goorm.plugin.manager;
@@ -480,25 +485,26 @@ goorm.core.prototype = {
 
 		
 
-		if (goorm.core.project.build.all) {
-			this.dialog.build_all = goorm.core.project.build.all;
-			this.dialog.build_all.init();
-		}
+		// if (goorm.core.project.build.all) {
+		// 	this.dialog.build_all = goorm.core.project.build.all;
+		// 	this.dialog.build_all.init();
+		// }
 
-		if (goorm.core.project.build.project) {
-			this.dialog.build_project = goorm.core.project.build.project;
-			this.dialog.build_project.init();
-		}
+		// if (goorm.core.project.build.project) {
+		// 	this.dialog.build_project = goorm.core.project.build.project;
+		// 	this.dialog.build_project.init();
+		// }
 
-		if (goorm.core.project.build.clean) {
-			this.dialog.build_clean = goorm.core.project.build.clean;
-			this.dialog.build_clean.init();
-		}
+		// if (goorm.core.project.build.clean) {
+		// 	this.dialog.build_clean = goorm.core.project.build.clean;
+		// 	this.dialog.build_clean.init();
+		// }
 
-		if (goorm.core.project.build.configuration) {
-			this.dialog.build_configuration = goorm.core.project.build.configuration;
-			this.dialog.build_configuration.init();
-		}
+		// if (goorm.core.project.build.configuration) {
+		// 	this.dialog.build_configuration = goorm.core.project.build.configuration;
+		// 	this.dialog.build_configuration.init();
+		// }
+
 		
 		// if (goorm.core.edit.go_to_line) {	//jeongmin: go to line is not in dialog anymore
 		// 	// by pear
@@ -665,7 +671,16 @@ goorm.core.prototype = {
 		this.socket.on('user_access', function() {
 			$(core).trigger('goorm_login_complete');
 		});
-
+		
+		this.socket.on('other_window_logged_out', function() {
+			self.socket.removeListener('disconnect'); //Don't try reconnect
+			$('#g_alert_btn_ok').one('click', function() {
+				core.logout = true;
+				location.href = "http://goorm.io";
+			});
+			alert.show(core.module.localization.msg.alert_logged_out_from_other);
+			core.router.disconnect();
+		});
 		
 
 		//useonly(mode=goorm-oss)

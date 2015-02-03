@@ -8,7 +8,7 @@
  * version: 2.0.0
  **/
 
-var duration = 60 * 60 * 36 // seconds
+var duration = 60 * 60 * 36; // seconds
 
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
@@ -239,13 +239,14 @@ module.exports = {
 		});
 	},
 
-	get_invite_email_content: function(user_data, callback) {
+	get_invite_email_content: function(user_data, project_path, _permission, callback) {
 		var email_content_path = global.__path + 'modules/goorm.core.collaboration/invitation_mail_content_' + user_data.language;
+		var permission = this.convert_permission(_permission, user_data.language);
 
 		fs.readFile(email_content_path, "utf8", function(err, data) {
 			var protocol = (global.__secure) ? 'https' : 'http';
 
-			data = data.replace(/\[DEMO_URL\]/gi, protocol+'://'+IDE_HOST+'/').replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, user_data.project_permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
+			data = data.replace(/\[DEMO_URL\]/gi, protocol+'://'+IDE_HOST+'/user/project/collaboration/invitation/push/email?project_path='+project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
 
 			// this part must be changed to follow localization data....
 			var subject = "";
@@ -259,16 +260,46 @@ module.exports = {
 				subject = user_data.invite_user + "님께서 " + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
 			}
 			
-// 			var ret = "알려드립니다.\n\n";
-// 			ret += subject;
-// 			var content = "";
-
-// 			if (data) {
-// 				content = ret + data;
-// 			}
-
 			callback(subject, data);
 		});
+	},
+
+	convert_permission: function (permission, language) {
+		var contents = permission;
+		
+		switch (permission) {
+			case "readonly":
+				if (language === 'kor') {
+					contents = "읽기 전용";
+				}
+				else {
+					contents = "ReadOnly";
+				}
+				break;
+
+			case "editable":
+				if (language === 'kor') {
+					contents = "수정 가능";
+				}
+				else {
+					contents = "Writable";
+				}
+				break;
+
+			case "manager":
+				if (language === 'kor') {
+					contents = "수정 및 공유 가능";
+				}
+				else {
+					contents = "Writable & Shareble";
+				}
+				break;
+
+			default:
+				break;
+		}
+
+		return contents;
 	},
 
 	

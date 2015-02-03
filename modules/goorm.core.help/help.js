@@ -18,17 +18,17 @@ module.exports = {
 		return_data.err_code = 0;
 		return_data.message = "Process Done";
 
-		var ori_data = {};
-		ori_data.id = query.id;
-		ori_data.subject = query.title;
-		ori_data.email = query.email;
-		ori_data.version = query.version;
-		ori_data.content = query.explanation;
+		var post_data = querystring.stringify({
+			'id': query.id,
+			'subject': query.title,
+			'email': query.email,
+			'version': query.version,
+			'content': query.explanation
+		});
 
-		var post_data = querystring.stringify(ori_data);
 		var post_options = {
-			host: 'goorm.io',
-			port: '3000',
+			host: DASHBOARD_HOST,
+			port: DASHBOARD_PORT,
 			path: '/user_comments/add',
 			method: 'POST',
 			headers: {
@@ -36,7 +36,6 @@ module.exports = {
 				'Content-Length': post_data.length
 			}
 		};
-
 		var post_req = http.request(post_options, function (res) {
 			res.setEncoding('utf8');
 

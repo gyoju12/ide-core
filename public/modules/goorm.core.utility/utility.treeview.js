@@ -17,7 +17,8 @@ goorm.core.utility.treeview = function(selector, opts) {
 	this.tree = $(selector);
 	this.is_ready = false;
 	this.raw_data = {};
-	this.normally_made = false;	// jeongmin: treeview is made normally or not
+	this.normally_made = false; // jeongmin: treeview is made normally or not
+	this.opened_node = {}; // opened node list before closing
 
 	this.init(opts);
 };
@@ -50,7 +51,8 @@ goorm.core.utility.treeview.prototype = {
 			wholerow: true,
 			sort: true,
 			folder_only: false,
-			check_callback: true
+			check_callback: true,
+			dots: true
 		}, opts);
 
 		this.project_path = this.options.project_path;
@@ -90,64 +92,75 @@ goorm.core.utility.treeview.prototype = {
 	 */
 	bind: function() {
 		var _this = this;
-		this.tree.on("loaded.jstree", function(event, data) {}).on("select_node.jstree", function(event, data) {
+		this.tree.on("loaded.jstree", function(event, data) {
+			
+		}).on("select_node.jstree", function(event, data) {
 			if (typeof _this.options.on_select === "function") {
 				_this.options.on_select(event, data.node);
 			}
-		}).on("ready.jstree", function(event, data) {}).on("model.jstree", function(event, data) {
+		}).on("ready.jstree", function(event, data) {
+			
+		}).on("model.jstree", function(event, data) {
 			// console.log("model", data);
 		}).on("refresh.jstree", function(event, data) {
 			_this.tree.trigger("ready.jstree");
 		}).on("open_node.jstree", function(event, data) {
-			// console.log("on open_node");
-			if (_this.options.auto_load_root === true)
-				_this.tree.jstree("load_node", data.node.children);
+			if (_this.opened_node[data.node.id]) { // we have opened node list
+				_this.tree.jstree('set_state', _this.opened_node[data.node.id]); // just show opened children of current opening node
+			} else if (_this.options.auto_load_root === true) { // we don't have opened children of current opening node
+				_this.tree.jstree("load_node", data.node.children); // load its children
+			}
+		}).on('close_node.jstree', function(evt, data) {
+			_this.opened_node[data.node.id] = _this.tree.jstree('get_state'); // save current closing node's opened children
 		}).on("keydown.jstree", function(e) {
 			_this._bind_keys(e);
 		}).on("load_node.jstree", function(event, data) {
+			
 			// console.log("on load_node", data);
 		}).on("dblclick.jstree", function(event, data) {
 			var node = _this.tree.jstree("get_node", event.target);
 			if (node) {
-				if (node.type === "folder" || node.type === "root") {
+				if (~event.target.className.indexOf('jstree-wholerow')) { // set double clickable on wholerow
 					_this.tree.jstree("toggle_node", node);
-				} 
+				}
 				if (typeof _this.options.on_dblclick === "function") {
 					_this.options.on_dblclick(event, node);
 				}
 			}
 		}).on('click.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
-			if (!_this.options.multiple) {
-				_this.tree.jstree("deselect_all");
-			}
+			// if (!_this.options.multiple) {	// hidden: jstree will do
+			// 	_this.tree.jstree("deselect_all");
+			// }
 			if (node.id !== "#") {
 				if (typeof _this.options.on_click === "function") {
 					_this.options.on_click(e, node);
-				} else {
-					_this.tree.jstree("select_node", node);
 				}
+				// else {	// hidden: jstree will do
+				// 	_this.tree.jstree("select_node", node);
+				// }
 			}
 		}).on('mousedown.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
-			if (!_this.options.multiple) {
-				_this.tree.jstree("deselect_all");
-			}
+			// if (!_this.options.multiple) {	// hidden: jstree will do
+			// 	_this.tree.jstree("deselect_all");
+			// }
 			if (node.id !== "#") {
 				if (typeof _this.options.on_mousedown === "function") {
 					_this.options.on_mousedown(e, node);
-				} else {
-					_this.tree.jstree("select_node", node);
 				}
+				// else {	// hidden: jstree will do
+				// 	_this.tree.jstree("select_node", node);
+				// }
 			}
-		}).on('mouseover.jstree', function (e) {
+		}).on('mouseover.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
 			if (node.id !== "#") {
 				if (typeof _this.options.on_mouseover === "function") {
 					_this.options.on_mouseover(e, node);
 				}
 			}
-		}).on('mouseleave.jstree', function (e) {
+		}).on('mouseleave.jstree', function(e) {
 			var node = _this.tree.jstree("get_node", $(e.target));
 			if (node.id !== "#") {
 				if (typeof _this.options.on_mouseleave === "function") {
@@ -233,12 +246,15 @@ goorm.core.utility.treeview.prototype = {
 			};
 		}
 
+		var fetch_children = 0,
+			count = 0;
+
 		_this.tree.jstree({
 			// the `plugins` array allows you to configure the active plugins on this instance
 			"plugins": plugins,
-			"themes": {
-				"stripes": true
-			},
+			// "themes": {	// hidden: useless
+			// 	"stripes": true
+			// },
 			"animation": 100,
 			"check_callback": true,
 			"multiple": _this.options.multiple,
@@ -252,52 +268,62 @@ goorm.core.utility.treeview.prototype = {
 					if (obj.type === undefined || obj.type === "#") {
 						if (!$.isArray(project_root)) project_root = [project_root];
 						// console.log(project_root);
-						callback.call(self, project_root);
+						callback.call(self, project_root, function(model) { // model: this._model.data in jquery.jstree.custom.js
+							obj = model[obj.id]; // get current obj only
 
-						// solution for getting root node at first
-						// if its tree already have full tree then set auto_load_root to false.
-						if (_this.options.auto_load_root === true) {
-							// console.log("# 에서 다음스탭 로딩", obj);
-							var root_node = _this.get_children(obj).then(function() {
-								nodes = arguments;
-								// console.log("루트노드 로딩완료",nodes);
-								if (nodes.length) {
-									if (_this._refresh === true) {
-										// console.log("Refresh상태이므로 열린폴더 모두 로딩");
-										_this.options.fetch(nodes[0].li_attr.path, function(_data) {
-											// console.log(data);
-											var data = process_data(_data);
+							// solution for getting root node at first
+							// if its tree already have full tree then set auto_load_root to false.
+							if (_this.options.auto_load_root === true) {
+								// console.log("# 에서 다음스탭 로딩", obj);
+								var root_node = _this.get_children(obj).then(function() {
+									nodes = arguments;
+									// console.log("루트노드 로딩완료", nodes);
+									if (nodes.length) {
+										if (_this._refresh === true) {
+											// console.log("Refresh상태이므로 열린폴더 모두 로딩");
+											_this.options.fetch(nodes[0].li_attr.path, function(_data) {
+												// console.log(data);
+												var data = process_data(_data);
 
-											_this.options.state = null;
-											_this.tree.jstree("_append_json_data", nodes[0], data);
+												_this.options.state = null;
+												_this.tree.jstree("_append_json_data", nodes[0], data, function() {
+													if (_this.is_ready === false) {
+														_this.is_ready = true;
+														if (typeof _this.options.on_ready === "function") {
+															_this.options.on_ready();
+														}
+													}
+												});
 
-											if (_this.is_ready === false) {
-												_this.is_ready = true;
-												if (typeof _this.options.on_ready === "function") {
-													_this.options.on_ready();
-												}
+
+											});
+											_this._refresh = false;
+										} else {
+											// console.log("No refresh 기본 로딩");
+											for (var i = 0; i < nodes.length; i++) {
+												var node = nodes[i];
+												// console.log("루트에서 로딩 ", node);
+												// _this.tree.jstree("_append_json_data", nodes[0], data);
+												_this.tree.jstree("load_node", node, function() {
+													if (_this.is_ready === false) {
+														_this.is_ready = true;
+														if (typeof _this.options.on_ready === "function") {
+															_this.options.on_ready();
+														}
+													}
+												});
 											}
-										});
-										_this._refresh = false;
-									} else {
-										// console.log("No refresh 기본 로딩");
-										for (var i = 0; i < nodes.length; i++) {
-											var node = nodes[i];
-											// console.log("루트에서 로딩 ", node);
-											// _this.tree.jstree("_append_json_data", nodes[0], data);
-											_this.tree.jstree("load_node", node);
-										}
 
-										if (_this.is_ready === false) {
-											_this.is_ready = true;
-											if (typeof _this.options.on_ready === "function") {
-												_this.options.on_ready();
-											}
+
 										}
 									}
+								});
+							} else {
+								if (typeof _this.options.on_ready == 'function') {
+									_this.options.on_ready();
 								}
-							});
-						}
+							}
+						});
 						// console.log(project_root);
 					}
 					// load node when it is folder
@@ -309,21 +335,29 @@ goorm.core.utility.treeview.prototype = {
 								data = process_data(data);
 
 								_this.options.state = null;
-								callback.call(self, data);
 							} else {
-								callback.call(self, "");
+								data = '';
 							}
 
-							if (_this._refresh) _this._refresh = false;
+							callback.call(self, data, function(model) {
+								obj = model[obj.id];
+
+								if (_this._refresh) _this._refresh = false;
+							});
 						});
 					}
 					// for other files
 					else {
 						// console.log("load file", obj);
-						callback.call(self, "");
+						callback.call(self, "", function(model) {
+							obj = model[obj.id];
+						});
 					}
 				},
-				"check_callback": _this.options.check_callback
+				"check_callback": _this.options.check_callback,
+				'themes': {
+					'dots': _this.options.dots
+				}
 			},
 			"types": {
 				"#": {
@@ -415,7 +449,7 @@ goorm.core.utility.treeview.prototype = {
 		this.tree.jstree("refresh");
 
 		return this;
-	},500),
+	}, 500),
 
 	/**
 	 * get state (opened files, selected files etc..)
@@ -424,13 +458,13 @@ goorm.core.utility.treeview.prototype = {
 	 */
 	get_state: function() {
 		var state = this.tree.jstree("get_state");
-		
-		if(state && state.core) {
+
+		if (state && state.core) {
 			for (var i = 0; i < state.core.open.length; i++) {
 				state.core.open[i] = state.core.open[i].replace(this.raw_id + "/", "");
 			}
 		}
-		
+
 		return state;
 	},
 
@@ -573,7 +607,7 @@ goorm.core.utility.treeview.prototype = {
 			this.tree.jstree("deselect_all");
 			this.tree.jstree("select_node", node);
 		} else {
-			this.get_node(node).then(this.select_node(node));
+			// this.get_node(node).then(this.select_node(node));	// hidden: this makes infinite loop
 		}
 	},
 

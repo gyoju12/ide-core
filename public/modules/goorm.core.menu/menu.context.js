@@ -97,7 +97,7 @@ goorm.core.menu.context.prototype = {
 				core.module.action.project_explorer_context_menu_init(type);
 			}
 			
-			else if (name.indexOf("bookmark.context") > -1 ){
+			else if (name.indexOf("bookmark.context") > -1) {
 
 			} else {
 				core.module.action.init();
@@ -126,7 +126,7 @@ goorm.core.menu.context.prototype = {
 				"display": "block",
 				"left": e.pageX,
 				"top": e.pageY,
-				"z-index": 1050,
+				"z-index": 1301, // jeongmin: 1050 isn't enough in SCM dialog
 			});
 		}
 	},

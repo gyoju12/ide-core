@@ -254,6 +254,9 @@
 	"type_message":{
 		"value": "Type your message..."
 	},
+	"invitation_type_message": {
+		"value": "Type your invitation message..."
+	},
 	"repository_path":{
 		"value": "Repository Path"
 	},
@@ -301,5 +304,8 @@
 	},
 	"open_source": {
 		"value": "Open Source Project"
+	},
+	"collaboration": {
+		"value": "Collaboration"
 	}
 }
