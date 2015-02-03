@@ -929,13 +929,19 @@
         "value": "다른 구름IDE에 같은 이름의 프로젝트 정보가 존재합니다. 덮어씌우시겠습니까?"
     },
     "confirmation_del_profile_image": {
-        "value": "프로필 이미지를 지우시겠습니까?"
+        "value": "프로필 이미지를 지우시겠습니까?<br>비밀번호를 입력해주세요!"
+    },
+    "confirmation_change_profile_image": {
+        "value": "프로필 이미지를 변경하시겠습니까?<br>비밀번호를 입력해주세요!"
     },
     "confirmation_close_tab": {
         "value": "구름을 종료하시겠습니까?"
     },
     "del_profile_image": {
         "value": "프로필 이미지 삭제"
+    },
+    "change_profile_image": {
+        "value": "프로필 이미지 변경"
     },
     "there_is_not_repository": {
         "value": "정상적인 Git/Subversion 저장소가 아닙니다."

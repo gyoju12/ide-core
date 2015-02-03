@@ -540,9 +540,8 @@ goorm.core.terminal.prototype = {
 		if (idx > -1 && stdout !== prom) {
 			this.test_stdout = stdout;
 
-			dir = stdout.split('/').pop().trim()
-			dir = dir.substring(0, dir.indexOf(prom));
-			dir = dir.split('\n').pop();
+			dir = stdout.substring(stdout.lastIndexOf('/')+1, stdout.indexOf(prom));
+			dir = dir.split('\n').join('');
 
 			if (/\\[H\\[2J/.test(dir)) dir = dir.replace(/\\[H\\[2J/, '');
 			if (dir === "") dir = '/';

@@ -927,13 +927,19 @@
         "value": "Same project name exists in other goorm. Do you want it to overwrite?"
     },
     "confirmation_del_profile_image": {
-        "value": "Do you want to delete profile image?"
+        "value": "Do you want to delete profile image?<br>Please Enter your password!"
+    },
+    "confirmation_change_profile_image": {
+        "value": "Do you want to change profile image?<br>Please Enter your password!"
     },
     "confirmation_close_tab": {
         "value": "Do you want to close goorm?"
     },
     "del_profile_image": {
         "value": "Delete Profile Image"
+    },
+    "change_profile_image": {
+        "value": "Change Profile Image"
     },
     "there_is_not_repository": {
         "value": "It isn't Git/Subversion repository."

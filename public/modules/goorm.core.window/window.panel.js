@@ -619,6 +619,9 @@ goorm.core.window.panel.prototype = {
 		//window body click event assign/		
 		panel.click(function(e) {
 			// self.window_body_click();	// hidden by jeongmin: function is deprecated
+			if($("#project_selector").find('.btn-group').hasClass('open')) {
+				$("#project_selector").find('.btn-group').removeClass('open');
+			}
 
 			e.stopPropagation();
 			e.preventDefault();
@@ -686,6 +689,7 @@ goorm.core.window.panel.prototype = {
 	titlebar_click: function() {
 		var window_manager = core.module.layout.workspace.window_manager;
 		window_manager.activate(this.index);
+
 	},
 
 	set_modified: function(data) {

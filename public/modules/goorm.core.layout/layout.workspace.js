@@ -82,6 +82,9 @@ goorm.core.layout.workspace = {
 
 		ws.click(function(e) {
 			$('#editor_status').hide();
+			if($("#project_selector").find('.btn-group').hasClass('open')) {
+				$("#project_selector").find('.btn-group').removeClass('open');
+			}
 			$(core).trigger('contextmenu_all_hide');
 			return false;
 		});

@@ -1368,13 +1368,25 @@ goorm.core.menu.action = {
 		var self = this;
 
 		//Main Menu : Debug
+		$("[action=debug_stop]").hide();
 		$("[action=debug]").off("click").tooltip();
 		$("[action=debug]").click(function() {
 			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
-
+			$("[action=debug_stop]").show();
+			$("[action=debug]").hide();
 			core.module.debug.debug_start();
+		});
+
+		$("[action=debug_stop]").off("click").tooltip();
+		$("[action=debug_stop]").click(function() {
+			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+				return false;
+			}
+			$("[action=debug_stop]").hide();
+			$("[action=debug]").show();
+			core.module.debug.debug_terminate();
 		});
 
 		$("[action=debug_continue]").off("click").tooltip();

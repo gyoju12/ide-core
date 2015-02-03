@@ -128,6 +128,7 @@ goorm.core.project.property = {
 	},
 
 	save_property: function(path, property, callback) {
+		var self = this;
 
 		property.description = property.description.replace(/&(lt|gt);/g, function(strMatch, p1) {
 			return (p1 == "lt") ? "<" : ">";
@@ -135,12 +136,17 @@ goorm.core.project.property = {
 		property.description = property.description.replace(/<\/?[^>]+(>|$)/g, "");
 
 		core._socket.once("/project/set_property", function(data) {
-			if (data.err_code === 0) {
-				$.extend(true, core.workspace[path], property);
-				callback && callback();
-			} else {
+			if (data.err_code) {
 				alert.show(data.message);
+
+				if (data.property) { // final saved property(real property) -> exists only if invalid query is there
+					core.property = data.property; // set back to valid property
+					self.fill_dialog(core.property);
+				}
 			}
+
+			$.extend(true, core.workspace[path], property);
+			callback && callback();
 		});
 
 		core._socket.emit("/project/set_property", {
@@ -413,7 +419,7 @@ goorm.core.project.property = {
 
 			// self.panel.modal('hide');	// hidden: this will be done data-dismiss in html
 
-			self.fill_dialog(core.property);
+			// self.fill_dialog(core.property);	// hidden: this will be done in save_property function
 		};
 
 		var handle_cancel = function() {

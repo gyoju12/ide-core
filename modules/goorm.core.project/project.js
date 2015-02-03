@@ -627,6 +627,7 @@ module.exports = {
 							data.message = "Invalid query";
 							evt.emit("set_property", data);
 						} else {
+							var invalid_query = [];
 							// jeongmin: prevent invalid build path
 							for (var plugin_type in new_property.plugins) {
 								for (var items in new_property.plugins[plugin_type]) {
@@ -634,11 +635,8 @@ module.exports = {
 										continue;
 									}
 									if (new_property.plugins[plugin_type][items] != g_secure.command_filter(new_property.plugins[plugin_type][items])) {
-										data.err_code = 10;
-										data.message = "Invalid query<br/>" + new_property.plugins[plugin_type][items];
-										evt.emit("set_property", data);
-
-										break;
+										invalid_query.push(new_property.plugins[plugin_type][items]);
+										new_property.plugins[plugin_type][items] = cur_manifest.plugins[plugin_type][items]; // set back to valid property
 									}
 								}
 							}
@@ -656,12 +654,17 @@ module.exports = {
 									mode: 0700
 								}, function(err) {
 									if (!err) {
-										evt.emit("set_property", data);
+										if (invalid_query.length) {
+											data.err_code = 10;
+											data.message = "Invalid query<br/>" + invalid_query.join(', ');
+											data.property = new_property; // final saved property(real property)
+										}
 									} else {
 										data.err_code = 20;
 										data.message = "Can not write project file.";
-										evt.emit("set_property", data);
 									}
+
+									evt.emit("set_property", data);
 								});
 							}
 						}
