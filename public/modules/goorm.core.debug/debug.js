@@ -73,7 +73,7 @@ goorm.core.debug.prototype = {
 			"iDisplayLength": -1 // jeongmin: no paging
 		});
 
-//		$("#debug_left").resizable();
+		//		$("#debug_left").resizable();
 
 		// click Event
 		$('#debug_tab_center_table').on('click', 'tbody td', function() {
@@ -160,12 +160,12 @@ goorm.core.debug.prototype = {
 		var left_padding = parseInt(left_column.css('padding'), 10); // jeongmin: padding should be subtracted, too
 		var right = debug_tab_center_table.find('.sorting_disabled:nth-child(3)').outerWidth;
 		var center = all - left - left_padding - right;
-		
+
 		left_column.width(left);
 		center_column.width(center);
 
 		debug_tab_center_table.css('table-layout', 'fixed'); // jeongmin: fix width
-		
+
 	},
 
 	//function for debug
@@ -416,16 +416,20 @@ goorm.core.debug.prototype = {
 	show_menu: function() {
 		$('#main-menu-debug').show();
 		$('#main_debug_toolbar').show();
+		$('#main_debug_toolbar').removeClass('disabled'); // for more toolbar
+		$('#bubble_debug_toolbar').show();
+		$('#bubble_debug_toolbar').removeClass('disabled'); // for more toolbar
 		$('[href="#debug_tab"]').show();
-
 	},
 
 	hide_menu: function() {
 		$('#main-menu-debug').hide();
 		$('#main_debug_toolbar').hide();
+		$('#main_debug_toolbar').addClass('disabled'); // for more toolbar
+		$('#bubble_debug_toolbar').hide();
+		$('#bubble_debug_toolbar').addClass('disabled'); // for more toolbar
 		$('[href="#debug_tab"]').hide();
 		$('[href="#terminal"]').click();
-
 	},
 
 	/* Debug Table API */
@@ -459,39 +463,39 @@ goorm.core.debug.prototype = {
 
 	add_data_table: function(data, parent, draw) { //parent is this rows' parent (in struct)
 		var index;
-		data = (typeof(data[0]) !== "object")? [data] : data; //if it is 1D array, make it 2D array
-		draw = (draw === undefined)? true : draw;
-		
+		data = (typeof(data[0]) !== "object") ? [data] : data; //if it is 1D array, make it 2D array
+		draw = (draw === undefined) ? true : draw;
+
 
 		if (this.table_variable) {
-			if (data){
+			if (data) {
 				index = this.table_variable.fnAddData(data, draw);
 				var nodes = this.table_variable.fnSettings().aoData;
-				for(var i=0; i<index.length; i++){
+				for (var i = 0; i < index.length; i++) {
 					var node = nodes[index[i]].nTr;
 					node.setAttribute('data-tt-id', data[i][0]);
 					if (parent) { // jeongmin: this row has parent(struct)
 						node.setAttribute('data-tt-parent-id', parent); // jeongmin: specify its parent, so connect with its parent as tree
-					}	
-				}				
+					}
+				}
 			}
-			
+
 		}
 
-		if(draw){
+		if (draw) {
 			var project_type = core.status.current_project_type;
 			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java' || project_type === 'ruby') {
-				for(var i=0; i<data.length; i++){
-					var edit_box = this.table_variable.find("tr[data-tt-id='"+data[i][0]+"'] td").eq(1);
+				for (var i = 0; i < data.length; i++) {
+					var edit_box = this.table_variable.find("tr[data-tt-id='" + data[i][0] + "'] td").eq(1);
 					this.bind_edit_box(edit_box);
 				}
-				
+
 			}
 		}
 		return index;
 	},
 
-	bind_edit_box: function(edit_boxs){
+	bind_edit_box: function(edit_boxs) {
 		var sendData = {};
 		var ev = {};
 		ev.keyDown = 13;
@@ -507,7 +511,7 @@ goorm.core.debug.prototype = {
 				edit_box.addClass('editing');
 				// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
 				edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
-				data=data.replace(/&gt;/g, '>');
+				data = data.replace(/&gt;/g, '>');
 				edit_box.find('.edit_box').val(data);
 
 				core.status.focus_obj = edit_box;

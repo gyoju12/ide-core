@@ -227,8 +227,14 @@
     "confirmation_logout": {
         "value": "로그아웃"
     },
-    "confirmation_not_saved": {
+    "confirmation_save_run": {
+        "value": "저장 후 실행"
+    },
+    "confirmation_not_save": {
         "value": " 파일이 저장되지 않았습니다."
+    },
+    "confirmation_not_save_msg": {
+        "value": "파일을 저장한 후에 실행하시겠습니까 ? <br>[저장 후 실행] 버튼 이나 [실행] 버튼을 눌러 주세요!"
     },
     "confirmation_stay": {
         "value": "페이지에 머무르기"
@@ -242,8 +248,6 @@
     "confirmation_auto_logout_warning": {
         "value": "초 후에 자동 로그아웃됩니다."
     },
-
-
     "tutorial_guide": {
         "value": "튜토리얼을 시작하시겠습니까?<br/>(키보드 방향키와 ESC로도 조작 가능합니다.)"
     },

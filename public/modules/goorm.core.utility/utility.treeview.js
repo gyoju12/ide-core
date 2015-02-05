@@ -331,7 +331,7 @@ goorm.core.utility.treeview.prototype = {
 						// console.log(obj);
 						_this.options.fetch(obj.li_attr.path, function(data) {
 							// console.log(data);
-							if (data.length) {
+							if (data && data.length) {
 								data = process_data(data);
 
 								_this.options.state = null;

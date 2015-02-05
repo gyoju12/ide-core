@@ -222,6 +222,15 @@
 			},
 			"dialog_new_project_view_all_description": {
 				"value": "View all available project items."
+			},
+			"dialog_new_project_template": {
+				"value": "Template"
+			},
+			"dialog_new_project_scm": {
+				"value": "SCM"
+			},
+			"dialog_new_project_import": {
+				"value": "Import"
 			}
 		}
 	},

@@ -45,12 +45,10 @@ goorm.core.project.property.manager = {
 		var self = this;
 
 		if (json.length) {
-			if (this.treeview) {
+			this.json_to_append = json; // this will be used on fetch
+
+			if (this.treeview) { // changing project
 				this.treeview.tree.jstree("_append_json_data", parent, json);
-			} else { // wait for loading treeview
-				$(core).one('property_treeview_loaded', function() {
-					self.treeview.tree.jstree("_append_json_data", parent, json);
-				});
 			}
 		}
 	},
@@ -128,7 +126,9 @@ goorm.core.project.property.manager = {
 					// self.treeview.tree.jstree("redraw", true);
 					// self.treeview.select_node("property_treeview/Property/System");
 				} else if (path === "Plugin") {
-					callback(self.plugin_data);
+					// property treeview is already made: self.json_to_append -> append current project's plugin
+					// property treeview isn't made yet: self.plugin_data -> just append all plugins
+					callback(self.json_to_append || self.plugin_data);
 				} else callback(null);
 			}
 		});

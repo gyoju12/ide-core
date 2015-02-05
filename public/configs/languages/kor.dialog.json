@@ -222,6 +222,15 @@
 			},
 			"dialog_new_project_view_all_description": {
 				"value": "가능한 모든 프로젝트 요소들을 확인합니다."
+			},
+			"dialog_new_project_template": {
+				"value": "템플릿"
+			},
+			"dialog_new_project_scm": {
+				"value": "소스 코드 관리"
+			},
+			"dialog_new_project_import": {
+				"value": "가져오기"
 			}
 		}
 	},

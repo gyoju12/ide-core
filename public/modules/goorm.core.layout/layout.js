@@ -32,18 +32,18 @@ goorm.core.layout = {
 	tab_cloud: null,
 	outline: null,
 
-// 	more_toolbar_timer: null,
-// 	more_toolbar_wait_timer: null,
-// 	more_toolbar_option: {
-// 		duration: 800, // fadein, fadeout duration
-// 		resize_timer: 900 // must be larger than duration
-// 	},
+	// 	more_toolbar_timer: null,
+	// 	more_toolbar_wait_timer: null,
+	// 	more_toolbar_option: {
+	// 		duration: 800, // fadein, fadeout duration
+	// 		resize_timer: 900 // must be larger than duration
+	// 	},
 	user_pluginList: [],
 
 	init: function(container) {
 
 		var self = this;
-		
+
 		self.toolbar_width = 20; // default padding value for calling set_more_toolbar()
 
 		var is_hide = false;
@@ -91,15 +91,15 @@ goorm.core.layout = {
 			},
 			onload: function(obj, state, options, name) {
 				$('div.goorm_layout').show();
-				
-				$('#main_toolbar ul.navbar-nav .grm_toolbar').each(function (i) {
-					if ($(this).is(':visible')) { 
+
+				$('#main_toolbar ul.navbar-nav .grm_toolbar').each(function(i) {
+					if ($(this).is(':visible')) {
 						self.toolbar_width += $(this).outerWidth();
 					}
 				});
 			},
 			onresize: function() {},
-			onresize_end: $.debounce(function() {				
+			onresize_end: $.debounce(function() {
 				if ($(document).width() < self.toolbar_width || $('#toolbar_more_button_group').is(':visible')) {
 					self.set_more_toolbar();
 				}
@@ -372,8 +372,8 @@ goorm.core.layout = {
 		// console.log("layout.js:init();");
 		// this.refresh();
 
-// 		console.log("2222");
-// 		this.set_more_toolbar();
+		// 		console.log("2222");
+		// 		this.set_more_toolbar();
 		// this.set_scroll_ui();
 
 		$(window).resize(function(event) {
@@ -627,25 +627,30 @@ goorm.core.layout = {
 		var current_toolbar_width = 30; // because jquery cannot measure hidden width
 
 
-		$toolbars.each(function (i) { 
+		$toolbars.each(function(i) {
 			var $bubble_toolbar = $(bubble_toolbars.get(i));
 
 			current_toolbar_width += $(this).outerWidth();
-			
+
 
 			if (current_toolbar_width > screen_width) {
 				$(this).fadeOut({
 					'duration': 500
 				});
 
-				$bubble_toolbar.show();
-				$more_button.fadeIn({
-					'duration': 500
-				});
+				if (!$bubble_toolbar.hasClass('disabled')) { // show if only it is enabled item
+					$bubble_toolbar.show();
+
+					$more_button.fadeIn({
+						'duration': 500
+					});
+				}
 			} else {
-				$(this).fadeIn({
-					'duration': 500
-				});
+				if (!$(this).hasClass('disabled')) { // show if only it is enabled item
+					$(this).fadeIn({
+						'duration': 500
+					});
+				}
 
 				$bubble_toolbar.hide();
 				if (i == $toolbars.length - 1) {
@@ -740,7 +745,7 @@ goorm.core.layout = {
 					if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
 						core.module.layout.terminal.Terminal.focus();
 					}
-					
+
 					$("#terminal").click();
 				}
 			}
