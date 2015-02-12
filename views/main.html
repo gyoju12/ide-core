@@ -206,7 +206,7 @@
                     <a href="#outline" data-toggle="tab" id='gLayoutTab_Outline' localization_key='outline'>Outline</a>
                 </li>
                 <li>
-                    <a href="#bookmark" data-toggle="tab" id='gLayoutTab_Bookmark' localization_key='bookmark'>Bookmark</a>
+                    <a href="#bookmark" data-toggle="tab" id='gLayoutTab_Bookmark' localization_key='edit_bookmark'>Bookmark</a>
                 </li>
             </ul>
 
@@ -403,7 +403,7 @@
                             <!--  -->
                             <li class="divider"></li>
                             <li>
-                                <a href="#" action="close_file" name="preference.shortcut.file.close" localization_key="file_close">
+                                <a href="#" action="close_file" name="preference.shortcut.file.close" localization_key="close">
                                     Close
                                     <em class="helptext">Alt + X</em>
                                 </a>
@@ -506,7 +506,7 @@
                                 </a>
                                 <ul id="child_text_menu" parent="parent_text_menu" class="dropdown-menu">
                                     <li>
-                                        <a href="#" action="do_delete" name="preference.shortcut.edit.delete" localization_key="edit_delete">
+                                        <a href="#" action="do_delete" name="preference.shortcut.edit.delete" localization_key="file_delete">
                                             Delete
                                             <em class="helptext">Backspace</em>
                                         </a>
@@ -905,7 +905,7 @@
                             <!--  -->
                             <li class="divider"></li>
                             <li>
-                                <a id="project_property_open" href="#" action="show_properties" localization_key="project_properties">Properties</a>
+                                <a id="project_property_open" href="#" action="show_properties" localization_key="file_properties">Properties</a>
                             </li>
 
                         </ul>
@@ -1603,10 +1603,10 @@
                     </a>
                 </li>
                 <li>
-                    <a action="search" localization_key='edit_search_edit_context'>Search</a>
+                    <a action="search" localization_key='edit_search'>Search</a>
                 </li>
                 <li>
-                    <a action="do_find" localization_key='edit_find_replace_edit_context'>Find/Replace</a>
+                    <a action="do_find" localization_key='edit_find_and_replace'>Find/Replace</a>
                 </li>
                 <li>
                     <a href="#" action="select_all" localization_key="edit_select_all">
@@ -1646,23 +1646,23 @@
                 <li class="divider"></li>
                 <!--  -->
                 <li>
-                    <a action="Copy_context" localization_key='Copy_context'>Copy</a>
+                    <a action="Copy_context" localization_key='edit_copy'>Copy</a>
                 </li>
                 <li class="disabled">
-                    <a action="Paste_context" localization_key='Paste_context'>Paste</a>
+                    <a action="Paste_context" localization_key='edit_paste'>Paste</a>
                 </li>
                 <li>
-                    <a action="Duplicate_context" localization_key='Duplicate_context'>Duplicate</a>
+                    <a action="Duplicate_context" localization_key='file_duplicate'>Duplicate</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="rename_context" localization_key='file_rename_context'>Rename</a>
+                    <a action="rename_context" localization_key='file_rename'>Rename</a>
                 </li>
                 <li>
                     <a action="move_context" localization_key='file_move_context'>Move</a>
                 </li>
                 <li>
-                    <a action="delete_context" localization_key='file_delete_context'>Delete</a>
+                    <a action="delete_context" localization_key='file_delete'>Delete</a>
                 </li>
                 <li>
                     <a action="delete_all_context" localization_key='delete_all_context'>Delete_All</a>
@@ -1681,16 +1681,16 @@
         <div id="project.explorer.folder_context" class="goorm_menu_item dropdown clearfix">
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                 <li class="dropdown-submenu">
-                    <a action="new_context" localization_key='file_new_context'>New</a>
+                    <a action="new_context" localization_key='file_new'>New</a>
                     <ul id="submenu_new" class="dropdown-menu folder_open_context_div">
                         <li>
-                            <a href="#" action="new_file_file_context" localization_key='file_new_context_new_file'>File</a>
+                            <a href="#" action="new_file_file_context" localization_key='file'>File</a>
                         </li>
                         <li>
-                            <a href="#" action="new_file_folder_context" localization_key='file_new_context_new_folder'>Folder</a>
+                            <a href="#" action="file_new_folder" localization_key='file_new_context_new_folder'>Folder</a>
                         </li>
                         <li>
-                            <a href="#" action="new_file_textfile_context" localization_key='file_new_context_untitled_text_file'>Untitled Text File</a>
+                            <a href="#" action="new_file_textfile_context" localization_key='file_new_untitled_text_file'>Untitled Text File</a>
                         </li>
                     </ul>
                 </li>
@@ -1698,26 +1698,26 @@
                 <li class="divider"></li>
                 <!--  -->
                 <li>
-                    <a action="Copy_context" localization_key='Copy_context'>Copy</a>
+                    <a action="Copy_context" localization_key='edit_copy'>Copy</a>
                 </li>
                 <li>
-                    <a action="Paste_context" localization_key='Paste_context'>Paste</a>
+                    <a action="Paste_context" localization_key='edit_paste'>Paste</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="folder_open_context" localization_key='folder_open_context'>Open</a>
+                    <a action="folder_open_context" localization_key='file_open_context'>Open</a>
                 </li>
                 <li style="display:none;">
-                    <a action="folder_close_context" localization_key='folder_close_context'>Close</a>
+                    <a action="folder_close_context" localization_key='close'>Close</a>
                 </li>
                 <li>
-                    <a action="rename_context" localization_key='file_rename_context'>Rename</a>
+                    <a action="rename_context" localization_key='file_rename'>Rename</a>
                 </li>
                 <li>
                     <a action="move_context" localization_key='file_move_context'>Move</a>
                 </li>
                 <li>
-                    <a action="delete_context" localization_key='file_delete_context'>Delete</a>
+                    <a action="delete_context" localization_key='file_delete'>Delete</a>
                 </li>
                 <li>
                     <a action="delete_all_context" localization_key='delete_all_context'>Delete_All</a>
@@ -1747,11 +1747,11 @@
                     <a action="new_project" localization_key='file_new_project_context'>New Project</a>
                 </li>
                 <li>
-                    <a action="open_project" localization_key='file_open_project_context'>Open Project</a>
+                    <a action="open_project" localization_key='file_open_project'>Open Project</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="new_file_file" localization_key='file_new_file_context'>New File</a>
+                    <a action="new_file_file" localization_key='file_new_file'>New File</a>
                 </li>
                 <li>
                     <a action="new_file_folder" localization_key='file_new_folder_context'>New Folder</a>
@@ -1761,18 +1761,18 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="import_file" localization_key='file_import_context'>Import File</a>
+                    <a action="import_file" localization_key='file_import'>Import File</a>
                 </li>
                 <!--  -->
                 <li>
-                    <a action="export_file" localization_key='file_export_context'>Export File</a>
+                    <a action="export_file" localization_key='file_export'>Export File</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="save_all_file" localization_key='file_save_all_context'>Save All</a>
+                    <a action="save_all_file" localization_key='file_save_all'>Save All</a>
                 </li>
                 <li>
-                    <a href="#" action="refresh_project_directory" localization_key='file_refresh_context'>Refresh</a>
+                    <a href="#" action="refresh_project_directory" localization_key='project_refresh'>Refresh</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -1787,13 +1787,13 @@
         <div id="window.manager_context" class="goorm_menu_item dropdown clearfix">
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                 <li>
-                    <a action="new_file_file" localization_key='file_new_file_context'>New File</a>
+                    <a action="new_file_file" localization_key='file_new_file'>New File</a>
                 </li>
                 <li>
-                    <a action="open_file" localization_key='file_open_file_context'>Open File</a>
+                    <a action="open_file" localization_key='file_open_file'>Open File</a>
                 </li>
                 <li>
-                    <a action="close_all" localization_key='file_close_all_context'>Close All</a>
+                    <a action="close_all" localization_key='file_close_all'>Close All</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -1819,13 +1819,13 @@
         <div id="window.manager.tabview_context" class="goorm_menu_item dropdown clearfix">
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                 <li>
-                    <a action="new_file_file" localization_key='file_new_file_context'>New File</a>
+                    <a action="new_file_file" localization_key='file_new_file'>New File</a>
                 </li>
                 <li>
-                    <a action="open_file" localization_key='file_open_file_context'>Open File</a>
+                    <a action="open_file" localization_key='file_open_file'>Open File</a>
                 </li>
                 <li>
-                    <a action="close_all" localization_key='file_close_all_context'>Close All</a>
+                    <a action="close_all" localization_key='file_close_all'>Close All</a>
                 </li>
                 <!-- <li class="divider"></li> -->
 <!--
@@ -1835,10 +1835,10 @@
 -->
                 <li class="divider"></li>
                 <li>
-                    <a action="previous_window" localization_key='window_previous_window_context'>Previous Window</a>
+                    <a action="previous_window" localization_key='window_previous_window'>Previous Window</a>
                 </li>
                 <li>
-                    <a action="next_window" localization_key='window_next_window_context'>Next Window</a>
+                    <a action="next_window" localization_key='window_next_window'>Next Window</a>
                 </li>
             </ul>
         </div>
@@ -2225,7 +2225,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_open_project" localization_key='dialog_open_project'>Open Project</h4>
+                        <h4 class="modal-title" id="modal_open_project" localization_key='dialog_project_open'>Open Project</h4>
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_project_open_guide'>Select a project to open</div>
@@ -2294,7 +2294,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_new_file" localization_key='dialog_new_file'>New File</h4>
+                        <h4 class="modal-title" id="modal_new_file" localization_key='dialog_file_new_file'>New File</h4>
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_file_new_file_guide'>Make a New File</div>
@@ -2462,7 +2462,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_new_folder" localization_key='dialog_new_folder'>New Folder</h4>
+                        <h4 class="modal-title" id="modal_new_folder" localization_key='dialog_file_new_folder'>New Folder</h4>
                     </div>
                     <div class="modal-body" style="max-height: 445px; min-height: 340px;">
                         <div class="well well-sm" localization_key='dialog_file_new_folder_guide'>Make a New Folder</div>
@@ -2593,7 +2593,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_open_file" localization_key='dialog_open_file'>Open File</h4>
+                        <h4 class="modal-title" id="modal_open_file" localization_key='dialog_file_open_file'>Open File</h4>
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_file_open_file_guide'>Select a file to open</div>
@@ -2672,7 +2672,7 @@
                         <h4 class="modal-title" id="modal_upload_file" localization_key='dialog_upload_file'>Upload File</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="well well-sm" localization_key='dialog_file_cloud_upload_guide'>Select a file to export</div>
+                        <div class="well well-sm" localization_key='dialog_file_export_file'>Select a file to export</div>
 
                         <div id="file_cloud_upload">
                             <nav class="navbar navbar-default" role="navigation">
@@ -2722,7 +2722,7 @@
                                 <!-- TODO : modify to bootstrap grid -->
                                 <tr style="line-height:1.8em;">
                                     <td style="width:100px">
-                                        <span localization_key='dialog_file_cloud_upload_file'>Selected File :</span>
+                                        <span localization_key='dialog_file_export_file'>Selected File :</span>
                                     </td>
                                     <td style="text-align:right;">
                                         <input type="text" id="file_cloud_upload_target_name" style="width:500px;" readonly/>
@@ -2730,7 +2730,7 @@
                                 </tr>
                                 <tr style="line-height:1.8em;">
                                     <td style="width:100px; padding-top:5px;">
-                                        <span localization_key='dialog_file_cloud_upload_cloud_uploadtype'>File Type</span>
+                                        <span localization_key='dialog_file_export_exporttype'>File Type</span>
                                     </td>
                                     <td style="padding-top:5px; text-align:right;">
                                         <select id='file_cloud_upload_file_type' style="width:500px;"></select>
@@ -2755,7 +2755,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_save_as_file" localization_key='dialog_save_as_file'>Save as...</h4>
+                        <h4 class="modal-title" id="modal_save_as_file" localization_key='dialog_file_save_as_file'>Save as...</h4>
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_file_save_as_file_guide'>Enter the new file name or select a file to overwrite</div>
@@ -3390,7 +3390,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_build_all" localization_key='dialog_build_all'>Build All</h4>
+                        <h4 class="modal-title" id="modal_build_all" localization_key='dialog_project_build_all'>Build All</h4>
                     </div>
                     <div class="modal-body">
                         <div class="well well-sm" localization_key='dialog_project_build_all_guide'>Build projects below.</div>
@@ -3445,7 +3445,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_build_clean" localization_key='dialog_build_clean'>Build Clean</h4>
+                        <h4 class="modal-title" id="modal_build_clean" localization_key='dialog_project_clean'>Build Clean</h4>
                     </div>
                     <div class="modal-body">
                         <div id="build_clean">
@@ -3476,8 +3476,8 @@
                         <div id="build_configuration"></div>
                     </div>
                     <div class="modal-footer">
-                        <button id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_build_config_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_build_config_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -3579,7 +3579,7 @@
                     <div class="modal-footer" style="padding:13px 13px 13px;">
                         <!-- depreciated -heeje -->
                         <!-- <button id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a> -->
-                        <button id="g_far_btn_find2" class="btn btn-default btn-sm" localization_key='find'>Find</a>
+                        <button id="g_far_btn_find2" class="btn btn-default btn-sm" localization_key='edit_find'>Find</a>
                         <button id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</a>
                         <button id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</a>
                         <button id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</a>
@@ -3676,8 +3676,8 @@
                         -->
                     </div>
                     <div class="modal-footer" style="padding: 13px 13px 13px">
-                        <button id="g_op_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button id="g_op_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
+                        <button id="g_s_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_s_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
                 </div>
             </div>
@@ -3727,7 +3727,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label for="prop_prj_name" localization_key="dialog_project_property_project_name" class="col-md-3">Project Name</label>
+                                                <label for="prop_prj_name" localization_key="dialog_new_project_name" class="col-md-3">Project Name</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control disabled" name="name" id="prop_prj_name" validate="required, alphanum" disabled />
                                                 </div>
@@ -3739,7 +3739,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label for="prop_prj_desc" localization_key="dialog_project_property_project_description" class="col-md-3">Project Description</label>
+                                                <label for="prop_prj_desc" localization_key="dialog_new_project_description" class="col-md-3">Project Description</label>
                                                 <div class="col-md-9">
                                                     <textarea type="text" class="form-control disabled" name="description" id="prop_prj_desc" validate="alphanum" disabled></textarea>
                                                 </div>
@@ -3914,7 +3914,7 @@
                                     </ul>
                                 </li>
                                 <li class='list-group-item'>
-                                    <p><b id='require_oss_version'>OT.js 0.0.14</b></p>
+                                    <p><b id='ot_oss_version'>OT.js 0.0.14</b></p>
                                     <ul>
                                         <li>License: MIT(<a href='https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE' target='_blank'>https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE</a>)</li>
                                     </ul>
@@ -4001,7 +4001,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_preference" localization_key='dialog_preference'>Preference</h4>
+                        <h4 class="modal-title" id="modal_preference" localization_key='dialog_preferences_preference'>Preference</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -4262,7 +4262,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="terminal_setting_tab" plugin="null">
                                         <div class="row">
-                                            <label for="preference.terminal.font_family" localization_key="dialog_preference_terminal_font_family" class="col-md-3 control-label">Font</label>
+                                            <label for="preference.terminal.font_family" localization_key="dialog_preference_editor_font_family" class="col-md-3 control-label">Font</label>
 
                                             <div class="col-md-9">
                                                 <select name="preference.terminal.font_family" id="preference.terminal.font_family" class="form-control">
@@ -4274,7 +4274,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label for="preference.terminal.font_size" localization_key="dialog_preference_terminal_font_size" class="col-md-3 control-label">Font Size</label>
+                                            <label for="preference.terminal.font_size" localization_key="dialog_preference_editor_font_size" class="col-md-3 control-label">Font Size</label>
 
                                             <div class="col-md-9">
                                                 <select name="preference.terminal.font_size" id="preference.terminal.font_size" class="form-control">
@@ -4313,7 +4313,7 @@
                                         </div>
                                         <div class="row">
 
-                                            <label for="preference.terminal.line_spacing" localization_key="dialog_preference_terminal_line_spacing" class="col-md-3 control-label">Line Spacing</label>
+                                            <label for="preference.terminal.line_spacing" localization_key="dialog_preference_editor_line_spacing" class="col-md-3 control-label">Line Spacing</label>
                                             <div class="col-md-3">
                                                 <select name="preference.terminal.line_spacing" id="preference.terminal.line_spacing" class="form-control">
                                                     <option value=0>1.0</option>
@@ -4476,7 +4476,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.close" localization_key="file_close">Close</label>
+                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.close" localization_key="close">Close</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.file.close" id="preference.shortcut.file.close" value="Alt+X"/>
                                                 </div>
@@ -4563,7 +4563,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.delete" localization_key="edit_delete">Delete</label>
+                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.delete" localization_key="file_delete">Delete</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.edit.delete" id="preference.shortcut.edit.delete" value="Backspace"/>
                                                 </div>
@@ -5454,7 +5454,7 @@
                                 Open  File...
                                 <em class="helptext">Ctrl + O</em>
                             </span>
-                            <span name="preference.shortcut.file.close" localization_key="file_close">
+                            <span name="preference.shortcut.file.close" localization_key="close">
                                 Close
                                 <em class="helptext">Alt + X</em>
                             </span>
@@ -5500,7 +5500,7 @@
                                 Copy
                                 <em class="helptext">Ctrl + C</em>
                             </span>
-                            <span name="preference.shortcut.file.duplicate" localization_key="edit_duplicate">
+                            <span name="preference.shortcut.edit.duplicate" localization_key="file_duplicate">
                                 Duplicate
                                 <em class="helptext">Ctrl + Shift + A</em>
                             </span>
@@ -5508,7 +5508,7 @@
                                 Paste
                                 <em class="helptext">Ctrl + V</em>
                             </span>
-                            <span name="preference.shortcut.edit.delete" localization_key="edit_delete">
+                            <span name="preference.shortcut.edit.delete" localization_key="file_delete">
                                 Delete
                                 <em class="helptext">Backspace</em>
                             </span>
@@ -5864,6 +5864,7 @@
 
     <script>
     var use_terminal = <%= use_terminal %>;
+    var version = <%= version %>;
     </script>
     <!--  -->
     <!--JS : jquery-->

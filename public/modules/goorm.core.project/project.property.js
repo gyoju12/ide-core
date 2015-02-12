@@ -43,13 +43,13 @@ goorm.core.project.property = {
 					case 'ruby':
 						$('[action="build_project"]').css('display', 'none');
 						$('[action="build_clean"]').css('display', 'none');
-						$('[action="help_about_private_url"]').show();
+						// $('[action="help_about_private_url"]').show();
 						break;
 						
 					default:
 						$('[action="build_project"]').css('display', '');
 						$('[action="build_clean"]').css('display', '');
-						$('[action="help_about_private_url"]').hide();
+						// $('[action="help_about_private_url"]').hide();
 						break;
 				}
 				$('[action="run"]').show();
@@ -118,6 +118,7 @@ goorm.core.project.property = {
 			}
 
 			this.panel.modal('show');
+			$('#property_treeview').find("li[path='Property/Information']>a").click()
 		} else {
 			var result = {
 				result: false,
@@ -474,6 +475,10 @@ goorm.core.project.property = {
 			self.manager.plugin_data = tree_data;
 			set_dialog_button();
 		};
+
+		$('#dlg_project_property').on('shown.bs.modal', function (e) {
+			$('#property_treeview').find("li[path='Property/Information']>a").click();
+		});
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({

@@ -310,8 +310,8 @@ goorm.core.file.rename = {
 					if (data.type === 'file') {
 						confirmation.init({
 							message: localization[confirm_msg],
-							yes_text: localization.confirmation_yes,
-							no_text: localization.confirmation_no,
+							yes_text: localization.yes,
+							no_text: localization.no,
 							title: "Confirmation",
 
 							yes: function() {

@@ -29,40 +29,28 @@
 	"delete": {
 		"value": "Delete"
 	},
-	"slide": {
-		"value": "Slide"
-	},
-	"history":{
+	"history": {
 		"value": "History"
 	},
-	"now":{
-		"value": "Now"
-	},
-	"history_speed_normal":{
-		"value": "Normal"
-	},
-	"speed":{
+	"speed": {
 		"value": "Speed"
 	},
-	"history_speed_fast":{
+	"history_speed_normal": {
+		"value": "Normal"
+	},
+	"history_speed_fast": {
 		"value": "Fast"
 	},
-	"history_speed_veryfast":{
+	"history_speed_veryfast": {
 		"value": "Very Fast"
 	},
-	"history_speed_slow":{
+	"history_speed_slow": {
 		"value": "Slow"
 	},
-	"history_speed_veryslow":{
+	"history_speed_veryslow": {
 		"value": "Very Slow"
 	},
-	"history_time":{
-		"value": "Save Time"
-	},
-	"history_delay":{
-		"value": "Delay(sec)"
-	},
-	"history_show_current":{
+	"history_show_current": {
 		"value": "Show current state"
 	},
 	"terminal": {
@@ -104,9 +92,6 @@
 	"apply": {
 		"value": "Apply"
 	},
-	"restore":{
-		"value": "Restore"
-	},
 	"default": {
 		"value": "Default"
 	},
@@ -140,12 +125,6 @@
 	"scm_configuration": {
 		"value": "SCM Configuration"
 	},
-	"general": {
-		"value": "General"
-	},
-	"project_setting": {
-		"value": "Project Setting"
-	},
 	"cloud": {
 		"value": "Cloud"
 	},
@@ -154,9 +133,6 @@
 	},
 	"upload": {
 		"value": "Upload"
-	},
-	"select": {
-		"value": "Select "
 	},
 	"private_mode": {
 		"value": "Access Private Mode"
@@ -176,35 +152,32 @@
 	"toggle_selection": {
 		"value": "Toggle Selection"
 	},
-	"system":{
-		"value":"System"
+	"editor": {
+		"value": "Editor"
 	},
-	"editor":{
-		"value":"Editor"
+	"save": {
+		"value": "Save"
 	},
-	"save":{
-		"value":"Save"
+	"add": {
+		"value": "Add"
 	},
-	"add":{
-		"value":"Add"
+	"number": {
+		"value": "No"
 	},
-	"number":{
-		"value":"No"
+	"thread": {
+		"value": "Thread"
 	},
-	"thread":{
-		"value":"Thread"
+	"variable": {
+		"value": "Variable"
 	},
-	"variable":{
-		"value":"Variable"
+	"value": {
+		"value": "Value"
 	},
-	"value":{
-		"value":"Value"
+	"summary": {
+		"value": "Summary"
 	},
-	"summary":{
-		"value":"Summary"
-	},
-	"code_highlight":{
-		"value":"Code Highlight"
+	"code_highlight": {
+		"value": "Code Highlight"
 	},
 	"my_project": {
 		"value": "My Project"
@@ -212,13 +185,13 @@
 	"share_project": {
 		"value": "Share"
 	},
-	"project_table":{
+	"project_table": {
 		"value": "Project Table"
 	},
-	"project_list":{
+	"project_list": {
 		"value": "Project List"
 	},
-	"cloud_projects":{
+	"cloud_projects": {
 		"value": "Cloud Projects"
 	},
 	"chats": {
@@ -239,9 +212,6 @@
 	"output": {
 		"value": "Output"
 	},
-	"study": {
-		"value": "Study"
-	},
 	"back": {
 		"value": "Back"
 	},
@@ -251,32 +221,32 @@
 	"password": {
 		"value": "PASSWORD"
 	},
-	"type_message":{
+	"type_message": {
 		"value": "Type your message..."
 	},
 	"invitation_type_message": {
 		"value": "Type your invitation message..."
 	},
-	"repository_path":{
+	"repository_path": {
 		"value": "Repository Path"
 	},
-	"shortcut_edit":{
+	"shortcut_edit": {
 		"value": "Edit"
 	},
-	"recent_empty":{
+	"recent_empty": {
 		"value": "Empty"
 	},
-	"recent_clear":{
+	"recent_clear": {
 		"value": "Clear"
 	},
-	"storage":{
+	"storage": {
 		"value": "Storage"
 	},
-	"hide":{
+	"hide": {
 		"value": "Hide"
 	},
-	"create":{
-		"value": "Create" 
+	"create": {
+		"value": "Create"
 	},
 	"replace": {
 		"value": "Replace"

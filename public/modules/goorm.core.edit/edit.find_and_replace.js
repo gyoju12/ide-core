@@ -123,7 +123,7 @@ goorm.core.edit.find_and_replace = {
 
 				var inputbox = $("#find_query_inputbox");
 				var inputbox_background = $("#find_query_inputbox_background");
-				inputbox.bind("keydown keyup keypress change select", function(e){
+				var make_shadow = function (){
 					if($('#far_use_regexp').hasClass('active')){
 						var value = inputbox.val();
 						var scroll = inputbox.scrollLeft();
@@ -139,7 +139,9 @@ goorm.core.edit.find_and_replace = {
 						inputbox_background.val(value);
 						inputbox_background.scrollLeft(scroll);
 					}
-
+				}
+				inputbox.bind("keydown keyup keypress change select", function(e){
+					setTimeout(make_shadow, 10);
 				});
 
 				// Donguk.kim
@@ -171,12 +173,13 @@ goorm.core.edit.find_and_replace = {
 				self.panel.on('hide.bs.modal', function() { // this part remove Donguk Kim 
 					self.unmark();
 					$("#find_and_replace_matches").hide();
+
 					var window_manager = core.module.layout.workspace.window_manager;
-					// Get current active_window's editor
-					if (window_manager.window[window_manager.active_window].editor) {
+					var active_window = window_manager.window[window_manager.active_window];
+					if (active_window && active_window.editor) {
 
 						// Get current active_window's CodeMirror editor
-						var editor = window_manager.window[window_manager.active_window].editor.editor;
+						var editor = active_window.editor.editor;
 						// jeongmin: remove all the highlights
 						CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
 						editor.focus(); // jeongmin: user can edit source code right after finding
@@ -363,7 +366,11 @@ goorm.core.edit.find_and_replace = {
 					  	"ignore_case": !this.match_case };
 		
 		if(this.use_regexp) {	// special case : regexp
-			text = "\/" + text + "\/";
+			try{
+				text = new RegExp(text);
+			}catch(e){
+				text = '';
+			}
 		}
 		else {	// others.
 			var flag = "g";
@@ -819,8 +826,8 @@ goorm.core.edit.find_and_replace = {
 			var options = {
 				title: core.module.localization.msg.title_replace_all,
 				message: msg,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
+				yes_text: core.module.localization.msg.yes,
+				no_text: core.module.localization.msg.no,
 				yes: function() {
 					for (var cursor = editor.getSearchCursor(text, null, caseFold); cursor.findNext();) {
 						// hidden - This causes infinite loop when replace 'a' to 'aa'

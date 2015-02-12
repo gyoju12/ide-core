@@ -202,27 +202,59 @@ goorm.core.file.move = {
 		// 		}
 		// 	}
 		// } else {
-			core._socket.once("/file/move", function(data) {
-				if (data.err_code === 0) {
+		core._socket.once("/file/move", function(data) {
+			var localization_msg = core.module.localization.msg,
+				err_files = '\n';
+
+			//2.open file .....
+			layout.project_explorer.treeview.open_path(postdata.dst_path);
+			layout.project_explorer.refresh();
+
+			if (data.err_files) {
+				if (data.err_files.length) { // array
+					err_files += data.err_files.join(', ');
+				} else { // string
+					err_files += data.err_files;
+				}
+			}
+
+			switch (data.err_code) {
+				case 0:
 					postdata.change = 'dialog_mv';
 					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
 					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
 						layout.workspace.window_manager.synch_with_fs(postdata);
-					//2.open file .....
-					layout.project_explorer.treeview.open_path(postdata.dst_path);
-					layout.project_explorer.refresh();
 
 					
-				} else if (data.err_code == 20) {
-					alert.show(data.message);
+					break;
 
-				} else {
-					alert.show(data.message);
-				}
-			});
-			core._socket.emit("/file/move", postdata);
+				case 18: // EINVAL
+					alert.show(localization_msg.alert_invalide_query + err_files);
+					break;
 
-			self.panel.modal('hide');
+				case 20:
+					alert.show(localization_msg.alert_permission_denied + err_files);
+					break;
+
+				case 27: // ENOTDIR
+					alert.show(localization_msg.alert_move_not_directory + err_files);
+					break;
+
+				case 28: // EISDIR
+					alert.show(localization_msg.alert_move_is_directory + err_files);
+					break;
+
+				case 53: // ENOTEMPTY
+					alert.show(localization_msg.alert_move_not_empty_directory + err_files);
+					break;
+
+				default:
+					alert.show(localization_msg.alert_move_error + err_files);
+			}
+		});
+		core._socket.emit("/file/move", postdata);
+
+		self.panel.modal('hide');
 		// }
 	}
 };

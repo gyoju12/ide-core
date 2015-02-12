@@ -36,37 +36,13 @@
         "value": "This is debug toolbar. You can debug project easily."
     },
     "main_window_toolbar": {
-        "value": "This is window toolbar. relative to window arrangment."
+        "value": "This is window toolbar. Relative to window arrangment."
     },
     "main_help_toolbar": {
         "value": "This is help toolbar. You can get information relative to Goorm IDE"
     },
-    "bubble_file_toolbar": {
-        "value": "This is file toolbar."
-    },
-    "bubble_edit_toolbar": {
-        "value": "This is edit toolbar. You can do relative to code editor such as resizing font size or searching words."
-    },
-    "bubble_project_toolbar": {
-        "value": "This is project toolbar. You can build, run share project and so on."
-    },
-    "bubble_debug_toolbar": {
-        "value": "This is debug toolbar. You can debug project easily."
-    },
-    "bubble_window_toolbar": {
-        "value": "This is window toolbar. relative to window arrangment."
-    },
-    "bubble_help_toolbar": {
-        "value": "This is help toolbar. You can get information relative to Goorm IDE"
-    },
     "project_table_tut": {
         "value": "These are project table and file tree. You can manage file tree, project list and share project list."
-    },
-    "pacakage_tree": {
-        "value": "This is package tree."
-    },
-    "cloud_viewer": {
-        "value": "This is cloud viewer. You can access via Google Drive and Dropbox"
     },
     "workspace": {
         "value": "This is your workspace. Your file editors are located in this space!"
@@ -140,9 +116,6 @@
     "build_project_list": {
         "value": "This is project list. You can choose the project which you want to build."
     },
-    "build_project_finish": {
-        "value": "After choosing project, click OK button and Goorm IDE builds project."
-    },
     "build_project_result": {
         "value": "This is Terminal tab. You can see the result of build. If it successes, 'Build Success' will be shown. If it fails, 'Build Fail' wiil be shown."
     },
@@ -202,9 +175,6 @@
     },
     "add_friends_add_friend": {
         "value": "If you click the 'Request' button on right side user list, Goorm IDE sends the request message to the user. After requesting, wait for respond."
-    },
-    "add_friends_friends_tab": {
-        "value": "After request add friends, you can see respond in Friends tab. And can manage friends list."
     },
     "add_friends_friend_list": {
         "value": "You can see friends list or the message waiting accept by request "

@@ -188,12 +188,7 @@ module.exports = {
 					session = JSON.parse(session);
 
 					if (session.id === user_id) {
-						self.g_collaboration_chat.is_connected(io, [{
-							'id': session.id
-						}], function(data) {
-							io.sockets.sockets[data.client.id].emit("force_disconnect");
-							io.sockets.sockets[data.client.id].disconnect();
-						});
+						
 
 						
 
@@ -220,12 +215,7 @@ module.exports = {
 							inner_session = JSON.parse(inner_session);
 
 							if (inner_session.id === user_id) {
-								self.g_collaboration_chat.is_connected(io, [{
-									'id': inner_session.id
-								}], function(data) {
-									io.sockets.sockets[data.client.id].emit("force_disconnect");
-									io.sockets.sockets[data.client.id].disconnect();
-								});
+								
 
 								
 

@@ -35,8 +35,8 @@ goorm.core.preference.filetype = {
 				$('#filetype_delete').click(function() {
 					confirmation.init({
 						message: core.module.localization.msg.confirmation_delete_filetype,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
+						yes_text: core.module.localization.msg.yes,
+						no_text: core.module.localization.msg.no,
 
 						title: "Confirmation",
 

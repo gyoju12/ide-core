@@ -248,7 +248,7 @@ goorm.core.menu.action = {
 
 				var window_manager = core.module.layout.workspace.window_manager;
 				var window_list = window_manager.window;
-				var opened_window = false; // jeongmin: selected file is opened or not
+				var opened_window = -1; // window index of selected file
 
 				// jeongmin: check if selected file is opened or in collaboration
 				for (var i = window_list.length - 1; 0 <= i; i--) {
@@ -256,11 +256,12 @@ goorm.core.menu.action = {
 						opened_window = i;
 
 						
+						break;
 					}
 				}
 
 				function close_window() {
-					if (opened_window) {
+					if (opened_window > -1) {
 						window_list[opened_window].is_saved = true;
 						window_list[opened_window].tab.is_saved = true;
 						// window_list[i].close();
@@ -276,8 +277,8 @@ goorm.core.menu.action = {
 				confirmation.init({
 					title: core.module.localization.msg.confirmation_delete_title,
 					message: core.module.localization.msg.confirmation_delete_file,
-					yes_text: core.module.localization.msg.confirmation_yes,
-					no_text: core.module.localization.msg.confirmation_no,
+					yes_text: core.module.localization.msg.yes,
+					no_text: core.module.localization.msg.no,
 					yes: function() {
 						var postdata = {
 							filename: core.status.selected_file
@@ -1200,8 +1201,8 @@ goorm.core.menu.action = {
 			}
 			confirmation.init({
 				message: core.module.localization.msg.alert_confirm_logout,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
+				yes_text: core.module.localization.msg.yes,
+				no_text: core.module.localization.msg.no,
 				title: core.module.localization.msg.confirmation_title,
 				yes: function() {
 					
@@ -1374,8 +1375,6 @@ goorm.core.menu.action = {
 			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
-			$("[action=debug_stop]").show();
-			$("[action=debug]").hide();
 			core.module.debug.debug_start();
 		});
 
@@ -1384,8 +1383,6 @@ goorm.core.menu.action = {
 			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
-			$("[action=debug_stop]").hide();
-			$("[action=debug]").show();
 			core.module.debug.debug_terminate();
 		});
 
@@ -1403,7 +1400,6 @@ goorm.core.menu.action = {
 			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
 				return false;
 			}
-
 			core.module.debug.debug_terminate();
 		});
 
@@ -1670,8 +1666,8 @@ goorm.core.menu.action = {
 					confirmation.init({
 						title: core.module.localization.msg.confirmation_delete_title,
 						message: core.module.localization.msg.confirmation_delete_all,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
+						yes_text: core.module.localization.msg.yes,
+						no_text: core.module.localization.msg.no,
 						yes: function() {
 							var postdata = {
 								files: files,

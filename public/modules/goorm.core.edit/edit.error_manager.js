@@ -24,8 +24,16 @@ goorm.core.edit.error_manager.prototype = {
 
         var line_number = error_data.line_number;
         var error_syntax = error_data.error_syntax;
+        var error_type = (error_data.error_type != undefined) ? error_data.error_type.toLowerCase() : 'error';
+
+        var marker_icon = '<i class="fa fa-times-circle fa-1"></i>';
+        var underline_class = 'cm-underline-error cm-underline-error-line-';
 
         if (error_syntax !== undefined) { // jeongmin: if error is about whole file, line isn't specified. So, no syntax.
+            if (error_type == 'warning') {
+                marker_icon = '<i class="fa fa-exclamation-triangle fa-1"></i>';
+                underline_class = 'cm-underline-warning cm-underline-warning-line-'
+            }
             var make_marker = function(marker_html, option) {
                 var marker = document.createElement("div");
                 marker.innerHTML = marker_html;
@@ -35,16 +43,16 @@ goorm.core.edit.error_manager.prototype = {
                 return marker;
             }
 
-            editor.setGutterMarker(line_number, "exception_error", make_marker("X", {
+            editor.setGutterMarker(line_number, "exception_error", make_marker(marker_icon, {
                 'count': count,
                 'line_number': line_number
             }));
 
             //error_syntax = error_syntax.trim(); // delete whitespace
             if (editor.getDoc().getLine(line_number)) {
-                error_syntax = editor.getDoc().getLine(line_number).trim();
-                var ch_start = editor.getDoc().getLine(line_number).indexOf(error_syntax);
-                var ch_end = ch_start + error_syntax.length;
+                var line_info = editor.getDoc().getLine(line_number).trim();
+                var ch_start = editor.getDoc().getLine(line_number).indexOf(line_info);
+                var ch_end = ch_start + line_info.length;
 
                 var marker = editor.getDoc().markText({
                     'line': line_number,
@@ -53,7 +61,7 @@ goorm.core.edit.error_manager.prototype = {
                     'line': line_number,
                     'ch': ch_end
                 }, {
-                    'className': "cm-syntax-error cm-syntax-error-line-" + line_number
+                    'className': underline_class + line_number
                 });
 
                 this.marker.push(marker);
@@ -67,7 +75,7 @@ goorm.core.edit.error_manager.prototype = {
     init_event: function() {
         var self = this;
 
-        $("span.cm-syntax-error").off('mouseover');
+        $("span.cm-underline-error").off('mouseover');
         $(document).on({
             mouseover: function(e) {
                 var __class = $(this).attr('class').split(" ");
@@ -76,8 +84,8 @@ goorm.core.edit.error_manager.prototype = {
                 var message = "";
 
                 __class.map(function(o) {
-                    if (o && o.indexOf('cm-syntax-error-line-') > -1) {
-                        line_number = o.replace(/cm-syntax-error-line-/, '');
+                    if (o && o.indexOf('cm-underline-error-line-') > -1) {
+                        line_number = o.replace(/cm-underline-error-line-/, '');
                     }
                 });
 
@@ -97,7 +105,39 @@ goorm.core.edit.error_manager.prototype = {
             mouseout: function() {
                 self.error_message_box.hide();
             }
-        }, 'span.cm-syntax-error');
+        }, 'span.cm-underline-error');
+
+        $("span.cm-underline-warning").off('mouseover');
+        $(document).on({
+            mouseover: function(e) {
+                var __class = $(this).attr('class').split(" ");
+
+                var line_number = -1;
+                var message = "";
+
+                __class.map(function(o) {
+                    if (o && o.indexOf('cm-underline-warning-line-') > -1) {
+                        line_number = o.replace(/cm-underline-warning-line-/, '');
+                    }
+                });
+
+                for (var i = 0; i < self.storage.length; i++) {
+                    var data = self.storage[i];
+
+                    if (data && data.line_number == parseInt(line_number, 10)) {
+                        message += data.error_message + "<br>";
+                    }
+                }
+                if (message !== "") {
+                    self.error_message_box.empty();
+                    self.error_message_box.bind(message);
+                    self.error_message_box.show(e);
+                }
+            },
+            mouseout: function() {
+                self.error_message_box.hide();
+            }
+        }, 'span.cm-underline-warning');
 
 
         $('div.exception_error').off('mouseover');

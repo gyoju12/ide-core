@@ -508,6 +508,12 @@ ColReorder.prototype = {
 			this.s.allowResize = this.s.init.allowResize;
 		}
 		
+		/* minimum width */
+		if ( typeof this.s.init.minWidth != 'undefined' )
+		{
+			this.s.minWidth = this.s.init.minWidth;
+		}
+		
 		/* Columns discounted from reordering - counting left to right */
 		if ( typeof this.s.init.iFixedColumns != 'undefined' )
 		{
@@ -836,6 +842,9 @@ ColReorder.prototype = {
 		  var nTh = this.s.mouse.resizeElem;
 		  var nThNext = $(nTh).next();
 		  var moveLength = e.pageX-this.s.mouse.startX; 
+          if (this.s.mouse.startWidth + moveLength < this.s.minWidth){
+             moveLength = this.s.minWidth - this.s.mouse.startWidth;
+          }
 		  if (moveLength != 0 && !scrollXEnabled)
 			$(nThNext).width(this.s.mouse.nextStartWidth - moveLength);
 		  $(nTh).width(this.s.mouse.startWidth + moveLength);

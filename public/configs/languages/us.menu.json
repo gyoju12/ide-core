@@ -43,9 +43,6 @@
 			"file_open_url": {
 				"value": "Open Url"
 			},
-			"file_close": {
-				"value": "Close"
-			},
 			"file_close_all": {
 				"value": "Close All"
 			},
@@ -69,9 +66,6 @@
 			},
 			"file_print": {
 				"value": "Print"
-			},
-			"file_restart": {
-				"value": "Restart"
 			},
 			"file_import": {
 				"value": "Import/Upload File"
@@ -102,18 +96,12 @@
 			"edit_copy": {
 				"value": "Copy"
 			},
-			"edit_duplicate": {
-				"value": "Duplicate"
-			},
 			"edit_paste": {
 				"value": "Paste"
 			},
 			"edit_text": {
 				"value": "Text",
 				"children": {
-					"edit_delete": {
-						"value": "Delete"
-					},
 					"edit_delete_line_left": {
 						"value": "Delete Line Left"
 					},
@@ -201,7 +189,7 @@
 					"edit_unfold_all": {
 						"value": "Unfold All"
 					}
-				}	
+				}
 			},
 			"edit_goto": {
 				"value": "Goto",
@@ -367,9 +355,6 @@
 			},
 			"project_share": {
 				"value": "Share the Project"
-			},
-			"project_properties": {
-				"value": "Properties"
 			}
 		}
 	},
@@ -422,9 +407,6 @@
 					},
 					"window_left_layout_show_hide": {
 						"value": "Left Pane Show/Hide"
-					},
-					"window_left_layout_toggle_project_explorer": {
-						"value": "Show Project Explorer"
 					},
 					"window_left_layout_toggle_cloud_explorer": {
 						"value": "Show Cloud Explorer"
@@ -574,44 +556,17 @@
 	"open_terminal_here": {
 		"value": "Open Terminal Here"
 	},
-	"Copy_context": {
-		"value": "Copy"
-	},
-	"Duplicate_context": {
-		"value": "Duplicate"
-	},
-	"Paste_context": {
-		"value": "Paste"
-	},
-	"file_rename_context": {
-		"value": "Rename"
-	},
 	"file_move_context": {
 		"value": "Move"
 	},
 	"find_in_folder_context": {
 		"value": "Find in Folder"
 	},
-	"file_delete_context": {
-		"value": "Delete"
-	},
 	"delete_all_context": {
 		"value": "Delete All"
 	},
-	"file_property_context": {
-		"value": "Properties"
-	},
 	"file_new_project_context": {
 		"value": "New Project"
-	},
-	"file_open_project_context": {
-		"value": "Open Project"
-	},
-	"file_save_all_context": {
-		"value": "Save All"
-	},
-	"file_new_file_context": {
-		"value": "New File"
 	},
 	"file_new_folder_context": {
 		"value": "New Folder"
@@ -619,70 +574,14 @@
 	"file_new_untitled_text_file_context": {
 		"value": "New Untitled Text File"
 	},
-	"file_import_context": {
-		"value": "Import/Upload File"
-	},
-	"file_export_context": {
-		"value": "Export File"
-	},
-	"file_refresh_context": {
-		"value": "Refresh"
-	},
-	"file_new_context": {
-		"value": "New",
-		"children": {
-			"file_new_context_new_file": {
-				"value": "File"
-			},
-			"file_new_context_new_folder": {
-				"value": "Folder"
-			},
-			"file_new_context_untitled_text_file": {
-				"value": "Untitled Text File"
-			}
-		}
-	},
-	"folder_open_context": {
-		"value": "Open"
-	},
 	"cloud_upload_context": {
 		"value": "Upload"
-	},
-	"folder_close_context": {
-		"value": "Close"
 	},
 	"project_properties_context": {
 		"value": "Project Properties"
 	},
-	"file_open_file_context": {
-		"value": "Open File"
-	},
-	"file_close_all_context": {
-		"value": "Close All"
-	},
 	"window_toggle_full_workspace_context": {
 		"value": "Toggle Full Workspace"
-	},
-	"window_hide_all_window_context": {
-		"value": "Hide All Window"
-	},
-	"window_show_all_window_context": {
-		"value": "Show All Window"
-	},
-	"window_cascade_context": {
-		"value": "Cascade"
-	},
-	"window_tile_vertically_context": {
-		"value": "Tile Vertically"
-	},
-	"window_tile_horizontally_context": {
-		"value": "Tile Horizontally"
-	},
-	"window_previous_window_context": {
-		"value": "Previous Window"
-	},
-	"window_next_window_context": {
-		"value": "Next Window"
 	},
 	"maximize": {
 		"value": "Maximize"
@@ -692,9 +591,6 @@
 	},
 	"show_and_hide": {
 		"value": "Show / Hide"
-	},
-	"open_recent_file": {
-		"value": "Open Recent File"
 	},
 	"close": {
 		"value": "Close"
@@ -710,21 +606,6 @@
 	},
 	"eval_in_repl": {
 		"value": "EVAL in REPL"
-	},
-	"edit_find_replace_edit_context": {
-		"value": "Find/Replace"
-	},
-	"edit_search_edit_context": {
-		"value": "Search"
-	},
-	"chat_user_info_context": {
-		"value": "User Info"
-	},
-	"chat_user_whisper_context": {
-		"value": "Whisper"
-	},
-	"pdf": {
-		"value": "PDF"
 	},
 	"edit_no_bookmark": {
 		"value": "No Bookmarks"
@@ -743,31 +624,28 @@
 	},
 	"Next": {
 		"value": "Next"
-	}, 
+	},
 	"Palette": {
 		"value": "Palette"
 	},
 	"Connect with co-developers": {
 		"value": "Connect"
-	}, 
+	},
 	"Pencil": {
 		"value": "Pencil"
-	}, 
-	"Erase": {
-		"value": "Erase"		
-	}, 
-	"Color Wheel": {
-		"value": "Color Wheel"		
-	}, 
-	"Size Slider": {
-		"value": "Size Slider"		
-	}, 
-	"Erase All": {
-		"value": "Erase All"		
 	},
-	"Go to Page": {
-		"value": "Go to Page"
-	}, 
+	"Erase": {
+		"value": "Erase"
+	},
+	"Color Wheel": {
+		"value": "Color Wheel"
+	},
+	"Size Slider": {
+		"value": "Size Slider"
+	},
+	"Erase All": {
+		"value": "Erase All"
+	},
 	"Magnify": {
 		"value": "Magnify"
 	},

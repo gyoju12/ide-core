@@ -439,9 +439,9 @@ goorm.core.window.panel.prototype = {
 				} else {
 					confirmation_save.init({
 						message: "\"" + self.filename + "\" " + core.module.localization.msg.confirmation_save_message,
-						yes_text: core.module.localization.msg.confirmation_yes,
+						yes_text: core.module.localization.msg.yes,
 						cancel_text: core.module.localization.msg.confirmation_cancel,
-						no_text: core.module.localization.msg.confirmation_no,
+						no_text: core.module.localization.msg.no,
 						title: "Close...",
 
 						//if editor, it should be off from ot-server --heeje
@@ -474,6 +474,7 @@ goorm.core.window.panel.prototype = {
 			},
 			close: function(event, ui) {
 				//to prevent multiple event calling on debug window closing --heeje
+				// console.log(self.filename);
 				if (self.filename == 'debug') {
 					core.module.layout.debug.debug_terminate();
 				} else {

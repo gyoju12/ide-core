@@ -43,9 +43,6 @@
 			"file_open_url": {
 				"value": "URL 열기"
 			},
-			"file_close": {
-				"value": "닫기"
-			},
 			"file_close_all": {
 				"value": "모두 닫기"
 			},
@@ -69,9 +66,6 @@
 			},
 			"file_print": {
 				"value": "인쇄"
-			},
-			"file_restart": {
-				"value": "재시작"
 			},
 			"file_import": {
 				"value": "파일 가져오기/업로드"
@@ -105,15 +99,9 @@
 			"edit_paste": {
 				"value": "붙여넣기"
 			},
-			"edit_duplicate": {
-				"value": "복제"
-			},
 			"edit_text": {
 				"value": "텍스트",
 				"children": {
-					"edit_delete": {
-						"value": "삭제"
-					},
 					"edit_delete_line_left": {
 						"value": "커서 왼쪽 삭제"
 					},
@@ -312,7 +300,7 @@
 					},
 					"edit_merge_diff": {
 						"value": "차이점 병합"
-					}		
+					}
 				}
 			},
 			"edit_refactor": {
@@ -367,9 +355,6 @@
 			},
 			"project_share": {
 				"value": "프로젝트 공유"
-			},
-			"project_properties": {
-				"value": "속성"
 			}
 		}
 	},
@@ -422,9 +407,6 @@
 					},
 					"window_left_layout_show_hide": {
 						"value": "보이기/숨기기"
-					},
-					"window_left_layout_toggle_project_explorer": {
-						"value": "프로젝트 탐색기 보기"
 					},
 					"window_left_layout_toggle_cloud_explorer": {
 						"value": "클라우드 탐색기 보기"
@@ -574,44 +556,17 @@
 	"open_terminal_here": {
 		"value": "해당 위치에서 터미널 열기"
 	},
-	"Copy_context": {
-		"value": "복사"
-	},
-	"Duplicate_context": {
-		"value": "복제"
-	},
-	"Paste_context": {
-		"value": "붙여넣기"
-	},
-	"file_rename_context": {
-		"value": "이름 변경"
-	},
 	"file_move_context": {
 		"value": "이동"
 	},
 	"find_in_folder_context": {
 		"value": "폴더에서 찾기"
 	},
-	"file_delete_context": {
-		"value": "삭제"
-	},
 	"delete_all_context": {
 		"value": "모두 삭제"
 	},
-	"file_property_context": {
-		"value": "속성"
-	},
 	"file_new_project_context": {
 		"value": "새 프로젝트"
-	},
-	"file_open_project_context": {
-		"value": "프로젝트 열기"
-	},
-	"file_save_all_context": {
-		"value": "모두 저장"
-	},
-	"file_new_file_context": {
-		"value": "새 파일"
 	},
 	"file_new_folder_context": {
 		"value": "새 폴더"
@@ -619,70 +574,14 @@
 	"file_new_untitled_text_file_context": {
 		"value": "새 텍스트 파일"
 	},
-	"file_import_context": {
-		"value": "파일 가져오기/업로드"
-	},
-	"file_export_context": {
-		"value": "파일 내보내기"
-	},
-	"file_refresh_context": {
-		"value": "새로 고침"
-	},
-	"file_new_context": {
-		"value": "새로 만들기",
-		"children": {
-			"file_new_context_new_file": {
-				"value": "파일"
-			},
-			"file_new_context_new_folder": {
-				"value": "폴더"
-			},
-			"file_new_context_untitled_text_file": {
-				"value": "텍스트 파일"
-			}
-		}
-	},
-	"folder_open_context": {
-		"value": "열기"
-	},
 	"cloud_upload_context": {
 		"value": "업로드"
-	},
-	"folder_close_context": {
-		"value": "닫기"
 	},
 	"project_properties_context": {
 		"value": "프로젝트 속성"
 	},
-	"file_open_file_context": {
-		"value": "파일 열기"
-	},
-	"file_close_all_context": {
-		"value": "모두 닫기"
-	},
 	"window_toggle_full_workspace_context": {
 		"value": "작업 공간 전환"
-	},
-	"window_hide_all_window_context": {
-		"value": "모든 창 숨기기"
-	},
-	"window_show_all_window_context": {
-		"value": "모든 창 보여주기"
-	},
-	"window_cascade_context": {
-		"value": "계단식 정렬"
-	},
-	"window_tile_vertically_context": {
-		"value": "세로 정렬"
-	},
-	"window_tile_horizontally_context": {
-		"value": "가로 정렬"
-	},
-	"window_previous_window_context": {
-		"value": "이전 창"
-	},
-	"window_next_window_context": {
-		"value": "다음 창"
 	},
 	"maximize": {
 		"value": "최대화"
@@ -692,9 +591,6 @@
 	},
 	"show_and_hide": {
 		"value": "보이기 / 숨기기"
-	},
-	"open_recent_file": {
-		"value": "최근 파일 열기"
 	},
 	"close": {
 		"value": "닫기"
@@ -710,21 +606,6 @@
 	},
 	"eval_in_repl": {
 		"value": "해당 영역을 쉘에서 실행하기"
-	},
-	"edit_find_replace_edit_context": {
-		"value": "찾기/바꾸기"
-	},
-	"edit_search_edit_context": {
-		"value": "검색"
-	},
-	"chat_user_info_context": {
-		"value": "유저 정보"
-	},
-	"chat_user_whisper_context": {
-		"value": "귓속말"
-	},
-	"pdf": {
-		"value": "PDF"
 	},
 	"edit_no_bookmark": {
 		"value": "북마크가 없습니다"
@@ -743,31 +624,28 @@
 	},
 	"Next": {
 		"value": "다음"
-	}, 
+	},
 	"Palette": {
 		"value": "팔레트"
 	},
 	"Connect with co-developers": {
 		"value": "연결"
-	}, 
+	},
 	"Pencil": {
 		"value": "연필"
-	}, 
-	"Erase": {
-		"value": "지우개"		
-	}, 
-	"Color Wheel": {
-		"value": "색상표"		
-	}, 
-	"Size Slider": {
-		"value": "연필 두께"		
-	}, 
-	"Erase All": {
-		"value": "모두 지우기"		
 	},
-	"Go to Page": {
-		"value": "페이지로 이동하기"
-	}, 
+	"Erase": {
+		"value": "지우개"
+	},
+	"Color Wheel": {
+		"value": "색상표"
+	},
+	"Size Slider": {
+		"value": "연필 두께"
+	},
+	"Erase All": {
+		"value": "모두 지우기"
+	},
 	"Magnify": {
 		"value": "확대"
 	},

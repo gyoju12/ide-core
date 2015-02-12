@@ -167,6 +167,18 @@ goorm.core.localization = {
 				core.preference['preference.language.select'] = self.language;
 				$(core).trigger('language_loaded', change_flag);
 				$(core).trigger('language_change');
+				var temp_message = $("div.join_message");
+				$.each(temp_message, function(i,v) {
+					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_join);
+				});
+				temp_message = $("div.leave_message");
+				$.each(temp_message, function(i,v) {
+					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_leave);
+				});
+				temp_message = $("div.change_message");
+				$.each(temp_message, function(i,v) {
+					$(v).html($(v).attr('before_user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change + $(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change2);
+				});
 			}
 
 			if (self.language_data[__language]) {

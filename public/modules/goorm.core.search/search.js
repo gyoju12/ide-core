@@ -444,14 +444,14 @@ goorm.core.search = {
 			now: 0,
 			unique: "search",
 			beforeStop: function(){
-				$("#dlg_search #g_op_btn_ok").removeAttr("disabled");
+				$("#g_s_btn_ok").removeAttr("disabled");
 			}
 		});
 		if(!progress_elements){
 			return false;
 		}
 		this.progress_elements = progress_elements;
-		$("#dlg_search #g_op_btn_ok").attr("disabled", "disabled");
+		$("#g_s_btn_ok").attr("disabled", "disabled");
 		self.matched_file_list = [];
 		//var progress_elements = core.module.loading_bar.start();
 

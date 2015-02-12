@@ -592,7 +592,14 @@ goorm.core.layout = {
 		$("#goorm_inner_layout_bottom").find("div.tab-content").height(layout_bottom_height);
 
 		//set search tab and server tab in nodejs correct dynamically --heeje
-		$(".rst_view").outerHeight($("#search_treeview").height() - $(".clr_view").outerHeight());
+		// $(".rst_view").outerHeight($("#search_treeview").height() - $(".clr_view").outerHeight());
+		$('.rst_view').each(function() {
+			var $parent = $(this).parent();
+
+			// clr_view may not be rendered yet
+			var clr_view_height = $(this).siblings('.clr_view').outerHeight() == 0 ? 38 : $(this).siblings('.clr_view').outerHeight();
+			$(this).outerHeight($parent.height() - clr_view_height);
+		});
 		// -- center --
 
 		// workspace

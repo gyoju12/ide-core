@@ -222,7 +222,6 @@ goorm.core.preference = {
 		if(id === 'line_wrapping' || id === 'rulers') {
 			$(core).trigger("on_global_preference_confirmed");
 		} else if(Number(id)>=3 && Number(id)<=9) {
-			console.log("==");
 			$(core).trigger("on_preference_shortcut_apply");
 		} else {
 			$(core).trigger("on_preference_confirmed");

@@ -163,8 +163,8 @@ goorm.core.window.manager = {
 						if (localStorage.unsaved_data && language === true) {
 							confirmation.init({
 								message: core.module.localization.msg.confirmation_restore_unsaved_data,
-								yes_text: core.module.localization.msg.confirmation_yes,
-								no_text: core.module.localization.msg.confirmation_no,
+								yes_text: core.module.localization.msg.yes,
+								no_text: core.module.localization.msg.no,
 								title: "Confirmation",
 
 								yes: function() {
@@ -865,9 +865,9 @@ goorm.core.window.manager = {
 		if (modified.length > 0) {
 			confirmation_save.init({
 				message: msg + " " + core.module.localization.msg.confirmation_save_message,
-				yes_text: core.module.localization.msg.confirmation_yes,
+				yes_text: core.module.localization.msg.yes,
 				cancel_text: core.module.localization.msg.confirmation_cancel,
-				no_text: core.module.localization.msg.confirmation_no,
+				no_text: core.module.localization.msg.no,
 				title: "Close...",
 
 				yes: function() {
@@ -937,9 +937,9 @@ goorm.core.window.manager = {
 		if (modified.length > 0) {
 			confirmation_save.init({
 				message: msg + " " + core.module.localization.msg.confirmation_save_message,
-				yes_text: core.module.localization.msg.confirmation_yes,
+				yes_text: core.module.localization.msg.yes,
 				cancel_text: core.module.localization.msg.confirmation_cancel,
-				no_text: core.module.localization.msg.confirmation_no,
+				no_text: core.module.localization.msg.no,
 				title: "Close...",
 
 				yes: function() {
@@ -1286,9 +1286,9 @@ goorm.core.window.manager = {
 			} else {
 				confirmation_save.init({
 					message: "\"" + target_window.filename + "\" " + core.module.localization.msg.confirmation_save_message,
-					yes_text: core.module.localization.msg.confirmation_yes,
+					yes_text: core.module.localization.msg.yes,
 					cancel_text: core.module.localization.msg.confirmation_cancel,
-					no_text: core.module.localization.msg.confirmation_no,
+					no_text: core.module.localization.msg.no,
 					title: "Close...",
 
 					yes: function() {

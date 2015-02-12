@@ -50,8 +50,8 @@ goorm.core.file.save_as = {
 				if (data.err_code == 99) {
 					confirmation.init({
 						message: core.module.localization.msg.confirmation_new_message,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
+						yes_text: core.module.localization.msg.yes,
+						no_text: core.module.localization.msg.no,
 						title: "Confirmation",
 						yes: function() {
 							self.is_save_anyway = true;

@@ -56,9 +56,13 @@ module.exports = {
 
 					if (channel == "join") {
 						
-						if (socket && socket.handshake && socket.handshake.sessionID) {
+						if (socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id);
+						}
+
+						if (msg_obj.version) {
+							socket.set('version', msg_obj.version.toString());
 						}
 
 						if (!msg_obj.reconnect) {
@@ -81,6 +85,10 @@ module.exports = {
 										'id': id,
 										'sessionID': msg_obj.fs_express_id
 									}));
+
+									if (msg_obj.version) {
+										fs_socket.set('version', msg_obj.version.toString());
+									}
 
 									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
 								}
@@ -106,6 +114,10 @@ module.exports = {
 										'sessionID': msg_obj.project_express_id
 									}));
 
+									if (msg_obj.version) {
+										project_socket.set('version', msg_obj.version.toString());
+									}
+
 									store.client.set(msg_obj.project_express_id, JSON.stringify(user_data));
 								}
 
@@ -122,16 +134,13 @@ module.exports = {
 			//api start
 			/////////
 
-			
-
-
 			//API : project
 
 			socket.on('/project/valid', function(msg) {
 				var evt = new EventEmitter();
 				var valid = {};
 
-				evt.on("project_over_limit", function(limit) {
+				evt.once("project_over_limit", function(limit) {
 					valid.result = false;
 					valid.err_code = 1;
 					valid.limit = limit;
@@ -139,21 +148,21 @@ module.exports = {
 					socket.emit("/project/valid", valid);
 				});
 
-				evt.on("project_exist", function() {
+				evt.once("project_exist", function() {
 					valid.result = false;
 					valid.err_code = 2;
 
 					socket.emit("/project/valid", valid);
 				});
 
-				evt.on("project_duplicate_name", function() {
+				evt.once("project_duplicate_name", function() {
 					valid.result = false;
 					valid.err_code = 3;
 
 					socket.emit("/project/valid", valid);
 				});
 
-				evt.on("project_valid_success", function() {
+				evt.once("project_valid_success", function() {
 					valid.result = true;
 					valid.err_code = 0;
 
@@ -178,7 +187,7 @@ module.exports = {
 				var evt = new EventEmitter();
 
 				//check user uses scm and if user uses, set scm info to goorm.manifest. Jeong-Min Im.
-				evt.on("project_do_new", function(data) {
+				evt.once("project_do_new", function(data) {
 					// set goorm.manifest's uid as root. Jeong-Min Im.
 					g_auth_project.manifest_setting(data.project_dir, function() {
 						socket.emit("/project/new", data);
@@ -201,7 +210,7 @@ module.exports = {
 			socket.on('/project/delete', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("project_do_delete", function(data) {
+				evt.once("project_do_delete", function(data) {
 					socket.emit("/project/delete", data);
 				});
 
@@ -224,7 +233,7 @@ module.exports = {
 			socket.on('/project/get_list', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("project_get_list", function(data) {
+				evt.once("project_get_list", function(data) {
 					// jeongmin: differ socket's destination according to get_list_type
 					switch (msg.get_list_type) {
 						
@@ -260,14 +269,17 @@ module.exports = {
 				var evt = new EventEmitter();
 				var data = {};
 
-				evt.on("project_doing_export", function(data) { 
+				function project_doing_export (data) {
 					socket.emit("/project/do_export", data);
-				});	
+				}
 
-				evt.on("project_do_export", function(data) {
+				evt.on("project_doing_export", project_doing_export);
+
+				evt.once("project_do_export", function(data) {
+					evt.removeListener('project_doing_export', project_doing_export);
 					socket.emit("/project/done_export", data);
 				});
-				
+
 				
 				//useonly(mode=goorm-oss)
 				g_project.do_export(postdata, evt);
@@ -278,7 +290,7 @@ module.exports = {
 			socket.on('/project/clean', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("project_do_clean", function(data) {
+				evt.once("project_do_clean", function(data) {
 					socket.emit("/project/clean", data);
 				});
 
@@ -287,7 +299,7 @@ module.exports = {
 
 			socket.on('/project/get_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.on("get_property", function(data) {
+				evt.once("get_property", function(data) {
 					if (data.contents) {
 						
 						//useonly(mode=goorm-oss)
@@ -303,7 +315,7 @@ module.exports = {
 
 			socket.on('/project/set_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.on("set_property", function(data) {
+				evt.once("set_property", function(data) {
 					socket.emit("/project/set_property", data);
 				});
 
@@ -319,7 +331,7 @@ module.exports = {
 
 			socket.on('/project/check_latest_build', function(msg) {
 				var evt = new EventEmitter();
-				evt.on("check_latest_build", function(data) {
+				evt.once("check_latest_build", function(data) {
 					socket.emit("/project/check_latest_build", data);
 				});
 				g_project.check_latest_build(msg, evt);
@@ -327,7 +339,7 @@ module.exports = {
 
 			socket.on('/project/check_valid_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.on("check_valid_property", function(data) {
+				evt.once("check_valid_property", function(data) {
 					socket.emit("/project/check_valid_property", data);
 				});
 
@@ -635,7 +647,7 @@ module.exports = {
 			socket.on('/file/new', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_new", function(data) {
+				evt.once("file_do_new", function(data) {
 					socket.emit("/file/new", data);
 				});
 
@@ -699,7 +711,7 @@ module.exports = {
 			socket.on('/file/new_folder', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_new_folder", function(data) {
+				evt.once("file_do_new_folder", function(data) {
 					socket.emit("/file/new_folder", data);
 				});
 
@@ -764,7 +776,7 @@ module.exports = {
 			socket.on('/file/new_untitled_text_file', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_new_untitled_text_file", function(data) {
+				evt.once("file_do_new_untitled_text_file", function(data) {
 					socket.emit("/file/new_untitled_text_file", data);
 				});
 
@@ -831,7 +843,7 @@ module.exports = {
 
 				var evt = new EventEmitter();
 
-				evt.on("file_do_new_other", function(data) {
+				evt.once("file_do_new_other", function(data) {
 					socket.emit("/file/new_other", data);
 				});
 
@@ -897,7 +909,7 @@ module.exports = {
 			socket.on('/file/save_as', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_save_as", function(data) {
+				evt.once("file_do_save_as", function(data) {
 					socket.emit("/file/save_as", data);
 				});
 
@@ -917,7 +929,7 @@ module.exports = {
 				var user_level = null;
 				var author_level = null;
 
-				evt.on("file_do_delete", function(data) {
+				evt.once("file_do_delete", function(data) {
 					socket.emit("/file/delete", data);
 				});
 
@@ -1044,7 +1056,7 @@ module.exports = {
 			socket.on('/file/put_contents', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_put_contents", function(data) {
+				evt.once("file_put_contents", function(data) {
 					socket.emit("/file/put_contents", data);
 				});
 
@@ -1060,7 +1072,7 @@ module.exports = {
 			socket.on('/file/get_result_ls', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("got_result_ls", function(data) {
+				evt.once("got_result_ls", function(data) {
 					socket.emit("/file/get_result_ls" + msg.path, data);
 				});
 
@@ -1094,7 +1106,7 @@ module.exports = {
 				//useonly(mode=goorm-oss)
 				// file validate
 				// 
-				evt.on("check_valid_edit", function(data) {
+				evt.once("check_valid_edit", function(data) {
 					if (!data.result) {
 						switch (data.code) {
 							case 0:
@@ -1123,21 +1135,20 @@ module.exports = {
 				var user_level = null;
 				var author_level = null;
 
-				var move_fail = function(fail_msg) {
-					var res_data = {
-						err_code: 20,
-						message: fail_msg,
-						path: msg
-					};
+				// var move_fail = function(fail_msg) {
+				// 	var res_data = {
+				// 		err_code: 20,
+				// 		message: fail_msg,
+				// 		path: msg
+				// 	};
 
-					socket.emit("/file/move", res_data);
-				};
-				evt.on("file_do_move", function(data) {
+				// 	socket.emit("/file/move", res_data);
+				// };
+				evt.once("file_do_move", function(data) {
 					socket.emit("/file/move", data);
 				});
 
 				
-
 				//useonly(mode=goorm-oss)
 				g_file.do_move(msg, evt);
 				
@@ -1147,7 +1158,7 @@ module.exports = {
 				var user_level = null;
 				var author_level = null;
 
-				evt.on("file_do_rename", function(data) {
+				evt.once("file_do_rename", function(data) {
 					socket.emit("/file/rename", data);
 				});
 
@@ -1217,7 +1228,7 @@ module.exports = {
 			socket.on('/file/get_property', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_get_property", function(data) {
+				evt.once("file_get_property", function(data) {
 					socket.emit("/file/get_property", data);
 				});
 
@@ -1227,7 +1238,7 @@ module.exports = {
 			socket.on('/file/search_on_project', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on("file_do_search_on_project", function(data) {
+				evt.once("file_do_search_on_project", function(data) {
 					socket.emit("/file/search_on_project", data);
 				});
 
@@ -1242,7 +1253,7 @@ module.exports = {
 			socket.on('/file/exist', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.on('file_check_exist', function(data) {
+				evt.once('file_check_exist', function(data) {
 					socket.emit('/file/exist', data);
 				});
 
@@ -1268,7 +1279,7 @@ module.exports = {
 
 			socket.on('/preference/get_server_info', function(msg) {
 				var evt = new EventEmitter();
-				evt.on("preference_get_server_info", function(data) {
+				evt.once("preference_get_server_info", function(data) {
 					socket.emit("/preference/get_server_info", data);
 				});
 				g_preference.get_server_info(msg, evt);
@@ -1276,7 +1287,7 @@ module.exports = {
 			socket.on('/preference/get_goorm_info', function(msg) {
 
 				var evt = new EventEmitter();
-				evt.on("preference_get_goorm_info", function(data) {
+				evt.once("preference_get_goorm_info", function(data) {
 					socket.emit("/preference/get_goorm_info", data);
 				});
 
@@ -1327,7 +1338,6 @@ module.exports = {
 			
 
 			
-			
 			/*
 			
 
@@ -1343,7 +1353,7 @@ module.exports = {
 						var path = msg.target_path.split('/');
 						var project_path = (path[0] !== "") ? path[0] : path[1];
 
-						evt.on("upload_dir_skeleton", function(data) {
+						evt.once("upload_dir_skeleton", function(data) {
 							socket.emit('/upload/dir_skeleton', data);
 						});
 

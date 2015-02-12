@@ -62,6 +62,9 @@ goorm.core.debug.prototype = {
 			}, {
 				"sTitle": '<span localization_key="summary">Summary</span>'
 			}],
+			"oColReorder": {
+				"minWidth": 100
+			},
 			"sDom": '<"H"f>Rrt',
 			"bFilter": false,
 			"bSort": false,
@@ -381,6 +384,9 @@ goorm.core.debug.prototype = {
 	button_active: function() {
 		var debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-continue, #goorm_main_toolbar .toolbar-debug-terminate, #goorm_main_toolbar .toolbar-debug-step-over, #goorm_main_toolbar .toolbar-debug-step-in, #goorm_main_toolbar .toolbar-debug-step-out");
 		var none_debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-start");
+
+		var debug_start_btn = $("#main_debug_toolbar button[action='debug']");
+		var debug_terminate_btn = $("#main_debug_toolbar button[action='debug_stop']");
 		//var debug_state_btn2 = $("#goorm-mainmenu .menu-debug-continue, #goorm-mainmenu .menu-debug-terminate, #goorm-mainmenu .menu-debug-step-over, #goorm-mainmenu .menu-debug-step-in, #goorm-mainmenu .menu-debug-step-out");
 		//var none_debug_state_btn2 = $("#goorm-mainmenu .menu-debug-start");
 		var debug_state_btn2 = $("#goorm-mainmenu a[action='debug_continue'], #goorm-mainmenu a[action='debug_step_over'], #goorm-mainmenu a[action='debug_step_in'],#goorm-mainmenu a[action='debug_step_out'],#goorm-mainmenu a[action='debug_terminate']");
@@ -394,11 +400,17 @@ goorm.core.debug.prototype = {
 
 		debug_state_btn1.parent().parent().removeAttr("isdisabled");
 		none_debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
+
+		debug_start_btn.hide();
+		debug_terminate_btn.show();
 	},
 
 	button_inactive: function() {
 		var debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-continue, #goorm_main_toolbar .toolbar-debug-terminate, #goorm_main_toolbar .toolbar-debug-step-over, #goorm_main_toolbar .toolbar-debug-step-in, #goorm_main_toolbar .toolbar-debug-step-out");
 		var none_debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-start");
+
+		var debug_start_btn = $("#main_debug_toolbar button[action='debug']");
+		var debug_terminate_btn = $("#main_debug_toolbar button[action='debug_stop']");
 		//var debug_state_btn2 = $("#goorm-mainmenu .menu-debug-continue, #goorm-mainmenu .menu-debug-terminate, #goorm-mainmenu .menu-debug-step-over, #goorm-mainmenu .menu-debug-step-in, #goorm-mainmenu .menu-debug-step-out");
 		//		var none_debug_state_btn2 = $("#goorm-mainmenu .menu-debug-start");
 		var debug_state_btn2 = $("#goorm-mainmenu a[action='debug_continue'], #goorm-mainmenu a[action='debug_step_over'], #goorm-mainmenu a[action='debug_step_in'],#goorm-mainmenu a[action='debug_step_out'],#goorm-mainmenu a[action='debug_terminate']");
@@ -411,6 +423,9 @@ goorm.core.debug.prototype = {
 
 		debug_state_btn1.parent().parent().attr("isdisabled", "disabled");
 		none_debug_state_btn1.parent().parent().removeAttr("isdisabled");
+
+		debug_start_btn.show();
+		debug_terminate_btn.hide();
 	},
 
 	show_menu: function() {

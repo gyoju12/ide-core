@@ -54,65 +54,84 @@ goorm.core.terminal.prototype = {
 		$("#terminal_dummy").append("<span id='" + self.dummy + "'></span>");
 
 		var create_terminal = function() {
-			$(self.target).addClass('terminal');
+			if(self.target){
+				$(self.target).addClass('terminal');
 
-			var terminal_open_complete = function() {
-				if (core.status.is_mobile) {
-					$(self.target).parent().append('<textarea class="inputbox" spellcheck=false style="position:absolute; left: -9999px; z-index:-1; width:98%; height:93%; visibility:none;">');
-					$(self.target).parent().find('textarea.inputbox').keydown(function(e) {
-						if (e.keyCode === 0) {
-							var key = $(this).val();
-							self.Terminal.handler(key);
-							$(this).val("");
-						} else {
-							self.Terminal.keyDown(e);
-						}
-					});
-					core.adapt_smart_pad($(self.target)[0]);
-					$(self.target)[0].addEventListener('touchstart', function(e) {
-						$(self.target).parent().find('textarea.inputbox').focus();
-					});
+				var terminal_open_complete = function() {
+					if (core.status.is_mobile) {
+						$(self.target).parent().append('<textarea class="inputbox" spellcheck=false style="position:absolute; left: -9999px; z-index:-1; width:98%; height:93%; visibility:none;">');
+						$(self.target).parent().find('textarea.inputbox').keydown(function(e) {
+							if (e.keyCode === 0) {
+								var key = $(this).val();
+								self.Terminal.handler(key);
+								$(this).val("");
+							} else {
+								self.Terminal.keyDown(e);
+							}
+						});
+						core.adapt_smart_pad($(self.target)[0]);
+						$(self.target)[0].addEventListener('touchstart', function(e) {
+							$(self.target).parent().find('textarea.inputbox').focus();
+						});
 
-					$('div#terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
-					$('div.terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
-				}
+						$('div#terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
+						$('div.terminal').css('-moz-user-select', 'none').css('-khtml-user-select', 'none').css('-webkit-user-select', 'none').css('user-select', 'none');
+					}
 
-				$(self.target).parent().css('outline', 'none').css('overflow', 'hidden'); //.css('background-color', 'rgb(70,70,70)');
+					$(self.target).parent().css('outline', 'none').css('overflow', 'hidden'); //.css('background-color', 'rgb(70,70,70)');
 
-				$(self).trigger(self.terminal_name + '_open_complete');
-			};
+					$(self).trigger(self.terminal_name + '_open_complete');
+				};
 
-			var geometry = self.calculate_geometry();
+				var geometry = self.calculate_geometry();
 
-			self.Terminal = new Terminal({
-				cols: geometry.cols,
-				rows: geometry.rows,
-			}); //seongho.cha: if not calculate when new Terminal, first line will be not refreshed correctly fisrt time.
+				self.Terminal = new Terminal({
+					cols: geometry.cols,
+					rows: geometry.rows,
+				}); //seongho.cha: if not calculate when new Terminal, first line will be not refreshed correctly fisrt time.
 
-			self.Terminal.open(self, self.target, {
-				'timestamp': self.timestamp,
-				'terminal_name': self.terminal_name
-			}, terminal_open_complete);
+				self.Terminal.open(self, self.target, {
+					'timestamp': self.timestamp,
+					'terminal_name': self.terminal_name
+				}, terminal_open_complete);
 
-			self.Terminal.bindKeys(self.target[0]);
+				self.Terminal.bindKeys(self.target[0]);
 
-			$(self.target).on("dialogfocus", function(event, ui) {
-				setTimeout(function() {
-					$("#workspace").scrollTop(0).scrollLeft(0);
-				}, 100);
-			});
+				$(self.target).on("dialogfocus", function(event, ui) {
+					setTimeout(function() {
+						$("#workspace").scrollTop(0).scrollLeft(0);
+					}, 100);
+				});
+			} else {
+				var msg = {
+					"timestamp": self.timestamp,
+					"cols": 1000,
+					"workspace": core.status.current_project_path,
+					"terminal_name": self.terminal_name,
+					"uid" : core.user.uid,
+					"gid" : core.user.gid,
+					// "user": core.user.id
+				};
+
+				self.send('terminal_init', {
+					'data': msg,
+					'stringify': true
+				});
+			}
 		};
 
 		var init_terminal = function() {
-			$(self.target).addClass('terminal');
-
-			// attach Terminal
-			$(self).on(self.terminal_name + '_open_complete', $.debounce(function() {
-				self.set_option();
-				self.focus();
-				self.resize_all("layout");
-				self.resize();
-			}, 100, false));
+			if(self.target){
+				$(self.target).addClass('terminal');
+			
+				// attach Terminal
+				$(self).on(self.terminal_name + '_open_complete', $.debounce(function() {
+					self.set_option();
+					self.focus();
+					self.resize_all("layout");
+					self.resize();
+				}, 100, false));
+			}
 
 			var init = false;
 			$(self).one('terminal_ready.' + self.terminal_name, function() {
@@ -130,7 +149,9 @@ goorm.core.terminal.prototype = {
 			$(window).on('unload', function() { // jeongmin: unload -> beforeunload. For doing necessary works before socket is disconnected
 
 				// terminal leave
-				self.Terminal.destroy();
+				if(self.target){
+					self.Terminal.destroy();
+				}
 				$(document).trigger(self.terminal_name + '_closed'); // jeongmin: let server know terminal is closed
 				$("#" + self.dummy).remove();
 				// socket disconnect
@@ -167,28 +188,11 @@ goorm.core.terminal.prototype = {
 				// self.socket.emit("terminal_leave", JSON.stringify(msg));
 			});
 
-			$(self.target).click(function() {
-				self.focus();
-			});
-
-			var terminal = $("#terminal");
-			terminal.mousedown(function() {
-				self.Terminal.flag_drag = 0;
-				self.Terminal.mouseon = true;
-			});
-
-			terminal.mousemove(function() {
-				if (self.Terminal.mouseon) {
-					self.Terminal.flag_drag++;
-				}
-			});
-
-			terminal.mouseup(function() {
-				self.Terminal.mouseon = false;
-				if (self.Terminal.flag_drag < 5) {
-					self.Terminal.flag_darg = 0;
-				}
-			});
+			if(self.target){
+				$(self.target).click(function() {
+					self.focus();
+				});
+			}
 
 			$(self).on("terminal_resize", function() { //$.debounce(function() {	// hidden by jeongmin: if debounce is applied, resizing will not be enough
 				var msg = {
@@ -222,31 +226,22 @@ goorm.core.terminal.prototype = {
 
 			
 
-			self.socket.on("on_change_project_dir." + self.terminal_name, function(data) {
-				$(self).trigger("terminal_ready." + self.terminal_name);
-			});
-
-			self.socket.on("platform." + self.terminal_name, function(data) {
-				data = JSON.parse(data);
-
-				if (!self.default_prompt) self.default_prompt = /.*@.*:.*(\#|\$)/;
-				self.platform = data.platform;
-				core.env.os = data.platform;
-			});
+//			self.socket.on("on_change_project_dir." + self.terminal_name, function(data) {
+//				$(self).trigger("terminal_ready." + self.terminal_name);
+//			});
 
 			self.socket.on("terminal_index." + self.terminal_name, function(data) {
 				data = JSON.parse(data);
-
 				if (self.index == -1 && self.timestamp == data.timestamp) {
 					self.index = data.index;
 					self.export_path = data.export_path;
+					$(self).trigger("terminal_ready." + self.terminal_name);
 
 					if (core.status.current_project_path !== "") {
 						var msg = {
 							index: self.index,
 							project_path: core.status.current_project_path
 						};
-
 						self.send('change_project_dir', {
 							'data': msg,
 							'stringify': true
@@ -271,9 +266,9 @@ goorm.core.terminal.prototype = {
 				//useonly(mode=goorm-oss)	
 				if (self.terminal_name == msg.terminal_name) {
 					self.work_queue(msg.stdout);
-
-					self.Terminal.write(msg.stdout);
-
+					if (self.target){
+						self.Terminal.write(msg.stdout);
+					}
 					if (self.terminal_name == 'debug') {
 						$(self.target).scrollTop($(self.target).parent().prop('scrollHeight'));
 
@@ -358,7 +353,6 @@ goorm.core.terminal.prototype = {
 
 	set_environment: function() {
 		var self = this;
-
 		if (/^background/.test(this.terminal_name)) {
 			this.send_command("export PS1=\"<bg$>\"\r");
 			this.command_ready = true;
@@ -379,6 +373,8 @@ goorm.core.terminal.prototype = {
 			}
 
 			this.send_command("complete;history -c;clear;\r");
+		}else{
+			if (!self.default_prompt) self.default_prompt = /.*@.*:.*(\#|\$)/;
 		}
 	},
 
@@ -486,6 +482,9 @@ goorm.core.terminal.prototype = {
 		return geometry;
 	},
 	_resize: function() {
+		if(!this.target){
+			return;
+		}
 		var geometry = this.calculate_geometry();
 		this.cols = geometry.cols;
 		this.rows = geometry.rows;

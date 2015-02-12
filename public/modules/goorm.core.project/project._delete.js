@@ -145,8 +145,8 @@ goorm.core.project._delete = {
 							confirmation.init({
 								title: core.module.localization.msg.confirmation_title,
 								message: core.module.localization.msg.confirmation_server_running_delete_msg,
-								yes_text: core.module.localization.msg.confirmation_yes,
-								no_text: core.module.localization.msg.confirmation_no,
+								yes_text: core.module.localization.msg.yes,
+								no_text: core.module.localization.msg.no,
 								yes: function() {
 									$("#gLayoutServer_" + core.status.current_running_server[data.path]).find(".hide_tab").click();
 									$("#gLayoutServer_" + core.status.current_running_server[data.path]).find(".server_btn").click();
@@ -163,8 +163,8 @@ goorm.core.project._delete = {
 							confirmation.init({
 								title: core.module.localization.msg.confirmation_delete_title,
 								message: core.module.localization.msg.confirmation_delete_project,
-								yes_text: core.module.localization.msg.confirmation_yes,
-								no_text: core.module.localization.msg.confirmation_no,
+								yes_text: core.module.localization.msg.yes,
+								no_text: core.module.localization.msg.no,
 								yes: function() {
 									self.processing = true;
 									self.__handle_delete();
@@ -245,8 +245,8 @@ goorm.core.project._delete = {
 						confirmation.init({
 							title: core.module.localization.msg.confirmation_delete_title,
 							message: core.module.localization.msg.confirmation_delete_project,
-							yes_text: core.module.localization.msg.confirmation_yes,
-							no_text: core.module.localization.msg.confirmation_no,
+							yes_text: core.module.localization.msg.yes,
+							no_text: core.module.localization.msg.no,
 							yes: function() {
 								self.processing = true;
 								self.__handle_delete();

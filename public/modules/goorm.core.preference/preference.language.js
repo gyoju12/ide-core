@@ -19,8 +19,9 @@ goorm.core.preference.language = {
 		$('[id="preference.language.select"]').change(function(){
 			var selected = $(this).find(':selected').val();
 			progress_elements = core.module.loading_bar.start();
-			
-			core.module.localization.change_language(selected, true, true);
+			setTimeout(function() {
+				core.module.localization.change_language(selected, true, true);
+			}, 150);
 		});
 
 		$(core).on('language_change', function() {		

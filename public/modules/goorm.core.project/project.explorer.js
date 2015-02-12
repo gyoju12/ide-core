@@ -879,8 +879,8 @@ goorm.core.project.explorer.prototype = {
 			$(self).off('confirm_move_file').on('confirm_move_file', function() {
 				confirmation.init({
 					message: msg.confirmation_do_you_want_move, //'Do you want move?', //core.module.localization.msg.alert_confirm_invite_co_developer,
-					yes_text: msg.confirmation_yes,
-					no_text: msg.confirmation_no,
+					yes_text: msg.yes,
+					no_text: msg.no,
 					title: msg.confirmation_title,					
 
 					yes: function() {

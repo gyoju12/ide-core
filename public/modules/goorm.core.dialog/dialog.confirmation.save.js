@@ -37,9 +37,9 @@ goorm.core.dialog.confirmation.save.prototype = {
 		this.title = option.title;
 		this.message = option.message;
 
-		this.yes_text = option.yes_text || core.module.localization.msg.confirmation_yes || "Yes";
+		this.yes_text = option.yes_text || core.module.localization.msg.yes || "Yes";
 		this.cancel_text = option.cancel_text;
-		this.no_text = option.no_text || core.module.localization.msg.confirmation_no || "No";
+		this.no_text = option.no_text || core.module.localization.msg.no || "No";
 
 		this.yes = option.yes;
 		this.cancel = option.cancel;

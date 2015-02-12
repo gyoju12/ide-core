@@ -1,7 +1,4 @@
 {
-    "alert_refresh": {
-        "value": "재시작 하시겠습니까?"
-    },
     "alert_file_name_illegal": {
         "value": "파일명에 잘못된 값이 있습니다."
     },
@@ -10,9 +7,6 @@
     },
     "alert_file_size_too_big_to_upload": {
         "value": "이런! 파일의 크기가 너무 큽니다!<br/>총 크기가 20MB 이하여야 합니다."
-    },
-    "alert_folder_name_empty": {
-        "value": "폴더 이름이 비어 있습니다."
     },
     "alert_shortcut_modified": {
         "value": "변경이 완료되었습니다!"
@@ -50,32 +44,14 @@
     "alert_find_pw_exist": {
         "value": "임시 비밀번호가 메일로 발송되었습니다."
     },
-    "alert_title_msg_send": {
-        "value": "메세지 보내기"
-    },
     "alert_project_not_selected": {
         "value": "프로젝트를 선택해주세요."
     },
     "alert_print_file_error": {
         "value": "열려있는 파일이 없습니다."
     },
-    "alert_plugin_run_error": {
-        "value": "바이너리가 존재하지 않습니다.<br/>프로젝트를 빌드 하시거나 경로설정을 확인하시기 바랍니다.<br/>화면 하단의 터미널을 확인해주세요."
-    },
-    "alert_cannot_find_plugin_to_build": {
-        "value": "프로젝트를 빌드할 플러그인을 찾지 못하였습니다."
-    },
-    "alert_plugin_no_class_file": {
-        "value": "클래스 파일이 존재하지않거나 경로가 옳바르지 않습니다.<br/>프로젝트를 빌드 하시거나 경로설정을 확인하시기 바랍니다."
-    },
     "alert_plugin_run_success": {
         "value": "성공적으로 실행되었습니다.<br/>터미널을 확인하세요."
-    },
-    "alert_plugin_build_error": {
-        "value": "빌드 실패!<br/>터미널 메시지를 확인하세요."
-    },
-    "alert_plugin_build_success": {
-        "value": "성공적으로 빌드가 완료되었습니다!"
     },
     "alert_plugin_check_terminal": {
         "value": "터미널을 확인하세요."
@@ -85,15 +61,6 @@
     },
     "alert_plugin_not_while_running": {
         "value": "사용자가 만든 프로그램이 이미 실행 중입니다.<br/>프로그램의 실행을 끝내고 시도하세요."
-    },
-    "alert_plugin_no_selected": {
-        "value": "플러그인이 선택되지 않았습니다."
-    },
-    "alert_plugin_not_found": {
-        "value": "이 프로젝트를 빌드하기 위해 필요한 플러그인을 찾을 수 없습니다."
-    },
-    "alert_only_zip_allowed": {
-        "value": "ZIP형식의 압축파일만 지원합니다."
     },
     "alert_unsupported_file_type": {
         "value": "지원하지 않는 파일 형식입니다."
@@ -125,32 +92,11 @@
     "alert_filetype_same_name": {
         "value": "같은 확장자를 가진 파일 타입이 존재합니다."
     },
-    "alert_forgot_id": {
-        "value": "아이디 찾기"
-    },
-    "alert_forgot_pw": {
-        "value": "비밀번호 찾기"
-    },
     "alert_forgot_info": {
         "value": "계정정보 찾기"
     },
-    "alert_sign_up": {
-        "value": "회원 가입"
-    },
     "alert_error": {
         "value": "에러"
-    },
-    "alert_assistant_msg": {
-        "value": "조교님으로부터 온 메세지입니다."
-    },
-    "alert_assistant_msg_recipient_blank": {
-        "value": "받는 학생 아이디를 확인해주세요."
-    },
-    "alert_assistant_msg_send_to_blank": {
-        "value": "보내기 종류를 선택해 주세요."
-    },
-    "notice_assistant_msg_success": {
-        "value": "메세지 전송 완료"
     },
     "alert_deny_make_file_in_workspace_root": {
         "value": "workspace의 root에선 새로운 파일을 만들 수 없습니다."
@@ -166,9 +112,6 @@
     },
     "alert_open_editor_more_two": {
         "value": "에디터 창을 2개 이상 열어주세요."
-    },
-    "confirmation_yes": {
-        "value": "네"
     },
     "yes": {
         "value": "네"
@@ -191,9 +134,6 @@
     "confirmation_title": {
         "value": "확인"
     },
-    "confirmation_no": {
-        "value": "아니오"
-    },
     "confirmation_save": {
         "value": "저장 여부"
     },
@@ -205,12 +145,6 @@
     },
     "confirmation_save_message": {
         "value": " 는 수정되었습니다. 저장 하시겠습니까?"
-    },
-    "confirmation_build_message": {
-        "value": " 는 수정되었습니다. 저장 후 빌드 하시겠습니까?"
-    },
-    "confirmation_language_title": {
-        "value": "Language Automatic Change"
     },
     "confirmation_language_message": {
         "value": "Are you sure you want to change the language setting to Korean?"
@@ -236,9 +170,6 @@
     "confirmation_not_save_msg": {
         "value": "파일을 저장한 후에 실행하시겠습니까 ? <br>[저장 후 실행] 버튼 이나 [실행] 버튼을 눌러 주세요!"
     },
-    "confirmation_stay": {
-        "value": "페이지에 머무르기"
-    },
     "confirmation_auto_logout": {
         "value": "자동 로그아웃"
     },
@@ -251,83 +182,29 @@
     "tutorial_guide": {
         "value": "튜토리얼을 시작하시겠습니까?<br/>(키보드 방향키와 ESC로도 조작 가능합니다.)"
     },
-    "alert_page_over_required": {
-        "value": " 너무 큽니다."
-    },
-    "alertValidateRequired": {
-        "value": "필수 사항"
-    },
-    "alert_validate_alpha": {
-        "value": "알파벳 영문자만 입력 가능합니다."
-    },
-    "alert_validate_alpha_num": {
-        "value": "알파벳 영문자 + 숫자 조합만 입력 가능합니다."
-    },
-    "alert_validate_digit": {
-        "value": "숫자만 입력 가능합니다."
-    },
-    "alert_validate_no_digit": {
-        "value": "숫자는 입력 불가능합니다."
-    },
-    "alert_validate_num": {
-        "value": "숫자만 입력 가능합니다."
-    },
-    "alert_validate_email": {
-        "value": "이메일 형식이 맞지 않습니다."
-    },
-    "alert_validate_url": {
-        "value": "URL 형식이 맞지 않습니다."
-    },
-    "alert_dialog_missing": {
-        "value": "선택하지 않거나, 입력되지 않은 항목이 있습니다."
-    },
-    "alert_project_type": {
-        "value": "프로젝트 유형을 선택해 주세요."
-    },
-    "alert_project_source": {
-        "value": "프로젝트 대상을 선택해 주세요."
-    },
     "alert_project_detailed_type": {
         "value": "프로젝트 세부 유형을 선택해 주세요."
     },
     "alert_project_name": {
         "value": "프로젝트 이름을 작성해 주세요."
     },
-    "alert_project_desc": {
-        "value": "프로젝트 설명을 작성해 주세요."
-    },
     "alert_allow_character": {
         "value": "알파벳과 숫자, _, -만 입력 가능합니다."
     },
-    "alert_project_cannot_open": {
-        "value": "프로젝트를 열 수 없습니다."
+    "alert_allow_character2": {
+        "value": "알파벳과 숫자, _ 만 입력 가능합니다."
     },
-    "alert_project_cannot_delete": {
-        "value": "프로젝트 폴더는 삭제할 수 없습니다.<br/>메뉴 - 프로젝트 - 프로젝트 제거 메뉴를 이용하여 주십시오."
+    "alert_allow_django": {
+        "value": "Django 프로젝트에서는 django와 test라는 프로젝트 생성이 불가능합니다."
     },
     "alert_upload_fail": {
         "value": "업로드에 실패하셨습니다. 다시 시도하여 주십시오."
     },
-    "notice_refresh_goorm": {
-        "value": "정보 변경이 완료된 후 새로고침됩니다."
-    },
-    "notice_project_import_done": {
-        "value": "프로젝트 가져오기 완료"
-    },
     "notice_file_import_done": {
         "value": "파일 가져오기 완료"
     },
-    "notice_file_upload_done": {
-        "value": "파일 업로드 완료"
-    },
-    "confirmation_new_title": {
-        "value": "새로 만들기"
-    },
     "confirmation_exit": {
         "value": "정말 종료하시겠습니까?"
-    },
-    "confirmation_theme": {
-        "value": "테마를 적용하시겠습니까?"
     },
     "confirmation_decompress_file": {
         "value": "정말 이 파일의 압축을 해제하시겠습니까?"
@@ -349,36 +226,6 @@
     },
     "confirmation_rename_message": {
         "value": "같은 이름의 파일이 이미 존재합니다. 계속 진행하시겠습니가?<br/>'네'를 누르시면 기존 파일은 삭제됩니다."
-    },
-    "confirmation_move_message": {
-        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
-    },
-    "confirmation_new_other_title": {
-        "value": "기타 파일 새로 만들기"
-    },
-    "confirmation_new_other_message": {
-        "value": "같은 이름의 파일이 이미 존재합니다. 그냥 진행하시겠습니까?"
-    },
-    "confirmation_save_as_title": {
-        "value": "다른 이름으로 저장"
-    },
-    "confirmation_save_as_message": {
-        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
-    },
-    "confirmation_copy_paste_message": {
-        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
-    },
-    "confirmation_upload_message": {
-        "value": "같은 이름의 파일(폴더)이/가 이미 존재합니다. 그냥 진행하시겠습니까?"
-    },
-    "alert_collaboration_select": {
-        "value": "협업할 프로젝트를 선택해주세요."
-    },
-    "alert_collaboration_save": {
-        "value": "다른 사용자와 동기화가 정상적으로 되지 않을 수 있습니다. 저장 하시겠습니까?"
-    },
-    "alert_collaboration_sync": {
-        "value": "동기화 오류. 파일을 다시 불러옵니다."
     },
     "alert_title_empty": {
         "value": "타이틀을 입력해주세요."
@@ -404,9 +251,6 @@
     "alert_cannot_project_delete": {
         "value": "프로젝트의 삭제를 수행할 수 없습니다."
     },
-    "alert_cannot_file_delete": {
-        "value": "파일의 삭제를 수행할 수 없습니다."
-    },
     "notice_write_done": {
         "value": "쓰기 작업을 완료했습니다."
     },
@@ -415,9 +259,6 @@
     },
     "notice_project_delete_done": {
         "value": "프로젝트가 삭제되었습니다."
-    },
-    "alert_naming": {
-        "value": "영역 이름을 겹칠 수 없습니다."
     },
     "alert_value": {
         "value": "영역 이름은 공백을 포함할 수 없습니다."
@@ -446,9 +287,6 @@
     "alert_user_duplicate_student_id": {
         "value": "동일한 학번이 존재합니다."
     },
-    "alert_user_not_fount_id": {
-        "value": "ID가 존재하지 않습니다."
-    },
     "alert_user_unmatched_id": {
         "value": "해당 회원이 아니십니다."
     },
@@ -475,12 +313,6 @@
     },
     "alert_user_unfit_name": {
         "value": "이름의 형식이 올바르지 않습니다(3~15자리, 한글/알파벳/숫자/특수문자(-/_/./ /))."
-    },
-    "alert_user_undefined_nick": {
-        "value": "닉네임을 입력해주세요."
-    },
-    "alert_user_unfit_nick": {
-        "value": "닉네임의 형식이 올바르지 않습니다(3~20자리, 한글/알파벳/숫자/특수문자(-/_/./ /))."
     },
     "alert_user_limit_comment": {
         "value": "코멘트 길이가 너무 깁니다.(최대 20자리)"
@@ -518,20 +350,8 @@
     "alert_cannot_connect_db": {
         "value": "Database에 접근할 수 없습니다."
     },
-    "confirmation_delete_item": {
-        "value": "삭제하시겠습니까?"
-    },
     "confirmation_modify_profile": {
         "value": "계속 진행하시려면 비밀번호를 입력해주세요."
-    },
-    "notice_help_goorm_ide_current_version": {
-        "value": "구름 IDE 현재 버젼"
-    },
-    "notice_help_goorm_ide_official_version": {
-        "value": "공식 버젼"
-    },
-    "notice_help_goorm_ide_update": {
-        "value": "업데이트"
     },
     "notice_search_select_project": {
         "value": "프로젝트를 선택하여 주십시오."
@@ -560,21 +380,6 @@
     "alert_cannot_project_debug": {
         "value": "디버그가 시작되지 않았거나, 디버그 할 수 없는 프로젝트입니다."
     },
-    "confirmation_file_upload": {
-        "value": "파일을 올리시겠습니까?"
-    },
-    "alert_file_cannot_delete": {
-        "value": "파일을 삭제할 수 없습니다."
-    },
-    "alert_file_not_defined": {
-        "value": "파일을 선택하여 주세요."
-    },
-    "alert_google_drive_not_auth": {
-        "value": "로그인과 인증을 해주십시오."
-    },
-    "alert_google_drive_not_selected": {
-        "value": "적절한 파일을 선택하여 주십시오."
-    },
     "alert_confirm_duplicate_login": {
         "value": "중복 로그인이 발생하였습니다. 로그인 하시겠습니까?"
     },
@@ -599,9 +404,6 @@
     "alert_not_compressed_file": {
         "value": "왼편 프로젝트 탐색기에서 압축 파일을 선택하여 주십시오."
     },
-    "collaboration_stop_message": {
-        "value": "협업 중지됨"
-    },
     "alert_quiz_is_ended": {
         "value": "퀴즈가 종료 또는 시작되지 않았습니다."
     },
@@ -622,9 +424,6 @@
     },
     "survey_not_send": {
         "value": "전송 안함"
-    },
-    "alert_run_fail": {
-        "value": "실행에 실패하였습니다. 다시 시도해 주시기 바랍니다."
     },
     "alert_open_file_fail": {
         "value": "읽을 수 없는 파일입니다."
@@ -650,18 +449,6 @@
     "dictionary_author": {
         "value": "작성자"
     },
-    "dictionary_executant": {
-        "value": "실행한 유저"
-    },
-    "dictionary_visitors": {
-        "value": "접속자"
-    },
-    "dictionary_co_server_access": {
-        "value": "접속"
-    },
-    "dictionary_co_server": {
-        "value": "실행 서버"
-    },
     "dictionary_userid": {
         "value": "아이디"
     },
@@ -671,14 +458,8 @@
     "dictionary_history_delay": {
         "value": "지연(초)"
     },
-    "dictionary_time": {
-        "value": "시간"
-    },
     "dictionary_event": {
         "value": "이벤트"
-    },
-    "dictionary_delay": {
-        "value": "지연"
     },
     "dictionary_line": {
         "value": "줄 번호"
@@ -688,12 +469,6 @@
     },
     "dictionary_file": {
         "value": "파일 이름"
-    },
-    "dictionary_room": {
-        "value": "방"
-    },
-    "dictionary_lobby": {
-        "value": "로비"
     },
     "dictionary_chat": {
         "value": "채팅하기"
@@ -725,9 +500,6 @@
     "dictionary_interface": {
         "value": "인터페이스 생성"
     },
-    "dictionary_output": {
-        "value": "아웃풋"
-    },
     "dictionary_install": {
         "value": "설치"
     },
@@ -736,24 +508,6 @@
     },
     "npm_no_libraries": {
         "value": "설치된 라이브러리가 존재하지 않습니다."
-    },
-    "notice_nodejs_app_running": {
-        "value": "사용자의 애플리케이션이 정상적으로 실행되었습니다."
-    },
-    "notice_nodejs_db_access": {
-        "value": "goorm.io의 유저 DB 정보입니다."
-    },
-    "notice_nodejs_tutorial": {
-        "value": "node.js 실행 튜토리얼을 보시겠습니까?"
-    },
-    "mongo_error_auth": {
-        "value": "DB의 비밀번호를 확인하여 주십시오."
-    },
-    "notice_user_profile_change": {
-        "value": "사용자 정보가 변경되어<br/>구름을 새로 시작합니다."
-    },
-    "do_not_show_again": {
-        "value": "다시 열지 않기"
     },
     "alert_cannot_template_folder": {
         "value": "소스 폴더에서 작업을 실행해 주십시오."
@@ -797,9 +551,6 @@
     "confirmation_replace_all_none": {
         "value": "일치하는 단어가 존재하지 않습니다."
     },
-    "confirmation_replace_all_front": {
-        "value": ""
-    },
     "confirmation_replace_all_end": {
         "value": "개의 단어를 바꾸시겠습니까?"
     },
@@ -832,9 +583,6 @@
     },
     "confirmation_run": {
         "value": "실행"
-    },
-    "server_is_end": {
-        "value": "서버가 종료되었습니다. 다시 연결해주시기 바랍니다."
     },
     "server_reconnect_fail": {
         "value": "서버와의 연결이 끊겼습니다. 다시 연결해주시기 바랍니다."
@@ -881,9 +629,6 @@
     "confirmation_shortcut_conflict": {
         "value": "입력한 단축키가 이미 존재합니다.<br/>덮어쓰시겠습니까?"
     },
-    "confirmation_open_file": {
-        "value": "파일(들)을 여시겠습니까?"
-    },
     "confirmation_do_you_want_to_add": {
         "value": "추가하시겠습니까?"
     },
@@ -896,23 +641,11 @@
     "confirmation_do_you_want_to_commit": {
         "value": "커밋하시겠습니까?"
     },
-    "confirmation_commit_failed_1": {
-        "value": "커밋이 실패했습니다.<br/>원인: '"
-    },
-    "confirmation_commit_failed_2": {
-        "value": "' 는 최신 파일이 아닙니다.<br/>이 파일을 업데이트 하시겠습니까?"
-    },
     "confirmation_revert_to_head": {
         "value": "HEAD 리비전으로 되돌리시겠습니까?<br/>수정된 내용은 사라지게 되며, 되돌릴 수 없습니다."
     },
     "confirmation_do_you_want_to_update": {
         "value": "업데이트 하시겠습니까?"
-    },
-    "confirmation_update_is_suspended_1": {
-        "value": "업데이트가 멈추었습니다.<br/>원인: 다음의 위치에서 충돌 발생 - "
-    },
-    "confirmation_update_is_suspended_2": {
-        "value": "<br/>이 충돌을 해결하는 단계로 들어갈까요?"
     },
     "confirmation_do_you_want_to_lock": {
         "value": "이 파일에 락을 걸까요?"
@@ -925,9 +658,6 @@
     },
     "confirmation_do_you_want_to_resolve_conflict": {
         "value": "이 충돌을 해결하시겠습니까?"
-    },
-    "confirmation_do_you_want_to_push": {
-        "value": "푸시 하시겠습니까?"
     },
     "confirmation_do_you_want_to_project_update": {
         "value": "다른 구름IDE에 같은 이름의 프로젝트 정보가 존재합니다. 덮어씌우시겠습니까?"
@@ -950,17 +680,11 @@
     "there_is_not_repository": {
         "value": "정상적인 Git/Subversion 저장소가 아닙니다."
     },
-    "del_friend_title": {
-        "value": "친구 삭제"
-    },
     "reject_friend": {
         "value": "친구 요청 거부"
     },
     "accept_friend": {
         "value": "친구 요청"
-    },
-    "add_friend": {
-        "value": "친구 추가"
     },
     "accept_project": {
         "value": "프로젝트 공유 수락"
@@ -1013,26 +737,8 @@
     "invitation_waiting": {
         "value": "응답 대기중..."
     },
-    "invitation_accept": {
-        "value": "수락"
-    },
-    "invitation_reject": {
-        "value": "거절"
-    },
     "invitation_accept_open": {
         "value": "수락 후 열기"
-    },
-    "alert_type_is_empty": {
-        "value": "유형 이름이 비었습니다."
-    },
-    "alert_check_package_name": {
-        "value": "패키지 이름을 확인하여 주세요."
-    },
-    "alert_same_file_at_created_package": {
-        "value": "같은 이름의 파일이 이미 패키지에 존재합니다."
-    },
-    "alert_check_package": {
-        "value": "패키지 폴더가 존재하지 않습니다.<br/>패키지를 먼저 확인하십시오."
     },
     "profile_comment": {
         "value": "코멘트..."
@@ -1048,9 +754,6 @@
     },
     "signup_name": {
         "value": "2~15자리, 한글/알파벳/숫자/( -/_/ . / /)"
-    },
-    "signup_nick": {
-        "value": "2~20자리, 한글/알파벳/숫자/( -/_/ . / /)"
     },
     "tutorial_prev": {
         "value": "&laquo; 이전"
@@ -1217,9 +920,6 @@
     "checkout_in_progress": {
         "value": "체크아웃 진행중"
     },
-    "checkout_done": {
-        "value": "체크아웃 완료"
-    },
     "status_loading": {
         "value": "상태 로딩중..."
     },
@@ -1253,9 +953,6 @@
     "safe_delete": {
         "value": "안전하게 삭제하기"
     },
-    "safe_delete_search_result": {
-        "value": "안전하게 삭제하기 – 검색 결과"
-    },
     "places": {
         "value": "곳"
     },
@@ -1267,9 +964,6 @@
     },
     "check_search_tab": {
         "value": "아래 검색 탭을 확인해 주세요."
-    },
-    "dev_log_empty": {
-        "value": "기록이 존재하지 않습니다."
     },
     "history_empty": {
         "value": "기록이 존재하지 않습니다."
@@ -1298,20 +992,11 @@
     "confirmation_server_running": {
         "value": "서버가 실행중입니다."
     },
-    "confirmation_server_running_msg": {
-        "value": "서버가 실행중입니다.<br/>서버 종료 후 프로젝트를 변경할 수 있습니다."
-    },
     "confirmation_server_running_delete_msg": {
         "value": "서버가 실행중입니다.<br/>서버 종료 후 프로젝트를 삭제하시겠습니까?"
     },
-    "confirmation_stop_server": {
-        "value": "서버 종료"
-    },
     "edit_no_bookmark": {
         "value": "북마크가 없습니다"
-    },
-    "title_open_file": {
-        "value": "파일 열기"
     },
     "user_plg_cleaned": {
         "value": "개의 유저 플러그인이 삭제되었습니다!\n툴바와 메뉴, 다이얼로그는 새로고침 후\n완전히 삭제됩니다."
@@ -1357,9 +1042,6 @@
     },
     "alert_delete_shared_file": {
         "value": "파일을 삭제할 수 없습니다. 이 파일은 현재 협업중입니다."
-    },
-    "alert_same_name_folder": {
-        "value": "같은 이름을 가진 폴더가 존재합니다."
     },
     "msg_project_find_guide": {
         "value": "찾기"
@@ -1433,9 +1115,6 @@
     "alert_drop_on_editor": {
         "value": "에디터 위에 파일을 올릴 수 없습니다."
     },
-    "alert_too_many_files_limit_20": {
-        "value": "파일이 너무 많습니다(20개 이하)."
-    },
     "alert_input_search_keyword": {
         "value": "검색어를 입력해 주세요."
     },
@@ -1470,7 +1149,7 @@
         "value": "알 수 없는 에러가 발생했습니다!"
     },
     "alert_move_error": {
-        "value": "이동할 수 없습니다!"
+        "value": "이동할 수 없습니다."
     },
     "alert_dialog_id_used": {
         "value": "이미 이 다이얼로그 ID를 이용하고 있습니다!"
@@ -1509,19 +1188,13 @@
         "value": "부모폴더가 자식 폴더로는 이동할 수 없습니다."
     },
     "confirmation_do_you_want_move": {
-        "value": "이동시키겠습니까?<br/>파일/폴더가 같은 이름이라면, 덮어씌워질 것입니다.<br/>옳지 않은 이동이라면, 이동되지 않습니다."
+        "value": "이동시키겠습니까?<br/>덮어쓰기가 가능한 경우라면 덮어씌워지지만,\n옳지 않은 이동이라면 이동되지 않습니다."
     },
     "confirmation_do_you_want_overwrite": {
         "value": "덮어쓰기 하시겠습니까?"
     },
     "alert_allow_file_has_valid_name": {
-        "value": "파일/폴더 이름은 알파벳, 숫자, 공백 그리고 일부 특수문자(_, -, /, (, ), [, ])만 가능합니다."
-    },
-    "confirmation_project_clean_title": {
-        "value": "프로젝트 클린"
-    },
-    "confirmation_project_clean_message": {
-        "value": "현재 프로젝트의 클린을 진행합니다."
+        "value": "파일/폴더 이름은 알파벳, 숫자, 공백 그리고 일부 특수문자(_, -, (, ), [, ])만 가능합니다."
     },
     "folder_dnd_error": {
         "value": "폴더는 드래그로 업로드할 수 없습니다!"
@@ -1574,16 +1247,25 @@
     "ignore_pattern": {
         "value": "무시 패턴"
     },
+    "ignore_pattern_list": {
+        "value": "무시 패턴 목록"
+    },
     "alert_input_ignore_pattern": {
         "value": "패턴을 입력하거나 파일을 선택하세요."
     },
     "alert_scm_ignore_import_fail": {
         "value": "파일 업로드 및 Ignore 설정에 실패했습니다.\n"
     },
-    "alert_scm_ignore_fail": {
-        "value": "Ignore 설정에 실패했습니다.\n"
-    },
     "making_template_in_progress": {
         "value": "탬플릿 생성 중..."
+    },
+    "alert_move_not_directory": {
+        "value": "목적지가 폴더가 아니기 때문에 이동할 수 없습니다."
+    },
+    "alert_move_is_directory": {
+        "value": "목적지가 폴더이기 때문에 이동할 수 없습니다."
+    },
+    "alert_move_not_empty_directory": {
+        "value": "목적지가 빈 폴더가 아니기 때문에 이동할 수 없습니다."
     }
 }

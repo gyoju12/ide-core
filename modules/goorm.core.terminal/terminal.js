@@ -126,9 +126,6 @@ module.exports = {
 
 					socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
 					socket.to().emit("terminal_index." + name, JSON.stringify(data));
-					socket.to().emit("platform." + name, JSON.stringify({
-						"platform": platform
-					}));
 					
 
 					

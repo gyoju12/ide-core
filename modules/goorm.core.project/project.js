@@ -220,61 +220,66 @@ module.exports = {
 				cmd_get_manifest = "tar -xf " + file.path + " -O";
 				break;
 		}
+		if (cmd_get_manifest !== "") {
+			var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
+			var stdout = "",
+				stderr = '',
+				find = false,
+				contents = null;
 
-		var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
+			check_cmd.stdout.on('data', function(data) {
+				var buf = new Buffer(data);
+				stdout += buf.toString();
 
-		var stdout = "",
-			stderr = '',
-			find = false,
-			contents = null;
-
-		check_cmd.stdout.on('data', function(data) {
-			var buf = new Buffer(data);
-			stdout += buf.toString();
-
-			if (!find && stdout.indexOf('goorm.manifest') > -1) {
-				find = true;
-
-
-			}
-		});
-		check_cmd.on('close', function(code) {
-			if (code) { // invalid compressed file
-				data.err_code = code;
-
-				evt.emit('project_do_import_check', data);
-			} else {
-				if (find) {
-					var file_list = stdout.split('\n');
-					var manifest_path = "";
-
-					for (var i = 0; i < file_list.length; i++) {
-						if (file_list[i].indexOf('goorm.manifest') != -1) {
-							manifest_path = file_list[i];
-							break;
-						}
-					}
-
-					exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
-						if (__err) {
-							console.log(__err);
+				if (!find && stdout.indexOf('goorm.manifest') > -1) {
+					find = true;
 
 
-						} else {
-							try {
-								contents = JSON.parse(manifest_content);
-								data.result = contents;
-							} catch (e) {
-								console.log(e);
-							}
-							evt.emit('project_do_import_check', data);
-						}
-					});
-				} else {
-					evt.emit('project_do_import_check', data);
 				}
-			}
-		});
+			});
+			check_cmd.on('close', function(code) {
+				console.log(code);
+				if (code) { // invalid compressed file
+					data.err_code = code;
+
+					evt.emit('project_do_import_check', data);
+				} else {
+					if (find) {
+						var file_list = stdout.split('\n');
+						var manifest_path = "";
+
+						for (var i = 0; i < file_list.length; i++) {
+							if (file_list[i].indexOf('goorm.manifest') != -1) {
+								manifest_path = file_list[i];
+								break;
+							}
+						}
+
+						exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
+							if (__err) {
+								console.log(__err);
+
+
+							} else {
+								try {
+									contents = JSON.parse(manifest_content);
+									data.result = contents;
+								} catch (e) {
+									console.log(e);
+								}
+								evt.emit('project_do_import_check', data);
+							}
+						});
+					} else {
+						evt.emit('project_do_import_check', data);
+					}
+				}
+			});
+		} else {
+			data.err_code = 10;
+			evt.emit('project_do_import_check', data);
+		}
+
 	},
 
 	do_import: function(query, file, evt) {
@@ -465,9 +470,14 @@ module.exports = {
 						});
 					} catch (e) {
 						console.log('import project error:', e);
-						data.err_code = 11;
-						data.message = "goorm.manifest doesn't exist";
-						evt.emit("project_do_import", data);
+						// data.err_code = 11;
+						// data.message = "goorm.manifest doesn't exist";
+						// evt.emit("project_do_import", data);
+
+						g_auth_project.valid_manifest(query.project_import_location, { // jeongmin: if author and name are '', make new goorm.manifest
+							author: '',
+							name: ''
+						}, _callback);
 					}
 				}
 
@@ -551,11 +561,16 @@ module.exports = {
 											project.contents = JSON.parse(data);
 
 											projects.push(project);
+
+											evt_get_project.emit('get_project_list', evt_get_project, ++i);
 										} catch (e) {
 											console.log('getting project list error:', e);
-										}
 
-										evt_get_project.emit('get_project_list', evt_get_project, ++i);
+											g_auth_project.valid_manifest(files[i], { // jeongmin: if author and name are '', make new goorm.manifest
+												author: '',
+												name: ''
+											}, _callback);
+										}
 									}
 
 									if (!err) { // jeongmin: goorm.manifest exists
@@ -677,7 +692,7 @@ module.exports = {
 					}
 				}
 
-				if (err) { // jeongmin: goorm.manifest exists
+				if (err) { // jeongmin: goorm.manifest doesn't exist
 					g_auth_project.valid_manifest(query.project_path, { // jeongmin: if author and name are '', make new goorm.manifest
 						author: '',
 						name: ''
@@ -711,9 +726,14 @@ module.exports = {
 							evt.emit("get_property", data);
 						} catch (e) {
 							console.log('getting project property error:', e);
-							data.err_code = 20;
-							data.message = "Can not open project.";
-							evt.emit("get_property", data);
+							// data.err_code = 20;
+							// data.message = "Can not open project.";
+							// evt.emit("get_property", data);
+
+							g_auth_project.valid_manifest(query.project_path, { // jeongmin: if author and name are '', make new goorm.manifest
+								author: '',
+								name: ''
+							}, _callback);
 						}
 					}
 
@@ -1067,7 +1087,7 @@ module.exports = {
 
 
 		var __evt = new EventEmitter();
-		__evt.on('project_get_list', function(projects) {
+		__evt.once('project_get_list', function(projects) {
 			if (!projects) projects = [];
 			evt.emit("count_project_by_id", projects.length);
 		});
@@ -1091,7 +1111,7 @@ module.exports = {
 		var limit = this.get_limit();
 
 		var __evt = new EventEmitter();
-		__evt.on('project_get_list', function(projects) {
+		__evt.once('project_get_list', function(projects) {
 			if (!projects) projects = [];
 			if (projects.length < limit) {
 				// check duplicate name 

@@ -23,7 +23,7 @@ goorm.core.file._import = {
 		// 	$("button[localization_key=common_target]").blur();
 		// });
 
-		var handle_ok = function() {
+		var handle_ok = $.throttle(function() {
 			if (self.input.val() === '') {
 				alert.show(core.module.localization.msg.alert_file_not_select);
 				return false;
@@ -39,7 +39,7 @@ goorm.core.file._import = {
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 			$("#g_if_btn_ok").attr("disabled", true);
-		};
+		},1000);
 
 		self.dialog = new goorm.core.dialog();
 		self.dialog.init({
@@ -202,8 +202,8 @@ goorm.core.file._import = {
 				case 21:
 					confirmation.init({
 						message: (data.file.length == 1) ? "[" + data.file[0] + "] " + core.module.localization.msg.imported_file_exist_single : "[" + data.file.join(", ") + "] " + core.module.localization.msg.imported_file_exist_multiple,
-						yes_text: core.module.localization.msg.confirmation_yes,
-						no_text: core.module.localization.msg.confirmation_no,
+						yes_text: core.module.localization.msg.yes,
+						no_text: core.module.localization.msg.no,
 						title: "Confirmation",
 						zIndex: 1001,
 
@@ -323,6 +323,11 @@ goorm.core.file._import = {
 							case "java":
 							case "rb":
 							case "go":
+							case "json":
+							case "xml":
+							case "sh":
+							case "css":
+							case "php":
 								core.module.layout.workspace.window_manager.open(self.upload_file_path, files[0].name, filetype);
 								break;
 						}

@@ -9,7 +9,7 @@
  **/
 
 goorm.core.file = {
-	name_regex: /[^a-zA-Z0-9_\ \/\-\.\(\)\[\]]/,
+	name_regex: /[^a-zA-Z0-9_\ \-\.\(\)\[\]]/,
 
 	filter: function (_str) {
 		var str = _str || "";

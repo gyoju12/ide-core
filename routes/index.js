@@ -55,7 +55,8 @@ exports.index = function(req, res, options) {
 
 	//useonly(mode=goorm-standalone,goorm-oss)
 	res.render(__path + 'views/main.html', {
-		use_terminal: use_terminal
+		use_terminal: use_terminal,
+		version: VERSION
 	});
 	
 };
@@ -112,7 +113,7 @@ exports.project.do_save = function(req, res) {
 exports.project.get_list = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("project_get_list", function(data) {
+	evt.once("project_get_list", function(data) {
 		res.json(data);
 	});
 
@@ -133,7 +134,7 @@ exports.project.get_list = function(req, res) {
 exports.project.do_import = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("project_do_import", function(data) {
+	evt.once("project_do_import", function(data) {
 		res.json(data);
 	});
 
@@ -143,7 +144,7 @@ exports.project.do_import = function(req, res) {
 
 exports.project.do_import_check = function(req, res) {
 	var evt = new EventEmitter();
-	evt.on("project_do_import_check", function(data) {
+	evt.once("project_do_import_check", function(data) {
 		res.json(data);
 	});
 
@@ -156,7 +157,7 @@ exports.project.do_export = function(req, res) {
 	var data = {};
 
 	//useonly(mode=goorm-standalone,goorm-oss)
-	evt.on("project_do_export", function(data) {
+	evt.once("project_do_export", function(data) {
 		res.json(data);
 	});
 
@@ -173,7 +174,7 @@ exports.project.do_export = function(req, res) {
 exports.project.do_clean = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("project_do_clean", function(data) {
+	evt.once("project_do_clean", function(data) {
 		res.json(data);
 	});
 
@@ -182,7 +183,7 @@ exports.project.do_clean = function(req, res) {
 
 exports.project.get_property = function(req, res) {
 	var evt = new EventEmitter();
-	evt.on("get_property", function(data) {
+	evt.once("get_property", function(data) {
 		res.json(data);
 	});
 
@@ -191,7 +192,7 @@ exports.project.get_property = function(req, res) {
 
 exports.project.set_property = function(req, res) {
 	var evt = new EventEmitter();
-	evt.on("set_property", function(data) {
+	evt.once("set_property", function(data) {
 		res.json(data);
 	});
 
@@ -200,11 +201,14 @@ exports.project.set_property = function(req, res) {
 
 exports.project.move_file = function(req, res) {
 	var evt = new EventEmitter();
-	evt.on("move_file", function(data) {
+	evt.once("move_file", function(data) {
 		res.json(data);
 	});
 	g_project.move_file(req.query, evt);
 };
+
+
+
 
 
 
@@ -444,7 +448,7 @@ exports.file = function(req, res) {
 exports.file.do_new = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("file_do_new", function(data) {
+	evt.once("file_do_new", function(data) {
 		res.json(data);
 	});
 
@@ -458,7 +462,7 @@ exports.file.do_new = function(req, res) {
 exports.file.do_new_folder = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("file_do_new_folder", function(data) {
+	evt.once("file_do_new_folder", function(data) {
 		res.json(data);
 	});
 
@@ -472,7 +476,7 @@ exports.file.do_new_folder = function(req, res) {
 exports.file.do_new_other = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("file_do_new_other", function(data) {
+	evt.once("file_do_new_other", function(data) {
 		res.json(data);
 	});
 
@@ -487,7 +491,7 @@ exports.file.do_new_other = function(req, res) {
 exports.file.do_new_untitled_text_file = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("file_do_new_untitled_text_file", function(data) {
+	evt.once("file_do_new_untitled_text_file", function(data) {
 		res.json(data);
 	});
 
@@ -506,7 +510,7 @@ exports.file.do_save_as = function(req, res) {
 
 	var evt = new EventEmitter();
 
-	evt.on("file_do_save_as", function(data) {
+	evt.once("file_do_save_as", function(data) {
 		res.json(data);
 	});
 
@@ -550,7 +554,7 @@ exports.file.do_delete = function(req, res) {
 	var user_level = null;
 	var author_level = null;
 
-	evt.on("file_do_delete", function(data) {
+	evt.once("file_do_delete", function(data) {
 		res.json(data);
 	});
 
@@ -618,7 +622,7 @@ exports.file.put_contents = function(req, res) {
 
 	var evt = new EventEmitter();
 
-	evt.on("file_put_contents", function(data) {
+	evt.once("file_put_contents", function(data) {
 		res.json(data);
 	});
 
@@ -637,7 +641,7 @@ exports.file.get_nodes = function(req, res) {
 
 	//res.setHeader("Content-Type", "application/json");
 
-	evt.on("got_nodes", function(data) {
+	evt.once("got_nodes", function(data) {
 		try {
 			res.json(data);
 			//res.send(JSON.stringify(data));
@@ -666,7 +670,7 @@ exports.file.get_dir_nodes = function(req, res) {
 
 	//res.setHeader("Content-Type", "application/json");
 
-	evt.on("got_dir_nodes", function(data) {
+	evt.once("got_dir_nodes", function(data) {
 		try {
 			//console.log(JSON.stringify(data));
 			res.json(data);
@@ -691,7 +695,7 @@ exports.file.get_result_ls = function(req, res) {
 	//var path = req.query.path;
 	//path = path.replace(/\/\//g, "/");
 
-	evt.on("got_result_ls", function(data) {
+	evt.once("got_result_ls", function(data) {
 		res.json(data);
 	});
 
@@ -712,7 +716,7 @@ exports.file.get_file = function(req, res) {
 	if (filepath) {
 		filepath = filepath.replace(/\/\//g, "/");
 
-		evt.on("got_file", function(data) {
+		evt.once("got_file", function(data) {
 			try {
 				//console.log(JSON.stringify(data));
 				res.json(data);
@@ -749,7 +753,7 @@ exports.file.check_valid_edit = function(req, res) {
 		res.json({});
 		return false;
 	}
-	evt.on("check_valid_edit", function(data) {
+	evt.once("check_valid_edit", function(data) {
 		if (!data.result) {
 			switch (data.code) {
 				case 0:
@@ -788,7 +792,7 @@ exports.file.do_move = function(req, res) {
 		};
 		res.json(res_data);
 	};
-	evt.on("file_do_move", function(data) {
+	evt.once("file_do_move", function(data) {
 		res.json(data);
 	});
 
@@ -800,7 +804,7 @@ exports.file.do_rename = function(req, res) {
 	var user_level = null;
 	var author_level = null;
 
-	evt.on("file_do_rename", function(data) {
+	evt.once("file_do_rename", function(data) {
 		res.json(data);
 	});
 
@@ -823,7 +827,7 @@ exports.file.do_export = function(req, res) {
 	var project_path = (path[0] !== "") ? path[0] : path[1];
 
 	//useonly(mode=goorm-standalone,goorm-oss)
-	evt.on("file_do_export", function(data) {
+	evt.once("file_do_export", function(data) {
 		res.json(data);
 	});
 	
@@ -855,7 +859,7 @@ exports.file.do_import = function(req, res) {
 	var path = req.body.file_import_location_path.split('/');
 	var project_path = (path[0] !== "") ? path[0] : path[1];
 
-	evt.on("file_do_import", function(data) {
+	evt.once("file_do_import", function(data) {
 		res.json(data);
 	});
 
@@ -869,7 +873,7 @@ exports.file.do_import = function(req, res) {
 exports.file.do_search_on_project = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("file_do_search_on_project", function(data) {
+	evt.once("file_do_search_on_project", function(data) {
 		res.send(data);
 	});
 
@@ -921,7 +925,7 @@ exports.terminal.exec = function(req, res) {
 	var evt = new EventEmitter();
 	var command = req.query.command;
 
-	evt.on("executed_command", function(data) {
+	evt.once("executed_command", function(data) {
 		try {
 			res.json(data);
 		} catch (exception) {
@@ -955,7 +959,7 @@ exports.preference.ini_maker = function(req, res) {
 exports.preference.get_server_info = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("preference_get_server_info", function(data) {
+	evt.once("preference_get_server_info", function(data) {
 		res.json(data);
 	});
 
@@ -965,7 +969,7 @@ exports.preference.get_server_info = function(req, res) {
 exports.preference.get_goorm_info = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("preference_get_goorm_info", function(data) {
+	evt.once("preference_get_goorm_info", function(data) {
 		res.json(data);
 	});
 
@@ -1000,7 +1004,7 @@ exports.help.get_readme_markdown = function(req, res) {
 exports.help.send_to_bug_report = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("help_send_to_bug_report", function(data) {
+	evt.once("help_send_to_bug_report", function(data) {
 		res.json(data);
 	});
 
@@ -1243,7 +1247,7 @@ exports.upload = function(req, res) {
 	var do_import_cnt = file_list.length;
 	var complete_import_cnt = 0;
 
-	evt.on('file_do_import', function(result) {
+	evt.once('file_do_import', function(result) {
 		complete_import_cnt++;
 		if (result.err_code !== 0) {
 			res.json(result);
@@ -1257,7 +1261,7 @@ exports.upload = function(req, res) {
 
 	});
 
-	evt.on('all_file_do_import', function(result) {
+	evt.once('all_file_do_import', function(result) {
 		
 		res.json(result);
 	});
@@ -1320,7 +1324,7 @@ exports.upload_file_dd = function(req, res) {
 	var evt = new EventEmitter();
 	var project_path = req.body.project_path;
 
-	evt.on('upload_finish', function(data) {
+	evt.once('upload_finish', function(data) {
 		res.json(data);
 	});
 	g_file.upload_file_dd(req, evt);
@@ -1360,7 +1364,7 @@ exports.edit.get_dictionary = function(req, res) {
 exports.edit.get_proposal_java = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("got_proposal_java", function(data) {
+	evt.once("got_proposal_java", function(data) {
 		res.json(data);
 	});
 
@@ -1373,7 +1377,7 @@ exports.edit.get_proposal_java = function(req, res) {
 exports.edit.get_auto_import_java = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("got_auto_import_java", function(data) {
+	evt.once("got_auto_import_java", function(data) {
 		res.json(data);
 	});
 
@@ -1384,7 +1388,7 @@ exports.edit.get_auto_import_java = function(req, res) {
 exports.edit.get_object_explorer = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.on("got_object_explorer", function(data) {
+	evt.once("got_object_explorer", function(data) {
 		res.json(data);
 	});
 

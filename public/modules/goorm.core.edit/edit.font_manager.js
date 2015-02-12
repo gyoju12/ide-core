@@ -21,6 +21,7 @@ goorm.core.edit.font_manager = function() {
     this.now_margin_left = -3;
     this.gutters_width = null;
     this.font_percent = 100;
+    this.flag;
 };
 
 goorm.core.edit.font_manager.prototype = {
@@ -117,6 +118,8 @@ goorm.core.edit.font_manager.prototype = {
         resize_background_image('div.bookmark_icon');
 
         resize_timer();
+
+
         // window.setTimeout(function() {
         //     self.user_cursor_resize(delta);
         //     //        var percent = (self.font_size * 100 / 11).toFixed(1);
@@ -132,13 +135,13 @@ goorm.core.edit.font_manager.prototype = {
         var code_mirror = $('div.CodeMirror', container);
         var cursors = container.find('.user_cursor');
 		
-	var height = container.find('.CodeMirror-activeline').height();
+        var height = container.find('.CodeMirror-cursor').height();
 		
         if (cursors.length > 0) {
             for (var i = 0; i < cursors.length; i++) {
                 var cursor = cursors[i];
                 var target_id = $(cursor).attr('class').split(' ')[0].replace('user_cursor', 'user'); // user_cursor_[ID]
-                var user_name = $('.' + target_id);
+                var $user_name = $('.' + target_id);
 
                 var line = $(cursor).attr('line');
                 var ch = $(cursor).attr('ch');
@@ -155,7 +158,7 @@ goorm.core.edit.font_manager.prototype = {
                 
                 //parseInt($(user_name).css('height').replace('px', ""), 10) + delta;
 
-                user_name.css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', core.preference["preference.editor.font_size"] + 'px').css('height', height + 'px');
+                $user_name.css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', core.preference["preference.editor.font_size"] + 'px').css('height', height + 'px');
                 $(cursor).css('top', (top) + 'px').css('left', (left) + 'px').css('height', height + 'px');
             }
             
@@ -176,6 +179,12 @@ goorm.core.edit.font_manager.prototype = {
         self.font_size = font_size;
         self.resize(delta);
         self.editor.refresh();
+        var window_manager = core.module.layout.workspace.window_manager;
+        var active_window = window_manager.active_window;
+        if (active_window > -1) {
+            CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+            // window_manager.window[active_window].editor.focus();
+        }
         return self.font_size;
     },
 };

@@ -52,6 +52,7 @@ goorm.core = function() {
 		
 		bookmark: null, //jeongmin: add bookmark to the module
 		
+		close_alert:false
 	};
 
 	this.dialog = {
@@ -290,6 +291,7 @@ goorm.core.prototype = {
 		$(window).on('beforeunload', function() {
 			// if (!self.is_login) return;
 			// if (!self.force_disconnect) return;
+			if(core.module.close_alert) return;
 			if (!core.force_unload && !self.module.auth.open_keep_session_dialog && !core.logout) {
 				//2. refresh, back button, close button 
 				var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();

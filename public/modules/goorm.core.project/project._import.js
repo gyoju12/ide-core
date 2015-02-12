@@ -233,8 +233,8 @@ goorm.core.project._import = {
 						confirmation.init({
 							title: localization_msg.project_duplicate,
 							message: localization_msg.confirmation_do_you_want_to_project_update,
-							yes_text: localization_msg.confirmation_yes,
-							no_text: localization_msg.confirmation_no,
+							yes_text: localization_msg.yes,
+							no_text: localization_msg.no,
 							title: localization_msg.confirmation_title,
 							yes: function() {
 								project_new();

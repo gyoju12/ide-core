@@ -62,8 +62,8 @@ goorm.core.file._new = {
 				if (check_data.err_code == 99) {
 					confirmation.init({
 						message: localization.confirmation_new_message,
-						yes_text: localization.confirmation_yes,
-						no_text: localization.confirmation_no,
+						yes_text: localization.yes,
+						no_text: localization.no,
 						title: "Confirmation",
 
 

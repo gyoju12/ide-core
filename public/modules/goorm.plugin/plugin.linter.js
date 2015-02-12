@@ -87,7 +87,8 @@ goorm.plugin.linter = {
 			error_data = {
 				'line_number': (isNaN(lint_result[i].from.line))? 0 : lint_result[i].from.line,
 				'error_message': lint_result[i].message,
-				'error_syntax': lint_result[i].severity
+				'error_syntax': '',
+				'error_type': lint_result[i].severity
 			};
 
 			// output_data = {
@@ -166,7 +167,7 @@ goorm.plugin.linter = {
 
 		om.clear();
 		wm.all_clear();
-
+		
 		var parsing = function(data) {
 			var data_path = data.file || "";
 			data_path = data_path.split('/');
@@ -188,7 +189,8 @@ goorm.plugin.linter = {
 				var error_data = {
 					'line_number': parseInt(data.line, 10) - 1,
 					'error_syntax': error_syntax,
-					'error_message': error_message.split('\r\n')[0]
+					'error_message': error_message.split('\r\n')[0],
+					'error_type': data.type
 				}
 
 				e_m.add_line(error_data);
@@ -247,7 +249,8 @@ goorm.plugin.linter = {
 				var error_data = {
 					'line_number': parseInt(line[1], 10) - 1,
 					'error_syntax': "",
-					'error_message': line[line.length - 1].split("\r\n")[0]
+					'error_message': line.slice(4).join(":").split("\r\n")[0],
+					'error_type': line[3].trim()
 				};
 				
 				error_manager.add_line(error_data);
@@ -255,13 +258,15 @@ goorm.plugin.linter = {
 				error_manager.init_event();
 				
 				table.push({
-					line: error_data.line_number,
+					line: error_data.line_number + 1,
 					content: error_data.error_message.split("<br />").shift(),
 					file: editor.filepath + editor.filename
 				});
 			}
 			om.push(table);
-			core.module.layout.select('gLayoutOutput_cpp');
+			if(output.length) {
+				core.module.layout.select('gLayoutOutput_cpp');	
+			}
 		});
 	},
 
@@ -324,6 +329,7 @@ goorm.plugin.linter = {
 			for(var i=0; i<output.length; i++) {
 				// parsing(output[i], i);
 				var line = output[i].split(":");
+				var type = line[1].trim();
 
 				e = __window.editor;
 				e_m = e.error_manager;
@@ -332,7 +338,8 @@ goorm.plugin.linter = {
 				var error_data = {
 					'line_number': parseInt(line[2].split(",")[0].replace("line ", ""), 10) - 1,
 					'error_syntax': '',
-					'error_message': line[line.length - 1]
+					'error_message': line[line.length - 1],
+					'error_type': type
 				};
 
 				e_m.add_line(error_data);
@@ -348,7 +355,9 @@ goorm.plugin.linter = {
 				});
 				
 			}
-			core.module.layout.select('gLayoutOutput_ruby');
+			if(output.length) {
+				core.module.layout.select('gLayoutOutput_ruby');
+			}
 		});
 	},
 	
@@ -377,7 +386,8 @@ goorm.plugin.linter = {
 				var error_data = {
 					'line_number': line - 1,
 					'error_syntax': '',
-					'error_message': message[i].message
+					'error_message': message[i].message,
+					'error_type': message[i].type
 				};
 
 				e_m.add_line(error_data);
@@ -391,7 +401,9 @@ goorm.plugin.linter = {
 				});
 				
 			}
-			core.module.layout.select('gLayoutOutput_php');
+			if(message.length) {
+				core.module.layout.select('gLayoutOutput_php');	
+			} 
 		});
 	}
 };

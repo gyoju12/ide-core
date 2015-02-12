@@ -41,8 +41,8 @@ goorm.core.dialog.confirmation.prototype = {
 		this.message = option.message;
 		this.zIndex = option.zIndex || 2;
 
-		this.yes_text = option.yes_text || core.module.localization.msg.confirmation_yes || "Yes";
-		this.no_text = option.no_text || core.module.localization.msg.confirmation_no || "No";
+		this.yes_text = option.yes_text || core.module.localization.msg.yes || "Yes";
+		this.no_text = option.no_text || core.module.localization.msg.no || "No";
 
 		this.yes = option.yes;
 		this.no = option.no;

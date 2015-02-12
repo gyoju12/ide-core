@@ -246,33 +246,30 @@ module.exports = {
 		fs.readFile(email_content_path, "utf8", function(err, data) {
 			var protocol = (global.__secure) ? 'https' : 'http';
 
-			data = data.replace(/\[DEMO_URL\]/gi, protocol+'://'+IDE_HOST+'/user/project/collaboration/invitation/push/email?project_path='+project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
+			data = data.replace(/\[DEMO_URL\]/gi, protocol + '://' + IDE_HOST + '/user/project/collaboration/invitation/push/email?project_path=' + project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
 
 			// this part must be changed to follow localization data....
 			var subject = "";
 			if (user_data.language == "kor") {
 				subject = user_data.invite_user + " 님께서 " + user_data.name + " 님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
-			}
-			else if (user_data.language == "us") {
+			} else if (user_data.language == "us") {
 				subject = user_data.invite_user + " invites you (" + user_data.name + ") to '" + user_data.project_name + "' project.";
-			}
-			else {
+			} else {
 				subject = user_data.invite_user + "님께서 " + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
 			}
-			
+
 			callback(subject, data);
 		});
 	},
 
-	convert_permission: function (permission, language) {
+	convert_permission: function(permission, language) {
 		var contents = permission;
-		
+
 		switch (permission) {
 			case "readonly":
 				if (language === 'kor') {
 					contents = "읽기 전용";
-				}
-				else {
+				} else {
 					contents = "ReadOnly";
 				}
 				break;
@@ -280,8 +277,7 @@ module.exports = {
 			case "editable":
 				if (language === 'kor') {
 					contents = "수정 가능";
-				}
-				else {
+				} else {
 					contents = "Writable";
 				}
 				break;
@@ -289,8 +285,7 @@ module.exports = {
 			case "manager":
 				if (language === 'kor') {
 					contents = "수정 및 공유 가능";
-				}
-				else {
+				} else {
 					contents = "Writable & Shareble";
 				}
 				break;
@@ -358,13 +353,17 @@ module.exports = {
 				} else { // jeongmin: goorm.manifest exists
 					try {
 						cur_manifest = JSON.parse(data);
-
-						fix_manifest();
 					} catch (e) {
 						console.log('goorm.manifest parsing error in valid_manifest:', e);
 
-						self.manifest_setting(project_path, callback);
+						// jeongmin: dummy cur_manifest
+						cur_manifest = {
+							author: '',
+							name: ''
+						};
 					}
+
+					fix_manifest();
 				}
 			});
 		} else {

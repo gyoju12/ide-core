@@ -66,13 +66,26 @@ goorm.core.project._new = {
 					/* TODO : make new function or module for validation */
 
 					////// value validation check //////
-					if ($("#input_project_name").val() === "") {
+					var input_name = $("#input_project_name").val();
+					
+					if (input_name === "") {
 						alert.show(core.module.localization.msg.alert_project_name);
 						return false;
-					} else if (!/^[\w-_]*$/.test($("#input_project_name").val())) {
-						alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
-						return false;
+					} else if(data.detailed_type !== 'django') {
+						if (!/^[\w-_]*$/.test(input_name)) {
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
+							return false;
+						}
+					} else if(data.detailed_type === 'django') {
+						if (!/^[\w_]*$/.test(input_name)) {
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character2);
+							return false;
+						} else if (input_name === 'django' || input_name === 'test') {
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_django);
+							return false;
+						}
 					}
+					
 
 					////// make basic project information //////
 					var project_desc = $("#input_project_desc").val();
@@ -139,8 +152,8 @@ goorm.core.project._new = {
 									confirmation.init({
 										title: core.module.localization.msg.project_duplicate,
 										message: core.module.localization.msg.confirmation_do_you_want_to_project_update,
-										yes_text: core.module.localization.msg.confirmation_yes,
-										no_text: core.module.localization.msg.confirmation_no,
+										yes_text: core.module.localization.msg.yes,
+										no_text: core.module.localization.msg.no,
 										title: core.module.localization.msg.confirmation_title,
 										yes: function() {
 											core._socket.once("/project/new", cb, true);

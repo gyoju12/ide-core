@@ -729,10 +729,17 @@ goorm.core.edit.dictionary.prototype = {
 		});
 		
 		cm_editor.on("keyup", $.throttle(function(i, e) {
+			//seongho.cha: because of throttle, active_window can be different when click in 0.2sec.
+			if (cm_editor !== goorm.core.window.manager.window[goorm.core.window.manager.active_window].editor.editor){
+				self.hide();
+			}
 			var code = e.keyCode;
 			var cursor = cm_editor.getCursor();
 			var token = cm_editor.getTokenAt(cursor);
-/*									
+			if (token.type === null || token.type === 'comment') {
+				return;
+			}
+/*			
 			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code > 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
 				console.log("keycode = " + code);
 				console.log(self.search(token.string));

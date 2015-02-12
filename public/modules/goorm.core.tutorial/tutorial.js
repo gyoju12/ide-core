@@ -85,8 +85,8 @@ goorm.core.tutorial = {
 		confirmation.init({
 			title: core.module.localization.msg.tutorial,
 			message: core.module.localization.msg.tutorial_guide,
-			yes_text: core.module.localization.msg.confirmation_yes,
-			no_text: core.module.localization.msg.confirmation_no,
+			yes_text: core.module.localization.msg.yes,
+			no_text: core.module.localization.msg.no,
 			yes: function() {
 				// before tutorial start, remember layout state.
 				self.save_layout();
@@ -325,7 +325,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_file_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_file_toolbar,
+				content: core.module.localization.tutorial.main_file_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");
@@ -333,7 +333,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_edit_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_edit_toolbar,
+				content: core.module.localization.tutorial.main_edit_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");
@@ -341,7 +341,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_project_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_project_toolbar,
+				content: core.module.localization.tutorial.main_project_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");
@@ -349,7 +349,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_debug_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_debug_toolbar,
+				content: core.module.localization.tutorial.main_debug_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");
@@ -357,7 +357,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_window_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_window_toolbar,
+				content: core.module.localization.tutorial.main_window_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");
@@ -365,7 +365,7 @@ goorm.core.tutorial = {
 			}, {
 				element: "#bubble_help_toolbar",
 				title: "",
-				content: core.module.localization.tutorial.bubble_help_toolbar,
+				content: core.module.localization.tutorial.main_help_toolbar,
 				placement: "bottom",
 				onShow: function() {
 					$("#bubble_toolbar").css("display", "block");

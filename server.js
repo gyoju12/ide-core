@@ -67,6 +67,9 @@ MODE = null; // IDE MODE --> (default:null), [edu], [cpp,java], ...
 
 LIMIT_FILE_SIZE = 50; // mb
 
+UID = 501;
+GID = 501;
+
 // Local Variables
 //
 var home = null;

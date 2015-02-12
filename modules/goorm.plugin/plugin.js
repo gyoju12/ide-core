@@ -227,7 +227,7 @@ module.exports = {
 		var plugin = require("../../plugins/" + "goorm.plugin.lecture" + "/modules/");
 		var evt = new EventEmitter();
 		var ret = {};
-		evt.on("auth_check_user_data", function (data) {
+		evt.once("auth_check_user_data", function (data) {
 			if (data.result) {
 				var g_auth_manager = require("../goorm.core.auth/auth.manager");
 

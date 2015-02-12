@@ -367,6 +367,7 @@ module.exports = {
 		var data = {};
 		data.err_code = 0;
 		data.message = "Process Done";
+		data.err_files = [];
 
 		function move(file_data, last) { // last: all files are moved or not
 			var ori_full = global.__workspace + '/' + file_data.ori_path + "/" + file_data.ori_file;
@@ -374,8 +375,11 @@ module.exports = {
 
 			fs.rename(ori_full, dst_full, function(err) {
 				if (err !== null) {
-					data.err_code = 20;
+					console.log('ERROR [fs.rename fails - do_move() in file.js]:', err);
+
+					data.err_code = err.errno;
 					data.message = "Can not move file";
+					data.err_files.push(file_data.ori_path + '/' + file_data.ori_file);
 				} else {
 					data.path = file_data.dst_path;
 					data.file = file_data.dst_file;
@@ -391,18 +395,20 @@ module.exports = {
 			move(query, true);
 		} else if (query.ori_path && query.dst_path) { // jeongmin: from drag and drop. Can be multiple files.
 			for (var i = query.ori_path.length - 1; 0 <= i; i--) {
-				var file = query.ori_path[i].slice(query.ori_path[i].lastIndexOf('/') + 1);
+				var ori_path = query.ori_path[i],
+					last_slash = ori_path.lastIndexOf('/'),
+					file = ori_path.slice(last_slash + 1);
 
-				_move({
-					ori_path: query.ori_path[i].slice(0, query.ori_path[i].lastIndexOf('/')),
+				move({
+					ori_path: ~last_slash ? ori_path.slice(0, last_slash) : ori_path, // has slash(remove it) : has no slash(just use it)
 					ori_file: file, // jeongmin: file name is same on drag and drop
 					dst_path: query.dst_path,
 					dst_file: file
 				}, i == 0);
 			}
 		} else {
-			data.err_code = 10;
-			data.message = "Invalide query";
+			data.err_code = 18; // EINVAL
+			data.message = "Invalid query";
 
 			evt.emit("file_do_move", data);
 		}

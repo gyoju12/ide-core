@@ -183,7 +183,7 @@ goorm.core.project.open = {
 		//$(core).trigger("on_project_binding");
 
 		//set once-open trigger every call of open so that can get the message of nodejs project --heeje
-		$(core).one('do_open', function() {
+		$(core).one('do_open', $.throttle(function() {
 			
 
 			
@@ -217,18 +217,23 @@ goorm.core.project.open = {
 				'project_type': current_project_type
 			});
 			
-		})
+		},2000));
+
+
 		if (this.handler && this.handler[core.status.current_project_type] && this.handler[core.status.current_project_type].before) {
 			this.handler[core.status.current_project_type].before();
 		} else {
 			$(core).one('on_project_open', function() {
-				var output_list = core.module.plugin_linter.output_tab_list;
-				var output_index = output_list.indexOf(core.status.current_project_type);
+				core.module.layout.select('gLayoutTab_Terminal');
+				setTimeout(function() {
+					var output_list = core.module.plugin_linter.output_tab_list;
+					var output_index = output_list.indexOf(core.status.current_project_type);
 
-				core.module.layout.tab_manager.del_by_tab_name('south', 'output');
-				if (output_index >= 0) {
-					core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
-				}
+					core.module.layout.tab_manager.del_by_tab_name('south', 'output');
+					if (output_index >= 0) {
+						core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
+					}
+				}, 700);
 			});
 
 			$(core).trigger('do_open');

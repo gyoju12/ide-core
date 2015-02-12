@@ -335,6 +335,20 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     background-repeat: no-repeat;
     background-position: -210px -34px;
 }
+.CodeMirror .cm-underline-error {
+    text-decoration: none;
+    padding-bottom: 1px;
+    background-image: url(../images/goorm.core.edit/underline.png);
+    background-position: bottom;
+    background-repeat: repeat-x;
+}
+.CodeMirror .cm-underline-warning {
+    text-decoration: none;
+    padding-bottom: 1px;
+    background-image: url(../images/goorm.core.edit/warning.png);
+    background-position: bottom;
+    background-repeat: repeat-x;
+}
 .CodeMirror-scroll>div .CodeMirror-gutters {
     height: 100% !important;
 }
@@ -369,9 +383,15 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     width: 12px;
     height: 12px !important;
     float: left;
-    color: red;
-    font-weight: bold;
+    /*color: red;
+    font-weight: bold;*/
     text-align: center;
+}
+.CodeMirror-gutter-elt .fa-times-circle {
+    color: #d9534f;
+}
+.CodeMirror-gutter-elt .fa-exclamation-triangle {
+    color: #f0ad4e;
 }
 .CodeMirror-gutter-elt .bookmark_icon {
     width: 12px;

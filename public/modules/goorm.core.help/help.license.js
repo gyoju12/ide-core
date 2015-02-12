@@ -53,8 +53,8 @@ goorm.core.help.license = {
 					case "iCheck":
 						$("#icheck_oss_version").html('iCheck ' + lib.version);
 						break;
-					case "RequireJs":
-						$("#require_oss_version").html('RequireJs ' + lib.version);
+					case "OT.js":
+						$("#ot_oss_version").html('OT.js ' + lib.version);
 				}
 			});
 		}

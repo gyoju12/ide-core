@@ -29,40 +29,28 @@
 	"delete": {
 		"value": "삭제"
 	},
-	"slide": {
-		"value": "슬라이드"
-	},
 	"history": {
 		"value": "작업내역"
 	},
-	"now":{
-		"value": "현재"
-	},
-	"speed":{
+	"speed": {
 		"value": "속도"
 	},
-	"history_speed_normal":{
+	"history_speed_normal": {
 		"value": "보통속도"
 	},
-	"history_speed_fast":{
+	"history_speed_fast": {
 		"value": "빠르게"
 	},
-	"history_speed_veryfast":{
+	"history_speed_veryfast": {
 		"value": "매우 빠르게"
 	},
-	"history_speed_slow":{
+	"history_speed_slow": {
 		"value": "천천히"
 	},
-	"history_speed_veryslow":{
+	"history_speed_veryslow": {
 		"value": "매우 천천히"
 	},
-	"history_time":{
-		"value": "저장 시간"
-	},
-	"history_delay":{
-		"value": "지연시간(초) "
-	},
-	"history_show_current":{
+	"history_show_current": {
 		"value": "현재 상태 보기"
 	},
 	"terminal": {
@@ -104,9 +92,6 @@
 	"apply": {
 		"value": "적용"
 	},
-	"restore":{
-		"value": "복구"
-	},
 	"default": {
 		"value": "기본 설정"
 	},
@@ -140,12 +125,6 @@
 	"scm_configuration": {
 		"value": "SCM 설정"
 	},
-	"general": {
-		"value": "일반"
-	},
-	"project_setting": {
-		"value": "프로젝트 설정"
-	},
 	"cloud": {
 		"value": "클라우드"
 	},
@@ -154,9 +133,6 @@
 	},
 	"upload": {
 		"value": "업로드"
-	},
-	"select": {
-		"value": "선택 "
 	},
 	"private_mode": {
 		"value": "개인 사용자용 접속"
@@ -176,35 +152,32 @@
 	"toggle_selection": {
 		"value": "선택 도구 열기/닫기"
 	},
-	"system":{
-		"value":"시스템"
+	"editor": {
+		"value": "에디터"
 	},
-	"editor":{
-		"value":"에디터"
+	"save": {
+		"value": "저장"
 	},
-	"save":{
-		"value":"저장"
+	"add": {
+		"value": "추가"
 	},
-	"add":{
-		"value":"추가"
+	"number": {
+		"value": "번호"
 	},
-	"number":{
-		"value":"번호"
+	"thread": {
+		"value": "쓰레드"
 	},
-	"thread":{
-		"value":"쓰레드"
+	"variable": {
+		"value": "변수"
 	},
-	"variable":{
-		"value":"변수"
+	"value": {
+		"value": "값"
 	},
-	"value":{
-		"value":"값"
+	"summary": {
+		"value": "요약"
 	},
-	"summary":{
-		"value":"요약"
-	},
-	"code_highlight":{
-		"value":"코드 강조"
+	"code_highlight": {
+		"value": "코드 강조"
 	},
 	"my_project": {
 		"value": "내 프로젝트"
@@ -212,13 +185,13 @@
 	"share_project": {
 		"value": "공유 프로젝트"
 	},
-	"project_table":{
+	"project_table": {
 		"value": "프로젝트 테이블"
 	},
-	"project_list":{
+	"project_list": {
 		"value": "프로젝트 리스트"
 	},
-	"cloud_projects":{
+	"cloud_projects": {
 		"value": "클라우드 프로젝트"
 	},
 	"chats": {
@@ -239,9 +212,6 @@
 	"output": {
 		"value": "아웃풋"
 	},
-	"study": {
-		"value": "스터디"
-	},
 	"back": {
 		"value": "돌아가기"
 	},
@@ -251,32 +221,32 @@
 	"password": {
 		"value": "비밀번호"
 	},
-	"type_message":{
+	"type_message": {
 		"value": "메세지를 입력해주세요..."
 	},
 	"invitation_type_message": {
 		"value": "초대 메시지를 입력해 주세요..."
 	},
-	"repository_path":{
+	"repository_path": {
 		"value": "저장소 경로"
 	},
-	"shortcut_edit":{
+	"shortcut_edit": {
 		"value": "편집"
 	},
-	"recent_empty":{
+	"recent_empty": {
 		"value": "최근목록 없음"
 	},
-	"recent_clear":{
+	"recent_clear": {
 		"value": "최근목록 삭제"
 	},
-	"storage":{
+	"storage": {
 		"value": "저장소"
 	},
-	"hide":{
+	"hide": {
 		"value": "숨기기"
 	},
-	"create":{
-		"value": "생성" 
+	"create": {
+		"value": "생성"
 	},
 	"replace": {
 		"value": "바꾸기"

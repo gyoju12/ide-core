@@ -18,18 +18,7 @@
 		"value": "Show/Hide All Cursor"
 	},
 	"dialog_file_cloud_upload": {
-		"value": "File Cloud Upload",
-		"children": {
-			"dialog_file_cloud_upload_guide": {
-				"value": "Select file to upload."
-			},
-			"dialog_file_cloud_upload_file": {
-				"value": "Selected file  "
-			},
-			"dialog_file_cloud_upload_cloud_uploadtype": {
-				"value": "File Type"
-			}
-		}
+		"value": "File Cloud Upload"
 	},
 	"dialog_file_export": {
 		"value": "File Export",
@@ -211,9 +200,6 @@
 			"dialog_new_project_desc": {
 				"value": "Project Description"
 			},
-			"dialog_new_project_import_use": {
-				"value": "Import Project"
-			},
 			"dialog_new_project_import_message": {
 				"value": "Select zip or tar file to import."
 			},
@@ -243,12 +229,7 @@
 		}
 	},
 	"dialog_project_clean": {
-		"value": "Clean Project",
-		"children": {
-			"dialog_project_clean_guide": {
-				"value": "Select project to clean."
-			}
-		}
+		"value": "Project Clean"
 	},
 	"dialog_project_build_all": {
 		"value": "Build All",
@@ -286,9 +267,6 @@
 			"dialog_project_share_link": {
 				"value": "Share Link"
 			},
-			"dialog_project_share_copy": {
-				"value": "Share Copy"
-			},
 			"dialog_project_share_authority_setting": {
 				"value": "Share Authority Setting"
 			}
@@ -311,9 +289,6 @@
 			"dialog_project_find_guide": {
 				"value": "Find"
 			},
-			"dialog_project_replace_guide": {
-				"value": "Replace"
-			},
 			"dialog_project_option_guide": {
 				"value": "Option"
 			},
@@ -325,27 +300,12 @@
 			},
 			"dialog_project_use_regular_expression_guide": {
 				"value": "Use regular expression."
-			},
-			"dialog_project_find_on_workspace_guide": {
-				"value": "Find on Workspace"
 			}
 		}
 	},
 	"dialog_preferences_preference": {
-		"value": "",
+		"value": "Preference",
 		"children": {
-			"dialog_preference_system_server_guide": {
-				"value": "Server Information"
-			},
-			"dialog_preference_libraries_goorm_guide": {
-				"value": "goorm Core"
-			},
-			"dialog_preference_libraries_external_guide": {
-				"value": "External Libraries"
-			},
-			"dialog_preference_editor_config_guide": {
-				"value": "Editor Configuration"
-			},
 			"dialog_preference_editor_font_family": {
 				"value": "Font"
 			},
@@ -379,56 +339,14 @@
 			"dialog_preference_editor_rulers": {
 				"value": "Show Rulers"
 			},
-			"dialog_preference_theme_guide": {
-				"value": "Theme"
-			},
 			"dialog_preference_theme_select_guide": {
 				"value": "Select Theme"
-			},
-			"dialog_preference_terminal_font_family": {
-				"value": "Font"
-			},
-			"dialog_preference_terminal_font_size": {
-				"value": "Font Size"
-			},
-			"dialog_preference_terminal_line_spacing": {
-				"value": "Line Spacing"
 			},
 			"dialog_preference_terminal_font_color": {
 				"value": "Font Color"
 			},
-			"dialog_preference_filetype_guide": {
-				"value": "Change file types."
-			},
-			"dialog_preference_select_language_guide": {
-				"value": "Select language."
-			},
-			"dialog_preference_shortcut_file_guide": {
-				"value": "Change file menu shortcut."
-			},
-			"dialog_preference_shortcut_edit_guide": {
-				"value": "Change edit menu shortcut."
-			},
-			"dialog_preference_shortcut_project_guide": {
-				"value": "Change project menu shortcut."
-			},
-			"dialog_preference_shortcut_debug_guide": {
-				"value": "Change debug menu shortcut."
-			},
-			"dialog_preference_shortcut_scm_guide": {
-				"value": "Change SCM menu shortcut."
-			},
 			"dialog_preference_shortcut_cloud_guide": {
 				"value": "Change cloud menu shortcut."
-			},
-			"dialog_preference_shortcut_window_guide": {
-				"value": "Change window menu shortcut."
-			},
-			"dialog_preference_shortcut_help_guide": {
-				"value": "Change help menu shortcut."
-			},
-			"dialog_preference_system_api_key_guide": {
-				"value": "API Key Setting"
 			},
 			"dialog_preference_theme_keymap": {
 				"value": "Key Map"
@@ -447,14 +365,8 @@
 			"dialog_project_property_project_author": {
 				"value": "Project Author"
 			},
-			"dialog_project_property_project_name": {
-				"value": "Project Name"
-			},
 			"dialog_project_property_project_date": {
 				"value": "Project Created Date"
-			},
-			"dialog_project_property_project_description": {
-				"value": "Project Description"
 			},
 			"dialog_project_property_scm_type": {
 				"value": "Type"
@@ -482,9 +394,6 @@
 	"dialog_goorm_profile": {
 		"value": "",
 		"children": {
-			"dialog_goorm_profile_header": {
-				"value": "User Profile"
-			},
 			"dialog_goorm_profile_id": {
 				"value": "ID"
 			},
@@ -496,9 +405,6 @@
 			},
 			"dialog_goorm_profile_password_confirm": {
 				"value": "Confirm New PW"
-			},
-			"dialog_goorm_profile_nick": {
-				"value": "Nickname"
 			},
 			"dialog_goorm_profile_email": {
 				"value": "E-mail"
@@ -645,47 +551,20 @@
 	"dialog_npm_pkg_list_version_guide": {
 		"value": "Version"
 	},
-	"dialog_preference": {
-		"value": "Preference"
-	},
-	"preference": {
-		"value": "Preference"
-	},
 	"property": {
 		"value": "Property"
 	},
 	"plugin": {
 		"value": "Plugins"
 	},
-	"dialog_open_project": {
-		"value": "Open Project"
-	},
-	"dialog_open_file": {
-		"value": "Open File"
-	},
-	"dialog_open_url": {
-		"value": "Open URL"
-	},
-	"dialog_save_as_file": {
-		"value": "Save as..."
-	},
 	"dialog_rename_file": {
 		"value": "Rename File"
-	},
-	"dialog_property": {
-		"value": "File Property"
 	},
 	"dialog_search": {
 		"value": "Search"
 	},
 	"dialog_build_project": {
 		"value": "Build Projects"
-	},
-	"dialog_build_all": {
-		"value": "Build All"
-	},
-	"dialog_build_clean": {
-		"value": "Build Clean"
 	},
 	"dialog_help_contents": {
 		"value": "Help Contents"
@@ -698,12 +577,6 @@
 	},
 	"dialog_help_license": {
 		"value": "Open Source License"
-	},
-	"dialog_new_file": {
-		"value": "New File"
-	},
-	"dialog_new_folder": {
-		"value": "New Folder"
 	},
 	"dialog_new_untitled_textfile": {
 		"value": "New Untitled Textfile"

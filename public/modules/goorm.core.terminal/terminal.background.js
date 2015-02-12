@@ -29,12 +29,12 @@ goorm.core.terminal.background.prototype = {
 	init: function(name, target) {
 		var self = this;
 
-		if (!target) {
-			target = $("<div>");
-		}
+		//if (!target) {
+		//	target = $("<div>");
+		//}
 
 		this.terminal = new goorm.core.terminal();
-		this.terminal.init(target, name, false);
+		this.terminal.init(null, name, false);
 
 		var buffer = "";
 		this.terminal.on_message = function (msg) {

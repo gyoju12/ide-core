@@ -133,30 +133,10 @@ goorm.core.edit.prototype = {
 
         //unbind CodeMirror key & shaping searching area --heeje
         this.editor.setOption("extraKeys", {
-            "Ctrl-G": function() {
-                if (self.editor.getSelection() !== "") {
-                    $("#find_query_inputbox").val(self.editor.getSelection());
-                    if (true) return CodeMirror.PASS;
-                }
-            },
-            "Cmd-G": function() {
-                if (self.editor.getSelection() !== "") {
-                    $("#find_query_inputbox").val(self.editor.getSelection());
-                    if (true) return CodeMirror.PASS;
-                }
-            },
-            "Ctrl-Shift-G": function() {
-                if (self.editor.getSelection() !== "") {
-                    $("#find_query_inputbox").val(self.editor.getSelection());
-                    if (true) return CodeMirror.PASS;
-                }
-            },
-            "Cmd-Shift-G": function() {
-                if (self.editor.getSelection() !== "") {
-                    $("#find_query_inputbox").val(self.editor.getSelection());
-                    if (true) return CodeMirror.PASS;
-                }
-            }
+            "Ctrl-G": false,
+            "Cmd-G": false,
+            "Shift-Ctrl-G": false,
+            "Shift-Cmd-G": false
         });
 
         
@@ -378,9 +358,15 @@ goorm.core.edit.prototype = {
                         target_window.set_modified();
                         target_tab.set_modified();
                     } else { // jeongmin: change event is occurred before keydown, so wait for coming keydown event
-                        $(core).one('undo_redo_pressed', function(e, data) { // data: undo or redo
+                        // title is used for distinguishing windows
+                        $(core).one('undo_redo_pressed_' + self.title, function(e, data) { // data: undo or redo
                             target_window.set_modified(data);
                             target_tab.set_modified();
+
+                            if(!data.user && !data.name) {  // only if this event is triggered by keydown. If these are true, this event is triggered by collaborator
+                                data.is_collaborating = true;   // for preventing other collaborators' ot stack. Used at set_modified in window.panel.js
+                                self.collaboration.update_change(data); // let other collaborators know I did undo
+                            }
                         });
                     }
                 }
@@ -397,7 +383,7 @@ goorm.core.edit.prototype = {
                 CodeMirror.commands.clearSearch(self.editor);
         });
 
-        cm_editor.on("cursorActivity", function() {
+        cm_editor.on("cursorActivity", function(cm) {   // cm: CodeMirror
             if (self.editor.history_mode == "history") return;
 
             var cur = self.editor.getCursor();
@@ -501,7 +487,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', {
+                $(core).trigger('undo_redo_pressed_' + self.title, {    // title is used for distinguishing windows
                     undo: true,
                     redo: false
                 });
@@ -509,7 +495,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed', {
+                $(core).trigger('undo_redo_pressed_' + self.title, {    // title is used for distinguishing windows
                     undo: false,
                     redo: true
                 });
@@ -642,7 +628,7 @@ goorm.core.edit.prototype = {
         var markerHtml = "&#x25cf";
         var info = this.editor.lineInfo(line);
         this.editor.setGutterMarker(line, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? this.remove_marker(line, "breakpoint") : this.make_marker(line, "breakpoint", markerHtml));
-        // 		this.font_manager.refresh();
+        //      this.font_manager.refresh();
     },
 
     //set bookmark that is saved before. Jeong-Min Im.
@@ -880,12 +866,12 @@ goorm.core.edit.prototype = {
 
         self.font_manager.refresh(self.font_size);
         // window.setTimeout(function() {
-        var temp = $.debounce(function() {
-            self.set_cursor();
-            if (tmp_scroll_top !== 0) // jeongmin: no need to scroll
-                self.editor.scrollTo(0, tmp_scroll_top);
-        }, 1000);
-        temp();
+        // var temp = $.debounce(function() {
+        //     self.set_cursor();
+        //     if (tmp_scroll_top !== 0) // jeongmin: no need to scroll
+        //         self.editor.scrollTo(0, tmp_scroll_top);
+        // }, 1000);
+        // temp();
 
     },
 
@@ -1118,8 +1104,8 @@ goorm.core.edit.prototype = {
             } else if (res.exists == false) { // jeongmin: file is deleted
                 confirmation.init({
                     message: localization_msg.confirmation_save_deleted_file,
-                    yes_text: localization_msg.confirmation_yes,
-                    no_text: localization_msg.confirmation_no,
+                    yes_text: localization_msg.yes,
+                    no_text: localization_msg.no,
                     title: localization_msg.confirmation_title,
 
                     yes: function() { // jeongmin: make new file

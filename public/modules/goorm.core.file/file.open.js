@@ -84,8 +84,8 @@ goorm.core.file.open = {
 			confirmation.init({
 				title: core.module.localization.msg.alert_error,
 				message: core.module.localization.msg.confirmation_down_file,
-				yes_text: core.module.localization.msg.confirmation_yes,
-				no_text: core.module.localization.msg.confirmation_no,
+				yes_text: core.module.localization.msg.yes,
+				no_text: core.module.localization.msg.no,
 				yes: function() {
 					var query = {
 						filepath: filepath,

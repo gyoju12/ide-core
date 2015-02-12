@@ -6554,7 +6554,7 @@
 						return true;
 					}
 					var obj = this.get_node(e.target),
-						mlt = this.is_selected(obj) && this.settings.drag_selection ? this.get_selected().length : 1,
+						mlt = this.is_selected(obj) && this.settings.dnd.drag_selection ? this.get_selected().length : 1, // jeongmin: this.settings.drag_selection -> this.settings.dnd.drag_selection
 						txt = (mlt > 1 ? mlt + ' ' + this.get_string('nodes') : this.get_text(e.currentTarget));
 					if (this.settings.core.force_text) {
 						txt = $('<div />').text(txt).html();
