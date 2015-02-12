@@ -121,8 +121,8 @@ goorm.core.localization = {
 
 		if (type == 'plugin') {
 			self.apply(self.language_data[language][type], 'plugin');
-		} else { 
-			self.apply(self.language_data[language][type]); 
+		} else {
+			self.apply(self.language_data[language][type]);
 		}
 
 		if (type == 'msg' || type == 'tutorial' || type == 'plugin' || type == 'title') {
@@ -168,15 +168,15 @@ goorm.core.localization = {
 				$(core).trigger('language_loaded', change_flag);
 				$(core).trigger('language_change');
 				var temp_message = $("div.join_message");
-				$.each(temp_message, function(i,v) {
+				$.each(temp_message, function(i, v) {
 					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_join);
 				});
 				temp_message = $("div.leave_message");
-				$.each(temp_message, function(i,v) {
+				$.each(temp_message, function(i, v) {
 					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_leave);
 				});
 				temp_message = $("div.change_message");
-				$.each(temp_message, function(i,v) {
+				$.each(temp_message, function(i, v) {
 					$(v).html($(v).attr('before_user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change + $(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change2);
 				});
 			}
@@ -327,7 +327,7 @@ goorm.core.localization = {
 
 					// attach tooltip
 					//$("[tooltip='" + key + "']").attr("title", value);
-					
+
 					//for bootstrap tooltip
 					$("[tooltip='" + key + "']").attr("data-original-title", value);
 
@@ -445,7 +445,7 @@ goorm.core.localization = {
 
 				$.each(data, function(key, value) {
 					var localizations = $(area + " [localization_key='" + key + "']");
-					var helptext = $("[localization_key='" + key + "'] > .helptext")[0];
+					var helptext = $(area + " [localization_key='" + key + "'] > .helptext")[0];
 					var helptext_parent = $(helptext).parent();
 
 					var caret = $(area + " [localization_key='" + key + "'] > .caret")[0];
