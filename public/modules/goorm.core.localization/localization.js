@@ -285,7 +285,8 @@ goorm.core.localization = {
 					// }
 				} else {
 					var localizations = $("[localization_key='" + key + "']");
-					var helptext = localizations.find(".helptext").html();
+					var helptext = $("[localization_key='" + key + "'] > .helptext")[0];
+					var helptext_parent = $(helptext).parent();
 					var placeholder = localizations.attr("placeholder");
 					var caret = $("[localization_key='" + key + "'] > .caret")[0];
 					var applied = localizations.find('.menu-applied')[0];
@@ -295,7 +296,8 @@ goorm.core.localization = {
 					localizations.html(value);
 
 					if (helptext) {
-						localizations.not(".shortcut_menu").append("<em class='helptext'>" + helptext + "</em>"); //jeongmin: prevent appending helptext to preference shortcut
+						helptext_parent.append(helptext.outerHTML);
+						// localizations.not(".shortcut_menu").append("<em class='helptext'>" + helptext + "</em>"); //jeongmin: prevent appending helptext to preference shortcut
 					}
 
 					if (caret) {
@@ -443,7 +445,8 @@ goorm.core.localization = {
 
 				$.each(data, function(key, value) {
 					var localizations = $(area + " [localization_key='" + key + "']");
-					var helptext = localizations.find(".helptext").html();
+					var helptext = $("[localization_key='" + key + "'] > .helptext")[0];
+					var helptext_parent = $(helptext).parent();
 
 					var caret = $(area + " [localization_key='" + key + "'] > .caret")[0];
 					var applied = localizations.find('.menu-applied')[0];
@@ -451,7 +454,8 @@ goorm.core.localization = {
 					localizations.html(this.value);
 
 					if (helptext) {
-						localizations.append("<em class='helptext'>" + helptext + "</em>");
+						helptext_parent.append(helptext.outerHTML);
+						// localizations.append("<em class='helptext'>" + helptext + "</em>");
 					}
 
 					if (caret) {
