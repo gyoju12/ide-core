@@ -731,7 +731,7 @@
     "shared_project_leave": {
         "value": "떠나기"
     },
-    "sharing_project_manage": {
+    "shared_project_manage": {
         "value": "관리"
     },
     "invitation_waiting": {
@@ -974,7 +974,7 @@
     "friend_empty": {
         "value": "친구 목록이 존재하지 않습니다."
     },
-    "sharing_project_unshare": {
+    "shared_project_unshare": {
         "value": "공유 취소"
     },
     "import_in_progress": {

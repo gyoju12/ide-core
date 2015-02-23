@@ -4195,7 +4195,6 @@ Plugin CSS: jeongmin
     resize: none;
 }
 #quiz_tab #quiz_selector .btn-default {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(226, 224, 223, 1) 98%, rgba(217, 217, 217, 1) 100%);
     height: 31px;
     margin-left: -4px;
 }
@@ -4248,11 +4247,14 @@ Plugin CSS: jeongmin
     overflow: auto;
 } */
 #lecture_list_container img {
-    width: 120px;
-    height: auto;
+    width: auto;
+    height: 124px;
 }
 #lecture_list_container .media {
     min-height: 150px;
+}
+#lecture_list_container li .media-body .row {
+    margin-top: 40px;
 }
 /* #lecture_list_container .list-group-item .pull-left {
     margin-right: 0px;
@@ -4293,7 +4295,13 @@ Plugin CSS: jeongmin
 #lesson_list_container {
     height: 250px;
     overflow-y: auto;
+}
+#lesson_list_container .tab-content{  
     border: 1px solid #ddd;
+    border-top: 0px;
+}
+#lesson_list_container .tab-content .tab-pane{  
+    padding: 2px;
 }
 /* #lecture_view_container .lecture_contents_container {
     font-size: 13px;
@@ -4313,22 +4321,22 @@ Plugin CSS: jeongmin
     height: 30px;
     margin-top: -10px;
 } */
-#lecture_view_container #lesson_list_table .week {
+#lecture_view_container #lesson_list_table .week, #lecture_view_container #quiz_list_table .week {
     width: 10%;
     text-align: center;
 }
-#lecture_view_container #lesson_list_table .title {
+#lecture_view_container #lesson_list_table .title, #lecture_view_container #quiz_list_table .title{
     width: 50%;
 }
-#lecture_view_container #lesson_list_table .instructor {
+#lecture_view_container #lesson_list_table .instructor, #lecture_view_container #quiz_list_table .instructor{
     width: 20%;
     text-align: center;
 }
-#lecture_view_container #lesson_list_table .exam {
+#lecture_view_container #lesson_list_table .exam, #lecture_view_container #quiz_list_table .exam{
     width: 20%;
     text-align: center;
 }
-#lecture_view_container #lesson_list_table .btn_container {
+#lecture_view_container #lesson_list_table .btn_container, #lecture_view_container #quiz_list_table .btn_container{
     width: 10%;
 }
 #lecture_view_container thead tr th {

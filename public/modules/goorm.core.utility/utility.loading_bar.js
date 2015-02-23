@@ -8,9 +8,6 @@
  * version: 2.0.0
  **/
 
-var is_hide = false, // is hide called before shown
-	try_to_show = false; // someone tries to show modal
-
 goorm.core.utility.loading_bar = {
 	list: {}, // loading bar's progress bar list
 	unique: [], //if progress has unique, compare with it. if in here, ignore start 
@@ -24,6 +21,8 @@ goorm.core.utility.loading_bar = {
 						</div>\
 					<div id="progress_contents"></div>\
 				</div>', // progress bar template
+	is_hide: false, // is hide called before shown
+	try_to_show: false, // someone tries to show modal
 
 	// bind loading bar events. Jeong-Min Im.
 	init: function() {
@@ -44,15 +43,15 @@ goorm.core.utility.loading_bar = {
 				self.panel.trigger('shown.bs.modal');
 			}
 
-			if (is_hide) { // modal is hiding now!
-				try_to_show = true; // but we're trying to show!
+			if (self.is_hide) { // modal is hiding now!
+				self.try_to_show = true; // but we're trying to show!
 			}
 		});
 
 		this.panel.on("shown.bs.modal", function() {
 			if (self.panel.is(':visible')) { // we success to show modal. Initialize all flags.
-				try_to_show = false;
-				is_hide = false;
+				self.try_to_show = false;
+				self.is_hide = false;
 
 				if (Object.keys(self.list).length === 0) {
 					self.hide();
@@ -74,10 +73,10 @@ goorm.core.utility.loading_bar = {
 		// });
 
 		this.panel.on('hide.bs.modal', function() {
-			if (try_to_show) { // wait, someone tries to show! Let him do that
+			if (self.try_to_show) { // wait, someone tries to show! Let him do that
 				return false;
 			} else { // we're going to hide
-				is_hide = true;
+				self.is_hide = true;
 			}
 		});
 

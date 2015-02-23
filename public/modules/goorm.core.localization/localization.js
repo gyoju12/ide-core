@@ -189,7 +189,7 @@ goorm.core.localization = {
 						self.get_plugin_language(__language);
 					else self.apply(data);
 
-					if (key == 'msg' || key == 'tutorial' || key == 'plugin') {
+					if (key == 'msg' || key == 'tutorial' || key == 'plugin' || key == 'title') {
 						self.apply_message(data, key);
 					}
 				}
@@ -285,8 +285,8 @@ goorm.core.localization = {
 					// }
 				} else {
 					var localizations = $("[localization_key='" + key + "']");
-					var helptext = $("[localization_key='" + key + "'] > .helptext")[0];
-					var helptext_parent = $(helptext).parent();
+					var helptext = $("[localization_key='" + key + "'] > .helptext");
+					var helptext_parent = helptext.parent();
 					var placeholder = localizations.attr("placeholder");
 					var caret = $("[localization_key='" + key + "'] > .caret")[0];
 					var applied = localizations.find('.menu-applied')[0];
@@ -295,8 +295,8 @@ goorm.core.localization = {
 
 					localizations.html(value);
 
-					if (helptext) {
-						helptext_parent.append(helptext.outerHTML);
+					if (helptext[0]) {
+						$(helptext_parent).append(helptext[0].outerHTML);
 						// localizations.not(".shortcut_menu").append("<em class='helptext'>" + helptext + "</em>"); //jeongmin: prevent appending helptext to preference shortcut
 					}
 
@@ -445,16 +445,16 @@ goorm.core.localization = {
 
 				$.each(data, function(key, value) {
 					var localizations = $(area + " [localization_key='" + key + "']");
-					var helptext = $(area + " [localization_key='" + key + "'] > .helptext")[0];
-					var helptext_parent = $(helptext).parent();
+					var helptext = $(area + " [localization_key='" + key + "'] > .helptext");
+					var helptext_parent = helptext.parent();
 
 					var caret = $(area + " [localization_key='" + key + "'] > .caret")[0];
 					var applied = localizations.find('.menu-applied')[0];
 
 					localizations.html(this.value);
 
-					if (helptext) {
-						helptext_parent.append(helptext.outerHTML);
+					if (helptext[0]) {
+						$(helptext_parent).append(helptext[0].outerHTML);
 						// localizations.append("<em class='helptext'>" + helptext + "</em>");
 					}
 

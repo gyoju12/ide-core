@@ -232,7 +232,7 @@ goorm.core.utility.treeview.prototype = {
 
 				var postdata = {
 					path: path,
-					state: (_this._refresh === true) ? state : [],
+					state: (_this._refresh === true) ? state : []
 				};
 				// _this._refresh = false;
 				// console.log("load folder", postdata);
@@ -449,7 +449,7 @@ goorm.core.utility.treeview.prototype = {
 		this.tree.jstree("refresh");
 
 		return this;
-	}, 500),
+	}, 1000),
 
 	/**
 	 * get state (opened files, selected files etc..)

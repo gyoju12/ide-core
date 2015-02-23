@@ -24,7 +24,7 @@ goorm.core.edit.error_manager.prototype = {
 
         var line_number = error_data.line_number;
         var error_syntax = error_data.error_syntax;
-        var error_type = (error_data.error_type != undefined) ? error_data.error_type.toLowerCase() : 'error';
+        var error_type = (error_data.error_type !== undefined) ? error_data.error_type.toLowerCase() : 'error';
 
         var marker_icon = '<i class="fa fa-times-circle fa-1"></i>';
         var underline_class = 'cm-underline-error cm-underline-error-line-';
@@ -32,7 +32,7 @@ goorm.core.edit.error_manager.prototype = {
         if (error_syntax !== undefined) { // jeongmin: if error is about whole file, line isn't specified. So, no syntax.
             if (error_type == 'warning') {
                 marker_icon = '<i class="fa fa-exclamation-triangle fa-1"></i>';
-                underline_class = 'cm-underline-warning cm-underline-warning-line-'
+                underline_class = 'cm-underline-warning cm-underline-warning-line-';
             }
             var make_marker = function(marker_html, option) {
                 var marker = document.createElement("div");
@@ -41,7 +41,7 @@ goorm.core.edit.error_manager.prototype = {
                 marker.id = "exception_error" + option.count;
                 marker.setAttribute('line_number', line_number);
                 return marker;
-            }
+            };
 
             editor.setGutterMarker(line_number, "exception_error", make_marker(marker_icon, {
                 'count': count,
@@ -181,12 +181,12 @@ goorm.core.edit.error_manager.prototype = {
         this.storage = [];
         this.marker = [];
         this.count = 0;
-    },
+    }
 
     // error_message_box: {
     //     add: function(container) {
     //         this.container = container;
-    //         var html = "<span style='display:none;' id='error_message_box'></span>";
+    //         var html = "<span style='display:none;' id='error_message_box'></span>";svn 
     //         $(container).append(html);
     //     },
 
@@ -227,4 +227,4 @@ goorm.core.edit.error_manager.prototype = {
     //         }
     //     }
     // }
-}
+};

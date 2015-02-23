@@ -170,7 +170,7 @@
 						"value": "아랫줄 추가 선택"
 					},
 					"edit_single_selection": {
-						"value": "다중 커서/선택 해"
+						"value": "다중 커서 해제"
 					},
 					"edit_split_into_lines": {
 						"value": "선택 영역 줄 단위로 나누기"

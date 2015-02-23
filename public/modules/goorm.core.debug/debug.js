@@ -104,22 +104,14 @@ goorm.core.debug.prototype = {
 				self.hide_menu();
 			}
 		});
-
-		$(document).on('click', function(e) {
+/*
+		$(document).on('click.debug_value_change', function(e) {
 			var edit_box = self.table_variable.find('.editing');
 			if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
-				var data = edit_box.children().val();
-				var sendData = {};
-				edit_box.html(data);
-				edit_box.removeClass('editing');
-				edit_box.addClass('edit_ready');
-				sendData.variable = edit_box.parent().attr("data-tt-id");
-				sendData.value = data;
-				if (typeof sendData.value != "undefined") {
-					$(core.module.debug).trigger('value_changed', sendData);
-				}
+				self.debug_value_change(edit_box);
 			}
 		});
+*/
 	},
 
 	init_css: function(argument) {
@@ -381,6 +373,21 @@ goorm.core.debug.prototype = {
 		}
 	},
 
+	debug_value_change: function(edit_box){
+		var data = edit_box.children().val();
+		var before = edit_box.children().attr('before');
+		var sendData = {};
+		edit_box.html(data);
+		edit_box.removeClass('editing');
+		edit_box.addClass('edit_ready');
+		sendData.variable = edit_box.parent().attr("data-tt-id");
+		sendData.value = data;
+		sendData.before  = before;
+		if (typeof sendData.value != "undefined") {
+			$(core.module.debug).trigger('value_changed', sendData);
+		}
+	},
+
 	button_active: function() {
 		var debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-continue, #goorm_main_toolbar .toolbar-debug-terminate, #goorm_main_toolbar .toolbar-debug-step-over, #goorm_main_toolbar .toolbar-debug-step-in, #goorm_main_toolbar .toolbar-debug-step-out");
 		var none_debug_state_btn1 = $("#goorm_main_toolbar .toolbar-debug-start");
@@ -499,7 +506,7 @@ goorm.core.debug.prototype = {
 
 		if (draw) {
 			var project_type = core.status.current_project_type;
-			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java' || project_type === 'ruby') {
+			if (project_type === 'c_examples' || project_type === 'cpp' || project_type === 'java_examples' || project_type === 'java' || project_type === 'ruby' || project_type === 'python') {
 				for (var i = 0; i < data.length; i++) {
 					var edit_box = this.table_variable.find("tr[data-tt-id='" + data[i][0] + "'] td").eq(1);
 					this.bind_edit_box(edit_box);
@@ -513,41 +520,42 @@ goorm.core.debug.prototype = {
 	bind_edit_box: function(edit_boxs) {
 		var sendData = {};
 		var ev = {};
+		var self = this;
 		ev.keyDown = 13;
 
 
 		edit_boxs.addClass('edit_ready');
+
+		edit_boxs.on('blur', '.edit_box', function(e) {
+			var edit_box = $(this).parent();
+			self.debug_value_change(edit_box);
+		});
+
+		edit_boxs.on('keyup', '.edit_box', function(e) {
+			var edit_box = $(e.target).parent();
+			if (e.keyCode == 13) {
+				$(e.target).blur();
+			} else {
+				core.status.focus_obj = edit_box;
+			}
+		});
+
 		edit_boxs.click(function(e) {
 			var edit_box = $(e.target);
 			var data = edit_box.html();
 			if (edit_box.hasClass('edit_ready')) {
-				core.module.terminal.terminal.Terminal.keyDown(ev);
+				//core.module.terminal.terminal.Terminal.keyDown(ev);
 				edit_box.removeClass('edit_ready');
 				edit_box.addClass('editing');
 				// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
-				edit_box.html("<input type='text' class='edit_box' style='width:100%;height:100%'>");
+				edit_box.html('<input type="text" class="edit_box" before="'+data+'" style="width:100%;height:100%">');
 				data = data.replace(/&gt;/g, '>');
-				edit_box.find('.edit_box').val(data);
-
+				edit_box.find('.edit_box').val(data).focus();
 				core.status.focus_obj = edit_box;
 			}
 		});
-		edit_boxs.on('keyup', '.edit_box', function(e) {
-			var edit_box = $(e.target).parent();
-			if (e.keyCode == 13) {
-				var data = $(this).val();
-				edit_box.html(data);
-				edit_box.removeClass('editing');
-				edit_box.addClass('edit_ready');
-				sendData.variable = edit_box.parent().attr("data-tt-id");
-				sendData.value = data;
-				if (typeof sendData.value != "undefined") {
-					$(core.module.debug).trigger('value_changed', sendData);
-				}
-			} else {
-				core.status.focus_obj = $(this);
-			}
-		});
+
+
 
 	},
 

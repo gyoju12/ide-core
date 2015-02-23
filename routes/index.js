@@ -272,8 +272,6 @@ exports.plugin.get_dialog = function(req, res) {
 };
 
 exports.plugin.do_create = function(req, res) {
-	var self = this;
-
 	var uid = null;
 	var gid = null;
 
@@ -358,7 +356,6 @@ exports.plugin.do_new = function(req, res) {
 };
 
 exports.plugin.do_web_run = function(req, res) {
-	var self = this;
 	var uid = null;
 	var gid = null;
 	var copy = function() {
@@ -1059,8 +1056,8 @@ exports.user.project.collaboration.invitation.pull = function(req, res) {
 				g_collaboration_chat.is_connected(io, user_list, function(__data) {
 					g_collaboration_project.refresh_message({
 						'user': __data.user.id
-					}, function(invitation_list, waiting_list, share_list, sharing_project) {
-						io.sockets.sockets[__data.client.id].emit('refresh_project_message', invitation_list, waiting_list, share_list, sharing_project, {
+					}, function(invitation_list, waiting_list, share_list, shared_project) {
+						io.sockets.sockets[__data.client.id].emit('refresh_project_message', invitation_list, waiting_list, share_list, shared_project, {
 							'refresh': {
 								'project': true,
 								'terminal': true

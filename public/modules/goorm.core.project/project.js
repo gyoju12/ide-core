@@ -92,7 +92,7 @@ goorm.core.project = {
 				core.module.project.display_error_message(result, 'alert');
 			}
 		} else if (this.tab[name]) {
-			this.tab[name].tab.click()
+			this.tab[name].tab.click();
 		}
 	},
 
@@ -118,7 +118,7 @@ goorm.core.project = {
 					if (self.tab.build) {
 						self.tab.build.tab_inner_content.html('');
 					}
-				}
+				};
 
 				var build_configs = $.extend(true, this.configs.build, {
 					tab_manager: {
@@ -170,7 +170,7 @@ goorm.core.project = {
 					if (self.tab.run) {
 						self.tab.run.terminal.send_command('clear\r');
 					}
-				}
+				};
 
 				var run_configs = $.extend(true, this.configs.run, {
 					tab_manager: {
@@ -600,7 +600,7 @@ goorm.core.project = {
 			if (callback) {
 				callback();
 			}
-		}
+		};
 
 		if (project_window && project_window.length > 0) {
 			confirmation.init({
@@ -613,7 +613,7 @@ goorm.core.project = {
 				yes: function() {
 					project_save(function() {
 						self.send_run_cmd();
-					})
+					});
 				},
 				no: function() {
 					self.send_run_cmd();

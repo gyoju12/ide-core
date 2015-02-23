@@ -732,6 +732,7 @@ goorm.core.edit.dictionary.prototype = {
 			//seongho.cha: because of throttle, active_window can be different when click in 0.2sec.
 			if (cm_editor !== goorm.core.window.manager.window[goorm.core.window.manager.active_window].editor.editor){
 				self.hide();
+				return;
 			}
 			var code = e.keyCode;
 			var cursor = cm_editor.getCursor();

@@ -67,11 +67,11 @@ goorm.plugin.linter = {
 		var self = this;
 		var error_data, output_data;
 		var error_manager = __window.editor.error_manager;
-		// var output_manager = core.module.layout.tab_manager.output_manager;
+		var output_manager = core.module.layout.tab_manager.output_manager;
 
 		// init error message in editor & output tab
 		error_manager.clear();
-		// output_manager.clear();
+		output_manager.clear();
 
 		// add error message in editor & output tab
 		var lint_result = CodeMirror.lint[type](__window.editor.editor.getValue());
@@ -91,14 +91,14 @@ goorm.plugin.linter = {
 				'error_type': lint_result[i].severity
 			};
 
-			// output_data = {
-			// 	'line': lint_result[i].from.line + 1,
-			// 	'content': lint_result[i].severity + ':' + lint_result[i].message,
-			// 	'file': __window.title
-			// };
+			output_data = {
+				'line': lint_result[i].from.line + 1,
+				'content': lint_result[i].severity + ': ' + lint_result[i].message,
+				'file': __window.title
+			};
 
 			error_manager.add_line(error_data);
-			// output_manager.push(output_data);
+			output_manager.push(output_data);
 		}
 		// show error message in editor & output tab
 		error_manager.error_message_box.add('#' + __window.panel.attr('id'));
@@ -109,6 +109,7 @@ goorm.plugin.linter = {
 	// to provide linter function in C, C++, Java
 	// after build in background terminal, parsing result.
 	lint_build: function(__window, type) {
+		console.log("----");
 		var self = this;
 
 
@@ -135,6 +136,7 @@ goorm.plugin.linter = {
 
 		}
 		core.module.project.background_build(cmd, function(result) {
+			console.log(result);
 			if (result) {
 				var build_success = (result.indexOf("Build Complete") > -1) ? true : false;
 				var window_manager = core.module.layout.workspace.window_manager;
@@ -191,10 +193,10 @@ goorm.plugin.linter = {
 					'error_syntax': error_syntax,
 					'error_message': error_message.split('\r\n')[0],
 					'error_type': data.type
-				}
+				};
 
 				e_m.add_line(error_data);
-				if (i == 0) e_m.error_message_box.add(e.target);
+				if (i === 0) e_m.error_message_box.add(e.target);
 				e_m.init_event();
 			}
 
@@ -239,7 +241,7 @@ goorm.plugin.linter = {
 			
 			var table = [];
 		
-			
+			error_manager.error_message_box.add(editor.target);
 			for(var i=0; i<output.length; i++){
 				var line = output[i].split(":");
 				if(isNaN(line[1])){
@@ -254,7 +256,6 @@ goorm.plugin.linter = {
 				};
 				
 				error_manager.add_line(error_data);
-				if (i === 0) error_manager.error_message_box.add(editor.target);
 				error_manager.init_event();
 				
 				table.push({
@@ -264,7 +265,7 @@ goorm.plugin.linter = {
 				});
 			}
 			om.push(table);
-			if(output.length) {
+			if(output.length >= 1) {
 				core.module.layout.select('gLayoutOutput_cpp');	
 			}
 		});
@@ -295,14 +296,14 @@ goorm.plugin.linter = {
 				var error_data = {
 					'line_number': parseInt(line[1], 10) - 1,
 					'error_syntax': "",
-					'error_message': line[line.length - 1].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
+					'error_message': isNaN(parseInt(line[2],10)) ? line[2].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;") : line[3].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
 				};
 				
 				error_manager.add_line(error_data);
 				if (i === 0) error_manager.error_message_box.add(editor.target);
 				error_manager.init_event();
 				om.push({
-					line: error_data.line_number,
+					line: error_data.line_number + 1,
 					content: error_data.error_message.split("<br />").shift(),
 					file: editor.filepath + editor.filename
 				});
@@ -355,7 +356,7 @@ goorm.plugin.linter = {
 				});
 				
 			}
-			if(output.length) {
+			if(output.length >= 1) {
 				core.module.layout.select('gLayoutOutput_ruby');
 			}
 		});
@@ -401,7 +402,7 @@ goorm.plugin.linter = {
 				});
 				
 			}
-			if(message.length) {
+			if(message.length >= 1) {
 				core.module.layout.select('gLayoutOutput_php');	
 			} 
 		});

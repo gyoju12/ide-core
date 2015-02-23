@@ -312,10 +312,12 @@ goorm.core.terminal.prototype = {
 			
 		};
 
-		$(core).on("on_preference_confirmed", function() { // 
-			self.set_option();
-			// self.resize();
-		});
+		if (self.target) {
+			$(core).on("on_preference_confirmed", function() { 
+				self.set_option();
+				// self.resize();
+			});	
+		}
 
 		// append message & prompt to terminal
 		init_terminal();

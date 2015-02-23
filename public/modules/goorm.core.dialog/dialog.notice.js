@@ -66,7 +66,7 @@ goorm.core.dialog.notice.prototype = {
 		this.panel.on('shown.bs.modal', function () {
 			$("#project_delete_list").blur();
 			$(this).focus();
-			console.log(document.activeElement);
+// 			console.log(document.activeElement);
 		});
 
 		// this.panel.on("show.bs.modal", function (){	//jeongmin: done at dialog.js

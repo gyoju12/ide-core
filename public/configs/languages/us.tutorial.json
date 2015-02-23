@@ -150,19 +150,19 @@
         "value": "You can choose what you want to share."
     },
     "share_project_current_list": {
-        "value": "This is project list that shows sharing project currently. You can set options such as 'read-only', 'editable' etc."
+        "value": "This is project list that shows shared projects currently. You can set options such as 'read-only', 'editable' etc."
     },
     "share_project_search_user": {
         "value": "Search User who you want to share by ID, name or NickName."
     },
     "share_project_finish": {
-        "value": "Click the OK button, and finish sharing project."
+        "value": "Click the OK button, and finish project sharing."
     },
     "share_project_shared_tab": {
-        "value": "This is shared tab. You can see sharing, shared project information."
+        "value": "This is shared tab. You can see sharing and shared project information."
     },
     "share_project_shared_project_list": {
-        "value": "You can see sharing project list and message that others send to share."
+        "value": "You can see shared project list and message that others send to share."
     },
     "add_friends_start": {
         "value": "Let's start add friends tutorial."

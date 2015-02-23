@@ -719,7 +719,7 @@
     "shared_project_leave": {
         "value": "Leave"
     },
-    "sharing_project_manage": {
+    "shared_project_manage": {
         "value": "Manage"
     },
     "invitation_waiting": {
@@ -974,7 +974,7 @@
     "friend_empty": {
         "value": "Friends list does not exist."
     },
-    "sharing_project_unshare": {
+    "shared_project_unshare": {
         "value": "Unshare"
     },
     "import_in_progress": {

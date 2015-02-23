@@ -1200,6 +1200,7 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('do_delete', this.hotkeys.do_delete), this.hotkeys.do_delete, this.hotkeys_fn.do_delete);
 		}
 
+		/*
 		//Select All (Ctrl+A)
 		if (this.hotkeys.select_all) {
 			this.hotkeys_fn.select_all = function(e) {
@@ -1208,10 +1209,13 @@ goorm.core.shortcut.manager = {
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
+
 			};
 
 			doc_obj.bind('keydown.' + this.make_namespace('select_all', this.hotkeys.select_all), this.hotkeys.select_all, this.hotkeys_fn.select_all);
 		}
+		*/
+
 		
 		//Find and Replace (Ctrl+F)
 		if (this.hotkeys.do_find) {

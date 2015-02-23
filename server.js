@@ -10,6 +10,7 @@
 
 
 
+var build_version = 'oss-1424684108';
 
 // Dependency
 //
@@ -83,122 +84,125 @@ var io = null;
 // GOORM MODULES
 //
 goorm.start = function() {
-	goorm.init();
-	
-	goorm.config();
-	goorm.routing();
-	goorm.load();
+	if (goorm.init()) {
+		
+		goorm.config();
+		goorm.routing();
+		goorm.load();
+	}
 };
 
 goorm.init = function() {
-		var set_global = function() {
-			// Set global
-			//
-			global.__path = __dirname + "/";
+	var set_global = function() {
+		// Set global
+		//
+		global.__path = __dirname + "/";
 
-			//useonly(mode=goorm-oss)	
-			global.__redis_mode = false;
-			
+		//useonly(mode=goorm-oss)	
+		global.__redis_mode = false;
+		
 
-			
+		
 
-			
+		
 
-			
+		
 
-			global.__secure = false; // use https ?
+		global.__secure = false; // use https ?
 
-			// Session Store
-			//
-			global.store = null;
-		};
+		// Session Store
+		//
+		global.store = null;
+	};
 
-		var set_arguments = function() {
-			// Set argv for commander
-			//
-			var argv = process.argv;
+	var set_arguments = function() {
+		// Set argv for commander
+		//
+		var argv = process.argv;
 
-			
+		
 
-			//useonly(mode=goorm-oss)	
-			if (argv[2] > 0 && argv[2] < 100000) {
-				port = argv[2];
-			}
+		//useonly(mode=goorm-oss)	
+		if (argv[2] > 0 && argv[2] < 100000) {
+			port = argv[2];
+		}
 
-			if (fs.existsSync(argv[3])) {
-				home = argv[3];
-			}
+		if (fs.existsSync(argv[3])) {
+			home = argv[3];
+		}
 
-			if (fs.existsSync(argv[4])) {
-				workspace = argv[4];
-			}
+		if (fs.existsSync(argv[4])) {
+			workspace = argv[4];
+		}
 
-			if (argv[5] && argv[5] == 'true') {
-				global.__redis_mode = true;
-			}
-			
-		};
+		if (argv[5] && argv[5] == 'true') {
+			global.__redis_mode = true;
+		}
 
-		var set_goorm_config = function() {
-			//useonly(mode=goorm-oss)	
-			var base = process.env.HOME + "/goorm_workspace/";
+		return true;
+		
+	};
 
-			if (!fs.existsSync(base)) {
-				fs.mkdir(base, 0755, function(err) {
-					if (err) {
-						console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
-					}
-				});
-			}
+	var set_goorm_config = function() {
+		//useonly(mode=goorm-oss)	
+		var base = process.env.HOME + "/goorm_workspace/";
 
-			global.__workspace = process.env.HOME + "/goorm_workspace/";
-			
-
-			
-
-				
-
-			//useonly(mode=goorm-oss)	
-			var temp = process.env.HOME + "/goorm_tempdir/";
-
-			if (!fs.existsSync(temp)) {
-				fs.mkdir(temp, 0755, function(err) {
-					if (err) {
-						console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
-					}
-				});
-			}
-
-			global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
-			
-
-			
-
-			if (!home) home = process.env.HOME;
-			if (fs.existsSync(home + '/.goorm/config.json')) {
-				var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
-				if (data !== "") {
-					config_data = JSON.parse(data);
+		if (!fs.existsSync(base)) {
+			fs.mkdir(base, 0755, function(err) {
+				if (err) {
+					console.log('Cannot make goorm_workspace : ' + base + ' ... ', err);
 				}
+			});
+		}
 
-				if (config_data) {
-					for (var attr in config_data) {
-						if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
-							continue;
-						}
+		global.__workspace = process.env.HOME + "/goorm_workspace/";
+		
 
-						if (config_data[attr] && config_data[attr] !== 'undefined') {
-							global[attr] = config_data[attr];
-						}
+		
+
+			
+
+		//useonly(mode=goorm-oss)	
+		var temp = process.env.HOME + "/goorm_tempdir/";
+
+		if (!fs.existsSync(temp)) {
+			fs.mkdir(temp, 0755, function(err) {
+				if (err) {
+					console.log('Cannot make goorm_tempdir : ' + temp + ' ... ', err);
+				}
+			});
+		}
+
+		global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
+		
+
+		
+
+		if (!home) home = process.env.HOME;
+		if (fs.existsSync(home + '/.goorm/config.json')) {
+			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
+			if (data !== "") {
+				config_data = JSON.parse(data);
+			}
+
+			if (config_data) {
+				for (var attr in config_data) {
+					if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
+						continue;
+					}
+
+					if (config_data[attr] && config_data[attr] !== 'undefined') {
+						global[attr] = config_data[attr];
 					}
 				}
 			}
 		}
+	}
 
-		set_global();
-		set_goorm_config();
-		set_arguments();
+	set_global();
+	set_goorm_config();
 
+	if (set_arguments()) {
 		// Update Workspace Path 
 		//
 		if (workspace && workspace !== 'undefined') {
@@ -225,16 +229,24 @@ goorm.init = function() {
 		}
 
 		global.__set_redis_client = false;
+
+		return true;
 	}
+	else {
+		return false;
+	}
+}
+
+
+
 	
 
-		
-
-		
-
-		
-	}
 	
+
+	
+}
+
+
 goorm.config = function() {
 	// Configuration
 	goorm.set('views', __dirname + '/views');
@@ -370,7 +382,7 @@ goorm.check_session = function(req, res, next) {
 	
 
 	
-}
+};
 
 goorm.set_expires_date = function(req, res, next) {
 	var url = req.url;
@@ -383,7 +395,7 @@ goorm.set_expires_date = function(req, res, next) {
 	}
 
 	next();
-}
+};
 
 goorm.routing = function() {
 	var routes = require('./routes');
@@ -583,7 +595,7 @@ goorm.routing = function() {
 	
 	
 	
-}
+};
 
 goorm.load = function() {
 	var g_terminal = require("./modules/goorm.core.terminal/terminal");
@@ -811,7 +823,7 @@ goorm.load = function() {
 		set_io();
 				
 	}
-}
+};
 
 goorm.start();
 
