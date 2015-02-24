@@ -571,7 +571,7 @@ exports.file.get_contents = function(req, res) {
 	if (req.query.res_type) res_type = req.query.res_type;
 
 	//1. valid path
-	console.log(path);
+	// console.log(path);
 	if (!check_valid_path(path)) {
 		console.log('invalid path in get_contents');
 		res.json(false);
@@ -1229,7 +1229,7 @@ exports.upload = function(req, res) {
 
 
 	if (file_list.length == 0) {
-		console.log('1-1');
+		// console.log('1-1');
 		res.json({
 			'err_code': 10,
 			'message': 'No file to upload'

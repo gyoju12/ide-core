@@ -74,7 +74,7 @@ module.exports = {
 									} else {
 										data.err_code = 30;
 										data.message = "Cannot make directory";
-										console.log('new project mkdir error:', err, data.message);
+										// console.log('new project mkdir error:', err, data.message);
 									}
 									console.log('new project mkdir error:', err, data.message);
 									evt.emit("project_do_new", data);
@@ -238,7 +238,7 @@ module.exports = {
 				}
 			});
 			check_cmd.on('close', function(code) {
-				console.log(code);
+				// console.log(code);
 				if (code) { // invalid compressed file
 					data.err_code = code;
 

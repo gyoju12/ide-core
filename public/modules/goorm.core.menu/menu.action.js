@@ -311,49 +311,6 @@ goorm.core.menu.action = {
 
 				confirmation.show();
 			}
-			// }
-			// else if ("Dropbox") {
-			// if (core.status.selected_file) {
-			// 	if ("/" + core.status.current_project_path == core.status.selected_file) {
-			// 		alert.show("Cannot Delete!");
-			// 		return;
-			// 	}
-			// 	confirmation.init({
-			// 		title: core.module.localization.msg.confirmation_delete_title,
-			// 		message: core.module.localization.msg.confirmation_delete_file,
-			// 		yes_text: core.module.localization.msg.confirmation_yes,
-			// 		no_text: core.module.localization.msg.confirmation_no,
-			// 		yes: function() {
-			// 			var postdata = {
-			// 				filename: core.status.selected_file
-			// 			};
-			// 			//$.get("file/delete", postdata, function (data) {
-			// 			core.socket.once("dropbox_remove_file", function(data) {
-			// 				//m.s("delete: " + core.status.selected_file);
-			// 				goorm.core.cloud.dropbox.project_explorer.refresh();
-
-			// 				var window_manager = core.module.layout.workspace.window_manager;
-			// 				var window_list = window_manager.window;
-
-			// 				for (var i = window_list.length - 1; i >= 0; i--) {
-			// 					if ((window_list[i].title).indexOf(core.status.selected_file) > -1) {
-			// 						window_list[i].is_saved = true;
-			// 						window_list[i].tab.is_saved = true;
-			// 						// window_list[i].close(i);
-			// 						window_manager.close_by_index(i, i);
-			// 					}
-			// 				}
-			// 			});
-			// 			core.socket.emit("/cloud/dropbox_remove", postdata.filename);
-			// 		},
-			// 		no: null
-			// 	});
-
-			// 	confirmation.show();
-			// } else {
-			// 	alert.show(core.module.localization.msg.alert_select_file);
-			// }
-			// }
 		});
 
 		$("[action=refresh_project_directory]").off("click").tooltip();

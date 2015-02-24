@@ -17,8 +17,8 @@ goorm.core.terminal.background = function(name, target) {
 	this.name = name;
 
 	this.configs = {
-		on_ready: function () {},
-		on_message: function (msg) {
+		on_ready: function() {},
+		on_message: function(msg) {
 			return msg;
 		}
 	};
@@ -37,7 +37,7 @@ goorm.core.terminal.background.prototype = {
 		this.terminal.init(null, name, false);
 
 		var buffer = "";
-		this.terminal.on_message = function (msg) {
+		this.terminal.on_message = function(msg) {
 			buffer += msg.stdout;
 
 			if (/<bg\$>complete/.test(buffer)) {
@@ -45,9 +45,9 @@ goorm.core.terminal.background.prototype = {
 			}
 		};
 	},
-	
-	get_terminal: function () {
-		return this.terminal;	
+
+	get_terminal: function() {
+		return this.terminal;
 	},
 
 	/**
@@ -101,7 +101,7 @@ goorm.core.terminal.background.prototype = {
 		}
 	},
 
-	complete: function () {
+	complete: function() {
 		var configs = this.configs;
 
 		if (configs.on_message && typeof(configs.on_message) === 'function') {
@@ -113,7 +113,7 @@ goorm.core.terminal.background.prototype = {
 		}
 	},
 
-	on_ready: function (on_ready) {
+	on_ready: function(on_ready) {
 		if (!on_ready) on_ready = function() {};
 		this.configs.on_ready = on_ready;
 	},
@@ -124,7 +124,7 @@ goorm.core.terminal.background.prototype = {
 				return msg;
 			};
 		}
-		
+
 		this.configs.on_message = on_message;
 	},
 };

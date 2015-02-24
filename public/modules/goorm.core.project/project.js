@@ -678,7 +678,7 @@ goorm.core.project = {
 			run_file_path = core.status.current_project_path + '/' + build_main + '.dart.js';
 		}
 
-		console.log(run_file_path, core.status.current_project_path);
+		// console.log(run_file_path, core.status.current_project_path);
 		core._socket.emit('/project/check_latest_build', {
 			"project_path": core.status.current_project_path,
 			"run_file_path": run_file_path

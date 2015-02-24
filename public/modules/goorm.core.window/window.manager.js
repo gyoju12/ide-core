@@ -328,16 +328,10 @@ goorm.core.window.manager = {
 				filename: filename
 			};
 
-			// if (!options.storage) {	// hidden: storage is deprecated
 			_$.get("file/get_file", query, function() {
 				
 				
 			});
-			// }
-			// else { // if dropbox or google drive ...etc
-			// 	var dropbox = goorm.core.cloud.dropbox;
-			// 	dropbox.open_media_url(filepath, filename, filetype);
-			// }
 			
 			if (callback && typeof(callback) === 'function')
 				callback();

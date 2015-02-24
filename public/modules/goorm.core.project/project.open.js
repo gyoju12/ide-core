@@ -37,11 +37,6 @@ goorm.core.project.open = {
 				// if (storage == "goormIDE Storage") {
 				self.open(data.path, data.name, data.type);
 				// }
-				// else if (storage == "Google Drive") {
-
-				// } else if (storage == "Dropbox") {
-				// 	goorm.core.cloud.dropbox.project.open(data.path, data.name, data.type);
-				// }
 
 				self.panel.modal('hide');
 			}
@@ -68,11 +63,6 @@ goorm.core.project.open = {
 			// 		}
 			// 		// else if (storage == "Google Drive") {
 
-			// 		// } else if (storage == "Dropbox") {
-			// 		// 	$("#project_open_list").empty();
-			// 		// 	$("#project_open_information").empty();
-			// 		// 	self.project_list = new goorm.core.cloud.dropbox.project.list();
-			// 		// 	self.project_list.init("#project_open");
 			// 		// }
 			// 	});
 			// }
@@ -217,7 +207,7 @@ goorm.core.project.open = {
 				'project_type': current_project_type
 			});
 			
-		},2000));
+		}, 2000));
 
 
 		if (this.handler && this.handler[core.status.current_project_type] && this.handler[core.status.current_project_type].before) {

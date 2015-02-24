@@ -21,7 +21,7 @@ goorm.core.router = {
 	},
 	project_load: false,
 	project_ready: false,
-	
+
 	wait_list: [],
 
 	init: function() {
@@ -82,7 +82,7 @@ goorm.core.router = {
 
 			emit: function(url, data) {
 				var s = this.get(url);
-				
+
 				if (s && s.socket && s.socket.connected) {
 					s.emit(url, data);
 				} else {
@@ -108,8 +108,7 @@ goorm.core.router = {
 
 						if (this.project_url.indexOf(url) > -1 && project_path && permission && !permission.writable) {
 							return this.router.socket_project;
-						}
-						else {
+						} else {
 							return this.router.socket_fs;
 						}
 					} else {
@@ -204,7 +203,7 @@ goorm.core.router = {
 					var permission = core.module.layout.project.get_permission();
 					var project_path = core.status.current_project_path;
 
-					var _send = function (_permission) {
+					var _send = function(_permission) {
 						if (self.project_url.indexOf(url) > -1 && project_path && _permission && !_permission.writable) {
 							host = core.user.project_host;
 							port = core.user.project_port;
@@ -236,19 +235,16 @@ goorm.core.router = {
 
 								// sync
 								_send(permission);
-							}
-							else {
+							} else {
 								// async
-								core.module.layout.project.get_permission(project_path, function (_permission) {
+								core.module.layout.project.get_permission(project_path, function(_permission) {
 									_send(_permission);
 								});
 							}
-						}
-						else {
+						} else {
 							_send(permission);
 						}
-					}
-					else {
+					} else {
 						_send(permission);
 					}
 				} else {
@@ -277,7 +273,7 @@ goorm.core.router = {
 		return this.fs_info;
 	},
 
-	set_reconnect: function (socket) {
+	set_reconnect: function(socket) {
 		var reconnect_attempts = 1;
 
 		var generate_interval = function(k) {
@@ -386,32 +382,31 @@ goorm.core.router = {
 		if (!this.socket) {
 			this.socket = io.connect();
 		}
-		
-		this.socket.on('connect', function () {
+
+		this.socket.on('connect', function() {
 			$('#goorm_bottom').find('.connect-icon').show();
 			$('#goorm_bottom').find('.disconnect-icon').hide();
 			$('#goorm_bottom').find('.connect_state').show();
 			$('#goorm_bottom').find('.disconnect_state').hide();
-			
+
 			
 		});
+
 		
-		
-		
+
 		this.set_reconnect(this.socket);
 	},
 
-	get_host: function (project_path) {
+	get_host: function(project_path) {
 		var permission = core.module.layout.project.get_permission(project_path);
 		var url = "";
 
 		if (permission.writable) {
 			var info = this.get_fs_info();
-			var host = (core.user.dns) ? core.user.id+"."+core.user.dns : info.host;
+			var host = (core.user.dns) ? core.user.id + "." + core.user.dns : info.host;
 
-			url = info.protocol+"://"+host+":"+info.port;
-		}
-		else {
+			url = info.protocol + "://" + host + ":" + info.port;
+		} else {
 			url = "http://" + core.user.project_host + ":" + core.user.project_port;
 		}
 
@@ -425,7 +420,7 @@ goorm.core.router = {
 	 * path: /api/path/
 	 * params : query
 	 */
-	get_url: function (project_path, path, params) {
+	get_url: function(project_path, path, params) {
 		var hostdata = this.get_host(project_path);
 		var url = hostdata.url + path + "?";
 
@@ -439,30 +434,29 @@ goorm.core.router = {
 
 		if (hostdata.permission.writable) {
 			url += '&secure_session_id=' + encodeURIComponent(core.user.fs_session_id);
-		}
-		else { // readonly
+		} else { // readonly
 			url += '&secure_session_id=' + encodeURIComponent(core.user.project_session_id);
 		}
 
 		return url;
 	},
 
-	is_connected: function () {
+	is_connected: function() {
 		
 
 		
 	},
-		
-	_wait: function (callback) {
-		this.wait_list.push(callback);	
+
+	_wait: function(callback) {
+		this.wait_list.push(callback);
 	},
-		
-	_call: function () {
+
+	_call: function() {
 		
 
 		
 	},
-		
+
 	get_socket: function() {
 		return this.socket;
 	}

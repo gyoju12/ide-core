@@ -449,7 +449,7 @@ goorm.core.project.explorer.prototype = {
 			};
 			_$.get("file/copy_file_paste", postdata, function(data) {
 				if (data.result) {
-					console.log(data.result);
+					// console.log(data.result);
 				}
 				//self.clipboard = false;
 				self.refresh();
@@ -470,7 +470,7 @@ goorm.core.project.explorer.prototype = {
 				};
 				_$.get("file/copy_file_paste", postdata, function(data) {
 					if (data.result) {
-						console.log(data.result);
+						// console.log(data.result);
 					}
 					//self.clipboard = false;
 					self.refresh();

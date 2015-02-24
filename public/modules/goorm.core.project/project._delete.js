@@ -213,8 +213,6 @@ goorm.core.project._delete = {
 			// 		// }
 			// 		// else if (storage == "Google Drive") {
 
-			// 		// } else if (storage == "Dropbox") {
-			// 		// 	self.project_list = new goorm.core.cloud.dropbox.project.list();
 			// 		// }
 			// 		//self.project_list.init("#project_delete");
 			// 	});

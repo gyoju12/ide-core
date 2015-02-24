@@ -341,7 +341,7 @@ module.exports = {
 				encoding: 'utf8'
 			}, function(err, data) {
 				if (err) { // jeongmin: no goorm.manifest
-					console.log('goorm.manifest reading error in valid_manifest:', err);
+					// console.log('goorm.manifest reading error in valid_manifest:', err);
 
 					// jeongmin: dummy cur_manifest
 					cur_manifest = {
@@ -354,7 +354,7 @@ module.exports = {
 					try {
 						cur_manifest = JSON.parse(data);
 					} catch (e) {
-						console.log('goorm.manifest parsing error in valid_manifest:', e);
+						// console.log('goorm.manifest parsing error in valid_manifest:', e);
 
 						// jeongmin: dummy cur_manifest
 						cur_manifest = {

@@ -9,10 +9,10 @@
  **/
 
 goorm.core.project.external = {
-	init: function () {
+	init: function() {
 		var self = this;
 		var m = location.pathname.match(/^\/(share|edu)-(.*)$/);
-		if(m) {
+		if (m) {
 			var mode = m[1];
 			var hash = m[2];
 			var senddata = {
@@ -24,38 +24,36 @@ goorm.core.project.external = {
 			localStorage.current_project = "{}";
 			localStorage.workspace_window = "[]";
 
-			$(core).on("goorm_login_complete", function(){
+			$(core).on("goorm_login_complete", function() {
 				core.socket.once("/share/on_init", function(res) {
-					if(!res.error && !res.err_code) {
-						if(res.result) res = res.result;
+					if (!res.error && !res.err_code) {
+						if (res.result) res = res.result;
 
 						self.data = res;
-						
+
 						goorm.core.project.open.open(res.project_path, res.project_name, res.project_type);
 
-						if(mode == "share") {
-							if(res.opened_files) {
-								for(var i=0; i < res.opened_files.length; i++) {
+						if (mode == "share") {
+							if (res.opened_files) {
+								for (var i = 0; i < res.opened_files.length; i++) {
 									var fullpath = res.project_path + res.opened_files[i];
 									var p = fullpath.split("/");
 									var filename = p.pop();
 									var filepath = p.join("/");
-									if(filename.split(".").length > 1) {
+									if (filename.split(".").length > 1) {
 										var ext = filename.split(".").pop();
-									}
-									else {
+									} else {
 										var ext = "txt";
 									}
 
-									console.log(filepath, filename, ext);
+									// console.log(filepath, filename, ext);
 									core.module.layout.workspace.window_manager.open(filepath + "/", filename, ext);
 								}
 							}
 						}
-						
+
 						$(core).trigger("goorm_share_ready", res);
-					}
-					else {
+					} else {
 						alert.show(res.result);
 					}
 				});
@@ -63,7 +61,7 @@ goorm.core.project.external = {
 			});
 		}
 	},
-	create: function(options){
+	create: function(options) {
 		var project = core.status.current_project_path;
 		var data = {
 			path: project,
@@ -71,7 +69,7 @@ goorm.core.project.external = {
 		};
 
 		var list = core.module.layout.workspace.window_manager.get_project_windows();
-		for(var i=0; i < list.length; i++) {
+		for (var i = 0; i < list.length; i++) {
 			var name = list[i].filepath + list[i].filename;
 			name = name.replace(project, "");
 			data.opened_files.push(name);
@@ -79,7 +77,7 @@ goorm.core.project.external = {
 		$.extend(data, options);
 
 		core.socket.once("/share/create", function(res) {
-			if(res.error) {
+			if (res.error) {
 				console.log(res);
 			}
 		});

@@ -365,18 +365,6 @@ goorm.core.window.panel.prototype = {
 
 				self.editor.set_mode(mode);
 			}
-			// }
-			// else if (self.storage == "Dropbox") {
-			// if (editor == "Editor") {
-			// 	self.editor = new goorm.core.cloud.dropbox.edit();
-			// 	self.editor.init("#g_window_" + morphed_title, self.filepath, self.filename, self.filetype, options);
-			// 	self.editor.load(self.filepath, self.filename, self.filetype, options);
-			// } else if (editor == "Terminal" || editor == "Merge") {
-
-			// } else if (editor == "WebView") {
-
-			// }
-			// }
 
 
 			self.set_footer(); //native function to call the self.panel.setFooter();
@@ -576,7 +564,7 @@ goorm.core.window.panel.prototype = {
 
 				self.tab.restore();
 
-				console.log("_restore_maximized : " + self.panel.parent().css("top"));
+				// console.log("_restore_maximized : " + self.panel.parent().css("top"));
 
 				// self.panel.trigger(self.filename + "_resized"); // jeongmin: document -> panel
 

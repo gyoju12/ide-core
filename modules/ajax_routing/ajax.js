@@ -42,7 +42,6 @@ module.exports = {
 		var self = this;
 		self.io = io;
 
-		// g_cloud_dropbox.start(io);
 		io.set('log level', 0);
 		io.sockets.on('connection', function(socket) {
 			// join to goorm. Jeong-Min Im.
@@ -269,7 +268,7 @@ module.exports = {
 				var evt = new EventEmitter();
 				var data = {};
 
-				function project_doing_export (data) {
+				function project_doing_export(data) {
 					socket.emit("/project/do_export", data);
 				}
 

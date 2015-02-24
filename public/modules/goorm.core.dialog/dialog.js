@@ -24,10 +24,10 @@ goorm.core.dialog.prototype = {
 		var goorm_dialog_container = $("[id='" + option.id + "']");
 
 		goorm_dialog_container.draggable({});
-// 		goorm_dialog_container.css("overflow", "hidden");
+		// 		goorm_dialog_container.css("overflow", "hidden");
 
 		// modal centering optimized - heeje
-		goorm_dialog_container.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+		goorm_dialog_container.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
 			var $dialog = $(this).find(".modal-dialog");
@@ -35,7 +35,7 @@ goorm.core.dialog.prototype = {
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css("top", offset_height - 30).css("left", offset_width);
 
-			
+
 		});
 
 		$(document).on('click', '.modal-backdrop.in', function() {
@@ -92,7 +92,7 @@ goorm.core.dialog.prototype = {
 		slider_c.on('change.bfhslider', function() {
 			var v = parseInt($('.bfh-slider-value').text(), 10);
 
-			console.log(v);
+			// console.log(v);
 		});
 	}
 };

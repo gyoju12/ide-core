@@ -67,16 +67,16 @@ goorm.core.project._new = {
 
 					////// value validation check //////
 					var input_name = $("#input_project_name").val();
-					
+
 					if (input_name === "") {
 						alert.show(core.module.localization.msg.alert_project_name);
 						return false;
-					} else if(data.detailed_type !== 'django') {
+					} else if (data.detailed_type !== 'django') {
 						if (!/^[\w-_]*$/.test(input_name)) {
 							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
 							return false;
 						}
-					} else if(data.detailed_type === 'django') {
+					} else if (data.detailed_type === 'django') {
 						if (!/^[\w_]*$/.test(input_name)) {
 							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character2);
 							return false;
@@ -85,7 +85,7 @@ goorm.core.project._new = {
 							return false;
 						}
 					}
-					
+
 
 					////// make basic project information //////
 					var project_desc = $("#input_project_desc").val();
@@ -197,7 +197,6 @@ goorm.core.project._new = {
 						plugins: plugin
 					};
 
-					////// local or dropbox storage //////
 					// var selected_storage = $("#new_project_storage").val().toString();	// hidden: storage is deprecated
 
 					// if (selected_storage == "goormIDE_Storage") {
@@ -208,12 +207,6 @@ goorm.core.project._new = {
 					////// communicate with server //////
 					if (!handle_ok(project_info, callback))
 						return false;
-					// }
-					// else if (selected_storage == "Dropbox") {
-					// 	goorm.core.cloud.dropbox.make_new_project(project_info);
-
-					// 	self.panel.modal('hide');
-					// }
 				});
 				
 				$("#g_np_btn_ok_import").click(function() {

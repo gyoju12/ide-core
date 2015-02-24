@@ -101,7 +101,7 @@ module.exports = {
 		
 
 		//to make correct host --heeje
-		if(host.indexOf(':') >= 0){
+		if (host.indexOf(':') >= 0) {
 			host = host.split(':')[0];
 		}
 
@@ -145,7 +145,7 @@ module.exports = {
 
 		// Redis Store
 		if (global.__redis_mode) {
-			store.client.set('session_'+IDE_HOST+'_' + user_data.id, req.sessionID);
+			store.client.set('session_' + IDE_HOST + '_' + user_data.id, req.sessionID);
 			store.client.set(req.sessionID, JSON.stringify(user_data));
 		} else {
 			session.auth = {
@@ -154,7 +154,7 @@ module.exports = {
 
 			//jeongmin: literal is faster
 
-			store.set('session_'+IDE_HOST+'_' + user_data.id, {
+			store.set('session_' + IDE_HOST + '_' + user_data.id, {
 				'cookie': {
 					'expires': null
 				},
@@ -193,16 +193,15 @@ module.exports = {
 						
 
 						store.destroy(sessionID, function() {
-							store.client.del('session_'+IDE_HOST+'_' + session.id, function() {
-								store.client.del('sess:'+sessionID, function() {
-									store.client.del('socket_'+sessionID, function() {
+							store.client.del('session_' + IDE_HOST + '_' + session.id, function() {
+								store.client.del('sess:' + sessionID, function() {
+									store.client.del('socket_' + sessionID, function() {
 										callback(true);
 									});
 								});
 							});
 						});
-					}
-					else {
+					} else {
 						console.log('auth.manager.js:destroy_session fail user id is not same', session.id, user_id);
 						callback(false);
 					}
@@ -220,16 +219,15 @@ module.exports = {
 								
 
 								store.destroy(sessionID, function() {
-									store.client.del('session_'+IDE_HOST+'_' + inner_session.id, function() {
+									store.client.del('session_' + IDE_HOST + '_' + inner_session.id, function() {
 										store.client.del(sessionID, function() {
-											store.client.del('socket_'+sessionID, function() {
+											store.client.del('socket_' + sessionID, function() {
 												callback(true);
 											});
 										});
 									});
 								});
-							}
-							else {
+							} else {
 								console.log('auth.manager.js:destroy_session fail user id is not same', inner_session.id, user_id);
 								callback(false);
 							}
@@ -239,8 +237,7 @@ module.exports = {
 						}
 					});
 				}
-			}
-			else {
+			} else {
 				console.log('auth.manager.js:destroy_session fail - cannot find sessionData', user_id, sessionID);
 				callback(false);
 			}
