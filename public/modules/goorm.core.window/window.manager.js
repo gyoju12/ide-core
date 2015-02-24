@@ -210,9 +210,9 @@ goorm.core.window.manager = {
 		for (var i = 0; i < this.window.length; i++) {
 			
 			//useonly(mode=goorm-oss)
-			if (this.window[i].filename === 'debug' || this.window[i].filetype == 'WebView') // jeongmin: skip debug window
-			
-				continue;
+				if (this.window[i].filename === 'debug' || this.window[i].filetype == 'WebView') // jeongmin: skip debug window
+				
+					continue;
 			if (this.window[i].editor && this.window[i].editor.editor) {
 				cursor = this.window[i].editor.editor.getCursor();
 				scroll_top = this.window[i].editor.scroll_top; // jeongmin: terminal window doesn't have editor
@@ -246,21 +246,7 @@ goorm.core.window.manager = {
 		localStorage.workspace_window = JSON.stringify(window_info);
 	},
 	
-
-		/*
-
-		if (this.recent_window.length==0) {
-			$(".menu-open-recent-file").css('display', 'none');
-			$(".menu-open-recent-file.recent_file_empty").css('display', 'list-item');
-		}
-*/
-	},
-
-	clear_recent_file: function() {
-		this.recent_window = [];
-		this.handle_recent_file();
-		localStorage.setItem('recent_files', JSON.stringify(this.recent_window));
-	},
+	
 	
 	open: function(filepath, filename, filetype, editor, __options, callback) {
 		var self = this;
@@ -277,11 +263,6 @@ goorm.core.window.manager = {
 			var project_name = filepath.split('/')[1];
 			if (filepath[0] !== '/') project_name = filepath.split('/')[0];
 
-			// var title = filepath + filename;
-			// var morphed_title = title.split("/").join("_").split(".").join("_");
-
-			// if the file is already open
-			// if ($("#g_window_" + morphed_title).length > 0) {
 			if (i > -1) {
 				self.activate(i);
 				self.active_window = i;
@@ -293,10 +274,7 @@ goorm.core.window.manager = {
 
 				return self.window[i];
 			} else {
-				// if (callback && typeof(callback) === 'function')
-				// 	callback(self.window[self.window.length - 1]); // jeongmin: do callback before return
 				// 콜백은 add되고 모든 프로세스가 끝난 이후에 실행되어야함
-
 				var idx = self.window.length - 1;
 
 				options.id = new Date().getTime();
@@ -304,7 +282,6 @@ goorm.core.window.manager = {
 				options.filename = filename;
 				self.add(filepath, filename, filetype, editor, options);
 
-				// console.log("binding = ", filepath + '/' + filename + options.index + '.window_loaded');
 				$(core).one(filepath + '/' + filename + '.window_loaded', function(e, __window) { // remove index: no need
 					if (callback && typeof(callback) === 'function') {
 						callback(__window);
@@ -314,37 +291,30 @@ goorm.core.window.manager = {
 				self.window[self.window.length - 1].resize_all();
 				return self.window[self.window.length - 1];
 			}
-
 		};
 
 		
-			
-			
-			//useonly(mode=goorm-oss)
-			if (filetype == "bmp" || filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx" || filetype == "avi" || filetype == "mpg" || filetype == "mp4" || filetype == "wmv") {
-			
+		
+		//useonly(mode=goorm-oss)
+		if (filetype == "bmp" || filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx" || filetype == "avi" || filetype == "mpg" || filetype == "mp4" || filetype == "wmv") {
 			var query = {
 				filepath: filepath,
 				filename: filename
 			};
 
 			_$.get("file/get_file", query, function() {
-				
-				
+				window.open("files/" + filepath + filename);
 			});
-			
+
 			if (callback && typeof(callback) === 'function')
 				callback();
-
 		} else {
-			
-				//useonly(mode=goorm-oss)
-				if (editor != 'WebView') { // just editor type except WebView(this is temporary file. So difficult to get property)
-				
+			if (editor != 'WebView') { // just editor type except WebView(this is temporary file. So difficult to get property)
 				////// check if this file is bigger than 10MB. Jeong-Min Im. //////
 				var postdata = {
 					path: filepath + filename
 				};
+
 				core._socket.once("/file/get_property", function(data) {
 					if (data.err_code === 0) {
 						if (data.size >= 10000000) { // 1MB = 1,000,000Bytes, 10MB = 10,000,000Bytes
@@ -352,12 +322,10 @@ goorm.core.window.manager = {
 
 							alert.show(core.module.localization.msg.alert_file_size_too_big + '<br/>' + filename + ': ' + mega_size + 'MB');
 						} else {
-							
 							do_open();
 						}
 					} else if (data.err_code === 20) {
 						// file not exists
-						
 						alert.show(data.message + ": " + data.path);
 
 						if (callback && typeof(callback) === 'function')
@@ -369,6 +337,7 @@ goorm.core.window.manager = {
 			} else // no need to check file size
 				return do_open();
 		}
+		
 	},
 	open_file_already_opened: function(filepath, filename, filetype, editor, __options, callback) {
 		var self = this;
@@ -380,22 +349,20 @@ goorm.core.window.manager = {
 		filetype = active_window_target.filetype;
 
 		var options = __options || {};
-		if (filetype == "pdf" || filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx") {
+
+		
+		
+		//useonly(mode=goorm-oss)
+		if (filetype == "jpg" || filetype == "jpeg" || filetype == "gif" || filetype == "png" || filetype == "doc" || filetype == "docx" || filetype == "ppt" || filetype == "pptx" || filetype == "xls" || filetype == "xlsx") {
 			var query = {
 				filepath: filepath,
 				filename: filename
 			};
 
 			_$.get("file/get_file", query, function() {
-				
-				
+				window.open("files/" + filepath + filename);
 			});
 		} else {
-			if (filepath != "/" && filepath !== "") {
-				if (core.module.layout.history)
-					core.module.layout.history.last_init_load = filepath + filename;
-			}
-
 			var i = this.is_opened(filepath, filename);
 			var project_name = filepath.split('/')[1];
 			if (filepath[0] != '/') project_name = filepath.split('/')[0];
@@ -408,6 +375,7 @@ goorm.core.window.manager = {
 
 			return this.window[this.window.length - 1];
 		}
+		
 	},
 
 	find_by_filename: function(filepath, filename) {
@@ -983,20 +951,10 @@ goorm.core.window.manager = {
 	},
 
 	check_file_list: function(temp_window_list, callback) {
-		var postdata = {
-			
-				//useonly(mode=goorm-oss)
-			'get_list_type': 'owner_list'
-				
-		};
-
-		//$.get("project/get_list", postdata, function (project_data) {
-		
-			//useonly(mode=goorm-oss)
-			core.socket.once("/project/get_list/owner", function(project_data) {
-			
+		function get_list_cb(project_data) {
 			if (!temp_window_list)
 				temp_window_list = [];
+
 			var files = temp_window_list.filter(function(o) {
 				for (var i = 0; i < project_data.length; i++) {
 					if (project_data[i].name === o.project) {
@@ -1009,8 +967,15 @@ goorm.core.window.manager = {
 
 			localStorage.workspace_window = JSON.stringify(files);
 			callback(files);
+		}
+
+		
+		//useonly(mode=goorm-oss)
+		core.socket.once("/project/get_list/owner", get_list_cb);
+		core.socket.emit("/project/get_list", {
+			'get_list_type': 'owner_list'
 		});
-		core.socket.emit("/project/get_list", postdata);
+		\
 	},
 
 	tab_manager: {

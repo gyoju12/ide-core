@@ -219,11 +219,12 @@ goorm.core.window.panel.prototype = {
 			this.title = this.filepath;
 		}
 		
-			//useonly(mode=goorm-oss)
-			else if ((this.filename == "debug" && editor == "Terminal")) {
-			
+		//useonly(mode=goorm-oss)
+		else if ((this.filename == "debug" && editor == "Terminal")) {
 			this.title = this.filename;
-		} else {
+		}
+		
+		else {
 			this.title = this.filepath + this.filename;
 		}
 
@@ -608,7 +609,7 @@ goorm.core.window.panel.prototype = {
 		//window body click event assign/		
 		panel.click(function(e) {
 			// self.window_body_click();	// hidden by jeongmin: function is deprecated
-			if($("#project_selector").find('.btn-group').hasClass('open')) {
+			if ($("#project_selector").find('.btn-group').hasClass('open')) {
 				$("#project_selector").find('.btn-group').removeClass('open');
 			}
 
@@ -897,12 +898,12 @@ goorm.core.window.panel.prototype = {
 
 		for (var i = 0; i < window_manager.index; i++) {
 			
-				//useonly(mode=goorm-oss)
-				if (window_manager.window[i].type == "Editor") {
-				
+			//useonly(mode=goorm-oss)
+			if (window_manager.window[i].type == "Editor") {
 				editor_exist = true;
 				break;
 			}
+			
 		}
 		if (!editor_exist) {
 

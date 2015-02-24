@@ -30,7 +30,7 @@ goorm.core.project.property = {
 
 		$(core).on("on_project_open", function() {
 			self.firstShow = true;
-			$('#property_treeview span').first().click(); // Init Project Propery...
+			// $('#property_treeview span').first().click(); // Init Project Propery... > there is no span
 			// var plugin_run = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type].run;
 			// goorm.core.project.clickRun = plugin_run ? plugin_run : function(){};
 			self.load_property(core.status.current_project_path, function(contents) {
@@ -109,16 +109,16 @@ goorm.core.project.property = {
 		});
 	},
 
-	show: function() {
+	show: function(node) {
+		var tree_node = node || 'Property/Information';
 		if (core.status.current_project_path !== "") {
 			if (this.firstShow) {
 				$("#property_tabview .nav > *").hide();
-				$("#property_tabview .nav li").first().show()
+				$("#property_tabview .nav li").first().show();
 				this.firstShow = false;
 			}
-
+			$('#property_treeview').find("li[path='" + tree_node + "'] > a.jstree-anchor").first().click();
 			this.panel.modal('show');
-			$('#property_treeview').find("li[path='Property/Information']>a").click()
 		} else {
 			var result = {
 				result: false,
@@ -476,9 +476,10 @@ goorm.core.project.property = {
 			set_dialog_button();
 		};
 
-		$('#dlg_project_property').on('shown.bs.modal', function (e) {
-			$('#property_treeview').find("li[path='Property/Information']>a").click();
-		});
+		// hidden : not always want to see information first. 
+		// $('#dlg_project_property').on('shown.bs.modal', function (e) {
+		// 	$('#property_treeview').find("li[path='Property/Information']>a").click();
+		// });
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({

@@ -23,7 +23,7 @@ goorm.core.project.explorer = function() {
 	this.project_idx_data = {};
 	this.table = null;
 	this.project_init = false;
- 	this.check_callbacks = [];
+	this.check_callbacks = [];
 };
 
 goorm.core.project.explorer.prototype = {
@@ -84,17 +84,7 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		$(core).on('goorm_login_complete', function() {
-			var postdata = {
-				
-				//useonly(mode=goorm-oss)
-				'get_list_type': 'owner_list'
-				
-			};
-			//$.get("project/get_list", postdata, function (data) {
-			
-				//useonly(mode=goorm-oss)
-			core.socket.once("/project/get_list/owner", function(data) {
-				
+			function get_list_cb(data) {
 				self.project_data = data;
 				self.make_project_selectbox();
 				core.workspace = {};
@@ -107,18 +97,15 @@ goorm.core.project.explorer.prototype = {
 				} else {}
 
 				$(core).trigger('project_get_list_complete');
+			}
+
+			
+			//useonly(mode=goorm-oss)
+			core.socket.once("/project/get_list/owner", get_list_cb);
+			core.socket.emit("/project/get_list", {
+				'get_list_type': 'owner_list'
 			});
-			core.socket.emit("/project/get_list", postdata);
-
-			// postdata = {
-			// 	kind: "project",
-			// 	path: "" + core.status.current_project_path
-			// };
-
-			// self.fill_tree_data(postdata.path);
-
-			// $('#project_loading_div').hide();
-			// $('#project_treeview').show();
+			
 
 			self.set_context_menu();
 		});
@@ -153,10 +140,8 @@ goorm.core.project.explorer.prototype = {
 		$("#project_loading_div").show();
 		$("#project_treeview").hide();
 		$("#project_list_table").hide();
-		
-		//useonly(mode=goorm-oss)
-		core.socket.once("/project/get_list/owner", function(data) {
-		
+
+		function get_list_cb(data) {
 			self.project_data = data;
 			self.make_project_selectbox();
 
@@ -202,7 +187,7 @@ goorm.core.project.explorer.prototype = {
 						self.treeview.destroy();
 					}
 					self.treeview = null;
-					
+
 					var postdata = {
 						kind: "project",
 						path: temp_project_path
@@ -228,13 +213,15 @@ goorm.core.project.explorer.prototype = {
 			}
 			self.drag_n_drop();
 			if (callback && typeof(callback) === 'function') callback();
-		});
+		}
+
+		
+		//useonly(mode=goorm-oss)
+		core.socket.once("/project/get_list/owner", get_list_cb);
 		core.socket.emit("/project/get_list", {
-			
-			//useonly(mode=goorm-oss)
 			'get_list_type': 'owner_list'
-			
 		});
+		
 	},
 
 	make_project_selectbox: function() {
@@ -286,8 +273,8 @@ goorm.core.project.explorer.prototype = {
 			$(core).trigger('contextmenu_all_hide');
 
 			// jeongmin: make project list scroll
-			var dropdown = ('#project_selector .dropdown-menu');
-			$(dropdown).css('max-height', $(document).height() - $(this).offset().top - 80);
+			var $dropdown = $('#project_selector .dropdown-menu');
+			$dropdown.css('max-height', $(document).height() - $(this).offset().top - 80);
 		});
 
 		$('#back_to_project_table').click(function() {
@@ -328,24 +315,19 @@ goorm.core.project.explorer.prototype = {
 
 	refresh_project_selectbox: function() {
 		var self = this;
-		var postdata = {
-			
-			//useonly(mode=goorm-oss)
-			'get_list_type': 'owner_list'
-			
-		};
 
-		//$.get("project/get_list", postdata, function (data) {
-		
-		//useonly(mode=goorm-oss)
-		core.socket.once("/project/get_list/owner", function(data) {
+		function get_list_cb(data) {
 			self.project_data = data;
 			self.make_project_selectbox();
+		}
+
+		
+		//useonly(mode=goorm-oss)
+		core.socket.once("/project/get_list/owner", get_list_cb);
+		core.socket.emit("/project/get_list", {
+			'get_list_type': 'owner_list'
 		});
 		
-
-		core.socket.emit("/project/get_list", postdata);
-
 	},
 
 	on_project_selectbox_change: function(project_idx) {
@@ -458,11 +440,11 @@ goorm.core.project.explorer.prototype = {
 	},
 	duplicate: function() {
 		var self = this;
-		
+
 		this.copy();
 		var path = this.clipboard.files[0];
-		if(path) {
-			path = path.substring(0,path.lastIndexOf("/"));	
+		if (path) {
+			path = path.substring(0, path.lastIndexOf("/"));
 			if (this.clipboard && path) {
 				var postdata = {
 					source: this.clipboard,
@@ -478,11 +460,10 @@ goorm.core.project.explorer.prototype = {
 			} else {
 				alert.show(core.module.localization.msg.alert_file_not_select);
 			}
-		}
-		else alert.show(core.module.localization.msg.alert_folder_duplicate_error);
+		} else alert.show(core.module.localization.msg.alert_folder_duplicate_error);
 	},
 
-	get_tree_selected_path: function(treeview_id) {	// treeview_id: id of various treeviews
+	get_tree_selected_path: function(treeview_id) { // treeview_id: id of various treeviews
 		treeview_id = treeview_id || 'project_treeview';
 
 		var selected_items = $("#" + treeview_id + " .jstree-clicked");
@@ -516,7 +497,7 @@ goorm.core.project.explorer.prototype = {
 		};
 	},
 
-	reset_tree_selected: function(){
+	reset_tree_selected: function() {
 		core.status.selected_node = '';
 		core.status.selected_file = '';
 		core.status.selected_file_type = '';
@@ -644,7 +625,7 @@ goorm.core.project.explorer.prototype = {
 	},
 
 	drag_n_drop: function() {
-		var self = this;		
+		var self = this;
 		var treeview = $('#project_treeview');
 
 		var isWholerow = true;
@@ -654,101 +635,100 @@ goorm.core.project.explorer.prototype = {
 		treeview.off('drop');
 		treeview.off('dragenter');
 		treeview.off('dragleave');
-		treeview.on('dragover', function(e) { 
-			return false; 
-		}) 
-		.on('drop', function(e) { 
-			if(isUploading) return false;
+		treeview.on('dragover', function(e) {
+				return false;
+			})
+			.on('drop', function(e) {
+				if (isUploading) return false;
 
-			var target = $(e.target).parent();
-			if(target.is('[file_type]') || !target.is('[role="treeitem"]')) return false;
-			var files = e.originalEvent.dataTransfer.files;
-			var items = e.originalEvent.dataTransfer.items;
+				var target = $(e.target).parent();
+				if (target.is('[file_type]') || !target.is('[role="treeitem"]')) return false;
+				var files = e.originalEvent.dataTransfer.files;
+				var items = e.originalEvent.dataTransfer.items;
 
-			function callback() {
-				isUploading = false;
-			}
-
-			// firefox does not support dataTransfer.items. we can't confirm which is file or folder.
-			// so we don't support drag n drop function in firefox. - gangseok.lee
-			if(items === undefined) return false; 
-
-			// is this best way to check folders?
-			// all items data will be gone when confirmataion dialog occur.
-			for(var i = 0; i < items.length; i++) {
-				var entry = items[i].getAsEntry ? items[i].getAsEntry() : items[i].webkitGetAsEntry();
-
-				if(entry && entry.isDirectory) {
-					alert.show(core.module.localization.msg.alert_folder_upload_is_not_allowed);
-					return false;
+				function callback() {
+					isUploading = false;
 				}
-			}
-			goorm.core.file._import.upload_file_drag(files, target.attr("path"), callback);						
-			return false; 
-		})
-		.on('dragenter', 'li:not([file_type])', function(e) {
-			var target = $(e.target);
-			if(target.parent().is('[file_type]')) return false;
 
-			var tagName = target.prop('tagName'); 
-			var sibling = undefined; 
+				// firefox does not support dataTransfer.items. we can't confirm which is file or folder.
+				// so we don't support drag n drop function in firefox. - gangseok.lee
+				if (items === undefined) return false;
 
-			switch(tagName) { 
-			case 'A': 
-				if(isWholerow) { 
-					target.addClass('jstree-hovered') 
-					.siblings('div').addClass('jstree-wholerow-hovered'); 
-				} 
-				else { 
-					target.addClass('jstree-hovered'); 
-				} 
-			//console.log('A dragenter'); 
-				break; 
-			case 'DIV': 
-				if(!isWholerow) break; 
-				target.addClass('jstree-wholerow-hovered') 
-				.siblings('a').addClass('jstree-hovered'); 
-				//console.log('DIV dragenter'); 
-				break; 
-			} 
+				// is this best way to check folders?
+				// all items data will be gone when confirmataion dialog occur.
+				for (var i = 0; i < items.length; i++) {
+					var entry = items[i].getAsEntry ? items[i].getAsEntry() : items[i].webkitGetAsEntry();
 
-			return false; 
-		})
-		.on('dragleave', 'li:not([file_type])', function(e) {
-			var target = $(e.target);
-			if(target.parent().is('[file_type]')) return false;
+					if (entry && entry.isDirectory) {
+						alert.show(core.module.localization.msg.alert_folder_upload_is_not_allowed);
+						return false;
+					}
+				}
+				goorm.core.file._import.upload_file_drag(files, target.attr("path"), callback);
+				return false;
+			})
+			.on('dragenter', 'li:not([file_type])', function(e) {
+				var target = $(e.target);
+				if (target.parent().is('[file_type]')) return false;
 
-			var tagName = target.prop('tagName');
+				var tagName = target.prop('tagName');
+				var sibling = undefined;
 
-			if(tagName === 'A') {
-				if(!isWholerow) { 
-					target.removeClass('jstree-hovered'); 
-					return false; 
-				} 
+				switch (tagName) {
+					case 'A':
+						if (isWholerow) {
+							target.addClass('jstree-hovered')
+								.siblings('div').addClass('jstree-wholerow-hovered');
+						} else {
+							target.addClass('jstree-hovered');
+						}
+						//console.log('A dragenter'); 
+						break;
+					case 'DIV':
+						if (!isWholerow) break;
+						target.addClass('jstree-wholerow-hovered')
+							.siblings('a').addClass('jstree-hovered');
+						//console.log('DIV dragenter'); 
+						break;
+				}
 
-				target = target.siblings('div'); 
-			} 
+				return false;
+			})
+			.on('dragleave', 'li:not([file_type])', function(e) {
+				var target = $(e.target);
+				if (target.parent().is('[file_type]')) return false;
 
-			var X = e.originalEvent.pageX; 
-			var Y = e.originalEvent.pageY; 
-			var offset = target.offset(); 
-			var d_value = 2;	// deviation value, chrome browser sends incorrect page position value.
-			offset.right = Math.floor(target.width() + offset.left) - d_value;
-			offset.bottom = Math.floor(target.height() + offset.top) - d_value;
-			offset.left = offset.left + d_value;
-			offset.top = offset.top + d_value;
+				var tagName = target.prop('tagName');
 
-			var isMouseout = X <= offset.left || X >= offset.right || Y <= offset.top || Y >= offset.bottom; 
+				if (tagName === 'A') {
+					if (!isWholerow) {
+						target.removeClass('jstree-hovered');
+						return false;
+					}
 
-			//console.log("X: " + X + ", Y: " + Y + ", offset(" + offset.left + "," + offset.right + "," + offset.top + "," + offset.bottom + ") out? " + isMouseout); 
+					target = target.siblings('div');
+				}
 
-			if(isMouseout) { 
-				target.removeClass('jstree-wholerow-hovered') 
-				.siblings('a').removeClass('jstree-hovered'); 
-			} 
+				var X = e.originalEvent.pageX;
+				var Y = e.originalEvent.pageY;
+				var offset = target.offset();
+				var d_value = 2; // deviation value, chrome browser sends incorrect page position value.
+				offset.right = Math.floor(target.width() + offset.left) - d_value;
+				offset.bottom = Math.floor(target.height() + offset.top) - d_value;
+				offset.left = offset.left + d_value;
+				offset.top = offset.top + d_value;
 
-			return false; 
-		});
+				var isMouseout = X <= offset.left || X >= offset.right || Y <= offset.top || Y >= offset.bottom;
+
+				//console.log("X: " + X + ", Y: " + Y + ", offset(" + offset.left + "," + offset.right + "," + offset.top + "," + offset.bottom + ") out? " + isMouseout); 
+
+				if (isMouseout) {
+					target.removeClass('jstree-wholerow-hovered')
+						.siblings('a').removeClass('jstree-hovered');
+				}
+
+				return false;
+			});
 
 		// drag n drop file move
 		var path_info = {};
@@ -765,193 +745,192 @@ goorm.core.project.explorer.prototype = {
 		  }, 100, true);
 		*/
 		self.check_callbacks.push(function(op, node, parent, pos, more) {
-					//handle_callback.apply(this, arguments);
-					return false;
-				});
-		
+			//handle_callback.apply(this, arguments);
+			return false;
+		});
+
 		$(document)
-		.off('dnd_start.vakata').on('dnd_start.vakata', function(e, data, helper, more) {    
-			$('head').append('<style id="dnd_custom_style">.jstree-er {display:none !important;}</style>');
-		})
-		.off('dnd_move.vakata').on('dnd_move.vakata', $.throttle(function(e, data) {
-			var target_node = $(data.event.target);
-		  	var tag_name = target_node.prop('tagName');
+			.off('dnd_start.vakata').on('dnd_start.vakata', function(e, data, helper, more) {
+				$('head').append('<style id="dnd_custom_style">.jstree-er {display:none !important;}</style>');
+			})
+			.off('dnd_move.vakata').on('dnd_move.vakata', $.throttle(function(e, data) {
+				var target_node = $(data.event.target);
+				var tag_name = target_node.prop('tagName');
 
-		  	if(tag_name === 'A' || tag_name === 'I') { 
-	    		target_node = target_node.parent();
-		    	tag_name = target_node.prop('tagName');
-		  	}
-		  	
-		  	var id = target_node.attr('id');
-		  	var path = target_node.attr('path');      
-		  	var is_folder = !target_node.is('[file_type]');
-		  	
-		  	if(tag_name === 'LI' && is_folder) {
-		  		path_info.target_path = path;
-		    	path_info.id = id;
-		  	}
-		  	else {
-		    	path_info = {};
-		  	}
-		}, 250, true))
-		.off('dnd_stop.vakata').on('dnd_stop.vakata', function(e, data) {
-			//console.log('dnd_stop');
-			var target_path = path_info.target_path;
-			// var target_id = path_info.id;
-			// var target_folder_children = [];
-			// var info = { filename : '', exist: false };
-			// var info_list = [];
+				if (tag_name === 'A' || tag_name === 'I') {
+					target_node = target_node.parent();
+					tag_name = target_node.prop('tagName');
+				}
 
-			var ori_path = [];	// jeongmin: files' origin
+				var id = target_node.attr('id');
+				var path = target_node.attr('path');
+				var is_folder = !target_node.is('[file_type]');
 
-			var msg = core.module.localization.msg;
-			$("#dnd_custom_style").remove();
+				if (tag_name === 'LI' && is_folder) {
+					path_info.target_path = path;
+					path_info.id = id;
+				} else {
+					path_info = {};
+				}
+			}, 250, true))
+			.off('dnd_stop.vakata').on('dnd_stop.vakata', function(e, data) {
+				//console.log('dnd_stop');
+				var target_path = path_info.target_path;
+				// var target_id = path_info.id;
+				// var target_folder_children = [];
+				// var info = { filename : '', exist: false };
+				// var info_list = [];
 
-			// if(target_path === undefined || target_id === undefined) return false;
-			if(target_path === undefined) return false;
-			var nodes = data.data.nodes;
-			nodes.sort().reverse();
+				var ori_path = []; // jeongmin: files' origin
 
-			// var children = treeview.jstree('get_children_dom', target_id);
+				var msg = core.module.localization.msg;
+				$("#dnd_custom_style").remove();
 
-			// if(children) {
+				// if(target_path === undefined || target_id === undefined) return false;
+				if (target_path === undefined) return false;
+				var nodes = data.data.nodes;
+				nodes.sort().reverse();
+
+				// var children = treeview.jstree('get_children_dom', target_id);
+
+				// if(children) {
 				// children.each(function(index, child) {
-					//console.log(child);
-					// var name = $(child).attr('id').split('/').slice(-1)[0];
-					// target_folder_children.push(name);
+				//console.log(child);
+				// var name = $(child).attr('id').split('/').slice(-1)[0];
+				// target_folder_children.push(name);
 				// });
-			// }
+				// }
 
-			nodes.forEach(function(id, index) {
-				var node = $('#' + id.replace(/[\/|\.]/g, '\\$&'));
-			// 	var is_folder = !node.is('[file_type]');
-			// 	var name = id.split('/').slice(-1)[0];
-				var path = node.attr('path');
+				nodes.forEach(function(id, index) {
+					var node = $('#' + id.replace(/[\/|\.]/g, '\\$&'));
+					// 	var is_folder = !node.is('[file_type]');
+					// 	var name = id.split('/').slice(-1)[0];
+					var path = node.attr('path');
 
-				ori_path.push(path);
+					ori_path.push(path);
 
-			// 	var i = target_folder_children.indexOf(name);
-			// 	var info = {};
+					// 	var i = target_folder_children.indexOf(name);
+					// 	var info = {};
 
-			// 	if(i > -1 && node.parent()) {
-			// 		var parent = node.parent().parent();
-			// 		if(parent && parent.attr('path').split('/').slice(-1)[0] === name) {
-			// 			info.cannot_move = true;
-			// 			// TODO : localization
-			// 			info.error_msg = msg.alert_cannot_overwrite_parent_folder + '<br/>"' + name +'"'; //'annot overwrite to a parent folder has the same name.';		
-			// 		}
-			// 		else if(target_path + '/' + target_folder_children[i] === path) {
-			// 			info.cannot_move = true;
-			// 			info.error_msg = msg.alert_cannot_overwrite_itself + '<br/>"' + name + '"'; //' cannot overwrite to itself.';
-			// 		}
-			// 	}
-			// 	else if(path.split('/').length === 1) {
-			// 		info.cannot_move = true;
-			// 		info.error_msg = msg.alert_root_folder_cannot_be_moved; //'Root folder cannot be moved';
-			// 	}
-			// 	else if(is_folder && target_path.match(path)) {
-			// 		info.cannot_move = true;
-			// 		info.error_msg = msg.alert_parent_folder_cannot_be_moved_to_its_child_folder; //'Root folder cannot be moved';
-			// 	}
+					// 	if(i > -1 && node.parent()) {
+					// 		var parent = node.parent().parent();
+					// 		if(parent && parent.attr('path').split('/').slice(-1)[0] === name) {
+					// 			info.cannot_move = true;
+					// 			// TODO : localization
+					// 			info.error_msg = msg.alert_cannot_overwrite_parent_folder + '<br/>"' + name +'"'; //'annot overwrite to a parent folder has the same name.';		
+					// 		}
+					// 		else if(target_path + '/' + target_folder_children[i] === path) {
+					// 			info.cannot_move = true;
+					// 			info.error_msg = msg.alert_cannot_overwrite_itself + '<br/>"' + name + '"'; //' cannot overwrite to itself.';
+					// 		}
+					// 	}
+					// 	else if(path.split('/').length === 1) {
+					// 		info.cannot_move = true;
+					// 		info.error_msg = msg.alert_root_folder_cannot_be_moved; //'Root folder cannot be moved';
+					// 	}
+					// 	else if(is_folder && target_path.match(path)) {
+					// 		info.cannot_move = true;
+					// 		info.error_msg = msg.alert_parent_folder_cannot_be_moved_to_its_child_folder; //'Root folder cannot be moved';
+					// 	}
 
-			// 	$.extend(info, { path: path, exist: ((i > -1) ? true : false)});
-			// 	info_list.push(info);
-			});
-
-			//console.log(file_list);
-
-			// var index = info_list.length - 1;
-			// info_list.sort(function(a, b) {
-			// 	return a > b;
-			// });
-
-			var _trigger = function(query, timeout) {
-				//console.log(query);
-
-				timeout === undefined ? 0 : timeout;
-				
-				setTimeout( function() {
-					$(self).trigger(query);
-				}, timeout);
-				
-			}
-
-			$(self).off('confirm_move_file').on('confirm_move_file', function() {
-				confirmation.init({
-					message: msg.confirmation_do_you_want_move, //'Do you want move?', //core.module.localization.msg.alert_confirm_invite_co_developer,
-					yes_text: msg.yes,
-					no_text: msg.no,
-					title: msg.confirmation_title,					
-
-					yes: function() {
-						//confirmation.hide();
-						_trigger('check_restriction', 500);
-						//setTimeout(_trigger('name_exist_check'), 250);							
-					},
-					no: function() {
-						//confirmation.hide();
-					}
+					// 	$.extend(info, { path: path, exist: ((i > -1) ? true : false)});
+					// 	info_list.push(info);
 				});
 
-				confirmation.show();
-			});
+				//console.log(file_list);
 
-			$(self).off('check_restriction').on('check_restriction', function() {
-				//confirmation.hide();
+				// var index = info_list.length - 1;
+				// info_list.sort(function(a, b) {
+				// 	return a > b;
+				// });
 
-				// if(index < 0) {
+				var _trigger = function(query, timeout) {
+					//console.log(query);
+
+					timeout === undefined ? 0 : timeout;
+
+					setTimeout(function() {
+						$(self).trigger(query);
+					}, timeout);
+
+				}
+
+				$(self).off('confirm_move_file').on('confirm_move_file', function() {
+					confirmation.init({
+						message: msg.confirmation_do_you_want_move, //'Do you want move?', //core.module.localization.msg.alert_confirm_invite_co_developer,
+						yes_text: msg.yes,
+						no_text: msg.no,
+						title: msg.confirmation_title,
+
+						yes: function() {
+							//confirmation.hide();
+							_trigger('check_restriction', 500);
+							//setTimeout(_trigger('name_exist_check'), 250);							
+						},
+						no: function() {
+							//confirmation.hide();
+						}
+					});
+
+					confirmation.show();
+				});
+
+				$(self).off('check_restriction').on('check_restriction', function() {
+					//confirmation.hide();
+
+					// if(index < 0) {
 					// self.move_file(target_id, target_path, info_list);
 					core.dialog.move_file.send({
 						ori_path: ori_path,
 						dst_path: target_path
 					});
 					// return;
-				// }
+					// }
 
-				// var exist = info_list[index].exist;
-				// var name = info_list[index].path.split('/').slice(-1)[0];
+					// var exist = info_list[index].exist;
+					// var name = info_list[index].path.split('/').slice(-1)[0];
 
-				// if(info_list[index].cannot_move) {
-				// 	alert.show(info_list[index].error_msg, function() {
-				// 		info_list.splice(index--, 1);
-				// 		_trigger('check_restriction', 250);
-				// 	});
-				// }
-				// else if(exist) {
-				// 	confirmation.init({
-				// 		message: msg.confirmation_do_you_want_overwrite, //'Already exists, do you want overwrite? : ' + name, //core.module.localization.msg.alert_confirm_invite_co_developer,
-				// 		yes_text: msg.confirmation_yes,
-				// 		no_text: msg.confirmation_no,
-				// 		title: msg.confirmation_title,
+					// if(info_list[index].cannot_move) {
+					// 	alert.show(info_list[index].error_msg, function() {
+					// 		info_list.splice(index--, 1);
+					// 		_trigger('check_restriction', 250);
+					// 	});
+					// }
+					// else if(exist) {
+					// 	confirmation.init({
+					// 		message: msg.confirmation_do_you_want_overwrite, //'Already exists, do you want overwrite? : ' + name, //core.module.localization.msg.alert_confirm_invite_co_developer,
+					// 		yes_text: msg.confirmation_yes,
+					// 		no_text: msg.confirmation_no,
+					// 		title: msg.confirmation_title,
 
-				// 		yes: function() {
-				// 			//console.log(name + ' will be moved forcely');
-				// 			index--;							
-				// 			//confirmation.hide();
-				// 			_trigger('check_restriction', 250);
+					// 		yes: function() {
+					// 			//console.log(name + ' will be moved forcely');
+					// 			index--;							
+					// 			//confirmation.hide();
+					// 			_trigger('check_restriction', 250);
 
-				// 		},
-				// 		no: function() {
-				// 			//console.log(name + ' will be ignored');
-				// 			info_list.splice(index--, 1);		
-				// 			//confirmation.hide();
-				// 			_trigger('check_restriction', 250);
+					// 		},
+					// 		no: function() {
+					// 			//console.log(name + ' will be ignored');
+					// 			info_list.splice(index--, 1);		
+					// 			//confirmation.hide();
+					// 			_trigger('check_restriction', 250);
 
-				// 		}
-				// 	});
+					// 		}
+					// 	});
 
-				// 	confirmation.show();					
-				// }
-				// else {
-				// 	//console.log(name + ' will be moved');
-				// 	index--;
-				// 	_trigger('check_restriction');					
-				// }
+					// 	confirmation.show();					
+					// }
+					// else {
+					// 	//console.log(name + ' will be moved');
+					// 	index--;
+					// 	_trigger('check_restriction');					
+					// }
+				});
+
+				_trigger('confirm_move_file');
+
 			});
-
-			_trigger('confirm_move_file');
-
-		});
 
 		// var colne;
 		// var self = this;
@@ -1192,7 +1171,7 @@ goorm.core.project.explorer.prototype = {
 	// 				self.treeview.open_node($target);
 	// 			}, 250);
 	// 		});
-			
+
 	// 		//getdata.change = "drag_n_drop";
 	// 		core.module.layout.workspace.window_manager.synch_with_fs(getdata);
 
@@ -1257,7 +1236,7 @@ goorm.core.project.explorer.prototype = {
 				self.treeview.tree.jstree("select_node", node);
 			}
 		};
-	
+
 		var on_click = function(e, node) {
 			e.stopPropagation();
 			$(core).trigger('contextmenu_all_hide');
@@ -1267,7 +1246,7 @@ goorm.core.project.explorer.prototype = {
 			core.status.selected_file_type = node.type;
 			self.selected_type = node.li_attr.file_type;
 
-			
+
 		};
 
 		var on_dblclick = function(e, node) {
@@ -1293,21 +1272,21 @@ goorm.core.project.explorer.prototype = {
 
 		var option = {
 			project_path: path,
-			multiple: true,	// jeongmin: for multi selecting item
-			dnd: true,	// jeongmin: for moving(dragging) treeview item
+			multiple: true, // jeongmin: for multi selecting item
+			dnd: true, // jeongmin: for moving(dragging) treeview item
 			on_click: on_click,
 			on_dblclick: on_dblclick,
 			on_mousedown: on_mousedown,
 			on_ready: on_ready,
 			check_callback: function(op, node, parent, pos, more) {
-					var args = arguments;
-					var return_value = true;
-					self.check_callbacks.forEach(function(handle_callback, index) {
-						return_value = return_value && handle_callback.apply(this, args);
-					});
+				var args = arguments;
+				var return_value = true;
+				self.check_callbacks.forEach(function(handle_callback, index) {
+					return_value = return_value && handle_callback.apply(this, args);
+				});
 
-					return return_value;
-				}
+				return return_value;
+			}
 		};
 
 		if (state) {

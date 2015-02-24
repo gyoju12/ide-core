@@ -80,10 +80,10 @@ goorm.core.project = {
 				// check treeview...
 				//
 				if (plugin && $('#property_tabview .tab-content > div[plugin="goorm.plugin.' + core.property.type + '"]').length > 0) {
-					$('#property_treeview').find("li[path='Plugin/" + plugin.text + "'] > a.jstree-anchor").first().click();
+					panel.show('Plugin/' + plugin.text);
+				} else {
+					panel.show();
 				}
-
-				panel.show();
 			} else {
 				var result = {
 					result: false,

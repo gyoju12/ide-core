@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1424765174';
+var build_version = 'oss-1424769765';
 
 // Dependency
 //
@@ -231,22 +231,13 @@ goorm.init = function() {
 		global.__set_redis_client = false;
 
 		return true;
-	}
-	else {
+	} else {
 		return false;
 	}
 }
 
 
-
 	
-
-	
-
-	
-}
-
-
 goorm.config = function() {
 	// Configuration
 	goorm.set('views', __dirname + '/views');
@@ -548,12 +539,7 @@ goorm.routing = function() {
 	
 
 	
-	goorm.post('/user/project/collaboration/invitation/pull', goorm.check_session, routes.user.project.collaboration.invitation.pull);
-	goorm.post('/user/preference/save', goorm.check_session, routes.user.preference.save);
-	goorm.get('/user/preference/load', goorm.check_session, routes.user.preference.load);
 
-	goorm.post('/session/save', routes.session.save);
-	goorm.post('/session/destroy', routes.session.destroy);
 	
 
 	//for download and upload
