@@ -262,7 +262,7 @@ module.exports = {
 
 
 			//cannot file
-			socket.on('/project/import', function(msg) {});
+			// socket.on('/project/import', function(msg) {});
 			//cannot file
 			socket.on("/project/do_export", function(postdata) {
 				var evt = new EventEmitter();
@@ -286,15 +286,15 @@ module.exports = {
 			});
 
 			//not used
-			socket.on('/project/clean', function(msg) {
-				var evt = new EventEmitter();
+			// socket.on('/project/clean', function(msg) {
+			// 	var evt = new EventEmitter();
 
-				evt.once("project_do_clean", function(data) {
-					socket.emit("/project/clean", data);
-				});
+			// 	evt.once("project_do_clean", function(data) {
+			// 		socket.emit("/project/clean", data);
+			// 	});
 
-				g_project.do_clean(msg, evt);
-			});
+			// 	g_project.do_clean(msg, evt);
+			// });
 
 			socket.on('/project/get_property', function(msg) {
 				var evt = new EventEmitter();
@@ -322,11 +322,11 @@ module.exports = {
 			});
 
 
-			socket.on('/project/check_running_project', function(msg) {
-				socket.emit("/project/check_running_project", {
-					'result': 0
-				});
-			});
+			// socket.on('/project/check_running_project', function(msg) {
+			// 	socket.emit("/project/check_running_project", {
+			// 		'result': 0
+			// 	});
+			// });
 
 			socket.on('/project/check_latest_build', function(msg) {
 				var evt = new EventEmitter();
@@ -1255,39 +1255,39 @@ module.exports = {
 			});
 
 			//cannot
-			socket.on('/file/copy_file_paste', function(msg) {});
+			// socket.on('/file/copy_file_paste', function(msg) {});
 			//cannot
-			socket.on('/file/get_file', function(msg) {});
+			// socket.on('/file/get_file', function(msg) {});
 			//cannot
-			socket.on('/file/import', function(msg) {});
+			// socket.on('/file/import', function(msg) {});
 			//cannot
-			socket.on('/file/export', function(msg) {});
+			// socket.on('/file/export', function(msg) {});
 
 			//API : Preference
-			socket.on("/preference/workspace_path", function(msg) {
+			// socket.on("/preference/workspace_path", function(msg) {
 
-				socket.emit("/preference/workspace_path", {
-					"path": global.__workspace
-				});
-			});
+			// 	socket.emit("/preference/workspace_path", {
+			// 		"path": global.__workspace
+			// 	});
+			// });
 
-			socket.on('/preference/get_server_info', function(msg) {
-				var evt = new EventEmitter();
-				evt.once("preference_get_server_info", function(data) {
-					socket.emit("/preference/get_server_info", data);
-				});
-				g_preference.get_server_info(msg, evt);
-			});
-			socket.on('/preference/get_goorm_info', function(msg) {
+			// socket.on('/preference/get_server_info', function(msg) {
+			// 	var evt = new EventEmitter();
+			// 	evt.once("preference_get_server_info", function(data) {
+			// 		socket.emit("/preference/get_server_info", data);
+			// 	});
+			// 	g_preference.get_server_info(msg, evt);
+			// });
+			// socket.on('/preference/get_goorm_info', function(msg) {
 
-				var evt = new EventEmitter();
-				evt.once("preference_get_goorm_info", function(data) {
-					socket.emit("/preference/get_goorm_info", data);
-				});
+			// 	var evt = new EventEmitter();
+			// 	evt.once("preference_get_goorm_info", function(data) {
+			// 		socket.emit("/preference/get_goorm_info", data);
+			// 	});
 
-				g_preference.get_goorm_info(msg, evt);
+			// 	g_preference.get_goorm_info(msg, evt);
 
-			});
+			// });
 			// socket.on('/preference/put_filetypes', function(msg) {	// hidden by jeongmin: file type is deprecated
 
 			// 	var evt = new EventEmitter();
@@ -1302,9 +1302,9 @@ module.exports = {
 
 			//EDIT
 
-			socket.on('/edit/get_dictionary', function(msg) {
-				socket.emit("/edit/get_dictionary", {});
-			});
+			// socket.on('/edit/get_dictionary', function(msg) {
+			// 	socket.emit("/edit/get_dictionary", {});
+			// });
 
 			
 			

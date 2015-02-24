@@ -975,7 +975,7 @@ goorm.core.window.manager = {
 		core.socket.emit("/project/get_list", {
 			'get_list_type': 'owner_list'
 		});
-		\
+		
 	},
 
 	tab_manager: {
