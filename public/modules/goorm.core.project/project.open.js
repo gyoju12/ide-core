@@ -110,6 +110,48 @@ goorm.core.project.open = {
 
 		if (project_path !== "") {
 			core._socket.set_url('/project/mount' + project_path);
+			core._socket.once('/project/mount_message', function(path) {
+				confirmation_save.init({
+					message: core.module.localization.msg.confirmation_project_close_and_save,
+					yes_text: core.module.localization.msg.save_and_close,
+					cancel_text: core.module.localization.msg.confirmation_cancel,
+					no_text: core.module.localization.msg.dont_save_and_close,
+					title: "Close...",
+
+					yes: function() {
+						var wm = core.module.layout.workspace.window_manager;
+						for (var i = wm.window.length - 1; i >= 0; i--) {
+							var w = wm.window[i];
+
+							// if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
+							if (path == w.project) { // hidden: storage is deprecated
+								if(w.is_saved) {
+									w.editor.save("close");
+								} else {
+									w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
+									wm.close_by_index(i, i);	
+								}
+								
+							}
+						}						
+					},
+					no: function() {
+						var wm = core.module.layout.workspace.window_manager;
+						for (var i = wm.window.length - 1; i >= 0; i--) {
+							var w = wm.window[i];
+
+							// if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
+							if (path == w.project) { // hidden: storage is deprecated
+								w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
+								wm.close_by_index(i, i);	
+							}
+						}
+					},
+					cancel: function() {}
+				});
+				confirmation_save.show();
+			});
+
 			core._socket.once('/project/mount' + project_path, function(result) {
 				core.module.layout.project.permission[project_path] = result.permission;
 
@@ -125,6 +167,7 @@ goorm.core.project.open = {
 					}
 				}
 			});
+		
 
 			core._socket.emit('/project/mount', {
 				'project_path': project_path

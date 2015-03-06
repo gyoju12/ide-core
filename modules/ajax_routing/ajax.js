@@ -57,7 +57,8 @@ module.exports = {
 						
 						if (socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
-							store.client.set('socket_' + sessionID, socket.id);
+							store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
+							store.client.sadd('sockets_' + global.__local_ip + "_" +sessionID, socket.id);
 						}
 
 						if (msg_obj.version) {
@@ -90,7 +91,7 @@ module.exports = {
 									}
 
 									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
-								}
+								} 
 
 								socket.to().emit('fs_access', fs_access);
 							});

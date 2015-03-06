@@ -102,6 +102,9 @@
 			"edit_text": {
 				"value": "Text",
 				"children": {
+					"edit": {
+						"value": "Delete"
+					},
 					"edit_delete_line_left": {
 						"value": "Delete Line Left"
 					},

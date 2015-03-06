@@ -143,6 +143,15 @@
     "confirmation_restore_unsaved_data": {
         "value": "복구할 데이터들이 있습니다. 복구하시겠습니까?"
     },
+    "confirmation_project_close_and_save": {
+        "value": "열 수 있는 프로젝트의 갯수를 초과했습니다. 가장 오래전에 열었던 프로젝트를 닫겠습니까?"
+    },
+    "save_and_close": {
+        "value": "모두 저장하고 닫기"
+    },
+    "dont_save_and_close": {
+        "value": "저장 안하고 닫기"
+    },
     "confirmation_save_message": {
         "value": " 는 수정되었습니다. 저장 하시겠습니까?"
     },
@@ -283,6 +292,9 @@
     },
     "alert_user_duplicate_id": {
         "value": "동일한 ID가 존재합니다."
+    },
+    "alert_user_duplicate_email": {
+        "value": "동일한 EMAIL이 존재합니다."
     },
     "alert_user_duplicate_student_id": {
         "value": "동일한 학번이 존재합니다."

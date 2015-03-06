@@ -681,6 +681,10 @@ goorm.core.layout = {
 		var $parent = null;
 		var pane = "";
 		var id = "";
+
+		var plugin_manager = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type];
+
+
 		if (tab_name) {
 			switch (tab_name) {
 
@@ -724,9 +728,18 @@ goorm.core.layout = {
 					/* east */
 					
 				case 'outline':
-					id = 'gLayoutTab_Outline';
-					pane = 'east';
-					$parent = $('#goorm_inner_layout_right');
+					if (plugin_manager) {
+						if (plugin_manager.outline) {
+							id = 'gLayoutTab_Outline';
+							pane = 'east';
+							$parent = $('#goorm_inner_layout_right');
+						} else {
+
+							return false;
+						}
+					}
+
+					
 					break;
 
 				default:

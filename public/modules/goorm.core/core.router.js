@@ -275,6 +275,7 @@ goorm.core.router = {
 
 	set_reconnect: function(socket) {
 		var reconnect_attempts = 1;
+		var offline = false;
 
 		var generate_interval = function(k) {
 			var maxInterval = (Math.pow(2, k) - 1) * 1000;
@@ -308,6 +309,10 @@ goorm.core.router = {
 		};
 
 		var reconnect = function(socket) {
+			if(offline) {
+				disconnect(socket);
+				return false;
+			}
 			if (!core.force_unload) {
 				var wm = core.module.layout.workspace.window_manager;
 
@@ -365,10 +370,12 @@ goorm.core.router = {
 		});
 
 		window.addEventListener('offline', function(e) {
+			offline = true;
 			disconnect(socket);
 		});
 
 		window.addEventListener('online', function(e) {
+			offline = false;
 			reconnect(socket);
 		});
 	},

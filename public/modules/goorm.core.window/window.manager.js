@@ -77,13 +77,20 @@ goorm.core.window.manager = {
 						// 	__file.height = 250;
 						// }
 
+
 						if (typeof(__file.left) === 'string' && __file.left.indexOf('px')) {
 							__file.left = __file.left.split('px')[0];
 						}
 
 						if (typeof(__file.top) === 'string' && __file.top.indexOf('px')) {
 							__file.top = __file.top.split('px')[0];
+							
 						}
+						if(__file.left === 5 && __file.top === 10 && maximized) {
+							__file.left=undefined;
+							__file.top=undefined;
+						}
+
 
 						editor_exist = true;
 

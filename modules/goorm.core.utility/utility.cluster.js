@@ -13,32 +13,7 @@ var numCPUs = os.cpus().length;
 
 module.exports = {
 	method: "",
-	ip: "127.0.0.1",
-
 	init: function () {
-		var networkInterfaces = os.networkInterfaces();
-		var get_ip = false;
-
-		for (var device in networkInterfaces) {
-			var cfg = networkInterfaces[device];
-
-			if (cfg && cfg.length > 0) {
-				for (var i=0; i<cfg.length; i++) {
-					var detail = cfg[i];
-
-					if (detail && detail.family === 'IPv4' && detail.address !== '127.0.0.1') {
-						this.ip = detail.address;
-						get_ip = true;
-						break;
-					}
-				}
-			}
-
-			if (get_ip) {
-				break;
-			}
-		}
-
 		if (global.__redis_mode && this.get_cpu_numbers() !== 1) {
 			if (!global.__jx_mode) {
 				this.method = "multi-processing";
@@ -65,13 +40,13 @@ module.exports = {
 		var method = this.get_method();
 
 		if (method === "multi-processing" && cluster.worker) {
-			return this.ip + ":" + cluster.worker.id;
+			return global.__local_ip + ":" + cluster.worker.id;
 		}
 		else if (method === "multi-threading") {
-			return this.ip + ":" + process.threadId;
+			return global.__local_ip + ":" + process.threadId;
 		}
 		else {
-			return this.ip;
+			return global.__local_ip;
 		}
 	},
 

@@ -121,7 +121,8 @@ goorm.core.window.panel.prototype = {
 
 		if (options.left !== undefined) {
 			x = options.left;
-		} else if (target_active_window > -1 && options.maximized === false) {
+		// } else if (target_active_window > -1 && options.maximized === false) {
+		} else if (target_active_window > -1) {
 
 			//		var previous_window = window_manager.window[target_active_window].panel;
 
@@ -154,7 +155,8 @@ goorm.core.window.panel.prototype = {
 
 		if (options.top !== undefined) {
 			y = options.top;
-		} else if (target_active_window > -1 && options.maximized === false) {
+		} else if (target_active_window > -1) {
+		// } else if (target_active_window > -1 && options.maximized === false) {
 
 			//		var previous_window = window_manager.window[target_active_window].panel;
 

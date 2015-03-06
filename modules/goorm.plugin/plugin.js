@@ -16,12 +16,12 @@ var async = require('async');
 
 var initial_list = {
 	'ide': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.dart", "goorm.plugin.go", "goorm.plugin.jsp", "goorm.plugin.nodejs", "goorm.plugin.php", "goorm.plugin.python", "goorm.plugin.ruby"],
-	'edu': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.python", "goorm.plugin.edu", "goorm.plugin.lecture"],
+	'edu': ["goorm.plugin.edu", "goorm.plugin.lecture"],
 	'dev': ["goorm.plugin.nodejs", "goorm.plugin.dev"],
 	'book': ["goorm.plugin.nodejs", "goorm.plugin.jquery"],
 	'cpp': ["goorm.plugin.cpp"],
 	'java': ["goorm.plugin.java"],
-	'nodejs': ["goorm.plugin.nodejs", "goorm.plugin.nodejs"],
+	'nodejs': ["goorm.plugin.nodejs"],
 	'python': ["goorm.plugin.python"],
 	'ruby': ["goorm.plugin.ruby"],
 	'go': ["goorm.plugin.go"],
@@ -49,7 +49,6 @@ module.exports = {
 		if (mode && typeof(mode) === 'string') {
 			mode = mode.split(',');
 		}
-
 		var list = [];
 
 		if (mode && mode.length > 0) {

@@ -218,6 +218,9 @@
 	"id": {
 		"value": "아이디"
 	},
+	"email": {
+		"value": "이메일"
+	},
 	"password": {
 		"value": "비밀번호"
 	},

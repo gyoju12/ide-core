@@ -102,6 +102,9 @@
 			"edit_text": {
 				"value": "텍스트",
 				"children": {
+					"edit_delete": {
+						"value": "삭제"
+					},
 					"edit_delete_line_left": {
 						"value": "커서 왼쪽 삭제"
 					},
@@ -406,13 +409,13 @@
 						"value": "기본 레이아웃"
 					},
 					"window_left_layout_show_hide": {
-						"value": "보이기/숨기기"
+						"value": "왼쪽 영역 보이기/숨기기"
 					},
 					"window_left_layout_toggle_cloud_explorer": {
 						"value": "클라우드 탐색기 보기"
 					},
 					"window_right_layout_show_hide": {
-						"value": "보이기/숨기기"
+						"value": "오른쪽 영역 보이기/숨기기"
 					},
 					"window_right_layout_toggle_chat": {
 						"value": "채팅 보기"
@@ -427,7 +430,7 @@
 						"value": "아웃라인 보기"
 					},
 					"window_bottom_layout_show_hide": {
-						"value": "보이기/숨기기"
+						"value": "아래쪽 영역 보이기/숨기기"
 					},
 					"window_bottom_layout_debug": {
 						"value": "디버그 보기"

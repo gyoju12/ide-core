@@ -196,7 +196,9 @@ module.exports = {
 							store.client.del('session_' + IDE_HOST + '_' + session.id, function() {
 								store.client.del('sess:' + sessionID, function() {
 									store.client.del('socket_' + sessionID, function() {
-										callback(true);
+										store.client.del('sockets_' + global.__local_ip + "_" + sessionID, function() {
+											callback(true);
+										});
 									});
 								});
 							});
@@ -222,7 +224,9 @@ module.exports = {
 									store.client.del('session_' + IDE_HOST + '_' + inner_session.id, function() {
 										store.client.del(sessionID, function() {
 											store.client.del('socket_' + sessionID, function() {
-												callback(true);
+												store.client.del('sockets_' + global.__local_ip + "_" + sessionID, function() {
+													callback(true);
+												});
 											});
 										});
 									});

@@ -32,12 +32,45 @@ var g_edit = require("../modules/goorm.core.edit/edit");
 
 
 
+/**
+ * Middleware
+ */
 
 
 var check_valid_path = function(str) {
 	if (!str) return false;
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
+
+var randomStringfunc = function(bits) {
+	var chars, rand, i, ret;
+
+	chars = 'abcdefghijklmnopqr12345678abcdefghijklmnopqrstuvwxyz012345678912';
+	ret = '';
+
+	while (bits > 0) {
+		// 32-bit integer
+		rand = Math.floor(Math.random() * 0x100000000);
+		// base 64 means 6 bits per character, so we use the top 30 bits from rand to give 30/6=5 characters.
+		for (i = 26; i > 0 && bits > 0; i -= 6, bits -= 6) {
+			ret += chars[0x3F & rand >>> i];
+		}
+	}
+
+	return ret;
+};
+
+var formatting = function(str) {
+	str = str || "";
+
+	if (str && str.length > 0) {
+		str = str.replace(/([\.\%\+\-])/g, "_");
+		str = str.toLowerCase();
+	}
+
+	return str;
+};
+
 /*
  * GET home page.
  */

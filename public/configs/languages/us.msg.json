@@ -275,6 +275,9 @@
     "alert_user_duplicate_id": {
         "value": "The ID is duplicated."
     },
+    "alert_user_duplicate_email": {
+        "value": "The EMAIL is duplicated."
+    },
     "alert_user_duplicate_student_id": {
         "value": "The Student ID is duplicated."
     },

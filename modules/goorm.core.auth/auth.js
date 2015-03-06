@@ -40,7 +40,10 @@ module.exports = {
 					try { // jeongmin: try catching
 						var redis_session = JSON.parse(data);
 
-						if (!force) {
+						if (force || USE_SSO) {
+							callback(redis_session);
+						}
+						else { // force --> false
 							store.client.get('session_'+IDE_HOST+'_' + redis_session.id, function(err, data) {
 								// compare ID: session ID 
 								if (data === session_id) {
@@ -49,9 +52,6 @@ module.exports = {
 									callback({});
 								}
 							});
-						}
-						else {
-							callback(redis_session);
 						}
 					} catch (e) {
 						console.log('get user data error:', e);

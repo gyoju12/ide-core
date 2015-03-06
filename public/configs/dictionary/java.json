@@ -16,6 +16,11 @@
 		"description": "<b>Type</b> : Int Type<br /><b>Description</b> : Integer type"
 	},
 	{
+		"keyword": "enum",
+		"type": "key",
+		"description": "<b>Type</b> : Enum Type<br /><b>Description</b> : Enum type"
+	},
+	{
 		"keyword": "char",
 		"type": "key",
 		"description": "<b>Type</b> : Char Type<br /><b>Description</b> : Character or small integer."
@@ -144,5 +149,242 @@
 		"keyword": "instanceof",
 		"type": "Operator",
 		"description": "<b>Type</b> : Operator<br /><b>Description</b> : InstanceOf Operator"
+	},
+	{
+		"keyword": "System",
+		"type": "Class",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "System.out.println()",
+		"type": "function",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "equals",
+		"type": "function",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "else",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "else if",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "switch",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "for",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "continue",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "return",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "Scanner",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "try {\n}\ncatch(e) {\n}",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "try {\n}\ncatch(e) {\n}\nfinally{\n}",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "FileNotFoundException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "NullPointerException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "IllegalStateException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "ArrayStoreException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "NoSuchElementException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "EmptyStackException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "IOException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "Exception",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "IllegalArgumentException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "ArithmeticException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "IndexOutOfBoundsException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "RuntimeException",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "BufferedReader",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "printStackTrace",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "throw",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "public static void main()",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "case",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "HashSet",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "Iterator",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "hasNext",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "next",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "containsAll",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "addAll",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "retainAll",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "removeAll",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "Hashtable",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "List",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "ArrayList",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "Collections",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "sort",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "put",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "containsKey",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "clear",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
+	},
+	{
+		"keyword": "values",
+		"type": "modi",
+		"description": "<b>Type</b> : <br /><b>Description</b> : ,"
 	}
+
+		
+		
+	
+
+
+
 ]

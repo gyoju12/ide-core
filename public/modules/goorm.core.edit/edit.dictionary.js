@@ -738,6 +738,8 @@ goorm.core.edit.dictionary.prototype = {
 			var cursor = cm_editor.getCursor();
 			var token = cm_editor.getTokenAt(cursor);
 			if (token.type === null || token.type === 'comment') {
+				self.hide();
+				cm_editor.focus();
 				return;
 			}
 /*			

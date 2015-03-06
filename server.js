@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1424769765';
+var build_version = 'oss-1425610564';
 
 // Dependency
 //
@@ -26,7 +26,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	methodOverride = require('method-override'),
-	multer = require('multer');
+	multer = require('multer'),
+	os = require('os');
 
 // External Variables
 //
@@ -71,6 +72,12 @@ LIMIT_FILE_SIZE = 50; // mb
 UID = 501;
 GID = 501;
 
+PROJECT_LIMIT_CNT = Infinity;
+PROJECT_LIMIT_QUE = [];
+
+USE_SSO = false;
+COOKIE_DOMAIN = '.goorm.io';
+
 // Local Variables
 //
 var home = null;
@@ -85,8 +92,8 @@ var io = null;
 //
 goorm.start = function() {
 	if (goorm.init()) {
-		
 		goorm.config();
+		
 		goorm.routing();
 		goorm.load();
 	}
@@ -113,6 +120,8 @@ goorm.init = function() {
 		// Session Store
 		//
 		global.store = null;
+
+		global.__local_ip = '127.0.0.1';
 	};
 
 	var set_arguments = function() {
@@ -310,7 +319,8 @@ goorm.config = function() {
 	goorm.use(express.session({
 		secret: 'rnfmadlek',
 		key: 'express.sid',
-		store: store
+		store: store,
+		cookie: (USE_SSO) ? { 'domain': COOKIE_DOMAIN } : null
 	}));
 
 	
@@ -352,6 +362,29 @@ goorm.config = function() {
 
 		
 	});
+
+	var networkInterfaces = os.networkInterfaces();
+	var get_ip = false;
+
+	for (var device in networkInterfaces) {
+		var cfg = networkInterfaces[device];
+
+		if (cfg && cfg.length > 0) {
+			for (var i=0; i<cfg.length; i++) {
+				var detail = cfg[i];
+
+				if (detail && detail.family === 'IPv4' && detail.address !== '127.0.0.1') {
+					global.__local_ip = detail.address;
+					get_ip = true;
+					break;
+				}
+			}
+		}
+
+		if (get_ip) {
+			break;
+		}
+	}
 
 	g_cluster.init();
 }
@@ -712,6 +745,8 @@ goorm.load = function() {
 						});
 					})
 				}
+
+
 
 				g_terminal.start(io);
 

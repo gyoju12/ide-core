@@ -506,7 +506,7 @@
                                 </a>
                                 <ul id="child_text_menu" parent="parent_text_menu" class="dropdown-menu">
                                     <li>
-                                        <a href="#" action="do_delete" name="preference.shortcut.edit.delete" localization_key="file_delete">
+                                        <a href="#" action="do_delete" name="preference.shortcut.edit.delete" localization_key="edit_delete">
                                             Delete
                                             <em class="helptext">Backspace</em>
                                         </a>
@@ -1600,7 +1600,7 @@
                             <a href="#" action="new_file_file_context" localization_key='file'>File</a>
                         </li>
                         <li>
-                            <a href="#" action="file_new_folder" localization_key='file_new_context_new_folder'>Folder</a>
+                            <a href="#" action="new_file_folder_context" localization_key='file_new_context_new_folder'>Folder</a>
                         </li>
                         <li>
                             <a href="#" action="new_file_textfile_context" localization_key='file_new_untitled_text_file'>Untitled Text File</a>
@@ -4476,7 +4476,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.delete" localization_key="file_delete">Delete</label>
+                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.delete" localization_key="edit_delete">Delete</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.edit.delete" id="preference.shortcut.edit.delete" value="Backspace"/>
                                                 </div>
@@ -5048,29 +5048,29 @@
                         <div id="goorm_signup_container" class="signup_container">
                             <div id="goorm_signup_container_child" class="signup_content_container">
                                 <div class="row">
-                                    <label class="goorm_signup_span col-md-3" for="signup_id_input" localization_key="dialog_goorm_profile_id">ID :</label>
+                                    <label class="goorm_signup_span col-md-3" for="signup_email_input" localization_key="dialog_goorm_profile_email">E-mail :</label>
+                                    <div class="col-md-9" style="margin-bottom: 5px;">
+                                        <input type="text" name="signup_email_input" id="signup_email_input" class="form-control" placeholder="goorm@goorm.io" />
+                                    </div>
+
+                                    <label class="goorm_signup_span col-md-3" for="signup_name_input" localization_key="dialog_goorm_profile_name">Name :</label>
+                                    <div class="col-md-9" style="margin-bottom: 5px;">
+                                        <input type="text" name="signup_name_input" id="signup_name_input" class="form-control" placeholder="2~15 digits, Hangul/Alphabet/Num/(-/_/./ /)" localization_key="signup_name"/>
+                                    </div>
+
+<!--                                     <label class="goorm_signup_span col-md-3" for="signup_id_input" localization_key="dialog_goorm_profile_id">ID :</label>
                                     <div class="col-md-9">
                                         <input type="text" name="signup_id_input" id="signup_id_input" class="form-control" placeholder="Input ID" localization_key="signup_id"/>
                                     </div>
-
+ -->
                                     <label class="goorm_signup_span col-md-3" for="signup_password_input" localization_key="dialog_goorm_profile_password">Password :</label>
-                                    <div class="col-md-9">
+                                    <div class="col-md-9" style="margin-bottom: 5px;">
                                         <input type="password" name="signup_password_input" id="signup_password_input" class="form-control" placeholder='(8~15), Alphabet+Number+Special' localization_key="profile_password"/>
                                     </div>
 
                                     <label class="goorm_signup_span col-md-3" for="signup_repassword_input" localization_key="dialog_goorm_profile_password_confirm">Confirm pw</label>
-                                    <div class="col-md-9">
+                                    <div class="col-md-9" style="margin-bottom: 5px;">
                                         <input type="password" name="signup_repassword_input" id="signup_repassword_input" class="form-control" placeholder='Please enter your pw again to confirm...' localization_key="profile_password_confirm"/>
-                                    </div>
-
-                                    <label class="goorm_signup_span col-md-3" for="signup_name_input" localization_key="dialog_goorm_profile_name">Name :</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="signup_name_input" id="signup_name_input" class="form-control" placeholder="2~15 digits, Hangul/Alphabet/Num/(-/_/./ /)" localization_key="signup_name"/>
-                                    </div>
-
-                                    <label class="goorm_signup_span col-md-3" for="signup_email_input" localization_key="dialog_goorm_profile_email">E-mail :</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="signup_email_input" id="signup_email_input" class="form-control" placeholder="goorm@goorm.io" />
                                     </div>
                                 </div>
 
@@ -5421,7 +5421,7 @@
                                 Paste
                                 <em class="helptext">Ctrl + V</em>
                             </span>
-                            <span name="preference.shortcut.edit.delete" localization_key="file_delete">
+                            <span name="preference.shortcut.edit.delete" localization_key="edit_delete">
                                 Delete
                                 <em class="helptext">Backspace</em>
                             </span>

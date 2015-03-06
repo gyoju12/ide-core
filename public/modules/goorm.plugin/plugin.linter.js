@@ -36,7 +36,7 @@ goorm.plugin.linter = {
 					break;
 				case 'c':
 				case 'cpp':
-					this.lint_cpp(__window);
+					this.lint_cpp(__window, project_type);
 					break;
 				case 'java':
 					if (project_type === "java") {
@@ -215,8 +215,15 @@ goorm.plugin.linter = {
 	lint_cpp: function(__window, type) {
 		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
 		var self = this;
+		
+		var property = core.property.plugins["goorm.plugin." + type];
+		var complier_type;
+		if(property){
+			complier_type = property["plugin." + type + ".compiler_type"] || 'gcc';
 
-		core.module.terminal.terminal.send_command("/usr/share/clang/scan-build/scan-build gcc -c " + path + "\r", function(output) {
+		}
+
+		core.module.terminal.terminal.send_command("/usr/share/clang/scan-build/scan-build " + complier_type + " -c " + path + "\r", function(output) {
 			var wm = core.module.layout.workspace.window_manager;
 			var om = core.module.layout.tab_manager.output_manager;
 

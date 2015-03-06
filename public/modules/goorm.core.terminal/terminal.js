@@ -236,8 +236,7 @@ goorm.core.terminal.prototype = {
 					self.index = data.index;
 					self.export_path = data.export_path;
 					$(self).trigger("terminal_ready." + self.terminal_name);
-
-					if (core.status.current_project_path !== "") {
+					if (core.status.current_project_path !== "" && self.terminal_name !== 'debug') {
 						var msg = {
 							index: self.index,
 							project_path: core.status.current_project_path
