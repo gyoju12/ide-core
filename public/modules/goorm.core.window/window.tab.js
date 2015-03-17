@@ -89,7 +89,7 @@ goorm.core.window.tab.prototype = {
 
 		var cnt = core.status.current_opened_list[this.filename];
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + this.filename + '"]');
+			var temp = $("#g_window_tab_list").find('.tab_title[filename="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
 					var name = temp.attr("filename");
@@ -239,7 +239,7 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_title: function(title) {
-		console.log("===tab_set_title");
+		// console.log("===tab_set_title");
 		if (title) {
 			if (typeof core.status.current_opened_list[this.filename] === "undefined") {
 				$("#" + this.tab_list_id).find('.tab_title').html(title + "-" + this.filepath);
@@ -290,7 +290,7 @@ goorm.core.window.tab.prototype = {
 		$.each(core.status.current_opened_list, function(index, value) {
 			cnt = value;
 			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-				var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + index + '"]');
+				var temp = $("#g_window_tab_list").find('.tab_title[filename="' + index + '"]');
 				if (temp) {
 					if (cnt == 1) {
 						var name = temp.attr("filename");
@@ -352,7 +352,7 @@ goorm.core.window.tab.prototype = {
 
 		this.empty_tab_dom();
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + this.filename + '"]');
+			var temp = $("#g_window_tab_list").find('.tab_title[filename="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
 					var name = temp.attr("filename");

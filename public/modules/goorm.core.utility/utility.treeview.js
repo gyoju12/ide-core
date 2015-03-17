@@ -443,13 +443,14 @@ goorm.core.utility.treeview.prototype = {
 	 * @method refresh
 	 * @return {treeview}
 	 */
-	refresh: $.throttle(function() {
+	refresh: function() {
+		this.opened_node = {};
 		this.options.state = this.get_state();
 		this._refresh = true;
 		this.tree.jstree("refresh");
 
 		return this;
-	}, 1000),
+	},
 
 	/**
 	 * get state (opened files, selected files etc..)

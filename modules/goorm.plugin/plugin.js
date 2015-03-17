@@ -217,30 +217,6 @@ module.exports = {
 		var plugin = require("../../plugins/" + req.query.plugin + "/modules/");
 		plugin.extend_function(req, res);
 	},
-	extend_function_sign_check: function(req, evtt) {
-		var plugin = require("../../plugins/" + "goorm.plugin.lecture" + "/modules/");
-		var evt = new EventEmitter();
-		var ret = {};
-		evt.once("auth_check_user_data", function(data) {
-			if (data.result) {
-				var g_auth_manager = require("../goorm.core.auth/auth.manager");
-
-				g_auth_manager.register(req, function(result) {
-
-					ret.type = 'signup';
-					ret.data = result;
-					evtt.emit("auth_check_user_data_final", ret);
-
-				});
-			} else {
-				ret.type = 'check';
-				ret.data = data;
-				evtt.emit("auth_check_user_data_final", ret);
-			}
-		});
-
-		plugin.extend_function_sign_check(req.body, evt);
-	},
 
 	load_userplugin: function(req, res, cb) {
 		var user_plg_path = global.__temp_dir + req.query.id + '/plugins/';

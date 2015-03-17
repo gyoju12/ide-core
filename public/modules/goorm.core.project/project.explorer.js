@@ -135,8 +135,14 @@ goorm.core.project.explorer.prototype = {
 		//	});
 	},
 
-	refresh: function(callback) {
+	refresh: $.throttle(function(callback) {
 		var self = this;
+
+		if(this.refreshing || (this.treeview && this.treeview._refresh)){ // It is not enough, need throttle too.
+			return;
+		}
+		this.refreshing = true;
+
 		$("#project_loading_div").show();
 		$("#project_treeview").hide();
 		$("#project_list_table").hide();
@@ -213,6 +219,7 @@ goorm.core.project.explorer.prototype = {
 			}
 			self.drag_n_drop();
 			if (callback && typeof(callback) === 'function') callback();
+			self.refreshing = false;
 		}
 
 		
@@ -222,7 +229,7 @@ goorm.core.project.explorer.prototype = {
 			'get_list_type': 'owner_list'
 		});
 		
-	},
+	}, 400),
 
 	make_project_selectbox: function() {
 		this.clear();
@@ -442,8 +449,9 @@ goorm.core.project.explorer.prototype = {
 		var self = this;
 
 		this.copy();
-		var path = this.clipboard.files[0];
-		if (path) {
+		var selected_node = this.clipboard;
+		var path = selected_node.files[0];
+		if (selected_node.files.length > 0) {
 			path = path.substring(0, path.lastIndexOf("/"));
 			if (this.clipboard && path) {
 				var postdata = {
@@ -460,7 +468,11 @@ goorm.core.project.explorer.prototype = {
 			} else {
 				alert.show(core.module.localization.msg.alert_file_not_select);
 			}
-		} else alert.show(core.module.localization.msg.alert_folder_duplicate_error);
+		} else if (selected_node.directorys.length > 0 ) {
+			alert.show(core.module.localization.msg.alert_folder_duplicate_error);
+		} else if (selected_node.files.length === 0 && selected_node.directorys.length === 0) {
+			alert.show(core.module.localization.msg.alert_file_not_select);
+		}
 	},
 
 	get_tree_selected_path: function(treeview_id) { // treeview_id: id of various treeviews

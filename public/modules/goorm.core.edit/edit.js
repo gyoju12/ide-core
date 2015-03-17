@@ -363,8 +363,8 @@ goorm.core.edit.prototype = {
                             target_window.set_modified(data);
                             target_tab.set_modified();
 
-                            if(!data.user && !data.name) {  // only if this event is triggered by keydown. If these are true, this event is triggered by collaborator
-                                data.is_collaborating = true;   // for preventing other collaborators' ot stack. Used at set_modified in window.panel.js
+                            if (!data.user && !data.name) { // only if this event is triggered by keydown. If these are true, this event is triggered by collaborator
+                                data.is_collaborating = true; // for preventing other collaborators' ot stack. Used at set_modified in window.panel.js
                                 self.collaboration.update_change(data); // let other collaborators know I did undo
                             }
                         });
@@ -383,7 +383,7 @@ goorm.core.edit.prototype = {
                 CodeMirror.commands.clearSearch(self.editor);
         });
 
-        cm_editor.on("cursorActivity", function(cm) {   // cm: CodeMirror
+        cm_editor.on("cursorActivity", function(cm) { // cm: CodeMirror
             if (self.editor.history_mode == "history") return;
 
             var cur = self.editor.getCursor();
@@ -487,7 +487,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed_' + self.title, {    // title is used for distinguishing windows
+                $(core).trigger('undo_redo_pressed_' + self.title, { // title is used for distinguishing windows
                     undo: true,
                     redo: false
                 });
@@ -495,7 +495,7 @@ goorm.core.edit.prototype = {
                 //console.log("ctrl pressed");
                 self.special_pressed = false;
 
-                $(core).trigger('undo_redo_pressed_' + self.title, {    // title is used for distinguishing windows
+                $(core).trigger('undo_redo_pressed_' + self.title, { // title is used for distinguishing windows
                     undo: false,
                     redo: true
                 });
@@ -627,8 +627,10 @@ goorm.core.edit.prototype = {
     set_breakpoint: function(line) {
         var markerHtml = "&#x25cf";
         var info = this.editor.lineInfo(line);
-        this.editor.setGutterMarker(line, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? this.remove_marker(line, "breakpoint") : this.make_marker(line, "breakpoint", markerHtml));
-        //      this.font_manager.refresh();
+
+        if (/\S/g.test(info.text)) { // if there are any non-whitespace characters
+            this.editor.setGutterMarker(line, "breakpoint", (info.gutterMarkers && info.gutterMarkers.breakpoint) ? this.remove_marker(line, "breakpoint") : this.make_marker(line, "breakpoint", markerHtml));
+        }
     },
 
     //set bookmark that is saved before. Jeong-Min Im.

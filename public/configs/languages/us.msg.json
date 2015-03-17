@@ -1097,6 +1097,9 @@
     "alert_project_permission_denied": {
         "value": "You do not have permission to Access the project."
     },
+    "alert_project_not_found": {
+        "value": "This project is already Deleted or Losted."
+    },
     "alert_project_plugin_not_loaded": {
         "value": "The [PLUGIN] plugin is not currently loaded.<br>Do you want to restart goorm to load the [PLUGIN] plugin? (If many plugins are loaded, goorm may slow down slightly.)"
     },
@@ -1120,6 +1123,9 @@
     },
     "alert_input_search_keyword": {
         "value": "Input search keyword."
+    },
+    "alert_same_name_folder": {
+        "value": "Same folder name exists"
     },
     "same_folder_exist_title": {
         "value": "Same File/Directory Exists"

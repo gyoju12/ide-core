@@ -301,11 +301,12 @@ goorm.core.project._import = {
 							case 1: // on Mac
 							case 2: // on Linux
 								alert.show(core.module.localization.msg.alert_invalid_compressed_file);
+								where.find('.project_import_file[type=file]').val('');
 								break;
 							case 9:
 							case 10:
 								alert.show(core.module.localization.msg.alert_invalid_project_file);
-								where.find('.project_import_form').resetForm();
+								where.find('.project_import_file[type=file]').val('');
 								// where.find(".input_import_project_author").val(core.user.id.replace(/ /g, "_"));
 								// where.find(".input_import_project_author_name").val(core.user.name.replace(/ /g, "_"));
 								break;

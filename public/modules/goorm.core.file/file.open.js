@@ -31,7 +31,7 @@ goorm.core.file.open = {
 		// });
 
 		var handle_ok = function(panel) {
-
+			console.log("handle_ok");
 			var data = self.dialog_explorer.get_data();
 
 			if (data.path === "" || $("#file_open_target_name").val() === "") {
@@ -107,13 +107,14 @@ goorm.core.file.open = {
 	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
+		var $ok_button = $("#g_of_btn_ok");
 
 		// when enter 'enter' key, dialog OK.
 		this.panel.keydown(function(e) {
-			switch (e.keyCode) {
-				case 13: // 'enter' key
-					$("#g_of_btn_ok").click();
-					break;
+			if (e.keyCode === 13) { // '13: enter key'
+				if ($ok_button.attr("disabled") === undefined) {
+					$ok_button.click();
+				}
 			}
 		});
 
@@ -126,7 +127,7 @@ goorm.core.file.open = {
 			}
 		});
 
-		$("#g_of_btn_ok").keydown(function(e) {
+		$ok_button.keydown(function(e) {
 			if (e.keyCode == 9) {
 				$("#file_open_dir_tree").find(".jstree-clicked").click();
 			}
@@ -135,6 +136,7 @@ goorm.core.file.open = {
 
 		// on selecting file view
 		$(files).on("click", "div.file_item", function() {
+			$ok_button.removeAttr("disabled");
 			$(self.dialog_explorer.input_file_name).val($(this).attr("filename"));
 
 			self.filename = $(this).attr("filename");
@@ -145,6 +147,7 @@ goorm.core.file.open = {
 			core.dialog.open_file.panel.modal('hide');
 		});
 		$(files).on("click", "div.folder_item", function() {
+			$ok_button.attr("disabled", "disabled");
 			$(self.dialog_explorer.input_file_name).val("");
 			self.filename = "";
 			self.filetype = "";

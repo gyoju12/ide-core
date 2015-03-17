@@ -144,7 +144,7 @@ goorm.core.window.panel.prototype = {
 				if (cnt > window_manager.window.length) break;
 			}
 			x = temp_x;
-			// if (options.maximized == true)
+			if (options.maximized == true) x=0;
 
 			// 	//x = previous_window.left;
 			// 	x=temp_x;
@@ -178,7 +178,7 @@ goorm.core.window.panel.prototype = {
 				if (cnt > window_manager.window.length) break;
 			}
 			y = temp_y;
-			// if (options.maximized == true)
+			if (options.maximized == true) y=0;
 			// 	//y = previous_window.top;
 			// 	y=temp_y;
 			// else

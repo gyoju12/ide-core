@@ -23,9 +23,13 @@ goorm.core.file._import = {
 		// 	$("button[localization_key=common_target]").blur();
 		// });
 
-		var handle_ok = $.throttle(function() {
+		var handle_ok = $.debounce(function() {
 			if (self.input.val() === '') {
 				alert.show(core.module.localization.msg.alert_file_not_select);
+				return false;
+			}
+			// console.log($("#g_if_btn_ok").attr("disabled") === true);
+			if( $("#g_if_btn_ok").attr("disabled") == true) {
 				return false;
 			}
 
@@ -39,7 +43,7 @@ goorm.core.file._import = {
 			$("#file_import_location_path_hidden").val(data.path);
 			$('#myForm').submit();
 			$("#g_if_btn_ok").attr("disabled", true);
-		},1000);
+		},3000, true);
 
 		self.dialog = new goorm.core.dialog();
 		self.dialog.init({
@@ -76,7 +80,6 @@ goorm.core.file._import = {
 							});
 
 							$('#myForm').submit();
-							self.panel.modal('hide');
 							$('#myForm').attr('action', 'file/import');
 						});
 					}
@@ -85,7 +88,7 @@ goorm.core.file._import = {
 				$('#myForm').ajaxForm(form_options);
 
 				$('#myForm').submit(function() {
-					$("#g_if_btn_ok").attr("disabled", true);
+					// self.panel.modal('hide');
 					return false;
 				});
 			}
@@ -171,7 +174,7 @@ goorm.core.file._import = {
 		var layout = core.module.layout;
 
 		this.progress_elements.stop();
-		$("#g_if_btn_ok").removeAttr("disabled");
+		
 
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
@@ -197,6 +200,7 @@ goorm.core.file._import = {
 			notice.show(core.module.localization.msg.notice_file_import_done);
 			layout.project_explorer.treeview.open_path(self.upload_file_path); // jeongmin: open uploaded path
 			layout.project_explorer.refresh();
+
 		} else {
 			switch (data.err_code) {
 				case 21:
@@ -247,6 +251,7 @@ goorm.core.file._import = {
 					break;
 			}
 		}
+		$("#g_if_btn_ok").removeAttr("disabled");
 	},
 	upload_file_drag: function(files, path, callback) {
 		var self = this;

@@ -102,6 +102,7 @@ goorm.core.project._delete = {
 						if (data.path == "") $("#project_delete_location").hide();
 						else $("#project_delete_location").show();
 						self.processing = false;
+						self.show();
 					});
 				}, true, {
 					lock: true
@@ -231,6 +232,7 @@ goorm.core.project._delete = {
 
 	show: function(list_callback) {
 		var self = this;
+		console.log("===show", list_callback);
 		this.project_list.init("#project_delete", list_callback);
 
 		this.project_list.set_keydown_event({

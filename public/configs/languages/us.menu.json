@@ -102,7 +102,7 @@
 			"edit_text": {
 				"value": "Text",
 				"children": {
-					"edit": {
+					"edit_delete": {
 						"value": "Delete"
 					},
 					"edit_delete_line_left": {

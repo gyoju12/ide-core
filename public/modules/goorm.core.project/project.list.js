@@ -412,9 +412,32 @@ goorm.core.project.list.prototype = {
 		var self = this;
 
 		var options = __options || {};
+		if (self.list == "#project_delete_list") {
+			$("#g_dp_btn_ok").off("keydown");
+			$("#g_dp_btn_ok").keydown(function(e) {
+				switch (e.which) {
+					case 9:
+						// console.log($(this.list), "aaaa");
+						$("#project_delete_list").focus();
+						break;
+				}
+			});
+		} else {
+			$("#g_ep_btn_ok").off("keydown");
+			$("#g_ep_btn_ok").keydown(function(e) {
+				switch (e.which) {
+					case 9:
+						// console.log($(this.list), "aaaa");
+						$("#project_export_list").focus();
+						break;
+				}
+			});	
+		}
+		
+		
 
-		$(this.list).off("keydown");
-		$(this.list).keydown(function(e) {
+		$(self.list).off("keydown");
+		$(self.list).keydown(function(e) {
 			var selected_project = $(self.list).find(".selected_button");
 			var project_list = $(self.list).children();
 			var target = null;
@@ -427,6 +450,7 @@ goorm.core.project.list.prototype = {
 			}
 			switch (e.which) {
 				case 9: // tab key
+					console.log(">> ", self.list == "#project_delete_list");
 					if (self.list == "#project_delete_list") {
 						$("#g_dp_btn_cancel").focus();
 					} else if (self.list == "#project_export_list") {

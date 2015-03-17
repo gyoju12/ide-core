@@ -403,7 +403,12 @@ module.exports = {
 
 						if (project_path) {
 							g_auth_project.can_read_project(user_data.id, project_path, function(can) {
-								if (can) {
+								if(can === 404) {
+									socket.to().emit('/project/available', {
+										'result': false,
+										'err_code': 404
+									});
+								} else if (can) {
 									var mode = user_data.mode;
 									var list = g_plugin.get_mode_list(mode);
 
@@ -431,6 +436,7 @@ module.exports = {
 										}
 									});
 								} else {
+									console.log("can't read project");
 									socket.to().emit('/project/available', {
 										'result': false,
 										'err_code': 20

@@ -600,10 +600,10 @@
         "value": "서버와의 연결이 끊겼습니다. 다시 연결해주시기 바랍니다."
     },
     "someone_typing_message": {
-        "value": " 님께서 입력 중입니다..."
+        "value": " 님이 입력 중..."
     },
-    "someone_typing_message": {
-        "value": " 님들께서 입력 중입니다..."
+    "someones_typing_message": {
+        "value": " 님이 입력 중..."
     },
     "confirmation_share_history_play": {
         "value": "Play 이벤트를 다른 협업 개발자들과 공유하시겠습니까?"
@@ -1106,6 +1106,9 @@
     "alert_project_permission_denied": {
         "value": "프로젝트에 접근할 권한이 없습니다."
     },
+    "alert_project_not_found": {
+        "value": "이미 삭제되었거나 찾을 수 없는 프로젝트입니다."
+    },
     "alert_project_plugin_not_loaded": {
         "value": "현재 [PLUGIN] 플러그인은 로드되어 있지 않습니다. [PLUGIN] 플러그인을 추가로 로딩하시고 재시작하시겠습니까? (플러그인이 많이 로드되어 있을수록, 구름이 다소 느려질 수도 있습니다.)"
     },
@@ -1129,6 +1132,9 @@
     },
     "alert_input_search_keyword": {
         "value": "검색어를 입력해 주세요."
+    },
+    "alert_same_name_folder": {
+        "value": "같은 이름의 폴더가 존재합니다."
     },
     "same_folder_exist_title": {
         "value": "동일한 파일/폴더 존재"

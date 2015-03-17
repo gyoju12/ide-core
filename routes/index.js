@@ -15,8 +15,6 @@ var fs = require("fs"),
 	xss = require('xss'),
 	EventEmitter = require("events").EventEmitter;
 
-//var g_env = require("../configs/env.js");
-
 var g_file = require("../modules/goorm.core.file/file");
 var g_preference = require("../modules/goorm.core.preference/preference");
 var g_project = require("../modules/goorm.core.project/project");
@@ -25,10 +23,12 @@ var g_plugin = require("../modules/goorm.plugin/plugin");
 var g_help = require("../modules/goorm.core.help/help");
 var g_search = require("../modules/goorm.core.search/search");
 var g_edit = require("../modules/goorm.core.edit/edit");
-
-
-
-
+var g_lecture = null;
+try {
+	g_lecture = require('../plugins/goorm.plugin.lecture/modules/index.js');
+} catch (e) {
+	console.log('[WARNING] route/index.js - cannot load lecture plugin');
+}
 
 
 

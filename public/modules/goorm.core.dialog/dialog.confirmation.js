@@ -65,6 +65,10 @@ goorm.core.dialog.confirmation.prototype = {
 			$(this).css("top", offset_height - 30).css("left", offset_width);
 		});
 
+		this.panel.on('shown.bs.modal', function() {
+			$(this).find('.form-control:first').focus();
+		});
+
 		var cfrm_btn_yes = this.panel.find(".modal-footer #g_cfrm_btn_yes"); //jeongmin: yes confirm button
 		var cfrm_btn_no = this.panel.find(".modal-footer #g_cfrm_btn_no"); //jeongmin: no confirm button
 		var cfrm_btn_close = this.panel.find(".modal-header .close");
