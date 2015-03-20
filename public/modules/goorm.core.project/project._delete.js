@@ -237,7 +237,7 @@ goorm.core.project._delete = {
 
 		this.project_list.set_keydown_event({
 			'handler': function() {
-				if (!self.processing) {
+				if (!self.processing && $('.modal:visible').length === 1) { // only when there is delete project dialog
 					var data = self.project_list.get_data();
 					if (data.path == "") {
 						alert.show(core.module.localization.msg.alert_project_not_selected);

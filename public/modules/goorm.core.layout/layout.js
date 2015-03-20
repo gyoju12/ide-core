@@ -440,7 +440,7 @@ goorm.core.layout = {
 			// self.north_layout_toggle(e);
 			var north_state = core.module.layout.layout.north.state;
 			if (!north_state.isClosed) {
-				if (north_state.layoutHeight < 70) {
+				if (north_state.outerHeight < core.module.layout.layout.north.options.size) {
 					// from half to close layout
 					self.north_layout_toggle(1);
 				} else {
