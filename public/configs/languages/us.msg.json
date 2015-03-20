@@ -248,6 +248,9 @@
     "notice_project_delete_done": {
         "value": "Project is deleted."
     },
+    "notice_modified_profile": {
+        "value": "User Profile successfully modified."
+    },
     "alert_collaboration_server_notconnected": {
         "value": "Server disconnected."
     },
@@ -1273,5 +1276,11 @@
     },
     "alert_move_not_empty_directory": {
         "value": "Cannot move, because the destination isn't empty directory."
+    },
+    "not_joined_yet": {
+        "value": "Not joined yet"
+    },
+    "send_invitation_mail_to_join": {
+        "value": "Send invitation mail to join Goorm"
     }
 }

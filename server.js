@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1426563083';
+var build_version = 'oss-1426823390';
 
 // Dependency
 //
@@ -76,6 +76,7 @@ PROJECT_LIMIT_CNT = Infinity;
 PROJECT_LIMIT_QUE = [];
 
 USE_SSO = false;
+COOKIE_NAME = 'express.sid';
 COOKIE_DOMAIN = '.goorm.io';
 
 // Local Variables
@@ -318,7 +319,7 @@ goorm.config = function() {
 	goorm.use(cookieParser());
 	goorm.use(express.session({
 		secret: 'rnfmadlek',
-		key: 'express.sid',
+		key: COOKIE_NAME,
 		store: store,
 		cookie: (USE_SSO) ? { 'domain': COOKIE_DOMAIN } : null
 	}));
@@ -734,9 +735,9 @@ goorm.load = function() {
 						io.set('authorization', function(handshakeData, accept) {
 							if (handshakeData.headers.cookie) {
 								handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-								handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+								handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie[COOKIE_NAME], 'rnfmadlek');
 
-								if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+								if (handshakeData.cookie[COOKIE_NAME] == handshakeData.sessionID) {
 									return accept('Cookie is invalid.', false);
 								}
 							}
@@ -813,9 +814,9 @@ goorm.load = function() {
 				io.set('authorization', function(handshakeData, accept) {
 					if (handshakeData.headers.cookie) {
 						handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-						handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie['express.sid'], 'rnfmadlek');
+						handshakeData.sessionID = cookieParser.signedCookie(handshakeData.cookie[COOKIE_NAME], 'rnfmadlek');
 
-						if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+						if (handshakeData.cookie[COOKIE_NAME] == handshakeData.sessionID) {
 							return accept('Cookie is invalid.', false);
 						}
 					}

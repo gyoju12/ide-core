@@ -232,7 +232,7 @@ goorm.core.project._delete = {
 
 	show: function(list_callback) {
 		var self = this;
-		console.log("===show", list_callback);
+		// console.log("===show", list_callback);
 		this.project_list.init("#project_delete", list_callback);
 
 		this.project_list.set_keydown_event({

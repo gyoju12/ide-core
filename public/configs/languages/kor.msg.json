@@ -269,6 +269,9 @@
     "notice_project_delete_done": {
         "value": "프로젝트가 삭제되었습니다."
     },
+    "notice_modified_profile": {
+        "value": "프로필 내용이 수정되었습니다."
+    },
     "alert_value": {
         "value": "영역 이름은 공백을 포함할 수 없습니다."
     },
@@ -1285,5 +1288,11 @@
     },
     "alert_move_not_empty_directory": {
         "value": "목적지가 빈 폴더가 아니기 때문에 이동할 수 없습니다."
+    },
+    "not_joined_yet": {
+        "value": "미가입"
+    },
+    "send_invitation_mail_to_join": {
+        "value": "구름 가입 메일 보내기"
     }
 }

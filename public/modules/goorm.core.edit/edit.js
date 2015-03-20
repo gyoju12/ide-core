@@ -1534,7 +1534,7 @@ goorm.core.edit.prototype = {
         localStorage.unsaved_data = '';
     },
 
-    set_readonly: function(nocursor) {
+    set_readonly: function(nocursor, tab) {
         if (nocursor) {
             this.editor.setOption("readOnly", "nocursor");
         } else {
@@ -1544,14 +1544,16 @@ goorm.core.edit.prototype = {
         this.readonly = true;
 
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').addClass('panel_readonly');
+        $("#"+tab.tab_list_id).find('.panel_image').addClass('panel_readonly');
     },
 
-    set_editable: function() {
+    set_editable: function(tab) {
         this.readonly = false;
 
         this.editor.setOption("readOnly", false);
 
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').removeClass('panel_readonly');
+        $("#"+tab.tab_list_id).find('.panel_image').removeClass('panel_readonly');
     },
 
     // resize_all: function(width, height) {

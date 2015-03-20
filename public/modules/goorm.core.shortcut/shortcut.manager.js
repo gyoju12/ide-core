@@ -1934,7 +1934,23 @@ goorm.core.shortcut.manager = {
 					// 	core.module.layout.inner_layout.getUnitByPosition("right").expand();
 					// }
 					// core.module.layout.inner_right_tabview.selectTab(3);
-					core.module.layout.select('outline');
+					var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();
+					switch (current_file_type) {
+			            case 'c':
+			            case 'cpp':
+			            case 'java':
+			            case 'py':
+			            case 'js':
+			            case 'html':
+			            case 'css':
+			            	core.module.layout.select('outline');
+			                break;
+
+			            default:
+			            	
+			                break;
+						
+					}
 				}
 
 

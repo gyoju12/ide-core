@@ -104,14 +104,14 @@ goorm.core.debug.prototype = {
 				self.hide_menu();
 			}
 		});
-/*
-		$(document).on('click.debug_value_change', function(e) {
-			var edit_box = self.table_variable.find('.editing');
-			if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
-				self.debug_value_change(edit_box);
-			}
-		});
-*/
+		/*
+				$(document).on('click.debug_value_change', function(e) {
+					var edit_box = self.table_variable.find('.editing');
+					if (!$(e.target).is('.editing') && !$(e.target).is('.edit_box')) {
+						self.debug_value_change(edit_box);
+					}
+				});
+		*/
 	},
 
 	init_css: function(argument) {
@@ -373,7 +373,7 @@ goorm.core.debug.prototype = {
 		}
 	},
 
-	debug_value_change: function(edit_box){
+	debug_value_change: function(edit_box) {
 		var data = edit_box.children().val();
 		var before = edit_box.children().attr('before');
 		var sendData = {};
@@ -382,7 +382,7 @@ goorm.core.debug.prototype = {
 		edit_box.addClass('edit_ready');
 		sendData.variable = edit_box.parent().attr("data-tt-id");
 		sendData.value = data;
-		sendData.before  = before;
+		sendData.before = before;
 		if (typeof sendData.value != "undefined") {
 			$(core.module.debug).trigger('value_changed', sendData);
 		}
@@ -442,6 +442,8 @@ goorm.core.debug.prototype = {
 		$('#bubble_debug_toolbar').show();
 		$('#bubble_debug_toolbar').removeClass('disabled'); // for more toolbar
 		$('[href="#debug_tab"]').show();
+
+		core.module.layout.set_more_toolbar();
 	},
 
 	hide_menu: function() {
@@ -452,6 +454,8 @@ goorm.core.debug.prototype = {
 		$('#bubble_debug_toolbar').addClass('disabled'); // for more toolbar
 		$('[href="#debug_tab"]').hide();
 		$('[href="#terminal"]').click();
+
+		core.module.layout.set_more_toolbar();
 	},
 
 	/* Debug Table API */
@@ -548,7 +552,7 @@ goorm.core.debug.prototype = {
 				edit_box.removeClass('edit_ready');
 				edit_box.addClass('editing');
 				// edit_box.html("<input type='text' value='" + data + "' class='edit_box' style='width:100%;height:100%'>");
-				edit_box.html('<input type="text" class="edit_box" before="'+data+'" style="width:100%;height:100%">');
+				edit_box.html('<input type="text" class="edit_box" before="' + data + '" style="width:100%;height:100%">');
 				data = data.replace(/&gt;/g, '>');
 				edit_box.find('.edit_box').val(data).focus();
 				core.status.focus_obj = edit_box;

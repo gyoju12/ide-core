@@ -48,13 +48,16 @@ goorm.core.edit.error_manager.prototype = {
                 'line_number': line_number
             }));
 
+            var editor_data = editor.getDoc();
+            var editor_line = editor_data.getLine(line_number);
+
             //error_syntax = error_syntax.trim(); // delete whitespace
-            if (editor.getDoc().getLine(line_number)) {
-                var line_info = editor.getDoc().getLine(line_number).trim();
-                var ch_start = editor.getDoc().getLine(line_number).indexOf(line_info);
+            if (editor_line) {
+                var line_info = editor_line.trim();
+                var ch_start = editor_line.indexOf(line_info);
                 var ch_end = ch_start + line_info.length;
 
-                var marker = editor.getDoc().markText({
+                var marker = editor_data.markText({
                     'line': line_number,
                     'ch': ch_start
                 }, {

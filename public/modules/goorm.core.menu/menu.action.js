@@ -472,7 +472,7 @@ goorm.core.menu.action = {
 
 			$('#use_line_wrapping').css('visibility', v ? 'visible' : 'hidden');
 
-			core.preference['preference.editor.line_wrapping'] = v.toString(); // true or false --> "true" / "false"
+			core.preference['preference.editor.line_wrapping'] = v;
 			core.dialog.preference.fill_dialog(core.preference);
 			core.dialog.preference.apply('line_wrapping');
 

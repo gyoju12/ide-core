@@ -52,34 +52,7 @@ goorm.core.preference = {
 
 		// init for editor option
 		//
-		var v = core.preference['preference.editor.line_wrapping'];
-
-		if (v === true || v === 'true') {
-			v = true;
-		} else {
-			v = false;
-		}
-
-		if (v) {
-			$('#use_line_wrapping').css('visibility', 'visible');
-		} else {
-			$('#use_line_wrapping').css('visibility', 'hidden');
-		}
-
-		v = core.preference['preference.editor.rulers'];
-
-		if (v === true || v === 'true') {
-			v = true;
-		} else {
-			v = false;
-		}
-
-		if (v) {
-			$('#use_rulers').css('visibility', 'visible');
-		} else {
-			$('#use_rulers').css('visibility', 'hidden');
-		}
-		// } else {
+				// } else {
 		// this.manager.get_default_file("configs/preferences/default.json", function (json) {
 		// 	self.preference = json;
 		// 	core.preference = json;
@@ -143,6 +116,38 @@ goorm.core.preference = {
 			}
 		});
 		localStorage.workspace && (core.preference.workspace = JSON.parse(localStorage.workspace));
+		var v = core.preference['preference.editor.line_wrapping'];
+
+		if (v === true || v === 'true') {
+			v = true;
+		} else {
+			v = false;
+		}
+
+		if (v) {
+			$('#use_line_wrapping').css('visibility', 'visible');
+		} else {
+			$('#use_line_wrapping').css('visibility', 'hidden');
+		}
+
+		core.preference['preference.editor.line_wrapping'] = v;
+
+		v = core.preference['preference.editor.rulers'];
+
+		if (v === true || v === 'true') {
+			v = true;
+		} else {
+			v = false;
+		}
+
+		if (v) {
+			$('#use_rulers').css('visibility', 'visible');
+		} else {
+			$('#use_rulers').css('visibility', 'hidden');
+		}
+
+		core.preference['preference.editor.rulers'] = v;
+
 	},
 
 	//jeongmin: merge with apply function

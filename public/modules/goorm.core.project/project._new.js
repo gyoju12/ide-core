@@ -441,7 +441,8 @@ goorm.core.project._new = {
 						// }
 						// } else {
 						project_items.find(project_type_name_class)[0].click();
-						$("#project_new").find(".project_items").focus();
+						// $("#project_new").find(".project_items").focus();
+						$("#project_new").find(".project_items").children("div:visible:first").click();
 						// }				
 
 					}
@@ -476,7 +477,7 @@ goorm.core.project._new = {
 			switch (e.which) {
 				case 37: // left key
 					if (current_selected_item.length) {
-						next_selected = current_selected_item.prev();
+						next_selected = current_selected_item.prev("div:visible");
 						if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
 
 					}

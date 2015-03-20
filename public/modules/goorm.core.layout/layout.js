@@ -665,6 +665,11 @@ goorm.core.layout = {
 				}
 			}
 		});
+
+		if (!bubble_toolbars.is(':visible')) { // if there aren't any bubble toolbars, hide bubble toolbar container
+			$('#bubble_toolbar').hide();
+			$more_button.hide();
+		}
 	},
 
 	set_scroll_ui: function() {
@@ -739,7 +744,7 @@ goorm.core.layout = {
 						}
 					}
 
-					
+
 					break;
 
 				default:
