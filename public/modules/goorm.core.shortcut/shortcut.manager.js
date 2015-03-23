@@ -533,6 +533,7 @@ goorm.core.shortcut.manager = {
 		}
 
 		localStorage.setItem('shortcut', JSON.stringify(this.custom_shortcut)); //set shortcut in the localStorage
+		core.preference[name] = new_shortcut;
 	},
 
 	//unbind/bind shortcut key event. Jeong-Min Im.
@@ -589,6 +590,7 @@ goorm.core.shortcut.manager = {
 
 			if (name && this.custom_shortcut[name] && this.hotkeys[action]) {
 				this.change_event(name, this.custom_shortcut[name], this.hotkeys[action]); //change default shortcut as loaded custom shortcut
+				core.preference[name] = this.custom_shortcut[name];
 			} else {
 				console.log('load_shortcut error:', name, this.custom_shortcut[name], this.hotkeys[action]);
 			}
@@ -1936,20 +1938,20 @@ goorm.core.shortcut.manager = {
 					// core.module.layout.inner_right_tabview.selectTab(3);
 					var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();
 					switch (current_file_type) {
-			            case 'c':
-			            case 'cpp':
-			            case 'java':
-			            case 'py':
-			            case 'js':
-			            case 'html':
-			            case 'css':
-			            	core.module.layout.select('outline');
-			                break;
+						case 'c':
+						case 'cpp':
+						case 'java':
+						case 'py':
+						case 'js':
+						case 'html':
+						case 'css':
+							core.module.layout.select('outline');
+							break;
 
-			            default:
-			            	
-			                break;
-						
+						default:
+
+							break;
+
 					}
 				}
 

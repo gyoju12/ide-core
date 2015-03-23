@@ -1286,6 +1286,10 @@ div.tooltip {
     width: 16px;
     height: 16px;
 }
+
+#chat .tab-content {
+    overflow: auto;
+}
 /* message_container */
 
 #message {

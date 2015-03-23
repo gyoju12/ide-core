@@ -284,7 +284,10 @@ goorm.core.project.property = {
 						$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
 					}
 				} else {
+					
+					//useonly(mode=goorm-oss)
 					$(this).val(key[$(this).attr("name")]);
+					
 				}
 				// }
 			});

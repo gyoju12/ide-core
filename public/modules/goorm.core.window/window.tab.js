@@ -418,7 +418,6 @@ goorm.core.window.tab.prototype = {
             	$("[action=do_jump_to_definition]").parent().hide();
             	$("#gLayoutTab_Outline").hide();
             	$("a[action='right_outline_show']").parent().hide();
-				$("#gLayoutTab_chat").click();
                 break;
         }
 	},

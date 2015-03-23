@@ -580,11 +580,12 @@ goorm.core.layout = {
 
 		$('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool
 
+		// -- right --
 		var layout_right_height = $("div.ui-layout-east").height() - $("#east_tab").height();
 		$("#goorm_inner_layout_right > div.tab-content").height(layout_right_height);
 		
 		// goorm_inner_layout_right.find("#bookmark_tab_list").css("max-height", layout_right_height / 2 - 33); //jeongmin: the other half is for outline and 33 means bookmark header	// hidden by jeongmin: bookmark tab list is now resizable, so don't need to set height.
-
+		$('#chat .tab-content').height(layout_right_height - $('#chat .nav').height());
 
 		// -- bottom --
 
@@ -658,7 +659,7 @@ goorm.core.layout = {
 
 				$bubble_toolbar.hide();
 
-				if($toolbars.length - 1 === i) {
+				if ($toolbars.length - 1 === i) {
 					$more_button.hide();
 				}
 			}

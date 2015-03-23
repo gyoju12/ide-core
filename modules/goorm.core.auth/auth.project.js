@@ -135,9 +135,6 @@ module.exports = {
 	
 
 	
-
-	
-	
 	
 	add_user: function(user_list, group_name, callback) {
 		var self = this;
