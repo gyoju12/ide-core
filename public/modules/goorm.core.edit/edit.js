@@ -1496,6 +1496,7 @@ goorm.core.edit.prototype = {
     },
 
     restore_unsaved_file_from_local: function() {
+        
         var i, k;
 
         if (!localStorage.unsaved_data) return false;

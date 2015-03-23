@@ -730,17 +730,17 @@ Optimized:Start
 }
 
 #pdf_drawing_container .goorm-bubble-arrow {
-    right: 70px;
+    /*right: 70px;*/
     top: -14px;
 }
 
-#pdf_palette_container .goorm-bubble-arrow {
+/*#pdf_palette_container .goorm-bubble-arrow {
     right: 86px;
 }
 
 #pdf_brush_container .goorm-bubble-arrow {
     right: 55px;
-}
+}*/
 
 .bfh-colorpicker-popover {
     left: -150px;

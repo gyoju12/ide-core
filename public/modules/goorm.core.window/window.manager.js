@@ -1190,7 +1190,7 @@ goorm.core.window.manager = {
 		$.each(core.status.current_opened_list, function(index, value) {
 			cnt = value;
 			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-				var temp = $("#g_window_tab_list").find('.tab_title[filename$="' + index + '"]');
+				var temp = $("#g_window_tab_list").find('.tab_title[filename="' + index + '"]');
 				if (temp) { // && index.indexOf('terminal')!=0
 					if (cnt == 1) {
 						var name = temp.attr("filename");

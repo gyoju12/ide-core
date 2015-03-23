@@ -627,47 +627,45 @@ goorm.core.layout = {
 
 		var $more_button = $('#toolbar_more_button_group');
 
-		var $toolbars = $('#main_toolbar ul.navbar-nav .grm_toolbar');
-		var bubble_toolbars = $('#bubble_toolbar ul.navbar-nav .grm_bubble_toolbar');
+		var $toolbars = $('#main_toolbar ul.navbar-nav .grm_toolbar').not('.disabled'),
+			bubble_toolbar_container = $('#bubble_toolbar');
+		var bubble_toolbars = bubble_toolbar_container.find('ul.navbar-nav .grm_bubble_toolbar').not('.disabled');
 
 		var screen_width = $(document).width();
 		var current_toolbar_width = 30; // because jquery cannot measure hidden width
 
-
-		$toolbars.each(function(i) {
+		$toolbars.each(function(i) { // show if only it is enabled item
 			var $bubble_toolbar = $(bubble_toolbars.get(i));
 
 			current_toolbar_width += $(this).outerWidth();
-
 
 			if (current_toolbar_width > screen_width) {
 				$(this).fadeOut({
 					'duration': 500
 				});
 
-				if (!$bubble_toolbar.hasClass('disabled')) { // show if only it is enabled item
-					$bubble_toolbar.show();
+				$bubble_toolbar.show();
 
+				if (!$more_button.is(':visible')) {
 					$more_button.fadeIn({
 						'duration': 500
 					});
 				}
 			} else {
-				if (!$(this).hasClass('disabled')) { // show if only it is enabled item
-					$(this).fadeIn({
-						'duration': 500
-					});
-				}
+				$(this).fadeIn({
+					'duration': 500
+				});
 
 				$bubble_toolbar.hide();
-				if (i == $toolbars.length - 1) {
+
+				if($toolbars.length - 1 === i) {
 					$more_button.hide();
 				}
 			}
 		});
 
-		if (!bubble_toolbars.is(':visible')) { // if there aren't any bubble toolbars, hide bubble toolbar container
-			$('#bubble_toolbar').hide();
+		if (bubble_toolbar_container.is(':visible') && !bubble_toolbars.is(':visible')) { // if there aren't any bubble toolbars, hide bubble toolbar container
+			bubble_toolbar_container.hide();
 			$more_button.hide();
 		}
 	},

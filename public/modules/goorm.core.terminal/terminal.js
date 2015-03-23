@@ -561,6 +561,8 @@ goorm.core.terminal.prototype = {
 
 		if (core.status.current_project_path === "") {
 			_title = "~";
+		} else if (this.terminal_name == 'debug') {
+			_title = "debug";
 		}
 		var w = core.module.layout.workspace.window_manager.get_window('/', this.terminal_name);
 
