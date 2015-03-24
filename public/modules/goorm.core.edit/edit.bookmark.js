@@ -139,7 +139,7 @@ goorm.core.edit.bookmark.prototype = {
 		var bookmark_table = $("#bookmark_table");
 		var cm = this.editor.editor;
 		var font_family = core.preference["preference.editor.font_family"];
-
+		
 		if (lines.length > 0) {
 			// make outline form and append it to outline tab. Jeong-Min Im.
 			var add_bookmark_to_outline = function(line) {

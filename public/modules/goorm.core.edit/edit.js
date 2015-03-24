@@ -1315,7 +1315,6 @@ goorm.core.edit.prototype = {
         var target_line;
         var temp_line;
 
-
         if (e.text.length == 1 && e.text[0] === "") is_line_deleted = true;
         if (e.text.length == 2 && e.text[1] === "") is_line_added = true;
 
@@ -1404,7 +1403,6 @@ goorm.core.edit.prototype = {
 
             for (var i = 0; i < this.editor.lineCount(); i++) { //search bookmarks
                 var info = this.editor.lineInfo(i); //get line information
-
                 if (info.gutterMarkers && info.gutterMarkers.bookmark) { //if bookmark is set
                     var original_line = parseInt($(info.gutterMarkers.bookmark).attr("id").split("bookmark").pop()),
                         comment = original_list[original_line + 1];
@@ -1484,9 +1482,9 @@ goorm.core.edit.prototype = {
                     'filepath': docu[i].filepath,
                     'filename': docu[i].filename,
                     'filetype': docu[i].filetype,
-                    'data': docu[i].editor.get_contents()
+                    'data': docu[i].editor.get_contents(),
+                    'bookmark': docu[i].editor.bookmark.bookmarks
                 });
-
             }
         }
         if (unsaved_data.length > 0)

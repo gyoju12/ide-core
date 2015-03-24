@@ -55,6 +55,8 @@ goorm.core.project._delete = {
 						// 	}
 						// });
 
+						goorm.core.edit.bookmark_list.delete_project_bookmarks(delete_project_path);
+
 						var wm = core.module.layout.workspace.window_manager;
 
 						for (var i = wm.window.length - 1; i >= 0; i--) {

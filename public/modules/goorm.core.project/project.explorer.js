@@ -138,7 +138,7 @@ goorm.core.project.explorer.prototype = {
 	refresh: $.throttle(function(callback) {
 		var self = this;
 
-		if(this.refreshing || (this.treeview && this.treeview._refresh)){ // It is not enough, need throttle too.
+		if (this.refreshing || (this.treeview && this.treeview._refresh)) { // It is not enough, need throttle too.
 			return;
 		}
 		this.refreshing = true;
@@ -468,7 +468,7 @@ goorm.core.project.explorer.prototype = {
 			} else {
 				alert.show(core.module.localization.msg.alert_file_not_select);
 			}
-		} else if (selected_node.directorys.length > 0 ) {
+		} else if (selected_node.directorys.length > 0) {
 			alert.show(core.module.localization.msg.alert_folder_duplicate_error);
 		} else if (selected_node.files.length === 0 && selected_node.directorys.length === 0) {
 			alert.show(core.module.localization.msg.alert_file_not_select);
@@ -638,7 +638,7 @@ goorm.core.project.explorer.prototype = {
 
 	drag_n_drop: function() {
 		var self = this;
-		var treeview = $('#project_treeview');
+		var treeview = $('#project_explorer'); // expand dnd space to whole tab
 
 		var isWholerow = true;
 		var isUploading = false;
@@ -654,7 +654,7 @@ goorm.core.project.explorer.prototype = {
 				if (isUploading) return false;
 
 				var target = $(e.target).parent();
-				if (target.is('[file_type]') || !target.is('[role="treeitem"]')) return false;
+				if (target.attr('id') !== 'my_project' && (target.is('[file_type]') || !target.is('[role="treeitem"]'))) return false; // if id === my_project, user dnd to empty space on project_treeview
 				var files = e.originalEvent.dataTransfer.files;
 				var items = e.originalEvent.dataTransfer.items;
 
@@ -676,7 +676,7 @@ goorm.core.project.explorer.prototype = {
 						return false;
 					}
 				}
-				goorm.core.file._import.upload_file_drag(files, target.attr("path"), callback);
+				goorm.core.file._import.upload_file_drag(files, target.attr("path") || core.status.current_project_path, callback);
 				return false;
 			})
 			.on('dragenter', 'li:not([file_type])', function(e) {

@@ -124,6 +124,8 @@ goorm.core.window.tab.prototype = {
 			// self.window.close();
 			$('.tooltip').remove(); // tooltip remove : Donguk Kim
 			self.window.panel.siblings('.ui-dialog-titlebar').find('.ui-dialog-titlebar-close').click(); // jeongmin: for showing confirmation_save dialog
+			$("#workspace").find(".ui-dialog");
+			core.module.layout.resize_all();
 		});
 
 		$('#' + this.tab_list_id + " .tab_restore_button").click(function() {
@@ -418,6 +420,9 @@ goorm.core.window.tab.prototype = {
             	$("[action=do_jump_to_definition]").parent().hide();
             	$("#gLayoutTab_Outline").hide();
             	$("a[action='right_outline_show']").parent().hide();
+            	if($("#gLayoutTab_Outline").parent().hasClass('active')) {
+            		$("#gLayoutTab_chat").click();
+            	}
                 break;
         }
 	},

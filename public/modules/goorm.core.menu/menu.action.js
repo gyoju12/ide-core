@@ -302,6 +302,8 @@ goorm.core.menu.action = {
 							core.module.layout.project_explorer.refresh();
 
 							close_window();
+
+							delete goorm.core.edit.bookmark_list.list[core.status.selected_file];
 						}, true);
 						core._socket.emit("/file/delete", postdata);
 						// }
@@ -347,7 +349,7 @@ goorm.core.menu.action = {
 		
 		$("[action=do_undo]").off("click").tooltip();
 		$("[action=do_undo]").click(function() {
-			if (self.prevent(this)) {
+			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
 				return false;
 			}
 
@@ -370,7 +372,7 @@ goorm.core.menu.action = {
 
 		$("[action=do_redo]").off("click").tooltip();
 		$("[action=do_redo]").click(function() {
-			if (self.prevent(this)) {
+			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
 				return false;
 			}
 
@@ -443,7 +445,7 @@ goorm.core.menu.action = {
 
 		$("[action=do_delete]").off("click").tooltip();
 		$("[action=do_delete]").click(function() {
-			if (self.prevent(this)) {
+			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
 				return false;
 			}
 
@@ -1501,6 +1503,10 @@ goorm.core.menu.action = {
 		// toggle showing window using tab context menu. Jeong-Min Im.
 		$("[action=show_hide_window]").off("click").tooltip();
 		$("[action=show_hide_window]").click(function() {
+			if($(this).parent().hasClass("disabled") === true) {
+				return false;
+			}
+
 			var tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
 
 			if ($('#' + tab.tab_list_id).find('.tab_restore_button').is(':visible')) // restore button == minimized

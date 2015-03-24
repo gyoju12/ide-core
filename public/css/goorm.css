@@ -1287,9 +1287,6 @@ div.tooltip {
     height: 16px;
 }
 
-#chat .tab-content {
-    overflow: auto;
-}
 /* message_container */
 
 #message {
@@ -5803,4 +5800,8 @@ nav#pdf_toolbar {
 div.modal .path {
     width: 99%;
     overflow: auto;
+}
+
+#blame_container_git .CodeMirror-scroll {
+    height: 89%;
 }
