@@ -365,20 +365,34 @@ goorm.core.edit.prototype = {
                     target_tab = core.module.layout.workspace.window_manager.tab[my_idx];
 
                 if (target_window && target_tab) {
-                    if (e.origin || self.special_pressed) { // jeongmin: no problem
+                    if (e.origin) { // jeongmin: no problem
                         target_window.set_modified();
                         target_tab.set_modified();
                     } else { // jeongmin: change event is occurred before keydown, so wait for coming keydown event
                         // title is used for distinguishing windows
                         $(core).one('undo_redo_pressed_' + self.title, function(e, data) { // data: undo or redo
-                            target_window.set_modified(data);
-                            target_tab.set_modified();
+                            if (data) { // undo, redo
+                                if (self.undo_redo_timestamp !== data.timestamp) { // don't do multiple times by just one undo/redo event
+                                    self.undo_redo_timestamp = data.timestamp;
 
-                            if (!data.user && !data.name) { // only if this event is triggered by keydown. If these are true, this event is triggered by collaborator
-                                data.is_collaborating = true; // for preventing other collaborators' ot stack. Used at set_modified in window.panel.js
-                                self.collaboration.update_change(data); // let other collaborators know I did undo
+                                    target_window.set_modified(data);
+                                    target_tab.set_modified();
+
+                                    if (!data.user && !data.name) { // only if this event is triggered by keydown. If these are true, this event is triggered by collaborator
+                                        data.is_collaborating = true; // for preventing other collaborators' ot stack. Used at set_modified in window.panel.js
+                                        self.collaboration.update_change(data); // let other collaborators know I did undo
+                                    }
+                                }
+                            } else { // not undo, redo
+                                target_window.set_modified();
+                                target_tab.set_modified();
                             }
                         });
+
+                        // for undefined origin but not undo/redo. Jeong-Min Im.
+                        $.debounce(function() {
+                            $(core).trigger('undo_redo_pressed_' + self.title);
+                        }, 100)();
                     }
                 }
             } else {
@@ -474,7 +488,6 @@ goorm.core.edit.prototype = {
         //onKeyEvent - keydown. Jeong-Min Im.
         __target.on('keydown', function(e) {
             var only = !self.editor.somethingSelected();
-            var comment_shortcut = $('[id="preference.shortcut.edit.comment_selected"]').attr('value'); // jeongmin: in case of custom shortcut
             var undo_shortcut = $('[id="preference.shortcut.edit.undo"]').attr('value'); // jeongmin: in case of custom shortcut
             var redo_shortcut = $('[id="preference.shortcut.edit.redo"]').attr('value'); // jeongmin: in case of custom shortcut
             var shortcut_manager = core.module.shortcut_manager;
@@ -492,27 +505,18 @@ goorm.core.edit.prototype = {
                 if (e.keyCode == 219) self.pressed_key = "{";
             }
 
-            if (key_string == comment_shortcut) { // jeongmin: comment_shortcut must not be canceled at beforeChange even if it has special key
-                self.special_pressed = true;
-            } else if (key_string == undo_shortcut) { // jeongmin: used at beforeChange event
-                //console.log("ctrl pressed");
-                self.special_pressed = false;
-
+            if (key_string == undo_shortcut) { // jeongmin: used at beforeChange event
                 $(core).trigger('undo_redo_pressed_' + self.title, { // title is used for distinguishing windows
                     undo: true,
-                    redo: false
+                    redo: false,
+                    timestamp: Math.random()
                 });
             } else if (key_string == redo_shortcut) { // jeongmin: used at beforeChange event
-                //console.log("ctrl pressed");
-                self.special_pressed = false;
-
                 $(core).trigger('undo_redo_pressed_' + self.title, { // title is used for distinguishing windows
                     undo: false,
-                    redo: true
+                    redo: true,
+                    timestamp: Math.random()
                 });
-            } else {
-                //console.log("press false");
-                self.special_pressed = false;
             }
             
             if (e.keyIdentifier == "Enter") {
