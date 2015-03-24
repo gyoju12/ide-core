@@ -286,7 +286,18 @@ goorm.core.edit.prototype = {
     },
 
     focus: function() {
+        var windows = core.module.layout.workspace.window_manager.window;
+
+        for (var i = windows.length - 1; 0 <= i; i--) {
+            windows[i].editor.blur();
+        }
+
         this.editor.focus();
+    },
+
+    // remove editor cursor. Jeong-Min Im.
+    blur: function() {
+        this.editor.display.input.blur();
     },
 
     codemirror_events: function() {
@@ -1494,7 +1505,7 @@ goorm.core.edit.prototype = {
     },
 
     restore_unsaved_file_from_local: function() {
-        
+
         var i, k;
 
         if (!localStorage.unsaved_data) return false;
@@ -1543,7 +1554,7 @@ goorm.core.edit.prototype = {
         this.readonly = true;
 
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').addClass('panel_readonly');
-        $("#"+tab.tab_list_id).find('.panel_image').addClass('panel_readonly');
+        $("#" + tab.tab_list_id).find('.panel_image').addClass('panel_readonly');
     },
 
     set_editable: function(tab) {
@@ -1552,7 +1563,7 @@ goorm.core.edit.prototype = {
         this.editor.setOption("readOnly", false);
 
         this.parent.panel.siblings('.ui-dialog-titlebar').find('.panel_image').removeClass('panel_readonly');
-        $("#"+tab.tab_list_id).find('.panel_image').removeClass('panel_readonly');
+        $("#" + tab.tab_list_id).find('.panel_image').removeClass('panel_readonly');
     },
 
     // resize_all: function(width, height) {

@@ -953,8 +953,9 @@ goorm.core.window.panel.prototype = {
 				window_manager.active_filename = this.editor.filepath + this.editor.filename; // jeongmin: need active filename update before on_activated
 
 				this.editor.on_activated();
-				this.editor.focus(); // jeongmin: when window is focused, focus codemirror, too.
 			}
+			
+			this.editor.focus(); // jeongmin: when window is focused, focus codemirror, too.
 		} else { // jeongmin: other windows(terminal...)
 			window_manager.active_filename = '';
 		}
