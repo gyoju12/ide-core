@@ -59,7 +59,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.new_file.show("");
 		});
@@ -72,7 +72,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.new_folder.show("");
 		});
@@ -85,7 +85,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.new_untitled_textfile.show("");
 		});
@@ -98,7 +98,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.new_other_file.show("");
 		});
@@ -112,7 +112,7 @@ goorm.core.menu.action = {
 		$("[action=open_file]").click(function() {
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.open_file.show();
 		});
@@ -328,7 +328,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.import_file.show();
 		});
@@ -342,7 +342,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.export_file.show();
 		});
@@ -1467,7 +1467,7 @@ goorm.core.menu.action = {
 
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.new_file.show("");
 		});
@@ -1476,7 +1476,7 @@ goorm.core.menu.action = {
 		$("[action=open_file]").click(function() {
 			if (core.status.current_project_path === "") {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
-				return false;
+				return; // false prevents closing menu
 			}
 			core.dialog.open_file.show();
 		});
@@ -1503,7 +1503,7 @@ goorm.core.menu.action = {
 		// toggle showing window using tab context menu. Jeong-Min Im.
 		$("[action=show_hide_window]").off("click").tooltip();
 		$("[action=show_hide_window]").click(function() {
-			if($(this).parent().hasClass("disabled") === true) {
+			if ($(this).parent().hasClass("disabled") === true) {
 				return false;
 			}
 
@@ -1665,7 +1665,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.export_file.show();
 			});
@@ -1827,7 +1827,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.import_file.show();
 			});
@@ -1858,7 +1858,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.new_file.show("");
 			});
@@ -1871,7 +1871,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.new_folder.show("");
 			});
@@ -1884,7 +1884,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.new_untitled_textfile.show("");
 			});
@@ -1897,7 +1897,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.import_file.show();
 			});
@@ -1910,7 +1910,7 @@ goorm.core.menu.action = {
 
 				if (core.status.current_project_path === "") {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return false;
+					return; // false prevents closing menu
 				}
 				core.dialog.export_file.show();
 			});
