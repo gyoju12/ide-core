@@ -362,9 +362,10 @@ goorm.core.menu.action = {
 
 					editor.undo();
 					//window_manager.window[window_manager.active_window].set_modified();
-					$(core).trigger('undo_redo_pressed', { // make event --heeje
+					$(core).trigger('undo_redo_pressed_' + active_window_obj.title, { // make event --heeje
 						undo: true,
-						redo: false
+						redo: false,
+						timestamp: Math.random()
 					});
 				}
 			}
