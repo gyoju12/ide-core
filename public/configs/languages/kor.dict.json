@@ -80,13 +80,13 @@
 	"logout": {
 		"value": "로그아웃"
 	},
-	"account_modify": {
+	"account_change": {
 		"value": "정보 변경"
 	},
 	"signup": {
 		"value": "회원 가입"
 	},
-	"modify": {
+	"change": {
 		"value": "변경"
 	},
 	"apply": {
@@ -203,7 +203,7 @@
 	"add_friends": {
 		"value": "친구 추가"
 	},
-	"edit": {
+	"modify": {
 		"value": "수정"
 	},
 	"crop": {

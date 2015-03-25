@@ -341,7 +341,7 @@
     "alert_cannot_connect_db": {
         "value": "Fail to connect with database."
     },
-    "confirmation_modify_profile": {
+    "confirmation_change_profile": {
         "value": "If you want to change your profile, please write your password."
     },
     "notice_search_select_project": {

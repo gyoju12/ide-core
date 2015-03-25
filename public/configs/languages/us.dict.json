@@ -80,13 +80,13 @@
 	"logout": {
 		"value": "Logout"
 	},
-	"account_modify": {
+	"account_change": {
 		"value": "Modify Account"
 	},
 	"signup": {
 		"value": "Sign-up"
 	},
-	"modify": {
+	"change": {
 		"value": "Modify"
 	},
 	"apply": {
@@ -203,7 +203,7 @@
 	"add_friends": {
 		"value": "Add Friends"
 	},
-	"edit": {
+	"modify": {
 		"value": "Edit"
 	},
 	"crop": {

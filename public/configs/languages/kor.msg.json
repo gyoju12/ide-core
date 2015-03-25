@@ -365,7 +365,7 @@
     "alert_cannot_connect_db": {
         "value": "Database에 접근할 수 없습니다."
     },
-    "confirmation_modify_profile": {
+    "confirmation_change_profile": {
         "value": "계속 진행하시려면 비밀번호를 입력해주세요."
     },
     "notice_search_select_project": {
