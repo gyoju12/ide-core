@@ -1038,13 +1038,11 @@ module.exports = {
 
 			if (files && target_path && target_path[0] !== '/') {
 				var file_arr = [];
-
 				if (!Array.isArray(files)) { //one file
 					file_arr.push(files);
 				} else {
 					file_arr = files;
 				}
-
 				if (file_arr.length) {
 					full_target_path = g_secure.filepath_filter(g_secure.command_filter(global.__workspace + target_path));
 
@@ -1054,15 +1052,17 @@ module.exports = {
 								var mv_exec = [],
 									file_path = req.body.file_path;
 
+								if (!Array.isArray(file_path)){
+									file_path = [file_path];
+								}
+
 								for (var i = file_arr.length - 1; 0 <= i; i--) {
 									mv_exec.push(function(callback) {
 										i++;
-
 										if (check_valid_path(full_target_path + '/' + file_arr[i].originalname)) {
 											file_arr[i].path = g_secure.filepath_filter(g_secure.command_filter(file_arr[i].path));
 											file_arr[i].originalname = g_secure.filepath_filter(g_secure.command_filter(file_arr[i].originalname));
 											file_path[i] = g_secure.filepath_filter(g_secure.command_filter(file_path[i].slice(file_path[i].indexOf('/'))));
-
 											exec('mv ' + file_arr[i].path + ' ' + full_target_path + file_path[i], {
 												cwd: full_target_path
 											}, function(err, stdout, stderr) {
@@ -1282,8 +1282,6 @@ module.exports = {
 				try {
 					_this._read_dir(query.path, abs_path)
 						.then(function(files) {
-							// console.log(2);
-							// console.log(files);
 							evt.emit('got_result_ls', files);
 						});
 				} catch (e) {

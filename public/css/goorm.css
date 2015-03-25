@@ -213,6 +213,30 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     border-bottom: 1px solid;
     color: white !important;
 }
+.cm-s-monokai .CodeMirror-merge-r-chunk,
+.cm-s-ambiance .CodeMirror-merge-r-chunk,
+.cm-s-blackboard .CodeMirror-merge-r-chunk,
+.cm-s-cobalt .CodeMirror-merge-r-chunk,
+.cm-s-erlang-dark .CodeMirror-merge-r-chunk,
+.cm-s-monokai .CodeMirror-merge-r-chunk,
+.cm-s-rubyblue .CodeMirror-merge-r-chunk,
+.cm-s-vibrant-ink .CodeMirror-merge-r-chunk,
+.cm-s-xq-dark .CodeMirror-merge-r-chunk,
+.cm-s-night .CodeMirror-merge-r-chunk {
+    opacity: 0.3;
+}
+.cm-s-monokai .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-ambiance .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-blackboard .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-cobalt .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-erlang-dark .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-monokai .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-rubyblue .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-vibrant-ink .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-xq-dark .CodeMirror-merge-r-chunk.current_diff,
+.cm-s-night .CodeMirror-merge-r-chunk.current_diff {
+    opacity: 0.6;
+}
 /* STOP */
 /* The rest of this file contains styles related to the mechanics of the editor. You probably shouldn't touch them. */
 
