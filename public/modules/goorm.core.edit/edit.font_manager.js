@@ -82,7 +82,7 @@ goorm.core.edit.font_manager.prototype = {
         var resize_background_image = function(target) {
             var container = $(self.target);
             var __target = container.find(target);
-            
+
             if (__target.length != 0) {
                 self.now_zoom = 1 + (0.05 * delta);
                 self.now_margin_top = -2 + (0.1 * delta);
@@ -104,8 +104,8 @@ goorm.core.edit.font_manager.prototype = {
         resize_target('.breakpoint', 'font-size', 12);
         resize_target('.bookmark', 'font-size', 12); //jeongmin: resize bookmark font
 
-        resize_target('.CodeMirror-gutter-elt', 'height', 14);  
-        resize_target('.CodeMirror', 'line-height');  
+        resize_target('.CodeMirror-gutter-elt', 'height', 14);
+        resize_target('.CodeMirror', 'line-height');
         $('.CodeMirror').css('line-height', parseFloat(self.parent.line_spacing / 10 + 1));
 
 
@@ -134,9 +134,9 @@ goorm.core.edit.font_manager.prototype = {
         var container = $(self.target);
         var code_mirror = $('div.CodeMirror', container);
         var cursors = container.find('.user_cursor');
-		
+
         var height = container.find('.CodeMirror-cursor').height();
-		
+
         if (cursors.length > 0) {
             for (var i = 0; i < cursors.length; i++) {
                 var cursor = cursors[i];
@@ -150,18 +150,18 @@ goorm.core.edit.font_manager.prototype = {
                     line: line,
                     ch: ch
                 });
-                
+
                 var top = parseInt(coords.top, 10) - parseInt(code_mirror.offset().top, 10);
                 var left = parseInt(coords.left, 10) - parseInt(code_mirror.offset().left, 10);
 
                 //parseInt($(user_name).css('font-size').replace('px', ""), 10) + delta;
-                
+
                 //parseInt($(user_name).css('height').replace('px', ""), 10) + delta;
 
                 $user_name.css('top', (top - 8) + 'px').css('left', (left + 5) + 'px').css('font-size', core.preference["preference.editor.font_size"] + 'px').css('height', height + 'px');
                 $(cursor).css('top', (top) + 'px').css('left', (left) + 'px').css('height', height + 'px');
             }
-            
+
         }
     },
 
@@ -182,7 +182,10 @@ goorm.core.edit.font_manager.prototype = {
         var window_manager = core.module.layout.workspace.window_manager;
         var active_window = window_manager.active_window;
         if (active_window > -1) {
-            CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+            if (window_manager.window[active_window].editor) {
+                CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+            }
+            
             // window_manager.window[active_window].editor.focus();
         }
         return self.font_size;

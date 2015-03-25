@@ -289,12 +289,10 @@ goorm.core.edit.prototype = {
         var windows = core.module.layout.workspace.window_manager.window;
 
         for (var i = windows.length - 1; 0 <= i; i--) {
-            if(windows[i].editor) {
+            if (windows[i].editor) {
                 windows[i].editor.blur();
-            } else if(windows[i].merge) {
-                windows[i].merge.edit.display.input.blur();
-                windows[i].merge.right.orig.display.input.blur();
             }
+            
         }
 
         this.editor.focus();
