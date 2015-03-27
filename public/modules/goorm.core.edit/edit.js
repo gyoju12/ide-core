@@ -128,7 +128,8 @@ goorm.core.edit.prototype = {
             lineNumbers: true,
             lineWrapping: self.line_wrapping,
             wordWrap: true,
-            matchBrackets: true
+            matchBrackets: true,
+            showCursorWhenSelecting: true // needed for dragover
         });
 
         //unbind CodeMirror key & shaping searching area --heeje
@@ -582,21 +583,40 @@ goorm.core.edit.prototype = {
                     CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
             }
         });
+
+        // showing drag destination by cursor. Jeong-Min Im.
+        cm_editor.on('dragover', function(cm, e) {
+            var code_mirror = $(cm.display.wrapper),
+                top = e.y - parseInt(code_mirror.offset().top) - 3,
+                left = e.x - parseInt(code_mirror.offset().left) - 3;
+
+            if ($('#dummy_cursor').length) {
+                $('#dummy_cursor').css("top", top).css("left", left);
+            } else {
+                code_mirror.prepend("<span id=dummy_cursor class='user_cursor' style='top: " + top + "px; left: " + left + "px; height: " + parseInt(code_mirror.find('.CodeMirror-cursor').height() || 11) + "px;'></span>");
+            }
+        });
+
+        // removing dummy cursor that is used for showing drag destination. Jeong-Min Im.
+        cm_editor.on('drop', function() {
+            $('#dummy_cursor').remove();
+        });
     },
 
     make_marker: function(linenumber, gutter, markerHtml) { //jeongmin: move these functions out from the codemirror_events for letting set_bookmark also use these
         var marker = document.createElement("div");
         marker.innerHTML = markerHtml;
         marker.className = gutter;
-        marker.id = gutter + linenumber;
+        // marker.id = gutter + linenumber;
         //$(marker).css("font-size", (this.nowfont) / 2);
+        marker.setAttribute('data-' + gutter, linenumber+1);
 
         if (this.theme && this.theme !== "default" && this.dark_themes.indexOf(this.theme)) {
             $(marker).css('color', '#ffff66');
         }
 
         if (gutter == "breakpoint") {
-            this.breakpoints.push(linenumber);
+            this.breakpoints.push(linenumber+1);
             this.breakpoints = jQuery.unique(this.breakpoints);
         }
         return marker;
@@ -625,7 +645,6 @@ goorm.core.edit.prototype = {
     // highlighting for debug
     highlight_line: function(line) {
         if (typeof(line) == "string") line = parseInt(line, 10);
-
         this.clear_highlight();
         this.highlighted_line = line;
 
@@ -636,9 +655,6 @@ goorm.core.edit.prototype = {
         if (this.highlighted_line) {
             this.editor.removeLineClass(this.highlighted_line, "wrap", "highlight_line");
         }
-
-        $(this.target).find(".CodeMirror-lines .highlight_line").removeClass("highlight_line");
-
         this.highlighted_line = null;
     },
 
@@ -656,7 +672,7 @@ goorm.core.edit.prototype = {
         var self = this;
         var gutter = "bookmark"; //bookmark gutter
         var cursor_line = (line) ? line - 1 : this.editor.getCursor().line; //get current cursor line
-
+        
         if (!this.editor) return; //if there is no active editor, do nothing
 
         if (!bookmark_list) { //new bookmark
@@ -681,7 +697,8 @@ goorm.core.edit.prototype = {
 
                 marker.className = marker_class;
                 marker.style.zoom = self.font_manager.now_zoom;
-                marker.id = gutter + linenumber;
+                // marker.id = gutter + linenumber;
+                marker.setAttribute('data-bookmark', linenumber+1);
             } else //clear
                 $(line_handler.gutterMarkers[gutter]).remove();
 
@@ -993,7 +1010,7 @@ goorm.core.edit.prototype = {
                     filename: filename
                 }); //jeongmin: editor load event -> set bookmark that is saved before
 
-                self.resize_gutter_height();
+                // self.resize_gutter_height();
 
                 
             };
@@ -1322,101 +1339,90 @@ goorm.core.edit.prototype = {
     },
     
     monitoring_lines: function(e) {
-        var self = this;
-
-        var is_line_deleted = false;
-        var is_line_added = false;
-
-        var start_line;
-        var end_line;
-
-        var target_line;
-        var temp_line;
-
-        if (e.text.length == 1 && e.text[0] === "") is_line_deleted = true;
-        if (e.text.length == 2 && e.text[1] === "") is_line_added = true;
-
-        if (is_line_deleted) {
-            var delete_line;
-
-            if ((e.to.line - e.from.line) === 0) { // 0 line deleted
-                return;
-            } else if ((e.to.line - e.from.line) == 1) { // 1 line deleted
-                if (parseInt(self.highlighted_line, 10) - 1 == e.to.line) {
-                    self.clear_highlight();
-                }
-
-                // breakpoints
-                var target_line_position = self.breakpoints.indexOf(e.to.line);
-                delete_line = 1;
-
-                if (target_line_position != -1) {
-                    self.breakpoints.splice(target_line_position, 1);
-                }
-            } else { // multi line deleted
-                start_line = e.to.line - 1;
-                end_line = e.from.line;
-                delete_line = end_line - start_line;
-
-                for (target_line = start_line; target_line > end_line; target_line--) {
-                    //highlights
-                    if (parseInt(self.highlighted_line, 10) - 1 == target_line) {
-                        self.clear_highlight();
-                    }
-
-                    // breakpoints
-                    var position = self.breakpoints.indexOf(target_line);
-                    if (position != -1)
-                        self.breakpoints.splice(position, 1);
-                }
-            }
-
-            //highlight
-            if (self.highlighted_line && parseInt(self.highlighted_line, 10) - 1 > e.to.line) {
-                temp_line = self.highlighted_line;
-                self.highlight_line((parseInt(temp_line, 10) - delete_line));
-            }
-
-            for (target_line = 0; target_line < self.breakpoints.length; target_line++) {
-                if (self.breakpoints[target_line] >= e.to.line) self.breakpoints.splice(target_line, 1, (parseInt(self.breakpoints[target_line], 10) - delete_line));
-            }
-
-            this.reset_bookmarks(); //jeongmin: reset bookmarks when line is changed
-        } else if (is_line_added) {
-
-
-            if (e.from.ch > 0) start_line = e.to.line + 1;
-            else start_line = e.to.line;
-
-            //highlight
-            if (self.highlighted_line && parseInt(self.highlighted_line, 10) - 1 >= start_line) {
-                temp_line = self.highlighted_line;
-                self.highlight_line((parseInt(temp_line, 10) + 1));
-            }
-
-            // breakpoints
-            for (var i = 0; i < self.breakpoints.length; i++) {
-                var line = self.breakpoints[i];
-
-                if (line >= start_line) self.breakpoints.splice(i, 1, (parseInt(line, 10) + 1));
-            }
-
-            this.reset_bookmarks(); //jeongmin: reset bookmarks when line is changed
+        var delta = e.text.length - e.removed.length;
+        if (delta != 0) {
+            this.reset_breakpoints(delta, e.from, e.to, e.text);
+            this.reset_highlighted_line(delta, e.from, e.to, e.text);
+            this.reset_bookmarks(delta, e.from, e.to, e.text);
         }
-
-        this.resize_gutter_height();
     },
 
-    reset_breakpoints: function() {
+    reset_highlighted_line: function(delta, from, to, text) {
+        var old_line = this.highlighted_line;
+        var new_line = null;
 
+        var num = parseInt(old_line, 10);
+        if (isNaN(num)) {
+            return;
+        }
+        if (num > from.line) {
+            if (num >= to.line) {
+                this.highlight_line(num + delta);
+            } else {
+                this.clear_highlight();
+            }
+        } else if (num == from.line) {
+            if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {
+                this.highlight_line(num + delta);
+            }
+        }
+    },
+
+    reset_breakpoints: function(delta, from, to, text) {
+        var old_list = this.breakpoints;
+        var new_list = [];
+        
+        for (var i = 0; i < old_list.length; i++) {
+            var num = old_list[i];
+            if (num > from.line + 1) {
+                if (num >= to.line + 1) {
+                    new_list.push(num + delta);
+                    $(this.target + ' [data-breakpoint="' + num + '"]').attr('data-breakpoint', num + delta);
+                }
+            } else if (num == from.line + 1) {
+                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {
+                    new_list.push(num + delta);
+                    $(this.target + ' [data-breakpoint="' + num + '"]').attr('data-breakpoint', num + delta);
+                } else {
+                    new_list.push(num);
+                }
+            } else {
+                new_list.push(num);
+            }
+        }
+        this.breakpoints = jQuery.unique(new_list);
     },
 
     //if line is changed, reset bookmarks. Jeong-Min Im.
-    reset_bookmarks: function() {
+    reset_bookmarks: function(delta, from, to, text) {
+        var old_list = this.bookmark.bookmarks;
+        var new_list = {};
 
+        for (i in old_list) {
+            var num = parseInt(i, 10);
+            if (num > from.line+1) {
+                if (num >= to.line+1) {
+                    new_list[num + delta] = old_list[num];
+                    $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
+                }
+            } else if (num == from.line+1) {
+                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {   // special case: when hitting enter key at the start of the line, gutters go down
+                    new_list[num + delta] = old_list[num];
+                    $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
+                } else {
+                    new_list[num] = old_list[num];
+                }
+            } else {
+                new_list[num] = old_list[num];
+            }
+        }
+        this.bookmark.bookmarks = new_list;
+        this.bookmark.outline_tab();
+
+        /*
         if (this.bookmark.bookmarks) { //only when there is bookmark
             var original_list = this.bookmark.bookmarks; //save for comment
-
+            console.log('original_list:', original_list);
             this.bookmark.bookmarks = {}; //initialize bookmark list
 
             for (var i = 0; i < this.editor.lineCount(); i++) { //search bookmarks
@@ -1424,7 +1430,7 @@ goorm.core.edit.prototype = {
                 if (info.gutterMarkers && info.gutterMarkers.bookmark) { //if bookmark is set
                     var original_line = parseInt($(info.gutterMarkers.bookmark).attr("id").split("bookmark").pop()),
                         comment = original_list[original_line + 1];
-
+                        
                     this.bookmark.bookmarks[i + 1] = comment; //add bookmark to the window
                     $(info.gutterMarkers.bookmark).attr("id", "bookmark" + i); //update bookmark's id -> line and comment use this id for updating, so id should be updated every time
                 }
@@ -1433,7 +1439,7 @@ goorm.core.edit.prototype = {
             ////// reset others, too //////
             this.bookmark.outline_tab();
             //            edit_bookmark.store_json();
-        }
+        }*/
     },
 
     refresh: function() {
@@ -1450,7 +1456,7 @@ goorm.core.edit.prototype = {
 
         //editor cursor and effect sync
         this.editor.refresh();
-        this.resize_gutter_height();
+        // this.resize_gutter_height();
 
         
     },
