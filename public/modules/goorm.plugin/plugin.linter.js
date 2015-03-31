@@ -12,6 +12,7 @@
 goorm.plugin.linter = {
 
 	output_tab_list: [],
+	flag:null,
 
 	init: function(plugin_name) {
 		var self = this;
@@ -230,6 +231,7 @@ goorm.plugin.linter = {
 			var editor = __window.editor;
 			var error_manager = editor.error_manager;
 
+			self.flag=0;
 			output = output.split("\n");
 			output.pop();
 			output.shift();
@@ -270,9 +272,10 @@ goorm.plugin.linter = {
 					content: error_data.error_message.split("<br />").shift(),
 					file: editor.filepath + editor.filename
 				});
+				self.flag=1;
 			}
 			om.push(table);
-			if (output.length >= 1) {
+			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_cpp');
 			}
 		});
@@ -322,6 +325,8 @@ goorm.plugin.linter = {
 
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
+		
+		self.flag=0;
 
 		// var parsed_data = om.parse(result, type);
 
@@ -361,9 +366,10 @@ goorm.plugin.linter = {
 					'line': parseInt(line[2].split(",")[0].replace("line ", ""), 10),
 					'content': line[line.length - 1]
 				});
+				self.flag=1;
 
 			}
-			if (output.length >= 1) {
+			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_ruby');
 			}
 		});
@@ -373,6 +379,8 @@ goorm.plugin.linter = {
 
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
+		
+		self.flag=0;
 
 		// var parsed_data = om.parse(result, type);
 
@@ -407,9 +415,10 @@ goorm.plugin.linter = {
 					'line': line,
 					'content': message[i].message
 				});
+				self.flag=1;
 
 			}
-			if (message.length >= 1) {
+			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_php');
 			}
 		});

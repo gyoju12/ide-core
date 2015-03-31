@@ -587,8 +587,8 @@ goorm.core.edit.prototype = {
         // showing drag destination by cursor. Jeong-Min Im.
         cm_editor.on('dragover', function(cm, e) {
             var code_mirror = $(cm.display.wrapper),
-                top = e.y - parseInt(code_mirror.offset().top) - 3,
-                left = e.x - parseInt(code_mirror.offset().left) - 3;
+                top = e.pageY - parseInt(code_mirror.offset().top) - 3,
+                left = e.pageX - parseInt(code_mirror.offset().left) - 3;
 
             if ($('#dummy_cursor').length) {
                 $('#dummy_cursor').css("top", top).css("left", left);
@@ -609,14 +609,14 @@ goorm.core.edit.prototype = {
         marker.className = gutter;
         // marker.id = gutter + linenumber;
         //$(marker).css("font-size", (this.nowfont) / 2);
-        marker.setAttribute('data-' + gutter, linenumber+1);
+        marker.setAttribute('data-' + gutter, linenumber + 1);
 
         if (this.theme && this.theme !== "default" && this.dark_themes.indexOf(this.theme)) {
             $(marker).css('color', '#ffff66');
         }
 
         if (gutter == "breakpoint") {
-            this.breakpoints.push(linenumber+1);
+            this.breakpoints.push(linenumber + 1);
             this.breakpoints = jQuery.unique(this.breakpoints);
         }
         return marker;
@@ -672,7 +672,7 @@ goorm.core.edit.prototype = {
         var self = this;
         var gutter = "bookmark"; //bookmark gutter
         var cursor_line = (line) ? line - 1 : this.editor.getCursor().line; //get current cursor line
-        
+
         if (!this.editor) return; //if there is no active editor, do nothing
 
         if (!bookmark_list) { //new bookmark
@@ -698,7 +698,7 @@ goorm.core.edit.prototype = {
                 marker.className = marker_class;
                 marker.style.zoom = self.font_manager.now_zoom;
                 // marker.id = gutter + linenumber;
-                marker.setAttribute('data-bookmark', linenumber+1);
+                marker.setAttribute('data-bookmark', linenumber + 1);
             } else //clear
                 $(line_handler.gutterMarkers[gutter]).remove();
 
@@ -1371,7 +1371,7 @@ goorm.core.edit.prototype = {
     reset_breakpoints: function(delta, from, to, text) {
         var old_list = this.breakpoints;
         var new_list = [];
-        
+
         for (var i = 0; i < old_list.length; i++) {
             var num = old_list[i];
             if (num > from.line + 1) {
@@ -1400,13 +1400,13 @@ goorm.core.edit.prototype = {
 
         for (i in old_list) {
             var num = parseInt(i, 10);
-            if (num > from.line+1) {
-                if (num >= to.line+1) {
+            if (num > from.line + 1) {
+                if (num >= to.line + 1) {
                     new_list[num + delta] = old_list[num];
                     $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
                 }
-            } else if (num == from.line+1) {
-                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {   // special case: when hitting enter key at the start of the line, gutters go down
+            } else if (num == from.line + 1) {
+                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") { // special case: when hitting enter key at the start of the line, gutters go down
                     new_list[num + delta] = old_list[num];
                     $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
                 } else {

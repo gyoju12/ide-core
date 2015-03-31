@@ -1282,5 +1282,17 @@
     },
     "send_invitation_mail_to_join": {
         "value": "Send invitation mail to join Goorm"
+    },
+    "search_clear_result": {
+        "value": "Clear Result"
+    },
+    "search_result_refresh": {
+        "value": "Refresh"
+    },
+    "do_safe_go_to_line" : {
+        "value": "Go to Line"
+    },
+    "do_safe_delete" : {
+        "value": "Delete"
     }
 }

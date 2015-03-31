@@ -1294,5 +1294,17 @@
     },
     "send_invitation_mail_to_join": {
         "value": "구름 가입 메일 보내기"
+    },
+    "search_clear_result": {
+        "value": "검색 결과 초기화"
+    },
+    "search_result_refresh": {
+        "value": "새로고침"
+    },
+    "do_safe_go_to_line" : {
+        "value": "라인으로 이동"
+    },
+    "do_safe_delete" : {
+        "value": "삭제하기"
     }
 }

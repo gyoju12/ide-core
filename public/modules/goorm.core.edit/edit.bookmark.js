@@ -221,11 +221,11 @@ goorm.core.edit.bookmark.prototype = {
 	// add comment. Jeong-Min Im.
 	add_comment: function(line, new_comment) {
 		////// make comment place //////
-		$("#bookmark_text_" + line).parent().append('<div class="well well-sm" id="comment_text_' + line + '"></div>');
+		$("#bookmark_text_" + line).parent().append('<div class="well well-sm" id="comment_text_' + line + '" localization_key="profile_comment"></div>');
 
 		var self = this,
 			comment_place = $("#bookmark_text_" + line).siblings('.well'),
-			placeholder = 'Comment...';
+			placeholder = core.module.localization.msg.profile_comment;
 
 		////// write comment //////
 		if (new_comment && new_comment != '')
@@ -294,7 +294,7 @@ goorm.core.edit.bookmark.prototype = {
 		this.bookmarks[line] = "";
 		this.set_modified();
 
-		$('#comment_text_' + line).html('Comment...'); // initialize well
+		$('#comment_text_' + line).html(core.module.localization.msg.profile_comment); // initialize well
 
 		this.who_clicked = null; // initialize
 	},
