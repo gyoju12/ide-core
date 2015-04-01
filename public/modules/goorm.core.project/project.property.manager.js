@@ -15,6 +15,8 @@ goorm.core.project.property.manager = {
 	tabview_id: "property_tabview",
 	json: {},
 	plugin_data: [],
+	json_to_append: null, // current project's plugin node json
+	is_init: false, // whether treeview is made or not
 
 	convert_json_to_tree: function(parent, json) {
 		var data = [];
@@ -47,7 +49,7 @@ goorm.core.project.property.manager = {
 		if (json.length) {
 			this.json_to_append = json; // this will be used on fetch
 
-			if (this.treeview) { // changing project
+			if (this.is_init && this.treeview) { // changing project
 				this.treeview.tree.jstree("_append_json_data", parent, json);
 			}
 		}
@@ -126,9 +128,12 @@ goorm.core.project.property.manager = {
 					// self.treeview.tree.jstree("redraw", true);
 					// self.treeview.select_node("property_treeview/Property/System");
 				} else if (path === "Plugin") {
-					// property treeview is already made: self.json_to_append -> append current project's plugin
-					// property treeview isn't made yet: self.plugin_data -> just append all plugins
-					callback(self.json_to_append || self.plugin_data);
+					if (self.is_init && self.json_to_append) { // property treeview is already made: append current project's plugin
+						callback(self.json_to_append);
+					} else { // property treeview isn't made yet: just append all plugins
+						callback(self.plugin_data);
+						self.is_init = true;
+					}
 				} else callback(null);
 			}
 		});
