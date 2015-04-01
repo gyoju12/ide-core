@@ -16,7 +16,7 @@ goorm.core.help.contents = {
 	top: null,
 	title: null,
 
-	init: function () {
+	init: function() {
 		var self = this;
 
 		this.panel = $("#dlg_help_contents");
@@ -28,40 +28,42 @@ goorm.core.help.contents = {
 		this.dialog.init({
 			// localization_key: "title_help_contents",
 			id: "dlg_help_contents",
-			success: function () {
+			success: function() {
 				self.panel.draggable('disable'); // jeongmin: for dragging url
-				
-				$('#dlg_help_contents li.list-group-item').click(function (e) {
+
+				$('#dlg_help_contents li.list-group-item').click(function(e) {
 					$('#dlg_help_contents li.list-group-item.active').removeClass('active');
 					$(this).addClass('active');
 
 					var id = $(this).find('a').attr('href');
 
 					var current = $('#help_contents_middle').scrollTop();
-					var top = $('#help_contents_middle '+id).position().top;
+					var top = $('#help_contents_middle ' + id).position().top;
 
-					$('#help_contents_middle').scrollTop(current+top);
+					$('#help_contents_middle').scrollTop(current + top);
 
-		            e.stopPropagation();
-		            e.preventDefault();
+					e.stopPropagation();
+					e.preventDefault();
 					return false;
 				});
 			}
 
 		});
 
-		this.panel.on('shown.bs.modal', function (){
+		this.panel.on('shown.bs.modal', function() {
 			// $('#help_contents_middle[data-spy="scroll"]').each(function () {
 			//   var $spy = $(this).scrollspy('refresh')
 			// });
 			$('#help_contents_middle[data-spy="scroll"]').scrollspy('refresh');
 		});
+
+		$(core).on('language_loaded', self.load);
 	},
 
-	load: function () {
+	load: function() {
 		var self = this;
 
-		$.getJSON("help/get_readme_markdown?language=" + localStorage.getItem("language"), function (data) {
+		$.getJSON("help/get_readme_markdown?language=" + localStorage.getItem("language"), function(data) {
 			$("#help_contents_middle").empty();
 			$("#help_contents_middle").append(data.html);
 
@@ -70,11 +72,11 @@ goorm.core.help.contents = {
 			// $('#help_contents_middle').scrollspy({ 'target': '.help_contents_nav' });
 			// $('#help_contents_middle[data-spy="scroll"]').scrollspy('refresh');
 
-			$('#help_contents_middle').scroll(function (){
+			$('#help_contents_middle').scroll(function() {
 				var current_scroll = $(this).scrollTop(); // 2443
 				var scroll_height = $(this).prop('scrollHeight') - $(this).outerHeight(); // 2441
 
-				if ( current_scroll >= scroll_height ) {
+				if (current_scroll >= scroll_height) {
 					$('#help_contents_left li.list-group-item').removeClass('active');
 					$('#help_contents_left li.list-group-item').last().addClass('active');
 				}
@@ -82,13 +84,13 @@ goorm.core.help.contents = {
 		});
 	},
 
-	show: function () {
-		
+	show: function() {
+
 
 
 		this.panel.modal('show');
-		var self=this;
-		
+		var self = this;
+
 	}
 
 };

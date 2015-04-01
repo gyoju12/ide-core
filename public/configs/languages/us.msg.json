@@ -192,7 +192,7 @@
         "value": "Do you want to delete all files and directorys?"
     },
     "confirmation_new_message": {
-        "value": "Same file(folder) name already exists. Do you want to create anyway?<br/>(The contents of original file(folder) will be gone.)"
+        "value": "Same file name already exists. Do you want to create anyway?<br/>(The contents of original file will be gone.)"
     },
     "confirmation_rename_message": {
         "value": "Same file name already exists. Do you want to rename anyway?<br/>(If you choose 'yes', original file will be deleted."

@@ -1340,6 +1340,7 @@ goorm.core.edit.prototype = {
     
     monitoring_lines: function(e) {
         var delta = e.text.length - e.removed.length;
+
         if (delta != 0) {
             this.reset_breakpoints(delta, e.from, e.to, e.text);
             this.reset_highlighted_line(delta, e.from, e.to, e.text);

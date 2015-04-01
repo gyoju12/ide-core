@@ -2068,7 +2068,12 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.hide_all_windows) {
 			this.hotkeys_fn.hide_all_windows = function(e) {
 				if (!core.status.keydown) {
-					core.module.layout.workspace.window_manager.hide_all_windows();
+					if ($("[action=hide_all_windows]").parent().hasClass("disabled") === true) {
+						return false;
+					} else {
+						core.module.layout.workspace.window_manager.hide_all_windows();	
+					}
+					
 				}
 
 
@@ -2085,7 +2090,11 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.show_all_windows) {
 			this.hotkeys_fn.show_all_windows = function(e) {
 				if (!core.status.keydown) {
-					core.module.layout.workspace.window_manager.show_all_windows();
+					if ($("[action=show_all_windows]").parent().hasClass("disabled") === true) {
+						return false;
+					} else {
+						core.module.layout.workspace.window_manager.show_all_windows();
+					}
 				}
 
 

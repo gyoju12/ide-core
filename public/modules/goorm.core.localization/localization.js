@@ -16,7 +16,7 @@ goorm.core.localization = {
 	title: {},
 	plugin: {},
 	language_data: {},
-	is_first: true,
+	is_first: false,
 	is_load: false,
 	version: {},
 
@@ -46,7 +46,11 @@ goorm.core.localization = {
 				self.get_json(language, get_type_list[i]);
 		}
 
-		self.get_plugin_language(language);
+		if (Object.keys(core.module.plugin_manager.plugins).length) { // only if there are plugins that can be applied localization
+			self.get_plugin_language(language);
+		}
+
+		$('[name=select_language_on_start][value=' + this.language + ']').iCheck('check');
 	},
 	/*
 		parse_version: function(data) {
@@ -149,79 +153,81 @@ goorm.core.localization = {
 		var broswer_language = navigator.language || navigator.userLanguage;
 		broswer_language = (/ko/.test(broswer_language)) ? 'kor' : 'us';
 
-		var change = function() {
-			var __language = (language && language != 'null' && language != 'undefined') ? language : broswer_language;
+		// var change = function() {
+		var __language = (language && language != 'null' && language != 'undefined') ? language : broswer_language;
 
-			self.language = __language;
-			localStorage.setItem('language', __language);
-			// var current = "";
-			// if (__language == "us") {
-			// 	current = "English";
-			// } else if (__language == "kor") {
-			// 	current = "한국어";
-			// }
-			// $("#language_button-button").text(current);
+		self.language = __language;
+		localStorage.setItem('language', __language);
+		// var current = "";
+		// if (__language == "us") {
+		// 	current = "English";
+		// } else if (__language == "kor") {
+		// 	current = "한국어";
+		// }
+		// $("#language_button-button").text(current);
 
-			function callback(argument) {
-				$('[id="preference.language.select"]').val(self.language);
-				core.preference['preference.language.select'] = self.language;
-				$(core).trigger('language_loaded', change_flag);
-				$(core).trigger('language_change');
-				var temp_message = $("div.join_message");
-				$.each(temp_message, function(i, v) {
-					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_join);
-				});
-				temp_message = $("div.leave_message");
-				$.each(temp_message, function(i, v) {
-					$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_leave);
-				});
-				temp_message = $("div.change_message");
-				$.each(temp_message, function(i, v) {
-					$(v).html($(v).attr('before_user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change + $(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change2);
-				});
+		// function callback(argument) {
+		// preference setting is moved to preference.js
+		// $(core).trigger('language_loaded', change_flag);
+		// $(core).trigger('language_change');
+		// var temp_message = $("div.join_message");	// done at collaboration.chat.js
+		// $.each(temp_message, function(i, v) {
+		// 	$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_join);
+		// });
+		// temp_message = $("div.leave_message");
+		// $.each(temp_message, function(i, v) {
+		// 	$(v).html($(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_leave);
+		// });
+		// temp_message = $("div.change_message");
+		// $.each(temp_message, function(i, v) {
+		// 	$(v).html($(v).attr('before_user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change + $(v).attr('user_name') + " " + core.module.localization.msg.alert_collaboration_chat_change2);
+		// });
+		// }
+
+		if (self.language_data[__language]) {
+			for (var key in self.language_data[__language]) {
+				var data = self.language_data[__language][key];
+
+				if (key == 'plugin')
+					self.get_plugin_language(__language);
+				else self.apply(data);
+
+				if (key == 'msg' || key == 'tutorial' || key == 'plugin' || key == 'title') {
+					self.apply_message(data, key);
+				}
 			}
 
-			if (self.language_data[__language]) {
-				for (var key in self.language_data[__language]) {
-					var data = self.language_data[__language][key];
+			// core.dialog.help_contents.load();	// done at help.content.js
 
-					if (key == 'plugin')
-						self.get_plugin_language(__language);
-					else self.apply(data);
-
-					if (key == 'msg' || key == 'tutorial' || key == 'plugin' || key == 'title') {
-						self.apply_message(data, key);
-					}
-				}
-
-				core.dialog.help_contents.load();
-
-				callback();
-			} else {
-				var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
-				var length = get_type_list.length;
-				self.get_json_count = 0; // jeongmin: get json loading count
-
-				for (var i = 0; i < length; i++) {
-					self.get_json(__language, get_type_list[i], length, callback); // jeongmin: getJSON is async
-				}
-
-				self.get_plugin_language(__language);
-
-				//localStorage.setItem('language.version', self.stringify_version(__language, self.version));
-				core.dialog.help_contents.load();
-				$(core).trigger('language_change');
-			}
-		};
-
-		if (!flag) {
-			if (this.t) clearTimeout(this.t);
-			this.t = setTimeout(function() {
-				change();
-			}, 3000);
+			// callback();
+			$(core).trigger('language_loaded', change_flag);
 		} else {
-			change();
+			var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
+			var length = get_type_list.length;
+			self.get_json_count = 0; // jeongmin: get json loading count
+
+			for (var i = 0; i < length; i++) {
+				self.get_json(__language, get_type_list[i], length, function() {
+					$(core).trigger('language_loaded', change_flag);
+				}); // jeongmin: getJSON is async
+			}
+
+			self.get_plugin_language(__language);
+
+			//localStorage.setItem('language.version', self.stringify_version(__language, self.version));
+			// core.dialog.help_contents.load();
+			// $(core).trigger('language_change');
 		}
+		// };
+
+		// if (!flag) {
+		// 	if (this.t) clearTimeout(this.t);
+		// 	this.t = setTimeout(function() {
+		// 		change();
+		// 	}, 3000);
+		// } else {
+		// change();
+		// }
 	},
 
 	apply: function(data, type) {
@@ -522,32 +528,41 @@ goorm.core.localization = {
 
 		}
 
-		if (self.is_first && self.language == "kor" && localStorage) {
-			if (!localStorage.getItem('language.confirmation.automatic_change')) {
-				confirmation.init({
-					message: core.module.localization.msg.confirmation_language_message,
-					yes_text: core.module.localization.msg.confirmation_language_message_yes,
-					no_text: core.module.localization.msg.confirmation_language_message_no,
+		// if (self.is_first && self.language == "kor" && localStorage) {	// language is selected at login page
+		// 	if (!localStorage.getItem('language.confirmation.automatic_change')) {
+		// 		confirmation.init({
+		// 			message: core.module.localization.msg.confirmation_language_message,
+		// 			yes_text: core.module.localization.msg.confirmation_language_message_yes,
+		// 			no_text: core.module.localization.msg.confirmation_language_message_no,
 
-					title: "Language Automatic Change",
-					yes: function() {
-						localStorage.setItem('language.confirmation.automatic_change', true);
-						self.change_language('kor');
-						self.language = 'kor';
-						
-					},
-					no: function() {
-						localStorage.setItem('language.confirmation.automatic_change', true);
-						self.change_language('us');
-						self.language = 'us';
-						
-					}
-				});
+		// 			title: "Language Automatic Change",
+		// 			yes: function() {
+		// 				localStorage.setItem('language.confirmation.automatic_change', true);
+		// 				self.change_language('kor');
+		// 				self.language = 'kor';
+		// 				
+		// 			},
+		// 			no: function() {
+		// 				localStorage.setItem('language.confirmation.automatic_change', true);
+		// 				self.change_language('us');
+		// 				self.language = 'us';
+		// 				
+		// 			}
+		// 		});
 
-				confirmation.show();
-			}
-		} else {
-			self.is_first = false;
+		// 		confirmation.show();
+		// 	}
+		// } else {
+		// 	self.is_first = false;
+		// }
+	},
+
+	// If user change language on login. Jeong-Min Im.
+	select_language_on_start: function() {
+		var selected_language = $('[name=select_language_on_start]:checked').val();
+
+		if (this.language !== selected_language) {
+			this.change_language(selected_language);
 		}
 	},
 

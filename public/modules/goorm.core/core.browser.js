@@ -19,13 +19,13 @@ goorm.core.browser = {
 			chrome: /chrome/.test(user_agent),
 			safari: /webkit/.test(user_agent) && !/chrome/.test(user_agent),
 			opera: /opera/.test(user_agent),
-			msie: /msie/.test(user_agent) && !/opera/.test(user_agent),
-			mozilla: /mozilla/.test(user_agent) && !/(compatible|webkit)/.test(user_agent)
+			msie: /msie/.test(user_agent) || /trident/.test(user_agent),
+			firefox: /firefox/.test(user_agent)
 		};
 
 		var _browser = $.browser;	//jeongmin: access object member less
 
-		if (_browser.mozilla)
+		if (_browser.firefox)
 			this.name = "Firefox";
 		else if (_browser.msie)
 			this.name = "IE";
@@ -41,7 +41,6 @@ goorm.core.browser = {
 		this.version = _browser.version;
 
 		$('.browser_name').html([this.name, " ", this.version].join(""));	//jeongmin: array.join() is better than + for concatenating strings
-		// $('.browser_name').html(this.name + " " + this.version);
 		//attach tooltips --heeje
 		$(".browser-icon").attr('title', $('.browser_name').text()).tooltip();
 	}

@@ -1506,14 +1506,16 @@ goorm.core.menu.action = {
 		$("[action=show_hide_window]").click(function() {
 			if ($(this).parent().hasClass("disabled") === true) {
 				return false;
+			} else {
+				var tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
+
+				if ($('#' + tab.tab_list_id).find('.tab_restore_button').is(':visible')) // restore button == minimized
+					tab.window.restore();
+				else
+					tab.window.minimize();	
 			}
 
-			var tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
-
-			if ($('#' + tab.tab_list_id).find('.tab_restore_button').is(':visible')) // restore button == minimized
-				tab.window.restore();
-			else
-				tab.window.minimize();
+			
 		});
 
 		// close window using tab context menu. Jeong-Min Im.

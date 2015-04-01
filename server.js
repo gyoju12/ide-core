@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1426823390';
+var build_version = 'oss-1427873008';
 
 // Dependency
 //
@@ -615,6 +615,9 @@ goorm.routing = function() {
 	
 	
 	
+
+	// for Log
+	goorm.post('/log/save_error_log', goorm.check_session, routes.log.save_error_log);
 };
 
 goorm.load = function() {

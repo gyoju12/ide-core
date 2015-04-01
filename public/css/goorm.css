@@ -976,7 +976,8 @@ div.tooltip {
     height: 78px;
     width: 100%;
 }
-#goorm_signup_button, #goorm_find_info_button {
+/*#goorm_signup_button, #goorm_find_info_button {*/
+#goorm_signup_button, #find_info_pw_bt {
     height: 32px;
     padding: 7px 12px;
     margin-left: 7px;
@@ -5826,6 +5827,7 @@ div.modal .path {
     overflow: auto;
 }
 
-#blame_container_git .CodeMirror-scroll {
+
+#blame_container_git .CodeMirror-scroll, #blame_container .CodeMirror-scroll {
     height: 89%;
 }

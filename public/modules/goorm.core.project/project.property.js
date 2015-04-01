@@ -188,6 +188,8 @@ goorm.core.project.property = {
 	},
 
 	restore_default: function() {
+		var current_plugin = "goorm.plugin." + core.status.current_project_type;
+		this.property_default.plugins[current_plugin] = core.preference.plugins[current_plugin];
 		this.fill_dialog(this.property_default);
 	},
 

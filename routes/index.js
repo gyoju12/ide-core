@@ -23,6 +23,7 @@ var g_plugin = require("../modules/goorm.plugin/plugin");
 var g_help = require("../modules/goorm.core.help/help");
 var g_search = require("../modules/goorm.core.search/search");
 var g_edit = require("../modules/goorm.core.edit/edit");
+var g_log = require("../modules/goorm.core.log/log");
 var g_lecture = null;
 try {
 	g_lecture = require('../plugins/goorm.plugin.lecture/modules/index.js');
@@ -1322,3 +1323,14 @@ exports.edit.load_tags = function(req, res) {
 
 
 	
+
+
+exports.log = function(req, res) {
+	res.json(null);
+};
+
+exports.log.save_error_log = function(req, res) {
+	g_log.save_error_log(req.body, function(data) {
+		res.json(data);
+	});
+};

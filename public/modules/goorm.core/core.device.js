@@ -38,7 +38,7 @@ goorm.core.device = {
 			this.type = "iPod";
 			this.os = "iOS";
 		} else if (is_android) {
-			device_type.html("iPod");
+			device_type.html("Android");
 
 			this.type = "Android";
 			this.os = "Android";

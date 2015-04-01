@@ -52,7 +52,7 @@ goorm.core.preference = {
 
 		// init for editor option
 		//
-				// } else {
+		// } else {
 		// this.manager.get_default_file("configs/preferences/default.json", function (json) {
 		// 	self.preference = json;
 		// 	core.preference = json;
@@ -224,14 +224,14 @@ goorm.core.preference = {
 	apply: function(id) {
 		// core.module.theme.load_css();
 		this.read_dialog(core.preference);
-		if(id === 'line_wrapping' || id === 'rulers') {
+		if (id === 'line_wrapping' || id === 'rulers') {
 			$(core).trigger("on_global_preference_confirmed");
-		} else if(Number(id)>=3 && Number(id)<=9) {
+		} else if (Number(id) >= 3 && Number(id) <= 9) {
 			$(core).trigger("on_preference_shortcut_apply");
 		} else {
 			$(core).trigger("on_preference_confirmed");
 		}
-		
+
 		this.update_ui();
 		//$(core).trigger('renew_stack');
 		core.module.layout.workspace.window_manager.resize_all();
@@ -239,9 +239,9 @@ goorm.core.preference = {
 
 	restore_default: function(tabName) {
 		var temp_tab = tabName.split("_")[0];
-		if(temp_tab === 'shortcut') {
-			$("#preference_tabview").find(".apply").each(function(i) {	
-				if(i>=3 && i<=9) {
+		if (temp_tab === 'shortcut') {
+			$("#preference_tabview").find(".apply").each(function(i) {
+				if (i >= 3 && i <= 9) {
 					$(this).removeAttr("disabled");
 				}
 			});
@@ -310,10 +310,10 @@ goorm.core.preference = {
 				$(targets[index]).find("input.form-control").each(function() {
 					var name = $(this).attr("name");
 					var type = $(this).attr("type");
-					
+
 					if (key[name] !== "undefined") {
 						if (type == "checkbox") {
-							
+
 							if (key[name] == "true" || key[name] === true) {
 								$(this).iCheck("check"); //jeongmin: change to iCheck
 							} else {
@@ -414,8 +414,8 @@ goorm.core.preference = {
 			// }).each(function(i) {
 			// 	$(this).attr("id", "preference_applyBt_" + i);
 			// });
-			$("#preference_tabview").find(".apply").each(function(i) {	
-				if(i>=3 && i<=9) {
+			$("#preference_tabview").find(".apply").each(function(i) {
+				if (i >= 3 && i <= 9) {
 					$(this).attr("id", "preference_applyBt_" + i).attr("disabled", "disabled");
 				} else {
 					$(this).attr("id", "preference_applyBt_" + i);
@@ -500,7 +500,12 @@ goorm.core.preference = {
 					self.preference.workspace_path = data.path;
 				});
 				$(core).on("language_loaded", function(event, change) {
-					self.manager.create_treeview(json[core.module.localization.language], change);
+					var lang = core.module.localization.language;
+
+					self.manager.create_treeview(json[lang], change);
+
+					$('[id="preference.language.select"]').val(lang);
+					core.preference['preference.language.select'] = lang;
 				});
 				$(core).trigger("preference_load_complete");
 			}

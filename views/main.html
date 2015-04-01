@@ -71,6 +71,16 @@
                     <button id="goorm_local_mode_button" class="btn btn-default" localization_key='login'>Login</button>
                 </div>
             </div>
+            <div class="row">
+                <label class="radio-inline left_padding_zero">
+                    <input type="radio" name="select_language_on_start" value="kor" checked>
+                    한국어
+                </label>
+                <label class="radio-inline left_padding_zero">
+                    <input type="radio" name="select_language_on_start" value="us">
+                    English
+                </label>
+            </div>
             <!-- <div id='local_login_user_box'>
                 <div id='local_user_area'>
                     <label id='local_user_label' for='local_user_input'>ID :</label>
@@ -4825,7 +4835,7 @@
         <!--
      DIALOG : auth.find_info
     -->
-        <div class="modal fade" id="dlg_auth_find_info" tabindex="-1" role="dialog" aria-labelledby="modal_auth_find_info" aria-hidden="true">
+        <!-- <div class="modal fade" id="dlg_auth_find_info" tabindex="-1" role="dialog" aria-labelledby="modal_auth_find_info" aria-hidden="true">
             <div class="modal-dialog" style="width: 300px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -4846,7 +4856,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!--
      DIALOG : auth.find_info.id
@@ -4897,15 +4907,16 @@
 
                         <div id="goorm_find_pw_container" class="find_pw_container">
                             <div class="find_pw_content_container row">
-                                <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_id">ID :</label>
+                                <!-- <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_id">ID :</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="find_pw_id_input" class="goorm_find_pw_input form-control"></div>
+                                    <input type="text" name="find_pw_id_input" class="goorm_find_pw_input form-control"></div> -->
+                                <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_email">E-mail :</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="find_pw_email_input" class="goorm_find_pw_input form-control"></div>    
                                 <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_name">Name :</label>
                                 <div class="col-md-9">
                                     <input type="text" name="find_pw_name_input" class="goorm_find_pw_input form-control"></div>
-                                <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_email">E-mail :</label>
-                                <div class="col-md-9">
-                                    <input type="text" name="find_pw_email_input" class="goorm_find_pw_input form-control"></div>
+                                
                             </div>
                         </div>
 

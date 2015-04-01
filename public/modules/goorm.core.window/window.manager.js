@@ -84,11 +84,11 @@ goorm.core.window.manager = {
 
 						if (typeof(__file.top) === 'string' && __file.top.indexOf('px')) {
 							__file.top = __file.top.split('px')[0];
-							
+
 						}
-						if(__file.left === 5 && __file.top === 10 && maximized) {
-							__file.left=undefined;
-							__file.top=undefined;
+						if (__file.left === 5 && __file.top === 10 && maximized) {
+							__file.left = undefined;
+							__file.top = undefined;
 						}
 
 
@@ -164,10 +164,11 @@ goorm.core.window.manager = {
 							$("a#parent_refactor_menu").parent().addClass("disabled");
 						}
 						// when all windows are loaded, confirm restoring data.
-						var language = localStorage["language.confirmation.automatic_change"];
-						if (language && typeof(language) === 'string')
-							language = JSON.parse(language);
-						if (localStorage.unsaved_data && language === true) {
+						// var language = localStorage["language.confirmation.automatic_change"];
+						// if (language && typeof(language) === 'string')
+						// 	language = JSON.parse(language);
+						// if (localStorage.unsaved_data && language === true) {
+						if (localStorage.unsaved_data) { // no more language change confirmation on login
 							confirmation.init({
 								message: core.module.localization.msg.confirmation_restore_unsaved_data,
 								yes_text: core.module.localization.msg.yes,

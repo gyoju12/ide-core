@@ -52,7 +52,7 @@ goorm.core = function() {
 		
 		bookmark: null, //jeongmin: add bookmark to the module
 		
-		close_alert:false
+		close_alert: false
 	};
 
 	this.dialog = {
@@ -140,7 +140,7 @@ goorm.core.prototype = {
 		
 	},
 
-	init_load: function () {
+	init_load: function() {
 		var self = this;
 
 		var container = this.container;
@@ -291,7 +291,7 @@ goorm.core.prototype = {
 		$(window).on('beforeunload', function() {
 			// if (!self.is_login) return;
 			// if (!self.force_disconnect) return;
-			if(core.module.close_alert) return;
+			if (core.module.close_alert) return;
 			if (!core.force_unload && !self.module.auth.open_keep_session_dialog && !core.logout) {
 				//2. refresh, back button, close button 
 				var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
@@ -304,8 +304,31 @@ goorm.core.prototype = {
 			}
 		});
 
-		// window.onbeforeunload = function (e) {
-		// 	if (core.module.auth.open_keep_session_dialog) return;
+		window.onerror = function(errorMsg, url, lineNumber, column) {
+				var postdata = {
+					user_id: core.user.id,
+					error_msg: errorMsg,
+					url: url,
+					line_number: lineNumber,
+					col_number: column || -1, // old browsers do not support this param
+					browser: navigator.userAgent,
+					os: navigator.platform
+				};
+
+				$.ajax({
+					'type': 'POST',
+					'url': '/log/save_error_log',
+					'data': postdata,
+					'async': false,
+					'success': function(result) {
+						if (result) {
+							console.log('error reported');
+						}
+					}
+				});
+			}
+			// window.onbeforeunload = function (e) {
+			// 	if (core.module.auth.open_keep_session_dialog) return;
 
 		// 	//1. logout
 		//     if(core.logout){
@@ -571,7 +594,7 @@ goorm.core.prototype = {
 			this.module.loading_bar = goorm.core.utility.loading_bar;
 			this.module.loading_bar.init();
 		}
-		
+
 		if (goorm.core.utility.progress_manager) {
 			this.module.progress_manager = goorm.core.utility.progress_manager;
 			this.module.progress_manager.init();
@@ -673,7 +696,7 @@ goorm.core.prototype = {
 		this.socket.on('user_access', function() {
 			$(core).trigger('goorm_login_complete');
 		});
-		
+
 		this.socket.on('other_window_logged_out', function() {
 			self.socket.removeListener('disconnect'); //Don't try reconnect
 			$('#g_alert_btn_ok').one('click', function() {
@@ -847,16 +870,16 @@ goorm.core.prototype = {
 			this.status.focus_obj.focus();
 		}
 	},
-	
+
 	check_localStorage_version: function() {
 		var server_version = JSON.parse(external_json['public']['configs']['version']['version.json']);
-		var current_version = (localStorage.version)? JSON.parse(localStorage.version) : {};
-		for(var key in server_version){
-			if(current_version[key] === undefined || current_version[key] < server_version[key]){
+		var current_version = (localStorage.version) ? JSON.parse(localStorage.version) : {};
+		for (var key in server_version) {
+			if (current_version[key] === undefined || current_version[key] < server_version[key]) {
 				localStorage.removeItem(key);
 			}
 		}
 		localStorage.setItem('version', JSON.stringify(server_version));
-		
+
 	}
 };
