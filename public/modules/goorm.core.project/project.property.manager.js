@@ -51,6 +51,10 @@ goorm.core.project.property.manager = {
 
 			if (this.is_init && this.treeview) { // changing project
 				this.treeview.tree.jstree("_append_json_data", parent, json);
+			} else { // wait for loading treeview
+				$(core).one('property_treeview_loaded', function() {
+					self.treeview.tree.jstree("_append_json_data", parent, json);
+				});
 			}
 		}
 	},
@@ -120,6 +124,9 @@ goorm.core.project.property.manager = {
 			sort: false,
 			on_ready: function() {
 				$(core).trigger(this.project_path + '_treeview_loaded');
+
+				self.treeview.open_path('Property');
+				self.treeview.open_path('Plugin');
 			},
 			fetch: function(path, callback) {
 				if (path === "Property") {

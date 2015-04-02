@@ -1340,7 +1340,7 @@ goorm.core.edit.prototype = {
     
     monitoring_lines: function(e) {
         var delta = e.text.length - e.removed.length;
-
+        console.log('e:', e);
         if (delta != 0) {
             this.reset_breakpoints(delta, e.from, e.to, e.text);
             this.reset_highlighted_line(delta, e.from, e.to, e.text);
@@ -1384,6 +1384,8 @@ goorm.core.edit.prototype = {
                 if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {
                     new_list.push(num + delta);
                     $(this.target + ' [data-breakpoint="' + num + '"]').attr('data-breakpoint', num + delta);
+                } else if (from.ch == 0 && text.length == 1 && delta == -1 && text[0] == "") {
+                    continue;
                 } else {
                     new_list.push(num);
                 }
@@ -1410,6 +1412,8 @@ goorm.core.edit.prototype = {
                 if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") { // special case: when hitting enter key at the start of the line, gutters go down
                     new_list[num + delta] = old_list[num];
                     $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
+                } else if (from.ch == 0 && text.length == 1 && delta == -1 && text[0] == "") { // special case2: when deleting the whole line, gutter is removed
+                    continue;
                 } else {
                     new_list[num] = old_list[num];
                 }
