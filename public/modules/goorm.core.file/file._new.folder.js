@@ -16,7 +16,7 @@ goorm.core.file._new.folder = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_new_folder");
+		this.panel = $('#dlg_new_folder');
 
 		var dst_name_check = function(dst_name) {
 			// var strings = "{}[]()<>?|~`!@#$%^&*+\"' ";
@@ -24,26 +24,25 @@ goorm.core.file._new.folder = {
 			// 	if (dst_name.indexOf(strings[i]) != -1) return false;
 			if (core.module.file.test(dst_name)) {
 				return false;
-			}
-			else{
+			} else {
 				return true;
 			}
 
-			if (dst_name.indexOf('..') > -1) return false; // jeongmin: prevent access higher directory
+			// if (dst_name.indexOf('..') > -1) return false; // jeongmin: prevent access higher directory
 
-			return true;
+			// return true;
 		};
 
 		var handle_ok = function(panel) {
 			var localization = core.module.localization.msg;
 			var data = self.dialog_explorer.get_data();
-			
+
 			if (data == false) {
 				// when folder name has space(' '), get_data returns false
 				alert.show(localization.alert_invalid_folder_name);
 				return false;
 			}
-			if (data.path == "/") {
+			if (data.path == '/') {
 				alert.show(localization.alert_deny_make_folder_in_workspace_root);
 				return;
 			}
@@ -53,7 +52,7 @@ goorm.core.file._new.folder = {
 				return false;
 			}
 
-			if (data.path === "" || data.name === "") {
+			if (data.path === '' || data.name === '') {
 				alert.show(localization.alert_filename_empty);
 
 				return false;
@@ -107,59 +106,59 @@ goorm.core.file._new.folder = {
 					// 		do_fs_mkdir();
 					// 	}
 					// } else {
-						// actual making new folder. Jeong-Min Im.
-						function do_file_new_folder() {
-							//$.get("file/new_folder", postdata, function (data) {
-							core._socket.once("/file/new_folder", function(check_data) {
-								if (check_data.err_code === 0) {
-									core.module.layout.project_explorer.treeview.open_path(data.path);
-									core.module.layout.project_explorer.refresh();
-								} else if (check_data.err_code == 20) {
-									alert.show(localization[check_data.message]);
-
-								} else {
-									alert.show(check_data.message);
-								}
-							});
-
-							core._socket.emit("/file/new_folder", postdata);
-						}
-
-						if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
-							var _postdata = {
-								filename: data.path + "/" + data.name
-							};
-
-							core._socket.once("/file/delete", function(data) {
-								// m.s("delete: " + core.status.selected_file);
-
+					// actual making new folder. Jeong-Min Im.
+					function do_file_new_folder() {
+						//$.get("file/new_folder", postdata, function (data) {
+						core._socket.once('/file/new_folder', function(check_data) {
+							if (check_data.err_code === 0) {
+								core.module.layout.project_explorer.treeview.open_path(data.path);
 								core.module.layout.project_explorer.refresh();
+							} else if (check_data.err_code == 20) {
+								alert.show(localization[check_data.message]);
 
-								var window_manager = core.module.layout.workspace.window_manager;
-								var window_list = window_manager.window;
+							} else {
+								alert.show(check_data.message);
+							}
+						});
 
-								for (var i = window_list.length - 1; i >= 0; i--) {
-									if ((window_list[i].title).indexOf(core.status.selected_file) > -1) {
-										window_list[i].is_saved = true;
-										window_list[i].tab.is_saved = true;
-										// window_list[i].close(i);
-										window_manager.close_by_index(i, i);
+						core._socket.emit('/file/new_folder', postdata);
+					}
 
-										// jeongmin: these are should be done after deleting selected file
-										core.status.selected_file = "";
-										core.status.selected_file_type = "";
+					if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
+						var _postdata = {
+							filename: data.path + '/' + data.name
+						};
 
-										break; // jeongmin: we find our target file, so no need to go further
-									}
+						core._socket.once('/file/delete', function(data) {
+							// m.s("delete: " + core.status.selected_file);
+
+							core.module.layout.project_explorer.refresh();
+
+							var window_manager = core.module.layout.workspace.window_manager;
+							var window_list = window_manager.window;
+
+							for (var i = window_list.length - 1; i >= 0; i--) {
+								if ((window_list[i].title).indexOf(core.status.selected_file) > -1) {
+									window_list[i].is_saved = true;
+									window_list[i].tab.is_saved = true;
+									// window_list[i].close(i);
+									window_manager.close_by_index(i, i);
+
+									// jeongmin: these are should be done after deleting selected file
+									core.status.selected_file = '';
+									core.status.selected_file_type = '';
+
+									break; // jeongmin: we find our target file, so no need to go further
 								}
+							}
 
-								do_file_new_folder();
-							}, true);
-
-							core._socket.emit("/file/delete", _postdata);
-						} else { // jeongmin: not exists, new folder
 							do_file_new_folder();
-						}
+						}, true);
+
+						core._socket.emit('/file/delete', _postdata);
+					} else { // jeongmin: not exists, new folder
+						do_file_new_folder();
+					}
 					// }
 				});
 			}
@@ -173,11 +172,10 @@ goorm.core.file._new.folder = {
 			}
 		};
 
-
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_new_folder",
-			id: "dlg_new_folder",
+			id: 'dlg_new_folder',
 			handle_ok: handle_ok,
 			success: null,
 			show: $.proxy(this.after_show, this)
@@ -187,15 +185,15 @@ goorm.core.file._new.folder = {
 		this.panel.keydown(function(e) {
 			switch (e.which) {
 				case 13: // enter key
-					$("#g_nfo_btn_ok").click();
+					$('#g_nfo_btn_ok').click();
 					break;
-					// case 27:
-					// 	$("#g_nfo_btn_close").click();
-					// 	break;
+				// case 27:
+				// 	$("#g_nfo_btn_close").click();
+				// 	break;
 			}
 		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer("#folder_new", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#folder_new', this);
 		this.bind();
 	},
 
@@ -205,25 +203,25 @@ goorm.core.file._new.folder = {
 	},
 
 	after_show: function() {
-		$("#folder_new_dir_tree").find(".jstree-clicked").click();
-		$("#folder_new_target_name").focus();
+		$('#folder_new_dir_tree').find('.jstree-clicked').click();
+		$('#folder_new_target_name').focus();
 	},
 
 	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
-	
-		$("#g_nfo_btn_ok").keydown(function(e) {
-			if(e.keyCode == 9 ) {
-				$("#folder_new_dir_tree").find(".jstree-clicked").click();
+
+		$('#g_nfo_btn_ok').keydown(function(e) {
+			if (e.keyCode == 9) {
+				$('#folder_new_dir_tree').find('.jstree-clicked').click();
 			}
 			e.preventDefault();
 		});
-		
-		$(files).on("click", "div.file_item", function() {
-			self.filename = $(this).attr("filename");
-			self.filetype = $(this).attr("filetype");
-			self.filepath = $(this).attr("filepath");
+
+		$(files).on('click', 'div.file_item', function() {
+			self.filename = $(this).attr('filename');
+			self.filetype = $(this).attr('filetype');
+			self.filepath = $(this).attr('filepath');
 		});
 	},
 
@@ -231,12 +229,15 @@ goorm.core.file._new.folder = {
 		var self = this;
 		var nodes = src.split('/');
 
-		var target_parent = "";
-		var target_name = "";
+		var target_parent = '';
+		var target_name = '';
 
 		function get_node_by_path(node) {
-			if (node.data.parent_label == target_parent && node.data.name == target_name) return true;
-			else return false;
+			if (node.data.parent_label == target_parent && node.data.name == target_name) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		for (var i = 0; i < nodes.length; i++) {

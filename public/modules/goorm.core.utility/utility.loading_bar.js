@@ -10,17 +10,17 @@
 
 goorm.core.utility.loading_bar = {
 	list: {}, // loading bar's progress bar list
-	unique: [], //if progress has unique, compare with it. if in here, ignore start 
+	unique: [], //if progress has unique, compare with it. if in here, ignore start
 	count: 0, // number of progress bars
-	template: '<div id="progress_wrapper" class="progress_wrapper" fingerprint="_fingerprint">\
-					<div id="progress_title" class="row text-muted"></div>\
-						<div class="progress">\
-							<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">\
-							</div>\
-							<button id="progress_kill" class="close" aria-hidden="true">&times;</button>\
-						</div>\
-					<div id="progress_contents"></div>\
-				</div>', // progress bar template
+	template: '<div id="progress_wrapper" class="progress_wrapper" fingerprint="_fingerprint">' +
+					'<div id="progress_title" class="row text-muted"></div>' +
+						'<div class="progress">' +
+							'<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
+							'</div>' +
+							'<button id="progress_kill" class="close" aria-hidden="true">&times;</button>' +
+						'</div>' +
+					'<div id="progress_contents"></div>' +
+				'</div>', // progress bar template
 	is_hide: false, // is hide called before shown
 	try_to_show: false, // someone tries to show modal
 
@@ -31,13 +31,13 @@ goorm.core.utility.loading_bar = {
 		this.panel = $('#dlg_loading_bar'); // loading bar dialog
 		this.goorm_progress_bar = $('#goorm_progress_bar'); // progress bar in bottom status bar
 
-		this.panel.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
+		this.panel.on('show.bs.modal', function() { // jeongmin: event should be binded to only one element, not .modal
 			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
+			var $dialog = $(this).find('.modal-dialog');
 			$dialog.width(336);
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
+			$(this).css('top', offset_height - 30).css('left', offset_width);
 
 			if (self.panel.is(':visible')) { // sometimes, shown event isn't triggered after show event automatically
 				self.panel.trigger('shown.bs.modal');
@@ -48,7 +48,7 @@ goorm.core.utility.loading_bar = {
 			}
 		});
 
-		this.panel.on("shown.bs.modal", function() {
+		this.panel.on('shown.bs.modal', function() {
 			if (self.panel.is(':visible')) { // we success to show modal. Initialize all flags.
 				self.try_to_show = false;
 				self.is_hide = false;
@@ -56,7 +56,7 @@ goorm.core.utility.loading_bar = {
 				if (Object.keys(self.list).length === 0) {
 					self.hide();
 				}
-			} else { // we fail to show modal, try again
+			} else if (Object.keys(self.list).length > 0) { // we fail to show modal, try again
 				self.show();
 			}
 		});
@@ -81,14 +81,14 @@ goorm.core.utility.loading_bar = {
 		});
 
 		// hide loading bar dialog and change it to progress bar in bottom status bar. Jeong-Min Im.
-		$("#g_lb_btn_hide").click(function() {
-			var now = self.panel.find(".progress-bar").attr("aria-valuenow"); // get current loading bar progress percentage
+		$('#g_lb_btn_hide').click(function() {
+			var now = self.panel.find('.progress-bar').attr('aria-valuenow'); // get current loading bar progress percentage
 
 			self.hide(now);
-			self.goorm_progress_bar.css('cursor', 'pointer'); //show it as clickable	
+			self.goorm_progress_bar.css('cursor', 'pointer'); //show it as clickable
 		});
 		// process is done and hide loading bar. Jeong-Min Im.
-		$("#g_lb_btn_ok").click(function() {
+		$('#g_lb_btn_ok').click(function() {
 			self.hide();
 		});
 		// restore loading bar. Jeong-Min Im.
@@ -100,7 +100,10 @@ goorm.core.utility.loading_bar = {
 	},
 
 	get_fingerprint: function(bits) {
-		var chars, rand, i, ret;
+		var chars;
+		var rand;
+		var i;
+		var ret;
 
 		chars = 'abcdefghijklmnopqr12345678abcdefghijklmnopqrstuvwxyz012345678912';
 		ret = '';
@@ -160,11 +163,11 @@ goorm.core.utility.loading_bar = {
 
 		// set options
 		$('#modal_loading_bar').html(core.module.localization.msg.please_wait);
-		$('#' + title).html(option.str || "");
+		$('#' + title).html(option.str || '');
 		core.progressbar.set(option.now || 99.9, '#' + bar);
 
 		// bind kill event
-		var kill_button = $("#" + kill);
+		var kill_button = $('#' + kill);
 		if (option.kill) {
 			kill_button.show();
 
@@ -173,7 +176,7 @@ goorm.core.utility.loading_bar = {
 
 				self.list[fingerprint].kill(); // execute kill function
 
-				if (typeof(option.beforeStop) === "function") {
+				if (typeof(option.beforeStop) === 'function') {
 					option.beforeStop();
 				}
 				if (option.unique) {
@@ -185,7 +188,7 @@ goorm.core.utility.loading_bar = {
 			kill_button.hide();
 		}
 
-		$("#g_lb_btn_hide").show(); // hide is default
+		$('#g_lb_btn_hide').show(); // hide is default
 		$('#g_lb_btn_ok').hide(); // ok button is for done loading bar
 		this.goorm_progress_bar.css('cursor', ''); // loading bar is showing, so set goorm progress bar non-clickable
 
@@ -193,7 +196,7 @@ goorm.core.utility.loading_bar = {
 		self.panel.modal('show');
 		// }, 150);
 
-		if (typeof(callback) === "function") {
+		if (typeof(callback) === 'function') {
 			callback();
 		}
 
@@ -201,7 +204,7 @@ goorm.core.utility.loading_bar = {
 			wrapper: '#' + wrapper,
 			title: '#' + title,
 			bar: '#' + bar,
-			kill: "#" + kill,
+			kill: '#' + kill,
 			contents: function(str) {
 				if (str.length > 45) {
 					var front = str.slice(0, 22);
@@ -215,7 +218,7 @@ goorm.core.utility.loading_bar = {
 				$(this.title).html(str);
 			},
 			stop: function() { // stops 'this' progress
-				if (typeof(option.beforeStop) === "function") {
+				if (typeof(option.beforeStop) === 'function') {
 					option.beforeStop();
 				}
 				if (option.unique) {
@@ -236,7 +239,7 @@ goorm.core.utility.loading_bar = {
 			this.list = {};
 			this.count = 0; // nothing left. Last one is stopped
 			$(wrapper).remove();
-			if (this.panel.hasClass("in")) { // loading bar is showing now, so no need to show it again -> just stop
+			if (this.panel.hasClass('in')) { // loading bar is showing now, so no need to show it again -> just stop
 				if (Object.keys(self.list).length == 0) {
 					self.hide();
 				}
@@ -271,7 +274,7 @@ goorm.core.utility.loading_bar = {
 			}
 
 			if (option.lock) {
-				$("#g_lb_btn_hide").hide();
+				$('#g_lb_btn_hide').hide();
 			}
 		}
 
@@ -282,8 +285,8 @@ goorm.core.utility.loading_bar = {
 	// loading bar will be hidden into goorm progress bar on bottom status bar. Jeong-Min Im.
 	hide: function(now) {
 		this.panel.modal('hide');
-
-		core.progressbar.set(now || 100, "#loading_progress_bar");
+		core.progressbar.set(now || 100, '#loading_progress_bar');
 		core.progressbar.set(now || 100); // loading bar hide to progress bar in bottom
+
 	}
 };

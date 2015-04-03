@@ -587,13 +587,13 @@ goorm.core.edit.prototype = {
         // showing drag destination by cursor. Jeong-Min Im.
         cm_editor.on('dragover', function(cm, e) {
             var code_mirror = $(cm.display.wrapper),
-                top = e.pageY - parseInt(code_mirror.offset().top) - 3,
-                left = e.pageX - parseInt(code_mirror.offset().left) - 3;
+                top = e.pageY - parseInt(code_mirror.offset().top, 10) - 3,
+                left = e.pageX - parseInt(code_mirror.offset().left, 10) - 3;
 
             if ($('#dummy_cursor').length) {
                 $('#dummy_cursor').css("top", top).css("left", left);
             } else {
-                code_mirror.prepend("<span id=dummy_cursor class='user_cursor' style='top: " + top + "px; left: " + left + "px; height: " + parseInt(code_mirror.find('.CodeMirror-cursor').height() || 11) + "px;'></span>");
+                code_mirror.prepend("<span id=dummy_cursor class='user_cursor' style='top: " + top + "px; left: " + left + "px; height: " + parseInt(code_mirror.find('.CodeMirror-cursor').height() || 11, 10) + "px;'></span>");
             }
         });
 
@@ -867,11 +867,11 @@ goorm.core.edit.prototype = {
             if (this.dark_themes.indexOf(this.theme) > -1) {
                 this.theme_cursor_highlight_color = 'background-color:#eee8aa !important; opacity:0.1 !important';
                 $('.CodeMirror-activeline-background').attr('style', this.theme_cursor_highlight_color);
-                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#ffff66')
+                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#ffff66');
             } else {
                 this.theme_cursor_highlight_color = 'background-color:#e8f2ff !important; opacity:0.3 !important';
                 $('.CodeMirror-activeline-background').attr('style', this.theme_cursor_highlight_color);
-                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#900')
+                $('.CodeMirror-gutter-elt .breakpoint').css('color', '#900');
             }
 
             this.editor.setOption("theme", this.theme);
@@ -1138,7 +1138,7 @@ goorm.core.edit.prototype = {
             if (!res || !res.result) {
                 alert.show(localization_msg.alert_save_file_fail);
                 return false;
-            } else if (res.exists == false) { // jeongmin: file is deleted
+            } else if (res.exists === false) { // jeongmin: file is deleted
                 confirmation.init({
                     message: localization_msg.confirmation_save_deleted_file,
                     yes_text: localization_msg.yes,
@@ -1310,7 +1310,7 @@ goorm.core.edit.prototype = {
     },
 
     do_delete: function() {
-        if (this.editor.getSelection() == "") {
+        if (this.editor.getSelection() === '') {
             var cursor_line = this.editor.getCursor().line;
             var cursor_ch = this.editor.getCursor().ch;
             this.editor.setSelection(CodeMirror.Pos(cursor_line, cursor_ch - 1), CodeMirror.Pos(cursor_line, cursor_ch));
@@ -1339,13 +1339,11 @@ goorm.core.edit.prototype = {
     },
     
     monitoring_lines: function(e) {
-        var delta = e.text.length - e.removed.length;
-        console.log('e:', e);
-        if (delta != 0) {
-            this.reset_breakpoints(delta, e.from, e.to, e.text);
-            this.reset_highlighted_line(delta, e.from, e.to, e.text);
-            this.reset_bookmarks(delta, e.from, e.to, e.text);
-        }
+		var delta = e.text.length - e.removed.length;
+
+		this.reset_breakpoints(delta, e.from, e.to, e.text);
+		this.reset_highlighted_line(delta, e.from, e.to, e.text);
+		this.reset_bookmarks(delta, e.from, e.to, e.text);
     },
 
     reset_highlighted_line: function(delta, from, to, text) {
@@ -1363,7 +1361,7 @@ goorm.core.edit.prototype = {
                 this.clear_highlight();
             }
         } else if (num == from.line) {
-            if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {
+            if (from.ch === 0 && text.length === 2 && text[0] === "" && text[1] === "") {
                 this.highlight_line(num + delta);
             }
         }
@@ -1375,22 +1373,20 @@ goorm.core.edit.prototype = {
 
         for (var i = 0; i < old_list.length; i++) {
             var num = old_list[i];
-            if (num > from.line + 1) {
-                if (num >= to.line + 1) {
+            var info = this.editor.lineInfo(num + delta - 1);
+            var info2 = this.editor.lineInfo(num - 1);
+
+            if (num >= from.line + 1) {
+                if (info && info.gutterMarkers && info.gutterMarkers.breakpoint) {
                     new_list.push(num + delta);
                     $(this.target + ' [data-breakpoint="' + num + '"]').attr('data-breakpoint', num + delta);
-                }
-            } else if (num == from.line + 1) {
-                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") {
-                    new_list.push(num + delta);
-                    $(this.target + ' [data-breakpoint="' + num + '"]').attr('data-breakpoint', num + delta);
-                } else if (from.ch == 0 && text.length == 1 && delta == -1 && text[0] == "") {
-                    continue;
-                } else {
+                } else if (info2 && info2.gutterMarkers && info2.gutterMarkers.breakpoint) {
                     new_list.push(num);
                 }
             } else {
-                new_list.push(num);
+                if (info2 && info2.gutterMarkers && info2.gutterMarkers.breakpoint) {
+                    new_list.push(num);
+                }
             }
         }
         this.breakpoints = jQuery.unique(new_list);
@@ -1401,24 +1397,23 @@ goorm.core.edit.prototype = {
         var old_list = this.bookmark.bookmarks;
         var new_list = {};
 
-        for (i in old_list) {
+        for (var i in old_list) {
             var num = parseInt(i, 10);
-            if (num > from.line + 1) {
-                if (num >= to.line + 1) {
+
+            var info = self.editor.lineInfo(num + delta - 1);
+            var info2 = self.editor.lineInfo(num - 1);
+
+            if (num >= from.line + 1) {
+                if (info && info.gutterMarkers && info.gutterMarkers.bookmark) {
                     new_list[num + delta] = old_list[num];
                     $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
-                }
-            } else if (num == from.line + 1) {
-                if (from.ch == 0 && text.length == 2 && text[0] == "" && text[1] == "") { // special case: when hitting enter key at the start of the line, gutters go down
-                    new_list[num + delta] = old_list[num];
-                    $(this.target + ' [data-bookmark="' + num + '"]').attr('data-bookmark', num + delta);
-                } else if (from.ch == 0 && text.length == 1 && delta == -1 && text[0] == "") { // special case2: when deleting the whole line, gutter is removed
-                    continue;
-                } else {
+                } else if (info2 && info2.gutterMarkers && info2.gutterMarkers.bookmark) {
                     new_list[num] = old_list[num];
                 }
             } else {
-                new_list[num] = old_list[num];
+                if (info2 && info2.gutterMarkers && info2.gutterMarkers.bookmark) {
+                    new_list[num] = old_list[num];
+                }
             }
         }
         this.bookmark.bookmarks = new_list;
@@ -1562,7 +1557,7 @@ goorm.core.edit.prototype = {
         localStorage.unsaved_data = '';
     },
 
-    set_readonly: function(nocursor, tab) {
+    set_readonly: function (nocursor, tab) {
         if (nocursor) {
             this.editor.setOption("readOnly", "nocursor");
         } else {
@@ -1575,7 +1570,7 @@ goorm.core.edit.prototype = {
         $("#" + tab.tab_list_id).find('.panel_image').addClass('panel_readonly');
     },
 
-    set_editable: function(tab) {
+    set_editable: function (tab) {
         this.readonly = false;
 
         this.editor.setOption("readOnly", false);
@@ -1598,14 +1593,14 @@ goorm.core.edit.prototype = {
     //     }
     // },
 
-    update_editor_status: function(line, ch) {
+    update_editor_status: function (line, ch) {
         var self = this;
         $('#editor_status span.line').html("Line: " + line);
         $('#editor_status span.coloumn').html("Col: " + ch);
         $("#goorm_bottom").find(".breadcrumb .zoom_percent").text(self.font_manager.font_percent + "%");
     },
 
-    add_vim_excommand: function(name, prefix, func) {
+    add_vim_excommand: function (name, prefix, func) {
         CodeMirror.Vim.defineEx(name, prefix, func);
     }
 };

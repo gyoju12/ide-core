@@ -20,55 +20,55 @@ goorm.core.file.rename = {
 		var self = this;
 		this.processing = false;
 
-		this.panel = $("#dlg_rename_file");
+		this.panel = $('#dlg_rename_file');
 
 		var dst_name_check = function(dst_name) {
 			/*var strings = "{}[]()<>?|~`!@#$%^&*+\"'\\/ ";
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
 			return true;*/
-			if (core.module.file.test(dst_name)){
+			if (core.module.file.test(dst_name)) {
 				return false;
-			}else{
+			}else {
 				return true;
 			}
 		};
 
 		var handle_ok = function(panel) {
-			if(self.processing) {return;}
+			if (self.processing) {return;}
 			self.processing = true;
 
-			var ori_path = $("#input_rename_old_filepath").val();
-			var ori_name = $("#input_rename_old_filename").val();
-			var dst_name = $("#input_rename_new_filename").val();
+			var ori_path = $('#input_rename_old_filepath').val();
+			var ori_name = $('#input_rename_old_filename').val();
+			var dst_name = $('#input_rename_new_filename').val();
 
-			if(ori_name == dst_name){
-				alert.show("plz change the name");
+			if (ori_name == dst_name) {
+				alert.show('plz change the name');
 				self.processing = false;
-				$("#input_rename_new_filename").focus();
+				$('#input_rename_new_filename').focus();
 				return false;
 			}
 
-			$("#input_rename_new_filename").blur();
-	
-			if (dst_name === "") {
+			$('#input_rename_new_filename').blur();
+
+			if (dst_name === '') {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				self.processing = false;
 				return false;
-			} else if (dst_name.indexOf(" ") != -1) {
-				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
-				self.processing = false;
-				return false;
+// 			} else if (dst_name.indexOf(' ') != -1) {	// hidden: space is now allowed
+// 				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
+// 				self.processing = false;
+// 				return false;
 			} else if (!dst_name_check(dst_name)) {
-				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
+				alert.show(core.module.localization.msg.alert_invalid_folder_name);
 				self.processing = false;
 				return false;
 			}
 
 			var postdata = {
-				ori_path: $("#input_rename_old_filepath").val(),
-				ori_name: $("#input_rename_old_filename").val(),
-				dst_name: $("#input_rename_new_filename").val()
+				ori_path: $('#input_rename_old_filepath').val(),
+				ori_name: $('#input_rename_old_filename').val(),
+				dst_name: $('#input_rename_new_filename').val()
 			};
 
 			function do_rename(data) {
@@ -115,81 +115,81 @@ goorm.core.file.rename = {
 				// 		do_fs_rename();
 				// 	}
 				// } else {
-					function do_file_rename(){
-						core._socket.once("/file/rename", function(_data) {
-							var received_data = _data;
+				function do_file_rename() {
+					core._socket.once('/file/rename', function(_data) {
+						var received_data = _data;
 
-							if (received_data.err_code === 0) {
-								var window_manager = core.module.layout.workspace.window_manager;
-								var window_list = window_manager.window;
-								var current_data = null;
-								for (var i = window_list.length - 1; i >= 0; i--) {
-									if (window_list[i].title == ori_path + dst_name) {
-										window_list[i].is_saved = true;
-										window_list[i].tab.is_saved = true;
-										window_manager.close_by_index(i, i);
-										//window_list[i].tab.close();
-										//window_list[i].close();
-									} else if (window_list[i].title == ori_path + ori_name) {
-										if(window_list[i].is_saved == false){
-											current_data = window_list[i].editor.editor.getValue();
-										}
-										window_list[i].is_saved = true;
-										window_list[i].tab.is_saved = true;
+						if (received_data.err_code === 0) {
+							var window_manager = core.module.layout.workspace.window_manager;
+							var window_list = window_manager.window;
+							var current_data = null;
+							for (var i = window_list.length - 1; i >= 0; i--) {
+								if (window_list[i].title == ori_path + dst_name) {
+									window_list[i].is_saved = true;
+									window_list[i].tab.is_saved = true;
+									window_manager.close_by_index(i, i);
+									//window_list[i].tab.close();
+									//window_list[i].close();
+								} else if (window_list[i].title == ori_path + ori_name) {
+									if (window_list[i].is_saved == false) {
+										current_data = window_list[i].editor.editor.getValue();
+									}
+									window_list[i].is_saved = true;
+									window_list[i].tab.is_saved = true;
 
-										var old_path = window_list[i].title;
+									var old_path = window_list[i].title;
 
-										var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
+									var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
 
-										var filename = new_path.split('/').pop();
-										var filepath = new_path.substring(0, new_path.length - filename.length);
-										var filetype = window_list[i].filetype;
+									var filename = new_path.split('/').pop();
+									var filepath = new_path.substring(0, new_path.length - filename.length);
+									var filetype = window_list[i].filetype;
 
-										//window_list[i].tab.close();
-										//window_list[i].close();
-										window_manager.close_by_index(i, i); // panel idx, tab idx
+									//window_list[i].tab.close();
+									//window_list[i].close();
+									window_manager.close_by_index(i, i); // panel idx, tab idx
 
-										if (received_data.type !== 'directory') { // type is null when file name is not duplicate - KW
+									if (received_data.type !== 'directory') { // type is null when file name is not duplicate - KW
 										// if (data.type == 'file') { // jeongmin: only file can be opened
-											core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
-											if(current_data !== null){
-												$(core).on("editor_loaded.rename", function (e, file) {
-													if(ori_path == file.filepath && dst_name == file.filename){
-														window_manager.get_window(file.filepath, file.filename).editor.editor.setValue(current_data);
-														$(core).unbind("editor_loaded.rename");
-													}
-												});
-											}
-											
-											
+										core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
+										if (current_data !== null) {
+											$(core).on('editor_loaded.rename', function(e, file) {
+												if (ori_path == file.filepath && dst_name == file.filename) {
+													window_manager.get_window(file.filepath, file.filename).editor.editor.setValue(current_data);
+													$(core).unbind('editor_loaded.rename');
+												}
+											});
 										}
+
+										
 									}
 								}
-
-								core.module.layout.project_explorer.refresh();
-							} else if (received_data.err_code == 20) {
-								alert.show(core.module.localization.msg[received_data.message]);
-								$("#input_rename_new_filename").focus();
-							} else {
-								alert.show(received_data.message);
-								$("#input_rename_new_filename").focus();
 							}
-						});
-						core._socket.emit("/file/rename", postdata);
-						self.panel.modal('hide');
-					}
 
-					if (data && data.exist && data.type == 'file') {
-						var _postdata = {
-							filename: ori_path + "/" + dst_name
-						};
-						core._socket.once("/file/delete", function(data) {
-							do_file_rename();
-						}, true);
-						core._socket.emit("/file/delete", _postdata);
-					}else{
+							core.module.layout.project_explorer.refresh();
+						} else if (received_data.err_code == 20) {
+							alert.show(core.module.localization.msg[received_data.message]);
+							$('#input_rename_new_filename').focus();
+						} else {
+							alert.show(received_data.message);
+							$('#input_rename_new_filename').focus();
+						}
+					});
+					core._socket.emit('/file/rename', postdata);
+					self.panel.modal('hide');
+				}
+
+				if (data && data.exist && data.type == 'file') {
+					var _postdata = {
+						filename: ori_path + '/' + dst_name
+					};
+					core._socket.once('/file/delete', function(data) {
 						do_file_rename();
-					}
+					}, true);
+					core._socket.emit('/file/delete', _postdata);
+				}else {
+					do_file_rename();
+				}
 
 				// }
 			}
@@ -199,7 +199,7 @@ goorm.core.file.rename = {
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			id: "dlg_rename_file",
+			id: 'dlg_rename_file',
 			handle_ok: handle_ok,
 			success: null,
 			show: $.proxy(this.after_show, this)
@@ -207,13 +207,13 @@ goorm.core.file.rename = {
 
 		// enter key 'OK'
 		// $("#dlg_rename_file").keydown(function(e) {
-		$("#input_rename_new_filename").keydown(function(e) {
+		$('#input_rename_new_filename').keydown(function(e) {
 			switch (e.keyCode) {
 				case 13: // key 'enter'
-					$("#g_rf_btn_ok").click();
+					$('#g_rf_btn_ok').click();
 					break;
 				case 27: // key 'esc'
-					$("#g_rf_btn_cancel").click();
+					$('#g_rf_btn_cancel').click();
 					break;
 			}
 		});
@@ -228,35 +228,34 @@ goorm.core.file.rename = {
 			return;
 		}
 		if (context) {
-			var fullpath = "";
-			
+			var fullpath = '';
 			var selected_file = core.module.layout.project_explorer.get_tree_selected_path();
-			if (selected_file.files.length !==0) {
+			if (selected_file.files.length !== 0) {
 				fullpath = selected_file.files.pop();
-			} else if (selected_file.directorys.length !==0) {
+			} else if (selected_file.directorys.length !== 0) {
 				fullpath = selected_file.directorys.pop();
 			} else {
 				alert.show(core.module.localization.msg.alert_select_file);
-				return false;	
+				return false;
 			}
-			// var fullpath = core.status.selected_file.split("/");
-			fullpath = fullpath.split("/");
+			// var fullpath = core.status.selected_file.split('/');
+			fullpath = fullpath.split('/');
 
 			var filename = fullpath.pop();
 			var filepath = fullpath.join('/') + '/';
-			filepath = filepath.replace("//", "/");
+			filepath = filepath.replace('//', '/');
 
-			$("#input_rename_new_filename").val(filename);
-			$("#input_rename_old_filepath").val(filepath);
-			$("#input_rename_old_filename").val(filename);
+			$('#input_rename_new_filename').val(filename);
+			$('#input_rename_old_filepath').val(filepath);
+			$('#input_rename_old_filename').val(filename);
 
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			for (var i = 0; i < window_manager.index; i++) {
 				var window_filename = window_manager.window[i].filename;
 				var window_filepath = window_manager.window[i].filepath;
-				window_filepath = window_filepath + "/";
-				window_filepath = window_filepath.replace("//", "/");
+				window_filepath = window_filepath + '/';
+				window_filepath = window_filepath.replace('//', '/');
 
 				if (window_manager.window[i].alive && window_filename == filename && window_filepath == filepath) {
 					this.is_alive_window = true;
@@ -274,19 +273,19 @@ goorm.core.file.rename = {
 			}
 
 			if (this.is_alive_window) {
-				$("#input_rename_new_filename").val(window_manager.window[window_manager.active_window].filename);
-				$("#input_rename_old_filepath").val(window_manager.window[window_manager.active_window].filepath);
-				$("#input_rename_old_filename").val(window_manager.window[window_manager.active_window].filename);
+				$('#input_rename_new_filename').val(window_manager.window[window_manager.active_window].filename);
+				$('#input_rename_old_filepath').val(window_manager.window[window_manager.active_window].filepath);
+				$('#input_rename_old_filename').val(window_manager.window[window_manager.active_window].filename);
 			} else if (core.status.selected_file) {
-				var fullpath = core.status.selected_file.split("/");
+				var fullpath = core.status.selected_file.split('/');
 
 				var temp_name = fullpath.pop();
 				var temp_path = fullpath.join('/') + '/';
-				temp_path = temp_path.replace("//", "/");
+				temp_path = temp_path.replace('//', '/');
 
-				$("#input_rename_new_filename").val(temp_name);
-				$("#input_rename_old_filepath").val(temp_path);
-				$("#input_rename_old_filename").val(temp_name);
+				$('#input_rename_new_filename').val(temp_name);
+				$('#input_rename_old_filepath').val(temp_path);
+				$('#input_rename_old_filename').val(temp_name);
 			} else {
 				// alert please click ...
 				//
@@ -297,7 +296,7 @@ goorm.core.file.rename = {
 	},
 
 	after_show: function() {
-		$("#input_rename_new_filename").focus();
+		$('#input_rename_new_filename').focus();
 	},
 
 	// check file exists. Jeong-Min Im.
@@ -312,14 +311,14 @@ goorm.core.file.rename = {
 							message: localization[confirm_msg],
 							yes_text: localization.yes,
 							no_text: localization.no,
-							title: "Confirmation",
+							title: 'Confirmation',
 
 							yes: function() {
 								callback(data);
 							},
 							no: function() {
 								self.processing = false;
-								$("#input_rename_new_filename").focus();
+								$('#input_rename_new_filename').focus();
 							}
 						});
 
@@ -327,7 +326,7 @@ goorm.core.file.rename = {
 					} else if (data.type === 'directory') {
 						self.processing = false;
 						alert.show(localization.alert_rename_exist_folder);
-						$("#input_rename_new_filename").trigger('focus');
+						$('#input_rename_new_filename').trigger('focus');
 					}
 				} else {
 					callback(data);
@@ -336,7 +335,7 @@ goorm.core.file.rename = {
 				var msg = '' || localization[data.message];
 				self.processing = false;
 				alert.show(localization[data.message]);
-				$("#input_rename_new_filename").focus();
+				$('#input_rename_new_filename').focus();
 			}
 		});
 		core._socket.emit('/file/exist', postdata);

@@ -11,19 +11,19 @@
 goorm.core.file = {
 	name_regex: /[^a-zA-Z0-9_\ \-\.\(\)\[\]]/,
 
-	filter: function (_str) {
-		var str = _str || "";
+	filter: function(_str) {
+		var str = _str || '';
 
-		return str.replace(/([\.\ \(\)\[\]])/g, "\\$1");
+		return str.replace(/([\.\ \(\)\[\]])/g, '\\$1');
 	},
 
-	get_regex: function () {
+	get_regex: function() {
 		return this.name_regex;
 	},
 
-	test: function (str, _regex) {
+	test: function(str, _regex) {
 		var regex = _regex || this.name_regex;
 
 		return regex.test(str);
 	}
-}
+};

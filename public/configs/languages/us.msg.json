@@ -1029,7 +1029,7 @@
         "value": "There are some duplicate directories"
     },
     "alert_invalid_folder_name": {
-        "value": "Only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ]) are allowed."
+        "value": "Only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .) are allowed."
     },
     "alert_limit_file_size": {
         "value": "You cannot upload large files with a size bigger than 50MB."
@@ -1203,7 +1203,7 @@
         "value": "Do you want to overwrite?"
     },
     "alert_allow_file_has_valid_name": {
-        "value": "File/folder's name should have only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ])."
+        "value": "File/folder's name should have only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .)."
     },
     "folder_dnd_error": {
         "value": "You cannot upload the folder by drag and drop!"

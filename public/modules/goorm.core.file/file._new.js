@@ -17,7 +17,7 @@ goorm.core.file._new = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_new_file");
+		this.panel = $('#dlg_new_file');
 		// this.panel.click(function() {	// hidden: storage is deprecated
 		// 	$("button[localization_key=common_target]").blur();
 		// });
@@ -27,7 +27,8 @@ goorm.core.file._new = {
 			for (var i = 0; i < strings.length; i++)
 				if (dst_name.indexOf(strings[i]) != -1) return false;
 			return true;*/
-			if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)) {
+			// if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)) {
+			if (core.module.file.test(dst_name)) {	// unify testing regex
 				return false;
 			} else {
 				return true;
@@ -38,34 +39,33 @@ goorm.core.file._new = {
 			var localization = core.module.localization.msg;
 			var data = self.dialog_explorer.get_data();
 
-			if (data.path === "" || data.name === "") {
+			if (data.path === '' || data.name === '') {
 				alert.show(localization.alert_filename_empty);
 				return false;
 			}
 
 			if (data === false || !dst_name_check(data.name)) {
-				alert.show(localization.alert_allow_character);
+				alert.show(localization.alert_invalid_folder_name);
 				return false;
 			}
 
-			if (data.path == "/") {
+			if (data.path == '/') {
 				alert.show(localization.alert_deny_make_file_in_workspace_root);
 				return;
 			}
 			var postdata = {
 				new_anyway: self.is_new_anyway,
-				path: data.path + "/" + data.name,
+				path: data.path + '/' + data.name,
 				type: data.type
 			};
 			//$.get("file/new", postdata, function (data) {
-			core._socket.once("/file/new", function(check_data) {
+			core._socket.once('/file/new', function(check_data) {
 				if (check_data.err_code == 99) {
 					confirmation.init({
 						message: localization.confirmation_new_message,
 						yes_text: localization.yes,
 						no_text: localization.no,
-						title: "Confirmation",
-
+						title: 'Confirmation',
 
 						yes: function() {
 							self.is_new_anyway = true;
@@ -89,8 +89,8 @@ goorm.core.file._new = {
 								window_manager.close_by_index(i, i);
 
 								// jeongmin: these are should be done after deleting selected file
-								core.status.selected_file = "";
-								core.status.selected_file_type = "";
+								core.status.selected_file = '';
+								core.status.selected_file_type = '';
 
 								break;
 							}
@@ -107,13 +107,13 @@ goorm.core.file._new = {
 					alert.show(msg);
 				}
 			});
-			core._socket.emit("/file/new", postdata);
+			core._socket.emit('/file/new', postdata);
 		};
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_new_file",
-			id: "dlg_new_file",
+			id: 'dlg_new_file',
 			handle_ok: handle_ok,
 			// success: function() {
 			// 	$(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
@@ -124,18 +124,18 @@ goorm.core.file._new = {
 		});
 
 		// enter key 'OK'
-		$("#file_new_target_name").keydown(function(e) {
+		$('#file_new_target_name').keydown(function(e) {
 			switch (e.which) {
 				case 13: // enter key
-					$("#g_nf_btn_ok").click();
+					$('#g_nf_btn_ok').click();
 					break;
 				case 27: // esc key
-					$("#g_nf_btn_cancel").click();
+					$('#g_nf_btn_cancel').click();
 					break;
 			}
 		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer("#file_new", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#file_new', this);
 	},
 
 	show: function() {
@@ -147,10 +147,10 @@ goorm.core.file._new = {
 	after_show: function() {
 		// var files = this.dialog_explorer.files;
 		// $(files).click();
-		$("#file_new_target_name").focus();
-		$("#g_nf_btn_ok").keydown(function(e) {
+		$('#file_new_target_name').focus();
+		$('#g_nf_btn_ok').keydown(function(e) {
 			if (e.keyCode == 9) {
-				$("#file_new_dir_tree").find(".jstree-clicked").click();
+				$('#file_new_dir_tree').find('.jstree-clicked').click();
 			}
 			e.preventDefault();
 		});
@@ -160,12 +160,15 @@ goorm.core.file._new = {
 		var self = this;
 		var nodes = src.split('/');
 
-		var target_parent = "";
-		var target_name = "";
+		var target_parent = '';
+		var target_name = '';
 
 		function get_node_by_path(node) {
-			if (node.data.parent_label == target_parent && node.data.name == target_name) return true;
-			else return false;
+			if (node.data.parent_label == target_parent && node.data.name == target_name) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		for (var i = 0; i < nodes.length; i++) {

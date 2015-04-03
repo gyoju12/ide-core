@@ -59,20 +59,40 @@ goorm.core.file._import = {
 
 
 				self.input.on("change", function(e) {
+					var filelist = this.files;
+					var large_files = [];
+
 					var data = self.dialog_explorer.get_data();
 					if (data.path === "" || data.path === "/") {
 						alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
 						self.input.val('');
 						return false;
 					}
-					if (!self.filename_check(e.target.files))
+					if (!self.filename_check(e.target.files)) {
 						self.input.val('');;
+					}
+
+					// to check files larger than 50mb
+					if (filelist !== null && filelist !== undefined) {
+						for (var i in filelist) {
+							if (filelist[i].size !== undefined) {
+								if (filelist[i].size > 1024*1024*50) {
+									large_files.push(filelist[i].name);
+								}
+							}
+						}
+					}
+					if (large_files.length > 0) {
+						alert.show("[" + large_files.join(", ") + "]<br/>" + core.module.localization.msg.alert_limit_file_size);
+						self.input.val('');
+					}
 					$('.jstree-clicked').click();
 				});
 
 				var form_options = {
 					target: "#upload_output",
 					success: function(data) {
+						// console.log('success', data);
 						self.files_upload(data, function() { // jeongmin: overwrite function
 							$('#myForm').attr('action', 'file/import?is_overwrite=true');
 							self.progress_elements = core.module.loading_bar.start({
@@ -133,7 +153,7 @@ goorm.core.file._import = {
 			}
 		});
 
-		// when enter 'tab' key, move from left tree to right file view 
+		// when enter 'tab' key, move from left tree to right file view
 		$("#file_import_dir_tree").keydown(function(e) {
 			switch (e.keyCode) {
 				case 9: // 'tab' key
@@ -174,7 +194,7 @@ goorm.core.file._import = {
 		var layout = core.module.layout;
 
 		this.progress_elements.stop();
-		
+
 
 		if (data.err_code === 0) {
 			self.panel.modal('hide');
