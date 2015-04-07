@@ -8,16 +8,15 @@
  * version: 2.0.0
  **/
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var async = require('async');
 // var walk = require('walk');
-var EventEmitter = require("events").EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 var rimraf = require('rimraf');
 var http = require('http');
 var https = require('https');
 var path = require('path');
-var exec = require('child_process').exec;
-// var spawn = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 var Q = require('q');
 var fs_readdir = Q.denodeify(fs.readdir);
 var fs_stat = Q.denodeify(fs.stat);
@@ -27,7 +26,9 @@ var g_secure = require('../goorm.core.secure/secure.js');
 
 
 var check_valid_path = function(str) {
-	if (!str) return false;
+	if (!str) {
+		return false;
+	}
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
@@ -37,24 +38,24 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 		if (query.path !== null) {
 			var path = query.path;
-			if (query.type !== "") {
-				path += "." + query.type;
+			if (query.type !== '') {
+				path += '.' + query.type;
 			}
 
 			// make new file. Jeong-Min Im.
 			function create_file() {
-				fs.writeFile(global.__workspace + '/' + path, "", function(err) {
+				fs.writeFile(global.__workspace + '/' + path, '', function(err) {
 					if (err !== null) {
 						data.err_code = 40;
-						data.message = "Can not make a file";
+						data.message = 'Can not make a file';
 
-						evt.emit("file_do_new", data);
+						evt.emit('file_do_new', data);
 					} else {
 						
-						evt.emit("file_do_new", data);
+						evt.emit('file_do_new', data);
 					}
 				});
 			}
@@ -66,28 +67,28 @@ module.exports = {
 					if (stats.isDirectory()) { // jeongmin: can't make file using this name
 						data.err_code = 28; // jeongmin: EISDIR
 						data.message = 'alert_same_name_folder';
-						evt.emit("file_do_new", data);
-					} else if (query.new_anyway == "false" || query.new_anyway == false) { // jeongmin: let user know same name exists
+						evt.emit('file_do_new', data);
+					} else if (query.new_anyway == 'false' || query.new_anyway == false) { // jeongmin: let user know same name exists
 						data.err_code = 99;
-						data.message = "exist file";
-						evt.emit("file_do_new", data);
+						data.message = 'exist file';
+						evt.emit('file_do_new', data);
 					} else if ((query.new_anyway == 'true' || query.new_anyway == true) && stats.isFile()) { // jeongmin: overwrite file
 						create_file();
 					} else {
 						data.err_code = 10;
-						data.message = "Invalid query";
-						evt.emit("file_do_new", data);
+						data.message = 'Invalid query';
+						evt.emit('file_do_new', data);
 					}
 				} else {
 					data.err_code = 10;
-					data.message = "Invalid query";
-					evt.emit("file_do_new", data);
+					data.message = 'Invalid query';
+					evt.emit('file_do_new', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("file_do_new", data);
+			data.message = 'Invalid query';
+			evt.emit('file_do_new', data);
 		}
 	},
 
@@ -95,34 +96,34 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.current_path !== null && query.folder_name !== null) {
 			fs.exists(global.__workspace + '/' + query.path, function(exists) {
 				if (exists) {
 					data.err_code = 20;
-					data.message = "Exist folder";
+					data.message = 'Exist folder';
 
-					evt.emit("file_do_new_folder", data);
+					evt.emit('file_do_new_folder', data);
 				} else {
 					fs.mkdir(global.__workspace + '/' + query.current_path + '/' + query.folder_name, '0777', function(err) {
 
 						if (err !== null) {
 							data.err_code = 30;
-							data.message = "Cannot make directory";
+							data.message = 'Cannot make directory';
 
-							evt.emit("file_do_new_folder", data);
+							evt.emit('file_do_new_folder', data);
 						} else {
 							
-							evt.emit("file_do_new_folder", data);
+							evt.emit('file_do_new_folder', data);
 						}
 					});
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("file_do_new_folder", data);
+			data.message = 'Invalid query';
+			evt.emit('file_do_new_folder', data);
 		}
 	},
 
@@ -130,43 +131,43 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.current_path !== null) {
 			fs.readdir(global.__workspace + '/' + query.current_path, function(err, files) {
 				if (err !== null) {
 					data.err_code = 10;
-					data.message = "Server can not response";
+					data.message = 'Server can not response';
 
-					evt.emit("file_do_new_untitled_text_file", data);
+					evt.emit('file_do_new_untitled_text_file', data);
 				} else {
-					var temp_file_name = "untitled";
+					var temp_file_name = 'untitled';
 					var i = 1;
 
 					while (1) {
-						if (files.hasObject(temp_file_name + i + ".txt")) {} else {
+						if (files.hasObject(temp_file_name + i + '.txt')) {} else {
 							break;
 						}
 						i++;
 					}
 
-					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + temp_file_name + i + '.txt', "", function(err) {
+					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + temp_file_name + i + '.txt', '', function(err) {
 						if (err !== null) {
 							data.err_code = 40;
-							data.message = "Can not make project file";
+							data.message = 'Can not make project file';
 
-							evt.emit("file_do_new_untitled_text_file", data);
+							evt.emit('file_do_new_untitled_text_file', data);
 						} else {
 							
-							evt.emit("file_do_new_untitled_text_file", data);
+							evt.emit('file_do_new_untitled_text_file', data);
 						}
 					});
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("file_do_new_untitled_text_file", data);
+			data.message = 'Invalid query';
+			evt.emit('file_do_new_untitled_text_file', data);
 		}
 	},
 
@@ -174,33 +175,33 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.current_path !== null && query.file_name !== null) {
 			fs.exists(global.__workspace + '/' + query.path, function(exists) {
 				if (exists) {
 					data.err_code = 20;
-					data.message = "Exist file";
+					data.message = 'Exist file';
 
-					evt.emit("file_do_new_other", data);
+					evt.emit('file_do_new_other', data);
 				} else {
-					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + query.file_name, "", function(err) {
+					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + query.file_name, '', function(err) {
 						if (err !== null) {
 							data.err_code = 40;
-							data.message = "Can not make file";
+							data.message = 'Can not make file';
 
-							evt.emit("file_do_new_other", data);
+							evt.emit('file_do_new_other', data);
 						} else {
 							
-							evt.emit("file_do_new_other", data);
+							evt.emit('file_do_new_other', data);
 						}
 					});
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("file_do_new_other", data);
+			data.message = 'Invalid query';
+			evt.emit('file_do_new_other', data);
 		}
 	},
 
@@ -210,42 +211,41 @@ module.exports = {
 		var abs_path = global.__workspace + '/' + query.path;
 		if (!check_valid_path(abs_path)) {
 			data.err_code = 10;
-			data.message = "Can not save";
+			data.message = 'Can not save';
 
-			evt.emit("file_put_contents", data);
+			evt.emit('file_put_contents', data);
 		} else {
 			if (query.options != undefined && query.options.append == true) {
 				fs.appendFile(abs_path, query.data, function(err) {
 					if (err !== null) {
 						data.err_code = 10;
-						data.message = "Can not save";
+						data.message = 'Can not save';
 
-						evt.emit("file_put_contents", data);
+						evt.emit('file_put_contents', data);
 					} else {
 						data.err_code = 0;
-						data.message = "saved";
+						data.message = 'saved';
 
-						evt.emit("file_put_contents", data);
+						evt.emit('file_put_contents', data);
 					}
 				});
 			} else {
 				fs.writeFile(abs_path, query.data, function(err) {
 					if (err !== null) {
 						data.err_code = 10;
-						data.message = "Can not save";
+						data.message = 'Can not save';
 
-						evt.emit("file_put_contents", data);
+						evt.emit('file_put_contents', data);
 					} else {
 						data.err_code = 0;
-						data.message = "saved";
+						data.message = 'saved';
 
-						evt.emit("file_put_contents", data);
+						evt.emit('file_put_contents', data);
 					}
 				});
 			}
 		}
 	},
-
 
 	make_dir_tree: function(root, dirs) {
 		var tree = [];
@@ -273,7 +273,7 @@ module.exports = {
 
 			// files on root
 			for (var j = 0; j < files.length; j++) {
-				if (files[j].root == "") {
+				if (files[j].root == '') {
 					marked.push(j);
 					tree.push(files[j]);
 				}
@@ -311,25 +311,25 @@ module.exports = {
 	do_delete: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.filename !== null) {
 			rimraf(global.__workspace + '/' + query.filename, function(err) {
 				if (err !== null) {
 					data.err_code = 20;
-					data.message = "Can not delete file";
+					data.message = 'Can not delete file';
 
-					evt.emit("file_do_delete", data);
+					evt.emit('file_do_delete', data);
 				} else {
 					//success
-					evt.emit("file_do_delete", data);
+					evt.emit('file_do_delete', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalide query";
+			data.message = 'Invalide query';
 
-			evt.emit("file_do_delete", data);
+			evt.emit('file_do_delete', data);
 		}
 
 	},
@@ -337,7 +337,7 @@ module.exports = {
 	do_rename: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.ori_path !== null && query.ori_name !== null && query.dst_name !== null) {
 			var path = global.__workspace + '/' + query.ori_path;
@@ -345,7 +345,7 @@ module.exports = {
 			fs.rename(path + query.ori_name, path + query.dst_name, function(err) {
 				if (err) {
 					data.err_code = 11;
-					data.message = "Fail to rename";
+					data.message = 'Fail to rename';
 
 					console.log(err);
 				} else {
@@ -353,32 +353,32 @@ module.exports = {
 					data.file = query.dst_name;
 				}
 
-				evt.emit("file_do_rename", data);
+				evt.emit('file_do_rename', data);
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalide query";
+			data.message = 'Invalide query';
 
-			evt.emit("file_do_rename", data);
+			evt.emit('file_do_rename', data);
 		}
 	},
 
 	do_move: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 		data.err_files = [];
 
 		function move(file_data, last) { // last: all files are moved or not
-			var ori_full = global.__workspace + '/' + file_data.ori_path + "/" + file_data.ori_file;
-			var dst_full = global.__workspace + '/' + file_data.dst_path + "/" + file_data.dst_file;
+			var ori_full = global.__workspace + '/' + file_data.ori_path + '/' + file_data.ori_file;
+			var dst_full = global.__workspace + '/' + file_data.dst_path + '/' + file_data.dst_file;
 
 			fs.rename(ori_full, dst_full, function(err) {
 				if (err !== null) {
 					console.log('ERROR [fs.rename fails - do_move() in file.js]:', err);
 
 					data.err_code = err.errno;
-					data.message = "Can not move file";
+					data.message = 'Can not move file';
 					data.err_files.push(file_data.ori_path + '/' + file_data.ori_file);
 				} else {
 					data.path = file_data.dst_path;
@@ -386,7 +386,7 @@ module.exports = {
 				}
 
 				if (last) {
-					evt.emit("file_do_move", data);
+					evt.emit('file_do_move', data);
 				}
 			});
 		}
@@ -395,9 +395,9 @@ module.exports = {
 			move(query, true);
 		} else if (query.ori_path && query.dst_path) { // jeongmin: from drag and drop. Can be multiple files.
 			for (var i = query.ori_path.length - 1; 0 <= i; i--) {
-				var ori_path = query.ori_path[i],
-					last_slash = ori_path.lastIndexOf('/'),
-					file = ori_path.slice(last_slash + 1);
+				var ori_path = query.ori_path[i];
+				var last_slash = ori_path.lastIndexOf('/');
+				var file = ori_path.slice(last_slash + 1);
 
 				move({
 					ori_path: ~last_slash ? ori_path.slice(0, last_slash) : ori_path, // has slash(remove it) : has no slash(just use it)
@@ -408,22 +408,23 @@ module.exports = {
 			}
 		} else {
 			data.err_code = 18; // EINVAL
-			data.message = "Invalid query";
+			data.message = 'Invalid query';
 
-			evt.emit("file_do_move", data);
+			evt.emit('file_do_move', data);
 		}
 	},
 
 	do_import: function(query, file, evt) {
 		var data = {};
 		data.err_code = 0;
-		// data.message = "Process Done";
+		// data.message = 'Process Done';
 		data.file = [];
 
 		if (file && query.file_import_location_path !== null && query.file_import_location_path !== undefined) {
 
-			if (!(file instanceof Array))
+			if (!(file instanceof Array)) {
 				file = new Array(file);
+			}
 
 			var load_count = 0;
 			var unload_count = 0;
@@ -451,7 +452,7 @@ module.exports = {
 							// });
 							load_count++;
 							if (load_count + unload_count === file.length) {
-								evt.emit("file_do_import", data);
+								evt.emit('file_do_import', data);
 							}
 
 						});
@@ -459,9 +460,7 @@ module.exports = {
 						unload_count++;
 					}
 				}
-			}
-			// 덮어쓰기 아닐 경우
-			else {
+			} else { // 덮어쓰기 아닐 경우
 				// 중복되지 않은 파일전부 로드
 				// 중복있으면 저장하고 err code 전송
 				async.map(file, function(item, callback) {
@@ -479,18 +478,14 @@ module.exports = {
 							if (stats.isDirectory()) {
 								is_exist_dir = true;
 								exist_dir.push(__file.originalname);
-							}
-							// 디렉토리가 아닌 경우(파일)
-							else {
+							} else { // 디렉토리가 아닌 경우(파일)
 								is_exist_file = true;
 								exist_file.push(__file.originalname);
 							}
 							callback(null, __file);
 						});
 
-					}
-					// 중복된 파일이 아닌 경우
-					else {
+					} else { // 중복된 파일이 아닌 경우
 						var is = fs.createReadStream(__file.path);
 						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
 
@@ -516,7 +511,7 @@ module.exports = {
 								data.file.push(exist_file[i]);
 							}
 						}
-						evt.emit("file_do_import", data);
+						evt.emit('file_do_import', data);
 					}
 				});
 
@@ -528,15 +523,15 @@ module.exports = {
 
 			if (fs.existsSync(global.__workspace + '/' + file_path) && query.is_overwrite != 'true') {
 				data.err_code = 21;
-				data.message = "The file '" + file.name  + "'" + " already exists. Do you want to overwrite the file?";
+				data.message = 'The file '' + file.name  + ''' + ' already exists. Do you want to overwrite the file?';
 
-				evt.emit("file_do_import", data);
+				evt.emit('file_do_import', data);
 
 			} else {
 				var loaded = 0; // jeongmin: number of loaded files
 				var	stream = function(_file, length) {
 						var is = fs.createReadStream(_file.path);
-						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + "/" + _file.name);
+						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + _file.name);
 
 						is.pipe(os);
 
@@ -549,7 +544,7 @@ module.exports = {
 
 							// true: all file's imported
 							if (loaded == length)
-								evt.emit("file_do_import", data);
+								evt.emit('file_do_import', data);
 						});
 					};
 
@@ -561,16 +556,16 @@ module.exports = {
 			}*/
 		} else {
 			data.err_code = 10;
-			// data.message = "Invalide query";
+			// data.message = 'Invalide query';
 
-			evt.emit("file_do_import", data);
+			evt.emit('file_do_import', data);
 		}
 	},
 
 	do_export: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.user && query.path && query.file) {
 			fs.mkdir(__temp_dir + '/' + query.user, '0777', function(err) {
@@ -580,31 +575,28 @@ module.exports = {
 					query.user = g_secure.command_filter(query.user);
 					query.file = g_secure.command_filter(query.file);
 
-					var filtered_file = g_secure.filepath_filter(query.file);
-
-					exec("cp " + global.__workspace + '/' + query.path + '/' + filtered_file + " " + __temp_dir + '/' + query.user + '/' + filtered_file, function(error, stdout, stderr) {
-						if (!error) {
+					fs.copy(global.__workspace + '/' + query.path + '/' + query.file, __temp_dir + '/' + query.user + '/' + query.file, function(err) {
+						if (!err) {
 							data.path = query.user + '/' + query.file;
-							evt.emit("file_do_export", data);
+							evt.emit('file_do_export', data);
 						} else {
 							data.err_code = 20;
-							// data.message = "Cannot export file";
-
-							evt.emit("file_do_export", data);
+							// data.message = 'Cannot export file';
+							evt.emit('file_do_export', data);
 						}
 					});
 				} else {
 					data.err_code = 30;
-					// data.message = "Cannot make directory";
+					// data.message = 'Cannot make directory';
 
-					evt.emit("file_do_export", data);
+					evt.emit('file_do_export', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			// data.message = "Invalide query";
+			// data.message = 'Invalide query';
 
-			evt.emit("file_do_export", data);
+			evt.emit('file_do_export', data);
 		}
 	},
 	
@@ -612,42 +604,49 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 		if (query.path !== null) {
 			var path = global.__workspace + '/' + query.path;
 
 			fs.stat(path, function(err, stats) {
 				if (err === null) {
-					exec('file ' + path, function(err, stdout, stderr) {
-						var temp_path = query.path.split("/");
-						var path = "";
+					var _stdout = '';
+
+					command = spawn('file', [path]);
+					command.stdout.on('data', function(data) {
+						_stdout += data;
+					});
+					command.on('close', function() {
+						var temp_path = query.path.split('/');
+						var path = '';
 						for (var i = 0; i < temp_path.length - 1; i++) {
-							path += temp_path[i] + "/";
+							path += temp_path[i] + '/';
 						}
 
 						data.filename = temp_path[temp_path.length - 1];
-						data.filetype = stdout.split(': ')[1]; // temp_path[temp_path.length - 1].split(".")[1];
+						data.filetype = _stdout.split(': ')[1]; // temp_path[temp_path.length - 1].split('.')[1];
 						data.path = path;
 						data.size = stats.size;
 						data.atime = stats.atime;
 						data.mtime = stats.mtime;
 						data.isFile = stats.isFile(); //jeongmin: whether this is file or directory
 
-						evt.emit("file_get_property", data);
+						evt.emit('file_get_property', data);
 					});
+
 				} else {
 					data.err_code = 20;
 					data.path = query.path;
-					data.message = "Can not find target file";
+					data.message = 'Can not find target file';
 					//console.log('get property stat error:', err, data.message);
-					evt.emit("file_get_property", data);
+					evt.emit('file_get_property', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalide query";
+			data.message = 'Invalide query';
 
-			evt.emit("file_get_property", data);
+			evt.emit('file_get_property', data);
 		}
 	},
 
@@ -655,42 +654,42 @@ module.exports = {
 
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.path !== null) {
 			var path = query.path;
-			if (query.type !== "") {
-				path += "." + query.type;
+			if (query.type !== '') {
+				path += '.' + query.type;
 			}
 
 			fs.exists(global.__workspace + '/' + path, function(exists) {
-				if (exists && (query.save_anyway == "false" || query.save_anyway == false)) {
+				if (exists && (query.save_anyway == 'false' || query.save_anyway == false)) {
 					data.err_code = 99;
-					data.message = "exist file";
-					evt.emit("file_do_save_as", data);
-				} else if (exists && (query.save_anyway == "true" || query.save_anyway == true)) {
+					data.message = 'exist file';
+					evt.emit('file_do_save_as', data);
+				} else if (exists && (query.save_anyway == 'true' || query.save_anyway == true)) {
 					rimraf(global.__workspace + '/' + path, function(err) {
 						if (err) {
 							data.err_code = 88;
-							data.message = "Can not overwrite file";
+							data.message = 'Can not overwrite file';
 
-							evt.emit("file_do_save_as", data);
+							evt.emit('file_do_save_as', data);
 						} else {
 							fs.writeFile(global.__workspace + '/' + path, query.data, function(err) {
 								if (err !== null) {
 									data.err_code = 40;
-									data.message = "Can not save file";
+									data.message = 'Can not save file';
 
-									evt.emit("file_do_save_as", data);
+									evt.emit('file_do_save_as', data);
 								} else {
 									
 
 									
 
 									//useonly(mode=goorm-oss)
-									exec('chmod 770 ' + global.__workspace + '/' + path);
-
-									evt.emit("file_do_save_as", data);
+									fs.chmod(global.__workspace + '/' + path, 0770, function() {
+										evt.emit('file_do_save_as', data);
+									});
 									
 								}
 							});
@@ -700,18 +699,18 @@ module.exports = {
 					fs.writeFile(global.__workspace + '/' + path, query.data, function(err) {
 						if (err !== null) {
 							data.err_code = 40;
-							data.message = "Can not save file";
+							data.message = 'Can not save file';
 
-							evt.emit("file_do_save_as", data);
+							evt.emit('file_do_save_as', data);
 						} else {
 							
 
 							
 
 							//useonly(mode=goorm-oss)
-							exec('chmod 770 ' + global.__workspace + '/' + path);
-
-							evt.emit("file_do_save_as", data);
+							fs.chmod(global.__workspace + '/' + path, 0770, function() {
+								evt.emit('file_do_save_as', data);
+							});
 							
 						}
 					});
@@ -719,8 +718,8 @@ module.exports = {
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("file_do_save_as", data);
+			data.message = 'Invalid query';
+			evt.emit('file_do_save_as', data);
 		}
 	},
 
@@ -728,27 +727,27 @@ module.exports = {
 		if (!fs.existsSync(__temp_dir)) {
 			fs.mkdirSync(__temp_dir);
 		}
-		if (!fs.existsSync(__temp_dir + "/files")) {
-			fs.mkdirSync(__temp_dir + "/files");
+		if (!fs.existsSync(__temp_dir + '/files')) {
+			fs.mkdirSync(__temp_dir + '/files');
 		}
 
 		if (filepath) {
-			var continue_path = "";
+			var continue_path = '';
 			var paths = filepath.split('/');
 
 			for (var i = 0; i < paths.length; i++) {
-				if (paths[i] !== "") {
+				if (paths[i] !== '') {
 					continue_path = continue_path + paths[i] + '/';
-					if (!fs.existsSync(__temp_dir + "/files/" + continue_path)) {
-						fs.mkdirSync(__temp_dir + "/files/" + continue_path);
+					if (!fs.existsSync(__temp_dir + '/files/' + continue_path)) {
+						fs.mkdirSync(__temp_dir + '/files/' + continue_path);
 					}
 				}
 			}
 		}
 
-		this.copy_file_sync(global.__workspace + filepath + filename, __temp_dir + "/files/" + filepath + filename);
+		this.copy_file_sync(global.__workspace + filepath + filename, __temp_dir + '/files/' + filepath + filename);
 
-		evt.emit("got_file", {
+		evt.emit('got_file', {
 			result: true
 		});
 	},
@@ -758,7 +757,7 @@ module.exports = {
 
 		var valid_path = function(base_path, filepath, filename, evt) {
 			if (!check_valid_path(base_path + '/' + filepath + filename)) {
-				evt.emit("check_valid_edit", {
+				evt.emit('check_valid_edit', {
 					result: false,
 					code: 3
 				});
@@ -767,15 +766,15 @@ module.exports = {
 			fs.exists(base_path + '/' + filepath + filename, function(exists) {
 				//valid file
 				if (exists) {
-					evt.emit("check_valid_edit", {
+					evt.emit('check_valid_edit', {
 						result: true
 					});
 				} else {
 					base_path = g_secure.command_filter(base_path);
 					filepath = g_secure.command_filter(filepath);
 
-					exec('mkdir -p ' + base_path + '/' + filepath, function(err, stdout, stderr) {
-						evt.emit("check_valid_edit", {
+					fs.mkdirs(base_path + '/' + filepath, function(err) {
+						evt.emit('check_valid_edit', {
 							result: true,
 							code: 10,
 							exists: exists
@@ -797,7 +796,7 @@ module.exports = {
 							fs.readlink(project_real_path, function(read_err, link_path) {
 								fs.realpath(link_path, function(real_path_err, link_real_path) {
 									if (read_err || real_path_err) {
-										evt.emit("check_valid_edit", {
+										evt.emit('check_valid_edit', {
 											result: false,
 											code: 2
 										});
@@ -810,16 +809,15 @@ module.exports = {
 							valid_path(global.__workspace, filepath, filename, evt);
 						}
 					} else {
-						evt.emit("check_valid_edit", {
+						evt.emit('check_valid_edit', {
 							result: false,
 							code: 1
 						});
 					}
 				});
 
-
 			} else {
-				evt.emit("check_valid_edit", {
+				evt.emit('check_valid_edit', {
 					result: false,
 					code: 0
 				});
@@ -843,7 +841,6 @@ module.exports = {
 		fs.closeSync(fdw);
 	},
 
-
 	do_delete_all: function(query, callback) {
 		var directorys = query.directorys;
 		var files = query.files;
@@ -853,7 +850,7 @@ module.exports = {
 				rimraf(global.__workspace + '/' + o, function(err) {
 					if (err !== null) {
 						data.err_code = 20;
-						data.message = "Can not delete file";
+						data.message = 'Can not delete file';
 					}
 				});
 			});
@@ -863,7 +860,7 @@ module.exports = {
 				rimraf(global.__workspace + '/' + o, function(err) {
 					if (err !== null) {
 						data.err_code = 20;
-						data.message = "Can not delete file";
+						data.message = 'Can not delete file';
 					}
 				});
 			});
@@ -874,7 +871,6 @@ module.exports = {
 	},
 	do_copy_file_paste: function(req, callback) {
 		var query = req.query;
-		var data = "";
 
 		if (query.source) {
 			var files = query.source.files;
@@ -888,7 +884,8 @@ module.exports = {
 
 					var filename_split = o.split('/');
 					var filename_full = filename_split[filename_split.length - 1];
-					var filename, extension;
+					var filename;
+					var extension;
 
 					//define filename (check if the file has extension)
 					if (filename_full.indexOf('.') < 0) {
@@ -901,36 +898,30 @@ module.exports = {
 
 					//check if _copy file is exist and add the count.
 					fs.exists(global.__workspace + target + '/' + filename + extension, function(e) {
-
 						if (e) {
-
 							var exist_func = function(i) {
-
 								fs.exists(global.__workspace + target + '/' + filename + '_copy' + i + extension, function(e) {
-
 									if (!e) {
 										var path = target + '/' + filename + '_copy' + i + extension;
-										exec("cp " + global.__workspace + '/' + o + " " + global.__workspace + target + '/' + filename + '_copy' + i + extension, function(error, stdout, stderr) {
+										fs.copy(global.__workspace + '/' + o, global.__workspace + path, function(err) {
 											
-											if (error !== null) {
-												console.log(error);
-												data += (" " + error.Error);
+											if (err) {
+												console.log(err);
 											}
 										});
-									} else exist_func(i + 1);
+									} else {
+										exist_func(i + 1);
+									}
 								});
 							}
-
 							exist_func(0);
 
 						} else {
-
 							var path = target + '/' + filename_full;
-							exec("cp " + global.__workspace + '/' + o + " " + global.__workspace + target, function(error, stdout, stderr) {
+							fs.copy(global.__workspace + '/' + o, global.__workspace + target, function(err) {
 								
-								if (error !== null) {
-									console.log(error);
-									data += (" " + error.Error);
+								if (err) {
+									console.log(err);
 								}
 							});
 						}
@@ -940,23 +931,22 @@ module.exports = {
 			}
 			if (directorys) {
 				directorys.forEach(function(o) {
-					exec("cp -r " + global.__workspace + o + " " + global.__workspace + target, function(error, stdout, stderr) {
-						o = o.split("/");
-						var path = target + "/" + o[o.length - 1];
+					fs.copy(global.__workspace + o, global.__workspace + target, function(err) {
+						o = o.split('/');
+						var path = target + '/' + o[o.length - 1];
 						
-						if (error !== null) {
-							console.log(error);
-							data += (" " + error.Error);
+						if (err) {
+							console.log(err);
 						}
 					});
 				});
 			}
 		}
 		callback({
-			result: ""
+			result: ''
 		});
 	},
-
+	/*
 	upload_file_dd: function(req, evt) {
 		var data = {
 			'result': true,
@@ -989,13 +979,15 @@ module.exports = {
 
 				is.on('end', function() {
 					fs.unlink(file.path, function(err) {
-						if (err) console.log(err);
+						if (err) {
+							console.log(err);
+						}
 					});
 
 					
 
 					data.path = file.originalname;
-					evt.emit("upload_finish", data);
+					evt.emit('upload_finish', data);
 				});
 			} else if (force) {
 				fs.unlink(abs_file_path, function(err) {
@@ -1006,13 +998,15 @@ module.exports = {
 
 					is.on('end', function() {
 						fs.unlink(file.path, function(err) {
-							if (err) console.log(err);
+							if (err) {
+								console.log(err);
+							}
 						});
 
 						
 
 						data.path = file.originalname;
-						evt.emit("upload_finish", data);
+						evt.emit('upload_finish', data);
 					});
 				});
 			} else {
@@ -1027,14 +1021,14 @@ module.exports = {
 			}
 		});
 	},
-
+	*/
 	// moving uploaded files to target directories. Jeong-Min Im.
 	// req (Object) : information set for uploading
 	// evt (EventEmitter) : for sending result
 	upload_dir_file: function(req, evt) {
 		if (req.body) {
-			var files = (req.files && req.files.file) ? req.files.file : req.body.file,
-				target_path = req.body.target_path;
+			var files = (req.files && req.files.file) ? req.files.file : req.body.file;
+			var target_path = req.body.target_path;
 
 			if (files && target_path && target_path[0] !== '/') {
 				var file_arr = [];
@@ -1044,15 +1038,16 @@ module.exports = {
 					file_arr = files;
 				}
 				if (file_arr.length) {
-					full_target_path = g_secure.filepath_filter(g_secure.command_filter(global.__workspace + target_path));
-
+					full_target_path = g_secure.command_filter(global.__workspace + target_path);
 					if (check_valid_path(full_target_path)) {
 						fs.exists(full_target_path, function(exists) {
 							if (exists) { // move tmp -> workspace
-								var mv_exec = [],
-									file_path = req.body.file_path;
+								full_target_path = g_secure.command_filter(global.__workspace + target_path);
 
-								if (!Array.isArray(file_path)){
+								var mv_exec = [];
+								var file_path = req.body.file_path;
+
+								if (!Array.isArray(file_path)) {
 									file_path = [file_path];
 								}
 
@@ -1060,16 +1055,13 @@ module.exports = {
 									mv_exec.push(function(callback) {
 										i++;
 										if (check_valid_path(full_target_path + '/' + file_arr[i].originalname)) {
-											file_arr[i].path = g_secure.filepath_filter(g_secure.command_filter(file_arr[i].path));
-											file_arr[i].originalname = g_secure.filepath_filter(g_secure.command_filter(file_arr[i].originalname));
-											file_path[i] = g_secure.filepath_filter(g_secure.command_filter(file_path[i].slice(file_path[i].indexOf('/'))));
-											exec('mv ' + file_arr[i].path + ' ' + full_target_path + file_path[i], {
-												cwd: full_target_path
-											}, function(err, stdout, stderr) {
+											file_arr[i].path = g_secure.command_filter(file_arr[i].path);
+											file_arr[i].originalname = g_secure.command_filter(file_arr[i].originalname);
+											file_path[i] = g_secure.command_filter(file_path[i].slice(file_path[i].indexOf('/')));
+											fs.rename(file_arr[i].path, full_target_path + file_path[i], function(err) {
 												if (err) {
 													console.log('ERROR (upload_dir_file mv):', err);
 												}
-
 												callback();
 											});
 										} else {
@@ -1113,8 +1105,8 @@ module.exports = {
 				if (check_valid_path(full_target_path)) {
 					fs.exists(full_target_path, function(exists) {
 						if (exists) {
-							var folders = options.folders,
-								mkdir_path = g_secure.command_filter(full_target_path + '/' + folders[0]);
+							var folders = options.folders;
+							var mkdir_path = g_secure.command_filter(full_target_path + '/' + folders[0]);
 
 							fs.stat(mkdir_path, function(err, stats) { // jeongmin: check there is file that has same name
 								function mkdir() {
@@ -1124,16 +1116,13 @@ module.exports = {
 										mkdir_p_exec.push(function(callback) {
 											i++;
 
-											var path = g_secure.filepath_filter(g_secure.command_filter(full_target_path + '/' + folders[i]));
+											var path = g_secure.command_filter(full_target_path + '/' + folders[i]);
 
 											if (check_valid_path(path)) {
-												exec('mkdir -p ' + path, {
-													cwd: full_target_path
-												}, function(_err, stdout, stderr) {
-													if (_err) {
-														console.log('ERROR (upload_dir_skeleton mkdir):', _err);
+												fs.mkdirs(path, function(err) {
+													if (err) {
+														console.log('ERROR (upload_dir_skeleton mkdir):', err);
 													}
-
 													callback();
 												});
 											} else {
@@ -1144,7 +1133,7 @@ module.exports = {
 
 									async.series(mkdir_p_exec, function() {
 										
-										evt.emit("upload_dir_skeleton", {
+										evt.emit('upload_dir_skeleton', {
 											'result': true,
 											'err_code': 0
 										});
@@ -1152,9 +1141,9 @@ module.exports = {
 								}
 
 								if (!err && stats.isFile()) { // exists and it's file -> it's folder upload so there must not be file that has same name
-									exec('rm ' + mkdir_path, function(_err, stdout, stderr) {
-										if (_err) {
-											console.log('ERROR (upload_dir_skeleton rm):', _err);
+									fs.unlink(mkdir_path, function(err) {
+										if (err) {
+											console.log('ERROR (upload_dir_skeleton rm):', err);
 
 											evt.emit('upload_dir_skeleton', {
 												'result': false,
@@ -1211,7 +1200,7 @@ module.exports = {
 		}
 
 		var abs_path = path.join(global.__workspace, query.path);
-		// console.log("get_result_ls");
+		// console.log('get_result_ls');
 		// console.log(abs_path);
 
 		var opened_folders = (query.state) ? query.state : [];
@@ -1229,8 +1218,9 @@ module.exports = {
 					if (folder_path.lastIndexOf('/') > -1) {
 						var parent = folder_path.slice(0, folder_path.lastIndexOf('/'));
 
-						if (opened_folders.indexOf(parent) < 0)
+						if (opened_folders.indexOf(parent) < 0) {
 							opened_folders.push(parent);
+						}
 					}
 				}
 				opened_folders.sort();
@@ -1299,7 +1289,9 @@ module.exports = {
 
 	_read_dir: function(relative_path, abs_path, folder_only) {
 		var _this = this;
-		if (folder_only === null) folder_only = false;
+		if (folder_only === null) {
+			folder_only = false;
+		}
 		if (fs.existsSync(abs_path)) {
 			// return Promise
 			return fs_readdir(abs_path)
@@ -1321,27 +1313,31 @@ module.exports = {
 						var stat = stats[i];
 						var file = {};
 
-						if (name[0] === "." || name === "goorm.manifest" || name === "lost+found" || /_run.js$/.test(name)) {} else {
+						if (name[0] === '.' || name === 'goorm.manifest' || name === 'lost+found' || /_run.js$/.test(name)) {} else {
 							file.filename = name;
 							file.text = name;
-							file.id = relative_path + "/" + name;
+							file.id = relative_path + '/' + name;
 							file.type = 'html';
 							file.li_attr = {
-								"path": file.id
+								'path': file.id
 							};
 							file.parent = relative_path;
 
 							if (stat.isFile()) {
-								if (folder_only) continue;
+								if (folder_only) {
+									continue;
+								}
 								var type = path.extname(name).toLowerCase();
-								if (type[0] === '.') type = type.replace(".", "");
-								file.li_attr.file_type = (type !== "") ? _this._set_filetype(type) : "etc";
-								file.type = "file";
+								if (type[0] === '.') {
+									type = type.replace('.', '');
+								}
+								file.li_attr.file_type = (type !== '') ? _this._set_filetype(type) : 'etc';
+								file.type = 'file';
 								file_list.push(file);
 							} else {
-									
+								
 								//useonly(mode=goorm-oss)
-								if (abs_path === "") {
+								if (abs_path === '') {
 									file.type = 'folder';
 									file_list.push(file);
 								}
@@ -1448,7 +1444,7 @@ module.exports = {
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "alert_invalide_query";
+			data.message = 'alert_invalide_query';
 
 			evt.emit('file_check_exist', data);
 		}

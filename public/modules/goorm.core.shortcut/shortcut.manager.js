@@ -385,7 +385,7 @@ goorm.core.shortcut.manager = {
 		else //already this function is called in the past
 			return;
 
-		// Duplication check 
+		// Duplication check
 		var is_dup = false;
 		if (this.shortcuts.indexOf(new_shortcut) > -1) {
 			if (new_shortcut != old_shortcut) {
@@ -554,7 +554,7 @@ goorm.core.shortcut.manager = {
 				////// unbind //////
 				if (old_shortcut != "None" && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
 					this.unbind(action, old_shortcut); //unbind old shortcut event
-					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list	
+					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list
 				}
 
 				////// bind //////
@@ -1254,10 +1254,10 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('do_go_to_line', this.hotkeys.do_go_to_line), this.hotkeys.do_go_to_line, this.hotkeys_fn.do_go_to_line);
 		}
 
-		//Toggle Breakpoint (Ctrl+B). 
+		//Toggle Breakpoint (Ctrl+B).
 		if (this.hotkeys.toggle_breakpoint) {
 			this.hotkeys_fn.toggle_breakpoint = function(e) {
-				$("a[action=toggle_breakpoint").get(0).click();
+				$("a[action=toggle_breakpoint]").get(0).click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1638,7 +1638,7 @@ goorm.core.shortcut.manager = {
 			// 		}, 500);
 			// 	}
 			// 	return false;
-			// } else 
+			// } else
 
 			if (self.get_focus() === "input" && core.status.focus_on_dialog) {
 				var selected_dialog = core.status.selected_dialog;
@@ -2071,9 +2071,9 @@ goorm.core.shortcut.manager = {
 					if ($("[action=hide_all_windows]").parent().hasClass("disabled") === true) {
 						return false;
 					} else {
-						core.module.layout.workspace.window_manager.hide_all_windows();	
+						core.module.layout.workspace.window_manager.hide_all_windows();
 					}
-					
+
 				}
 
 

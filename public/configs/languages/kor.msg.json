@@ -1306,5 +1306,20 @@
     },
     "do_safe_delete" : {
         "value": "삭제하기"
+    },
+    "font_color_white" : {
+        "value": "흰색"
+    },
+    "font_color_red" : {
+        "value": "빨간색"
+    },
+    "font_color_blue" : {
+        "value": "파란색"
+    },
+    "font_color_green" : {
+        "value": "녹색"
+    },
+    "font_color_yellow" : {
+        "value": "노란색"
     }
 }

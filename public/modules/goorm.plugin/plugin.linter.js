@@ -59,7 +59,7 @@ goorm.plugin.linter = {
 			/*
 						if (callback && typeof(callback) === "function") {
 							callback(result);
-						} 
+						}
 						*/
 		}
 	},
@@ -216,7 +216,7 @@ goorm.plugin.linter = {
 	lint_cpp: function(__window, type) {
 		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
 		var self = this;
-		
+
 		var property = core.property.plugins["goorm.plugin." + type];
 		var complier_type;
 		if(property){
@@ -325,7 +325,7 @@ goorm.plugin.linter = {
 
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
-		
+
 		self.flag=0;
 
 		// var parsed_data = om.parse(result, type);
@@ -379,13 +379,13 @@ goorm.plugin.linter = {
 
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
-		
+
 		self.flag=0;
 
 		// var parsed_data = om.parse(result, type);
 
 		var path = core.preference.workspace_path + __window.editor.filepath + __window.editor.filename;
-		core.module.terminal.terminal.send_command("phpcs --report=json " + path + "\r", function(output) {
+		core.module.terminal.terminal.send_command("phpcs --severity=6 --report=json " + path + "\r", function(output) {
 
 			om.clear();
 			wm.all_clear();

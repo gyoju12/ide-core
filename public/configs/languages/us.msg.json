@@ -1294,5 +1294,20 @@
     },
     "do_safe_delete" : {
         "value": "Delete"
+    },
+    "font_color_white" : {
+        "value": "white"
+    },
+    "font_color_red" : {
+        "value": "red"
+    },
+    "font_color_blue" : {
+        "value": "blue"
+    },
+    "font_color_green" : {
+        "value": "green"
+    },
+    "font_color_yellow" : {
+        "value": "yellow"
     }
 }

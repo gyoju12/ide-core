@@ -17,7 +17,6 @@ goorm.core.project.list = function() {
 	this.list = null;
 
 	this.information = null;
-	this.information_script = "";
 
 	this.path = null;
 	this.name = null;
@@ -29,34 +28,25 @@ goorm.core.project.list.prototype = {
 	init: function(context, list_callback) {
 		var self = this;
 
-		this.location = context + "_location";
-		this.types = context + "_types";
-		this.list = context + "_list";
-		this.information = context + "_information";
-		this.information_script = "<dt localization_key='project_info_type'>Project Type : </dt><dd>[PROJECT_TYPE]</dd> \
-								   <dt localization_key='project_info_detail'>Project Detail : </dt><dd>[PROJECT_DETAIL]</dd> \
-								   <dt localization_key='project_info_author'>Project Author : </dt><dd>[PROJECT_AUTHOR]</dd> \
-								   <dt localization_key='project_info_name'>Project Name : </dt><dd>[PROJECT_NAME]</dd> \
-								   <dt localization_key='project_info_description'>Project Description : </dt><dd>[PROJECT_DESCRIPT]</dd> \
-								   <dt localization_key='project_info_date'>Project Date : </dt><dd>[PROJECT_DATE]</dd>";
+		this.location = context + '_location';
+		this.types = context + '_types';
+		this.list = context + '_list';
+		this.information = context + '_information';
 
+		this.path = context + '_path';
+		this.name = context + '_name';
+		this.type = context + '_type';
 
-		this.path = context + "_path";
-		this.name = context + "_name";
-		this.type = context + "_type";
-
-		$(this.location).val("");
+		$(this.location).val('');
 		$(this.list).empty();
-		$(this.information).empty();
-		if (context == "#project_export") {
-			this.add_project_list("export_list", list_callback);
+		if (context == '#project_export') {
+			this.add_project_list('export_list', list_callback);
 		} else {
-			this.add_project_list("", list_callback);
+			this.add_project_list('', list_callback);
 		}
 
 		this.add_project_item();
 	},
-
 
 	/**
 	 * Init Datatable
@@ -74,29 +64,29 @@ goorm.core.project.list.prototype = {
 
 		$('#' + this.context).html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.table_context + '" ></table>')
 		this.table = $('#' + this.table_context).dataTable({
-			"aaData": [],
-			"aoColumns": [{
-					"mData": 'check',
-					"sClass": "project_list_check text-center",
-					"sTitle": ''
+			'aaData': [],
+			'aoColumns': [{
+					'mData': 'check',
+					'sClass': 'project_list_check text-center',
+					'sTitle': ''
 				}, {
-					"mData": 'type',
-					"sClass": "project_list_type",
-					"sTitle": '<span localization_key="dictionary_type">' + dictionary_type + '</span>'
+					'mData': 'type',
+					'sClass': 'project_list_type',
+					'sTitle': '<span localization_key="dictionary_type">' + dictionary_type + '</span>'
 				}, {
-					"mData": 'name',
-					"sClass": "project_list_name",
-					"sTitle": '<span localization_key="dictionary_name">' + dictionary_name + '</span>'
+					'mData': 'name',
+					'sClass': 'project_list_name',
+					'sTitle': '<span localization_key="dictionary_name">' + dictionary_name + '</span>'
 				}, {
-					"mData": 'author',
-					"sClass": "project_list_author",
-					"sTitle": '<span localization_key="dictionary_author">' + dictionary_author + '</span>'
+					'mData': 'author',
+					'sClass': 'project_list_author',
+					'sTitle': '<span localization_key="dictionary_author">' + dictionary_author + '</span>'
 				}
 
 			],
-			"sDom": '<"H">rt',
-			"oLanguage": {
-				"sEmptyTable": '<span localization_key="project_empty">' + project_empty + '</span>'
+			'sDom': '<"H">rt',
+			'oLanguage': {
+				'sEmptyTable': '<span localization_key="project_empty">' + project_empty + '</span>'
 			}
 		});
 
@@ -110,7 +100,7 @@ goorm.core.project.list.prototype = {
 
 		// Click Event
 		//
-		$('#' + this.context).on("click", "tbody td:not(.project_list_check)", function(e) {
+		$('#' + this.context).on('click', 'tbody td:not(.project_list_check)', function(e) {
 			var aPos = self.table.fnGetPosition(this);
 			var row = self.table.fnGetData(aPos[0]);
 
@@ -276,74 +266,67 @@ goorm.core.project.list.prototype = {
 	add_project_list: function(type, list_callback) {
 		var self = this;
 
-
 		var postdata = { // Donguk Kim : export - all project list | ect - owner project list
 			'get_list_type': 'owner_list'
 		};
-		var url = "/project/get_list/";
-		if (type == "export_list") {
+		var url = '/project/get_list/';
+		if (type == 'export_list') {
 			postdata = {
 				'get_list_type': type
 			};
-			url += "export";
+			url += 'export';
 		} else {
-			url += "owner";
+			url += 'owner';
 		}
 
 		core.socket.once(url, function(data) {
+			var information = $(self.information);
 			if (data && data.length) {
+				information.find('.project_informations').css('display', 'block');
+				information.find('.project_no_information').css('display', 'none');
 				$(data).each(function(i) {
-					var icon_str = "";
-					var img_src = (this.contents.is_user_plugin ? "/" + core.user.id + "/plugins" : "") + "/goorm.plugin." + this.contents.type + "/images/" + this.contents.type + ".png";
-					if(this.contents.type == 'edu') this.contents.detailedtype = 'edu';					
-					icon_str += "<div id='selector_" + this.contents.name + "' value='" + i + "' class='selector_project media' type='" + this.contents.type + "'>";
-					icon_str += "<a class='pull-left project_list_img' href='#'><img class='media-object project_list_img' alt='" + this.contents.type + "' src=" + img_src + "></a>"
-					icon_str += "<div style='white-space:nowrap; overflow:hidden; text-overflow:ellipsis'>";
-					icon_str += "<h5>" + $(".project_wizard_second_button[project_type=" + this.contents.type + "][detail_type=" + this.contents.detailedtype.replace(' ', '_') + "] .caption p").text() + "</h5>" // jeongmin; remove blank in detailedtype
-					icon_str += "<p>" + this.contents.name + "</p>";
-					icon_str += "</div>";
+					var icon_str = '';
+					var img_src = (this.contents.is_user_plugin ? '/' + core.user.id + '/plugins' : '') + '/goorm.plugin.' + this.contents.type + '/images/' + this.contents.type + '.png';
+					if (this.contents.type == 'edu') {
+						this.contents.detailedtype = 'edu';
+					}
+					icon_str += '<div id="selector_' + this.contents.name + '" value="' + i + '" class="selector_project media" type="' + this.contents.type + '">';
+					icon_str += '<a class="pull-left project_list_img" href="#"><img class="media-object project_list_img" alt="' + this.contents.type + '" src=' + img_src + '></a>'
+					icon_str += '<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis">';
+					icon_str += '<h5>' + $('.project_wizard_second_button[project_type=' + this.contents.type + '][detail_type=' + this.contents.detailedtype.replace(' ', '_') + '] .caption p').text() + '</h5>' // jeongmin; remove blank in detailedtype
+					icon_str += '<p>' + this.contents.name + '</p>';
+					icon_str += '</div>';
 
 					$(self.list).append(icon_str);
 				});
 
-				$(self.list + " .selector_project").click(function() {
-					$(self.list + " .selector_project").removeClass("selected_button");
-					$(this).addClass("selected_button");
+				$(self.list + ' .selector_project').click(function() {
+					$(self.list + ' .selector_project').removeClass('selected_button');
+					$(this).addClass('selected_button');
 
-					var idx = $(this).attr("value");
+					var idx = $(this).attr('value');
 
-					$(self.location).html("<li><a href='#' action>/ " + data[idx].contents.name + "</a></li>"); //jeongmin: set project name as location and make breadcrumb list
+					$(self.location).html('<li><a href="#" action>/ ' + data[idx].contents.name + '</a></li>'); //jeongmin: set project name as location and make breadcrumb list
 					$(self.path).val(data[idx].name);
 					$(self.name).val(data[idx].contents.name);
 					$(self.type).val(data[idx].contents.type);
 
-					var information = $(self.information);
-					var description = data[idx].contents.description || "No Description";
+					var description = data[idx].contents.description || 'No Description';
 
-					// var detailed = self.information_script.replace(/\[PROJECT_TYPE\]/, data[idx].contents.type)
-					// 	.replace(/\[PROJECT_DETAIL\]/, data[idx].contents.detailedtype)
-					// 	.replace(/\[PROJECT_AUTHOR\]/, data[idx].contents.author)
-					// 	.replace(/\[PROJECT_NAME\]/, data[idx].contents.name)
-					// 	.replace(/\[PROJECT_DESCRIPT\]/, description)
-					// 	.replace(/\[PROJECT_DATE\]/, data[idx].contents.date)
-					var detailed = self.information_script.replace(/\[PROJECT_TYPE\]/, $(".project_wizard_first_button[project_type=" + data[idx].contents.type + "] h4.list-group-item-heading").text())
-						.replace(/\[PROJECT_DETAIL\]/, $(".project_wizard_second_button[project_type=" + data[idx].contents.type + "][detail_type=" + data[idx].contents.detailedtype.replace(' ', '_') + "] .caption p").text()) // jeongmin; remove blank in detailedtype
-						.replace(/\[PROJECT_AUTHOR\]/, data[idx].contents.author)
-						.replace(/\[PROJECT_NAME\]/, data[idx].contents.name)
-						.replace(/\[PROJECT_DESCRIPT\]/, description)
-						.replace(/\[PROJECT_DATE\]/, data[idx].contents.date);
+					information.find('.project_info_type').html($('.project_wizard_first_button[project_type=' + data[idx].contents.type + '] h4.list-group-item-heading').text());
+					information.find('.project_info_detail').html($('.project_wizard_second_button[project_type=' + data[idx].contents.type + '][detail_type=' + data[idx].contents.detailedtype.replace(' ', '_') + '] .caption p').text()); // jeongmin; remove blank in detailedtype
+					information.find('.project_info_author').html(data[idx].contents.author);
+					information.find('.project_info_name').html(data[idx].contents.name);
+					information.find('.project_info_description').html(description);
+					information.find('.project_info_date').html(data[idx].contents.date);
 
-					information.empty().append(detailed);
-					core.module.localization.local_apply("#project_export_information", "title");
-					core.module.localization.local_apply("#project_open_information", "title");
-					core.module.localization.local_apply("#project_delete_information", "title");
 				});
-				$(self.list + " .selector_project").dblclick(function() {
+				$(self.list + ' .selector_project').dblclick(function() {
 					$(self.list).parents('.modal-content').find('button:last').click(); // jeongmin: we should click button of this list's dialog!
 				});
 				var project_list_children = $(self.list).children();
 
-				if (core.status.current_project_name != "") {
+				if (core.status.current_project_name != '') {
 					for (var i = 0; i < project_list_children.length; i++) {
 						if ($(project_list_children[i]).find('p').text() == core.status.current_project_name) {
 							$(project_list_children[i]).prependTo($(self.list));
@@ -355,8 +338,10 @@ goorm.core.project.list.prototype = {
 					$(project_list_children[0]).click();
 				}
 			} else {
-				$(self.list).append('<div class="well well-sm" style="margin: 10px">' + core.module.localization.msg.alert_no_have_project + '</div>')
-				$(self.information).append('<div class="well well-sm">' + core.module.localization.msg.alert_no_have_project + '</div>')
+				information.find('.project_informations').css('display', 'none');
+				information.find('.project_no_information').css('display', 'block');
+
+				$(self.list).append('<div class="well well-sm" style="margin: 10px">' + core.module.localization.msg.alert_no_have_project + '</div>');
 			}
 
 			if (typeof list_callback != 'undefined') {
@@ -364,31 +349,28 @@ goorm.core.project.list.prototype = {
 			}
 		});
 
-
-		//$.getJSON("project/get_list", postdata, function (data) {
-		core.socket.emit("/project/get_list", postdata);
+		//$.getJSON('project/get_list', postdata, function (data) {
+		core.socket.emit('/project/get_list', postdata);
 	},
 
 	add_project_item: function() {
 		var self = this;
 
-		$(self.types + " option:eq(0)").attr("selected", "selected");
+		$(self.types + ' option:eq(0)').attr('selected', 'selected');
 
 		$(self.types).change(function() {
-			var type = $(self.types + " option:selected").val();
+			var type = $(self.types + ' option:selected').val();
 
-			$(self.information).empty();
-
-			if (type == "All") {
-				$(self.list + " .selector_project").each(function() {
-					$(this).css("display", "block");
+			if (type == 'All') {
+				$(self.list + ' .selector_project').each(function() {
+					$(this).css('display', 'block');
 				});
 			} else {
-				$(self.list + " .selector_project").each(function() {
-					if ($(this).attr("type") == type) {
-						$(this).css("display", "block");
+				$(self.list + ' .selector_project').each(function() {
+					if ($(this).attr('type') == type) {
+						$(this).css('display', 'block');
 					} else {
-						$(this).css("display", "none");
+						$(this).css('display', 'none');
 					}
 				});
 			}
@@ -397,13 +379,13 @@ goorm.core.project.list.prototype = {
 
 	//when current project is not set(project table), set initial project. Jeong-min Im.
 	init_project: function() {
-		if ($(this.list + " .selector_project").length > 0) {
-			$(this.list + " .selector_project").first().click().focus(); //set initial project
+		if ($(this.list + ' .selector_project').length > 0) {
+			$(this.list + ' .selector_project').first().click().focus(); //set initial project
 		} else {
-			$(this.path).val("");
-			$(this.name).val("");
-			$(this.type).val("");
-			$("#project_delete_location").html("");
+			$(this.path).val('');
+			$(this.name).val('');
+			$(this.type).val('');
+			$('#project_delete_location').html('');
 		}
 	},
 
@@ -412,49 +394,48 @@ goorm.core.project.list.prototype = {
 		var self = this;
 
 		var options = __options || {};
-		if (self.list == "#project_delete_list") {
-			$("#g_dp_btn_ok").off("keydown");
-			$("#g_dp_btn_ok").keydown(function(e) {
+		if (self.list == '#project_delete_list') {
+			$('#g_dp_btn_ok').off('keydown');
+			$('#g_dp_btn_ok').keydown(function(e) {
 				switch (e.which) {
 					case 9:
-						// console.log($(this.list), "aaaa");
-						$("#project_delete_list").focus();
+						// console.log($(this.list), 'aaaa');
+						$('#project_delete_list').focus();
 						break;
 				}
 			});
 		} else {
-			$("#g_ep_btn_ok").off("keydown");
-			$("#g_ep_btn_ok").keydown(function(e) {
+			$('#g_ep_btn_ok').off('keydown');
+			$('#g_ep_btn_ok').keydown(function(e) {
 				switch (e.which) {
 					case 9:
-						// console.log($(this.list), "aaaa");
-						$("#project_export_list").focus();
+						// console.log($(this.list), 'aaaa');
+						$('#project_export_list').focus();
 						break;
 				}
-			});	
+			});
 		}
-		
-		
 
-		$(self.list).off("keydown");
+		$(self.list).off('keydown');
 		$(self.list).keydown(function(e) {
-			var selected_project = $(self.list).find(".selected_button");
+			var selected_project = $(self.list).find('.selected_button');
 			var project_list = $(self.list).children();
 			var target = null;
 			var next_selected = null;
-			//$("#project_new").find(".dialog_left_inner").scrollTop($("#project_new").find(".dialog_left_inner").scrollTop() + $(".project_wizard_first_button[project_type=cpp]").position().top);
+			//$('#project_new').find('.dialog_left_inner').scrollTop($('#project_new').find('.dialog_left_inner').scrollTop() + $('.project_wizard_first_button[project_type=cpp]').position().top);
 			for (var i = 0; i < project_list.length; i++) {
 				// set target = current selected project index
-				if (project_list[i].id === selected_project.attr('id'))
+				if (project_list[i].id === selected_project.attr('id')) {
 					target = i;
+				}
 			}
 			switch (e.which) {
 				case 9: // tab key
-					console.log(">> ", self.list == "#project_delete_list");
-					if (self.list == "#project_delete_list") {
-						$("#g_dp_btn_cancel").focus();
-					} else if (self.list == "#project_export_list") {
-						$("#g_ep_btn_cancel").focus();
+					console.log('>> ', self.list == '#project_delete_list');
+					if (self.list == '#project_delete_list') {
+						$('#g_dp_btn_cancel').focus();
+					} else if (self.list == '#project_export_list') {
+						$('#g_ep_btn_cancel').focus();
 					}
 					break;
 				case 13: // enter key
@@ -480,8 +461,10 @@ goorm.core.project.list.prototype = {
 					}
 					break;
 			}
-			
-			if (next_selected == null) return;
+
+			if (next_selected == null) {
+				return;
+			}
 
 			if (project_list.length) {
 				// 253.09090912342072 value is heigth (layout showing type items)
@@ -507,7 +490,7 @@ goorm.core.project.list.prototype = {
 
 			// list.scrollTop(scroll);
 
-			// $(self.list).scrollTop($(self.list).scrollTop() + $(self.list).find(".selected_button").position().top);
+			// $(self.list).scrollTop($(self.list).scrollTop() + $(self.list).find('.selected_button').position().top);
 		});
 
 	},

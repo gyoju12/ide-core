@@ -1213,25 +1213,6 @@ exports.download.exe_file = function(req, res) {
 
 
 
-//useonly(mode=goorm-oss)
-exports.upload_file_dd = function(req, res) {
-	var evt = new EventEmitter();
-	var project_path = req.body.project_path;
-
-	evt.once('upload_finish', function(data) {
-		res.json(data);
-	});
-	g_file.upload_file_dd(req, evt);
-};
-
-
-
-
-
-
-
-
-
 
 
 

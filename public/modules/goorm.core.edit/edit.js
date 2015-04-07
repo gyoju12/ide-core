@@ -25,7 +25,7 @@ goorm.core.edit = function(parent) {
     this.theme = "default"; //"default", "neat", "elegant", "night", "cobalt"
     this.theme_cursor_highlight_color = "#e8f2ff !important;";
     this.mode = "htmlmixed";
-    this.font_size = 11; // minimum size 
+    this.font_size = 11; // minimum size
     this.default_font_size = 12; // default size
     this.indent_unit = 2;
     this.indent_with_tabs = true;
@@ -180,22 +180,23 @@ goorm.core.edit.prototype = {
         });
 
         // set searching highlight when drag. Jeong-Min Im.
-        $(target).mouseup(function() { // selected string's exist when mouse is up means dragged
-            self.str_selection = self.editor.getSelection();
-            if (!$("#dlg_find_and_replace").hasClass("in") && !($('.cm-matchhighlight:first').html() === self.str_selection) && $("#gLayoutTab_Search").find(".badge").length === 0) {
+        $(target).mouseup(function(e) { // selected string's exist when mouse is up means dragged
+            if (e.which === 1) {    // left button
+                self.str_selection = self.editor.getSelection();
+                if (!$("#dlg_find_and_replace").hasClass("in") && !($('.cm-matchhighlight:first').html() === self.str_selection) && $("#gLayoutTab_Search").find(".badge").length === 0) {
 
-                if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
-                    self.is_selectiond = true;
+                    if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
+                        self.is_selectiond = true;
 
-                    var ranges = self.editor.listSelections();
-                    var cursor = self.editor.getCursor();
-                    // if cursor is on the last of the selected word, reverse search direction should be true.
-                    var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
+                        var ranges = self.editor.listSelections();
+                        var cursor = self.editor.getCursor();
+                        // if cursor is on the last of the selected word, reverse search direction should be true.
+                        var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
 
-                    CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
+                        CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
+                    }
                 }
             }
-
         });
 
         $(target).keypress(function(e) {
@@ -256,7 +257,7 @@ goorm.core.edit.prototype = {
 
         var options = this.options;
 
-        //useonly(mode=goorm-oss) 
+        //useonly(mode=goorm-oss)
         this.codemirror_events();
         
 
@@ -912,7 +913,7 @@ goorm.core.edit.prototype = {
 
     },
 
-    set_part_of_option: function() { // only change some part of options like line wrapping or rulers which should affect all editors.        
+    set_part_of_option: function() { // only change some part of options like line wrapping or rulers which should affect all editors.
         this.line_wrapping = this.preference["preference.editor.line_wrapping"];
         this.rulers = this.preference["preference.editor.rulers"];
 
@@ -1430,7 +1431,7 @@ goorm.core.edit.prototype = {
                 if (info.gutterMarkers && info.gutterMarkers.bookmark) { //if bookmark is set
                     var original_line = parseInt($(info.gutterMarkers.bookmark).attr("id").split("bookmark").pop()),
                         comment = original_list[original_line + 1];
-                        
+
                     this.bookmark.bookmarks[i + 1] = comment; //add bookmark to the window
                     $(info.gutterMarkers.bookmark).attr("id", "bookmark" + i); //update bookmark's id -> line and comment use this id for updating, so id should be updated every time
                 }

@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1427873008';
+var build_version = 'oss-1428395101';
 
 // Dependency
 //
@@ -582,8 +582,6 @@ goorm.routing = function() {
 	goorm.get('/send_file', goorm.check_session, routes.send_file);
 	goorm.get('/download/exe_file', goorm.check_session, routes.download.exe_file);
 
-	//file upload by dd
-	goorm.post('/upload/file/dd', goorm.check_session, routes.upload_file_dd);
 	
 
 	goorm.get('/alloc_port', function(req, res) {

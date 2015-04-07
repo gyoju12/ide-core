@@ -2190,7 +2190,25 @@
                             <div class="row">
                                 <div id="project_open_list" class="col-md-4 dialog_left_inner" tabindex="-1"></div>
                                 <div id="project_open_dialog_center" class="col-md-8 dialog_center">
-                                    <dl id="project_open_information" style="padding:10px; line-height:24px;"></dl>
+                                    <dl id="project_open_information" style="padding:10px; line-height:24px;">
+                                       <div class="project_informations">
+                                            <dt localization_key="project_info_type">Project Type : </dt>
+                                            <dd class="project_info_type"></dd>
+                                            <dt localization_key="project_info_detail">Project Detail : </dt>
+                                            <dd class="project_info_detail"></dd>
+                                            <dt localization_key="project_info_author">Project Author : </dt>
+                                            <dd class="project_info_author"></dd>
+                                            <dt localization_key="project_info_name">Project Name : </dt>
+                                            <dd class="project_info_name"></dd>
+                                            <dt localization_key="project_info_description">Project Description : </dt>
+                                            <dd class="project_info_description"></dd>
+                                            <dt localization_key="project_info_date">Project Date : </dt>
+                                            <dd class="project_info_date"></dd>
+                                        </div>
+                                        <div class="project_no_information">
+                                            <div class="well well-sm" localization_key='alert_no_have_project'></div>
+                                        </div>
+                                    </dl>
                                 </div>
                             </div>
                             <input id="project_open_path" type="hidden" />
@@ -3103,7 +3121,25 @@
                                 <div class="row">
                                     <div id="project_export_list" class="col-md-4 dialog_left_inner" tabindex="-1"></div>
                                     <div id="project_export_dialog_center" class="col-md-8 dialog_center">
-                                        <div id="project_export_information"></div>
+                                        <div id="project_export_information">
+                                            <div class="project_informations">
+                                                <dt localization_key="project_info_type">Project Type : </dt>
+                                                <dd class="project_info_type"></dd>
+                                                <dt localization_key="project_info_detail">Project Detail : </dt>
+                                                <dd class="project_info_detail"></dd>
+                                                <dt localization_key="project_info_author">Project Author : </dt>
+                                                <dd class="project_info_author"></dd>
+                                                <dt localization_key="project_info_name">Project Name : </dt>
+                                                <dd class="project_info_name"></dd>
+                                                <dt localization_key="project_info_description">Project Description : </dt>
+                                                <dd class="project_info_description"></dd>
+                                                <dt localization_key="project_info_date">Project Date : </dt>
+                                                <dd class="project_info_date"></dd>
+                                            </div>
+                                            <div class="project_no_information">
+                                                <div class="well well-sm" localization_key='alert_no_have_project'></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -3287,7 +3323,25 @@
                             <div class="row">
                                 <div id="project_delete_list" class="col-md-4 dialog_left_inner" tabindex="-1"></div>
                                 <div id="project_delete_dialog_center" class="col-md-8 dialog_center">
-                                    <div id="project_delete_information" class="margin-10px"></div>
+                                    <div id="project_delete_information" class="margin-10px">
+                                        <div class="project_informations">
+                                            <dt localization_key="project_info_type">Project Type : </dt>
+                                            <dd class="project_info_type"></dd>
+                                            <dt localization_key="project_info_detail">Project Detail : </dt>
+                                            <dd class="project_info_detail"></dd>
+                                            <dt localization_key="project_info_author">Project Author : </dt>
+                                            <dd class="project_info_author"></dd>
+                                            <dt localization_key="project_info_name">Project Name : </dt>
+                                            <dd class="project_info_name"></dd>
+                                            <dt localization_key="project_info_description">Project Description : </dt>
+                                            <dd class="project_info_description"></dd>
+                                            <dt localization_key="project_info_date">Project Date : </dt>
+                                            <dd class="project_info_date"></dd>
+                                        </div>
+                                        <div class="project_no_information">
+                                            <div class="well well-sm" localization_key='alert_no_have_project'></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <input id="project_delete_path" type="hidden" />
@@ -4251,11 +4305,11 @@
                                             <label for="preference.terminal.font_color" localization_key="dialog_preference_terminal_font_color" class="col-md-3 control-label">Font Color</label>
                                             <div class="col-md-3">
                                                 <select name="preference.terminal.font_color" id="preference.terminal.font_color" class="form-control">
-                                                    <option value="white" selected>white</option>
-                                                    <option value="red">red</option>
-                                                    <option value="blue">blue</option>
-                                                    <option value="green">green</option>
-                                                    <option value="yellow">yellow</option>
+                                                    <option value="white" localization_key="font_color_white" selected>white</option>
+                                                    <option value="red" localization_key="font_color_red">red</option>
+                                                    <option value="blue" localization_key="font_color_blue">blue</option>
+                                                    <option value="green" localization_key="font_color_green">green</option>
+                                                    <option value="yellow" localization_key="font_color_yellow">yellow</option>
                                                 </select>
                                             </div>
                                         </div>
