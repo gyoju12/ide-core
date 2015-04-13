@@ -463,8 +463,8 @@ goorm.core.window.manager = {
 
 			////// bind shortcut for selecting window //////
 			this.tab_manager.set_event(this.index);
-
-			this.index++;
+			this.tab[this.index++].set_saved();
+			
 		}
 	},
 
@@ -1188,6 +1188,8 @@ goorm.core.window.manager = {
 		// 	tabs[i].set_title();
 		// 	panels[i].set_title();
 		// }
+
+		var title = null;
 		$.each(core.status.current_opened_list, function(index, value) {
 			cnt = value;
 			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
@@ -1197,17 +1199,25 @@ goorm.core.window.manager = {
 						var name = temp.attr("filename");
 						var path = temp.attr("filepath").split("/")[0];
 						if (typeof current_project_path == "string" && path != current_project_path) {
-							temp.html(name + " - " + temp.attr("filepath"));
+							title = name + " - " + temp.attr("filepath");
 						} else {
-							temp.html(name);
+							title = name;
 						}
+						temp.html(title);
+						$(".ui-dialog").find("[path='"+temp.attr("filepath")+name+"']").parent().find('.ui-dialog-title').html(title);
 					} else if (cnt > 1) {
 						temp.each(function(index2) {
 							var path = $(this).attr("filepath");
 							var name = $(this).attr("filename");
-							$(this).html(name + " - " + path);
+							console.log(path, name);
+							title = name + " - " + path;
+							temp.html(title);
+							$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
 						});
-					}
+					}				
+					
+					
+
 				}
 			}
 		});

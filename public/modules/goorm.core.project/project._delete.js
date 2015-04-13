@@ -23,6 +23,10 @@ goorm.core.project._delete = {
 		// this.panel.click(function() {	// hidden: storage is deprecated
 		// 	$('button[localization_key=common_target]').blur();
 		// });
+		this.panel.on('focus', function(e) {
+			e.stopPropagation();
+			$('#project_delete_list').focus();
+		});
 
 		
 		this.__handle_delete = $.debounce(function(panel) { // jeongmin: prevent multiple export

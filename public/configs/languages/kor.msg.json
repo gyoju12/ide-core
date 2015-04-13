@@ -17,6 +17,9 @@
     "alert_filename_empty": {
         "value": "파일 이름이 비어 있습니다."
     },
+    "alert_project_copy": {
+        "value": "프로젝트는 복사할 수 없습니다."
+    },
     "alert_file_permission": {
         "value": "파일을 수정할 권한이 없습니다."
     },
@@ -30,10 +33,10 @@
         "value": "단어를 찾을 수 없습니다."
     },
     "alert_file_not_opened": {
-        "value": "해당 파일이 오픈되어 있지 않습니다."
+        "value": "열려있는 파일이 없습니다."
     },
     "alert_find_id_notexist": {
-        "value": "해당 아이디가 존재 하지 않습니다."
+        "value": "해당 아이디가 존재하지 않습니다."
     },
     "alert_find_id_exist": {
         "value": "해당 아이디 정보는"
@@ -1301,25 +1304,28 @@
     "search_result_refresh": {
         "value": "새로고침"
     },
-    "do_safe_go_to_line" : {
+    "do_safe_go_to_line": {
         "value": "라인으로 이동"
     },
-    "do_safe_delete" : {
+    "do_safe_delete": {
         "value": "삭제하기"
     },
-    "font_color_white" : {
+    "font_color_white": {
         "value": "흰색"
     },
-    "font_color_red" : {
+    "font_color_red": {
         "value": "빨간색"
     },
-    "font_color_blue" : {
+    "font_color_blue": {
         "value": "파란색"
     },
-    "font_color_green" : {
+    "font_color_green": {
         "value": "녹색"
     },
-    "font_color_yellow" : {
+    "font_color_yellow": {
         "value": "노란색"
+    },
+    "alert_git_clone_non_empty_repository": {
+        "value": "비어있지 않은 디렉토리에 클론받을 수 없습니다."
     }
 }

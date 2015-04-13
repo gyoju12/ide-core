@@ -36,7 +36,7 @@
 }
 .tour-step-background {
   position: absolute;
-  z-index: 1100;
+  z-index: 9999;
   /* customizing... */
   /* background: inherit;*/
   border-radius: 6px;

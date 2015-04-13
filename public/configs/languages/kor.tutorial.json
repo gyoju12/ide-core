@@ -83,6 +83,9 @@
     "output_tab": {
         "value": "이것은 아웃풋 탭 입니다. 저장 시에 문법적인 에러사항을 표시합니다."
     },
+    "bookmark_tab": {
+        "value": "이것은 북마크 탭 입니다. 에디터 별로 라인을 저장하고, 코멘트를 달 수 있습니다."
+    },
     "new_project": {
         "value": "버튼을 클릭하여 새 프로젝트 생성하기를 시작합니다."
     },
@@ -95,8 +98,8 @@
     "project_dtype": {
         "value": "프로젝트의 세부 유형을 고릅니다."
     },
-    "c_example": {
-        "value": "C 프로젝트를 하나 선택해봅시다."
+    "project_select_dtype": {
+        "value": "이 튜토리얼에서는 가장 첫번째 세부 유형을 선택하여 진행하겠습니다."
     },
     "nextbutton": {
         "value": "다음 버튼을 눌러주세요."
@@ -111,22 +114,16 @@
         "value": "프로젝트 이름이 필요합니다."
     },
     "new_project_finish": {
-        "value": "새 프로젝트 마법사를 마치기위해 OK 버튼을 누릅니다."
+        "value": "새 프로젝트 마법사를 마치기위해 Create 버튼을 누릅니다."
     },
     "build_project_start": {
         "value": "버튼을 클릭하여 프로젝트 빌드를 시작합니다."
     },
-    "build_project_select_many": {
-        "value": "한 번에 여러 프로젝트를 빌드하려면 '프로젝트' 메뉴란에서 '여러 프로젝트 빌드'를 선택하면 됩니다."
-    },
-    "build_project_dialog": {
-        "value": "이것은 빌드 프로젝트 다이얼로그 입니다."
-    },
-    "build_project_list": {
-        "value": "이것은 프로젝트 리스트입니다. 여기에서 빌드할 프로젝트를 선택할 수 있습니다."
+    "build_project_select": {
+        "value": "'프로젝트' 메뉴란에서 '빌드'를 선택하여도 빌드를 하실 수 있습니다."
     },
     "build_project_result": {
-        "value": "이것은 터미널로서, 빌드한 결과를 보여줍니다. 성공하면 'Build Success', 실패하면 'Build Fail'이라는 문구가 뜹니다."
+        "value": "이것은 빌드 탭으로써, 빌드한 결과를 보여줍니다. 성공하면 'Build Success', 실패하면 'Build Fail'이라는 문구가 뜹니다."
     },
     "run_project": {
         "value": "'Build Success'인 경우에 Run 버튼을 누르면 빌드한 프로젝트를 실행할 수 있습니다. 실행 결과는 터미널에 출력됩니다."
@@ -180,7 +177,7 @@
         "value": "여기서 유저 목록을 볼 수 있습니다."
     },
     "add_friends_search_user": {
-        "value": "이름, ID, E-mail, 닉네임으로 유저를 검색할 수 있습니다."
+        "value": "이름, E-mail으로 유저를 검색할 수 있습니다."
     },
     "add_friends_add_friend": {
         "value": "검색한 유저목록에서 우측에 '친구 요청' 버튼을 누르면 상대방에게 친구 요청을 합니다. 요청하면 상대방의 친구 수락 응답을 기다립니다."

@@ -8,30 +8,33 @@
  * version: 2.0.0
  **/
 
-var fs = require("fs");
+var fs = require('fs');
+var execFile = require('child_process').execFile;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
 var EventEmitter = require('events').EventEmitter;
 
-var g_file = require("../goorm.core.file/file");
-var g_preference = require("../goorm.core.preference/preference");
-var g_project = require("../goorm.core.project/project");
-var g_search = require("../goorm.core.search/search");
-var g_edit = require("../goorm.core.edit/edit");
-var g_secure = require("../goorm.core.secure/secure");
-var g_plugin = require("../goorm.plugin/plugin");
+var g_file = require('../goorm.core.file/file');
+var g_preference = require('../goorm.core.preference/preference');
+var g_project = require('../goorm.core.project/project');
+var g_search = require('../goorm.core.search/search');
+var g_edit = require('../goorm.core.edit/edit');
+var g_secure = require('../goorm.core.secure/secure');
+var g_plugin = require('../goorm.plugin/plugin');
 
-var g_auth = require("../goorm.core.auth/auth");
-var g_auth_manager = require("../goorm.core.auth/auth.manager");
-var g_auth_project = require("../goorm.core.auth/auth.project");
+var g_auth = require('../goorm.core.auth/auth');
+var g_auth_manager = require('../goorm.core.auth/auth.manager');
+var g_auth_project = require('../goorm.core.auth/auth.project');
 
 
 
 
 
 var check_valid_path = function(str) {
-	if (!str) return false;
+	if (!str) {
+		return false;
+	}
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
@@ -48,17 +51,17 @@ module.exports = {
 			socket.on('access', function(raw_msg) {
 				try {
 					var msg_obj = JSON.parse(raw_msg);
-					var channel = "";
+					var channel = '';
 					if (msg_obj.channel !== undefined) {
 						channel = msg_obj.channel;
 					}
 
-					if (channel == "join") {
+					if (channel == 'join') {
 						
 						if (socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
-							store.client.sadd('sockets_' + global.__local_ip + "_" +sessionID, socket.id);
+							store.client.sadd('sockets_' + global.__local_ip + '_' + sessionID, socket.id);
 						}
 
 						if (msg_obj.version) {
@@ -91,8 +94,7 @@ module.exports = {
 									}
 
 									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
-								} 
-
+								}
 								socket.to().emit('fs_access', fs_access);
 							});
 						}
@@ -140,33 +142,33 @@ module.exports = {
 				var evt = new EventEmitter();
 				var valid = {};
 
-				evt.once("project_over_limit", function(limit) {
+				evt.once('project_over_limit', function(limit) {
 					valid.result = false;
 					valid.err_code = 1;
 					valid.limit = limit;
 
-					socket.emit("/project/valid", valid);
+					socket.emit('/project/valid', valid);
 				});
 
-				evt.once("project_exist", function() {
+				evt.once('project_exist', function() {
 					valid.result = false;
 					valid.err_code = 2;
 
-					socket.emit("/project/valid", valid);
+					socket.emit('/project/valid', valid);
 				});
 
-				evt.once("project_duplicate_name", function() {
+				evt.once('project_duplicate_name', function() {
 					valid.result = false;
 					valid.err_code = 3;
 
-					socket.emit("/project/valid", valid);
+					socket.emit('/project/valid', valid);
 				});
 
-				evt.once("project_valid_success", function() {
+				evt.once('project_valid_success', function() {
 					valid.result = true;
 					valid.err_code = 0;
 
-					socket.emit("/project/valid", valid);
+					socket.emit('/project/valid', valid);
 				});
 
 				self.get_user_data(socket, function(user_data) {
@@ -182,15 +184,14 @@ module.exports = {
 				});
 			});
 
-
 			socket.on('/project/new', function(msg) {
 				var evt = new EventEmitter();
 
 				//check user uses scm and if user uses, set scm info to goorm.manifest. Jeong-Min Im.
-				evt.once("project_do_new", function(data) {
+				evt.once('project_do_new', function(data) {
 					// set goorm.manifest's uid as root. Jeong-Min Im.
 					g_auth_project.manifest_setting(data.project_dir, function() {
-						socket.emit("/project/new", data);
+						socket.emit('/project/new', data);
 					});
 				});
 				
@@ -210,8 +211,8 @@ module.exports = {
 			socket.on('/project/delete', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("project_do_delete", function(data) {
-					socket.emit("/project/delete", data);
+				evt.once('project_do_delete', function(data) {
+					socket.emit('/project/delete', data);
 				});
 
 				
@@ -233,19 +234,18 @@ module.exports = {
 			socket.on('/project/get_list', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("project_get_list", function(data) {
+				evt.once('project_get_list', function(data) {
 					// jeongmin: differ socket's destination according to get_list_type
 					switch (msg.get_list_type) {
 						
 						case 'export_list':
-							socket.emit("/project/get_list/export", data);
+							socket.emit('/project/get_list/export', data);
 							break;
 
 						case 'owner_list':
-							socket.emit("/project/get_list/owner", data);
+							socket.emit('/project/get_list/owner', data);
 					}
 				});
-
 
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
@@ -261,23 +261,22 @@ module.exports = {
 
 			});
 
-
 			//cannot file
 			// socket.on('/project/import', function(msg) {});
 			//cannot file
-			socket.on("/project/do_export", function(postdata) {
+			socket.on('/project/do_export', function(postdata) {
 				var evt = new EventEmitter();
 				var data = {};
 
 				function project_doing_export(data) {
-					socket.emit("/project/do_export", data);
+					socket.emit('/project/do_export', data);
 				}
 
-				evt.on("project_doing_export", project_doing_export);
+				evt.on('project_doing_export', project_doing_export);
 
-				evt.once("project_do_export", function(data) {
+				evt.once('project_do_export', function(data) {
 					evt.removeListener('project_doing_export', project_doing_export);
-					socket.emit("/project/done_export", data);
+					socket.emit('/project/done_export', data);
 				});
 
 				
@@ -290,8 +289,8 @@ module.exports = {
 			// socket.on('/project/clean', function(msg) {
 			// 	var evt = new EventEmitter();
 
-			// 	evt.once("project_do_clean", function(data) {
-			// 		socket.emit("/project/clean", data);
+			// 	evt.once('project_do_clean', function(data) {
+			// 		socket.emit('/project/clean', data);
 			// 	});
 
 			// 	g_project.do_clean(msg, evt);
@@ -299,14 +298,14 @@ module.exports = {
 
 			socket.on('/project/get_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.once("get_property", function(data) {
+				evt.once('get_property', function(data) {
 					if (data.contents) {
 						
 						//useonly(mode=goorm-oss)
-						socket.emit("/project/get_property", data);
+						socket.emit('/project/get_property', data);
 						
 					} else {
-						socket.emit("/project/get_property", data);
+						socket.emit('/project/get_property', data);
 					}
 				});
 
@@ -315,32 +314,31 @@ module.exports = {
 
 			socket.on('/project/set_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.once("set_property", function(data) {
-					socket.emit("/project/set_property", data);
+				evt.once('set_property', function(data) {
+					socket.emit('/project/set_property', data);
 				});
 
 				g_project.set_property(msg, evt);
 			});
 
-
 			// socket.on('/project/check_running_project', function(msg) {
-			// 	socket.emit("/project/check_running_project", {
+			// 	socket.emit('/project/check_running_project', {
 			// 		'result': 0
 			// 	});
 			// });
 
 			socket.on('/project/check_latest_build', function(msg) {
 				var evt = new EventEmitter();
-				evt.once("check_latest_build", function(data) {
-					socket.emit("/project/check_latest_build", data);
+				evt.once('check_latest_build', function(data) {
+					socket.emit('/project/check_latest_build', data);
 				});
 				g_project.check_latest_build(msg, evt);
 			});
 
 			socket.on('/project/check_valid_property', function(msg) {
 				var evt = new EventEmitter();
-				evt.once("check_valid_property", function(data) {
-					socket.emit("/project/check_valid_property", data);
+				evt.once('check_valid_property', function(data) {
+					socket.emit('/project/check_valid_property', data);
 				});
 
 				self.get_user_data(socket, function(user_data) {
@@ -354,44 +352,6 @@ module.exports = {
 				});
 			});
 
-			// socket.on('/project/move_file', function(msg) {
-			// 	var evt = new EventEmitter();
-			// 	evt.on('move_file', function(data) {
-			// 		socket.emit('/project/move_file', data);
-			// 	});
-
-			// 	g_project.move_file(msg, evt);
-			// });
-
-
-			// goorm.manifest validation when login. Jeong-Min Im.
-			// socket.on('/project/valid_manifest', function(msg) {
-			// 	var evt = new EventEmitter();
-
-			// 	// validate goorm.manifest. Jeong-Min Im.
-			// 	evt.on('project_get_list', function(data) {
-			// 		for (var i = data.length - 1; 0 <= i; i--) {
-			// 			g_auth_project.valid_manifest(data[i].name, data[i].contents, function() {
-			// 				socket.emit('/project/valid_manifest');
-			// 			});
-			// 		}
-			// 	});
-
-			// 	// get user's project list. Jeong-Min Im.
-			// 	self.get_user_data(socket, function(user_data) {
-			// 		if (user_data.result) {
-			// 			user_data = user_data.data;
-
-			// 			msg['author'] = {
-			// 				author_id: user_data.id
-			// 			};
-			// 			msg.get_list_type = 'collaboration_list';
-
-			// 			g_project.get_list(msg, evt);
-			// 		}
-			// 	});
-			// });
-
 			
 
 			socket.on('/project/available', function(msg) {
@@ -403,7 +363,7 @@ module.exports = {
 
 						if (project_path) {
 							g_auth_project.can_read_project(user_data.id, project_path, function(can) {
-								if(can === 404) {
+								if (can === 404) {
 									socket.to().emit('/project/available', {
 										'result': false,
 										'err_code': 404
@@ -436,7 +396,7 @@ module.exports = {
 										}
 									});
 								} else {
-									console.log("can't read project");
+									console.log('can\'t read project');
 									socket.to().emit('/project/available', {
 										'result': false,
 										'err_code': 20
@@ -469,14 +429,16 @@ module.exports = {
 							var plugin_name = msg.plugin;
 							var project_data = msg.data;
 
-							var workspace = global.__workspace + "/" + project_data.project_dir;
+							var workspace = global.__workspace + '/' + project_data.project_dir;
 							var template_path = global.__path + 'temp_files/' + user_data.id + '/plugins/' + plugin_name;
 
 							// Default Plugin
 							//
 							if (global.plugins_list && global.plugins_list.length > 0) {
 								var is_default_plg = global.plugins_list.some(function(o) {
-									if (o && o.name === plugin_name) return true;
+									if (o && o.name === plugin_name) {
+										return true;
+									}
 								});
 
 								if (is_default_plg) {
@@ -484,15 +446,15 @@ module.exports = {
 								}
 							}
 
-							var template = template_path + "/template";
+							var template = template_path + '/template';
 
 							if (project_data.project_detailed_type) {
 								try {
-									var syncStat = fs.statSync(template + "/" + project_data.project_detailed_type.replace(/\s/g, "\ "));
+									var syncStat = fs.statSync(template + '/' + project_data.project_detailed_type.replace(/\s/g, '\ '));
 									if (!syncStat || !syncStat.isDirectory()) {
 
 									} else {
-										template += "/" + project_data.project_detailed_type.replace(/\s/g, "\\ ");
+										template += '/' + project_data.project_detailed_type.replace(/\s/g, '\\ ');
 									}
 								} catch (e) {
 
@@ -519,13 +481,13 @@ module.exports = {
 
 							copy_progress.on('close', function(code, signal) {
 								var make_manifest = function() {
-									fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+									fs.readFile(workspace + '/goorm.manifest', 'utf-8', function(err, file_data) {
 										var contents = JSON.parse(file_data);
 
 										contents.plugins = project_data.plugins;
 										contents.detailedtype = project_data.project_detailed_type;
 
-										fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+										fs.writeFile(workspace + '/goorm.manifest', JSON.stringify(contents), {
 											encoding: 'utf-8',
 											mode: 0700
 										}, function(err) {
@@ -540,7 +502,7 @@ module.exports = {
 											//useonly(mode=goorm-oss)
 											socket.to().emit('/plugin/create', {
 												code: 200,
-												message: "success"
+												message: 'success'
 											});
 											
 										});
@@ -553,15 +515,16 @@ module.exports = {
 
 									fs.exists(workspace + '/' + _path, function(exists) {
 										if (exists) {
-											var cmd = "sed -i \"\"";
+											var cmd = 'sed -i ';
 
 											for (var key in _data) {
-												cmd += " -e \"s#" + key + "#" + _data[key] + "#g\"";
+												cmd += ' -e s#' + key + '#' + _data[key] + '#g';
 											}
 
-											cmd += " ./" + _path;
+											cmd += ' ./' + _path;
+											cmd = cmd.split(' ');
 
-											exec(cmd, {
+											execFile(cmd.shift(), cmd, {
 												'cwd': workspace
 											}, function() {
 												cb(true);
@@ -597,46 +560,47 @@ module.exports = {
 				var uid = null;
 				var gid = null;
 				var copy = function() {
-					var workspace = global.__workspace + "/" + msg.project_path;
+					var workspace = global.__workspace + '/' + msg.project_path;
 
-					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + msg.project_path : __temp_dir + "plugins/web/" + msg.project_path;
+					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + msg.project_path : __temp_dir + 'plugins/web/' + msg.project_path;
 
-					var run_path = target_path.split("temp_files").pop();
+					var run_path = target_path.split('temp_files').pop();
 					fse.ensureDir(target_path, function(__err1) {
 						fse.copy(workspace, target_path, function(__err2) {
 							if (__err1 || __err2) {
 								console.log('do_web_run Err:', __err1, __err2);
 								socket.to().emit('/plugin/do_web_run', {
 									code: 500,
-									message: "Copy Error"
+									message: 'Copy Error'
 								});
 							} else {
 								
 
 								//useonly(mode=goorm-server,goorm-client,goorm-oss)
-								var cmd = '';
-								if (msg.chown) {
-									cmd = 'chown -R ' + msg.chown + ' ' + target_path;
-								}
-
-								if (msg.chmod) {
-									cmd += '; chmod -R ' + msg.chmod + ' ' + target_path;
-								}
-
-								if (!cmd) {
-									socket.to().emit('/plugin/do_web_run', {
+								var callback = function(_socket, _run_path) {
+									_socket.to().emit('/plugin/do_web_run', {
 										code: 200,
-										message: "success",
-										run_path: run_path
+										message: 'success',
+										run_path: _run_path
+									});
+								};
+								//if msg.chown exist, do chown. if msg.chmod exist, do chmod, when everything done, callback
+								if (msg.chown) {
+									execFile('chown', ['-R', msg.chown, target_path], function(err) {
+										if (msg.chmod) {
+											execFile('chmod', ['-R', msg.chmod, target_path], function(err) {
+												callback(socket, run_path);
+											});
+										} else {
+											callback(socket, run_path);
+										}
+									});
+								} else if (msg.chmod) {
+									execFile('chmod', ['-R', msg.chmod, target_path], function(err) {
+										callback(socket, run_path);
 									});
 								} else {
-									exec(cmd, function() {
-										socket.to().emit('/plugin/do_web_run', {
-											code: 200,
-											message: "success",
-											run_path: run_path
-										});
-									});
+									callback(socket, run_path);
 								}
 								
 							}
@@ -653,53 +617,9 @@ module.exports = {
 			socket.on('/file/new', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_do_new", function(data) {
-					socket.emit("/file/new", data);
+				evt.once('file_do_new', function(data) {
+					socket.emit('/file/new', data);
 				});
-
-				// for edu (ver 1.5)
-				// self.get_user_data(socket, function(user_data) {
-				// 	var msg_path = msg.path.split("/");
-
-				// 	var project_path = msg_path[0];
-				// 	if (project_path == "")
-				// 		project_path = msg_path[1];
-				// 	//jeongmin: minimize executing split
-
-				// 	g_auth_project.get({
-				// 		'project_path': project_path
-				// 	}, function(data) {
-				// 		if (data != null) {
-				// 			var user_level = user_data.level;
-
-				// 			g_auth_manager.get({
-				// 				'id': data.author_id,
-				// 				'type': data.author_type
-				// 			}, function(data) {
-				// 				var author_level = data.level;
-
-				// 				if (user_level == 'Member' && author_level == 'Assistant') {
-				// 					var res_data = {
-				// 						err_code: 20,
-				// 						message: 'alert_file_permission',
-				// 						path: msg.ori_name
-				// 					};
-
-				// 					socket.emit("/file/new", res_data);
-				// 				} else {
-				// 					g_file.do_new(msg, evt);
-				// 				}
-				// 			});
-				// 		} else {
-				// 			var res_data = {
-				// 				err_code: 20,
-				// 				message: 'alert_file_permission',
-				// 				path: msg.ori_name
-				// 			};
-				// 			socket.emit("/file/new", res_data);
-				// 		}
-				// 	});
-				// });
 
 				
 
@@ -717,53 +637,9 @@ module.exports = {
 			socket.on('/file/new_folder', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_do_new_folder", function(data) {
-					socket.emit("/file/new_folder", data);
+				evt.once('file_do_new_folder', function(data) {
+					socket.emit('/file/new_folder', data);
 				});
-
-				// for edu (ver 1.5)
-				// self.get_user_data(socket, function(user_data) {
-				// 	var msg_current_path = msg.current_path.split("/");
-
-				// 	var project_path = msg_current_path[0];
-				// 	if (project_path == "")
-				// 		project_path = msg_current_path[1];
-				// 	//jeongmin: minimize executing split
-
-				// 	g_auth_project.get({
-				// 		'project_path': project_path
-				// 	}, function(data) {
-				// 		if (data != null) {
-				// 			var user_level = user_data.level;
-
-				// 			g_auth_manager.get({
-				// 				'id': data.author_id,
-				// 				'type': data.author_type
-				// 			}, function(data) {
-				// 				var author_level = data.level;
-
-				// 				if (user_level == 'Member' && author_level == 'Assistant') {
-				// 					var res_data = {
-				// 						err_code: 20,
-				// 						message: 'alert_file_permission',
-				// 						path: msg.ori_name
-				// 					};
-				// 					socket.emit("/file/new_folder", res_data);
-
-				// 				} else {
-				// 					g_file.do_new_folder(msg, evt);
-				// 				}
-				// 			});
-				// 		} else {
-				// 			var res_data = {
-				// 				err_code: 20,
-				// 				message: 'alert_file_permission',
-				// 				path: msg.ori_name
-				// 			};
-				// 			socket.emit("/file/new_folder", res_data);
-				// 		}
-				// 	});
-				// });
 
 				
 
@@ -781,54 +657,9 @@ module.exports = {
 			socket.on('/file/new_untitled_text_file', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_do_new_untitled_text_file", function(data) {
-					socket.emit("/file/new_untitled_text_file", data);
+				evt.once('file_do_new_untitled_text_file', function(data) {
+					socket.emit('/file/new_untitled_text_file', data);
 				});
-
-				// for edu (ver 1.5)
-				// self.get_user_data(socket, function(user_data) {
-				// 	var msg_current_path = msg.current_path.split("/");
-
-				// 	var project_path = msg_current_path[0];
-				// 	if (project_path == "")
-				// 		project_path = msg_current_path[1];
-				// 	//jeongmin: minimize executing split
-
-				// 	g_auth_project.get({
-				// 		'project_path': project_path
-				// 	}, function(data) {
-				// 		if (data != null) {
-				// 			var user_level = user_data.level;
-
-				// 			g_auth_manager.get({
-				// 				'id': data.author_id,
-				// 				'type': data.author_type
-				// 			}, function(data) {
-				// 				var author_level = data.level;
-
-				// 				if (user_level == 'Member' && author_level == 'Assistant') {
-				// 					var res_data = {
-				// 						err_code: 20,
-				// 						message: 'alert_file_permission',
-				// 						path: msg.ori_name
-				// 					};
-
-				// 					socket.emit("/file/new_untitled_text_file", res_data);
-				// 				} else {
-				// 					g_file.do_new_untitled_text_file(msg, evt);
-				// 				}
-				// 			});
-				// 		} else {
-				// 			var res_data = {
-				// 				err_code: 20,
-				// 				message: 'alert_file_permission',
-				// 				path: msg.ori_name
-				// 			};
-
-				// 			socket.emit("/file/new_untitled_text_file", res_data);
-				// 		}
-				// 	});
-				// });
 
 				
 
@@ -847,54 +678,9 @@ module.exports = {
 
 				var evt = new EventEmitter();
 
-				evt.once("file_do_new_other", function(data) {
-					socket.emit("/file/new_other", data);
+				evt.once('file_do_new_other', function(data) {
+					socket.emit('/file/new_other', data);
 				});
-
-				//for edu(ver 1.5)
-				// self.get_user_data(socket, function(user_data) {
-				// 	var msg_current_path = msg.current_path.split("/");
-
-				// 	var project_path = msg_current_path[0];
-				// 	if (project_path == "")
-				// 		project_path = msg_current_path[1];
-				// 	//jeongmin: minimize executing split
-
-				// 	g_auth_project.get({
-				// 		'project_path': project_path
-				// 	}, function(data) {
-				// 		if (data != null) {
-				// 			var user_level = user_data.level;
-
-				// 			g_auth_manager.get({
-				// 				'id': data.author_id,
-				// 				'type': data.author_type
-				// 			}, function(data) {
-				// 				var author_level = data.level;
-
-				// 				if (user_level == 'Member' && author_level == 'Assistant') {
-				// 					var res_data = {
-				// 						err_code: 20,
-				// 						message: 'alert_file_permission',
-				// 						path: msg.ori_name
-				// 					};
-
-				// 					socket.emit("/file/new_other", res_data);
-				// 				} else {
-				// 					g_file.do_new_other(msg, evt);
-				// 				}
-				// 			});
-				// 		} else {
-				// 			var res_data = {
-				// 				err_code: 20,
-				// 				message: 'alert_file_permission',
-				// 				path: msg.ori_name
-				// 			};
-
-				// 			socket.emit("/file/new_other", res_data);
-				// 		}
-				// 	});
-				// });
 
 				
 
@@ -912,8 +698,8 @@ module.exports = {
 			socket.on('/file/save_as', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_do_save_as", function(data) {
-					socket.emit("/file/save_as", data);
+				evt.once('file_do_save_as', function(data) {
+					socket.emit('/file/save_as', data);
 				});
 
 				
@@ -927,61 +713,13 @@ module.exports = {
 
 			socket.on('/file/delete', function(msg) {
 
-
 				var evt = new EventEmitter();
 				var user_level = null;
 				var author_level = null;
 
-				evt.once("file_do_delete", function(data) {
-					socket.emit("/file/delete", data);
+				evt.once('file_do_delete', function(data) {
+					socket.emit('/file/delete', data);
 				});
-
-				//for edu(ver 1.5)
-				// self.get_user_data(socket, function(user_data) {
-				// 	var msg_filename = msg.filename.split("/");
-
-				// 	var project_path = msg_filename[0];
-				// 	if (project_path == "")
-				// 		project_path = msg_filename[1];
-				// 	//jeongmin: minimize executing split
-
-				// 	g_auth_project.get({
-				// 		'project_path': project_path
-				// 	}, function(data) {
-				// 		if (data != null) {
-				// 			var user_level = user_data.level;
-
-				// 			g_auth_manager.get({
-				// 				'id': data.author_id,
-				// 				'type': data.author_type
-				// 			}, function(data) {
-				// 				var author_level = data.level;
-
-				// 				if (user_level == 'Member' && author_level == 'Assistant') {
-				// 					var res_data = {
-				// 						err_code: 20,
-				// 						message: 'alert_file_permission',
-				// 						path: msg.ori_name
-				// 					};
-
-				// 					socket.emit("/file/delete", res_data);
-				// 				} else {
-				// 					g_file.do_delete(msg, evt);
-				// 					g_history.empty_file_history(msg.filename);
-				// 				}
-				// 			});
-				// 		} else {
-				// 			var res_data = {
-				// 				err_code: 20,
-				// 				message: 'alert_file_permission',
-				// 				path: msg.ori_name
-				// 			};
-
-				// 			socket.emit("/file/delete", res_data);
-				// 		}
-				// 	});
-
-				// });
 
 				
 
@@ -999,7 +737,7 @@ module.exports = {
 
 				//useonly(mode=goorm-oss)
 				g_file.do_delete_all(msg, function(result) {
-					socket.emit("/file/delete_all", result);
+					socket.emit('/file/delete_all', result);
 				});
 				
 			});
@@ -1019,7 +757,7 @@ module.exports = {
 				//2. don't need to check (ex) dialog html
 				if (msg.type !== 'get_workspace_file') {
 					// console.log(abs_path);
-					// fs.readFile(abs_path, "utf8", function(err, data) {
+					// fs.readFile(abs_path, 'utf8', function(err, data) {
 					// 	if (!err) {
 					// 		socket.emit(reply_event, data);
 					// 	} else {
@@ -1035,7 +773,7 @@ module.exports = {
 				//local -> do not check any thing
 
 				//useonly(mode=goorm-oss)
-				fs.readFile(abs_path, "utf8", function(err, data) {
+				fs.readFile(abs_path, 'utf8', function(err, data) {
 					if (!err) {
 						try {
 							encodeURIComponent(data); //seongho.cha: Check it can be encoded and decoded by websocket
@@ -1058,8 +796,8 @@ module.exports = {
 			socket.on('/file/put_contents', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_put_contents", function(data) {
-					socket.emit("/file/put_contents", data);
+				evt.once('file_put_contents', function(data) {
+					socket.emit('/file/put_contents', data);
 				});
 
 				
@@ -1069,13 +807,12 @@ module.exports = {
 				
 			});
 
-
 			//later....test
 			socket.on('/file/get_result_ls', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("got_result_ls", function(data) {
-					socket.emit("/file/get_result_ls" + msg.path, data);
+				evt.once('got_result_ls', function(data) {
+					socket.emit('/file/get_result_ls' + msg.path, data);
 				});
 
 				
@@ -1092,13 +829,13 @@ module.exports = {
 				var filename = msg.filename;
 
 				if (project_path && filepath && filename) {
-					filepath = filepath.replace(/\/\//g, "/");
+					filepath = filepath.replace(/\/\//g, '/');
 					if (!check_valid_path(project_path) || !check_valid_path(filepath) || !check_valid_path(filename)) {
-						socket.emit("/file/check_valid_edit", {});
+						socket.emit('/file/check_valid_edit', {});
 						return false;
 					}
 				} else {
-					socket.emit("/file/check_valid_edit", {});
+					socket.emit('/file/check_valid_edit', {});
 					return false;
 				}
 				
@@ -1107,8 +844,8 @@ module.exports = {
 
 				//useonly(mode=goorm-oss)
 				// file validate
-				// 
-				evt.once("check_valid_edit", function(data) {
+				//
+				evt.once('check_valid_edit', function(data) {
 					if (!data.result) {
 						switch (data.code) {
 							case 0:
@@ -1124,12 +861,11 @@ module.exports = {
 								break;
 						}
 					}
-					socket.emit("/file/check_valid_edit", data);
+					socket.emit('/file/check_valid_edit', data);
 				});
 				g_file.check_valid_edit(project_path, filepath, filename, evt);
 				
 			});
-
 
 			// context ....
 			socket.on('/file/move', function(msg) {
@@ -1144,10 +880,10 @@ module.exports = {
 				// 		path: msg
 				// 	};
 
-				// 	socket.emit("/file/move", res_data);
+				// 	socket.emit('/file/move', res_data);
 				// };
-				evt.once("file_do_move", function(data) {
-					socket.emit("/file/move", data);
+				evt.once('file_do_move', function(data) {
+					socket.emit('/file/move', data);
 				});
 
 				
@@ -1160,8 +896,8 @@ module.exports = {
 				var user_level = null;
 				var author_level = null;
 
-				evt.once("file_do_rename", function(data) {
-					socket.emit("/file/rename", data);
+				evt.once('file_do_rename', function(data) {
+					socket.emit('/file/rename', data);
 				});
 
 				if (msg.ori_path === '/' || msg.ori_path === '') {
@@ -1170,51 +906,8 @@ module.exports = {
 						message: 'alert_deny_rename_folder_in_workspace_root',
 						path: msg.ori_name
 					};
-					socket.emit("/file/rename", res_data);
+					socket.emit('/file/rename', res_data);
 				} else {
-					//for edu (ver 1.5)
-					// self.get_user_data(socket, function(user_data) {
-					// 	var msg_ori_path = msg.ori_path;
-					// 	var msg_ori_path_split = msg_ori_path.split("/");
-
-					// 	var __ori_path = (msg_ori_path == "/") ? msg_ori_path + msg.ori_file : msg_ori_path;
-					// 	__ori_path = (msg_ori_path_split[0] == "") ? msg_ori_path_split[1] : msg_ori_path_split[0];
-					// 	//jeongmin: access object member less and minimize executing split
-
-					// 	g_auth_project.get({
-					// 		'project_path': __ori_path
-					// 	}, function(data) {
-					// 		if (data != null) {
-					// 			var user_level = user_data.level;
-
-					// 			g_auth_manager.get({
-					// 				'id': data.author_id,
-					// 				'type': data.author_type
-					// 			}, function(data) {
-					// 				var author_level = data.level;
-
-					// 				if (user_level == 'Member' && author_level == 'Assistant') {
-					// 					var res_data = {
-					// 						err_code: 20,
-					// 						message: 'alert_file_permission',
-					// 						path: msg.ori_name
-					// 					};
-					// 					socket.emit("/file/rename", res_data);
-					// 				} else {
-					// 					g_file.do_rename(msg, evt);
-					// 				}
-					// 			});
-					// 		} else {
-					// 			var res_data = {
-					// 				err_code: 20,
-					// 				message: 'alert_file_permission',
-					// 				path: msg.ori_name
-					// 			};
-					// 			socket.emit("/file/rename", res_data);
-					// 		}
-					// 	});
-					// });
-
 					
 
 					//useonly(mode=goorm-oss)
@@ -1229,8 +922,8 @@ module.exports = {
 			socket.on('/file/get_property', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_get_property", function(data) {
-					socket.emit("/file/get_property", data);
+				evt.once('file_get_property', function(data) {
+					socket.emit('/file/get_property', data);
 				});
 
 				g_file.get_property(msg, evt);
@@ -1239,8 +932,8 @@ module.exports = {
 			socket.on('/file/search_on_project', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once("file_do_search_on_project", function(data) {
-					socket.emit("/file/search_on_project", data);
+				evt.once('file_do_search_on_project', function(data) {
+					socket.emit('/file/search_on_project', data);
 				});
 
 				
@@ -1249,6 +942,23 @@ module.exports = {
 				g_search.do_search(msg, evt);
 				
 			});
+
+			socket.on('kill_process', function(msg) {
+				var allowed_process = ['svn', 'git', 'grep'];
+				if (allowed_process.indexOf(msg.kill) === -1) {
+					return;
+				}
+
+				
+				//useonly(mode=goorm-oss)
+				execFile('pkill', [msg.kill], function(err) {
+					if (err) {
+						console.log('kill search err : ' + err);
+					}
+				});
+				
+
+			})
 
 			// check file or folder exists. Jeong-Min Im.
 			socket.on('/file/exist', function(msg) {
@@ -1261,56 +971,41 @@ module.exports = {
 				g_file.check_exist(msg, evt);
 			});
 
-			//cannot
-			// socket.on('/file/copy_file_paste', function(msg) {});
-			//cannot
-			// socket.on('/file/get_file', function(msg) {});
-			//cannot
-			// socket.on('/file/import', function(msg) {});
-			//cannot
-			// socket.on('/file/export', function(msg) {});
+			socket.on('/user/friend/list', function(msg) {
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						user_data = user_data.data;
 
-			//API : Preference
-			// socket.on("/preference/workspace_path", function(msg) {
+						var m = {};
+						m.user_id = user_data.id;
+						m.query = msg.query;
+						m.length = msg.length;
+						m.seed = msg.seed;
 
-			// 	socket.emit("/preference/workspace_path", {
-			// 		"path": global.__workspace
-			// 	});
-			// });
+						g_auth_manager.get_friend_list(m, function(user_list, end, seed) {
+							socket.emit('/user/friend/list', {
+								'result': true,
+								'data': user_list,
+								'end': end,
+								'seed': seed
+							});
+						});
+					} else {
+						socket.emit('/user/friend/list', {
+							'result': false
+						});
+					}
+				});
+			});
 
-			// socket.on('/preference/get_server_info', function(msg) {
-			// 	var evt = new EventEmitter();
-			// 	evt.once("preference_get_server_info", function(data) {
-			// 		socket.emit("/preference/get_server_info", data);
-			// 	});
-			// 	g_preference.get_server_info(msg, evt);
-			// });
-			// socket.on('/preference/get_goorm_info', function(msg) {
-
-			// 	var evt = new EventEmitter();
-			// 	evt.once("preference_get_goorm_info", function(data) {
-			// 		socket.emit("/preference/get_goorm_info", data);
-			// 	});
-
-			// 	g_preference.get_goorm_info(msg, evt);
-
-			// });
-			// socket.on('/preference/put_filetypes', function(msg) {	// hidden by jeongmin: file type is deprecated
-
-			// 	var evt = new EventEmitter();
-			// 	evt.on("preference_put_filetypes", function(data) {
-			// 		socket.emit("/preference/put_filetypes", data);
-			// 	});
-
-			// 	g_preference.put_filetypes(msg, evt);
-			// });
-
+			// socket.on('/user/project/list/no_co_developers', function(msg) {});
+			// socket.on('/user/project/collaboration/invitation/push', function(msg) {});
 			
 
 			//EDIT
 
 			// socket.on('/edit/get_dictionary', function(msg) {
-			// 	socket.emit("/edit/get_dictionary", {});
+			// 	socket.emit('/edit/get_dictionary', {});
 			// });
 
 			
@@ -1321,7 +1016,7 @@ module.exports = {
 				var option = msg;
 
 				g_edit.save_tags_data(option, function() {
-					socket.emit("/edit/save_tags", true);
+					socket.emit('/edit/save_tags', true);
 				});
 
 			});
@@ -1352,14 +1047,14 @@ module.exports = {
 						var evt = new EventEmitter();
 
 						var path = msg.target_path.split('/');
-						var project_path = (path[0] !== "") ? path[0] : path[1];
+						var project_path = (path[0] !== '') ? path[0] : path[1];
 
-						evt.once("upload_dir_skeleton", function(data) {
+						evt.once('upload_dir_skeleton', function(data) {
 							socket.emit('/upload/dir_skeleton', data);
 						});
 
 						// validate permission
-						// 
+						//
 						g_auth_project.can_edit_project(user_data.id, project_path, function(can_edit) {
 							if (can_edit) {
 								msg.user_id = user_data.id;
@@ -1368,7 +1063,7 @@ module.exports = {
 							} else {
 								socket.emit('/upload/dir_skeleton', {
 									err_code: 20,
-									message: "Permission denied"
+									message: 'Permission denied'
 								});
 							}
 						});
@@ -1385,7 +1080,6 @@ module.exports = {
 			////////////
 
 		});
-
 
 	},
 
@@ -1444,7 +1138,7 @@ module.exports = {
 						if (user_data) {
 							try { // jeongmin: try catching
 								user_data = JSON.parse(user_data);
-								user_data.mode = MODE || user_data.mode || ["ide"];
+								user_data.mode = MODE || user_data.mode || ['ide'];
 
 								cb({
 									'result': true,
@@ -1500,7 +1194,7 @@ module.exports = {
 				if (user_data) {
 					try { // jeongmin: try catching
 						user_data = JSON.parse(user_data);
-						user_data.mode = MODE || user_data.mode || ["ide"];
+						user_data.mode = MODE || user_data.mode || ['ide'];
 
 						cb({
 							'result': true,

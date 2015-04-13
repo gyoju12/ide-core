@@ -157,6 +157,8 @@ goorm.core.file.rename = {
 												if (ori_path == file.filepath && dst_name == file.filename) {
 													window_manager.get_window(file.filepath, file.filename).editor.editor.setValue(current_data);
 													$(core).unbind('editor_loaded.rename');
+
+													
 												}
 											});
 										}

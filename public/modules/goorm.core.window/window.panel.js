@@ -233,6 +233,7 @@ goorm.core.window.panel.prototype = {
 		// var morphed_title = this.title.split("/").join("_").split(".").join("_").split(':').join('_');
 		// var morphed_title = new Date().getTime();
 		var morphed_title = options.id;
+		
 
 		if (editor == "Editor") {
 			this.panel = $("<div id='g_window_" + morphed_title + "' title='" + options.filename + "' path='" + this.title + "'><textarea class='code_editor' placeholder='Code goes here...'>Loading Data...</textarea></div>"); // jeongmin: add placeholder
@@ -1019,6 +1020,7 @@ goorm.core.window.panel.prototype = {
 	},
 
 	set_title: function(title) {
+
 		if (!title) title = this.options.filename;
 		this.panel.dialog("option", "title", title);
 	},

@@ -11,6 +11,9 @@
     "alert_filename_empty": {
         "value": "File name is empty."
     },
+    "alert_project_copy": {
+        "value": "Project can't copy."
+    },
     "alert_file_permission": {
         "value": "You do not have permission to modify the file."
     },
@@ -1289,25 +1292,28 @@
     "search_result_refresh": {
         "value": "Refresh"
     },
-    "do_safe_go_to_line" : {
+    "do_safe_go_to_line": {
         "value": "Go to Line"
     },
-    "do_safe_delete" : {
+    "do_safe_delete": {
         "value": "Delete"
     },
-    "font_color_white" : {
+    "font_color_white": {
         "value": "white"
     },
-    "font_color_red" : {
+    "font_color_red": {
         "value": "red"
     },
-    "font_color_blue" : {
+    "font_color_blue": {
         "value": "blue"
     },
-    "font_color_green" : {
+    "font_color_green": {
         "value": "green"
     },
-    "font_color_yellow" : {
+    "font_color_yellow": {
         "value": "yellow"
+    },
+    "alert_git_clone_non_empty_repository": {
+        "value": "Can't clone in non-empty directory"
     }
 }

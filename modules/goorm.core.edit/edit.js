@@ -9,9 +9,12 @@
  **/
 
 var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
+
 // var EventEmitter = require("events").EventEmitter;
-var fs = require('fs');
+var fs = require('fs-extra');
 var spawn = require('child_process').spawn;
+
 
 var g_secure = require('../goorm.core.secure/secure.js');
 
@@ -529,7 +532,7 @@ module.exports = {
 	get_proposal_java: function(query, evt) {
 		evt.emit("got_proposal_java", {});
 	},
-
+	/*
 	get_auto_import_java: function(query, evt) {
 		var self = this;
 
@@ -537,7 +540,7 @@ module.exports = {
 		res_packet.last_package_def_sentence = -1;
 		var res = [];
 		var err_java_file = query.err_java_file;
-		var missing_symbol = query.missing_symbol;
+		var missing_symbol = query.missing_symbol;a
 
 		if (!missing_symbol || !java_basic_class_arr) {
 			evt.emit("got_auto_import_java", res_packet);
@@ -549,7 +552,7 @@ module.exports = {
 
 			query.selected_file_path = g_secure.command_filter(query.selected_file_path);
 
-			exec("ctags -x " + global.__workspace + query.selected_file_path, function(err, stdout, stderr) {
+			execFile("ctags",  ['-x', global.__workspace + query.selected_file_path], function(err, stdout, stderr) {
 
 				var last_package_def_sentence = 0 * 1;
 				var first_class_def_sentence = 100000 * 1;
@@ -610,6 +613,7 @@ module.exports = {
 		}
 
 	},
+	*/
 
 };
 

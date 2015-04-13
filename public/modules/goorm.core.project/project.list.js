@@ -427,11 +427,11 @@ goorm.core.project.list.prototype = {
 				// set target = current selected project index
 				if (project_list[i].id === selected_project.attr('id')) {
 					target = i;
+					break;
 				}
 			}
 			switch (e.which) {
 				case 9: // tab key
-					console.log('>> ', self.list == '#project_delete_list');
 					if (self.list == '#project_delete_list') {
 						$('#g_dp_btn_cancel').focus();
 					} else if (self.list == '#project_export_list') {

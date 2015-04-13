@@ -23,12 +23,12 @@ goorm.core.edit.bookmark.prototype = {
 
 	//toggle bookmark. Jeong-Min Im.
 	toggle: function(new_bookmark_line) { // line that we want to set bookmark
-		var is_added = true, // jeongmin: whether bookmark will be added or not
-			line = this.editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
+		var is_added = true; // jeongmin: whether bookmark will be added or not
+		var line = this.editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
 
-		if (this.bookmarks[line] == undefined) //if bookmark line isn't in the list
-			this.bookmarks[line] = ""; //add new bookmark to the window
-		else {
+		if (this.bookmarks[line] == undefined) {//if bookmark line isn't in the list
+			this.bookmarks[line] = ''; //add new bookmark to the window
+		} else {
 			delete this.bookmarks[line];
 			is_added = false;
 		}
@@ -99,7 +99,7 @@ goorm.core.edit.bookmark.prototype = {
 
 	//clear all bookmarks. Jeong-Min Im.
 	clear: function() {
-		this.editor.editor.clearGutter("bookmark"); //send loaded bookmark list and set those
+		this.editor.editor.clearGutter('bookmark'); //send loaded bookmark list and set those
 		this.bookmarks = {}; //delete this window from the list
 
 		this.set_modified();
@@ -109,7 +109,7 @@ goorm.core.edit.bookmark.prototype = {
 	//move cursor to bookmark. Jeong-Min Im.
 	move: function(linenumber) {
 		var bookmark_rows = $('#bookmark_table').children();
-		var current_row = bookmark_rows.has("#bookmark_line_" + linenumber);
+		var current_row = bookmark_rows.has('#bookmark_line_' + linenumber);
 
 		bookmark_rows.removeClass('current_bookmark_row');
 		current_row.addClass('current_bookmark_row');
@@ -119,27 +119,26 @@ goorm.core.edit.bookmark.prototype = {
 			bookmark_rows.removeClass('current_bookmark_row');
 		});
 
-		$("#bookmark_tab_list").scrollTop(current_row[0].offsetTop);
+		$('#bookmark_tab_list').scrollTop(current_row[0].offsetTop);
 
-		if (typeof(linenumber) == "string") { //if linenumber is string type
-			var keyword = linenumber.split("_").pop(); //find real line number from the string
+		if (typeof(linenumber) == 'string') { //if linenumber is string type
+			var keyword = linenumber.split('_').pop(); //find real line number from the string
 
 			this.editor.editor.setCursor(parseInt(keyword, 10) - 1, 0); //set cursor to the parsed integer keyword
-		} else //linenumber is number type
+		} else {//linenumber is number type
 			this.editor.editor.setCursor(linenumber - 1, 0); //set cursor to the line
+		}
 	},
-
-
 
 	//make bookmark list in the outline tab. Jeong-Min Im.
 	outline_tab: function(is_added, target_line) {
-		var is_there = false, //'No Bookmark' sign is in the list or not
-			self = this;
+		var is_there = false; //'No Bookmark' sign is in the list or not
+		var self = this;
 		var lines = Object.keys(this.bookmarks);
-		var bookmark_table = $("#bookmark_table");
+		var bookmark_table = $('#bookmark_table');
 		var cm = this.editor.editor;
-		var font_family = core.preference["preference.editor.font_family"];
-		
+		var font_family = core.preference['preference.editor.font_family'];
+
 		if (lines.length > 0) {
 			// make outline form and append it to outline tab. Jeong-Min Im.
 			var add_bookmark_to_outline = function(line) {
@@ -151,31 +150,25 @@ goorm.core.edit.bookmark.prototype = {
 					var i = lines.indexOf(line.toString());
 
 					var bookmark_elmnt = '<tr><td id="bookmark_line_' + line + '" class="bookmark_line" style="font-family:' + font_family + '">' + line + '</td><td><div id="bookmark_text_' + line + '" class="bookmark_text col-md-11 margin-0px padding-0px" style="font-family:' + font_family + '"></div><button type="button" id="delete_bookmark_' + line + '" class="close" aria-hidden="true">&times;</button></td></tr>';
-
 					if (i === 0) {
 						bookmark_table.prepend(bookmark_elmnt);
 					} else {
 						bookmark_table.children().eq(i - 1).after(bookmark_elmnt);
 					}
 
-
 					////// delete bookmark button handler //////
-					$('#delete_bookmark_' + line).click(function() {
+					$('#delete_bookmark_' + line).click(function(e) {
+						e.stopPropagation();
 						self.toggle(parseInt($(this).attr('id').split('_').pop(), 10));
 					});
 
 					////// give some effects //////
 					if (text) {
-						CodeMirror.runMode(text, cm.options.mode, $("#bookmark_text_" + line).get(0)); //syntax highlighting
+						CodeMirror.runMode(text, cm.options.mode, $('#bookmark_text_' + line).get(0)); //syntax highlighting
 					}
 
-					$("#bookmark_line_" + line).click(function() {
-						var _line = $(this).attr('id').split('_').pop(); // extract line from bookmark_line
-
-						cm.setCursor(_line - 1);
-					});
-					$("#bookmark_text_" + line).click(function() {
-						var _line = $(this).attr('id').split('_').pop(); // extract line from bookmark_line
+					$('#bookmark_line_' + line).parent().click(function() {
+						var _line = $(this).find('.bookmark_line').attr('id').split('_').pop(); // extract line from bookmark_line
 
 						cm.setCursor(_line - 1);
 					});
@@ -195,7 +188,7 @@ goorm.core.edit.bookmark.prototype = {
 					add_bookmark_to_outline(target_line);
 
 					////// make it prettier //////
-					$(".bookmark_text").css("font-family", font_family);
+					$('.bookmark_text').css('font-family', font_family);
 				} else { // delete bookmark
 					$('#delete_bookmark_' + target_line).off('click'); // unbind delete bookmark button handler
 					$('#bookmark_line_' + target_line).off('click'); // unbind go to line handler
@@ -209,7 +202,7 @@ goorm.core.edit.bookmark.prototype = {
 				for (var i = 0; i < keys.length; i++) {
 					add_bookmark_to_outline(keys[i]);
 				}
-				$(".bookmark_text").css("font-family", font_family);
+				$('.bookmark_text').css('font-family', font_family);
 			}
 
 		} else {
@@ -221,32 +214,35 @@ goorm.core.edit.bookmark.prototype = {
 	// add comment. Jeong-Min Im.
 	add_comment: function(line, new_comment) {
 		////// make comment place //////
-		$("#bookmark_text_" + line).parent().append('<div class="well well-sm" id="comment_text_' + line + '" localization_key="profile_comment"></div>');
+		$('#bookmark_text_' + line).parent().append('<div class="well well-sm" id="comment_text_' + line + '" localization_key="profile_comment"></div>');
 
-		var self = this,
-			comment_place = $("#bookmark_text_" + line).siblings('.well'),
-			placeholder = core.module.localization.msg.profile_comment;
+		var self = this;
+		var comment_place = $('#bookmark_text_' + line).siblings('.well');
+		var placeholder = core.module.localization.msg.profile_comment;
 
 		////// write comment //////
-		if (new_comment && new_comment != '')
+		if (new_comment && new_comment != '') {
 			comment_place.html(this.filtering(new_comment));
-		else
+		} else {
 			comment_place.html(this.filtering(placeholder));
+		}
 
 		////// comment place click event handler //////
 		comment_place.mousedown(function(e) {
+			e.stopPropagation();
 			if (e.which == 1) { // left click
 				////// input space //////
 				$(this).parent().append('<input type="text" class="well form-control" placeholder="Comment"/>');
 
 				var $form_control = $(this).siblings('.form-control'); // comment input space
-				var comment = "";
+				var comment = '';
 
 				////// make it editable //////
-				if ($(this).html() == placeholder)
+				if ($(this).html() == placeholder) {
 					comment = ''; // no comment
-				else
+				} else {
 					comment = $(this).html(); //old comment
+				}
 
 				$form_control.val(self.de_filtering(comment));
 
@@ -262,8 +258,9 @@ goorm.core.edit.bookmark.prototype = {
 						comment = $(this).val();
 
 						$(this).blur();
-					} else if (e.keyCode == 27) //esc
+					} else if (e.keyCode == 27) {//esc
 						$(this).blur(); // cancel
+					}
 				});
 
 				////// disappearing input space. Jeong-Min Im. //////
@@ -279,8 +276,9 @@ goorm.core.edit.bookmark.prototype = {
 			} else if (e.which == 3 && $(this).html() != placeholder) { // right click. If it is placeholder now, don't show context menu.
 				self.who_clicked = this; // save who this is
 				goorm.core.edit.bookmark_list.context_menu.show(e);
-			} else
+			} else {
 				goorm.core.edit.bookmark_list.context_menu.hide(e);
+			}
 
 			return false; // stop propagation
 		});
@@ -291,7 +289,7 @@ goorm.core.edit.bookmark.prototype = {
 		////// removing //////
 		var line = $(this.who_clicked).attr('id').split('_').pop(); // get checked line
 
-		this.bookmarks[line] = "";
+		this.bookmarks[line] = '';
 		this.set_modified();
 
 		$('#comment_text_' + line).html(core.module.localization.msg.profile_comment); // initialize well

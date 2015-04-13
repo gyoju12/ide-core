@@ -10,7 +10,7 @@
 
 
 
-var build_version = 'oss-1428395101';
+var build_version = 'oss-1428921603';
 
 // Dependency
 //
@@ -350,6 +350,8 @@ goorm.config = function() {
 	}
 
 	process.on('uncaughtException', function(err) {
+		var g_log = require('./modules/goorm.core.log/log');
+		
 		if (!fs.existsSync("./error_log/")) fs.mkdirSync("./error_log/", 0777);
 		var now = new Date();
 		var date_now = (now.getMonth() + 1) + "_" + now.getDate() + "_" + now.getHours() + "_" + now.getMinutes() + "_" + now.getSeconds();
@@ -360,6 +362,10 @@ goorm.config = function() {
 		}
 
 		console.log('Caught exception: ' + err + err.stack + "\n" + "saved at " + './error_log/' + date_now + ".log");
+
+		
+
+		
 
 		
 	});

@@ -1566,7 +1566,11 @@ goorm.core.menu.action = {
 		var file_folder_common_context = function() {
 			$("[action=Copy_context]").off("click").tooltip();
 			$("[action=Copy_context]").click(function() {
-				core.module.layout.project_explorer.copy();
+				var tmp = core.status.selected_file.substring(1); //and select project root
+				if (tmp.indexOf('/') == -1) {
+					alert.show("프로젝트는 복사할수 없습니다.");
+					return;
+				} else core.module.layout.project_explorer.copy();
 			});
 
 			$("[action=Paste_context]").off("click").tooltip();

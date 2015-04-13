@@ -74,6 +74,9 @@
     "output_tab": {
         "value": "This is output tab. You can see errors when save files."
     },
+    "bookmark_tab": {
+        "value": "This is bookmark tab. You can save lines and comments on each editors."
+    },
     "new_project": {
         "value": "Click the New Project button. And start new project tutorial."
     },
@@ -86,8 +89,8 @@
     "project_dtype": {
         "value": "Select the project detailed type."
     },
-    "c_example": {
-        "value": "In this tutorial, we choose a C Basic Example project."
+    "project_select_dtype": {
+        "value": "In this tutorial, we choose the first detailed type."
     },
     "nextbutton": {
         "value": "Click the Next button."
@@ -102,22 +105,16 @@
         "value": "The project name is required."
     },
     "new_project_finish": {
-        "value": "Click the OK button to finish the New Project wizard."
+        "value": "Click the Create button to finish the New Project wizard."
     },
     "build_project_start": {
         "value": "Click build project button and start project build."
     },
-    "build_project_select_many": {
-        "value": "If you want to build many projects once, you can do that in 'Build Projects'."
-    },
-    "build_project_dialog": {
-        "value": "This is build project dialog."
-    },
-    "build_project_list": {
-        "value": "This is project list. You can choose the project which you want to build."
+    "build_project_select": {
+        "value": "Also you can build project in 'Build'."
     },
     "build_project_result": {
-        "value": "This is Terminal tab. You can see the result of build. If it successes, 'Build Success' will be shown. If it fails, 'Build Fail' wiil be shown."
+        "value": "This is Build tab. You can see the result of build. If it successes, 'Build Success' will be shown. If it fails, 'Build Fail' wiil be shown."
     },
     "run_project": {
         "value": "When build success, click 'Run' button. You can run project built and see result on terminal."
@@ -171,7 +168,7 @@
         "value": "You can see user list here."
     },
     "add_friends_search_user": {
-        "value": "You can search user by name, ID, E-mail, NickName."
+        "value": "You can search user by name, E-mail."
     },
     "add_friends_add_friend": {
         "value": "If you click the 'Request' button on right side user list, Goorm IDE sends the request message to the user. After requesting, wait for respond."

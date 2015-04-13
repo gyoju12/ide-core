@@ -14,6 +14,7 @@ goorm.core.project._new = {
 	tabview: null,
 	panel: null,
 	callback: null,
+	select: true,
 
 	init: function() {
 		var self = this;
@@ -377,6 +378,8 @@ goorm.core.project._new = {
 	},
 
 	set_keydown_event: function() {
+		var self = this;
+
 		var project_types = $("#project_new").find("div[class='wizard_step'] .project_types");
 		var project_items = $("#project_new").find("div[class='wizard_step'] .project_items");
 
@@ -388,16 +391,31 @@ goorm.core.project._new = {
 		$("#project_new").find(".nav").off("keydown");
 		$("#project_new").find(".nav").keydown(function(e) {
 			var current_selected_tab_anchor = $(":focus");
-			var project_last_tab_anchor = $('#project_new div[class="wizard_step"] .dialog_tabview .nav-tabs li:last a[data-toggle=tab]');
+			var project_last_tab_anchor = $('#project_new div[class="wizard_step"] .nav-tabs li:last a[data-toggle=tab]');
+			var project_first_tab_anchor = $('#project_new div[class="wizard_step"] .nav-tabs li:first a[data-toggle=tab]');
 			var current_selected_types = project_types.find(".active");
 
 			if (current_selected_tab_anchor == null) return;
 
 			switch (e.which) {
 				case 9: // tab key
-					// when press tab key, focusing move to project types										
-					if (current_selected_tab_anchor.is(project_last_tab_anchor)) {
+					// when press tab key, focusing move to project types	
+					console.log(current_selected_tab_anchor.is(project_last_tab_anchor));
+					if(e.shiftKey && current_selected_tab_anchor.is(project_first_tab_anchor)) {
+						console.log("--1");
+						$("#g_np_btn_cancel").focus();
+						e.preventDefault();
+					} else if(e.shiftKey) {
+						console.log("--2");
+						$('#project_new div[class="wizard_step"] .nav-tabs li a:focus').parent().prev().children().focus();
+						e.preventDefault();
+					} else if (current_selected_tab_anchor.is(project_last_tab_anchor)) {
+						console.log("--3");
 						current_selected_types.click();
+						e.preventDefault();
+					} else {
+						console.log("--4");
+						$('#project_new div[class="wizard_step"] .nav-tabs li a:focus').parent().next().children().focus();
 						e.preventDefault();
 					}
 					break;
@@ -431,7 +449,9 @@ goorm.core.project._new = {
 				case 9: // tab key
 					// when press tab key, focusing move to project items
 					var project_type_name_class = "." + current_selected_types.attr("project_type");
-					if (current_selected_item.is(project_type_name_class)) {
+					if(e.shiftKey) {
+						$('#project_new div[class="wizard_step"] .nav-tabs li:last a').focus();
+					} else if (current_selected_item.is(project_type_name_class)) {
 						current_selected_item.click();
 					} else {
 						// if (current_selected_types.next().length) {
@@ -470,54 +490,57 @@ goorm.core.project._new = {
 		// project type items key down event
 		$("#project_new").find(".dialog_center").off("keydown");
 		$("#project_new").find(".dialog_center").keydown(function(e) {
-			var current_selected_types = project_types.find(".active")[0];
-			var project_type = $(current_selected_types).attr("project_type"); // project_type (string)
-			var current_selected_item = project_items.find(".selected_button");
-			var next_selected = null;
-			switch (e.which) {
-				case 37: // left key
-					if (current_selected_item.length) {
-						next_selected = current_selected_item.prev("div:visible");
-						if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
+			if (self.select) {
+				var current_selected_types = project_types.find(".active")[0];
+				var project_type = $(current_selected_types).attr("project_type"); // project_type (string)
+				var current_selected_item = project_items.find(".selected_button");
+				var next_selected = null;
+				switch (e.which) {
+					case 37: // left key
+						if (current_selected_item.length) {
+							next_selected = current_selected_item.prev("div:visible");
+							if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
 
-					}
-					break;
-				case 38: // up key
-					if (current_selected_item.length) {
-						next_selected = current_selected_item.prev().prev().prev().prev();
-						if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
-					}
-					break;
-				case 39: // right key
-					if (current_selected_item.length) {
-						next_selected = current_selected_item.next();
-						if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
-					}
-					break;
-				case 40: // down key
-					if (current_selected_item.length) {
-						next_selected = current_selected_item.next().next().next().next();
-						if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
-					}
-					break;
-				case 13: // enter key
-					if (current_selected_item.length) {
-						$('#g_np_btn_next').trigger('click');
-					}
-			}
-			if (next_selected == null) return;
+						}
+						break;
+					case 38: // up key
+						if (current_selected_item.length) {
+							next_selected = current_selected_item.prev().prev().prev().prev();
+							if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
+						}
+						break;
+					case 39: // right key
+						if (current_selected_item.length) {
+							next_selected = current_selected_item.next();
+							if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
+						}
+						break;
+					case 40: // down key
+						if (current_selected_item.length) {
+							next_selected = current_selected_item.next().next().next().next();
+							if (next_selected.length && next_selected.attr("class").search(project_type) != -1) next_selected.click();
+						}
+						break;
+					case 13: // enter key
+						if (current_selected_item.length) {
+							$('#g_np_btn_next').trigger('click');
+						}
+				}
+				if (next_selected == null) return;
 
-			// scroll setting
-			if (next_selected.length) {
-				// 253.09090912342072 value is heigth (layout showing type items)
-				if (next_selected.position().top > 253.09090912342072) {
-					// item above the layout
-					project_items.scrollTop(project_items.scrollTop() + 136.5); // item size 127 + margin 10
-				} else if (next_selected.position().top < 0) {
-					// item below the layout
-					project_items.scrollTop(project_items.scrollTop() - 136.5);
+				// scroll setting
+				if (next_selected.length) {
+					// 253.09090912342072 value is heigth (layout showing type items)
+					if (next_selected.position().top > 253.09090912342072) {
+						// item above the layout
+						project_items.scrollTop(project_items.scrollTop() + 136.5); // item size 127 + margin 10
+					} else if (next_selected.position().top < 0) {
+						// item below the layout
+						project_items.scrollTop(project_items.scrollTop() - 136.5);
+					}
 				}
 			}
+
 			e.preventDefault();
 		});
 
@@ -532,9 +555,23 @@ goorm.core.project._new = {
 			}
 		});
 
+		$("#g_np_btn_next").off("keydown");
+		$("#g_np_btn_next").on("keydown", function(e) {
+			if(e.which === 9 && e.shiftKey) {
+				project_items.find(".selected_button").click();
+			} else if(e.which === 9) {
+				$("#g_np_btn_cancel").focus();
+			}
+			e.preventDefault();
+		});
+
+
+
 		$("#g_np_btn_cancel").off("keydown");
 		$("#g_np_btn_cancel").on("keydown", function(e) {
-			if (e.which === 9) {
+			if(e.which === 9 && e.shiftKey) {
+				$("#g_np_btn_next").focus();
+			} else if (e.which === 9) {
 				var flag = true,
 					temp_value;
 				$.each($("#dlg_new_project").find(".btn-primary.g_np_btn_ok"), function(index, value) {

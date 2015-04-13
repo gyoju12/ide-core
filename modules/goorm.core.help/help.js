@@ -12,12 +12,17 @@ var http = require('http');
 var fs = require("fs");
 var querystring = require('querystring');
 
+var g_log = require('../goorm.core.log/log');
+
 module.exports = {
 	send_to_bug_report: function (query, evt) {
 		var return_data = {};
 		return_data.err_code = 0;
 		return_data.message = "Process Done";
 
+		/**
+		 *  SEND TO DASHBOARD
+		 */
 		var post_data = querystring.stringify({
 			'id': query.id,
 			'subject': query.title,
@@ -46,7 +51,6 @@ module.exports = {
 			});
 
 			res.on('end', function () {
-				evt.emit("help_send_to_bug_report", return_data);
 			});
 		});
 
@@ -54,6 +58,20 @@ module.exports = {
 
 		post_req.write(post_data);
 		post_req.end();
+
+		/**
+		 *  SEND TO EMAIL
+		 */
+		g_log.report({
+			'mail_options': {
+				from: query.email, // sender address
+				to: "contact@goorm.io", // list of receivers
+				subject: query.title, // Subject line
+				text: query.explanation // plaintext body
+			}
+		});
+
+		evt.emit("help_send_to_bug_report", return_data);
 	},
 
 	get_readme_markdown: function (language, filename, filepath) {

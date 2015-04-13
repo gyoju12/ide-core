@@ -114,7 +114,7 @@ goorm.core.edit.dictionary.prototype = {
 
 	load: function(filetype) {
 		var self = this;
-		
+
 		$(this.target).find(".dictionary_list_table").empty();
 
 		// if (core.is_optimization) {
@@ -185,7 +185,7 @@ goorm.core.edit.dictionary.prototype = {
 		};
 
 		var i = 0;
-		
+
 		for (i = 0; i < words.length; i++) {
 			// if (!is_duplicated(words[i], this.result)) {
 			this.result.push({
@@ -211,7 +211,7 @@ goorm.core.edit.dictionary.prototype = {
 				}
 			}
 		}
-		
+
 
 		if (this.result.length === 1) {
 			this.index = 0;
@@ -228,8 +228,8 @@ goorm.core.edit.dictionary.prototype = {
 // 			};
 // 			this.result.push(not_data);
 // 		}
-		
-		if (this.result.length >= 1) {			
+
+		if (this.result.length >= 1) {
 			var dictionary_list_table_array = [];
 			var dictionary_desc_array = [];
 			var get_element_image = function(type) {
@@ -274,7 +274,7 @@ goorm.core.edit.dictionary.prototype = {
 				}
 
 			};
-			
+
 			$(this.result).each(function(i) {
 				var ele_id = "dict_" + i;
 
@@ -296,7 +296,7 @@ goorm.core.edit.dictionary.prototype = {
 				print_key = print_key.replace('<', '&lt').replace('>', '&gt');
 				if (keyword && keyword != '.')
 					print_key = print_key.replace(new RegExp(keyword, 'g'), '<span class="text-primary"><b>' + keyword + '</b></span>');
-				
+
 				var ele_html = "";
 				ele_html += "<tr class='dictionary_element' id='" + ele_id + "'>";
 				ele_html += "<td width='20px' style='font-size:11px;' >" + get_element_image(this.type) + "</td><td style='font-size:11px; font-family: " + core.preference["preference.editor.font_family"] + ", monospace;'>" + print_key + "</td>";
@@ -316,7 +316,7 @@ goorm.core.edit.dictionary.prototype = {
 					desc_html += this.description;
 					desc_html += "</li>";
 				}
-				
+
 				dictionary_desc_array.push(desc_html);
 			});
 			dictionary_list_table.empty()[0].innerHTML = (dictionary_list_table_array.join(""));
@@ -417,16 +417,16 @@ goorm.core.edit.dictionary.prototype = {
 		}
 
 		var dictionary_element = $('tr.dictionary_element', dictionary_list);
-		
+
 		dictionary_element.removeClass("hovered");
 		dictionary_element.eq(next_item).mouseover();
 	},
-	
+
 	select_top: function() {
 		var __target = $(this.target);
 		var dictionary_list = $('li.dictionary_list', __target);
 		var dictionary_element = $('tr.dictionary_element', dictionary_list);
-		
+
 		dictionary_element.removeClass("hovered");
 // 		if (this.reversed) {
 // 			dictionary_element.eq(this.result.length - 1).mouseover();
@@ -455,12 +455,12 @@ goorm.core.edit.dictionary.prototype = {
 			line: cursor.line,
 			ch: cursor.ch
 		}, "local");
-		
+
 		var scroll = cm.getScrollInfo();
 		var gutter = cm.getGutterElement();
 // 		var gutter_width = $(gutter).width() + parseInt(core.preference["preference.editor.font_size"]);
-		
-		
+
+
 		var left = cursor_pos.left + $(gutter).width();// + parseInt(core.preference["preference.editor.font_size"], 10);
 		var top = cursor_pos.top - scroll.top + parseInt(core.preference["preference.editor.font_size"], 10);
 
@@ -476,19 +476,19 @@ goorm.core.edit.dictionary.prototype = {
 
 		var dictionary_box_height = dictionary_box.height();
 		var dictionary_box_width = dictionary_box.width();
-		var margin = 50; 
+		var margin = 50;
 // 		this.reversed = false;
-		
+
 		if (workspace.offset().top + workspace.height() < wrapper.offset().top + top + dictionary_box_height + margin) {
 // 			this.reversed = true;
 
 			top = top - dictionary_box_height - parseInt(core.preference["preference.editor.font_size"], 10) * 2;
-						
+
 // 			var list = $('ul.dictionary_box table.dictionary_list_table tbody');
 // 			var listItems = list.children('tr');
 // 			list.append(listItems.get().reverse());
 		}
-		
+
 		if (workspace.offset().left + workspace.width() < wrapper.offset().left + left + dictionary_box_width + margin) {
 			left = left - dictionary_box_width;
 		}
@@ -507,7 +507,7 @@ goorm.core.edit.dictionary.prototype = {
 			dictionary_box.find('li.dictionary_desc').css('width', this.list_width);
 			dictionary_box.find('div.dictionary_desc_list').css('width', this.list_width);
 		}
-		
+
 		if (this.result.length > 0) {
 			dictionary_box.show();
 			this.display = true;
@@ -515,26 +515,26 @@ goorm.core.edit.dictionary.prototype = {
 			dictionary_list.scrollTop(0);
 			this.completable = true;
 		}
-		
+
 // 		dictionary_box.attr("tabindex", -1).focus();
 
 // 		__target.find(".divider").hide();
 // 		__target.find("li.dictionary_list tr.hovered").removeClass("hovered");
 
-		
-		
+
+
 // 		if (this.reversed) {
 // 			this.index = this.result.length - 1;
 // 			dictionary_list.scrollTop(29 * this.result.length);
 // 		}
 // 		else {
-			
+
 // 		}
-		
-		
+
+
 	},
 
-	hide: function() {		
+	hide: function() {
 		var __target = $(this.target);
 		__target.find(".dictionary_box").hide();
 		__target.find(".dictionary_desc").hide();
@@ -542,17 +542,17 @@ goorm.core.edit.dictionary.prototype = {
 		this.display = false;
 	},
 
-	search: function(keyword, type, line_content) {		
+	search: function(keyword, type, line_content) {
 		if (keyword == "/*" || /[^\-\+=\[{\]}\\\|\;\:\'\"\,<\.>\/\?\!\@#\$%\^&\*\(\)~\`]+/g.test(keyword) === false) {
 			return false;
 		}
-		
+
 		var self = this;
 		self.result = [];
 
 		var special_characters = ['!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|', '\\'];
-		
-		
+
+
 		$(special_characters).each(function (i) {
 			keyword.split(this).join("\\" + this);
 		});
@@ -564,7 +564,7 @@ goorm.core.edit.dictionary.prototype = {
 // 		var keyword_object = {};
 // 		keyword_object.keyword = keyword + "";
 // 		keyword_object.line_content = line_content + "";
-		
+
 		$(self.contents).each(function(i) {
 			if (reg_exp.test(this.keyword)) {
 				self.result.push(this);
@@ -572,7 +572,7 @@ goorm.core.edit.dictionary.prototype = {
 		});
 
 		self.set(keyword);
-		
+
 		return true;
 	},
 // 	get_dictionary: function(keyword_object, callback) {
@@ -619,7 +619,7 @@ goorm.core.edit.dictionary.prototype = {
 		// 				});
 		// 			}
 		// 		}
-		// 	} //local var end				
+		// 	} //local var end
 		// 	if (data.f !== undefined) {
 		// 		data.f = data.f.unique();
 
@@ -689,7 +689,7 @@ goorm.core.edit.dictionary.prototype = {
 // 			CodeMirror.on(dictionary_box.get(0), "keydown", function(e) {
 // 				var code = e.keyCode;
 
-				
+
 // 			});
 // 		}
 
@@ -699,23 +699,23 @@ goorm.core.edit.dictionary.prototype = {
 // 				self.autokey_down = false;
 // 			}
 // 		});
-		
+
 		cm_editor.on("keydown", function(i, e) {
 			var code = e.keyCode;
-			
+
 			if (code == 91 || code == 93) self.metaKey = true;
 			if (code == 18) self.ctrlKey = true;
-			if (code == 17) self.altKey = true;	
-						
+			if (code == 17) self.altKey = true;
+
 			if (self.display) {
 				if (code == 38) { // key 'up arrow'
 					CodeMirror.e_stop(e);
-					
+
 					self.select(-1);
 					cm_editor.focus();
 				} else if (code == 40) { // key 'down arrow'
 					CodeMirror.e_stop(e);
-					
+
 					self.select(1);
 					cm_editor.focus();
 				} else if (code == 13 || code == 9) { // key 'enter' and 'tab'
@@ -727,7 +727,7 @@ goorm.core.edit.dictionary.prototype = {
 				}
 			}
 		});
-		
+
 		cm_editor.on("keyup", $.throttle(function(i, e) {
 			//seongho.cha: because of throttle, active_window can be different when click in 0.2sec.
 			if (cm_editor !== goorm.core.window.manager.window[goorm.core.window.manager.active_window].editor.editor){
@@ -742,7 +742,7 @@ goorm.core.edit.dictionary.prototype = {
 				cm_editor.focus();
 				return;
 			}
-/*			
+/*
 			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code > 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
 				console.log("keycode = " + code);
 				console.log(self.search(token.string));
@@ -767,9 +767,9 @@ goorm.core.edit.dictionary.prototype = {
 				self.hide();
 				cm_editor.focus();
 			}
-*/		
+*/
 // 			console.log(token.string);
-			
+
 			//All new code...
 			if (code != 38 && code != 40){//key 'up', 'down'
 				if (self.search(token.string) && code != 13 && code != 9  && !self.metaKey && !self.ctrlKey && !self.altKey) {
@@ -784,7 +784,7 @@ goorm.core.edit.dictionary.prototype = {
 						cm_editor.focus();
 					}
 				}
-				else if ((self.metaKey || self.ctrlKey || self.altKey) && ((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189)) {
+				else if ((self.metaKey || self.ctrlKey || self.altKey) && ((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || code == 189 || code == 32)) {
 					self.metaKey = false;
 					self.ctrlKey = false;
 					self.altKey = false;
@@ -795,8 +795,8 @@ goorm.core.edit.dictionary.prototype = {
 					cm_editor.focus();
 				}
 			}
-			
-			
+
+
 			if (self.display) {
 				if (code == 27) { // key 'escape'
 					CodeMirror.e_stop(e);
@@ -825,7 +825,7 @@ goorm.core.edit.dictionary.prototype = {
 					} else {
 						self.hide();
 					}
-					
+
 // 					cm_editor.triggerOnKeyDown(e);
 					cm_editor.focus();
 // 				} else if (code == 17 || code == 32) { //control & space (in mac)
@@ -861,9 +861,9 @@ goorm.core.edit.dictionary.prototype = {
 //         $target.on('keydown', function(e) {
 // 			var cursor = cm_editor.getCursor();
 // 			var token = cm_editor.getTokenAt(cursor);
-			
+
 //             if (dictionary_box.css("display") == "block" && e.keyCode == 8) {
-                
+
 
 //                 if (token && token.string.trim() !== "") {
 //                     token.string = token.string.slice(0, -1);
@@ -878,7 +878,7 @@ goorm.core.edit.dictionary.prototype = {
 //                     self.hide();
 //                 }
 //             }
-//         }); 
+//         });
 
         $target.mousedown(function(e) {
         	self.hide();

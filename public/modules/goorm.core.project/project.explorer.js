@@ -185,7 +185,7 @@ goorm.core.project.explorer.prototype = {
 				} else {
 					if (self.treeview) {
 						// save state
-						// 
+						//
 						self.save_explorer_treeview(self.treeview.project_path);
 
 						// destroy
@@ -384,8 +384,8 @@ goorm.core.project.explorer.prototype = {
 
 	// add_explorer_treeview: function (path) {
 	// 	if (!this.treeview_data[core.status.current_project_path]) this.treeview_data[core.status.current_project_path] = [];
-	// 	if (path == "//undefined") return; 
-	// 	this.remove_explorer_treeview(path); 
+	// 	if (path == "//undefined") return;
+	// 	this.remove_explorer_treeview(path);
 	// 	this.treeview_data[core.status.current_project_path].push(path);
 	// 	this.save_explorer_treeview();
 	// },
@@ -676,6 +676,7 @@ goorm.core.project.explorer.prototype = {
 						return false;
 					}
 				}
+
 				goorm.core.file._import.upload_file_drag(files, target.attr("path") || core.status.current_project_path, callback);
 				return false;
 			})
@@ -694,13 +695,13 @@ goorm.core.project.explorer.prototype = {
 						} else {
 							target.addClass('jstree-hovered');
 						}
-						//console.log('A dragenter'); 
+						//console.log('A dragenter');
 						break;
 					case 'DIV':
 						if (!isWholerow) break;
 						target.addClass('jstree-wholerow-hovered')
 							.siblings('a').addClass('jstree-hovered');
-						//console.log('DIV dragenter'); 
+						//console.log('DIV dragenter');
 						break;
 				}
 
@@ -732,7 +733,7 @@ goorm.core.project.explorer.prototype = {
 
 				var isMouseout = X <= offset.left || X >= offset.right || Y <= offset.top || Y >= offset.bottom;
 
-				//console.log("X: " + X + ", Y: " + Y + ", offset(" + offset.left + "," + offset.right + "," + offset.top + "," + offset.bottom + ") out? " + isMouseout); 
+				//console.log("X: " + X + ", Y: " + Y + ", offset(" + offset.left + "," + offset.right + "," + offset.top + "," + offset.bottom + ") out? " + isMouseout);
 
 				if (isMouseout) {
 					target.removeClass('jstree-wholerow-hovered')
@@ -829,7 +830,7 @@ goorm.core.project.explorer.prototype = {
 					// 		if(parent && parent.attr('path').split('/').slice(-1)[0] === name) {
 					// 			info.cannot_move = true;
 					// 			// TODO : localization
-					// 			info.error_msg = msg.alert_cannot_overwrite_parent_folder + '<br/>"' + name +'"'; //'annot overwrite to a parent folder has the same name.';		
+					// 			info.error_msg = msg.alert_cannot_overwrite_parent_folder + '<br/>"' + name +'"'; //'annot overwrite to a parent folder has the same name.';
 					// 		}
 					// 		else if(target_path + '/' + target_folder_children[i] === path) {
 					// 			info.cannot_move = true;
@@ -877,7 +878,7 @@ goorm.core.project.explorer.prototype = {
 						yes: function() {
 							//confirmation.hide();
 							_trigger('check_restriction', 500);
-							//setTimeout(_trigger('name_exist_check'), 250);							
+							//setTimeout(_trigger('name_exist_check'), 250);
 						},
 						no: function() {
 							//confirmation.hide();
@@ -917,26 +918,26 @@ goorm.core.project.explorer.prototype = {
 
 					// 		yes: function() {
 					// 			//console.log(name + ' will be moved forcely');
-					// 			index--;							
+					// 			index--;
 					// 			//confirmation.hide();
 					// 			_trigger('check_restriction', 250);
 
 					// 		},
 					// 		no: function() {
 					// 			//console.log(name + ' will be ignored');
-					// 			info_list.splice(index--, 1);		
+					// 			info_list.splice(index--, 1);
 					// 			//confirmation.hide();
 					// 			_trigger('check_restriction', 250);
 
 					// 		}
 					// 	});
 
-					// 	confirmation.show();					
+					// 	confirmation.show();
 					// }
 					// else {
 					// 	//console.log(name + ' will be moved');
 					// 	index--;
-					// 	_trigger('check_restriction');					
+					// 	_trigger('check_restriction');
 					// }
 				});
 
@@ -1097,7 +1098,7 @@ goorm.core.project.explorer.prototype = {
 		// 			upload_path=upload_path.split('/');
 		// 			upload_path.pop();
 		// 			upload_path=upload_path.join('/');
-		// 		}	
+		// 		}
 		// 	}else{
 		// 		upload_path=core.status.current_project_path;
 		// 	}
@@ -1170,7 +1171,7 @@ goorm.core.project.explorer.prototype = {
 	// 		current_path.push(info.path);
 	// 	});
 
-	// 	var getdata = {	
+	// 	var getdata = {
 	// 		after_path: target_path,
 	// 		current_path: current_path
 	// 	//	force: true
@@ -1179,7 +1180,7 @@ goorm.core.project.explorer.prototype = {
 
 	// 	core.socket.once('/project/move_file', function(data){
 	// 		self.refresh(function() {
-	// 			setTimeout(function() { 
+	// 			setTimeout(function() {
 	// 				self.treeview.open_node($target);
 	// 			}, 250);
 	// 		});
@@ -1202,7 +1203,7 @@ goorm.core.project.explorer.prototype = {
 
 		var self = this;
 
-		//tree init 
+		//tree init
 
 		var on_mousedown = function(e, node) {
 			e.stopPropagation();

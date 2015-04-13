@@ -1248,7 +1248,7 @@ exports.edit.get_proposal_java = function(req, res) {
 
 
 
-
+/*
 exports.edit.get_auto_import_java = function(req, res) {
 	var evt = new EventEmitter();
 
@@ -1258,7 +1258,7 @@ exports.edit.get_auto_import_java = function(req, res) {
 
 	g_edit.get_auto_import_java(req.query, evt);
 };
-
+*/
 
 exports.edit.get_object_explorer = function(req, res) {
 	var evt = new EventEmitter();

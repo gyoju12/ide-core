@@ -12,7 +12,6 @@ var fs = require('fs');
 // var exec = require('child_process').exec,
 var spawn = require('child_process').spawn;
 
-
 var g_auth_project = require('../goorm.core.auth/auth.project');
 var g_project = require('../goorm.core.project/project');
 
@@ -24,30 +23,34 @@ module.exports = {
 		var self = this;
 
 		var author = query.author;
+		var uid = query.uid;
 		var find_query = query.find_query;
 		var project_path = query.project_path;
 		var folder_path = query.folder_path;
 		var grep_option = query.grep_option || {};
 
 		var nodes = {};
-		// console.log("@find_query:", find_query);
+		// console.log('@find_query:', find_query);
 		var make_grep_option = function(options) {
-			var grep = ["-r", "-n", "-R"];
+			var grep = ['-r', '-n', '-R'];
 			var is_true = function(str) {
 				var r = false;
-				if (str && (str === true || str === 'true')) r = true;
+				if (str && (str === true || str === 'true')) {
+					r = true;
+				}
 
 				return r;
 			};
 
 			if (is_true(options.use_regexp)) {
-				grep.push("-E");
+				grep.push('-E');
 			} else {
-				grep.push("-F");
+				grep.push('-F');
 			}
 
-			if (!is_true(options.match_case))
-				grep.push("-i");
+			if (!is_true(options.match_case)) {
+				grep.push('-i');
+			}
 
 			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']); // jeongmin: in spawn, exclude item should be separated
 
@@ -61,11 +64,11 @@ module.exports = {
 				var node = {};
 				nodes.total_match = 0;
 				for (idx = 0; idx < matched_files_list.length; idx++) {
-					if (matched_files_list[idx].split(":").length > 1) {
+					if (matched_files_list[idx].split(':').length > 1) {
 						node = {};
-						node.filename = matched_files_list[idx].split(":")[0].match(/[^/]*$/)[0];
-						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?/, "").split(":")[0].split('.').pop(); // jeongmin: type is the last string after .
-						node.filepath = matched_files_list[idx].split(":")[0].replace(global.__workspace, "").substring(0, matched_files_list[idx].split(":")[0].replace(global.__workspace, "").lastIndexOf("/") + 1);
+						node.filename = matched_files_list[idx].split(':')[0].match(/[^/]*$/)[0];
+						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?/, '').split(':')[0].split('.').pop(); // jeongmin: type is the last string after .
+						node.filepath = matched_files_list[idx].split(':')[0].replace(global.__workspace, '').substring(0, matched_files_list[idx].split(':')[0].replace(global.__workspace, '').lastIndexOf('/') + 1);
 						node.matched_line = 0;
 						node.children = [];
 						node.badge = 0;
@@ -75,12 +78,12 @@ module.exports = {
 				}
 
 				for (idx = 0; idx < matched_files_list.length; idx++) {
-					if (matched_files_list[idx].split(":").length > 1) {
+					if (matched_files_list[idx].split(':').length > 1) {
 						node = {};
-						node.filename = matched_files_list[idx].split(":")[0].match(/[^/]*$/)[0];
-						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?./, "").split(":")[0].split('.').pop(); // jeongmin: type is the last string after .
-						node.filepath = matched_files_list[idx].split(":")[0].replace(global.__workspace, "").substring(0, matched_files_list[idx].split(":")[0].replace(global.__workspace, "").lastIndexOf("/") + 1);
-						node.matched_line = matched_files_list[idx].split(":")[1];
+						node.filename = matched_files_list[idx].split(':')[0].match(/[^/]*$/)[0];
+						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?./, '').split(':')[0].split('.').pop(); // jeongmin: type is the last string after .
+						node.filepath = matched_files_list[idx].split(':')[0].replace(global.__workspace, '').substring(0, matched_files_list[idx].split(':')[0].replace(global.__workspace, '').lastIndexOf('/') + 1);
+						node.matched_line = matched_files_list[idx].split(':')[1];
 						node.parent = node.filepath + node.filename;
 						if (nodes[node.filepath + node.filename]) {
 							nodes[node.filepath + node.filename].badge++;
@@ -89,9 +92,9 @@ module.exports = {
 								nodes[node.filepath + node.filename].matched_line = node.matched_line;
 							}
 						}
-						// node.html = "<span style=\"color: #666; font-weight:bold;\">Line: " + node.matched_line + "</span> - <span style=\"color: #808080\">" + matched_files_list[idx].split(":")[2] + "</span>";
+						// node.html = '<span style=\'color: #666; font-weight:bold;\'>Line: ' + node.matched_line + '</span> - <span style=\'color: #808080\'>' + matched_files_list[idx].split(':')[2] + '</span>';
 
-						nodes[node.filepath + node.filename + ":" + node.matched_line] = node;
+						nodes[node.filepath + node.filename + ':' + node.matched_line] = node;
 					}
 				}
 
@@ -105,9 +108,8 @@ module.exports = {
 		//
 		grep_option = make_grep_option(grep_option);
 
-
 		var owner_roots = [];
-				
+		
 
 		//useonly(mode=goorm-oss)
 		g_project.get_list(null, null, function(owner_project_data) {
@@ -115,7 +117,7 @@ module.exports = {
 				owner_roots.push('/' + owner_project_data[i].name);
 			}
 
-			if (project_path === "" && owner_roots.length !== 0) {
+			if (project_path === '' && owner_roots.length !== 0) {
 				var all_matched_files_list = [];
 				var count = 0;
 
@@ -178,6 +180,7 @@ module.exports = {
 		var project_path = option.project_path;
 		var folder_path = option.folder_path;
 		var grep_option = option.grep_option;
+		var uid = option.uid;
 
 		// find_query = g_secure.command_filter(find_query);
 		project_path = g_secure.command_filter(project_path);
@@ -206,9 +209,11 @@ module.exports = {
 		fs.exists(global.__workspace.slice(0, -1) + project_path, function(exists) {
 			if (exists) {
 				// jeongmin: exec is changed to spawn, because exec has small buffer.
-				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option)),
-					_stdout = '',
-					_stderr = '';
+				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option), {
+					'uid' : parseInt(uid)
+				});
+				var _stdout = '';
+				var _stderr = '';
 				command.stdout.on('data', function(data) {
 					_stdout += data;
 				});
@@ -219,7 +224,8 @@ module.exports = {
 					var res = {};
 					var matched_files_list = [];
 
-					if (code === 0) {
+					//seongho.cha : code === null mean process stoped by user.
+					if (code === 0 || code === null) {
 						matched_files_list = get_matched_files_list(_stdout);
 
 						res.error = false;
@@ -230,9 +236,9 @@ module.exports = {
 						matched_files_list = get_matched_files_list(_stdout);
 
 						if (matched_files_list && matched_files_list.length > 0) {
-							res.error = "Max buffer exceeded.";
+							res.error = 'Max buffer exceeded.';
 						} else {
-							res.error = "Cannot find a word";
+							res.error = 'Cannot find a word';
 						}
 
 						res.data = matched_files_list;
@@ -240,7 +246,7 @@ module.exports = {
 						callback(res);
 					}
 				});
-				// var command = exec("grep " + find_query + " " + global.__workspace.slice(0, -1) + project_path + '/' + folder_path + grep_option, {
+				// var command = exec('grep ' + find_query + ' ' + global.__workspace.slice(0, -1) + project_path + '/' + folder_path + grep_option, {
 				// 	maxBuffer: 1024 * 1024,
 				// 	killSignal: 'SIGTERM'
 				// }, function(error, stdout, stderr) {
@@ -258,10 +264,10 @@ module.exports = {
 				// 		matched_files_list = get_matched_files_list(stdout);
 
 				// 		if (matched_files_list && matched_files_list.length > 0) {
-				// 			res.error = "Max buffer exceeded.";
+				// 			res.error = 'Max buffer exceeded.';
 				// 		}
 				// 		else {
-				// 			res.error = "Cannot find a word";
+				// 			res.error = 'Cannot find a word';
 				// 		}
 
 				// 		res.data = matched_files_list;
@@ -271,7 +277,7 @@ module.exports = {
 				// });
 			} else {
 				callback({
-					error: "Incorrect path provided.",
+					error: 'Incorrect path provided.',
 					data: []
 				});
 			}

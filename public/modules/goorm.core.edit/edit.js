@@ -1113,6 +1113,7 @@ goorm.core.edit.prototype = {
                     //project_type project_type
                     var postdata = {};
                     postdata.workspace = self.filepath.split('/')[0];
+                    console.log(postdata.workspace);
 
                     var active_file = core.module.layout.workspace.window_manager.active_filename;
                     var workspace = active_file.split('/')[0];
@@ -1401,8 +1402,8 @@ goorm.core.edit.prototype = {
         for (var i in old_list) {
             var num = parseInt(i, 10);
 
-            var info = self.editor.lineInfo(num + delta - 1);
-            var info2 = self.editor.lineInfo(num - 1);
+            var info = this.editor.lineInfo(num + delta - 1);
+            var info2 = this.editor.lineInfo(num - 1);
 
             if (num >= from.line + 1) {
                 if (info && info.gutterMarkers && info.gutterMarkers.bookmark) {

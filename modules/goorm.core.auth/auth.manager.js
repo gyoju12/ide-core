@@ -16,6 +16,7 @@ var http = require('http');
 var querystring = require('querystring');
 
 var g_secure = require("../goorm.core.secure/secure");
+var g_log = require("../goorm.core.log/log");
 
 // var retricon = require('retricon');
 
@@ -57,39 +58,7 @@ module.exports = {
 		});
 		
 	},
-
-	sync_uid: function(option, callback) {
-		var content = option;
-
-		content.uid = g_secure.command_filter(content.uid);
-		content.id = g_secure.command_filter(content.id);
-
-		//jeongmin: array.join() is better than + for concatenating strings
-		//'useradd -u ' + content.uid + ' ' + content.id
-		exec(['useradd -u ', content.uid, ' ', content.id].join(""), function(err, stdout, stderr) {
-			if (!err) {
-				
-				//useonly(mode=goorm-oss)
-				console.log('Complete : sync-uid [', option, ']');
-
-				if (callback) {
-					callback({
-						result: true
-					});
-				}
-				
-			} else {
-				console.log(err, stdout, stderr);
-				if (callback) {
-					callback({
-						result: false,
-						code: 1
-					});
-				}
-			}
-			//jeongmin: most frequently executable condition should be appeared first
-		});
-	},
+	
 	
 	login: function(user, req, callback) {
 		var self = this;

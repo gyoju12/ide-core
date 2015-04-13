@@ -117,7 +117,6 @@ goorm.core.dialog.confirmation.prototype = {
 		if (!this.first_init) {
 			this.first_init = true;
 			this.panel.on('hidden.bs.modal', function() {
-
 				$('.modal.in').focus();
 
 				if (!self.bt_clicked && typeof option.no == "function")
@@ -129,7 +128,7 @@ goorm.core.dialog.confirmation.prototype = {
 				}
 				//self.panel.modal('hide');
 
-				self.bt_clicked = false; //jeongmin: reset 
+				self.bt_clicked = false; //jeongmin: reset
 			});
 		}
 

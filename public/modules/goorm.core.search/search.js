@@ -27,27 +27,26 @@ goorm.core.search = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_search");
+		this.panel = $('#dlg_search');
 
 		var handle_ok = function() {
 			self.search();
 			// self.panel.modal('hide');
 		};
 
-
 		//clear button roles --heeje
 		$('#search_clear>.clr-btn').click(function() {
 
-			$("#search_clear .clr-btn").attr('disabled', 'disabled');
-			$("#search_clear .refresh-btn").attr('disabled', 'disabled');
+			$('#search_clear .clr-btn').attr('disabled', 'disabled');
+			$('#search_clear .refresh-btn').attr('disabled', 'disabled');
 			$('#search_result').empty();
-			$("#gLayoutTab_Search .badge").remove();
+			$('#gLayoutTab_Search .badge').remove();
 			self.last_option = null;
 			self.unmark();
 		});
 
 		$('#search_clear>.refresh-btn').click(function() {
-			$(core).one("event_save_all", function(e) {
+			$(core).one('event_save_all', function(e) {
 				if (self.last_option != null) {
 					self.search(self.last_option);
 				} else {
@@ -58,7 +57,7 @@ goorm.core.search = {
 			var save_cnt = 0;
 			core.module.layout.workspace.window_manager.save_all(function() {
 				if (save_cnt === (core.module.layout.workspace.window_manager.window.length - 1)) {
-					$(core).trigger("event_save_all");
+					$(core).trigger('event_save_all');
 					$('#south_tab #gLayoutTab_Search').click();
 				} else {
 					save_cnt++;
@@ -68,16 +67,16 @@ goorm.core.search = {
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_search",
-			id: "dlg_search",
+			// localization_key: 'title_search',
+			id: 'dlg_search',
 			handle_ok: handle_ok,
 			success: function() {
-				$("#search_project_selector").append("<select id='search_project_selectbox' class='form-control'></select>");
-				$("#search_project_selector").append("<label id='search_path_input' class='control-label' style='display:none'>hi</label>");
+				$('#search_project_selector').append('<select id="search_project_selectbox" class="form-control"></select>');
+				$('#search_project_selector').append('<label id="search_path_input" class="control-label" style="display:none">hi</label>');
 
-				$("#search_project_selectbox").change(function() {});
+				$('#search_project_selectbox').change(function() {});
 
-				$("#search_query_inputbox").keydown(function(e) {
+				$('#search_query_inputbox').keydown(function(e) {
 					var ev = e || event;
 
 					if (ev.keyCode == 13) {
@@ -92,9 +91,9 @@ goorm.core.search = {
 
 				// focus find inputbox by native javascript
 				var moveCaretToEnd = function(el) {
-					if (typeof el.selectionStart == "number") {
+					if (typeof el.selectionStart == 'number') {
 						el.selectionStart = el.selectionEnd = el.value.length;
-					} else if (typeof el.createTextRange != "undefined") {
+					} else if (typeof el.createTextRange != 'undefined') {
 						el.focus();
 
 						var range = el.createTextRange();
@@ -103,7 +102,7 @@ goorm.core.search = {
 					}
 				};
 
-				var input_box = document.getElementById("search_query_inputbox");
+				var input_box = document.getElementById('search_query_inputbox');
 				input_box.onfocus = function() {
 					moveCaretToEnd(input_box);
 
@@ -117,32 +116,32 @@ goorm.core.search = {
 
 				// Checkbox event handler
 
-				// $("#search_match_case_checkbox_name").click(function () {
-				// 	if ($("#search_match_case")[0].checked === true) {
-				// 		$("#search_match_case")[0].checked = false;
+				// $('#search_match_case_checkbox_name').click(function () {
+				// 	if ($('#search_match_case')[0].checked === true) {
+				// 		$('#search_match_case')[0].checked = false;
 				// 		self.match_case = false;
 				// 	} else {
-				// 		$("#search_match_case")[0].checked = true;
+				// 		$('#search_match_case')[0].checked = true;
 				// 		self.match_case = true;
 				// 	}
 				// });
 
-				// $("#search_ignore_whitespace_checkbox_name").click(function () {
-				// 	if ($("#search_ignore_whitespace")[0].checked === true) {
-				// 		$("#search_ignore_whitespace")[0].checked = false;
+				// $('#search_ignore_whitespace_checkbox_name').click(function () {
+				// 	if ($('#search_ignore_whitespace')[0].checked === true) {
+				// 		$('#search_ignore_whitespace')[0].checked = false;
 				// 		self.ignore_whitespace = false;
 				// 	} else {
-				// 		$("#search_ignore_whitespace")[0].checked = true;
+				// 		$('#search_ignore_whitespace')[0].checked = true;
 				// 		self.ignore_whitespace = true;
 				// 	}
 				// });
 
 				self.panel.on('shown.bs.modal', function() {
-					$("#find_query_inputbox").focus();
-					$("#find_query_inputbox").select();
+					$('#find_query_inputbox').focus();
+					$('#find_query_inputbox').select();
 					// cut modal fade (dialog size)
 
-					var goorm_dialog_container = $("#dlg_search");
+					var goorm_dialog_container = $('#dlg_search');
 					var container = goorm_dialog_container.find('.modal-dialog');
 
 					var window_width = $(window).width();
@@ -170,27 +169,27 @@ goorm.core.search = {
 							container.css('margin-top', '10px');
 						}
 					}
-					$("#search_query_inputbox").focus();
+					$('#search_query_inputbox').focus();
 				});
-				// $("#search_use_regexp_checkbox_name").click(function () {
-				// 	if ($("#search_use_regexp")[0].checked === true) {
-				// 		$("#search_use_regexp")[0].checked = false;
+				// $('#search_use_regexp_checkbox_name').click(function () {
+				// 	if ($('#search_use_regexp')[0].checked === true) {
+				// 		$('#search_use_regexp')[0].checked = false;
 				// 		self.use_regexp = false;
-				// 		$("#search_match_case")[0].disabled = false;
-				// 		$("#search_ignore_whitespace")[0].disabled = false;
+				// 		$('#search_match_case')[0].disabled = false;
+				// 		$('#search_ignore_whitespace')[0].disabled = false;
 				// 	} else {
-				// 		$("#search_use_regexp")[0].checked = true;
+				// 		$('#search_use_regexp')[0].checked = true;
 				// 		self.use_regexp = true;
-				// 		$("#search_match_case")[0].checked = false;
-				// 		$("#search_match_case")[0].disabled = true;
-				// 		$("#search_ignore_whitespace")[0].checked = false;
-				// 		$("#search_ignore_whitespace")[0].disabled = true;
+				// 		$('#search_match_case')[0].checked = false;
+				// 		$('#search_match_case')[0].disabled = true;
+				// 		$('#search_ignore_whitespace')[0].checked = false;
+				// 		$('#search_ignore_whitespace')[0].disabled = true;
 				// 	}
 				// });
 			}
 		});
 
-		// $(core).on("on_preference_confirmed", function () {
+		// $(core).on('on_preference_confirmed', function () {
 		// 	self.refresh();
 		// });
 
@@ -201,19 +200,19 @@ goorm.core.search = {
 	search: $.throttle(function() {
 		var search_path;
 
-		this.match_case = $("#search_match_case").hasClass("active");
-		this.use_regexp = $("#search_use_regexp").hasClass("active");
-		this.ignore_whitespace = $("#search_ignore_whitespace").hasClass("active");
+		this.match_case = $('#search_match_case').hasClass('active');
+		this.use_regexp = $('#search_use_regexp').hasClass('active');
+		this.ignore_whitespace = $('#search_ignore_whitespace').hasClass('active');
 
-		if ($("#search_path_input").css('display') != 'none') {
-			search_path = $("#search_path_input").text();
+		if ($('#search_path_input').css('display') != 'none') {
+			search_path = $('#search_path_input').text();
 		} else {
-			search_path = $("#search_project_selectbox option:selected").attr("value");
+			search_path = $('#search_project_selectbox option:selected').attr('value');
 		}
 		if (search_path == 'null') { // jeongmin: only 'null' search_path has to be filtered
 			return;
 		}
-		var keyword = $("#search_query_inputbox").val();
+		var keyword = $('#search_query_inputbox').val();
 		if (!keyword) {
 			alert.show(core.module.localization.msg.alert_input_search_keyword);
 			return;
@@ -233,8 +232,9 @@ goorm.core.search = {
 		grep_option.use_regexp = this.use_regexp;
 		grep_option.match_case = this.match_case;
 
-		if (this.ignore_whitespace === true)
+		if (this.ignore_whitespace === true) {
 			text = text.replace(/\s*/g, '');
+		}
 
 		this.query = text;
 
@@ -251,20 +251,22 @@ goorm.core.search = {
 			// 	continue;
 
 			var obj = json[key];
-			if (!obj.filepath) continue;
+			if (!obj.filepath) {
+				continue;
+			}
 			var d = {};
 
 			if (obj.badge) {
-				d.type = "root";
-				d.parent = "#";
-				d.text = key + "<span class=\"badge\">" + obj.badge + "</span>";
+				d.type = 'root';
+				d.parent = '#';
+				d.text = key + '<span class="badge">' + obj.badge + '</span>';
 			} else {
 				var split_key = key.split(':');
-				d.type = "file";
+				d.type = 'file';
 				d.parent = obj.parent;
 				// Set 'filepath:linenumber'
 				// 'line number' is first_line_number + mached_line
-				// d.text = split_key[0] + ":" + (parseInt(split_key[1]) + parseInt(core.preference["preference.editor.first_line_number"]) - 1);
+				// d.text = split_key[0] + ':' + (parseInt(split_key[1]) + parseInt(core.preference['preference.editor.first_line_number']) - 1);
 				d.text = key;
 			}
 			d.id = key;
@@ -299,12 +301,15 @@ goorm.core.search = {
 
 					if (self.query) {
 						var caseFold = true;
+						var text = self.query;
 
-						if (self.use_regexp !== true && self.match_case === true) {
+						if (self.use_regexp) {
+							text = RegExp(text, 'g');
+						} else if (self.match_case === true) {
 							caseFold = false;
 						}
 						self.unmark();
-						for (var cursor = cm.getSearchCursor(self.query, null, caseFold); cursor.findNext();) {
+						for (var cursor = cm.getSearchCursor(text, null, caseFold); cursor.findNext();) {
 							self.marked.push(
 								cm.markText(cursor.from(), cursor.to(), {
 									'className': 'cm-matchhighlight'
@@ -344,11 +349,13 @@ goorm.core.search = {
 				}
 			};
 
-			if (this.treeview) self.treeview.destroy();
+			if (this.treeview) {
+				self.treeview.destroy();
+			}
 			this.treeview = null;
 
-			this.treeview = new goorm.core.utility.treeview("#search_result", {
-				project_path: "search",
+			this.treeview = new goorm.core.utility.treeview('#search_result', {
+				project_path: 'search',
 				root_node: project_root,
 				sort: false,
 				auto_load_root: false,
@@ -371,13 +378,14 @@ goorm.core.search = {
 				window_manager.window[window_manager.active_window].searching = false;
 			}
 
-			$("#search_result").empty();
-			var html = "<div class='node' style='padding: 2px 5px;'>" + core.module.localization.msg.notice_no_matched_fild + "</div>";
-			$("#search_result").append(html);
+			$('#search_result').empty();
+			var html = '<div class="node" style="padding: 2px 5px;">' + core.module.localization.msg.notice_no_matched_fild + '</div>';
+			$('#search_result').append(html);
 		}
 
-		if (window_manager.window[firstActivate])
+		if (window_manager.window[firstActivate]) {
 			window_manager.window[firstActivate].activate();
+		}
 	},
 	
 	
@@ -395,24 +403,25 @@ goorm.core.search = {
 		};
 
 		// jeongmin: all projects
-		if (search_path == '')
+		if (search_path == '') {
 			postdata.project_path = '';
+		}
 
 		var progress_elements = core.module.loading_bar.start({
 			now: 0,
-			unique: "search",
+			unique: 'search',
 			beforeStop: function() {
-				$("#g_s_btn_ok").removeAttr("disabled");
+				$('#g_s_btn_ok').removeAttr('disabled');
 			}
 		});
 		if (!progress_elements) {
 			return false;
 		}
 		this.progress_elements = progress_elements;
-		$("#g_s_btn_ok").attr("disabled", "disabled");
+		$('#g_s_btn_ok').attr('disabled', 'disabled');
 		this.matched_file_list = [];
 
-		core._socket.once("/file/search_on_project", function(res) {
+		core._socket.once('/file/search_on_project', function(res) {
 			core.progressbar.set(80, self.progress_elements.bar);
 
 			if (res.error || res.data.total_match === 0) {
@@ -426,23 +435,25 @@ goorm.core.search = {
 
 				self.set_search_treeview(data);
 
-				if ($("#gLayoutTab_Search .badge").length > 0) //jeongmin: if already there is badge
-					$("#gLayoutTab_Search .badge").html(data.total_match); //then just change number
-				else //if there isn't badge yet
-					$("#gLayoutTab_Search").prepend("<span class='badge pull-right'>" + data.total_match + "</span>"); //then attach badge next to the search tab
-
-				$("#search_clear>.clr-btn").removeAttr('disabled');
-				$("#search_clear>.refresh-btn").removeAttr('disabled');
+				if ($('#gLayoutTab_Search .badge').length > 0) {//jeongmin: if already there is badge
+					$('#gLayoutTab_Search .badge').html(data.total_match); //then just change number
+				} else {//if there isn't badge yet
+					$('#gLayoutTab_Search').prepend('<span class="badge pull-right">' + data.total_match + '</span>'); //then attach badge next to the search tab
+				}
+				$('#search_clear>.clr-btn').removeAttr('disabled');
+				$('#search_clear>.refresh-btn').removeAttr('disabled');
 
 				self.hide();
 			}
 			self.progress_elements.stop();
 		});
-		core._socket.emit("/file/search_on_project", postdata);
+		core._socket.emit('/file/search_on_project', postdata);
 	},
 	
 	unmark: function() {
-		for (var i = 0; i < this.marked.length; ++i) this.marked[i].clear();
+		for (var i = 0; i < this.marked.length; ++i) {
+			this.marked[i].clear();
+		}
 		this.marked.length = 0;
 
 		var windows = core.module.layout.workspace.window_manager.window;
@@ -465,16 +476,16 @@ goorm.core.search = {
 
 	show: function(path) {
 		if (path) {
-			$("#search_project_selectbox").css('display', 'none');
-			$("#search_path_input").css('display', '');
-			$("#search_path_input").text(path);
+			$('#search_project_selectbox').css('display', 'none');
+			$('#search_path_input').css('display', '');
+			$('#search_path_input').text(path);
 		} else {
-			$("#search_project_selectbox").css('display', '');
-			$("#search_path_input").css('display', 'none');
+			$('#search_project_selectbox').css('display', '');
+			$('#search_path_input').css('display', 'none');
 		}
 		this.make_search_project_selectbox();
 
-		$("#search_query_inputbox").val("");
+		$('#search_query_inputbox').val('');
 		// Get current active_window's editor
 		var window_manager = core.module.layout.workspace.window_manager;
 		if (window_manager.window[window_manager.active_window] && window_manager.window[window_manager.active_window].editor !== undefined) {
@@ -484,18 +495,18 @@ goorm.core.search = {
 			if (editor) {
 				editor = window_manager.window[window_manager.active_window].editor.editor;
 
-				if (editor && editor.getSelection() !== "") {
-					$("#search_query_inputbox").val(editor.getSelection());
+				if (editor && editor.getSelection() !== '') {
+					$('#search_query_inputbox').val(editor.getSelection());
 				}
 			}
 		}
 
-		$("#search_match_case").tooltip();
-		$("#search_ignore_whitespace").tooltip();
-		$("#search_use_regexp").tooltip();
+		$('#search_match_case').tooltip();
+		$('#search_ignore_whitespace').tooltip();
+		$('#search_use_regexp').tooltip();
 
 		this.panel.modal('show');
-		$("#search_query_inputbox").focus();
+		$('#search_query_inputbox').focus();
 	},
 
 	hide: function() {
@@ -505,11 +516,11 @@ goorm.core.search = {
 	},
 
 	make_search_project_selectbox: function() {
-		$("#search_project_selectbox").empty();
+		$('#search_project_selectbox').empty();
 
-		$("#search_project_selectbox").append("<option value='null' localization_key='dialog_search_project_select_guide' selected>" + core.module.localization.msg.notice_search_select_project + "</option>");
+		$('#search_project_selectbox').append('<option value="null" localization_key="dialog_search_project_select_guide" selected>' + core.module.localization.msg.notice_search_select_project + '</option>');
 
-		var max_num = $("#search_project_selector").width(); //jeongmin: set max_num as selectbox's width
+		var max_num = $('#search_project_selector').width(); //jeongmin: set max_num as selectbox's width
 
 		if (core.module.layout.project_explorer.project_data) {
 			for (var project_idx = 0; project_idx < core.module.layout.project_explorer.project_data.length; project_idx++) {
@@ -517,17 +528,17 @@ goorm.core.search = {
 
 				// if (temp_name.length > max_num) {
 				// 	temp_name = temp_name.substring(0, max_num - 1);
-				// 	temp_name += " …";
+				// 	temp_name += ' …';
 				// }
 
 				if (core.module.layout.project_explorer.project_data[project_idx].name == core.status.current_project_path) {
-					$("#search_project_selectbox").append("<option value='/" + core.module.layout.project_explorer.project_data[project_idx].name + "' selected>" + temp_name + "</option>");
+					$('#search_project_selectbox').append('<option value="/' + core.module.layout.project_explorer.project_data[project_idx].name + '" selected>' + temp_name + '</option>');
 				} else {
-					$("#search_project_selectbox").append("<option value='/" + core.module.layout.project_explorer.project_data[project_idx].name + "'>" + temp_name + "</option>");
+					$('#search_project_selectbox').append('<option value="/' + core.module.layout.project_explorer.project_data[project_idx].name + '">' + temp_name + '</option>');
 				}
 			}
 
-			$("#search_project_selectbox").append("<option value=''>All Projects</option>");
+			$('#search_project_selectbox').append('<option value="">All Projects</option>');
 		}
 	}
 };

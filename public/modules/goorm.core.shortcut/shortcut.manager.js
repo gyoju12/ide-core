@@ -1704,10 +1704,13 @@ goorm.core.shortcut.manager = {
 						} else {
 							var cursor = editor.getCursor();
 							var token = editor.getTokenAt(cursor);
-							context.dictionary.search(token.string);
-							context.dictionary.show();
-							editor.focus();
-							context.dictionary.select_top();
+							if (token.type !== null && token.type !== 'comment') {
+								context.dictionary.search(token.string);
+								context.dictionary.show();
+							}
+
+							// editor.focus();
+							// context.dictionary.select_top();
 						}
 				}
 

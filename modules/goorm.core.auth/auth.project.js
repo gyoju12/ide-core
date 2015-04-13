@@ -15,13 +15,13 @@ var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var fs = require('fs');
 var async = require('async');
-var nodemailer = require('nodemailer');
+var platform = require('os');
 
 
 
 var g_auth_manager = require('./auth.manager.js');
 var g_secure = require('../goorm.core.secure/secure');
-var platform = require('os');
+var g_log = require('../goorm.core.log/log');
 
 
 

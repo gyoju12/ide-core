@@ -22,8 +22,8 @@ goorm.core.layout.tab = {
 	list: {},
 	buffer: [],
 	manager: null,
-	
-	init: function () {
+
+	init: function() {
 		this.output_manager = goorm.core.layout.tab.output_manager;
 		this.terminal_manager = goorm.core.layout.tab.terminal_manager;
 	},
@@ -86,13 +86,13 @@ goorm.core.layout.tab = {
 
 				var content = (core.module.localization && core.module.localization.msg && options.localization.tab && core.module.localization.msg[options.localization.tab]) ? core.module.localization.msg[options.localization.tab] : options.tab.content;
 
-				var classes = options.tab_content['class'] || "";
+				var classes = options.tab_content['class'] || '';
 				var fade = (options.tab_content.fade === false) ? false : true;
 
-				fade = (fade) ? "fade" : "";
+				fade = (fade) ? 'fade' : '';
 
 				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + options.localization.tab + '">' + content + '</a></li>');
-				tab_content_container.append('<div class="tab-pane '+fade+' ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + options.tab_content.content + '</div>');
+				tab_content_container.append('<div class="tab-pane ' + fade + ' ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + options.tab_content.content + '</div>');
 
 				this.list[tab_id] = {
 					'id': tab_id,
@@ -104,11 +104,11 @@ goorm.core.layout.tab = {
 				this.set_event(options.tab, this.convert_position(position), options.fn);
 
 				if (data.tutorial) {
-					if (core.module.tutorial.tab_steps["" + data.tutorial.step_name]) {
-						core.module.tutorial.tab_steps["" + data.tutorial.step_name].push(data.tutorial);
+					if (core.module.tutorial.tab_steps['' + data.tutorial.step_name]) {
+						core.module.tutorial.tab_steps['' + data.tutorial.step_name].push(data.tutorial);
 					} else {
-						core.module.tutorial.tab_steps["" + data.tutorial.step_name] = [];
-						core.module.tutorial.tab_steps["" + data.tutorial.step_name].push(data.tutorial);
+						core.module.tutorial.tab_steps['' + data.tutorial.step_name] = [];
+						core.module.tutorial.tab_steps['' + data.tutorial.step_name].push(data.tutorial);
 					}
 				}
 
@@ -131,9 +131,8 @@ goorm.core.layout.tab = {
 
 			this.off_event(options.tab, this.convert_position(position));
 
-
 			if (data.tutorial) {
-				var tab_step = core.module.tutorial.tab_steps["" + data.tutorial.step_name];
+				var tab_step = core.module.tutorial.tab_steps['' + data.tutorial.step_name];
 				if (tab_step) {
 					for (var i = 0; i < tab_step.length; i++) {
 						if (tab_step[i].plugin === data.tutorial.plugin) {
@@ -191,7 +190,9 @@ goorm.core.layout.tab = {
 	set_event: function(tab, position, fn) {
 		var sm = core.module.shortcut_manager;
 		var os = sm.getOStype();
-		if (!fn) fn = function() {};
+		if (!fn) {
+			fn = function() {};
+		}
 
 		var action = 'toggle_' + position + '_' + tab.id;
 
@@ -205,17 +206,17 @@ goorm.core.layout.tab = {
 
 		// Make UI (MainMenu - Perpectives & All ShortCut)
 		//
-		var li = '<li class="' + action + '" key="' + key + '"> \
-					<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '"> \
-						' + content + ' \
-						<em class="helptext">' + html_key + '</em> \
-					</a> \
-				 </li>';
+		var li = '<li class="' + action + '" key="' + key + '">' +
+					'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '">' +
+						content +
+						'<em class="helptext">' + html_key + '</em>' +
+					'</a>' +
+				'</li>';
 
-		var span = '<span class="' + action + '" localization_key="' + tab.localization.menu + '"> \
-                        ' + content + ' \
-                        <em class="helptext">' + html_key + '</em> \
-                    </span>';
+		var span = '<span class="' + action + '" localization_key="' + tab.localization.menu + '">' +
+                         content +
+                        '<em class="helptext">' + html_key + '</em>' +
+                    '</span>';
 
 		$('li.goorm_perspectives_menu_end[position="' + position + '"]').before(li);
 		$('span.goorm_perspectives_menu_end[position="' + position + '"]').before(span);
@@ -224,6 +225,7 @@ goorm.core.layout.tab = {
 		//
 		$('.' + action).off('click');
 		$('.' + action).click(function(e) {
+			$('#child_perspectives_menu').hide();
 			fn.call(this, e);
 		});
 	},
@@ -251,11 +253,11 @@ goorm.core.layout.tab = {
 	},
 
 	make_output_tab: function(plugin_name) {
-		var tab_id = 'gLayoutOutput_' + plugin_name,
-			tab_content_id = 'output_tab_' + plugin_name;
+		var tab_id = 'gLayoutOutput_' + plugin_name;
+		var tab_content_id = 'output_tab_' + plugin_name;
 
 		// Make Output Tab
-		//	
+		//
 		this.add('south', {
 			'tab': {
 				'id': tab_id,
@@ -278,8 +280,8 @@ goorm.core.layout.tab = {
 				'plugin': plugin_name,
 				'element_id': 'goorm_inner_layout_bottom',
 				'step': {
-					element: '#goorm_inner_layout_bottom',
-					title: "",
+					element: '#'+tab_id,
+					title: '',
 					content: core.module.localization.msg.tutorial_output_tab,
 					placement: 'top',
 					onShow: function(tour) {
@@ -297,10 +299,10 @@ goorm.core.layout.tab = {
 
 		if ($('#south_tab .active>a[data-toggle=tab]').attr('localization_key') == 'output' || $('#goorm_inner_layout_bottom>.tab-content .active').length <= 0) {
 			core.module.layout.select(tab_id);
-		}		
+		}
 	},
-	
-	make_background_tab: function () {
-		
+
+	make_background_tab: function() {
+
 	}
 };

@@ -88,6 +88,7 @@ goorm.core.window.tab.prototype = {
 
 
 		var cnt = core.status.current_opened_list[this.filename];
+		var title = null;
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
 			var temp = $("#g_window_tab_list").find('.tab_title[filename="' + this.filename + '"]');
 			if (temp) {
@@ -96,17 +97,24 @@ goorm.core.window.tab.prototype = {
 					var path = temp.attr("filepath").split("/")[0];
 					var current_project_path = core.status.current_project_path;
 					if(path != current_project_path) {
-						temp.html(name + " - " + temp.attr("filepath"));
+						title = name + " - " + temp.attr("filepath");
 					} else {
-						temp.html(name);	
+						title = name;
 					}
+					temp.html(title);
+					$(".ui-dialog").find("[path='"+temp.attr("filepath")+name+"']").parent().find('.ui-dialog-title').html(title);
 				} else if (cnt > 1) {
 					temp.each(function(index) {
 						var path = $(this).attr("filepath");
 						var name = $(this).attr("filename");
-						$(this).html(name + " - " + path);
+						title = name + " - " + path;
+						temp.html(title);
+						$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
 					});
 				}
+
+				
+				
 			}
 		}
 
@@ -299,15 +307,19 @@ goorm.core.window.tab.prototype = {
 						var path = temp.attr("filepath").split("/")[0];
 						var current_project_path = core.status.current_project_path;
 						if(path != current_project_path) {
-							temp.html(name + " - " + temp.attr("filepath"));
+							title = name + " - " + temp.attr("filepath");
 						} else {
-							temp.html(name);	
+							title = name;
 						}
+						temp.html(title);
+						$(".ui-dialog").find("[path='"+temp.attr("filepath")+name+"']").parent().find('.ui-dialog-title').html(title);
 					} else if (cnt > 1) {
-						temp.each(function(index2) {
+						temp.each(function(index) {
 							var path = $(this).attr("filepath");
 							var name = $(this).attr("filename");
-							$(this).html(name + " - " + path);
+							title = name + " - " + path;
+							temp.html(title);
+							$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
 						});
 					}
 				}

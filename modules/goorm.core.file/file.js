@@ -215,34 +215,57 @@ module.exports = {
 
 			evt.emit('file_put_contents', data);
 		} else {
-			if (query.options != undefined && query.options.append == true) {
-				fs.appendFile(abs_path, query.data, function(err) {
-					if (err !== null) {
-						data.err_code = 10;
-						data.message = 'Can not save';
-
-						evt.emit('file_put_contents', data);
-					} else {
+			if (query.mode && query.mode.indexOf('secure') > -1) {
+				g_secure.save({
+					'path': abs_path,
+					'user_id': query.user_id,
+					'data': query.data,
+					'append': (query.options && query.options.append === true) ? true : false
+				}, function (save) {
+					if (save.result) {
 						data.err_code = 0;
 						data.message = 'saved';
 
 						evt.emit('file_put_contents', data);
 					}
-				});
-			} else {
-				fs.writeFile(abs_path, query.data, function(err) {
-					if (err !== null) {
+					else {
 						data.err_code = 10;
 						data.message = 'Can not save';
 
 						evt.emit('file_put_contents', data);
-					} else {
-						data.err_code = 0;
-						data.message = 'saved';
-
-						evt.emit('file_put_contents', data);
 					}
 				});
+			}
+			else {
+				if (query.options != undefined && query.options.append == true) {
+					fs.appendFile(abs_path, query.data, function(err) {
+						if (err !== null) {
+							data.err_code = 10;
+							data.message = 'Can not save';
+
+							evt.emit('file_put_contents', data);
+						} else {
+							data.err_code = 0;
+							data.message = 'saved';
+
+							evt.emit('file_put_contents', data);
+						}
+					});
+				} else {
+					fs.writeFile(abs_path, query.data, function(err) {
+						if (err !== null) {
+							data.err_code = 10;
+							data.message = 'Can not save';
+
+							evt.emit('file_put_contents', data);
+						} else {
+							data.err_code = 0;
+							data.message = 'saved';
+
+							evt.emit('file_put_contents', data);
+						}
+					});
+				}
 			}
 		}
 	},
@@ -421,7 +444,6 @@ module.exports = {
 		data.file = [];
 
 		if (file && query.file_import_location_path !== null && query.file_import_location_path !== undefined) {
-
 			if (!(file instanceof Array)) {
 				file = new Array(file);
 			}
@@ -433,14 +455,45 @@ module.exports = {
 			var is_exist_file = false;
 			var is_exist_dir = false;
 
-			// 덮어쓰기일 경우
+			// 덮어쓰기일 경우, 무조건 write
 			if (query.is_overwrite == 'true') {
-				// 중복된 파일만 로드
+				async.map(file, function(item, callback) {
+					var __file = item;
+					var file_path = query.file_import_location_path + '/' + __file.originalname;
+
+					var is = fs.createReadStream(__file.path);
+					var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
+
+					is.pipe(os);
+
+					is.on('end', function() {
+						callback(null, __file);
+					});
+				}, function(err, results) {
+					if (err) {
+						console.log(err);
+					}
+					if (results) {
+						evt.emit('file_do_import', data);
+					}
+				});
+
+			} else { // 덮어쓰기 아닐 경우
+				// 중복되지 않은 파일만 write
 				for (var i = 0; i < file.length; i++) {
 					var __file = file[i];
 					var file_path = query.file_import_location_path + '/' + __file.originalname;
 
 					if (fs.existsSync(global.__workspace + '/' + file_path)) {
+						unload_count++;
+
+						if (load_count + unload_count === file.length) {
+							if (load_count === 0) {
+								data.err_code = 10;
+							}
+							evt.emit('file_do_import', data);
+						}
+					} else {
 						var is = fs.createReadStream(__file.path);
 						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
 
@@ -456,64 +509,8 @@ module.exports = {
 							}
 
 						});
-					} else {
-						unload_count++;
 					}
 				}
-			} else { // 덮어쓰기 아닐 경우
-				// 중복되지 않은 파일전부 로드
-				// 중복있으면 저장하고 err code 전송
-				async.map(file, function(item, callback) {
-					var __file = item;
-					var file_path = query.file_import_location_path + '/' + __file.originalname;
-
-					// 이미 존재하는지 검사
-					if (fs.existsSync(global.__workspace + '/' + file_path)) {
-
-						fs.stat(global.__workspace + file_path, function(fs_err, stats) {
-							if (fs_err) {
-								console.log(fs_err);
-							}
-							// 디렉토리인 경우
-							if (stats.isDirectory()) {
-								is_exist_dir = true;
-								exist_dir.push(__file.originalname);
-							} else { // 디렉토리가 아닌 경우(파일)
-								is_exist_file = true;
-								exist_file.push(__file.originalname);
-							}
-							callback(null, __file);
-						});
-
-					} else { // 중복된 파일이 아닌 경우
-						var is = fs.createReadStream(__file.path);
-						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
-
-						is.pipe(os);
-
-						is.on('end', function() {
-							callback(null, __file);
-						});
-					}
-				}, function(err, results) {
-					if (err) {
-						console.log(err);
-					}
-					if (results) {
-						if (is_exist_dir) {
-							data.err_code = 30;
-							for (var i = 0; i < exist_dir.length; i++) {
-								data.file.push(exist_dir[i]);
-							}
-						} else if (is_exist_file) {
-							data.err_code = 21;
-							for (var i = 0; i < exist_file.length; i++) {
-								data.file.push(exist_file[i]);
-							}
-						}
-						evt.emit('file_do_import', data);
-					}
-				});
 
 			}
 
@@ -1058,7 +1055,7 @@ module.exports = {
 											file_arr[i].path = g_secure.command_filter(file_arr[i].path);
 											file_arr[i].originalname = g_secure.command_filter(file_arr[i].originalname);
 											file_path[i] = g_secure.command_filter(file_path[i].slice(file_path[i].indexOf('/')));
-											fs.rename(file_arr[i].path, full_target_path + file_path[i], function(err) {
+											fs.move(file_arr[i].path, full_target_path + file_path[i], function(err) {
 												if (err) {
 													console.log('ERROR (upload_dir_file mv):', err);
 												}

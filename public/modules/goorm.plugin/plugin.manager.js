@@ -76,7 +76,7 @@ goorm.plugin.manager = {
 				
 
 				//useonly(mode=goorm-oss)
-				$(o).appendTo(plugin_project_container.siblings('li:eq(' + (i + 2) + ')'));
+				$(o).appendTo(plugin_project_container.siblings('li:eq(' + (i + 3) + ')'));
 				
 			});
 

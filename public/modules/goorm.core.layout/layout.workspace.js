@@ -38,15 +38,20 @@ goorm.core.layout.workspace = {
 		//
 		var ws = $(this.context);
 		ws.on('dragenter', function(e) {
-			ws.css('border', '2px solid #007ee5');
-			
+			if (e.target.id == 'workspace') {
+				ws.css('border', '2px solid #007ee5');
+				self.window_manager.tab_resize_window_relocation();
+			}
+
 			e.stopPropagation();
 			e.preventDefault();
 		});
 
 		ws.on('dragover', function(e) {
-			ws.css('border', '2px solid #007ee5');
-			self.window_manager.tab_resize_window_relocation();
+			if (e.target.id === 'workspace') {
+				ws.css('border', '2px solid #007ee5');
+				self.window_manager.tab_resize_window_relocation();
+			}
 
 			e.stopPropagation();
 			e.preventDefault();
@@ -62,7 +67,9 @@ goorm.core.layout.workspace = {
 
 			// Make File Description
 			//
-			goorm.core.file._import.upload_file_drag(files);
+			if (files) {
+				goorm.core.file._import.upload_file_drag(files);	
+			}
 		});
 
 		ws.on('dragleave', $.debounce(function(e) {
@@ -75,6 +82,9 @@ goorm.core.layout.workspace = {
 		}, 100));
 
 		ws.on('dragend', function(e) {
+			ws.css('border', 'none');
+			self.window_manager.tab_resize_window_relocation();
+			
 			e.stopPropagation();
 			e.preventDefault();
 			return false; // added by ryu

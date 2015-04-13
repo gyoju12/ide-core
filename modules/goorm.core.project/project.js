@@ -8,13 +8,14 @@
  * version: 2.0.0
  **/
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var os = require('os');
 var path = require('path');
 var rimraf = require('rimraf');
-var EventEmitter = require("events").EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
+var execFile = require('child_process').execFile;
 
 
 
@@ -23,9 +24,10 @@ var g_auth_project = require('../goorm.core.auth/auth.project');
 
 
 
-
 var check_valid_path = function(str) {
-	if (!str) return false;
+	if (!str) {
+		return false;
+	}
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
@@ -40,44 +42,44 @@ module.exports = {
 		var self = this;
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.project_type && query.project_detailed_type && query.project_author && query.project_name) { //jeongmin: remove collaboration comparison (collaboration is disappered)
 			//useonly(mode=goorm-oss)
 			fs.readdir(global.__workspace + '/', function(err, files) {
 				if (err) {
 					data.err_code = 10;
-					data.message = "Server can not response";
+					data.message = 'Server can not response';
 
-					evt.emit("project_do_new", data);
+					evt.emit('project_do_new', data);
 				} else {
 					var project_dir = query.project_author + '_' + query.project_name;
 
 					if (files.hasObject(project_dir)) {
 						data.err_code = 20;
-						data.message = "Same project name is exist.";
-						fs.readFile(global.__workspace + "/" + project_dir + "/goorm.manifest", 'utf-8', function(err, goorm_manifest_json) {
+						data.message = 'Same project name is exist.';
+						fs.readFile(global.__workspace + '/' + project_dir + '/goorm.manifest', 'utf-8', function(err, goorm_manifest_json) {
 							data.prev_project_type = JSON.parse(goorm_manifest_json).type;
-							evt.emit("project_do_new", data);
+							evt.emit('project_do_new', data);
 						});
 					} else {
 						if (query.project_name.length > 50) {
 							data.err_code = 39;
-							data.message = "Project name is too long";
-							evt.emit("project_do_new", data);
+							data.message = 'Project name is too long';
+							evt.emit('project_do_new', data);
 						} else {
 							fs.mkdir(global.__workspace + '/' + project_dir, '0777', function(err) {
 								if (err) {
 									if (err.code == 'ENAMETOOLONG') {
 										data.err_code = 39;
-										data.message = "Project name is too long";
+										data.message = 'Project name is too long';
 									} else {
 										data.err_code = 30;
-										data.message = "Cannot make directory";
+										data.message = 'Cannot make directory';
 										// console.log('new project mkdir error:', err, data.message);
 									}
 									console.log('new project mkdir error:', err, data.message);
-									evt.emit("project_do_new", data);
+									evt.emit('project_do_new', data);
 								} else {
 									var today = new Date();
 									var today_month = parseInt(today.getMonth(), 10) + 1;
@@ -96,7 +98,9 @@ module.exports = {
 									};
 									if (global.plugins_list && global.plugins_list.length > 0) {
 										var is_default_plg = global.plugins_list.some(function(o) {
-											if (o && o.name === ("goorm.plugin." + query.project_type)) return true;
+											if (o && o.name === ('goorm.plugin.' + query.project_type)) {
+												return true;
+											}
 										});
 										if (!is_default_plg) {
 											file_contents.is_user_plugin = true;
@@ -107,16 +111,16 @@ module.exports = {
 									}, function(err) {
 										if (err) {
 											data.err_code = 40;
-											data.message = "Can not make project file";
+											data.message = 'Can not make project file';
 
-											evt.emit("project_do_new", data);
+											evt.emit('project_do_new', data);
 										} else {
 											data.project_dir = project_dir;
 											data.project_name = query.project_name;
 											data.project_author = query.project_author;
 											data.project_type = query.project_type;
 
-											evt.emit("project_do_new", data);
+											evt.emit('project_do_new', data);
 										}
 									});
 								}
@@ -132,16 +136,16 @@ module.exports = {
 			
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
+			data.message = 'Invalid query';
 
-			evt.emit("project_do_new", data);
+			evt.emit('project_do_new', data);
 		}
 	},
 
 	do_delete: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		var user_list = [];
 		var me = {
@@ -158,20 +162,20 @@ module.exports = {
 			rimraf(global.__workspace + '/' + query.project_path, function(err) {
 				if (err) {
 					data.err_code = 20;
-					data.message = "Can not delete project";
+					data.message = 'Can not delete project';
 				}
 
 				//success
 				if (evt) {
-					evt.emit("project_do_delete", data);
+					evt.emit('project_do_delete', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
+			data.message = 'Invalid query';
 
 			if (evt) {
-				evt.emit("project_do_delete", data);
+				evt.emit('project_do_delete', data);
 			}
 		}
 		
@@ -186,7 +190,7 @@ module.exports = {
 		var data = {};
 		data.err_code = 0;
 		data.type = 'check';
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		var temp_path = __temp_dir + '/' + query.user.id;
 
@@ -196,36 +200,41 @@ module.exports = {
 		var file_type = file.path.split('.').pop();
 
 		var cmd_get_list = {};
-		var cmd_get_manifest = "";
+		var cmd_get_manifest = {
+			cmd : ''
+		};
 
 		switch (file_type) {
-			case "zip":
+			case 'zip':
 				cmd_get_list.cmd = 'unzip';
 				cmd_get_list.opt = ('-Z -1 ' + file.path).split(' ');
 
-				cmd_get_manifest = "unzip -p " + file.path;
+				cmd_get_manifest.cmd = 'unzip';
+				cmd_get_manifest.opt = ['-p', file.path]
 				break;
 
-			case "gz":
+			case 'gz':
 				cmd_get_list.cmd = 'tar';
 				cmd_get_list.opt = ('-ztf ' + file.path).split(' ');
 
-				cmd_get_manifest = "tar -zxf " + file.path + " -O";
+				cmd_get_manifest.cmd = 'tar';
+				cmd_get_manifest.opt = ['-zxf', file.path, '-O'];
 				break;
 
-			case "tar":
+			case 'tar':
 				cmd_get_list.cmd = 'tar';
 				cmd_get_list.opt = ('-tf ' + file.path).split(' ');
 
-				cmd_get_manifest = "tar -xf " + file.path + " -O";
+				cmd_get_manifest.cmd = 'tar';
+				cmd_get_manifest.opt = ['-xf', file.path, '-O'];
 				break;
 		}
-		if (cmd_get_manifest !== "") {
+		if (cmd_get_manifest.cmd !== '') {
 			var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
-			var stdout = "",
-				stderr = '',
-				find = false,
-				contents = null;
+			var stdout = '';
+			var stderr = '';
+			var find = false;
+			var contents = null;
 
 			check_cmd.stdout.on('data', function(data) {
 				var buf = new Buffer(data);
@@ -233,8 +242,6 @@ module.exports = {
 
 				if (!find && stdout.indexOf('goorm.manifest') > -1) {
 					find = true;
-
-
 				}
 			});
 			check_cmd.on('close', function(code) {
@@ -246,7 +253,7 @@ module.exports = {
 				} else {
 					if (find) {
 						var file_list = stdout.split('\n');
-						var manifest_path = "";
+						var manifest_path = '';
 
 						for (var i = 0; i < file_list.length; i++) {
 							if (file_list[i].indexOf('goorm.manifest') != -1) {
@@ -254,12 +261,11 @@ module.exports = {
 								break;
 							}
 						}
+						cmd_get_manifest.opt.push(manifest_path);
 
-						exec(cmd_get_manifest + " " + manifest_path, function(__err, manifest_content) {
+						execFile(cmd_get_manifest.cmd, cmd_get_manifest.opt, function(__err, manifest_content) {
 							if (__err) {
 								console.log(__err);
-
-
 							} else {
 								try {
 									contents = JSON.parse(manifest_content);
@@ -285,19 +291,19 @@ module.exports = {
 	do_import: function(query, file, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 		var save_project_json = {};
 		if (query.project_import_location && file) {
-			var project_abs_path = global.__workspace + "/" + query.project_import_location;
-			project_abs_path = project_abs_path.replace(/\/\//g, "/");
+			var project_abs_path = global.__workspace + '/' + query.project_import_location;
+			project_abs_path = project_abs_path.replace(/\/\//g, '/');
 
 			if (project_abs_path === global.__workspace || project_abs_path.indexOf('..') > -1) {
 				data.err_code = 10;
-				data.message = "Invalid Import Location";
-				evt.emit("project_do_import", data);
+				data.message = 'Invalid Import Location';
+				evt.emit('project_do_import', data);
 				return false;
 			}
-			fs.readFile(project_abs_path + "/goorm.manifest", 'utf-8', function(err, project_json_data) {
+			fs.readFile(project_abs_path + '/goorm.manifest', 'utf-8', function(err, project_json_data) {
 				function _callback(_data) {
 					save_project_json = _data;
 					try { // jeongmin: try catching
@@ -305,7 +311,7 @@ module.exports = {
 
 						project_abs_path = g_secure.command_filter(project_abs_path);
 
-						// var clear_command = "rm -rf  " + project_abs_path + "/* ;";	// hidden by jeongmin: this command is redefined below
+						// var clear_command = 'rm -rf  ' + project_abs_path + '/* ;';	// hidden by jeongmin: this command is redefined below
 
 						var callback = function(error, stdout, stderr) {
 							//temp_file delete
@@ -315,7 +321,7 @@ module.exports = {
 
 							// if (!error) {
 							if (error == 0) { // error == code
-								//mv 
+								//mv
 								fs.readdir(project_abs_path, function(err, stdout) {
 
 									if (!err && stdout && stdout.length !== 0) {
@@ -329,25 +335,26 @@ module.exports = {
 												// }
 
 												// jeongmin: delete mac's additional unzip result directory
-												if (stdout[i] == '__MACOSX')
-													rimraf(project_abs_path + "/__MACOSX", function(err) {});
+												if (stdout[i] == '__MACOSX') {
+													rimraf(project_abs_path + '/__MACOSX', function(err) {});
+												}
 											}
 
-											evt.emit("project_do_import", data);
+											evt.emit('project_do_import', data);
 										};
 
 										// if (ori_project_name === '') {
 										// 	data.message = 'Import Fail';
-										// 	evt.emit("project_do_import", data);
+										// 	evt.emit('project_do_import', data);
 										// 	return false;
 										// }
 
 										// project_abs_path = g_secure.command_filter(project_abs_path);
 										// ori_project_name = g_secure.command_filter(ori_project_name);
-										// ////// ISSUE: Sometimes, mv_command's 'project_abs_path + "/" + ori_project_name + "/* " + project_abs_path' becomes just '/*'. So, system files 'move' to project_path. This is disaster... (jeongmin) //////
-										// var mv_command = "mv " + project_abs_path + "/" + ori_project_name + "/*   " + project_abs_path;
+										// ////// ISSUE: Sometimes, mv_command's 'project_abs_path + '/' + ori_project_name + '/* ' + project_abs_path' becomes just '/*'. So, system files 'move' to project_path. This is disaster... (jeongmin) //////
+										// var mv_command = 'mv ' + project_abs_path + '/' + ori_project_name + '/*   ' + project_abs_path;
 
-										// mv_command = mv_command.replace(/\/\//g, "/");
+										// mv_command = mv_command.replace(/\/\//g, '/');
 										// exec(mv_command, function(err, stdout) {
 										// 	if (err) console.log(err);
 
@@ -358,14 +365,14 @@ module.exports = {
 										
 
 										var revert_manifest = function() {
-											fs.writeFile(project_abs_path + "/goorm.manifest", JSON.stringify(save_project_json), {
+											fs.writeFile(project_abs_path + '/goorm.manifest', JSON.stringify(save_project_json), {
 												mode: 0700,
 												flag: 'w'
 											}, function(err) {});
 										};
 
-										var lostfound = stdout.indexOf("lost+found");
-										var manifest = stdout.indexOf("goorm.manifest");
+										var lostfound = stdout.indexOf('lost+found');
+										var manifest = stdout.indexOf('goorm.manifest');
 
 										if (lostfound !== -1) {
 											stdout.splice(lostfound, 1);
@@ -374,15 +381,18 @@ module.exports = {
 											stdout.splice(manifest, 1);
 										}
 
-
 										if (stdout.length == 1) {
-											fs.exists(project_abs_path + "/" + stdout[0] + "/goorm.manifest", function(exists) {
+											fs.exists(project_abs_path + '/' + stdout[0] + '/goorm.manifest', function(exists) {
 												if (exists) {
-													exec("mv " + project_abs_path + "/" + stdout[0] + "/* " + project_abs_path + "/; rm -rf " + project_abs_path + "/" + stdout[0], function(err) {
+													project_abs_path = g_secure.filepath_filter(g_secure.command_filter(project_abs_path));
+													stdout[0] = g_secure.filepath_filter(g_secure.command_filter(stdout[0]));
+
+													//seongho.cha : because of *, execFile or spawn can't be used. if is there any good idea to not use exec function, edit it plz.
+													exec('mv ' + project_abs_path + '/' + stdout[0] + '/* ' + project_abs_path + '/; rm -rf ' + project_abs_path + '/' + stdout[0], function(err) {
 														if (!err) {
 															revert_manifest();
 														} else {
-															console.log(err);
+															console.log('do_import: err: ' + err);
 														}
 													});
 												} else {
@@ -393,11 +403,11 @@ module.exports = {
 											revert_manifest();
 										}
 										//delete empty folder
-										// rimraf(project_abs_path + "/" + ori_project_name, function(err) {});
+										// rimraf(project_abs_path + '/' + ori_project_name, function(err) {});
 
 										// });
 									} else {
-										evt.emit("project_do_import", data);
+										evt.emit('project_do_import', data);
 									}
 								});
 							} else {
@@ -405,16 +415,16 @@ module.exports = {
 								
 
 								data.err_code = 20;
-								data.message = "Cannot extract zip file";
+								data.message = 'Cannot extract zip file';
 
-								evt.emit("project_do_import", data);
-								fs.writeFile(project_abs_path + "/goorm.manifest", JSON.stringify(save_project_json), {
+								evt.emit('project_do_import', data);
+								fs.writeFile(project_abs_path + '/goorm.manifest', JSON.stringify(save_project_json), {
 									mode: 0700
 								}, function(err) {});
 							}
 						};
 
-						// exec(clear_command + " unzip -o " + file.path + " -d " + global.__workspace + "/" + query.project_import_location, {
+						// exec(clear_command + ' unzip -o ' + file.path + ' -d ' + global.__workspace + '/' + query.project_import_location, {
 						// 	maxBuffer: 400 * 1024
 						// }, function(error, stdout, stderr) {
 						// 	callback(error, stdout, stderr);
@@ -424,13 +434,13 @@ module.exports = {
 						var clear_command = spawn('rm', ['-rf', project_abs_path + '/*']);
 						clear_command.stdout.on('data', function() {}); // for preventing process kill
 						clear_command.on('close', function(code) {
-							var _stdout = '',
-								_stderr = '',
-								zip_process = null;
+							var _stdout = '';
+							var _stderr = '';
+							var zip_process = null;
 
-							if (file.name.split('.').pop() === "zip") {
-								//	console.log(clear_command + " unzip -o " + file.path + " -d " + global.__workspace + "/" + query.project_import_location);
-								// exec(clear_command + " unzip -o " + file.path + " -d " + global.__workspace + "/" + query.project_import_location, {
+							if (file.name.split('.').pop() === 'zip') {
+								//	console.log(clear_command + ' unzip -o ' + file.path + ' -d ' + global.__workspace + '/' + query.project_import_location);
+								// exec(clear_command + ' unzip -o ' + file.path + ' -d ' + global.__workspace + '/' + query.project_import_location, {
 								// 	maxBuffer: 400 * 1024
 								// }, function(err, std_out, std_err) {
 								// 	callback(err, std_out, std_err);
@@ -438,24 +448,24 @@ module.exports = {
 								// hidden by jeongmin: exec is not for processing big buffer. Spawn is more suitable.
 
 								zip_process = spawn('unzip', ['-o', file.path, '-d', project_abs_path]);
-							} else if (file.name.split('.').pop() === "tar") {
-								//	console.log(clear_command + " tar -xvf " + file.path + " -C " + global.__workspace + "/" + query.project_import_location);
-								// exec(clear_command + "tar -xvf " + file.path + " -C " + global.__workspace + "/" + query.project_import_location, {
+							} else if (file.name.split('.').pop() === 'tar') {
+								//	console.log(clear_command + ' tar -xvf ' + file.path + ' -C ' + global.__workspace + '/' + query.project_import_location);
+								// exec(clear_command + 'tar -xvf ' + file.path + ' -C ' + global.__workspace + '/' + query.project_import_location, {
 								// 	maxBuffer: 400 * 1024
 								// }, function(error, std_out, std_err) {
 								// 	callback(err, std_out, std_err);
 								// });
 
-								zip_process = spawn('tar', ['-xvf', file.path, '-C', project_abs_path]);
-							} else if (file.name.split('.').pop() === "gz") {
-								//	console.log(clear_command + " tar -zxvf " + file.path + " -C " + global.__workspace + "/" + query.project_import_location);
-								// exec(clear_command + " tar -zxvf " + file.path + " -C " + global.__workspace + "/" + query.project_import_location, {
+								zip_process = spawn('tar', ['-xvf', file.path, '-C', project_abs_path, '--no-same-owner']);
+							} else if (file.name.split('.').pop() === 'gz') {
+								//	console.log(clear_command + ' tar -zxvf ' + file.path + ' -C ' + global.__workspace + '/' + query.project_import_location);
+								// exec(clear_command + ' tar -zxvf ' + file.path + ' -C ' + global.__workspace + '/' + query.project_import_location, {
 								// 	maxBuffer: 400 * 1024
 								// }, function(error, std_out, std_err) {
 								// 	callback(err, std_out, std_err);
 								// });
 
-								zip_process = spawn('tar', ['-zxvf', file.path, '-C', project_abs_path]);
+								zip_process = spawn('tar', ['-zxvf', file.path, '-C', project_abs_path, '--no-same-owner']);
 							}
 
 							zip_process.stdout.on('data', function(data) {
@@ -471,8 +481,8 @@ module.exports = {
 					} catch (e) {
 						console.log('import project error:', e);
 						// data.err_code = 11;
-						// data.message = "goorm.manifest doesn't exist";
-						// evt.emit("project_do_import", data);
+						// data.message = 'goorm.manifest doesn't exist';
+						// evt.emit('project_do_import', data);
 
 						g_auth_project.valid_manifest(query.project_import_location, { // jeongmin: if author and name are '', make new goorm.manifest
 							author: '',
@@ -492,16 +502,16 @@ module.exports = {
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query ";
+			data.message = 'Invalid query ';
 
-			evt.emit("project_do_import", data);
+			evt.emit('project_do_import', data);
 		}
 	},
 
 	do_export: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.user && query.project_path && query.project_name) {
 
@@ -518,16 +528,16 @@ module.exports = {
 					// query.project_path = g_secure.command_filter(query.project_path);
 				} else {
 					data.err_code = 30;
-					data.message = "Cannot make directory";
+					data.message = 'Cannot make directory';
 					console.log('export project mkdir error:', err, data.message);
-					evt.emit("project_do_export", data);
+					evt.emit('project_do_export', data);
 				}
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalide query";
+			data.message = 'Invalide query';
 
-			evt.emit("project_do_export", data);
+			evt.emit('project_do_export', data);
 		}
 	},
 
@@ -540,7 +550,7 @@ module.exports = {
 
 		var is_empty = true;
 
-		//useonly(mode=goorm-oss)	
+		//useonly(mode=goorm-oss)
 		fs.readdir(global.__workspace + '/', function(err, files) {
 			if (!err) {
 				var evt_get_project = new EventEmitter();
@@ -551,7 +561,7 @@ module.exports = {
 
 						fs.exists(target_dir, function(exists) {
 							if (exists && !fs.statSync(target_dir).isFile()) {
-								fs.readFile(global.__workspace + '/' + files[i] + "/goorm.manifest", 'utf-8', function(err, data) {
+								fs.readFile(global.__workspace + '/' + files[i] + '/goorm.manifest', 'utf-8', function(err, data) {
 									function _callback(_data) {
 										data = _data;
 
@@ -588,12 +598,14 @@ module.exports = {
 						});
 					} else {
 						projects.sort(function(a, b) {
-							if (a.name < b.name) return -1;
+							if (a.name < b.name) {
+								return -1;
+							}
 							return 1;
 						});
 
 						if (evt) {
-							evt.emit("project_get_list", projects);
+							evt.emit('project_get_list', projects);
 						} else if (callback) {
 							callback(projects);
 						}
@@ -604,7 +616,7 @@ module.exports = {
 				console.log('Directory Error : ', err);
 
 				if (evt) {
-					evt.emit("project_get_list", projects);
+					evt.emit('project_get_list', projects);
 				} else if (callback) {
 					callback(projects);
 				}
@@ -622,7 +634,7 @@ module.exports = {
 	set_property: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.project_path) {
 			fs.readFile(global.__workspace + '/' + query.project_path + '/goorm.manifest', {
@@ -639,8 +651,8 @@ module.exports = {
 							console.log('Attempt to change author and name of project in set_property');
 
 							data.err_code = 10;
-							data.message = "Invalid query";
-							evt.emit("set_property", data);
+							data.message = 'Invalid query';
+							evt.emit('set_property', data);
 						} else {
 							var invalid_query = [];
 							// jeongmin: prevent invalid build path
@@ -664,22 +676,22 @@ module.exports = {
 							}
 
 							if (data.err_code === 0) {
-								fs.writeFile(global.__workspace + '/' + query.project_path + "/goorm.manifest", JSON.stringify(new_property), {
+								fs.writeFile(global.__workspace + '/' + query.project_path + '/goorm.manifest', JSON.stringify(new_property), {
 									encoding: 'utf-8',
 									mode: 0700
 								}, function(err) {
 									if (!err) {
 										if (invalid_query.length) {
 											data.err_code = 10;
-											data.message = "Invalid query<br/>" + invalid_query.join(', ');
+											data.message = 'Invalid query<br/>' + invalid_query.join(', ');
 											data.property = new_property; // final saved property(real property)
 										}
 									} else {
 										data.err_code = 20;
-										data.message = "Can not write project file.";
+										data.message = 'Can not write project file.';
 									}
 
-									evt.emit("set_property", data);
+									evt.emit('set_property', data);
 								});
 							}
 						}
@@ -687,8 +699,8 @@ module.exports = {
 						console.log('parsing error in set_property:', e);
 
 						data.err_code = 10;
-						data.message = "Invalid query";
-						evt.emit("set_property", data);
+						data.message = 'Invalid query';
+						evt.emit('set_property', data);
 					}
 				}
 
@@ -703,32 +715,32 @@ module.exports = {
 			});
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("set_property", data);
+			data.message = 'Invalid query';
+			evt.emit('set_property', data);
 		}
 	},
 
 	get_property: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 		if (query.project_path !== null && query.project_path !== undefined) {
-			if (query.project_path === "") {
-				evt.emit("get_property", data);
+			if (query.project_path === '') {
+				evt.emit('get_property', data);
 			} else {
-				fs.readFile(global.__workspace + '/' + query.project_path + "/goorm.manifest", 'utf-8', function(err, file_data) {
+				fs.readFile(global.__workspace + '/' + query.project_path + '/goorm.manifest', 'utf-8', function(err, file_data) {
 					function _callback(_data) {
 						file_data = _data;
 
 						try { // jeongmin: try catching
 							data.contents = JSON.parse(file_data);
 
-							evt.emit("get_property", data);
+							evt.emit('get_property', data);
 						} catch (e) {
 							console.log('getting project property error:', e);
 							// data.err_code = 20;
-							// data.message = "Can not open project.";
-							// evt.emit("get_property", data);
+							// data.message = 'Can not open project.';
+							// evt.emit('get_property', data);
 
 							g_auth_project.valid_manifest(query.project_path, { // jeongmin: if author and name are '', make new goorm.manifest
 								author: '',
@@ -746,15 +758,15 @@ module.exports = {
 						}, _callback);
 
 						// data.err_code = 20;
-						// data.message = "Can not open project.";
-						// evt.emit("get_property", data);
+						// data.message = 'Can not open project.';
+						// evt.emit('get_property', data);
 					}
 				});
 			}
 		} else {
 			data.err_code = 10;
-			data.message = "Invalid query";
-			evt.emit("get_property", data);
+			data.message = 'Invalid query';
+			evt.emit('get_property', data);
 		}
 	},
 
@@ -762,7 +774,7 @@ module.exports = {
 		var self = this;
 		var data = {};
 		data.err_code = 0;
-		data.message = "Process Done";
+		data.message = 'Process Done';
 
 		if (query.project_list) {
 
@@ -770,88 +782,44 @@ module.exports = {
 			var clean_count = 0;
 			var evt_clean = new EventEmitter();
 
-			evt_clean.on("do_delete_for_clean", function() {
+			evt_clean.on('do_delete_for_clean', function() {
 
 				clean_count++;
 				if (clean_count < total_count) {
 					self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
 				} else {
-					evt.emit("project_do_clean", data);
+					evt.emit('project_do_clean', data);
 				}
 			});
 
 			self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
 		} else {
 			data.err_code = 10;
-			data.message = "Invalide query";
+			data.message = 'Invalide query';
 
-			evt.emit("project_do_clean", data);
+			evt.emit('project_do_clean', data);
 		}
 	},
 
 	do_delete_for_clean: function(project_path, evt_clean) {
-		rimraf(global.__workspace + '/' + project_path + "/build", function(err) {
-			evt_clean.emit("do_delete_for_clean");
+		rimraf(global.__workspace + '/' + project_path + '/build', function(err) {
+			evt_clean.emit('do_delete_for_clean');
 		});
 	},
-
-	// move_file: function(data, evt) {
-	// 	var length = data.current_path.length;
-	// 	//var force = data.force ? '-f' : '';
-
-	// 	var callback = function(err, stdout, stderr) {
-	// 		if (err) {
-	// 			console.log(err, stdout, stderr);
-
-	// 			evt.emit('move_file', {
-	// 				flag: false
-	// 			});
-	// 		}
-	// 		if (i == length - 1 || i == length) {
-
-	// 			evt.emit('move_file', {
-	// 				flag: true
-	// 			});
-	// 		}
-	// 	};
-
-	// 	var move = function(current_path, target_path) {
-	// 		exec('mv ' + global.__workspace + current_path + " " + global.__workspace + target_path, callback);
-	// 	}
-
-	// 	//console.log('move_file');
-	// 	for (var i = 0; i < length; i++) {
-	// 		data.current_path[i] = g_secure.command_filter(data.current_path[i]);
-	// 		data.after_path = g_secure.command_filter(data.after_path);
-	// 		var filename = data.current_path[i].split('/').slice(-1)[0];
-	// 		var exist_check_path = path.join(global.__workspace, data.after_path, filename);
-
-
-	// 		//console.log(exist_check_path, data.current_path[i], data.after_path);
-	// 		if (fs.existsSync(exist_check_path)) {
-	// 			exec('rm -rf ' + exist_check_path + ' | ' + 'mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-	// 		} else {
-	// 			exec('mv ' + global.__workspace + data.current_path[i] + ' ' + global.__workspace + data.after_path, callback);
-	// 			//move(data.current_path[i], data.after_path);
-	// 		}
-	// 	}
-	// },
 
 	check_running_project: function(req, evt) {
 		var res = {};
 		var i = 0;
-
-		//"not_running_project";	-> can run user's proc
+		//'not_running_project';	-> can run user's proc
 		res.result = 0;
 
 		//by session id
 		var id = req.id;
 
-
 		id = g_secure.command_filter(id);
 
 		//get user's bash
-		exec("ps -lu " + id + "  | awk '{print $4, $5, $14}' | grep -v PID ", function(err, stdout, stderr) {
+		exec('ps -lu ' + id + "  | awk '{print $4, $5, $14}' | grep -v PID ", function(err, stdout, stderr) {
 			//pid ppid cmd
 			if (err || stderr) {
 				evt.emit('check_running_project', res);
@@ -866,7 +834,9 @@ module.exports = {
 			var etc_procs_ppid = [];
 
 			for (i = 0; i < procs.length; i++) {
-				if (procs[i] === '') continue;
+				if (procs[i] === '') {
+					continue;
+				}
 
 				if (procs[i].split(' ').pop() === 'bash') {
 					bash_procs_pid.push(procs[i].split(' ')[0]);
@@ -878,7 +848,7 @@ module.exports = {
 			for (i = 0; i < bash_procs_pid.length; i++) {
 				for (var k = 0; k < etc_procs_ppid.length; k++) {
 					if (etc_procs_ppid[k] === bash_procs_pid[i]) {
-						//already running user's process 
+						//already running user's process
 						res.result = 1;
 						break;
 					}
@@ -891,27 +861,33 @@ module.exports = {
 	//Check property's file is available --heeje
 	//query: project_path, project_type, class_name, source_path
 	check_valid_property: function(query, evt) {
-		var source_path = g_secure.command_filter(__workspace + query.project_path + "/" + query.source_path);
+		var source_path = g_secure.command_filter(__workspace + query.project_path + '/' + query.source_path);
 		var source_file = g_secure.command_filter(source_path + query.class_name);
-		var makefile = g_secure.command_filter(__workspace + query.project_path + "/make");
+		var makefile = g_secure.command_filter(__workspace + query.project_path + '/make');
 		
 		
 		//useonly(mode=goorm-oss)
 		fs.exists(makefile, function(exist) {
 			if (!exist) {
-				if (query.project_type == "java" || query.project_type == "java_examples") {
-					exec("cp " + global.__path + '/plugins/goorm.plugin.java/template/make ' + __workspace + query.project_path);
-				} else if (query.project_type == "c_examples" || query.project_type == "cpp") {
-					exec("cp " + global.__path + '/plugins/goorm.plugin.cpp/template/cpp/make ' + __workspace + query.project_path);
+				if (query.project_type == 'java' || query.project_type == 'java_examples') {
+					fs.copy(global.__path + '/plugins/goorm.plugin.java/template/make', __workspace + query.project_path, function(err) {
+						if (!err) {
+							fs.chmod(__workspace + query.project_path + '/make', 0770, function() {});
+						}
+					});
+				} else if (query.project_type == 'c_examples' || query.project_type == 'cpp') {
+					fs.copy(global.__path + '/plugins/goorm.plugin.cpp/template/cpp/make', __workspace + query.project_path, function(err) {
+						if (!err) {
+							fs.chmod(__workspace + query.project_path + '/make', 0770, function() {});
+						}
+					});
 				}
-
-				exec('chmod 770 ' + __workspace + query.project_path + '/make');
 			};
 		});
 		
 		//2. directory and main file check
 		switch (query.project_type) {
-			case "c_examples":
+			case 'c_examples':
 				fs.exists(source_path, function(exist) {
 					if (!exist) {
 						evt.emit('check_valid_property', {
@@ -920,7 +896,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file = source_file + ".c";
+						source_file = source_file + '.c';
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {
@@ -939,7 +915,7 @@ module.exports = {
 					}
 				});
 				break;
-			case "cpp":
+			case 'cpp':
 				fs.exists(source_path, function(exist) {
 					if (!exist) {
 						evt.emit('check_valid_property', {
@@ -948,7 +924,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file = (query.detail_type == "cpp") ? source_file + ".cpp" : source_file + ".c";
+						source_file = (query.detail_type == 'cpp') ? source_file + '.cpp' : source_file + '.c';
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {
@@ -968,8 +944,8 @@ module.exports = {
 				});
 				break;
 
-			case "java":
-			case "java_examples":
+			case 'java':
+			case 'java_examples':
 				fs.exists(source_path, function(exist) {
 					if (!exist) {
 						evt.emit('check_valid_property', {
@@ -978,7 +954,7 @@ module.exports = {
 						});
 						return false;
 					} else {
-						source_file += ".java";
+						source_file += '.java';
 
 						fs.exists(source_file, function(exist) {
 							if (!exist) {
@@ -1034,7 +1010,7 @@ module.exports = {
 
 		//depreciated function --cheking latest using timestamp gives false result
 		// exec_option.cwd = global.__workspace + query.project_path;
-		// exec("find . -type f -not -name '.*' -printf '%T@      %p\n' | sort -nr | head -n 1 | awk '{print $2}'", exec_option, function(err, stdout, stderr) {
+		// exec('find . -type f -not -name '.*' -printf '%T@      %p\n' | sort -nr | head -n 1 | awk '{print $2}'', exec_option, function(err, stdout, stderr) {
 		// 	if (err) {
 		// 		evt.emit('check_latest_build', {
 		// 			result: false
@@ -1067,7 +1043,7 @@ module.exports = {
 		// 	});
 
 		// 	// exec_option.cwd = global.__workspace + query.project_path;
-		// 	// exec("find . -type f -not -name '.*' -print0 | xargs -0 -n 1 stat -f '%m %N' | sort -nr | head -n 1 | awk '{print $2}'", exec_option, function(err, stdout, stderr) {
+		// 	// exec('find . -type f -not -name '.*' -print0 | xargs -0 -n 1 stat -f '%m %N' | sort -nr | head -n 1 | awk '{print $2}'', exec_option, function(err, stdout, stderr) {
 		// 	// 	if (err) {
 		// 	// 		evt.emit('check_latest_build', {
 		// 	// 			result: false
@@ -1082,14 +1058,14 @@ module.exports = {
 
 	},
 
-
 	count_project_by_id: function(author_id, evt) {
-
 
 		var __evt = new EventEmitter();
 		__evt.once('project_get_list', function(projects) {
-			if (!projects) projects = [];
-			evt.emit("count_project_by_id", projects.length);
+			if (!projects) {
+				projects = [];
+			}
+			evt.emit('count_project_by_id', projects.length);
 		});
 
 		this.get_list({
@@ -1112,13 +1088,18 @@ module.exports = {
 
 		var __evt = new EventEmitter();
 		__evt.once('project_get_list', function(projects) {
-			if (!projects) projects = [];
+			if (!projects) {
+				projects = [];
+			}
 			if (projects.length < limit) {
-				// check duplicate name 
+				// check duplicate name
 				//
 				var exist_project = projects.some(function(p) {
-					if (p.project_path === project_name) return true;
-					else return false;
+					if (p.project_path === project_name) {
+						return true;
+					} else {
+						return false;
+					}
 				});
 
 				if (exist_project) {
