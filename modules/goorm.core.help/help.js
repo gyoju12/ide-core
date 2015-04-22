@@ -8,6 +8,24 @@
  * version: 2.0.0
  **/
 
+var user_comments_schema = {
+	user_id: String,
+	name: String,
+	email: String,
+	category: String,
+	where: String,
+	date: String,
+	checked: Boolean,
+	msg: String,
+	send_msg: String,
+	title: String,
+	version: String
+};
+
+var db = {
+	'user_comments': mongoose.model('user_comments', new Schema(user_comments_schema))
+};
+
 var http = require('http');
 var fs = require("fs");
 var querystring = require('querystring');
@@ -21,43 +39,25 @@ module.exports = {
 		return_data.message = "Process Done";
 
 		/**
-		 *  SEND TO DASHBOARD
+		 *  PUSH TO DB
 		 */
-		var post_data = querystring.stringify({
-			'id': query.id,
-			'subject': query.title,
+		var snapshot = new db.user_comments({
+			'user_id': query.id,
 			'email': query.email,
-			'version': query.version,
-			'content': query.explanation
+			'category': query.category || "questions",
+			'where': IDE_HOST,
+			'date': new Date(),
+			'checked': false,
+			'title': query.title,
+			'version': build_version,
+			'msg': query.explanation
 		});
 
-		var post_options = {
-			host: DASHBOARD_HOST,
-			port: DASHBOARD_PORT,
-			path: '/user_comments/add',
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Length': post_data.length
+		snapshot.save(function (err) {
+			if (err) {
+				console.log('help.js:send_to_bug_report fail', err);
 			}
-		};
-		var post_req = http.request(post_options, function (res) {
-			res.setEncoding('utf8');
-
-			var data = "";
-
-			res.on('data', function (chunk) {
-				data += chunk;
-			});
-
-			res.on('end', function () {
-			});
 		});
-
-		post_req.on('error', function (e) {});
-
-		post_req.write(post_data);
-		post_req.end();
 
 		/**
 		 *  SEND TO EMAIL

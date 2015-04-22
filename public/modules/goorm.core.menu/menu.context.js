@@ -45,10 +45,6 @@ goorm.core.menu.context.prototype = {
 			}
 
 			if (trigger) {
-				$(core).on('contextmenu_all_hide', function() {
-					self.menu.hide();
-				});
-
 				if (nobind === false) {
 					$(trigger).mousedown(function(e) {
 						if (e.which == 3) {
@@ -63,14 +59,6 @@ goorm.core.menu.context.prototype = {
 						}
 					});
 				}
-
-				$(document).on('click', '[id="' + name + '"] li > a', function() {
-					self.menu.hide();
-				});
-
-				$(document).click(function() {
-					self.menu.hide();
-				});
 
 				// hide context menu on esc key. Jeong-Min Im.
 				$(document).keydown(function(e) {
@@ -103,11 +91,28 @@ goorm.core.menu.context.prototype = {
 				core.module.action.init();
 			}
 
+			$(core).on('contextmenu_all_hide', function() {
+				self.menu.hide();
+			});
+
+			$(document).on('click', '[id="' + name + '"] li > a', function(e) {
+				if (!e.target.getAttribute('children')) {
+					self.menu.hide();
+				}
+			});
+
+			document.addEventListener('mousedown', function(e){
+				var context = $('[id="' + name + '"]');
+				if (!context.is(e.target) && context.has(e.target).length === 0) {
+					self.menu.hide();
+				}
+			}, true); //event capturing method.
 		}
 	},
 
 	show: function(e) {
 		var max_height = 500;
+		var self = this;
 		if (this.menu) {
 			var current_file = $(e.target).parent().attr('path');
 			
@@ -121,13 +126,15 @@ goorm.core.menu.context.prototype = {
 				e.pageY -= height - e.pageY;
 			if (e.pageY < 0)
 				e.pageY = 0;
-			this.menu.css({
-				"position": "absolute",
-				"display": "block",
-				"left": e.pageX,
-				"top": e.pageY,
-				"z-index": 1301, // jeongmin: 1050 isn't enough in SCM dialog
-			});
+			setTimeout(function(){
+				self.menu.css({
+					"position": "absolute",
+					"display": "block",
+					"left": e.pageX,
+					"top": e.pageY,
+					"z-index": 1301, // jeongmin: 1050 isn't enough in SCM dialog
+				});
+			}, 0);
 		}
 	},
 

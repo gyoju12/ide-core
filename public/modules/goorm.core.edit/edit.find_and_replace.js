@@ -434,13 +434,14 @@ goorm.core.edit.find_and_replace = {
 
 		if (direction == "previous") {
 			CodeMirror.commands.findPrev(editor, true, text, caseFold);
-			CodeMirror.commands.showInCenter(editor);
+			
 			
 			if (this.total_count > 0) {
 				this.current_count--;
 				if (this.current_count < 1) {
 					this.current_count = this.total_count;
 				}
+				CodeMirror.commands.showInCenter(editor);
 			}
 			
 			// cursor.findPrevious();
@@ -481,13 +482,14 @@ goorm.core.edit.find_and_replace = {
 			// }
 		} else {
 			CodeMirror.commands.find(editor, null, text, caseFold);
-			CodeMirror.commands.showInCenter(editor);
+			
 			
 			if (this.total_count > 0) {
 				this.current_count++;
 				if (this.current_count > this.total_count) {
 					this.current_count = 1;
 				}
+				CodeMirror.commands.showInCenter(editor);
 			}
 			
 			// if (!cursor.findNext()) {

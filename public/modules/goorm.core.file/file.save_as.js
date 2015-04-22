@@ -136,6 +136,7 @@ goorm.core.file.save_as = {
 		path_arr.pop();
 		// console.log($('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
 		$('#file_save_as_dir_tree').jstree("select_node", $('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
+		$("#file_save_as_target_name").focus();
 	},
 
 	bind: function() {

@@ -280,5 +280,8 @@
 	},
 	"collaboration": {
 		"value": "Collaboration"
+	},
+	"keyword": {
+		"value": "Keyword"
 	}
 }

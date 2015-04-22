@@ -936,14 +936,6 @@ goorm.core.window.panel.prototype = {
 
 	},
 
-	show: function() {
-		this.context_menu.hide();
-	},
-
-	hide: function() {
-		this.context_menu.hide();
-	},
-
 	activate: function() {
 		var window_manager = core.module.layout.workspace.window_manager;
 
@@ -988,14 +980,14 @@ goorm.core.window.panel.prototype = {
 		}
 
 		if (this.tab !== null) this.tab.activate();
-		if (this.context_menu !== null) this.context_menu.hide();
-
-		// hide all context menu in project.explorer
-		//
-		$(core).trigger('contextmenu_all_hide');
 
 		this.activated = true;
 		
+
+		var menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
+		if (menu_shown) {
+			$(core).trigger('contextmenu_all_hide');
+		}
 	},
 
 	init_title: function() {
@@ -1020,7 +1012,6 @@ goorm.core.window.panel.prototype = {
 	},
 
 	set_title: function(title) {
-
 		if (!title) title = this.options.filename;
 		this.panel.dialog("option", "title", title);
 	},

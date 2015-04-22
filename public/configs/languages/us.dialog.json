@@ -589,5 +589,20 @@
 	},
 	"dialog_scm_ignore_guide": {
 		"value": "You can explore and manage the ignore list."
+	},
+	"dialog_auth_profile_image": {
+		"value": "Profile Iamge Modify"
+	},
+	"dialog_auth_profile_image_width": {
+		"value": "Width:"
+	},
+	"dialog_auth_profile_image_height": {
+		"value": "Height:"
+	},
+	"dialog_move_file": {
+		"value": "Move File"
+	},
+	"dialog_auth_find_info_pw": {
+		"value": "Find PW Information"
 	}
 }

@@ -219,7 +219,13 @@ goorm.core.layout = {
 		var menu_shown = false;
 		var menu = null;
 
-
+		$("#goorm_left").find('div').bind("click",function() {
+			menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
+			if (menu_shown) {
+				$(core).trigger('contextmenu_all_hide');
+			}
+		});
+		
 		$('#goorm-mainmenu .dropdown').on('show.bs.dropdown', function() {
 			$(core).trigger('contextmenu_all_hide');
 		});
@@ -384,8 +390,6 @@ goorm.core.layout = {
 		});
 
 		$(core).on('contextmenu_all_hide', function() {
-			// force hide --> remove 'open' class
-
 			$('#goorm-mainmenu li.dropdown.open').removeClass('open');
 		});
 

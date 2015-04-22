@@ -38,6 +38,7 @@ goorm.core.preference = {
 
 	load_default: function() {
 		var self = this;
+
 		// read default preference file
 		// if (core.is_optimization) {
 		var json = this.parse_json();
@@ -461,7 +462,7 @@ goorm.core.preference = {
 			set_dialog_button();
 		};
 
-		this.load();
+		// this.load();
 
 		this.dialog.init({
 			// localization_key: "title_preference",

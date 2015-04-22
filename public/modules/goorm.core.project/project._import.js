@@ -397,10 +397,14 @@ goorm.core.project._import = {
 		this.target_zip_file = null;
 		where.find('.project_import_upload_output').text('');
 
+		where.one('shown.bs.modal', function(e) {
+			where.find('.input_import_project_name').focus();
+		});
+
 		if (where.attr('id') == 'dlg_import_project') {
 			this.panel.modal('show');
-		}
-
+			
+		}		
 	},
 
 	// make project type list from new project wizard dialog. Jeong-Min Im.
@@ -466,7 +470,7 @@ goorm.core.project._import = {
 		}
 
 		// make this project type's detail list
-		select_project_type.change(function() {
+		select_project_type.on('change', function(e) {
 			var project_type = $(this).val();
 
 			$(this).attr('project_type', project_type);
@@ -481,7 +485,6 @@ goorm.core.project._import = {
 					select_project_detail_type.append('<option value="' + detail_type + '" type="' + project_type + '">' + detail_type_name + '</option>');
 				}
 			}
-
 			$(core).trigger('change_done');
 		});
 		select_project_type.change();

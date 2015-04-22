@@ -12,7 +12,7 @@
 						"value": "새 파일"
 					},
 					"file_new_folder": {
-						"value": "폴더"
+						"value": "새 폴더"
 					},
 					"file_new_untitled_text_file": {
 						"value": "텍스트 파일"
@@ -332,7 +332,7 @@
 			"project_build_dialog": {
 				"value": "여러 프로젝트 빌드"
 			},
-			"project_build_project": {
+			"project_build": {
 				"value": "빌드"
 			},
 			"project_build_all": {
@@ -394,7 +394,7 @@
 				"value": "새 메인 창"
 			},
 			"window_new_terminal_window": {
-				"value": "새 터미널 윈도우"
+				"value": "새 터미널 창"
 			},
 			"window_previous_window": {
 				"value": "이전 창"
@@ -684,5 +684,17 @@
 	},
 	"scm_pull": {
 		"value": "풀"
+	},
+	"chat_remove_all": {
+		"value": "모든 대화 내용 삭제"
+	},
+	"chat_remove_selected": {
+		"value": "선택한 대화 내용 삭제"
+	},
+	"chat_cancel_selected": {
+		"value": "선택 취소"
+	},
+	"file_new_context_new_folder": {
+		"value": "폴더"
 	}
 }

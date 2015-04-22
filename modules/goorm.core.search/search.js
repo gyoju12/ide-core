@@ -208,10 +208,11 @@ module.exports = {
 
 		fs.exists(global.__workspace.slice(0, -1) + project_path, function(exists) {
 			if (exists) {
+				var option = {};
 				// jeongmin: exec is changed to spawn, because exec has small buffer.
-				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option), {
-					'uid' : parseInt(uid)
-				});
+				
+				
+				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option), option);
 				var _stdout = '';
 				var _stderr = '';
 				command.stdout.on('data', function(data) {

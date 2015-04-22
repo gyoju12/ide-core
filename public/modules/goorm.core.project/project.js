@@ -18,7 +18,8 @@ goorm.core.project = {
 				},
 				tab_content: {
 					fade: false,
-					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_build_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-sm rebuild_btn" style="float: left; margin-right:5px">Rebuild</button></div><div class="inner_content rst_view terminal_style user-select-available"></div>'
+					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_build_log_btn" style="float: left; margin-right:5px" localization_key="tab_button_clear">/tab_button_clear/</button><button class="btn btn-primary btn-sm rebuild_btn" style="float: left; margin-right:5px" localization_key="tab_title_rebuild">/tab_title_rebuild/</button></div><div class="inner_content rst_view terminal_style user-select-available"></div>',
+					localization_replace: ['tab_button_clear','tab_title_rebuild']
 				}
 			},
 			terminal: {
@@ -39,7 +40,8 @@ goorm.core.project = {
 				},
 				tab_content: {
 					fade: false,
-					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_run_log_btn" style="float: left; margin-right:5px">Clear</button><button class="btn btn-primary btn-sm restart_btn" style="float: left; margin-right:5px">Restart</button></div><div id="run_inner_content" class="inner_content rst_view terminal_style user-select-available"></div>'
+					content: '<div class="clr_view"><button class="btn btn-default btn-sm clear_run_log_btn" style="float: left; margin-right:5px" localization_key="tab_button_clear">/tab_button_clear/</button><button class="btn btn-primary btn-sm restart_btn" style="float: left; margin-right:5px" localization_key="tab_title_restart">/tab_title_restart/</button></div><div id="run_inner_content" class="inner_content rst_view terminal_style user-select-available"></div>',
+					localization_replace: ['tab_button_clear','tab_title_restart']
 				}
 			},
 			terminal: {

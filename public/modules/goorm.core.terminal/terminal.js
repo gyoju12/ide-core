@@ -654,6 +654,8 @@ goorm.core.terminal.prototype = {
 			this.command_ready = true;
 		} else if (prompt && prompt.test(this.stdout)) {
 			this.command_ready = true;
+		} else if (/Error/.test(this.stdout)) {
+			this.command_ready = true;
 		} else if (this.terminal_name != 'debug' && this.stdout) {
 			var output = this.stdout.replace(/\r\n/g, "").replace(/\n/g, "").replace(/\r/g, "");
 

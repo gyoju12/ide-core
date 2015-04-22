@@ -23,6 +23,7 @@ goorm.core.utility.loading_bar = {
 				'</div>', // progress bar template
 	is_hide: false, // is hide called before shown
 	try_to_show: false, // someone tries to show modal
+	status_hide: false,
 
 	// bind loading bar events. Jeong-Min Im.
 	init: function() {
@@ -149,6 +150,7 @@ goorm.core.utility.loading_bar = {
 
 
 
+		this.status_hide = false;
 		// count
 		this.list[fingerprint] = option;
 		this.count++;
@@ -260,6 +262,7 @@ goorm.core.utility.loading_bar = {
 			delete this.list[fingerprint]; // delete it from progress bars list
 			$(wrapper).remove();
 		}
+		if(self.status_hide) core.progressbar.set(0);
 	},
 
 	// show loading bar dialog. Jeong-Min Im.
@@ -284,6 +287,7 @@ goorm.core.utility.loading_bar = {
 
 	// loading bar will be hidden into goorm progress bar on bottom status bar. Jeong-Min Im.
 	hide: function(now) {
+		this.status_hide = true;
 		this.panel.modal('hide');
 		core.progressbar.set(now || 100, '#loading_progress_bar');
 		core.progressbar.set(now || 100); // loading bar hide to progress bar in bottom

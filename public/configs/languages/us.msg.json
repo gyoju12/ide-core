@@ -2,6 +2,9 @@
     "alert_file_name_illegal": {
         "value": "File name is wrong."
     },
+    "alert_img_size_too_big": {
+        "value": "Image is too big."
+    },
     "alert_file_size_too_big": {
         "value": "Oops! This file is too big to open!<br/>We can open files that are smaller than 10MB."
     },
@@ -77,6 +80,9 @@
     "alert_plugin_run_success": {
         "value": "Successfully excuted.<br/>Check terminal on screen."
     },
+    "alert_plugin_run_fail": {
+        "value": "Failed excuted.<br/>Check terminal on screen."
+    },
     "alert_filetype_same_name": {
         "value": "There is same file extension."
     },
@@ -130,6 +136,15 @@
     },
     "confirmation_restore_unsaved_data": {
         "value": "You have unsaved data. Do you want to recover?"
+    },
+    "confirmation_project_close_and_save": {
+        "value": "You cannot open a project more. Do you want to close oldest project?"
+    },
+    "save_and_close": {
+        "value": "All save and close"
+    },
+    "dont_save_and_close": {
+        "value": "No save and close"
     },
     "confirmation_save_message": {
         "value": " has been modified. Save changes?"
@@ -1315,5 +1330,32 @@
     },
     "alert_git_clone_non_empty_repository": {
         "value": "Can't clone in non-empty directory"
+    },
+    "tab_title_build": {
+        "value": "Build"
+    },
+    "tab_title_run": {
+        "value": "Run"
+    },
+    "tab_title_rebuild": {
+        "value": "Rebuild"
+    },
+    "tab_title_restart": {
+        "value": "Restart"
+    },
+    "tab_button_clear": {
+        "value": "Clear"
+    },
+    "tab_button_stop_server": {
+        "value": "Stop Server"
+    },
+    "tab_msg_sever_running": {
+        "value": "Server is running on "
+    },
+    "tab_msg_sever_running2": {
+        "value": ""
+    },
+    "alert_outline_parse_err": {
+        "value": "Can not parse this file. Please check the error."
     }
 }

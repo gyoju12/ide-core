@@ -318,6 +318,7 @@ goorm.core.shortcut.manager = {
 					// break;
 
 				case 109:
+				case 173: //firefox
 				case 189: //this key codes differ Opera and other browsers
 					shortcut_input += "-";
 					break;
@@ -1217,7 +1218,6 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('select_all', this.hotkeys.select_all), this.hotkeys.select_all, this.hotkeys_fn.select_all);
 		}
 		*/
-
 		
 		//Find and Replace (Ctrl+F)
 		if (this.hotkeys.do_find) {

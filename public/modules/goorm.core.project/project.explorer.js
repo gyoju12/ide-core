@@ -277,8 +277,6 @@ goorm.core.project.explorer.prototype = {
 		var self = this;
 
 		$('#project_selectbox').click(function() {
-			$(core).trigger('contextmenu_all_hide');
-
 			// jeongmin: make project list scroll
 			var $dropdown = $('#project_selector .dropdown-menu');
 			$dropdown.css('max-height', $(document).height() - $(this).offset().top - 80);
@@ -412,17 +410,6 @@ goorm.core.project.explorer.prototype = {
 
 		this.context_menu_project = new goorm.core.menu.context();
 		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_explorer"), "", null, null, false);
-
-		$(core).on('contextmenu_all_hide', function() {
-			self.hide_all_context_menu();
-		});
-
-	},
-
-	hide_all_context_menu: function() {
-		this.context_menu_file.hide();
-		this.context_menu_project.hide();
-		this.context_menu_folder.hide();
 	},
 
 	copy: function() {
@@ -1207,7 +1194,6 @@ goorm.core.project.explorer.prototype = {
 
 		var on_mousedown = function(e, node) {
 			e.stopPropagation();
-			$(core).trigger('contextmenu_all_hide');
 
 			core.status.selected_node = e.target;
 			core.status.selected_file = node.li_attr.path;
@@ -1252,7 +1238,6 @@ goorm.core.project.explorer.prototype = {
 
 		var on_click = function(e, node) {
 			e.stopPropagation();
-			$(core).trigger('contextmenu_all_hide');
 
 			core.status.selected_node = e.target;
 			core.status.selected_file = node.li_attr.path;

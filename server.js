@@ -10,8 +10,6 @@
 
 
 
-var build_version = 'oss-1428921603';
-
 // Dependency
 //
 var express = require('express'),
@@ -31,6 +29,8 @@ var express = require('express'),
 
 // External Variables
 //
+build_version = 'oss-1429686738';
+
 port = 9999;
 
 Schema = null;
@@ -500,7 +500,7 @@ goorm.routing = function() {
 	// 	console.log("===step1");
 	// 	routes.plugin.run(req,res);
 	// });
-	goorm.post('/plugin/do_web_run', goorm.check_session, routes.plugin.do_web_run);
+	//goorm.post('/plugin/do_web_run', goorm.check_session, routes.plugin.do_web_run);
 	goorm.get('/plugin/user_clean', goorm.check_session, routes.plugin.user_clean);
 	goorm.get('/plugin/set_property', goorm.check_session, routes.plugin.set_property);
 
@@ -543,7 +543,7 @@ goorm.routing = function() {
 	//for help
 	goorm.get('/help/get_readme_markdown', routes.help.get_readme_markdown);
 	
-	goorm.get('/help/send_to_bug_report', routes.help.send_to_bug_report);
+	goorm.get('/help/send_to_bug_report', goorm.check_session, routes.help.send_to_bug_report);
 
 	//useonly(mode=goorm-oss)	
 	goorm.post('/local_login', function(req, res) {

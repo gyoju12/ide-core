@@ -474,6 +474,10 @@ goorm.core.window.manager = {
 		}
 		// core.module.layout.workspace.window_manager.active_window = index;	// jeongmin: active_window is updated at panel.activate()
 		this.window[index].activate();
+
+		if(this.window[index].type === "Terminal") {
+			this.window[index].panel.click();
+		}
 	},
 
 	maximize_all: function() {
@@ -1209,15 +1213,12 @@ goorm.core.window.manager = {
 						temp.each(function(index2) {
 							var path = $(this).attr("filepath");
 							var name = $(this).attr("filename");
-							console.log(path, name);
+							
 							title = name + " - " + path;
-							temp.html(title);
+							$(this).html(title);
 							$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
 						});
-					}				
-					
-					
-
+					}
 				}
 			}
 		});
@@ -1316,6 +1317,7 @@ goorm.core.window.manager = {
 					this.move((workspace_height - (this.height + 12)), this.left);
 				} else {
 					this.move(0, this.left); //if this make bug, then call to chw
+					self.maximize_all();
 				}
 			}
 			if (workspace_width < (this.left + this.width)) {
@@ -1323,6 +1325,7 @@ goorm.core.window.manager = {
 					this.move(this.top, (workspace_width - (this.width + 12)));
 				} else {
 					this.move(this.top, 0); //if this make bug, then call to chw
+					self.maximize_all();
 				}
 			}
 			// 							}

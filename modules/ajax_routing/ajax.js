@@ -57,7 +57,6 @@ module.exports = {
 					}
 
 					if (channel == 'join') {
-						
 						if (socket.handshake && socket.handshake.sessionID) {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
@@ -72,7 +71,11 @@ module.exports = {
 							socket.to().emit('user_access');
 						}
 
+						
+
 						if (msg_obj.fs_express_id && msg_obj.fs_socket_id) {
+							
+
 							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
 							var fs_access = false;
 
@@ -141,11 +144,14 @@ module.exports = {
 			socket.on('/project/valid', function(msg) {
 				var evt = new EventEmitter();
 				var valid = {};
+				var _user_data = {};
 
 				evt.once('project_over_limit', function(limit) {
 					valid.result = false;
 					valid.err_code = 1;
 					valid.limit = limit;
+
+					
 
 					socket.emit('/project/valid', valid);
 				});
@@ -154,12 +160,16 @@ module.exports = {
 					valid.result = false;
 					valid.err_code = 2;
 
+					
+
 					socket.emit('/project/valid', valid);
 				});
 
 				evt.once('project_duplicate_name', function() {
 					valid.result = false;
 					valid.err_code = 3;
+
+					
 
 					socket.emit('/project/valid', valid);
 				});
@@ -168,17 +178,21 @@ module.exports = {
 					valid.result = true;
 					valid.err_code = 0;
 
+					
+
 					socket.emit('/project/valid', valid);
 				});
 
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
-						user_data = user_data.data;
+						user_data = _user_data = user_data.data;
 
 						msg['author'] = {
 							author_id: user_data.id
 						}
 					}
+
+					
 
 					g_project.valid(msg, evt);
 				});
@@ -186,21 +200,31 @@ module.exports = {
 
 			socket.on('/project/new', function(msg) {
 				var evt = new EventEmitter();
+				var _user_data = {};
 
 				//check user uses scm and if user uses, set scm info to goorm.manifest. Jeong-Min Im.
 				evt.once('project_do_new', function(data) {
+
+					
+
 					// set goorm.manifest's uid as root. Jeong-Min Im.
 					g_auth_project.manifest_setting(data.project_dir, function() {
+
+						
+
 						socket.emit('/project/new', data);
 					});
 				});
+
 				
 
 				
 
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
-						user_data = user_data.data;
+						user_data = _user_data = user_data.data;
+
+						
 
 						msg.project_author = user_data.id;
 						g_project.do_new(msg, evt);
@@ -210,8 +234,12 @@ module.exports = {
 
 			socket.on('/project/delete', function(msg) {
 				var evt = new EventEmitter();
+				var _user_data = {};
 
 				evt.once('project_do_delete', function(data) {
+
+					
+
 					socket.emit('/project/delete', data);
 				});
 
@@ -219,9 +247,11 @@ module.exports = {
 
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
-						user_data = user_data.data;
+						user_data = _user_data = user_data.data;
 
 						msg.id = user_data.id;
+
+						
 
 						
 						//useonly(mode=goorm-oss)
@@ -362,8 +392,14 @@ module.exports = {
 						var project_path = msg.project_path;
 
 						if (project_path) {
+
+							
+
 							g_auth_project.can_read_project(user_data.id, project_path, function(can) {
 								if (can === 404) {
+
+									
+
 									socket.to().emit('/project/available', {
 										'result': false,
 										'err_code': 404
@@ -372,6 +408,8 @@ module.exports = {
 									var mode = user_data.mode;
 									var list = g_plugin.get_mode_list(mode);
 
+									
+
 									g_auth_project.get({
 										'project_path': project_path
 									}, function(project_data) {
@@ -379,6 +417,9 @@ module.exports = {
 										var plugin_name = 'goorm.plugin.' + project_type;
 
 										if (list.indexOf(plugin_name) > -1) {
+
+											
+
 											socket.to().emit('/project/available', {
 												'result': true
 											});
@@ -389,6 +430,8 @@ module.exports = {
 												err_code = 20;
 											}
 
+											
+
 											socket.to().emit('/project/available', {
 												'result': false,
 												'err_code': err_code
@@ -396,6 +439,8 @@ module.exports = {
 										}
 									});
 								} else {
+									
+
 									console.log('can\'t read project');
 									socket.to().emit('/project/available', {
 										'result': false,
@@ -404,6 +449,9 @@ module.exports = {
 								}
 							});
 						} else {
+
+							
+
 							socket.to().emit('/project/available', {
 								'result': true
 							});
@@ -795,8 +843,18 @@ module.exports = {
 
 			socket.on('/file/put_contents', function(msg) {
 				var evt = new EventEmitter();
+				var _user_data = {};
 
 				evt.once('file_put_contents', function(data) {
+
+					g_log.save({
+						'user_id': _user_data.id,
+						'type': 'active',
+						'action': '/file/put_contents | end | in file_put_contents',
+						'date': new Date(),
+						'url': IDE_HOST
+					});
+
 					socket.emit('/file/put_contents', data);
 				});
 

@@ -2,6 +2,9 @@
     "alert_file_name_illegal": {
         "value": "파일명에 잘못된 값이 있습니다."
     },
+    "alert_img_size_too_big": {
+        "value": "이미지가 너무 큽니다."
+    },
     "alert_file_size_too_big": {
         "value": "이런! 파일의 크기가 너무 큽니다!<br/>에디터는 10MB 이하 크기의 파일만 열 수 있습니다."
     },
@@ -55,6 +58,9 @@
     },
     "alert_plugin_run_success": {
         "value": "성공적으로 실행되었습니다.<br/>터미널을 확인하세요."
+    },
+    "alert_plugin_run_fail": {
+        "value": "실행에 실패하였습니다.<br/>터미널을 확인하세요."
     },
     "alert_plugin_check_terminal": {
         "value": "터미널을 확인하세요."
@@ -159,7 +165,7 @@
         "value": " 는 수정되었습니다. 저장 하시겠습니까?"
     },
     "confirmation_language_message": {
-        "value": "Are you sure you want to change the language setting to Korean?"
+        "value": "Do you want to change the language setting to Korean?"
     },
     "confirmation_language_message_yes": {
         "value": "Yes"
@@ -176,7 +182,7 @@
     "confirmation_save_run": {
         "value": "저장 후 실행"
     },
-    "confirmation_not_save": {
+    "confirmation_not_saved": {
         "value": " 파일이 저장되지 않았습니다."
     },
     "confirmation_not_save_msg": {
@@ -274,9 +280,6 @@
     },
     "notice_modified_profile": {
         "value": "프로필 내용이 수정되었습니다."
-    },
-    "alert_value": {
-        "value": "영역 이름은 공백을 포함할 수 없습니다."
     },
     "alert_collaboration_server_notconnected": {
         "value": "서버와의 연결이 끊겼습니다."
@@ -539,6 +542,12 @@
     "alert_same_file_at_created_package": {
         "value": "같은 이름의 파일이 이미 패키지에 존재합니다."
     },
+    "alert_same_file_at_created_class": {
+        "value": "같은 이름의 파일이 이미 존재합니다."
+    },
+    "alert_same_file_at_created_interface": {
+        "value": "같은 이름의 파일이 이미 존재합니다."
+    },
     "alert_check_package": {
         "value": "패키지 폴더가 존재하지 않습니다.<br/>패키지를 먼저 확인하십시오."
     },
@@ -598,6 +607,9 @@
     },
     "confirmation_build_and_debug": {
         "value": "빌드 후 디버그"
+    },
+    "confirmation_not_save": {
+        "value": "최신 코드가 아닙니다."
     },
     "confirmation_run": {
         "value": "실행"
@@ -1166,9 +1178,6 @@
     "loading_bar_export": {
         "value": "내보내기중..."
     },
-    "loading_bar_import": {
-        "value": "가져오기중..."
-    },
     "alert_unknown_error": {
         "value": "알 수 없는 에러가 발생했습니다!"
     },
@@ -1327,5 +1336,32 @@
     },
     "alert_git_clone_non_empty_repository": {
         "value": "비어있지 않은 디렉토리에 클론받을 수 없습니다."
+    },
+    "tab_title_build": {
+        "value": "빌드"
+    },
+    "tab_title_run": {
+        "value": "실행"
+    },
+    "tab_title_rebuild": {
+        "value": "재빌드"
+    },
+    "tab_title_restart": {
+        "value": "재실행"
+    },
+    "tab_button_clear": {
+        "value": "초기화"
+    },
+    "tab_button_stop_server": {
+        "value": "서버 종료"
+    },
+    "tab_msg_sever_running": {
+        "value": "현재 "
+    },
+    "tab_msg_sever_running2": {
+        "value": "로 서버 접속 가능합니다."
+    },
+    "alert_outline_parse_err": {
+        "value": "파일을 분석할 수 없습니다. 에러를 확인해주세요."
     }
 }

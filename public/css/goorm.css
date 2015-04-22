@@ -315,8 +315,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     background: #d7d4f0;
 }
 .cm-searching {
-    background: #ffa;
-    background: rgba(255, 255, 0, .4);
+    background: transparent;
+    border: 1px solid #007ee5;
+    border-radius: 2px;
 }
 /* IE7 hack to prevent it from returning funny offsetTops on the spans */
 
@@ -476,9 +477,8 @@ span.CodeMirror-matchhighlight {
     color: black !important;
 }
 .CodeMirror-ruler {
-    border-color: rgba(160, 140, 0, 0.3) !important;
-    border-left: 1px dotted !important;
     border-width: 0;
+    border-left: 1px dotted rgba(160, 140, 0, 0.3) !important;
 }
 
 /**
@@ -1588,9 +1588,12 @@ Toolbar CSS
     width: 100%;
 }
 .continue_message {
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding: 5px 10px;
     text-align: right;
+}
+.continue_message.selected {
+    background-color: #eeffff;
+    border-radius: 2px;
 }
 .continue_message:last-child {
     border-bottom: none;
@@ -1667,6 +1670,10 @@ Toolbar CSS
     left: auto;
     right: -10px;
     top: 7px;
+}
+
+.talk .triangle-border {
+    padding: 4px 0px;
 }
 /* dlg css start*/
 
@@ -1910,11 +1917,12 @@ Toolbar CSS
     font-size: 10px;
 }
 
-#chat span.chat_msg_time {
+#chat div.chat_msg_time {
     background-color: #ddd !important;
     color: #666;
     font-size: 8px;
     font-weight: normal;
+    margin: 5px 5px 0px 5px;
 }
 
 #chat .user_chat_img {
@@ -2607,6 +2615,7 @@ Plugin CSS: jeongmin
     font-size: 12px;
     height: 100%;
     overflow: hidden;
+    white-space: nowrap;
     padding: 5px !important;
     user-select: auto;
 }
@@ -2624,6 +2633,8 @@ Plugin CSS: jeongmin
     margin-bottom: 0.5px;
     width: 16px;
 }
+
+
 #emoticon_box {
     margin-left: 5px;
     width: 230px;
@@ -2638,10 +2649,23 @@ Plugin CSS: jeongmin
     margin-bottom: -4px;
 }
 
+.chat_button {
+    height: 16px;
+    margin-bottom: 0.5px;
+    width: 16px;
+}
+
+#chat_selection_button_container {
+    margin-left: 3px;
+    display: none;
+}
+
+
 /* ui panes show&close button effect */
 
 .ui-layout-toggler:hover {
-    background: no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .ui-layout-toggler-west:hover {
     border-radius: 0 5px 5px 0;
@@ -3251,7 +3275,9 @@ Plugin CSS: jeongmin
     word-wrap: break-word;
     z-index: 1042;
 }
-#gLayoutTab_Terminal {
+
+/* terminal tab button is black only when it is selected */
+li.active > #gLayoutTab_Terminal {
     background-color: rgb(30, 30, 30);
     border-color: rgb(30, 30, 30);
     color: white;
@@ -3404,4 +3430,58 @@ tr.current_bookmark_row{
 div.modal .path {
     overflow: auto;
     width: 99%;
+}
+
+.talk img {
+    max-height: 250px;
+    max-height: 250px;
+}
+
+.selector_project {
+    height: 80px;
+    padding: 10px;
+    margin: 0px;
+    cursor: pointer;
+}
+.selected_button {
+    color: white;
+    background-color: #007ee5;
+    border: none;
+}
+.selector_project .project_list_img {
+    width: 64px;
+    height: 64px;
+    border: 0px;
+}
+.selector_project h5 {
+    margin-top: 0px;
+}
+
+.chat_image {
+    cursor: pointer;
+}
+
+#disconnected_bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 26px;
+    z-index: 1000;
+    background-color: #d9534f;
+    padding: 4px;
+    color: #FFF;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+#disconnected_bar i.fa-plug {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+div.tooltip {
+    z-index: 10000;
+}
+#chat_all div.tooltip {
+    position: fixed;
 }

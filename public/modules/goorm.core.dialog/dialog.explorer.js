@@ -304,50 +304,15 @@ goorm.core.dialog.explorer.prototype = {
 				self.filename = $(this).attr("filename");
 				self.filetype = $(this).attr("filetype");
 				self.filepath = $(this).attr("filepath");
+
+				if (self.files === '#file_new_files') {
+					$(self.input_file_name).val($(this).attr("filename"));
+				}
 			});
 
 			
 
-			if (self.files == "#file_open_files") {
-				
-			} else if (self.files == "#file_export_files") {
-				
-			} else if (self.files == "#file_move_files") {
-				file_item.click(function () {
-					file_item.removeClass("selected_item");
-					folder_item.removeClass("selected_item");
-					$(this).addClass("selected_item");
-
-					$(self.input_file_name).val($(this).attr("filename"));
-
-					self.filename = $(this).attr("filename");
-					self.filetype = $(this).attr("filetype");
-					self.filepath = $(this).attr("filepath");
-				});
-			}
-			//by sim
-			else if (self.files == "#file_cloud_upload_files") {
-				file_item.click(function () {
-
-					file_item.removeClass("selected_item");
-					folder_item.removeClass("selected_item");
-					$(this).addClass("selected_item");
-
-					input_file_name.val($(this).attr("filename"));
-
-					self.filename = $(this).attr("filename");
-					self.filetype = $(this).attr("filetype");
-					self.filepath = $(this).attr("filepath");
-				});
-			}
-			//by sim
-			else {
-				file_item.click(function () {
-					file_item.removeClass("selected_item");
-					folder_item.removeClass("selected_item");
-					$(this).addClass("selected_item");
-				});
-			}
+			
 		});
 	},
 

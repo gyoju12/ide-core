@@ -421,6 +421,12 @@ goorm.core.prototype = {
 			this.module.tutorial = goorm.core.tutorial;
 		}
 
+		if(core.realtime_lint) {
+			$("#toggle_realtime_lint_checker").show();
+		} else {
+			$("#toggle_realtime_lint_checker").hide();
+		}
+
 		//Cloud
 		// if (goorm.core.cloud) {
 		// 	this.module.cloud = goorm.core.cloud;

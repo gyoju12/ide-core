@@ -12,7 +12,7 @@
 						"value": "New File"
 					},
 					"file_new_folder": {
-						"value": "Folder"
+						"value": "New Folder"
 					},
 					"file_new_untitled_text_file": {
 						"value": "Untitled Text File"
@@ -332,7 +332,7 @@
 			"project_build_dialog": {
 				"value": "Build Projects"
 			},
-			"project_build_project": {
+			"project_build": {
 				"value": "Build"
 			},
 			"project_build_all": {
@@ -684,5 +684,17 @@
 	},
 	"scm_pull": {
 		"value": "Pull"
+	},
+	"chat_remove_all": {
+		"value": "Delete All Log"
+	},
+	"chat_remove_selected": {
+		"value": "Delete Selected Log"
+	},
+	"chat_cancel_selected": {
+		"value": "Cancel Selection"
+	},
+	"file_new_context_new_folder": {
+		"value": "Folder"
 	}
 }

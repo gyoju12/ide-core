@@ -85,11 +85,15 @@ goorm.core.layout.tab = {
 				this.del(position, data);
 
 				var content = (core.module.localization && core.module.localization.msg && options.localization.tab && core.module.localization.msg[options.localization.tab]) ? core.module.localization.msg[options.localization.tab] : options.tab.content;
-
+				var localization_replace = (options.tab_content.localization_replace) ? options.tab_content.localization_replace : [];
 				var classes = options.tab_content['class'] || '';
 				var fade = (options.tab_content.fade === false) ? false : true;
 
 				fade = (fade) ? 'fade' : '';
+				
+				$.each(localization_replace,function(i, v) {
+					options.tab_content.content = options.tab_content.content.replace("/"+v+"/", core.module.localization.msg[v]);
+				});
 
 				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + options.localization.tab + '">' + content + '</a></li>');
 				tab_content_container.append('<div class="tab-pane ' + fade + ' ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + options.tab_content.content + '</div>');
@@ -111,6 +115,8 @@ goorm.core.layout.tab = {
 						core.module.tutorial.tab_steps['' + data.tutorial.step_name].push(data.tutorial);
 					}
 				}
+
+				goorm.core.terminal.dummy();
 
 			}
 		}

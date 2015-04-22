@@ -280,5 +280,8 @@
 	},
 	"collaboration": {
 		"value": "협업"
+	},
+	"keyword": {
+		"value": "검색어"
 	}
 }

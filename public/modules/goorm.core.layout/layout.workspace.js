@@ -52,7 +52,6 @@ goorm.core.layout.workspace = {
 				ws.css('border', '2px solid #007ee5');
 				self.window_manager.tab_resize_window_relocation();
 			}
-
 			e.stopPropagation();
 			e.preventDefault();
 		});
@@ -90,13 +89,18 @@ goorm.core.layout.workspace = {
 			return false; // added by ryu
 		});
 
-		ws.click(function(e) {
+		ws.on('click', function(e) {
 			$('#editor_status').hide();
 			if($("#project_selector").find('.btn-group').hasClass('open')) {
 				$("#project_selector").find('.btn-group').removeClass('open');
 			}
-			$(core).trigger('contextmenu_all_hide');
 			return false;
+		});
+
+		ws.on('mousewheel', function(e) {
+			if (e.metaKey || e.ctrlKey) {
+				e.preventDefault(); //for firefox
+			}
 		});
 	}
 };

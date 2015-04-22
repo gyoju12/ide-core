@@ -36,7 +36,7 @@ goorm.core.search = {
 
 		//clear button roles --heeje
 		$('#search_clear>.clr-btn').click(function() {
-
+			$('#search_keyword_wrapper').css('display', 'none');
 			$('#search_clear .clr-btn').attr('disabled', 'disabled');
 			$('#search_clear .refresh-btn').attr('disabled', 'disabled');
 			$('#search_result').empty();
@@ -47,6 +47,7 @@ goorm.core.search = {
 
 		$('#search_clear>.refresh-btn').click(function() {
 			$(core).one('event_save_all', function(e) {
+				console.log("self.last_option : ", self.last_option);
 				if (self.last_option != null) {
 					self.search(self.last_option);
 				} else {
@@ -466,6 +467,7 @@ goorm.core.search = {
 	refresh: function() {
 		var self = this;
 		var options = this.current_options;
+		console.log("options : ",options);
 		if (options) {
 			self.get_matched_file(options.keyword, {
 				use_regexp: options.use_regexp,

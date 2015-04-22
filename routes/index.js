@@ -8,10 +8,11 @@
  * version: 2.0.0
  **/
 
-var fs = require("fs"),
+var fs = require("fs-extra"),
 	rimraf = require('rimraf'),
 	
 	exec = require('child_process').exec,
+	execFile = require('child_process').execFile,
 	xss = require('xss'),
 	EventEmitter = require("events").EventEmitter;
 
@@ -305,7 +306,7 @@ exports.plugin.get_dialog = function(req, res) {
 
 };
 
-exports.plugin.do_create = function(req, res) {
+exports.plugin.do_create = function(req, res) { //seongho.cha: if not used on 2015/04/16... if you want to use, plz remove exec
 	var uid = null;
 	var gid = null;
 
@@ -389,7 +390,8 @@ exports.plugin.do_new = function(req, res) {
 	g_plugin.do_new(req.query, res);
 };
 
-exports.plugin.do_web_run = function(req, res) {
+/*
+exports.plugin.do_web_run = function(req, res) { //seongho.cha: if not used on 2015/04/16... if you want to use, plz remove exec
 	var uid = null;
 	var gid = null;
 	var copy = function() {
@@ -432,6 +434,7 @@ exports.plugin.do_web_run = function(req, res) {
 	copy();
 	
 }
+*/
 
 exports.plugin.user_clean = function(req, res) {
 	g_plugin.user_clean(req.query, res);
@@ -1039,12 +1042,15 @@ exports.help.send_to_bug_report = function(req, res) {
 		res.json(data);
 	});
 
+	req.query.id = req.__user.id;
+	req.query.email = req.query.email || req.__user.email;
+
 	g_help.send_to_bug_report(req.query, evt);
 }
 
 
 
-exports.project.get_contents = function(req, res) {
+exports.project.get_contents = function(req, res) { //(2015/04/16) if you want to use, plz remove exec
 	var path = req.query.path;
 	var user = req.query.username;
 

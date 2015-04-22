@@ -62,11 +62,14 @@ goorm.core.layout.tab.terminal_manager = {
 
 		tab_manager.tab.id = _id.tab_id;
 		tab_manager.tab_content.id = _id.tab_content_id;
+		tab_manager.localization = {
+			tab: _id.tab_localization
+		}
 
 		return this.create(name, tab_manager, terminal, {
 			'success': options.success,
 			'show': options.show,
-			'hide': options.hide
+			'hide': options.hide,
 		});
 	},
 
@@ -79,6 +82,8 @@ goorm.core.layout.tab.terminal_manager = {
 
 		if (!this.list[name]) {
 			var position = tab_manager.position;
+
+
 
 			core.module.layout.tab_manager.add(position, tab_manager);
 			
@@ -222,7 +227,8 @@ goorm.core.layout.tab.terminal_manager = {
 		var configs = this.configs;
 		return {
 			'tab_id': configs.prev.tab_id + name,
-			'tab_content_id': configs.prev.tab_content_id + name
+			'tab_content_id': configs.prev.tab_content_id + name,
+			'tab_localization': 'tab_title_' + name
 		}
 	},
 

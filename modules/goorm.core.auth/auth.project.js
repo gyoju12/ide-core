@@ -12,6 +12,7 @@ var duration = 60 * 60 * 36; // seconds
 
 var EventEmitter = require("events").EventEmitter;
 var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
 var spawn = require('child_process').spawn;
 var fs = require('fs');
 var async = require('async');
@@ -311,7 +312,7 @@ module.exports = {
 
 	// change bin's group permission. Jeong-Min Im.
 	bin_setting: function(project_path, callback) {
-		exec('find ' + global.__workspace + project_path + '/bin -exec chmod -R 774 {} \\;', function(err) {
+		execFile('chmod', ['-R', '774', global.__workspace + project_path + '/bin'], function(err) {
 			callback();
 		});
 	},

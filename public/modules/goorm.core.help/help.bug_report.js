@@ -14,6 +14,10 @@ goorm.core.help.bug_report = {
 	tabview: null,
 	treeview: null,
 
+	check_form: {
+		regular_expression_email: /^([0-9a-zA-Z._-]+)@([0-9a-zA-Z_-]+)(\.[a-zA-Z0-9]+)(\.[a-zA-Z]+)?$/
+	},
+
 	init: function () {
 		var self = this;
 
@@ -23,30 +27,19 @@ goorm.core.help.bug_report = {
 			if ($("#bug_reports_title").val() === "") {
 				alert.show(core.module.localization.msg.alert_title_empty);
 				return false;
-			} else if ($("#bug_reports_author").val() === "") {
-				alert.show(core.module.localization.msg.alert_author_empty);
-				return false;
 			} else if ($("#bug_reports_email").val() === "") {
 				alert.show(core.module.localization.msg.alert_email_empty);
 				return false;
-			} else if ($("#bug_reports_version").val() === "") {
-				alert.show(core.module.localization.msg.alert_version_empty);
-				return false;
-			} else if ($("#bug_reports_module").val() === "") {
-				alert.show(core.module.localization.msg.alert_module_empty);
-				return false;
-			} else if ($("#bug_reports_content").val() === "") {
-				alert.show(core.module.localization.msg.alert_contents_empty);
+			} else if (!self.check_form.regular_expression_email.test($("#bug_reports_email").val())) {
+				alert.show(core.module.localization.msg.alert_user_unfit_email);
 				return false;
 			}
 
 			var postdata = {
 				title: $("#bug_reports_title").val(),
-				explanation: $("#bug_reports_content").val(),
-				author: $("#bug_reports_author").val(),
 				email: $("#bug_reports_email").val(),
-				version: $("#bug_reports_version").val(),
-				module: $("#bug_reports_module").val()
+				category: $('#bug_reports_category').val(),
+				explanation: $("#bug_reports_content").val().split("<").join("").split(">").join("")
 			};
 
 			$.get("/help/send_to_bug_report", postdata, function (data) {
@@ -73,15 +66,10 @@ goorm.core.help.bug_report = {
 	},
 
 	show: function () {
-		var name = core.user.name;
+		var email = core.user.email;
 
-		$("#bug_reports_author").val(name);
-		$("#bug_reports_author").attr('readonly', 'readonly');
-		$("#bug_reports_author").addClass('readonly');
 		$("#bug_reports_title").val("");
-		$("#bug_reports_email").val("");
-		$("#bug_reports_version").val(core.env.version);
-		$("#bug_reports_module").val("");
+		$("#bug_reports_email").val(email);
 		$("#bug_reports_content").val("");
 
 		this.panel.modal('show');

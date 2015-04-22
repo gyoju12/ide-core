@@ -95,7 +95,7 @@
 		"value": "파일 이동",
 		"children": {
 			"dialog_file_move_file_guide": {
-				"value": "이동할 파일을 선택하세요."
+				"value": "파일을 이동할 위치를 선택하세요."
 			}
 		}
 	},
@@ -589,5 +589,20 @@
 	},
 	"dialog_scm_ignore_guide": {
 		"value": "Ignore 목록을 살펴보고 관리합니다."
+	},
+	"dialog_auth_profile_image": {
+		"value": "프로필 이미지 수정"
+	},
+	"dialog_auth_profile_image_width": {
+		"value": "너비:"
+	},
+	"dialog_auth_profile_image_height": {
+		"value": "높이:"
+	},
+	"dialog_move_file": {
+		"value": "파일 이동"
+	},
+	"dialog_auth_find_info_pw": {
+		"value": "비밀번호 찾기"
 	}
 }

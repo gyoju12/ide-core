@@ -309,6 +309,7 @@ goorm.core.file._import = {
 			}
 
 			notice.show(core.module.localization.msg.notice_file_import_done);
+
 			layout.project_explorer.treeview.open_path(self.upload_file_path); // jeongmin: open uploaded path
 			layout.project_explorer.refresh();
 
@@ -379,10 +380,9 @@ goorm.core.file._import = {
 				for (var i = 0; i < files.length; i++)
 					fd.append('file', files[i]);
 				fd.append('file_import_location_path', current_project);
-
-				this.upload_file_path = current_project + '/'; // jeongmin: for reopening windows
-
-				this.progress_elements = core.module.loading_bar.start({
+				
+				self.upload_file_path = current_project + '/'; // jeongmin: for reopening windows
+				self.progress_elements = core.module.loading_bar.start({
 					str: localization_msg.import_in_progress
 				});
 

@@ -296,6 +296,11 @@ goorm.core.router = {
 			$('#goorm_bottom').find('.disconnect-icon').show();
 			$('#goorm_bottom').find('.connect_state').hide();
 			$('#goorm_bottom').find('.disconnect_state').show();
+			$('#disconnected_bar').show();
+
+			$('#disconnected_bar button.close').one('click', function(e) {
+				$('#disconnected_bar').hide();
+			});
 
 			var interval = generate_interval(reconnect_attempts);
 			
@@ -338,6 +343,7 @@ goorm.core.router = {
 				$('#goorm_bottom').find('.disconnect-icon').hide();
 				$('#goorm_bottom').find('.connect_state').show();
 				$('#goorm_bottom').find('.disconnect_state').hide();
+				$('#disconnected_bar').hide();
 			}
 
 			reconnect_attempts--;
