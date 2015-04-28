@@ -50,7 +50,7 @@ goorm.core.dialog.confirmation.prototype = {
 				}
 			});
 			this.panel.find('.close').click(function() {
-				this.no_bt.click();
+				self.no_bt.click();
 			});
 
 			this.panel.on('show.bs.modal', function() { // jeongmin: event should be binded to only one element, not .modal
@@ -59,7 +59,7 @@ goorm.core.dialog.confirmation.prototype = {
 				var offset_height = ($(window).height() - $(this).find('.modal-dialog').height()) / 2 - 30;
 				var offset_width = ($(window).width() - $(this).find('.modal-dialog').width()) / 2;
 
-				$(this).css('top', offset_height).css('left', offset_width).css('z-index', self.option.zIndex);
+				$(this).css('top', offset_height).css('left', offset_width);
 			}).on('shown.bs.modal', function() {
 				$(this).find('.form-control:first').focus();
 			}).on('hide.bs.modal', function() {
@@ -72,7 +72,7 @@ goorm.core.dialog.confirmation.prototype = {
 				$('.modal.in').focus();
 
 				if (!self.bt_clicked && typeof self.option.no === 'function') {
-					this.no_bt.click();
+					self.no_bt.click();
 				}
 
 				if (typeof self.option.close === 'function') {
@@ -82,7 +82,7 @@ goorm.core.dialog.confirmation.prototype = {
 				self.bt_clicked = false; //jeongmin: reset
 			}).on('keydown', function(e) {
 				if (e.keyCode === 13) {
-					this.yes_bt.click();
+					self.yes_bt.click();
 				}
 			});
 		}

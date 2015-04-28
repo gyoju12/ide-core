@@ -48,6 +48,10 @@ module.exports = {
 				grep.push('-F');
 			}
 
+			if (is_true(options.whole_word)) {
+				grep.push('-w');
+			}
+
 			if (!is_true(options.match_case)) {
 				grep.push('-i');
 			}

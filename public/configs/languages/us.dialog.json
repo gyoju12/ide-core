@@ -604,5 +604,17 @@
 	},
 	"dialog_auth_find_info_pw": {
 		"value": "Find PW Information"
+	},
+	"dialog_search_project": {
+		"value": "Project"
+	},
+	"dialog_search_dir": {
+		"value": "Directory Path"
+	},
+	"dialog_svn_info_title": {
+		"value": "Server Certificate Validation"
+	},
+	"dialog_svn_info_permanent": {
+		"value": "Accept permanently"
 	}
 }

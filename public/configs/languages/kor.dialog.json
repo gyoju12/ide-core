@@ -604,5 +604,17 @@
 	},
 	"dialog_auth_find_info_pw": {
 		"value": "비밀번호 찾기"
+	},
+	"dialog_search_project": {
+		"value": "프로젝트"
+	},
+	"dialog_search_dir": {
+		"value": "디렉토리 경로"
+	},
+	"dialog_svn_info_title": {
+		"value": "서버 인증서 확인"
+	},
+	"dialog_svn_info_permanent": {
+		"value": "앞으로도 신뢰"
 	}
 }

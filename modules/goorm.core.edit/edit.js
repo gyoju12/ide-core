@@ -15,7 +15,6 @@ var execFile = require('child_process').execFile;
 var fs = require('fs-extra');
 var spawn = require('child_process').spawn;
 
-
 var g_secure = require('../goorm.core.secure/secure.js');
 
 var java_libs = {};
@@ -31,7 +30,7 @@ module.exports = {
 	// tag:
 	// 	aaa     src/main.c      /^var inte aaa = ;$/;"  v       line:7
 	//
-	// options: data, type, (html needs filepath) 
+	// options: data, type, (html needs filepath)
 	//
 	tag_parser: function(options, callback) {
 
@@ -51,7 +50,7 @@ module.exports = {
 						name: data[0],
 						'use_detailed': false,
 						filetype: 'c/cpp',
-						type: "variable",
+						type: 'variable',
 						line: line,
 						query: data[2]
 					};
@@ -62,7 +61,7 @@ module.exports = {
 						'use_detailed': false,
 						filetype: 'c/cpp',
 						children: [],
-						type: "struct",
+						type: 'struct',
 						line: line,
 						query: data[2]
 					};
@@ -72,20 +71,20 @@ module.exports = {
 						name: data[0],
 						'use_detailed': false,
 						filetype: 'c/cpp',
-						type: "function",
+						type: 'function',
 						line: line,
 						query: data[2]
 					};
 					break;
 				case 'm':
-					if (data[5] && data[5].indexOf("struct") === 0) {
+					if (data[5] && data[5].indexOf('struct') === 0) {
 						//strcut property
 						var struct_property_obj = {};
-						struct_property_obj.parent = data[5].split(":")[1];
+						struct_property_obj.parent = data[5].split(':')[1];
 						struct_property_obj.name = data[0];
 						struct_property_obj.use_detailed = false;
 						struct_property_obj.filetype = 'c/cpp';
-						struct_property_obj.type = "property";
+						struct_property_obj.type = 'property';
 						struct_property_obj.line = line;
 						struct_property_obj.query = data[2];
 
@@ -109,7 +108,7 @@ module.exports = {
 					response = {
 						name: data[0],
 						'use_detailed': false,
-						type: "variable",
+						type: 'variable',
 						filetype: 'c/cpp',
 						line: line,
 						query: data[2]
@@ -120,7 +119,7 @@ module.exports = {
 						name: data[0],
 						'use_detailed': false,
 						children: [],
-						type: "class",
+						type: 'class',
 						filetype: 'c/cpp',
 						line: line,
 						query: data[2]
@@ -131,7 +130,7 @@ module.exports = {
 						name: data[0],
 						'use_detailed': false,
 						children: [],
-						type: "struct",
+						type: 'struct',
 						query: data[2]
 					};
 					break;
@@ -141,7 +140,7 @@ module.exports = {
 						response = {
 							name: data[0],
 							'use_detailed': false,
-							type: "function",
+							type: 'function',
 							filetype: 'c/cpp',
 							line: line,
 							query: data[2]
@@ -149,10 +148,10 @@ module.exports = {
 					} else {
 						//class method
 						var class_method_obj = {};
-						class_method_obj.parent = data[5].split(":")[1];
+						class_method_obj.parent = data[5].split(':')[1];
 						class_method_obj.name = data[0];
 						class_method_obj.use_detailed = false;
-						class_method_obj.type = "method";
+						class_method_obj.type = 'method';
 						class_method_obj.filetype = 'c/cpp';
 						class_method_obj.line = line
 						class_method_obj.query = data[2];
@@ -161,28 +160,28 @@ module.exports = {
 					}
 					break;
 				case 'm':
-					if (data[5].indexOf("class") === 0) {
+					if (data[5].indexOf('class') === 0) {
 						//class property
 						var class_property_obj = {};
-						class_property_obj.parent = data[5].split(":")[1];
+						class_property_obj.parent = data[5].split(':')[1];
 						class_property_obj.name = data[0];
 						class_property_obj.use_detailed = false;
 						class_property_obj.parent_type = 'class'
-						class_property_obj.type = "property";
+						class_property_obj.type = 'property';
 						class_property_obj.filetype = 'c/cpp';
 						class_property_obj.line = line
 						class_property_obj.query = data[2];
 
 						response = class_property_obj;
 
-					} else if (data[5].indexOf("struct") === 0) {
+					} else if (data[5].indexOf('struct') === 0) {
 						//strcut property
 						var struct_property_obj = {};
-						struct_property_obj.parent = data[5].split(":")[1];
+						struct_property_obj.parent = data[5].split(':')[1];
 						struct_property_obj.name = data[0];
 						struct_property_obj.use_detailed = false;
-						struct_property_obj.parent_type = "struct";
-						struct_property_obj.type = "property";
+						struct_property_obj.parent_type = 'struct';
+						struct_property_obj.type = 'property';
 						struct_property_obj.filetype = 'c/cpp';
 						struct_property_obj.line = line;
 						struct_property_obj.query = data[2];
@@ -215,10 +214,12 @@ module.exports = {
 			response.name = items[0];
 			response.filepath = items[1];
 			items[type_index + 1] && (response.line = parseInt(items[type_index + 1].split('line:')[1]), 10);
-			response.query = "";
+			response.query = '';
 			for (var i = 2; i < type_index; i++) {
 				response.query += items[i];
-				if (i != type_index - 1) response.query += '\t';
+				if (i != type_index - 1) {
+					response.query += '\t';
+				}
 			}
 
 			callback(response);
@@ -242,10 +243,12 @@ module.exports = {
 			response.name = items[0];
 			response.filepath = items[1];
 			items[type_index + 1] && (response.line = parseInt(items[type_index + 1].split('line:')[1]), 10);
-			response.query = "";
+			response.query = '';
 			for (var i = 2; i < type_index; i++) {
 				response.query += items[i];
-				if (i != type_index - 1) response.query += '\t';
+				if (i != type_index - 1) {
+					response.query += '\t';
+				}
 			}
 
 			callback(response);
@@ -261,11 +264,10 @@ module.exports = {
 					[filepath1] : [
 						{item}, {item}, ...
 					]
-				}	
+				}
 			},
 
 			'cpp' : {
-		
 			}
 
 			...
@@ -277,22 +279,24 @@ module.exports = {
 
 		var base_dir = __workspace;
 
-		if (!cb) cb = function() {};
+		if (!cb) {
+			cb = function() {};
+		}
 
 		var __called_data = {};
 		var absolute_workspace_path = base_dir + workspace;
 
 		var create_tags = function(workspace, callback) {
-			var ctags_command = "-R --exclude=*.html --exclude=*.js --fields=+n -f ./.tags";
+			var ctags_command = '-R --exclude=*.html --exclude=*.js --fields=+n -f ./.tags';
 
 			var ctags = spawn('ctags', ctags_command.split(' '), {
 				'cwd': absolute_workspace_path,
 				'env': process.env
 			});
 
-			ctags.stderr.on("data", function(data) {
+			ctags.stderr.on('data', function(data) {
 				var buf = new Buffer(data);
-				console.log("error:" + buf.toString());
+				console.log('error:' + buf.toString());
 			});
 
 			ctags.on('close', function(code) {
@@ -313,8 +317,11 @@ module.exports = {
 				init(workspace);
 
 				var tags = stdout.split('\n').filter(function(o) {
-					if (o.indexOf('!_TAG') >= 0) return false;
-					else return true;
+					if (o.indexOf('!_TAG') >= 0) {
+						return false;
+					} else {
+						return true;
+					}
 				});
 
 				for (var i = 0; i < tags.length; i++) {
@@ -344,9 +351,9 @@ module.exports = {
 				'env': process.env
 			});
 
-			ctags.stderr.on("data", function(data) {
+			ctags.stderr.on('data', function(data) {
 				var buf = new Buffer(data);
-				console.log("error:" + buf.toString());
+				console.log('error:' + buf.toString());
 			});
 
 			ctags.stdout.on('data', function(data) {
@@ -396,8 +403,6 @@ module.exports = {
 				start();
 			}
 		});
-
-
 	},
 
 	// c, cpp, java, python ...
@@ -406,21 +411,21 @@ module.exports = {
 		var self = this;
 		var response = {};
 		var workspace = option.workspace;
-		var path = option.path || "";
+		var path = option.path || '';
 
 		var base_dir = __workspace;
 
 		var absolute_workspace_path = base_dir + workspace;
 		var ctags_command = './.tags_result';
-		var ctags_result = "";
+		var ctags_result = '';
 		var make_response = function() {
 			if (ctags_result) {
 				try { // jeongmin: try catching
-					if (typeof ctags_result === "string") {
+					if (typeof ctags_result === 'string') {
 						ctags_result = JSON.parse(ctags_result);
 					}
 					if (ctags_result && ctags_result[workspace]) {
-						var parsed_data = "";
+						var parsed_data = '';
 						if (path) {
 							parsed_data = ctags_result[workspace][path];
 						} else {
@@ -451,7 +456,7 @@ module.exports = {
 			}
 		};
 
-		// if .tags_result exist, read file 
+		// if .tags_result exist, read file
 		// if not, create tag data and read it.
 		fs.exists(absolute_workspace_path + '/.tags_result', function(exists) {
 			if (!exists) {
@@ -465,9 +470,9 @@ module.exports = {
 					'env': process.env
 				});
 
-				ctags.stderr.on("data", function(data) {
+				ctags.stderr.on('data', function(data) {
 					var buf = new Buffer(data);
-					console.log("error:" + buf.toString());
+					console.log('error:' + buf.toString());
 				});
 
 				ctags.stdout.on('data', function(data) {
@@ -486,11 +491,13 @@ module.exports = {
 
 	proposal_import: function(query) {
 		//query form : "java.i" "java." "java"
-		if (query === "" || query === null || query === undefined) return [];
-		last_point_index = query.split(".").pop().length;
-		last_query = query.split(".").pop();
+		if (query === '' || query === null || query === undefined) {
+			return [];
+		}
+		last_point_index = query.split('.').pop().length;
+		last_query = query.split('.').pop();
 		prefix_query = query.substring(0, query.length - last_point_index - 1);
-		prefix_query_origin = prefix_query + "";
+		prefix_query_origin = prefix_query + '';
 
 		prefix_query = prefix_query.replace(/\./g, "']['");
 		prefix_query = "['" + prefix_query + "']";
@@ -499,7 +506,9 @@ module.exports = {
 		list = eval('java_libs');
 		for (var i = 0; i < prefix_query_origin.split('.').length; i++) {
 			list = list[prefix_query_origin.split('.')[i]];
-			if (!list) return [];
+			if (!list) {
+				return [];
+			}
 		}
 
 		var res = [];
@@ -508,18 +517,20 @@ module.exports = {
 			var res_entry = {};
 			if (o.import_code !== undefined && o.import_code.indexOf(query) === 0) {
 				var target = o.import_code;
-				if (target.indexOf('$') != -1) continue;
+				if (target.indexOf('$') != -1) {
+					continue;
+				}
 
 				if (o.type.toString() == 'class') {
 					//ex)java.awt.Queue
 					res_entry.keyword = target;
 					res_entry.type = 'class';
-					res_entry.description = target + "   description";
+					res_entry.description = target + '   description';
 				} else {
 					//ex)java.io.*
-					res_entry.keyword = target + ".*";
+					res_entry.keyword = target + '.*';
 					res_entry.type = 'package';
-					res_entry.description = target + "   description";
+					res_entry.description = target + '   description';
 				}
 				res.push(res_entry);
 			}
@@ -530,7 +541,7 @@ module.exports = {
 	},
 
 	get_proposal_java: function(query, evt) {
-		evt.emit("got_proposal_java", {});
+		evt.emit('got_proposal_java', {});
 	},
 	/*
 	get_auto_import_java: function(query, evt) {
@@ -574,7 +585,7 @@ module.exports = {
 					}
 
 				}
-				//get range where import statement will be 
+				//get range where import statement will be
 
 				res_packet.last_package_def_sentence = last_package_def_sentence;
 				res_packet.first_class_def_sentence = first_class_def_sentence;
@@ -622,12 +633,16 @@ module.exports = {
 var get_ready_for_java = function(package_root_name, callback) {
 	var each_lib_root = package_root_name;
 	//java lib object read
-	if (JSON.stringify(java_libs) == "{}") {
+	if (JSON.stringify(java_libs) == '{}') {
 		fs.readFile('./plugins/goorm.plugin.java/java_basic_libs.json', 'utf-8', function(err, data) {
-			if (err) return;
+			if (err) {
+				return;
+			}
 			try { // jeongmin: try catching
 				java_libs = JSON.parse(data);
-				if (JSON.stringify(java_libs) == "{}") console.log('no java_basic');
+				if (JSON.stringify(java_libs) == '{}') {
+					console.log('no java_basic');
+				}
 			} catch (e) {
 				console.log('getting library ready for java error:', e);
 			}
@@ -635,10 +650,12 @@ var get_ready_for_java = function(package_root_name, callback) {
 	}
 
 	//class path save
-	if (JSON.stringify(java_basic_class_arr) == "[]") {
+	if (JSON.stringify(java_basic_class_arr) == '[]') {
 
 		fs.readFile('./plugins/goorm.plugin.java/java_basic_class_arr.json', 'utf-8', function(err, data) {
-			if (err) return;
+			if (err) {
+				return;
+			}
 			try { // jeongmin: try catching
 				java_basic_class_arr = JSON.parse(data);
 			} catch (e) {

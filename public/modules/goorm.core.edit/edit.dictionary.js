@@ -550,11 +550,10 @@ goorm.core.edit.dictionary.prototype = {
 		var self = this;
 		self.result = [];
 
-		var special_characters = ['!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|', '\\'];
-
+		var special_characters = ['\\','!', '@', "#", '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '`', '~', '{', '}', ':', ';', '"', "'", '<', '>', '/', '?', '|'];
 
 		$(special_characters).each(function (i) {
-			keyword.split(this).join("\\" + this);
+			keyword = keyword.split(this).join("\\" + this);
 		});
 // 		if (special_characters.indexOf(keyword) > -1) {
 // 			keyword = '\\' + keyword;

@@ -15,7 +15,7 @@ goorm.core.search = {
 	last_query: null,
 	marked: [],
 	match_case: false,
-	ignore_whitespace: false,
+	whole_word: false,
 	use_regexp: false,
 	replace_cursor: null,
 	matched_file_list: [],
@@ -47,7 +47,6 @@ goorm.core.search = {
 
 		$('#search_clear>.refresh-btn').click(function() {
 			$(core).one('event_save_all', function(e) {
-				console.log("self.last_option : ", self.last_option);
 				if (self.last_option != null) {
 					self.search(self.last_option);
 				} else {
@@ -72,10 +71,18 @@ goorm.core.search = {
 			id: 'dlg_search',
 			handle_ok: handle_ok,
 			success: function() {
-				$('#search_project_selector').append('<select id="search_project_selectbox" class="form-control"></select>');
-				$('#search_project_selector').append('<label id="search_path_input" class="control-label" style="display:none">hi</label>');
+				$('#search_project_selectbox').change(function(e) {
+					var selected_option = e.target.selectedOptions[0].value;
+					var $input = $('#search_path_input');
 
-				$('#search_project_selectbox').change(function() {});
+					if (selected_option === '/' || selected_option === 'null') {
+						$input.val('/');
+						$input.prop('disabled', true);
+					} else {
+						$input.prop('disabled', false);
+						$input.focus().select();	
+					}
+				});
 
 				$('#search_query_inputbox').keydown(function(e) {
 					var ev = e || event;
@@ -87,33 +94,67 @@ goorm.core.search = {
 						e.preventDefault();
 						return false;
 					}
-
 				});
 
 				// focus find inputbox by native javascript
-				var moveCaretToEnd = function(el) {
-					if (typeof el.selectionStart == 'number') {
-						el.selectionStart = el.selectionEnd = el.value.length;
-					} else if (typeof el.createTextRange != 'undefined') {
-						el.focus();
+				// var moveCaretToEnd = function(el) {
+				// 	if (typeof el.selectionStart == 'number') {
+				// 		el.selectionStart = el.selectionEnd = el.value.length;
+				// 	} else if (typeof el.createTextRange != 'undefined') {
+				// 		el.focus();
 
-						var range = el.createTextRange();
-						range.collapse(false);
-						range.select();
+				// 		var range = el.createTextRange();
+				// 		range.collapse(false);
+				// 		range.select();
+				// 	}
+				// };
+				$('#search_use_regexp').click(function() {
+					if (!$('#search_whole_word').hasClass('disabled')) {
+						$('#search_whole_word').addClass('disabled');
+						$('#search_match_case').addClass('disabled');
+					} else {
+						$('#search_whole_word').removeClass('disabled');
+						$('#search_match_case').removeClass('disabled');
 					}
-				};
+					if (!$('#search_use_regexp').hasClass('active')) {
+						$("#search_query_inputbox").trigger("change");
+					} else {
+						$("#search_query_inputbox_background").val('');
+					}
+				})
 
-				var input_box = document.getElementById('search_query_inputbox');
-				input_box.onfocus = function() {
-					moveCaretToEnd(input_box);
+				var inputbox = $('#search_query_inputbox'); //document.getElementById('search_query_inputbox');
+				var inputbox_background = $("#search_query_inputbox_background");
+				var make_shadow = function () {
+					if ($('#search_use_regexp').hasClass('active')) {
+						var value = inputbox.val();
+						var scroll = inputbox.scrollLeft();
+						if (value.length > 0) {
+							if (scroll > 0) {
+								inputbox_background.css('padding-left', '8px');
+							} else {
+								inputbox_background.css('padding-left', '4px');
+								value = "/" + value;
+							}
+							value = value + "/";
+						}
+						inputbox_background.val(value);
+						inputbox_background.scrollLeft(scroll);
+					}
+				}
+				inputbox.bind('keydown keyup keypress change select', function(e){
+					setTimeout(make_shadow, 10);
+				});
+				// inputbox.on('focus', function() {
+				// 	moveCaretToEnd(inputbox);
 
-					// Work around Chrome's little problem
-					// window.setTimeout(function() {
-					var temp = $.debounce(function() {
-						moveCaretToEnd(input_box);
-					}, 5);
-					temp();
-				};
+				// 	// Work around Chrome's little problem
+				// 	// window.setTimeout(function() {
+				// 	var temp = $.debounce(function() {
+				// 		moveCaretToEnd(inputbox);
+				// 	}, 5);
+				// 	temp();
+				// });
 
 				// Checkbox event handler
 
@@ -203,14 +244,9 @@ goorm.core.search = {
 
 		this.match_case = $('#search_match_case').hasClass('active');
 		this.use_regexp = $('#search_use_regexp').hasClass('active');
-		this.ignore_whitespace = $('#search_ignore_whitespace').hasClass('active');
+		this.whole_word = $('#search_whole_word').hasClass('active');
 
-		if ($('#search_path_input').css('display') != 'none') {
-			search_path = $('#search_path_input').text();
-		} else {
-			search_path = $('#search_project_selectbox option:selected').attr('value');
-		}
-		if (search_path == 'null') { // jeongmin: only 'null' search_path has to be filtered
+		if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
 			return;
 		}
 		var keyword = $('#search_query_inputbox').val();
@@ -218,13 +254,13 @@ goorm.core.search = {
 			alert.show(core.module.localization.msg.alert_input_search_keyword);
 			return;
 		}
-
+		search_path = $('#search_project_selectbox option:selected').val() + $('#search_path_input').val();
 		this.current_options = {
 			keyword: keyword,
 			search_path: search_path,
 			match_case: this.match_case,
 			use_regexp: this.regexp,
-			ignore_whitespace: this.ignore_whitespace
+			whole_word: this.whole_word
 		};
 
 		var grep_option = {};
@@ -232,10 +268,7 @@ goorm.core.search = {
 
 		grep_option.use_regexp = this.use_regexp;
 		grep_option.match_case = this.match_case;
-
-		if (this.ignore_whitespace === true) {
-			text = text.replace(/\s*/g, '');
-		}
+		grep_option.whole_word = this.whole_word;
 
 		this.query = text;
 
@@ -467,7 +500,6 @@ goorm.core.search = {
 	refresh: function() {
 		var self = this;
 		var options = this.current_options;
-		console.log("options : ",options);
 		if (options) {
 			self.get_matched_file(options.keyword, {
 				use_regexp: options.use_regexp,
@@ -478,16 +510,15 @@ goorm.core.search = {
 
 	show: function(path) {
 		if (path) {
-			$('#search_project_selectbox').css('display', 'none');
-			$('#search_path_input').css('display', '');
-			$('#search_path_input').text(path);
+			var dir_path = path.split('/');
+			dir_path.splice(1,1);
+			$('#search_path_input').val(dir_path.join('/'));
 		} else {
-			$('#search_project_selectbox').css('display', '');
-			$('#search_path_input').css('display', 'none');
+			$('#search_path_input').val('/');
 		}
 		this.make_search_project_selectbox();
 
-		$('#search_query_inputbox').val('');
+		// $('#search_query_inputbox').val('');
 		// Get current active_window's editor
 		var window_manager = core.module.layout.workspace.window_manager;
 		if (window_manager.window[window_manager.active_window] && window_manager.window[window_manager.active_window].editor !== undefined) {
@@ -504,11 +535,12 @@ goorm.core.search = {
 		}
 
 		$('#search_match_case').tooltip();
-		$('#search_ignore_whitespace').tooltip();
+		$('#search_whole_word').tooltip();
 		$('#search_use_regexp').tooltip();
 
 		this.panel.modal('show');
 		$('#search_query_inputbox').focus();
+		$('#search_query_inputbox').select();
 	},
 
 	hide: function() {
@@ -540,7 +572,7 @@ goorm.core.search = {
 				}
 			}
 
-			$('#search_project_selectbox').append('<option value="">All Projects</option>');
+			$('#search_project_selectbox').append('<option value="/">All Projects</option>');
 		}
 	}
 };

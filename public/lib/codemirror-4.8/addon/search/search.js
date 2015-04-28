@@ -133,7 +133,7 @@
           var advance = function() {
             var start = cursor.from(), match;
             if (!(match = cursor.findNext())) {
-              cursor = getSearchCursor(cm, query);ㄱ
+              cursor = getSearchCursor(cm, query);
               if (!(match = cursor.findNext()) ||
                   (start && cursor.from().line == start.line && cursor.from().ch == start.ch)) return;
             }

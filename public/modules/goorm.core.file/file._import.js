@@ -243,8 +243,6 @@ goorm.core.file._import = {
 					yes_text: core.module.localization.msg.yes,
 					no_text: core.module.localization.msg.no,
 					title: "Confirmation",
-					zIndex: 1001,
-
 					yes: function() {
 						self.upload_file_name = dup_list; // jeongmin: for reopening windows
 						$('#myForm').attr('action', 'file/import?is_overwrite=true');
@@ -324,8 +322,6 @@ goorm.core.file._import = {
 						yes_text: core.module.localization.msg.yes,
 						no_text: core.module.localization.msg.no,
 						title: "Confirmation",
-						zIndex: 1001,
-
 						yes: function() {
 							self.upload_file_name = data.file; // jeongmin: for reopening windows
 

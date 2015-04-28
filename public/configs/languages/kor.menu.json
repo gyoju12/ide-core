@@ -563,7 +563,7 @@
 		"value": "이동"
 	},
 	"find_in_folder_context": {
-		"value": "폴더에서 찾기"
+		"value": "현재 디렉토리에서 찾기"
 	},
 	"delete_all_context": {
 		"value": "모두 삭제"

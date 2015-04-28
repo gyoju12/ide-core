@@ -9,8 +9,6 @@
  **/
 
 goorm = function() {};
-
-
 goorm.core = function() {
 
 	this.user = {
@@ -95,15 +93,15 @@ goorm.core = function() {
 		is_login: false,
 		login_complete: false,
 		keydown: false,
-		focus_obj: "",
+		focus_obj: '',
 		focus_on_editor: false,
 		foucs_on_dialog: false,
-		selected_file: "",
-		selected_dialog: "",
-		selected_dialog_container: "",
-		current_project_path: "",
-		current_project_name: "",
-		current_project_type: "",
+		selected_file: '',
+		selected_dialog: '',
+		selected_dialog_container: '',
+		current_project_path: '',
+		current_project_name: '',
+		current_project_type: '',
 		current_opened_list: {},
 		current_running_server: {}
 	};
@@ -161,28 +159,28 @@ goorm.core.prototype = {
 
 		var _this = $(this); //jeongmin: access object member less
 
-		_this.on("layout_loaded", function() {
-			console.log("layout load complete");
+		_this.on('layout_loaded', function() {
+			console.log('layout load complete');
 
 			this.module.layout.resize_all();
 			this.module.plugin_manager.get();
 		});
 
-		_this.on("preference_load_complete", function() {
-			console.log("preference load complete");
+		_this.on('preference_load_complete', function() {
+			console.log('preference load complete');
 			goorm.core.terminal.dummy();
 		});
 
-		_this.on("plugin_loaded", function() {
-			console.log("plugin load complete");
+		_this.on('plugin_loaded', function() {
+			console.log('plugin load complete');
 
 			this.module.plugin_manager.load(0, false); // jeongmin: load plugin first
 
 			// this.main();
 		});
 
-		_this.on("plugin_load_complete", function() {
-			console.log("plugin init complete");
+		_this.on('plugin_load_complete', function() {
+			console.log('plugin init complete');
 
 			this.main();
 		});
@@ -190,16 +188,16 @@ goorm.core.prototype = {
 		this.load_complete_flag = false;
 
 		//Loading Animation
-		_this.on("goorm_loading", function() {
+		_this.on('goorm_loading', function() {
 			if (self.loading_count < Object.keys(core.dialog).length - 9 + parseInt(core.module.plugin_manager.list.length, 10)) {
 				self.loading_count++;
 			} else {
 				if (!self.load_complete_flag) {
 					self.check_localStorage_version();
-					$(self).trigger("goorm_load_complete");
+					$(self).trigger('goorm_load_complete');
 					self.load_complete_flag = true;
 
-					//useonly(mode=goorm-oss)	
+					//useonly(mode=goorm-oss)
 					self.show_local_login_box();
 					
 
@@ -213,22 +211,22 @@ goorm.core.prototype = {
 		});
 
 		//Loading Ending
-		_this.on("goorm_load_complete", function() {
-			console.log("goormIDE load complete");
+		_this.on('goorm_load_complete', function() {
+			console.log('goormIDE load complete');
 
-			$("input[type=checkbox]").iCheck({
+			$('input[type=checkbox]').iCheck({
 				checkboxClass: 'icheckbox_minimal',
 				radioClass: 'iradio_minimal',
 				increaseArea: '20%' // optional
 			});
-			$("input[type=radio]").iCheck({
+			$('input[type=radio]').iCheck({
 				checkboxClass: 'icheckbox_minimal',
 				radioClass: 'iradio_minimal',
 				increaseArea: '20%' // optional
 			});
 			// core.module.tutorial.start('basic');
 
-			$(document).on("contextmenu", function(e) {
+			$(document).on('contextmenu', function(e) {
 				var target = $(e.target);
 
 				// terminal & chat & find/replace - open browser context menu
@@ -249,8 +247,6 @@ goorm.core.prototype = {
 			self.module.action.init();
 
 			var goorm_loading_end_time = new Date().getTime();
-
-
 			//theme
 			// self.module.theme = goorm.core.theme;
 			// self.module.theme.init();
@@ -281,7 +277,7 @@ goorm.core.prototype = {
 
 			
 
-			$("#goorm").show();
+			$('#goorm').show();
 		});
 
 		$(window).on('unload', function() {
@@ -291,14 +287,16 @@ goorm.core.prototype = {
 		$(window).on('beforeunload', function() {
 			// if (!self.is_login) return;
 			// if (!self.force_disconnect) return;
-			if (core.module.close_alert) return;
+			if (core.module.close_alert) {
+				return;
+			}
 			if (!core.force_unload && !self.module.auth.open_keep_session_dialog && !core.logout) {
-				//2. refresh, back button, close button 
+				//2. refresh, back button, close button
 				var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
 				if (unsaved_file) {
 					return unsaved_file + core.module.localization.msg.confirmation_not_saved;
 				} else {
-					var msg = (core.module.localization && core.module.localization.msg && core.module.localization.msg.confirmation_close_tab) ? core.module.localization.msg.confirmation_close_tab : "Do you want to close goorm?";
+					var msg = (core.module.localization && core.module.localization.msg && core.module.localization.msg.confirmation_close_tab) ? core.module.localization.msg.confirmation_close_tab : 'Do you want to close goorm?';
 					return msg;
 				}
 			}
@@ -334,7 +332,7 @@ goorm.core.prototype = {
 		//     if(core.logout){
 		//     	return "core.logout";
 		//     }
-		//     //2. refresh, back button, close button 
+		//     //2. refresh, back button, close button
 		//     var unsaved_file = goorm.core.edit.prototype.find_unsaved_file();
 		//     if(unsaved_file){
 		//     	return unsaved_file + core.module.localization.msg.confirmation_not_saved;
@@ -421,10 +419,10 @@ goorm.core.prototype = {
 			this.module.tutorial = goorm.core.tutorial;
 		}
 
-		if(core.realtime_lint) {
-			$("#toggle_realtime_lint_checker").show();
+		if (core.realtime_lint) {
+			$('#toggle_realtime_lint_checker').show();
 		} else {
-			$("#toggle_realtime_lint_checker").hide();
+			$('#toggle_realtime_lint_checker').hide();
 		}
 
 		//Cloud
@@ -629,11 +627,11 @@ goorm.core.prototype = {
 	},
 
 	get_css: function(url) {
-		$("head").append("<link>");
-		css = $("head").children(":last");
+		$('head').append('<link>');
+		css = $('head').children(':last');
 		css.attr({
-			rel: "stylesheet",
-			type: "text/css",
+			rel: 'stylesheet',
+			type: 'text/css',
 			href: url
 		});
 	},
@@ -647,7 +645,7 @@ goorm.core.prototype = {
 		// goorm_dialog_container_child += "<div id='loading_background'></div>";
 		// goorm_dialog_container.append(goorm_dialog_container_child);
 
-		var loading_panel_container = $("#loading_panel_container");
+		var loading_panel_container = $('#loading_panel_container');
 		// loading_panel_container_child = "";
 		// loading_panel_container_child += "<div id='main_loading_image'></div>";
 		// loading_panel_container_child += "<div id='loading_message'></div>";
@@ -658,7 +656,7 @@ goorm.core.prototype = {
 
 		
 
-		//useonly(mode=goorm-oss)	
+		//useonly(mode=goorm-oss)
 		// $('#local_login_box').append("<div id='local_login_user_box'><div id='local_user_area'><label id='local_user_label' for='local_user_input'>ID : </label><input id='local_user_input' /></div><div id='local_user_pw_area'><label id='local_user_pw_label' for='local_user_pw_input'>PW : </label><input id='local_user_pw_input' type='password' /></div></div>");
 		// $('#local_login_box').append("<input type='button' id='goorm_local_mode_button' localization_key='private_mode' value='Access Private Mode' />");
 		$('#login_box').remove();
@@ -670,10 +668,10 @@ goorm.core.prototype = {
 			self.access_local_mode();
 		});
 		
-		$("#loading_panel_container").show();
+		$('#loading_panel_container').show();
 
-		var loading_background = $("#loading_background");
-		loading_background.css('position', "absolute").width($(window).width()).height($(window).height());
+		var loading_background = $('#loading_background');
+		loading_background.css('position', 'absolute').width($(window).width()).height($(window).height());
 		loading_background.css('left', 0).css('top', 0).css('z-index', 999);
 
 		$(window).resize(function(event) {
@@ -683,7 +681,7 @@ goorm.core.prototype = {
 			}
 		});
 
-		loading_panel_container.css('display', "none").width(640).height(480).css('position', "absolute").css('z-index', 1000).css('left', $(window).width() / 2 - 320).css('top', parseInt($(window).height() / 2) - 240).fadeIn(2000);
+		loading_panel_container.css('display', 'none').width(640).height(480).css('position', 'absolute').css('z-index', 1000).css('left', $(window).width() / 2 - 320).css('top', parseInt($(window).height() / 2) - 240).fadeIn(2000);
 	},
 
 	// manage socket connections. Jeong-Min Im.
@@ -707,7 +705,7 @@ goorm.core.prototype = {
 			self.socket.removeListener('disconnect'); //Don't try reconnect
 			$('#g_alert_btn_ok').one('click', function() {
 				core.logout = true;
-				location.href = "http://goorm.io";
+				location.href = 'http://goorm.io';
 			});
 			alert.show(core.module.localization.msg.alert_logged_out_from_other);
 			core.router.disconnect();
@@ -719,31 +717,33 @@ goorm.core.prototype = {
 			'channel': 'join'
 		}));
 		
+
+		$(core).trigger('socket_connected'); // for binding socket handler
 	},
 
 	
 	//useonly(mode=goorm-oss)
 	show_local_login_box: function() {
-		if (localStorage.user && localStorage.user != "undefined") {
+		if (localStorage.user && localStorage.user != 'undefined') {
 			var user = JSON.parse(localStorage.user);
 			$('#local_user_input').val(user.id);
 		}
 
-		$("#local_login_box").delay(1500).fadeIn(2000);
+		$('#local_login_box').delay(1500).fadeIn(2000);
 
 		// setTimeout(function() {
 		var temp = $.debounce(function() {
 			$('#local_user_input').focus();
 
-			if ($('#local_user_input').val() !== "") {
+			if ($('#local_user_input').val() !== '') {
 				$('#local_user_pw_input').focus();
 			}
 		}, 2000);
 	},
 
 	local_complete: function() {
-		$("#loading_background").delay(1000).fadeOut(1000);
-		$("#loading_panel_container").delay(1500).fadeOut(1000);
+		$('#loading_background').delay(1000).fadeOut(1000);
+		$('#loading_panel_container').delay(1500).fadeOut(1000);
 
 		// $(core).trigger('goorm_login_complete');
 		this.socket_connect();
@@ -761,10 +761,10 @@ goorm.core.prototype = {
 		}, function(data) {
 			if (data.result) {
 				self.user.id = id;
-				self.user.email = "";
+				self.user.email = '';
 				self.user.name = id;
-				self.user.level = "Member";
-				self.user.type = "password";
+				self.user.level = 'Member';
+				self.user.type = 'password';
 
 				localStorage.user = JSON.stringify(self.user);
 				self.local_complete();
@@ -775,14 +775,14 @@ goorm.core.prototype = {
 	},
 	
 	new_main_window: function() {
-		window.open("./");
+		window.open('./');
 	},
 
 	is_touchable_device: function() {
 		var el = document.createElement('div');
 		el.setAttribute('ongesturestart', 'return;');
 
-		if (typeof el.ongesturestart == "function") {
+		if (typeof el.ongesturestart == 'function') {
 			return true;
 		} else {
 			return false;
@@ -790,7 +790,7 @@ goorm.core.prototype = {
 	},
 
 	test_web_socket: function() {
-		if ("WebSocket" in window) {
+		if ('WebSocket' in window) {
 			return true;
 		} else {
 			// the browser doesn't support WebSockets
@@ -809,8 +809,6 @@ goorm.core.prototype = {
 
 	unload: function() {
 		if (core !== undefined && !core.local_mode && core.user !== undefined && core.user.id) {
-
-
 			// window unload event for user-preference. youseok.nam
 			//
 			core.module.preference.save_to_database();
@@ -829,9 +827,9 @@ goorm.core.prototype = {
 				domain = '';
 			}
 
-			var value = escape(data) + ((exdays === null) ? "" : "; expires=" + exdate.toGMTString() + ";" + domain + "path=/");
+			var value = escape(data) + ((exdays === null) ? '' : '; expires=' + exdate.toGMTString() + ';' + domain + 'path=/');
 
-			document.cookie = name + "=" + value;
+			document.cookie = name + '=' + value;
 		},
 
 		del: function(name, domain) {
@@ -844,21 +842,21 @@ goorm.core.prototype = {
 			}
 
 			expire_date.setDate(expire_date.getDate() - 10);
-			document.cookie = name + "=path=/;" + domain + "; expires=" + expire_date.toGMTString();
+			document.cookie = name + '=path=/;' + domain + '; expires=' + expire_date.toGMTString();
 		},
 
 		get: function(c_name) {
 			var c_value = document.cookie;
-			var c_start = c_value.indexOf(" " + c_name + "=");
+			var c_start = c_value.indexOf(' ' + c_name + '=');
 
 			if (c_start == -1) {
-				c_start = c_value.indexOf(c_name + "=");
+				c_start = c_value.indexOf(c_name + '=');
 			}
 			if (c_start == -1) {
 				c_value = null;
 			} else {
-				c_start = c_value.indexOf("=", c_start) + 1;
-				var c_end = c_value.indexOf(";", c_start);
+				c_start = c_value.indexOf('=', c_start) + 1;
+				var c_end = c_value.indexOf(';', c_start);
 
 				if (c_end == -1) {
 					c_end = c_value.length;
@@ -872,7 +870,7 @@ goorm.core.prototype = {
 	},
 
 	restore_prev_focus: function() {
-		if (this.status.focus_obj !== null && this.status.focus_obj !== undefined && this.status.focus_obj !== "") {
+		if (this.status.focus_obj !== null && this.status.focus_obj !== undefined && this.status.focus_obj !== '') {
 			this.status.focus_obj.focus();
 		}
 	},

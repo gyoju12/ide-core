@@ -563,7 +563,7 @@
 		"value": "Move"
 	},
 	"find_in_folder_context": {
-		"value": "Find in Folder"
+		"value": "Find in This Directory"
 	},
 	"delete_all_context": {
 		"value": "Delete All"

@@ -316,8 +316,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 .cm-searching {
     background: transparent;
-    border: 1px solid #007ee5;
     border-radius: 2px;
+    box-shadow: 0px 0px 0px 1px #007ee5;
 }
 /* IE7 hack to prevent it from returning funny offsetTops on the spans */
 
@@ -1684,7 +1684,7 @@ Toolbar CSS
 #dlg_survey, 
 #dlg_toast {
     word-wrap: break-word;
-    z-index: 1042;
+    z-index: 1042 !important;
 }
 .alert_content_div, 
 .notice_content_div {
@@ -2172,9 +2172,15 @@ div:focus {
 #dlg_scm_auth {
     z-index: 1041;
 }
+#git_treeview,
+#svn_treeview,
+#svn_tabview,
+#git_tabview {
+    height: 500px;
+}
 #git_tabview .panel-body,
 #svn_tabview .panel-body {
-    height: 263px;
+    height: 372px;
     overflow: auto;
     padding: 0;
 }
@@ -2197,7 +2203,7 @@ div:focus {
 
 #blame_container .CodeMirror-scroll, 
 #blame_container_git .CodeMirror-scroll {
-    height: 89%;
+    height: 92%;
     margin-right: 0;
 }
 #blame_container .CodeMirror-vscrollbar, 
@@ -3410,6 +3416,23 @@ tr.current_bookmark_row{
     position: absolute;
     top: 0;
 }
+
+#search_query_inputbox {
+    background-color: transparent;
+    left: 0;
+    position: relative;
+    top: 0;
+}
+
+#search_query_inputbox_background {
+    background-color: white;
+    color: #c0c0c0;
+    left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    position: absolute;
+    top: 0;
+}
 #user_list_container .added_user,
 #user_list_container .edited_user {
     background-color: #ddd;
@@ -3484,4 +3507,20 @@ div.tooltip {
 }
 #chat_all div.tooltip {
     position: fixed;
+}
+
+#preference_tabview li[target="Terminal"], 
+#preference_tabview li[target="Language"],
+#preference_tabview li[target="Language"] + li[target="Shortcut"],
+#property_tabview li {
+    margin-left: 5px;
+}
+
+#project_selectbox,
+#project_explorer_refresh_tool {
+    border: none;
+}
+
+#dlg_svn_info .modal-dialog {
+    width: 500px;
 }

@@ -213,12 +213,14 @@ goorm.core.router = {
 							}
 						}
 
-						if (url[0] === '/') url = url.substr(1);
+						if (url[0] === '/') {
+							url = url.substr(1);
+						}
 
 						$.ajax({
-							url: 'http://' + host + ":" + port + '/' + url,
+							url: 'http://' + host + ':' + port + '/' + url,
 							data: data,
-							dataType: "jsonp",
+							dataType: 'jsonp',
 							jsonp: 'callback',
 							success: fn
 						});
@@ -314,7 +316,7 @@ goorm.core.router = {
 		};
 
 		var reconnect = function(socket) {
-			if(offline) {
+			if (offline) {
 				disconnect(socket);
 				return false;
 			}
@@ -358,7 +360,7 @@ goorm.core.router = {
 		});
 
 		socket.on('reconnect_failed', function() {
-			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
+			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : 'A connection failure has occurred. Please reconnect to the server.';
 
 			// Reconnect Fail --> Refresh !!
 			//
@@ -370,7 +372,7 @@ goorm.core.router = {
 		});
 
 		socket.on('/get_lxc_data_failed', function() {
-			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : "A connection failure has occurred. Please reconnect to the server.";
+			var msg = (core.module.localization) ? core.module.localization.msg.server_reconnect_fail : 'A connection failure has occurred. Please reconnect to the server.';
 
 			alert.show(msg);
 		});
@@ -412,15 +414,15 @@ goorm.core.router = {
 
 	get_host: function(project_path) {
 		var permission = core.module.layout.project.get_permission(project_path);
-		var url = "";
+		var url = '';
 
 		if (permission.writable) {
 			var info = this.get_fs_info();
-			var host = (core.user.dns) ? core.user.id + "." + core.user.dns : info.host;
+			var host = (core.user.dns) ? core.user.id + '.' + core.user.dns : info.host;
 
-			url = info.protocol + "://" + host + ":" + info.port;
+			url = info.protocol + '://' + host + ':' + info.port;
 		} else {
-			url = "http://" + core.user.project_host + ":" + core.user.project_port;
+			url = 'http://' + core.user.project_host + ':' + core.user.project_port;
 		}
 
 		return {
@@ -435,7 +437,7 @@ goorm.core.router = {
 	 */
 	get_url: function(project_path, path, params) {
 		var hostdata = this.get_host(project_path);
-		var url = hostdata.url + path + "?";
+		var url = hostdata.url + path + '?';
 
 		if (params) {
 			for (var key in params) {

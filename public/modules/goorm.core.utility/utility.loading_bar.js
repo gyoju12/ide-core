@@ -54,6 +54,8 @@ goorm.core.utility.loading_bar = {
 				self.try_to_show = false;
 				self.is_hide = false;
 
+				core.progressbar.set(0);
+
 				if (Object.keys(self.list).length === 0) {
 					self.hide();
 				}
@@ -78,6 +80,7 @@ goorm.core.utility.loading_bar = {
 				return false;
 			} else { // we're going to hide
 				self.is_hide = true;
+				self.status_hide = true;
 			}
 		});
 
@@ -259,10 +262,11 @@ goorm.core.utility.loading_bar = {
 		} else if (wrapper) {
 			var fingerprint = $(wrapper).attr('fingerprint'); // find out which progress is done
 
+			this.count--;
 			delete this.list[fingerprint]; // delete it from progress bars list
 			$(wrapper).remove();
 		}
-		if(self.status_hide) core.progressbar.set(0);
+		if(self.status_hide && this.count === 0) core.progressbar.set(0);
 	},
 
 	// show loading bar dialog. Jeong-Min Im.

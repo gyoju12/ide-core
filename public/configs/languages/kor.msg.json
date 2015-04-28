@@ -2,9 +2,6 @@
     "alert_file_name_illegal": {
         "value": "파일명에 잘못된 값이 있습니다."
     },
-    "alert_img_size_too_big": {
-        "value": "이미지가 너무 큽니다."
-    },
     "alert_file_size_too_big": {
         "value": "이런! 파일의 크기가 너무 큽니다!<br/>에디터는 10MB 이하 크기의 파일만 열 수 있습니다."
     },
@@ -1273,6 +1270,9 @@
     },
     "confirmation_go_mygoorm_title": {
         "value": "my.goorm.io로 이동"
+    },
+    "confirmation_upload_image": {
+        "value": "이미지를 업로드하시겠습니까?"
     },
     "ignored_files": {
         "value": "무시된 파일"

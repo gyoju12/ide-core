@@ -1081,9 +1081,151 @@ module.exports = {
 			
 
 			
-			
 
-			
+			//svn socket. Jeong-Min Im.
+			socket.on('/scm/svn', function(msg) {
+				var evt = new EventEmitter();
+
+				// for giving uid and gid to scm repository. Jeong-Min Im.
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.author_id = user_data.id;
+						
+						
+						////// check user's permission //////
+						if (msg.project_path && msg.project_path != '') { // exist project
+							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
+								if (result) { // have permission
+									g_scm.index(msg, evt); // go to scm.js -> sort commands
+								} else { // have no permission
+									var res_data = {
+										err_code: 20,
+										message: 'alert_scm_permission',
+										path: msg.repository
+									}
+									socket.emit('/scm/svn/' + msg.mode, res_data);
+								}
+							});
+						} else { // new project
+							g_scm.index(msg, evt); // go to scm.js -> sort commands
+						}
+					}
+				});
+
+				// show checkout progress. Jeong-Min Im.
+				var checkout_callback = function(data) {
+					socket.emit('/scm/svn/checkout_progress', data);
+				};
+				var stdin_callback = function(option) {
+					socket.emit('/scm/svn/stdin', option);
+				};
+
+				//check user uses scm and if user uses, set scm info to goorm.manifest. Jeong-Min Im.
+				evt.once('scm_svn_do', function(data) { //get event from scm.svn.js -> result of svn command
+					if (data === 0 && msg.scm_info) { // only when checkout(data will be 0 or 1) and checkout successes
+						g_scm.set_scm_property(msg.author_id, msg.project_path, msg.scm_info, function(success) {
+							if (!success) { // checkout fails
+								socket.emit('/scm/svn/' + msg.mode, !success); //scm config setting is done. !success == true, true != 0 -> checkout fails
+							} else {
+								socket.emit('/scm/svn/' + msg.mode, data); //scm config setting is done. data == 0 (checkout success)
+							}
+						});
+					} else {
+						socket.emit('/scm/svn/' + msg.mode, data); //send this result to client scm.svn.js
+					}
+
+					// remove checkout progress socket listener
+					if (msg.mode == 'checkout' || msg.mode == 'update') {
+						evt.removeListener('scm_svn_do_checkout', checkout_callback);
+					} else if (msg.mode === 'info') {
+						evt.removeListener('scm_svn_stdin', stdin_callback);
+					}
+				});
+
+				// add checkout progress socket listener
+				if (msg.mode == 'checkout' || msg.mode == 'update') {
+					evt.on('scm_svn_do_checkout', checkout_callback);
+				} else if (msg.mode === 'info') {
+					evt.once('scm_svn_stdin', stdin_callback);
+				}
+			});
+
+			socket.on('/scm/svn/stdin', function(option) {
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						option.author_id = user_data.data.id; // for finding ps_list
+						option.scm = 'svn'; // for indexing
+						option.mode = 'stdin';
+
+						g_scm.index(option);
+					}
+				});
+			});
+
+			//git socket. Jeong-Min Im.
+			socket.on('/scm/git', function(msg) {
+				var evt = new EventEmitter();
+
+				// for giving uid and gid to scm repository. Jeong-Min Im.
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						user_data = user_data.data;
+
+						msg.author_id = user_data.id;
+						
+						
+						////// check user's permission //////
+						if (msg.project_path && msg.project_path != '') { // new project
+							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
+								if (result) { // have permission
+									g_scm.index(msg, evt); // go to scm.js -> sort commands
+								} else { // have no permission
+									var res_data = {
+										err_code: 20,
+										message: 'alert_scm_permission',
+										path: msg.repository
+									}
+									socket.emit('/scm/git' + msg.mode, res_data);
+								}
+							});
+						} else { // exist project
+							g_scm.index(msg, evt); // go to scm.js -> sort commands
+						}
+					}
+				});
+
+				// show checkout progress. Jeong-Min Im.
+				var checkout_callback = function(data) {
+					socket.emit('/scm/git/checkout', data);
+				};
+
+				//check user uses scm and if user uses, set scm info to goorm.manifest. Jeong-Min Im.
+				evt.once('scm_git_do', function(data) { //get event from scm.git.js -> result of git command
+					if (data === 0 && msg.scm_info) { // only when checkout(data will be 0 or 1) and checkout successes
+						g_scm.set_scm_property(msg.author_id, msg.project_path, msg.scm_info, function(success) {
+							if (!success) {
+								socket.emit('/scm/git' + msg.mode, !success); //scm config setting is done. !success == true, true != 0 -> checkout fails
+							} else {
+								socket.emit('/scm/git' + msg.mode, data); //scm config setting is done. data == 0 (checkout success)
+							}
+						});
+					} else {
+						socket.emit('/scm/git' + msg.mode, data); //send this result to client scm.git.js
+					}
+
+					// remove checkout progress socket listener
+					if (msg.mode == 'checkout' || msg.mode == 'pull') {
+						evt.removeListener('scm_git_do_checkout', checkout_callback);
+					}
+				});
+
+				// add checkout progress socket listener
+				if (msg.mode == 'checkout' || msg.mode == 'pull') {
+					evt.on('scm_git_do_checkout', checkout_callback);
+				}
+			});
 
 			
 

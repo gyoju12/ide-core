@@ -179,7 +179,7 @@ goorm.core.edit.prototype = {
 
 		// set searching highlight when drag. Jeong-Min Im.
 		$(target).mouseup(function(e) { // selected string's exist when mouse is up means dragged
-			if (e.which === 1) {	// left button
+			if (e.which === 1) { // left button
 				self.str_selection = self.editor.getSelection();
 				if (!$('#dlg_find_and_replace').hasClass('in') && !($('.cm-matchhighlight:first').html() === self.str_selection) && $('#gLayoutTab_Search').find('.badge').length === 0) {
 
@@ -411,7 +411,7 @@ goorm.core.edit.prototype = {
 			}
 
 			// jeongmin: remove searching highlight
-			if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) {// jeongmin: if doing find and replace, don't remove
+			if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 		});
@@ -555,7 +555,7 @@ goorm.core.edit.prototype = {
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
-			} else if (!e.shiftKey && (e.ctrlKey || e.metaKey) && e.keyCode == 75) {// special key is now pressed
+			} else if (!e.shiftKey && (e.ctrlKey || e.metaKey) && e.keyCode == 75) { // special key is now pressed
 				shortcut_manager.is_theme_key_pressed = true;
 			}
 			// }
@@ -592,7 +592,7 @@ goorm.core.edit.prototype = {
 		cm_editor.on('dblclick', function() {
 			if (self.editor.somethingSelected() && !$('#dlg_find_and_replace').hasClass('in') && $('#gLayoutTab_Search').find('.badge').length === 0) {
 				self.str_selection = self.editor.getSelection();
-				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) {// except special character
+				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 					CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
 				}
 			}
@@ -724,7 +724,7 @@ goorm.core.edit.prototype = {
 				marker.style.zoom = self.font_manager.now_zoom;
 				// marker.id = gutter + linenumber;
 				marker.setAttribute('data-bookmark', linenumber + 1);
-			} else {//clear
+			} else { //clear
 				$(line_handler.gutterMarkers[gutter]).remove();
 			}
 
@@ -1131,14 +1131,11 @@ goorm.core.edit.prototype = {
 						core.module.plugin_linter.lint(self.parent);
 					}, 500);
 
-					if(option !== 'refresh') {
-						linter_timer();	
+					if (option !== 'refresh') {
+						linter_timer();
 					}
-					
 
-					
 
-					
 
 					//to change latest build status once it is true --heeje
 					if (tmpdata[send_data.project_path].is_latest_build) {

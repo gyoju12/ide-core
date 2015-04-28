@@ -901,9 +901,10 @@ module.exports = {
 									if (!e) {
 										var path = target + '/' + filename + '_copy' + i + extension;
 										fs.copy(global.__workspace + '/' + o, global.__workspace + path, function(err) {
-											
 											if (err) {
 												console.log(err);
+											} else {
+												
 											}
 										});
 									} else {
@@ -915,10 +916,11 @@ module.exports = {
 
 						} else {
 							var path = target + '/' + filename_full;
-							fs.copy(global.__workspace + '/' + o, global.__workspace + target, function(err) {
-								
+							fs.copy(global.__workspace + '/' + o, global.__workspace + path, function(err) {
 								if (err) {
 									console.log(err);
+								} else {
+									
 								}
 							});
 						}
