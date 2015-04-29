@@ -267,6 +267,8 @@ goorm.core.file._import = {
 
 							$('#myForm').submit();
 							$("#g_if_btn_ok").attr("disabled", true);
+						} else if (where === 'dnd' && dup_list.length === 1) {
+							ret_val = false;
 						}
 						callback(ret_val);
 					}

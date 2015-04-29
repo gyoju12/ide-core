@@ -245,12 +245,14 @@ goorm.core.window.tab.prototype = {
 		$("[id=close_tab_" + morphed_title + "]").click(function() {
 			$("[id=g_window_tab_" + morphed_title + "]").tooltip('hide');
 		});
+		/*
 		$("[id=g_window_tab_" + morphed_title + "]").on('shown.bs.tooltip', function(e) {
 			var leftpx = Number($("[id=g_window_tab_" + morphed_title + "]").offset().left);
 			$('.tooltip').css("left", leftpx - 10);
 			$('.tooltip.top > .tooltip-arrow').css('display', 'none');
 			// $('.tooltip > .tooltip-arrow').css("left", 23);
 		});
+		*/
 	},
 
 	set_title: function(title) {

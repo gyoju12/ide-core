@@ -8,23 +8,23 @@
  * version: 2.0.0
  **/
 
-var fs = require("fs-extra"),
-	rimraf = require('rimraf'),
-	
-	exec = require('child_process').exec,
-	execFile = require('child_process').execFile,
-	xss = require('xss'),
-	EventEmitter = require("events").EventEmitter;
+var fs = require('fs-extra');
+var rimraf = require('rimraf');
 
-var g_file = require("../modules/goorm.core.file/file");
-var g_preference = require("../modules/goorm.core.preference/preference");
-var g_project = require("../modules/goorm.core.project/project");
-var g_terminal = require("../modules/goorm.core.terminal/terminal");
-var g_plugin = require("../modules/goorm.plugin/plugin");
-var g_help = require("../modules/goorm.core.help/help");
-var g_search = require("../modules/goorm.core.search/search");
-var g_edit = require("../modules/goorm.core.edit/edit");
-var g_log = require("../modules/goorm.core.log/log");
+var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
+var xss = require('xss');
+var EventEmitter = require('events').EventEmitter;
+
+var g_file = require('../modules/goorm.core.file/file');
+var g_preference = require('../modules/goorm.core.preference/preference');
+var g_project = require('../modules/goorm.core.project/project');
+var g_terminal = require('../modules/goorm.core.terminal/terminal');
+var g_plugin = require('../modules/goorm.plugin/plugin');
+var g_help = require('../modules/goorm.core.help/help');
+var g_search = require('../modules/goorm.core.search/search');
+var g_edit = require('../modules/goorm.core.edit/edit');
+var g_log = require('../modules/goorm.core.log/log');
 var g_lecture = null;
 try {
 	g_lecture = require('../plugins/goorm.plugin.lecture/modules/index.js');
@@ -40,12 +40,17 @@ try {
 
 
 var check_valid_path = function(str) {
-	if (!str) return false;
+	if (!str) {
+		return false;
+	}
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
 
 var randomStringfunc = function(bits) {
-	var chars, rand, i, ret;
+	var chars;
+	var rand;
+	var i;
+	var ret;
 
 	chars = 'abcdefghijklmnopqr12345678abcdefghijklmnopqrstuvwxyz012345678912';
 	ret = '';
@@ -63,10 +68,10 @@ var randomStringfunc = function(bits) {
 };
 
 var formatting = function(str) {
-	str = str || "";
+	str = str || '';
 
 	if (str && str.length > 0) {
-		str = str.replace(/([\.\%\+\-])/g, "_");
+		str = str.replace(/([\.\%\+\-])/g, '_');
 		str = str.toLowerCase();
 	}
 
@@ -120,8 +125,6 @@ exports.project = function(req, res) {
 // 	
 
 // 	
-
-
 // 	g_project.do_new(req.query, evt);
 // };
 
@@ -148,13 +151,13 @@ exports.project.do_save = function(req, res) {
 exports.project.get_list = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("project_get_list", function(data) {
+	evt.once('project_get_list', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_project.get_list(req.query, evt);
 	
 };
@@ -169,7 +172,7 @@ exports.project.get_list = function(req, res) {
 exports.project.do_import = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("project_do_import", function(data) {
+	evt.once('project_do_import', function(data) {
 		res.json(data);
 	});
 
@@ -179,7 +182,7 @@ exports.project.do_import = function(req, res) {
 
 exports.project.do_import_check = function(req, res) {
 	var evt = new EventEmitter();
-	evt.once("project_do_import_check", function(data) {
+	evt.once('project_do_import_check', function(data) {
 		res.json(data);
 	});
 
@@ -192,7 +195,7 @@ exports.project.do_export = function(req, res) {
 	var data = {};
 
 	//useonly(mode=goorm-standalone,goorm-oss)
-	evt.once("project_do_export", function(data) {
+	evt.once('project_do_export', function(data) {
 		res.json(data);
 	});
 
@@ -209,7 +212,7 @@ exports.project.do_export = function(req, res) {
 exports.project.do_clean = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("project_do_clean", function(data) {
+	evt.once('project_do_clean', function(data) {
 		res.json(data);
 	});
 
@@ -218,7 +221,7 @@ exports.project.do_clean = function(req, res) {
 
 exports.project.get_property = function(req, res) {
 	var evt = new EventEmitter();
-	evt.once("get_property", function(data) {
+	evt.once('get_property', function(data) {
 		res.json(data);
 	});
 
@@ -227,7 +230,7 @@ exports.project.get_property = function(req, res) {
 
 exports.project.set_property = function(req, res) {
 	var evt = new EventEmitter();
-	evt.once("set_property", function(data) {
+	evt.once('set_property', function(data) {
 		res.json(data);
 	});
 
@@ -236,15 +239,11 @@ exports.project.set_property = function(req, res) {
 
 exports.project.move_file = function(req, res) {
 	var evt = new EventEmitter();
-	evt.once("move_file", function(data) {
+	evt.once('move_file', function(data) {
 		res.json(data);
 	});
 	g_project.move_file(req.query, evt);
 };
-
-
-
-
 
 
 
@@ -271,7 +270,7 @@ exports.plugin.check_css = function(req, res) {
 
 	var plugin_data = req.body;
 
-	var path = (plugin_data.type == 'true') ? (global.__temp_dir) : (global.__path + "/plugins/");
+	var path = (plugin_data.type == 'true') ? (global.__temp_dir) : (global.__path + '/plugins/');
 
 	fs.exists(path + plugin_data.path, function(exists) {
 		res.json({
@@ -287,20 +286,21 @@ exports.plugin.get_dialog = function(req, res) {
 	var workspace = global.__temp_dir;
 	try {
 		fs.readFile(workspace + project_data.html, 'utf-8', function(err, file_data) {
-			if (err)
-				file_data = "";
+			if (err) {
+				file_data = '';
+			}
 			var filtered_data = xss(file_data);
 
 			res.json({
 				code: 200,
-				message: "success",
+				message: 'success',
 				file_data: filtered_data
 			});
 		});
 	} catch (e) {
 		res.json({
 			code: 201,
-			message: "fail"
+			message: 'fail'
 		});
 	}
 
@@ -314,14 +314,16 @@ exports.plugin.do_create = function(req, res) { //seongho.cha: if not used on 20
 		var plugin_name = req.body.plugin;
 		var project_data = req.body.data;
 
-		var workspace = global.__workspace + "/" + project_data.project_dir;
+		var workspace = global.__workspace + '/' + project_data.project_dir;
 		var template_path = global.__path + 'temp_files/' + req.__user.id + '/plugins/' + plugin_name;
 
 		// Default Plugin
 		//
 		if (global.plugins_list && global.plugins_list.length > 0) {
 			var is_default_plg = global.plugins_list.some(function(o) {
-				if (o && o.name === plugin_name) return true;
+				if (o && o.name === plugin_name) {
+					return true;
+				}
 			});
 
 			if (is_default_plg) {
@@ -329,15 +331,15 @@ exports.plugin.do_create = function(req, res) { //seongho.cha: if not used on 20
 			}
 		}
 
-		var template = template_path + "/template";
+		var template = template_path + '/template';
 
 		if (project_data.project_detailed_type) {
 			try {
-				var syncStat = fs.statSync(template + "/" + project_data.project_detailed_type.replace(/\s/g, "\ "));
+				var syncStat = fs.statSync(template + '/' + project_data.project_detailed_type.replace(/\s/g, '\ '));
 				if (!syncStat || !syncStat.isDirectory()) {
 
 				} else {
-					template += "/" + project_data.project_detailed_type.replace(/\s/g, "\\ ");
+					template += '/' + project_data.project_detailed_type.replace(/\s/g, '\\ ');
 				}
 			} catch (e) {
 
@@ -346,15 +348,15 @@ exports.plugin.do_create = function(req, res) { //seongho.cha: if not used on 20
 
 		exec('cp -r ' + template + '/* ' + workspace, function(__err) {
 			if (__err) {
-				console.log("do_create error!:", __err);
+				console.log('do_create error!:', __err);
 			}
-			fs.readFile(workspace + "/goorm.manifest", 'utf-8', function(err, file_data) {
+			fs.readFile(workspace + '/goorm.manifest', 'utf-8', function(err, file_data) {
 				var contents = JSON.parse(file_data);
 
 				contents.plugins = project_data.plugins;
 				contents.detailedtype = project_data.project_detailed_type;
 
-				fs.writeFile(workspace + "/goorm.manifest", JSON.stringify(contents), {
+				fs.writeFile(workspace + '/goorm.manifest', JSON.stringify(contents), {
 					encoding: 'utf-8',
 					mode: 0700
 				}, function(err) {
@@ -369,7 +371,7 @@ exports.plugin.do_create = function(req, res) { //seongho.cha: if not used on 20
 					//useonly(mode=goorm-oss)
 					res.json({
 						code: 200,
-						message: "success"
+						message: 'success'
 					});
 					
 				});
@@ -448,7 +450,7 @@ exports.plugin.make_template = function(req, res) {
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_plugin.make_template(req.query, res);
 	
 };
@@ -482,13 +484,13 @@ exports.file = function(req, res) {
 exports.file.do_new = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("file_do_new", function(data) {
+	evt.once('file_do_new', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_new(req.query, evt);
 	
 };
@@ -496,13 +498,13 @@ exports.file.do_new = function(req, res) {
 exports.file.do_new_folder = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("file_do_new_folder", function(data) {
+	evt.once('file_do_new_folder', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_new_folder(req.query, evt);
 	
 };
@@ -510,28 +512,26 @@ exports.file.do_new_folder = function(req, res) {
 exports.file.do_new_other = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("file_do_new_other", function(data) {
+	evt.once('file_do_new_other', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_new_other(req.query, evt);
 	
 };
-
-
 exports.file.do_new_untitled_text_file = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("file_do_new_untitled_text_file", function(data) {
+	evt.once('file_do_new_untitled_text_file', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_new_untitled_text_file(req.query, evt);
 	
 };
@@ -544,13 +544,13 @@ exports.file.do_save_as = function(req, res) {
 
 	var evt = new EventEmitter();
 
-	evt.once("file_do_save_as", function(data) {
+	evt.once('file_do_save_as', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_save_as(req.query, evt);
 	
 };
@@ -562,7 +562,7 @@ exports.file.do_delete_all = function(req, res) {
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_delete_all(req.query, function(result) {
 		res.json(result);
 	});
@@ -576,7 +576,7 @@ exports.file.do_copy_file_paste = function(req, res) {
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_copy_file_paste(req, function(result) {
 		res.json(result);
 	});
@@ -588,24 +588,24 @@ exports.file.do_delete = function(req, res) {
 	var user_level = null;
 	var author_level = null;
 
-	evt.once("file_do_delete", function(data) {
+	evt.once('file_do_delete', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.do_delete(req.query, evt);
 	
 };
-
-
 exports.file.get_contents = function(req, res) {
 	var path = req.query.path;
 	var abs_path = __path + path;
 
-	var res_type = "json";
-	if (req.query.res_type) res_type = req.query.res_type;
+	var res_type = 'json';
+	if (req.query.res_type) {
+		res_type = req.query.res_type;
+	}
 
 	//1. valid path
 	// console.log(path);
@@ -617,7 +617,7 @@ exports.file.get_contents = function(req, res) {
 
 	//2. don't need to check (ex) dialog html
 	if (req.query.type !== 'get_workspace_file') {
-		fs.readFile(abs_path, "utf8", function(err, data) {
+		fs.readFile(abs_path, 'utf8', function(err, data) {
 			if (err) {
 				res.json(false);
 			} else {
@@ -631,8 +631,8 @@ exports.file.get_contents = function(req, res) {
 	abs_path = __workspace + path;
 	//local -> do not check any thing
 
-	//useonly(mode=goorm-oss)	
-	fs.readFile(abs_path, "utf8", function(err, data) {
+	//useonly(mode=goorm-oss)
+	fs.readFile(abs_path, 'utf8', function(err, data) {
 		if (err) {
 			res.json(false);
 		} else {
@@ -647,7 +647,7 @@ exports.file.get_contents = function(req, res) {
 exports.file.get_contents.send = function(req, res) {
 	var path = req.query.path;
 
-	fs.readFile(__workspace + path, "base64", function(err, data) {
+	fs.readFile(__workspace + path, 'base64', function(err, data) {
 		res.send(data);
 	});
 };
@@ -656,7 +656,7 @@ exports.file.put_contents = function(req, res) {
 
 	var evt = new EventEmitter();
 
-	evt.once("file_put_contents", function(data) {
+	evt.once('file_put_contents', function(data) {
 		res.json(data);
 	});
 
@@ -671,11 +671,11 @@ exports.file.get_nodes = function(req, res) {
 	var evt = new EventEmitter();
 	var path = req.query.path;
 	var type = req.query.type || null;
-	path = path.replace(/\/\//g, "/");
+	path = path.replace(/\/\//g, '/');
 
 	//res.setHeader("Content-Type", "application/json");
 
-	evt.once("got_nodes", function(data) {
+	evt.once('got_nodes', function(data) {
 		try {
 			res.json(data);
 			//res.send(JSON.stringify(data));
@@ -687,7 +687,7 @@ exports.file.get_nodes = function(req, res) {
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	var nodes_data = {
 		path: __workspace + '/' + path
 	};
@@ -699,12 +699,10 @@ exports.file.get_nodes = function(req, res) {
 exports.file.get_dir_nodes = function(req, res) {
 	var evt = new EventEmitter();
 	var path = req.query.path;
-	path = path.replace(/\/\//g, "/");
-
-
+	path = path.replace(/\/\//g, '/');
 	//res.setHeader("Content-Type", "application/json");
 
-	evt.once("got_dir_nodes", function(data) {
+	evt.once('got_dir_nodes', function(data) {
 		try {
 			//console.log(JSON.stringify(data));
 			res.json(data);
@@ -718,7 +716,7 @@ exports.file.get_dir_nodes = function(req, res) {
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	req.query.path = __workspace + '/' + path;
 	g_file.get_dir_nodes(req.query, evt);
 	
@@ -729,18 +727,16 @@ exports.file.get_result_ls = function(req, res) {
 	//var path = req.query.path;
 	//path = path.replace(/\/\//g, "/");
 
-	evt.once("got_result_ls", function(data) {
+	evt.once('got_result_ls', function(data) {
 		res.json(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_file.get_result_ls(req.query, evt);
 	
 };
-
-
 exports.file.get_file = function(req, res) {
 	var evt = new EventEmitter();
 	var filepath = req.query.filepath;
@@ -748,9 +744,9 @@ exports.file.get_file = function(req, res) {
 
 	//useonly(mode=goorm-standalone,goorm-oss)
 	if (filepath) {
-		filepath = filepath.replace(/\/\//g, "/");
+		filepath = filepath.replace(/\/\//g, '/');
 
-		evt.once("got_file", function(data) {
+		evt.once('got_file', function(data) {
 			try {
 				//console.log(JSON.stringify(data));
 				res.json(data);
@@ -778,7 +774,7 @@ exports.file.check_valid_edit = function(req, res) {
 	var filename = req.body.filename;
 
 	if (project_path && filepath && filename) {
-		filepath = filepath.replace(/\/\//g, "/");
+		filepath = filepath.replace(/\/\//g, '/');
 		if (!check_valid_path(project_path) || !check_valid_path(filepath) || !check_valid_path(filename)) {
 			res.json({});
 			return false;
@@ -787,7 +783,7 @@ exports.file.check_valid_edit = function(req, res) {
 		res.json({});
 		return false;
 	}
-	evt.once("check_valid_edit", function(data) {
+	evt.once('check_valid_edit', function(data) {
 		if (!data.result) {
 			switch (data.code) {
 				case 0:
@@ -810,9 +806,6 @@ exports.file.check_valid_edit = function(req, res) {
 
 	g_file.check_valid_edit(project_path, filepath, filename, evt);
 };
-
-
-
 exports.file.do_move = function(req, res) {
 	var evt = new EventEmitter();
 	var user_level = null;
@@ -826,7 +819,7 @@ exports.file.do_move = function(req, res) {
 		};
 		res.json(res_data);
 	};
-	evt.once("file_do_move", function(data) {
+	evt.once('file_do_move', function(data) {
 		res.json(data);
 	});
 
@@ -838,7 +831,7 @@ exports.file.do_rename = function(req, res) {
 	var user_level = null;
 	var author_level = null;
 
-	evt.once("file_do_rename", function(data) {
+	evt.once('file_do_rename', function(data) {
 		res.json(data);
 	});
 
@@ -858,10 +851,10 @@ exports.file.do_export = function(req, res) {
 	var evt = new EventEmitter();
 
 	var path = req.query.path.split('/');
-	var project_path = (path[0] !== "") ? path[0] : path[1];
+	var project_path = (path[0] !== '') ? path[0] : path[1];
 
 	//useonly(mode=goorm-standalone,goorm-oss)
-	evt.once("file_do_export", function(data) {
+	evt.once('file_do_export', function(data) {
 		res.json(data);
 	});
 	
@@ -891,14 +884,15 @@ exports.file.do_import = function(req, res) {
 	var evt = new EventEmitter();
 
 	var path = req.body.file_import_location_path.split('/');
-	var project_path = (path[0] !== "") ? path[0] : path[1];
+	var project_path = (path[0] !== '') ? path[0] : path[1];
 
-	evt.once("file_do_import", function(data) {
+	evt.once('file_do_import', function(data) {
 		res.json(data);
 	});
 
-	if (req.query.is_overwrite)
+	if (req.query.is_overwrite) {
 		req.body.is_overwrite = req.query.is_overwrite;
+	}
 
 	g_file.do_import(req.body, req.files.file, evt);
 };
@@ -907,49 +901,47 @@ exports.file.do_import = function(req, res) {
 exports.file.do_search_on_project = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("file_do_search_on_project", function(data) {
+	evt.once('file_do_search_on_project', function(data) {
 		res.send(data);
 	});
 
 	
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	g_search.do_search(req.query, evt);
 	
 };
 
 exports.file.do_open = function(req, res) {
-	var query = req.query.q;
-	var __atob = function(str) {
-		return (new Buffer(str, 'base64').toString('binary'));
+		var query = req.query.q;
+		var __atob = function(str) {
+			return (new Buffer(str, 'base64').toString('binary'));
+		}
+
+		var decode = __atob(query);
+
+		var parser = function(decode) {
+			var result = {};
+
+			decode.split('&').forEach(function(part) {
+				var item = part.split('=');
+				result[__atob(item[0])] = decodeURIComponent(__atob(item[1]));
+			});
+
+			return result;
+		};
+
+		var decode_data = parser(decode); // id, filepath, filename, filetype
+		var filepath = decode_data.filepath.split('/');
+		filepath.shift();
+		filepath = filepath.join('/');
+		
+		res.write('<script>setTimeout("window.close();",10)</script>');
+		res.end();
 	}
-
-	var decode = __atob(query);
-
-	var parser = function(decode) {
-		var result = {};
-
-		decode.split("&").forEach(function(part) {
-			var item = part.split("=");
-			result[__atob(item[0])] = decodeURIComponent(__atob(item[1]));
-		});
-
-		return result;
-	};
-
-	var decode_data = parser(decode); // id, filepath, filename, filetype
-	var filepath = decode_data.filepath.split('/');
-	filepath.shift();
-	filepath = filepath.join('/');
-	
-	res.write('<script>setTimeout("window.close();",10)</script>');
-	res.end();
-}
-
-
-/*
- * API : Terminal
- */
+	/*
+	 * API : Terminal
+	 */
 
 exports.terminal = function(req, res) {
 	res.send(null);
@@ -959,7 +951,7 @@ exports.terminal.exec = function(req, res) {
 	var evt = new EventEmitter();
 	var command = req.query.command;
 
-	evt.once("executed_command", function(data) {
+	evt.once('executed_command', function(data) {
 		try {
 			res.json(data);
 		} catch (exception) {
@@ -993,7 +985,7 @@ exports.preference.ini_maker = function(req, res) {
 exports.preference.get_server_info = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("preference_get_server_info", function(data) {
+	evt.once('preference_get_server_info', function(data) {
 		res.json(data);
 	});
 
@@ -1003,7 +995,7 @@ exports.preference.get_server_info = function(req, res) {
 exports.preference.get_goorm_info = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("preference_get_goorm_info", function(data) {
+	evt.once('preference_get_goorm_info', function(data) {
 		res.json(data);
 	});
 
@@ -1018,8 +1010,6 @@ exports.preference.get_goorm_info = function(req, res) {
 
 // 	g_preference.put_filetypes(req.query, evt);
 // };
-
-
 /*
  * API : Help
  */
@@ -1038,7 +1028,7 @@ exports.help.get_readme_markdown = function(req, res) {
 exports.help.send_to_bug_report = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("help_send_to_bug_report", function(data) {
+	evt.once('help_send_to_bug_report', function(data) {
 		res.json(data);
 	});
 
@@ -1054,14 +1044,14 @@ exports.project.get_contents = function(req, res) { //(2015/04/16) if you want t
 	var path = req.query.path;
 	var user = req.query.username;
 
-	var command = exec("cd " + __workspace + path + ";zip -r " + __temp_dir + path + ".zip *", function(error, stdout, stderr) {
+	var command = exec('cd ' + __workspace + path + ';zip -r ' + __temp_dir + path + '.zip *', function(error, stdout, stderr) {
 		if (error == null) {
-			fs.readFile(__temp_dir + path + ".zip", "base64", function(err, data) {
+			fs.readFile(__temp_dir + path + '.zip', 'base64', function(err, data) {
 				res.send(data);
 			});
 		} else {
-			console.log("error : " + error);
-			res.send("error : " + error);
+			console.log('error : ' + error);
+			res.send('error : ' + error);
 		}
 	});
 }
@@ -1089,8 +1079,6 @@ exports.download = function(req, res) {
 				// download and remove complete
 			}
 		});
-
-
 	}, function(err) {
 		// ...
 		console.log('Donwload Error : [' + err + ']');
@@ -1101,8 +1089,6 @@ exports.upload = function(req, res) {
 	//req.body.file_import_location_path
 	// console.log(req.files);
 	// console.log(req.body);
-
-
 	var file_import_location_path = req.body.file_import_location_path;
 
 	if (!req.files) {
@@ -1129,8 +1115,6 @@ exports.upload = function(req, res) {
 	} else {
 		file_list = req.files.file;
 	}
-
-
 	if (file_list.length == 0) {
 		// console.log('1-1');
 		res.json({
@@ -1139,9 +1123,6 @@ exports.upload = function(req, res) {
 		});
 		return false;
 	}
-
-
-
 	var evt = new EventEmitter();
 
 	var do_import_cnt = file_list.length;
@@ -1157,8 +1138,6 @@ exports.upload = function(req, res) {
 		if (complete_import_cnt === do_import_cnt) {
 			evt.emit('all_file_do_import', result);
 		}
-
-
 	});
 
 	evt.once('all_file_do_import', function(result) {
@@ -1170,9 +1149,6 @@ exports.upload = function(req, res) {
 
 		g_file.do_import(req.body, file_list[i], evt);
 	}
-
-
-
 }
 exports.send_file = function(req, res) {
 	// console.log('__workspace', __workspace)
@@ -1190,14 +1166,14 @@ exports.send_file = function(req, res) {
 	res.sendfile(req.query.file, {
 		'root': __temp_dir
 	}, function(err) {
-		if (err) console.log(err);
+		if (err) {
+			console.log(err);
+		}
 		rimraf(__temp_dir + '/' + req.query.file, function(err) {
-			if (err != null) {} else {
-				// send file remove?????????
-			}
+			// 			if (err != null) {} else {
+			// send file remove?????????
+			// 			}
 		});
-
-
 	}, function(err) {
 		// ...
 	});
@@ -1245,7 +1221,7 @@ exports.edit.get_dictionary = function(req, res) {
 exports.edit.get_proposal_java = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("got_proposal_java", function(data) {
+	evt.once('got_proposal_java', function(data) {
 		res.json(data);
 	});
 
@@ -1269,7 +1245,7 @@ exports.edit.get_auto_import_java = function(req, res) {
 exports.edit.get_object_explorer = function(req, res) {
 	var evt = new EventEmitter();
 
-	evt.once("got_object_explorer", function(data) {
+	evt.once('got_object_explorer', function(data) {
 		res.json(data);
 	});
 
@@ -1310,8 +1286,6 @@ exports.edit.load_tags = function(req, res) {
 
 
 	
-
-
 exports.log = function(req, res) {
 	res.json(null);
 };

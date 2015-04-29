@@ -2612,7 +2612,7 @@ Plugin CSS: jeongmin
 #terminal, 
 .terminal {
     -khtml-user-select: auto;
-    -moz-user-select: auto;
+    -moz-user-select: text;
     -ms-user-select: auto;
     -webkit-user-select: auto;
     background-color: rgb(30, 30, 30) !important;

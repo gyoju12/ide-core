@@ -589,11 +589,6 @@ goorm.core.prototype = {
 		// 	this.module.npm.init();
 		// }
 
-		if (goorm.core.localization) {
-			this.module.localization = goorm.core.localization;
-			this.module.localization.init();
-		}
-
 		if (goorm.core.utility.loading_bar) {
 			this.module.loading_bar = goorm.core.utility.loading_bar;
 			this.module.loading_bar.init();
@@ -614,6 +609,11 @@ goorm.core.prototype = {
 		if (this.module.preference) {
 			this.dialog.preference = this.module.preference;
 			this.dialog.preference.init_dialog();
+		}
+
+		if (goorm.core.localization) {
+			this.module.localization = goorm.core.localization;
+			this.module.localization.init();
 		}
 
 		// for Selenium IDE
