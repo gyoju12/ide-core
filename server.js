@@ -12,36 +12,38 @@
 
 // Dependency
 //
-var express = require('express'),
-	fs = require('fs'),
-	
-	socketio = require('socket.io'),
-	http = require('http'),
-	colors = require('colors'),
-	redis = require('socket.io/node_modules/redis'),
-	connect = require('express/node_modules/connect'),
-	cookie = require('express/node_modules/cookie'),
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	methodOverride = require('method-override'),
-	multer = require('multer'),
-	os = require('os');
+var express = require('express');
+var fs = require('fs');
+
+var socketio = require('socket.io');
+var http = require('http');
+var colors = require('colors');
+var redis = require('socket.io/node_modules/redis');
+var connect = require('express/node_modules/connect');
+var cookie = require('express/node_modules/cookie');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var methodOverride = require('method-override');
+var multer = require('multer');
+var os = require('os');
 
 // External Variables
 //
-build_version = 'oss-1430194367';
+build_version = 'oss-1431091402';
 
 port = 9999;
 
 Schema = null;
 ObjectId = null;
-g_cluster = require("./modules/goorm.core.utility/utility.cluster");
+g_cluster = require('./modules/goorm.core.utility/utility.cluster');
 RedisStore = null;
 
 VERSION = 3;
 
-SITE_HOST = "goorm.io";
-IDE_HOST = "ide.goorm.io";
+SITE_HOST = 'goorm.io';
+IDE_HOST = 'ide.goorm.io';
+
+
 
 
 
@@ -64,6 +66,7 @@ DASHBOARD_HOST = 'dashboard.goorm.io';
 DASHBOARD_PORT = 3000;
 
 PROJECT_BUCKET = 'grm-project-bucket';
+CONTENTS_BUCKET = 'grm-contents-bucket';
 
 MODE = null; // IDE MODE --> (default:null), [edu], [cpp,java], ...
 
@@ -104,9 +107,9 @@ goorm.init = function() {
 	var set_global = function() {
 		// Set global
 		//
-		global.__path = __dirname + "/";
+		global.__path = __dirname + '/';
 
-		//useonly(mode=goorm-oss)	
+		//useonly(mode=goorm-oss)
 		global.__redis_mode = false;
 		
 
@@ -132,7 +135,7 @@ goorm.init = function() {
 
 		
 
-		//useonly(mode=goorm-oss)	
+		//useonly(mode=goorm-oss)
 		if (argv[2] > 0 && argv[2] < 100000) {
 			port = argv[2];
 		}
@@ -154,8 +157,8 @@ goorm.init = function() {
 	};
 
 	var set_goorm_config = function() {
-		//useonly(mode=goorm-oss)	
-		var base = process.env.HOME + "/goorm_workspace/";
+		//useonly(mode=goorm-oss)
+		var base = process.env.HOME + '/goorm_workspace/';
 
 		if (!fs.existsSync(base)) {
 			fs.mkdir(base, 0755, function(err) {
@@ -165,15 +168,15 @@ goorm.init = function() {
 			});
 		}
 
-		global.__workspace = process.env.HOME + "/goorm_workspace/";
+		global.__workspace = process.env.HOME + '/goorm_workspace/';
 		
 
 		
 
-			
+		
 
-		//useonly(mode=goorm-oss)	
-		var temp = process.env.HOME + "/goorm_tempdir/";
+		//useonly(mode=goorm-oss)
+		var temp = process.env.HOME + '/goorm_tempdir/';
 
 		if (!fs.existsSync(temp)) {
 			fs.mkdir(temp, 0755, function(err) {
@@ -183,15 +186,17 @@ goorm.init = function() {
 			});
 		}
 
-		global.__temp_dir = process.env.HOME + "/goorm_tempdir/";
+		global.__temp_dir = process.env.HOME + '/goorm_tempdir/';
 		
 
 		
 
-		if (!home) home = process.env.HOME;
+		if (!home) {
+			home = process.env.HOME;
+		}
 		if (fs.existsSync(home + '/.goorm/config.json')) {
 			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
-			if (data !== "") {
+			if (data !== '') {
 				config_data = JSON.parse(data);
 			}
 
@@ -213,13 +218,13 @@ goorm.init = function() {
 	set_goorm_config();
 
 	if (set_arguments()) {
-		// Update Workspace Path 
+		// Update Workspace Path
 		//
 		if (workspace && workspace !== 'undefined') {
 			global.__workspace = workspace;
 		}
 
-		if (global.__workspace && global.__workspace !== "") {
+		if (global.__workspace && global.__workspace !== '') {
 			if (global.__workspace[global.__workspace.length - 1] !== '/') {
 				global.__workspace = global.__workspace + '/';
 			}
@@ -247,11 +252,11 @@ goorm.init = function() {
 }
 
 
-	
+
 goorm.config = function() {
 	// Configuration
 	goorm.set('views', __dirname + '/views');
-	goorm.set("jsonp callback", true);
+	goorm.set('jsonp callback', true);
 	goorm.set('uploadDir', __temp_dir);
 	goorm.set('keepExtensions', true);
 
@@ -293,7 +298,7 @@ goorm.config = function() {
 				res.json({
 					err_code: 50,
 					type: 'check',
-					message: "You cannot upload large files with a size bigger than 50MB.",
+					message: 'You cannot upload large files with a size bigger than 50MB.',
 					file: req.__upload_err_files
 				});
 			} else {
@@ -321,11 +326,12 @@ goorm.config = function() {
 		secret: 'rnfmadlek',
 		key: COOKIE_NAME,
 		store: store,
-		cookie: (USE_SSO) ? { 'domain': COOKIE_DOMAIN } : null
+		cookie: (USE_SSO) ? {
+			'domain': COOKIE_DOMAIN
+		} : null
 	}));
 
 	
-
 
 	//goorm.use(express.logger('dev'));
 
@@ -337,7 +343,6 @@ goorm.config = function() {
 	
 
 	goorm.use(express.static(__temp_dir));
-
 
 	var env = process.env.NODE_ENV || 'development';
 	if ('development' == env) {
@@ -351,17 +356,20 @@ goorm.config = function() {
 
 	process.on('uncaughtException', function(err) {
 		var g_log = require('./modules/goorm.core.log/log');
-		
-		if (!fs.existsSync("./error_log/")) fs.mkdirSync("./error_log/", 0777);
+
+		if (!fs.existsSync('./error_log/')) {
+			fs.mkdirSync('./error_log/', 0777);
+		}
 		var now = new Date();
-		var date_now = (now.getMonth() + 1) + "_" + now.getDate() + "_" + now.getHours() + "_" + now.getMinutes() + "_" + now.getSeconds();
-		if (!fs.existsSync('./error_log/' + date_now + ".log")) fs.writeFileSync('./error_log/' + date_now + ".log", 'Caught exception: \n' + err + err.stack + "\n", 'utf8');
-		else {
-			console.log("come on")
-			fs.appendFileSync('./error_log/' + date_now + ".log", 'Caught exception: \n' + err + err.stack + "\n", "utf8");
+		var date_now = (now.getMonth() + 1) + '_' + now.getDate() + '_' + now.getHours() + '_' + now.getMinutes() + '_' + now.getSeconds();
+		if (!fs.existsSync('./error_log/' + date_now + '.log')) {
+			fs.writeFileSync('./error_log/' + date_now + '.log', 'Caught exception: \n' + err + err.stack + '\n', 'utf8');
+		} else {
+			console.log('come on')
+			fs.appendFileSync('./error_log/' + date_now + '.log', 'Caught exception: \n' + err + err.stack + '\n', 'utf8');
 		}
 
-		console.log('Caught exception: ' + err + err.stack + "\n" + "saved at " + './error_log/' + date_now + ".log");
+		console.log('Caught exception: ' + err + err.stack + '\n' + 'saved at ' + './error_log/' + date_now + '.log');
 
 		
 
@@ -377,7 +385,7 @@ goorm.config = function() {
 		var cfg = networkInterfaces[device];
 
 		if (cfg && cfg.length > 0) {
-			for (var i=0; i<cfg.length; i++) {
+			for (var i = 0; i < cfg.length; i++) {
 				var detail = cfg[i];
 
 				if (detail && detail.family === 'IPv4' && detail.address !== '127.0.0.1') {
@@ -397,7 +405,7 @@ goorm.config = function() {
 }
 
 goorm.check_session = function(req, res, next) {
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	var user = config_data.users[0];
 
 	req.__user = user;
@@ -430,9 +438,9 @@ goorm.set_expires_date = function(req, res, next) {
 
 goorm.routing = function() {
 	var routes = require('./routes');
-	var g_auth_m = require("./modules/goorm.core.auth/auth.manager"); // jeongmin: for update_session
-	var g_port_manager = require("./modules/goorm.core.utility/utility.port_manager");
-	var g_plugin = require("./modules/goorm.plugin/plugin.js");
+	var g_auth_m = require('./modules/goorm.core.auth/auth.manager'); // jeongmin: for update_session
+	var g_port_manager = require('./modules/goorm.core.utility/utility.port_manager');
+	var g_plugin = require('./modules/goorm.plugin/plugin.js');
 
 	
 
@@ -513,8 +521,8 @@ goorm.routing = function() {
 	goorm.get('/file/new_other', goorm.check_session, routes.file.do_new_other);
 	goorm.get('/file/save_as', goorm.check_session, routes.file.do_save_as);
 	goorm.get('/file/delete', goorm.check_session, routes.file.do_delete);
-	goorm.get('/file/delete_all', goorm.check_session, routes.file.do_delete_all);
 	goorm.get('/file/copy_file_paste', goorm.check_session, routes.file.do_copy_file_paste);
+	goorm.get('/file/directorys_exist', goorm.check_session, routes.file.do_directory_exist);
 	goorm.get('/file/get_contents', goorm.check_session, routes.file.get_contents);
 	goorm.get('/file/get_contents/send', routes.file.get_contents.send);
 	
@@ -533,7 +541,7 @@ goorm.routing = function() {
 	//for preference
 	goorm.get('/preference/workspace_path', function(req, res) {
 		res.json({
-			"path": global.__workspace
+			'path': global.__workspace
 		});
 	});
 	goorm.get('/preference/get_server_info', routes.preference.get_server_info);
@@ -545,7 +553,7 @@ goorm.routing = function() {
 	
 	goorm.get('/help/send_to_bug_report', goorm.check_session, routes.help.send_to_bug_report);
 
-	//useonly(mode=goorm-oss)	
+	//useonly(mode=goorm-oss)
 	goorm.post('/local_login', function(req, res) {
 		var response = {};
 		response.result = false;
@@ -610,7 +618,6 @@ goorm.routing = function() {
 
 	
 
-
 	goorm.get('/edit/get_dictionary', routes.edit.get_dictionary);
 	goorm.get('/edit/get_object_explorer', goorm.check_session, routes.edit.get_object_explorer);
 	
@@ -622,20 +629,22 @@ goorm.routing = function() {
 
 	// for Log
 	goorm.post('/log/save_error_log', goorm.check_session, routes.log.save_error_log);
+
+	
 };
 
 goorm.load = function() {
-	var g_terminal = require("./modules/goorm.core.terminal/terminal");
-	var g_file = require("./modules/goorm.core.file/file");
-	var g_plugin = require("./modules/goorm.plugin/plugin");
-	var g_utility = require("./modules/goorm.core.utility/utility");
-	var g_port_manager = require("./modules/goorm.core.utility/utility.port_manager");
+	var g_terminal = require('./modules/goorm.core.terminal/terminal');
+	var g_file = require('./modules/goorm.core.file/file');
+	var g_plugin = require('./modules/goorm.plugin/plugin');
+	var g_utility = require('./modules/goorm.core.utility/utility');
+	var g_port_manager = require('./modules/goorm.core.utility/utility.port_manager');
 
 	
 
 	
 
-	var g_ajax = require("./modules/ajax_routing/ajax.js")
+	var g_ajax = require('./modules/ajax_routing/ajax.js')
 
 	
 
@@ -644,7 +653,7 @@ goorm.load = function() {
 	
 
 	var set_main_log = function() {
-		console.log("");
+		console.log('');
 		console.log("             ,'''''',".blue);
 		console.log("          ''''''''''''''".blue);
 		console.log("        '''''        '''''''''''.".blue);
@@ -658,31 +667,31 @@ goorm.load = function() {
 		console.log("  '''',        ,''''';''''''         '''',".blue);
 		console.log(" :''''           `''''''';           ,''''".blue);
 		console.log(" :''''            '''''''            ,''''".blue);
-		console.log("  ::::`         ;::::::::::`         ::::.".cyan);
-		console.log("  ,;;;;;.   .;;;;;;;   ;;;;;;;:    ;;;;;;".cyan);
-		console.log("    ;;;;;;;;;;;;;;       :;;;;;;;;;;;;;:".cyan);
-		console.log("      ;;;;;;;;;             :;;;;;;;;`".cyan);
-		console.log("");
+		console.log('  ::::`         ;::::::::::`         ::::.'.cyan);
+		console.log('  ,;;;;;.   .;;;;;;;   ;;;;;;;:    ;;;;;;'.cyan);
+		console.log('    ;;;;;;;;;;;;;;       :;;;;;;;;;;;;;:'.cyan);
+		console.log('      ;;;;;;;;;             :;;;;;;;;`'.cyan);
+		console.log('');
 
-		console.log("--------------------------------------------------------".grey);
-		console.log("workspace_path: " + __workspace);
-		console.log("temp_dir_path: " + __temp_dir);
+		console.log('--------------------------------------------------------'.grey);
+		console.log('workspace_path: ' + __workspace);
+		console.log('temp_dir_path: ' + __temp_dir);
 
 		console.log();
 		console.log('If you want to change a workspace, use -w option.');
 		console.log('node goorm.js start -w [workspace]')
 		console.log();
-		console.log("goormIDE:: starting...".yellow);
-		console.log("--------------------------------------------------------".grey);
-		console.log("Open your browser and connect to");
+		console.log('goormIDE:: starting...'.yellow);
+		console.log('--------------------------------------------------------'.grey);
+		console.log('Open your browser and connect to');
 		console.log("'http://localhost:" + port + "' or 'http://[YOUR IP/DOMAIN]:" + port + "'");
-		console.log("--------------------------------------------------------".grey);
+		console.log('--------------------------------------------------------'.grey);
 	};
 
 	// clustering
 	//
 	var method = g_cluster.get_method();
-	if (method === "multi-processing") {
+	if (method === 'multi-processing') {
 		global.__set_redis_client = true;
 
 		global.__redis = {};
@@ -754,8 +763,6 @@ goorm.load = function() {
 					})
 				}
 
-
-
 				g_terminal.start(io);
 
 				
@@ -765,8 +772,8 @@ goorm.load = function() {
 				//simdjend
 
 				g_port_manager.alloc_port({
-					"port": port,
-					"process_name": "goorm"
+					'port': port,
+					'process_name': 'goorm'
 				});
 
 				
@@ -839,8 +846,8 @@ goorm.load = function() {
 			//simdjend
 
 			g_port_manager.alloc_port({
-				"port": port,
-				"process_name": "goorm"
+				'port': port,
+				'process_name': 'goorm'
 			});
 		};
 
@@ -850,7 +857,7 @@ goorm.load = function() {
 		});
 
 		set_io();
-				
+		
 	}
 };
 

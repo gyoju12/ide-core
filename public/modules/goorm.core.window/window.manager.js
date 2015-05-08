@@ -29,6 +29,7 @@ goorm.core.window.manager = {
 	transition_manager: null,
 	recent_window: [],
 	min_tab_width: 50,
+	activated_list: [], //[window.panel, window.panel, ...]
 
 	init: function(container) {
 		var self = this;
@@ -496,14 +497,19 @@ goorm.core.window.manager = {
 	},
 
 	previous_window: function() {
+		// console.log("---", this.index);
 		if (this.active_window > 0) {
 			this.activate(this.active_window - 1);
+		} else {
+			this.activate(this.index-1);
 		}
 	},
 
 	next_window: function() {
 		if (this.active_window < this.index - 1) {
 			this.activate(this.active_window + 1); // jeongmin: - -> +
+		} else {
+			this.activate(0); // jeongmin: - -> +
 		}
 	},
 

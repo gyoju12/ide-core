@@ -167,8 +167,7 @@ goorm.core.file.rename = {
 									}
 								}
 							}
-
-							core.module.layout.project_explorer.refresh();
+							core.module.layout.project_explorer.treeview.refresh_node(ori_path);
 						} else if (received_data.err_code == 20) {
 							alert.show(core.module.localization.msg[received_data.message]);
 							$('#input_rename_new_filename').focus();

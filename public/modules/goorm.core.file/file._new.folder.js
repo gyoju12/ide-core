@@ -111,8 +111,8 @@ goorm.core.file._new.folder = {
 						//$.get("file/new_folder", postdata, function (data) {
 						core._socket.once('/file/new_folder', function(check_data) {
 							if (check_data.err_code === 0) {
+								core.module.layout.project_explorer.treeview.refresh_node(data.path);
 								core.module.layout.project_explorer.treeview.open_path(data.path);
-								core.module.layout.project_explorer.refresh();
 							} else if (check_data.err_code == 20) {
 								alert.show(localization[check_data.message]);
 
@@ -130,10 +130,6 @@ goorm.core.file._new.folder = {
 						};
 
 						core._socket.once('/file/delete', function(data) {
-							// m.s("delete: " + core.status.selected_file);
-
-							core.module.layout.project_explorer.refresh();
-
 							var window_manager = core.module.layout.workspace.window_manager;
 							var window_list = window_manager.window;
 

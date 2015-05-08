@@ -69,25 +69,52 @@ goorm.core.layout = {
 			center__childOptions: {
 				enableCursorHotkey: false,
 				center__paneSelector: ".ui-inner-layout-center",
-				// inset: {
-				// 	top: 4
-				// },
+				south__animatePaneSizing: true,
+				south__fxSpeed: 'fast',
+				south__fxSettings: {
+					direction: "down"
+				},
+				south__fxName: 'fade',
+				south__fxSpeed_open: 1,
 				east__size: 380,
 				south__size: 200,
 				spacing_open: 3,
 				spacing_closed: 5,
 				onopen: function(pos) {
-					try {
-						if (pos == "east")
-							$(core).trigger("east_tab_openend");
-					} catch (e) {
-						console.log(e);
+					if (pos == "east") {
+						$(core).trigger("east_tab_openend");
 					}
 				},
+				onclose_start: function(pos) {
+					var inner_layout = goorm.core.layout.layout.center.children.layout1;
+					if (pos == "south" && !inner_layout.state.south.closing) {
+						inner_layout.state.south.closing = true;
+						inner_layout.state.south._size = inner_layout.state.south.size;
+						inner_layout.sizePane('south', '1');
+						return false
+					}
+				},
+				onclose_end: function(pos) {
+					var inner_layout = goorm.core.layout.layout.center.children.layout1;
+					if (pos == "south" && inner_layout.state.south.closing) {
+						inner_layout.state.south.closing = false;
+					}
+				},
+				onopen_start: function(pos) {
+					var inner_layout = goorm.core.layout.layout.center.children.layout1;
+					if (pos == "south") {
+						inner_layout.sizePane('south', inner_layout.state.south._size || inner_layout.state.south.size);
+					}
+
+				},
 				
-				onresize_end: $.debounce(function() {
+				onresize_end: function(pos) {
+					var inner_layout = goorm.core.layout.layout.center.children.layout1;
+					if (pos == "south" && inner_layout.state.south.closing) {
+						inner_layout.close('south');
+					}
 					self.refresh();
-				}, 100, false)
+				}
 			},
 			onload: function(obj, state, options, name) {
 				$('div.goorm_layout').show();
@@ -219,13 +246,6 @@ goorm.core.layout = {
 		var menu_shown = false;
 		var menu = null;
 
-		$("#goorm_left").find('div').bind("click",function() {
-			menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
-			if (menu_shown) {
-				$(core).trigger('contextmenu_all_hide');
-			}
-		});
-		
 		$('#goorm-mainmenu .dropdown').on('show.bs.dropdown', function() {
 			$(core).trigger('contextmenu_all_hide');
 		});
@@ -388,6 +408,26 @@ goorm.core.layout = {
 				self.refresh();
 			}
 		});
+
+		$(document).on('click', '#goorm-mainmenu .disabled,.dropdown-submenu', function(e) {
+			return false;
+		});
+
+		document.addEventListener('mousedown', function(e){
+			var context = $(e.target).closest('ul.dropdown-menu');
+			if (context) {
+				var parent = context.attr('parent');
+				if (parent) {
+					context = $('#' + parent).closest('ul.dropdown-menu');
+				}
+				context = context.closest('.dropdown');
+
+				$('div.goorm_menu_item').not(context).hide();
+				$('#goorm-mainmenu li.dropdown.open').not(context).removeClass('open');
+			} else {
+				$(core).trigger('contextmenu_all_hide');
+			}
+		}, true); //event capturing method.
 
 		$(core).on('contextmenu_all_hide', function() {
 			$('#goorm-mainmenu li.dropdown.open').removeClass('open');

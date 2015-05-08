@@ -565,9 +565,6 @@
 	"find_in_folder_context": {
 		"value": "현재 디렉토리에서 찾기"
 	},
-	"delete_all_context": {
-		"value": "모두 삭제"
-	},
 	"file_new_project_context": {
 		"value": "새 프로젝트"
 	},
@@ -696,5 +693,8 @@
 	},
 	"file_new_context_new_folder": {
 		"value": "폴더"
+	},
+	"file_send_link": {
+		"value": "채팅으로 파일 링크 전송"
 	}
 }

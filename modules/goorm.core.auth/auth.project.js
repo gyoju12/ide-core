@@ -8,6 +8,7 @@
  * version: 2.0.0
  **/
 
+
 var duration = 60 * 60 * 36; // seconds
 
 var EventEmitter = require("events").EventEmitter;
@@ -368,6 +369,24 @@ module.exports = {
 		} else {
 			fix_manifest();
 		}
+	},
+
+	set_last_open_date: function (project_path, callback) {
+		db.project.update({
+			'project_path': project_path
+		}, {
+			$set: {
+				'last_open_date': new Date()
+			}
+		}, function (err) {
+			if (err) {
+				console.log('auth.project.js:set_last_open_date fail', err);
+			}
+
+			if (callback && typeof(callback) === 'function') {
+				callback(true);
+			}
+		});
 	},
 
 		

@@ -34,6 +34,8 @@ try {
 
 
 
+
+
 /**
  * Middleware
  */
@@ -554,33 +556,26 @@ exports.file.do_save_as = function(req, res) {
 	g_file.do_save_as(req.query, evt);
 	
 };
-
-exports.file.do_delete_all = function(req, res) {
-	//var evt = new EventEmitter();
-	var files = req.query.files;
-	var directories = req.query.directorys;
-
-	
-
-	//useonly(mode=goorm-oss)
-	g_file.do_delete_all(req.query, function(result) {
-		res.json(result);
-	});
-	
-}
 exports.file.do_copy_file_paste = function(req, res) {
-	var files = req.query.files || [];
-	var directories = req.query.directorys || [];
-
+	//useonly(mode=goorm-standalone,goorm-oss)
+	var response = 'json';
 	
-
 	
+	var source = req.query.source;
+	var files = source.files;
 
-	//useonly(mode=goorm-oss)
-	g_file.do_copy_file_paste(req, function(result) {
-		res.json(result);
-	});
-	
+	if (source && (files || source.directorys)) {
+		
+		//useonly(mode=goorm-oss)
+		g_file.do_copy_file_paste(req, function(result) {
+			res[response](result);
+		});
+		
+	} else {
+		res[response]({
+			'err_code': 1
+		});
+	}
 }
 
 exports.file.do_delete = function(req, res) {
@@ -913,35 +908,51 @@ exports.file.do_search_on_project = function(req, res) {
 };
 
 exports.file.do_open = function(req, res) {
-		var query = req.query.q;
-		var __atob = function(str) {
-			return (new Buffer(str, 'base64').toString('binary'));
-		}
-
-		var decode = __atob(query);
-
-		var parser = function(decode) {
-			var result = {};
-
-			decode.split('&').forEach(function(part) {
-				var item = part.split('=');
-				result[__atob(item[0])] = decodeURIComponent(__atob(item[1]));
-			});
-
-			return result;
-		};
-
-		var decode_data = parser(decode); // id, filepath, filename, filetype
-		var filepath = decode_data.filepath.split('/');
-		filepath.shift();
-		filepath = filepath.join('/');
-		
-		res.write('<script>setTimeout("window.close();",10)</script>');
-		res.end();
+	var query = req.query.q;
+	var __atob = function(str) {
+		return (new Buffer(str, 'base64').toString('binary'));
 	}
-	/*
-	 * API : Terminal
-	 */
+
+	var decode = __atob(query);
+
+	var parser = function(decode) {
+		var result = {};
+
+		decode.split('&').forEach(function(part) {
+			var item = part.split('=');
+			result[__atob(item[0])] = decodeURIComponent(__atob(item[1]));
+		});
+
+		return result;
+	};
+
+	var decode_data = parser(decode); // id, filepath, filename, filetype
+	var filepath = decode_data.filepath.split('/');
+	filepath.shift();
+	filepath = filepath.join('/');
+	
+	res.write('<script>setTimeout("window.close();",10)</script>');
+	res.end();
+};
+exports.file.do_directory_exist = function(req, res) {
+	//useonly(mode=goorm-standalone,goorm-oss)
+	var response = 'json';
+	
+	
+
+	if (req.query.source.directorys && req.query.target) {
+		g_file.do_directory_exist(req, function(result) {
+			res[response](result);
+		});
+	} else {
+		res[response]({
+			'err_code': 1
+		});
+	}
+};
+/*
+ * API : Terminal
+ */
 
 exports.terminal = function(req, res) {
 	res.send(null);
@@ -1285,7 +1296,7 @@ exports.edit.load_tags = function(req, res) {
 
 
 
-	
+
 exports.log = function(req, res) {
 	res.json(null);
 };
@@ -1295,3 +1306,5 @@ exports.log.save_error_log = function(req, res) {
 		res.json(data);
 	});
 };
+
+

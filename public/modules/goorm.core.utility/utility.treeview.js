@@ -16,6 +16,7 @@ goorm.core.utility.treeview = function(selector, opts) {
 	this.raw_id = selector.replace('#', '');
 	this.options = {};
 	this._refresh = false;
+	this._refresh_node = null;
 	this.tree = $(selector);
 	this.is_ready = false;
 	this.raw_data = {};
@@ -242,21 +243,31 @@ goorm.core.utility.treeview.prototype = {
 
 		if (this.options.fetch === null) {
 			this.options.fetch = function(path, callback) {
-
 				var state = [];
 				if (_this.options.state && _this.options.state.core) {
 					state = _this.options.state.core.open;
 				}
 
+				if (_this._refresh_node) {
+					var _state = [];
+					$.each(state, function (index, value) { //delete children's opened flag
+						if (value.indexOf(path) === 0) {
+							_state.push(value);
+						}
+					});
+					state = _state;
+				} else if (!_this._refresh) {
+					state = []
+				}
+
 				var postdata = {
 					path: path,
-					state: (_this._refresh === true) ? state : []
+					state: state
 				};
 				// _this._refresh = false;
 				// console.log("load folder", postdata);
 
 				core._socket.set_url('/file/get_result_ls' + path, true);
-
 				core._socket.once('/file/get_result_ls' + path, function(data) {
 					callback(data);
 				});
@@ -287,7 +298,6 @@ goorm.core.utility.treeview.prototype = {
 						if (!$.isArray(project_root)) {
 							project_root = [project_root];
 						}
-						// console.log(project_root);
 						callback.call(self, project_root, function(model) { // model: this._model.data in jquery.jstree.custom.js
 							obj = model[obj.id]; // get current obj only
 
@@ -304,7 +314,6 @@ goorm.core.utility.treeview.prototype = {
 											_this.options.fetch(nodes[0].li_attr.path, function(_data) {
 												// console.log(data);
 												var data = process_data(_data);
-
 												_this.options.state = null;
 												_this.tree.jstree('_append_json_data', nodes[0], data, function() {
 													if (_this.is_ready === false) {
@@ -340,7 +349,32 @@ goorm.core.utility.treeview.prototype = {
 								}
 							}
 						});
-						// console.log(project_root);
+					} else if (_this._refresh_node == obj.id) { //refresh specific node
+						_this.options.fetch(obj.li_attr.path, function(_data) {
+							var data = process_data(_data);
+							/*
+								seongho.cha : when refresing specific node, need to follow these procedure.
+								1. remove children
+								2. set node's opened state if it was opened
+								3. apprend children
+								if not, it try to reload already loadead node again. and not be opened all opened node at once.
+							*/
+							callback.call(self, [], function() { // 1
+								if (_this.options.state.core.open.indexOf(obj.li_attr.path) > -1) {//2
+									_this.tree.jstree(true)._model.data[obj.id].state.opened = true; //open_node() can't be used beacse children doesn't exist yet
+								}
+								_this.options.state = null;
+								_this.tree.jstree("_append_json_data", obj, data, function() { //3
+									if (_this.is_ready === false) {
+										_this.is_ready = true;
+										if (typeof _this.options.on_ready === "function") {
+											_this.options.on_ready();
+										}
+									}
+								});
+								_this._refresh_node = false;
+							});
+						});
 					} else if (obj.type === 'folder' || obj.type === 'root') { // load node when it is folder
 						// console.log(obj);
 						_this.options.fetch(obj.li_attr.path, function(data) {
@@ -465,6 +499,28 @@ goorm.core.utility.treeview.prototype = {
 
 		return this;
 	},
+
+	refresh_node: function(node) {
+		var self = this;
+
+		if (node.indexOf(this.raw_id) !== 0) {
+			node = this.raw_id + "/" + node;
+		}
+
+		if (node.charAt(node.length - 1) === '/') {
+			node = node.substring(0, node.length - 1);
+		}
+
+		$.each(this.opened_node, function (key, value) { //delete children's opened flag
+			if (key.indexOf(node) === 0) {
+				delete self.opened_node[key];
+			}
+		});
+		this.options.state = this.get_state();
+		this._refresh_node = node;
+		this.tree.jstree('refresh_node', node);
+	},
+
 
 	/**
 	 * get state (opened files, selected files etc..)

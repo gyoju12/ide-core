@@ -182,6 +182,7 @@ goorm.core.edit.find_and_replace = {
 						var editor = active_window.editor.editor;
 						// jeongmin: remove all the highlights
 						CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
+						self.remove_search_focus(editor);
 						editor.focus(); // jeongmin: user can edit source code right after finding
 					}
 					self.current_count = 0;
@@ -194,8 +195,6 @@ goorm.core.edit.find_and_replace = {
 					if (window_manager.window[window_manager.active_window].searching) // jeongmin: only when searching
 						core.dialog.search.unmark(); // jeongmin: remove search highlight
 
-					$("#find_query_inputbox").focus();
-					$("#find_query_inputbox").select();
 					// 	var window_manager = core.module.layout.workspace.window_manager;  // this part remove Donguk Kim
 
 					// cut modal fade (dialog size)
@@ -364,7 +363,6 @@ goorm.core.edit.find_and_replace = {
 			start,
 			options = { "whole_word": this.whole_word,
 					  	"ignore_case": !this.match_case };
-		
 		if(this.use_regexp) {	// special case : regexp
 			try{
 				text = new RegExp(text);
@@ -424,8 +422,7 @@ goorm.core.edit.find_and_replace = {
 					} else {
 						this.current_count = this.total_count - 1;
 					}
-				}
-				
+				}	
 			}
 			
 		}
@@ -538,7 +535,54 @@ goorm.core.edit.find_and_replace = {
 				$("#find_query_inputbox").focus();
 				$("#find_query_inputbox").select();
 			});
+		} else {
+			this.draw_search_focus(editor);	
 		}
+	},
+	draw_search_focus: function(editor) {
+		if (!editor.somethingSelected() || $(editor.display.wrapper).find('.cm-searching').length === 0) {
+			this.remove_search_focus(editor);
+			return;
+		}
+		var start = editor.cursorCoords(true, {mode: 'local'});
+		var end = editor.cursorCoords(false, {mode: 'local'});
+		var height = start.bottom - start.top;
+		if (start.top < 0) {
+			start.top = 0;
+		}
+		if (end.bottom < 0) {
+			end.top = 0;
+		}
+
+		if ($(editor.display.wrapper).find('.CodeMirror-lines').children().children('.goorm-search').length === 0) {
+			$(editor.display.wrapper).find('.CodeMirror-lines').children().prepend('<div class="goorm-search" style="position: relative; z-index: 2;"></div>');	
+		}
+		var $to = $(editor.display.wrapper).find('.CodeMirror-lines').children().children('.goorm-search');
+		var PRE_PADDING = 4;
+
+		this.remove_search_focus(editor);
+		
+		if (start.top === end.top) {	// no line wrapped
+			$to.append('<div class="goorm-search-focus" style="top: ' + start.top + 'px; ' +
+														'left: ' + start.left + 'px; ' +
+														'width: ' + (end.left - start.left).toString() + 'px; ' +
+														'height: ' + height.toString() + 'px;' +
+														'"></div>');	
+		} else {	// line wrapped
+			$to.append('<div class="goorm-search-focus" style="top: ' + start.top + 'px; ' +
+														'left: ' + start.left + 'px; ' +
+														'width: ' + ($to.parents('.CodeMirror-lines').width() - start.left - PRE_PADDING).toString() + 'px; ' +
+														'height: ' + height.toString() + 'px;' +
+														'"></div>');
+			$to.append('<div class="goorm-search-focus" style="top: ' + end.top + 'px; ' +
+														'left: ' + PRE_PADDING + 'px; ' +
+														'width: ' + end.left + 'px; ' +
+														'height: ' + height.toString() + 'px;' +
+														'"></div>');
+		}
+	},
+	remove_search_focus: function(editor) {
+		$(editor.display.wrapper).find('.CodeMirror-lines').children().children('.goorm-search').empty();
 	},
 	/* 트리뷰 만들어줘야됌 */
 	search_all: function(keyword, editor) {
@@ -883,7 +927,6 @@ goorm.core.edit.find_and_replace = {
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window] !== undefined) {
 
-
 			this.panel.modal('show');
 			// Get current active_window's CodeMirror editor
 			var editor = window_manager.window[window_manager.active_window].editor.editor;
@@ -891,6 +934,7 @@ goorm.core.edit.find_and_replace = {
 			if (editor.getSelection() !== "") {
 				$("#find_query_inputbox").val(editor.getSelection());
 			}
+			$("#find_query_inputbox").select();
 		} else {
 			alert.show(core.module.localization.msg.alert_cannot_exist_editor);
 		}
@@ -901,8 +945,6 @@ goorm.core.edit.find_and_replace = {
 		$("#far_use_regexp").tooltip();
 		$("#g_far_btn_find_prev").tooltip();
 		$("#g_far_btn_find").tooltip();
-		$("#find_query_inputbox").focus();
-		$("#find_query_inputbox").select();
 
 	}
 };

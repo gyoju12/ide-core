@@ -760,34 +760,24 @@ module.exports = {
 			});
 
 			socket.on('/file/delete', function(msg) {
+				if (msg.files || msg.directorys) {
+					var evt = new EventEmitter();
+					var files = (msg.files || []).concat(msg.directorys || []);
 
-				var evt = new EventEmitter();
-				var user_level = null;
-				var author_level = null;
+					evt.once('file_do_delete', function(data) {
+						socket.emit('/file/delete', data);
+					});
 
-				evt.once('file_do_delete', function(data) {
-					socket.emit('/file/delete', data);
-				});
+					
 
-				
-
-				//useonly(mode=goorm-oss)
-				g_file.do_delete(msg, evt);
-				
-			});
-
-			//context menu err
-			socket.on('/file/delete_all', function(msg) {
-				var files = msg.files;
-				var directories = msg.directorys;
-
-				
-
-				//useonly(mode=goorm-oss)
-				g_file.do_delete_all(msg, function(result) {
-					socket.emit('/file/delete_all', result);
-				});
-				
+					//useonly(mode=goorm-oss)
+					g_file.do_delete(files, evt);
+					
+				} else { // invalid query
+					socket.emit('/file/delete', {
+						err_code: 1
+					});
+				}
 			});
 
 			socket.on('/file/get_contents', function(msg) {

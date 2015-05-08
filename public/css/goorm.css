@@ -314,11 +314,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-focused .CodeMirror-selected {
     background: #d7d4f0;
 }
-.cm-searching {
-    background: transparent;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px 1px #007ee5;
+.goorm-search-focus {
+    position: absolute;
+    outline: #007ee5 solid 2px;
 }
+
 /* IE7 hack to prevent it from returning funny offsetTops on the spans */
 
 .CodeMirror span {
@@ -1340,7 +1340,8 @@ Toolbar CSS
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     background-color: #fff;
     border-color: #bbb #bbb #a8a8a8;
-    border: 1px solid;
+    border-style: solid;
+    border-width: 1px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     float: right;
     margin-right: 25px;
@@ -1598,6 +1599,14 @@ Toolbar CSS
 .continue_message:last-child {
     border-bottom: none;
 }
+
+.continue_message a:visited {
+    color : #3366BB
+}
+
+.continue_message a:link {
+    color : #3366BB
+}
 .triangle-border {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -1675,6 +1684,7 @@ Toolbar CSS
 .talk .triangle-border {
     padding: 4px 0px;
 }
+
 /* dlg css start*/
 
 #dlg_alert, 

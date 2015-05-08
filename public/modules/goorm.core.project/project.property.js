@@ -142,11 +142,15 @@ goorm.core.project.property = {
 
 				if (data.property) { // final saved property(real property) -> exists only if invalid query is there
 					core.property = data.property; // set back to valid property
-					self.fill_dialog(core.property);
 				}
+			} else {	// new property
+				core.property = property;
 			}
-
-			$.extend(true, core.workspace[path], property);
+			
+			// set property (if property isn't modified in property dialog, need to set property manually)
+			$.extend(true, core.workspace[path], core.property);	
+			self.fill_dialog(core.property);
+			
 			callback && callback();
 		});
 

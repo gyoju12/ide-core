@@ -1,1361 +1,1370 @@
 {
-    "alert_file_name_illegal": {
-        "value": "File name is wrong."
-    },
-    "alert_file_size_too_big": {
-        "value": "Oops! This file is too big to open!<br/>We can open files that are smaller than 10MB."
-    },
-    "alert_file_size_too_big_to_upload": {
-        "value": "Oops! This file is too big to upload!<br/>Total size should be less than 20MB."
-    },
-    "alert_filename_empty": {
-        "value": "File name is empty."
-    },
-    "alert_project_copy": {
-        "value": "Project can't copy."
-    },
-    "alert_file_permission": {
-        "value": "You do not have permission to modify the file."
-    },
-    "alert_scm_permission": {
-        "value": "You do not have permission to access the SCM."
-    },
-    "alert_shortcut_modified": {
-        "value": "Preference modification have been completed!"
-    },
-    "alert_file_not_select": {
-        "value": "Please, select the file."
-    },
-    "alert_folder_duplicate_error": {
-        "value": "Folder can't duplicate."
-    },
-    "alert_file_not_opened": {
-        "value": "Cannot find opened file."
-    },
-    "alert_cannot_find_word": {
-        "value": "Cannot find a word."
-    },
-    "alert_find_id_notexist": {
-        "value": "No ID found. Please check name and email again."
-    },
-    "alert_find_id_exist": {
-        "value": "Your ID is"
-    },
-    "alert_find_pw_notexist": {
-        "value": "No information found. Please check ID, name and email again."
-    },
-    "alert_find_pw_exist": {
-        "value": "Temporary password sent to your email account."
-    },
-    "alert_forgot_info": {
-        "value": "Find ID/PW"
-    },
-    "alert_project_not_selected": {
-        "value": "Please select the project."
-    },
-    "alert_unsupported_file_type": {
-        "value": "We don't support this file type."
-    },
-    "alert_no_imported_file": {
-        "value": "There is no project to be imported"
-    },
-    "alert_project_not_opened": {
-        "value": "Cannot find opened project."
-    },
-    "alert_print_file_error": {
-        "value": "No file opened."
-    },
-    "alert_plugin_check_terminal": {
-        "value": "Check terminal on screen."
-    },
-    "alert_plugin_build_failed": {
-        "value": "Fail to build project.<br/>Check errors below."
-    },
-    "alert_plugin_not_while_running": {
-        "value": "Your program is running...<br/>Try it after end of your program."
-    },
-    "alert_plugin_run_success": {
-        "value": "Successfully excuted.<br/>Check terminal on screen."
-    },
-    "alert_plugin_run_fail": {
-        "value": "Failed excuted.<br/>Check terminal on screen."
-    },
-    "alert_filetype_same_name": {
-        "value": "There is same file extension."
-    },
-    "alert_error": {
-        "value": "Error"
-    },
-    "alert_upload_fail": {
-        "value": "Fail to upload. Please retry upload."
-    },
-    "alert_deny_make_file_in_workspace_root": {
-        "value": "You cannot make a file in workspace root"
-    },
-    "alert_deny_make_folder_in_workspace_root": {
-        "value": "You cannot make a folder in workspace root"
-    },
-    "alert_deny_rename_folder_in_workspace_root": {
-        "value": "You cannot rename a folder in workspace root."
-    },
-    "alert_merge_menu_for_editor": {
-        "value": "Code Merge menu is only for Editor."
-    },
-    "alert_open_editor_more_two": {
-        "value": "Open editor windows more than 2."
-    },
-    "confirmation_cancel": {
-        "value": "Cancel"
-    },
-    "yes": {
-        "value": "Yes"
-    },
-    "no": {
-        "value": "No"
-    },
-    "confirmation_exit_title": {
-        "value": "Exit"
-    },
-    "confirmation_decompress_title": {
-        "value": "Decompress"
-    },
-    "confirmation_delete_title": {
-        "value": "Delete"
-    },
-    "confirmation_title": {
-        "value": "Confirmation"
-    },
-    "confirmation_save": {
-        "value": "Close..."
-    },
-    "confirmation_build": {
-        "value": "Build..."
-    },
-    "confirmation_restore_unsaved_data": {
-        "value": "You have unsaved data. Do you want to recover?"
-    },
-    "confirmation_project_close_and_save": {
-        "value": "You cannot open a project more. Do you want to close oldest project?"
-    },
-    "save_and_close": {
-        "value": "All save and close"
-    },
-    "dont_save_and_close": {
-        "value": "No save and close"
-    },
-    "confirmation_save_message": {
-        "value": " has been modified. Save changes?"
-    },
-    "confirmation_language_message": {
-        "value": "언어설정을 한국어로 변경하시겠습니까?"
-    },
-    "confirmation_logout_save": {
-        "value": "Logout after save"
-    },
-    "confirmation_logout": {
-        "value": "Logout"
-    },
-    "confirmation_not_saved": {
-        "value": " File is not Saved."
-    },
-    "confirmation_auto_logout": {
-        "value": "Auto Logout"
-    },
-    "confirmation_auto_logout_keep_using": {
-        "value": "Keep Using"
-    },
-    "confirmation_auto_logout_warning": {
-        "value": "Second later Auto Logout"
-    },
-    "tutorial_guide": {
-        "value": "Do you want to start tutorial?<br/>(You can go to next/prev step via arrow keys.)"
-    },
-    "alert_project_detailed_type": {
-        "value": "Select the project detailed type."
-    },
-    "alert_project_name": {
-        "value": "Insert the project name."
-    },
-    "alert_allow_character": {
-        "value": "Only alphabets, numbers and _, - are allowed."
-    },
-    "alert_allow_character2": {
-        "value": "Only alphabets, numbers and _ are allowed."
-    },
-    "alert_allow_django": {
-        "value": "Django Project not allowed this project name - 'django' and 'test'"
-    },
-    "notice_file_import_done": {
-        "value": "File import done."
-    },
-    "confirmation_exit": {
-        "value": "Do you want to exit?"
-    },
-    "confirmation_decompress_file": {
-        "value": "Do you want to decompress this file?"
-    },
-    "confirmation_down_file": {
-        "value": "Can not extract file type. Do you want to download?"
-    },
-    "confirmation_delete_file": {
-        "value": "Do you want to delete this file?"
-    },
-    "confirmation_delete_project": {
-        "value": "Do you want to delete this project?"
-    },
-    "confirmation_delete_all": {
-        "value": "Do you want to delete all files and directorys?"
-    },
-    "confirmation_new_message": {
-        "value": "Same file name already exists. Do you want to create anyway?<br/>(The contents of original file will be gone.)"
-    },
-    "confirmation_rename_message": {
-        "value": "Same file name already exists. Do you want to rename anyway?<br/>(If you choose 'yes', original file will be deleted."
-    },
-    "alert_collaboration_previous_chat": {
-        "value": "Previous Chats"
-    },
-    "alert_collaboration_chat_join": {
-        "value": "joined this workspace!"
-    },
-    "alert_collaboration_chat_leave": {
-        "value": "leaved this workspace!"
-    },
-    "alert_collaboration_chat_unfriend": {
-        "value": "is not your friend."
-    },
-    "alert_collaboration_chat_change": {
-        "value": "change name to "
-    },
-    "alert_collaboration_chat_change2": {
-        "value": "!"
-    },
-    "alert_title_empty": {
-        "value": "Insert the title."
-    },
-    "alert_author_empty": {
-        "value": "Insert the author."
-    },
-    "alert_email_empty": {
-        "value": "Insert the E-mail."
-    },
-    "alert_version_empty": {
-        "value": "Insert the version."
-    },
-    "alert_module_empty": {
-        "value": "Insert the module."
-    },
-    "alert_contents_empty": {
-        "value": "Insert the content."
-    },
-    "alert_cannot_write": {
-        "value": "cannot write"
-    },
-    "alert_cannot_project_delete": {
-        "value": "Can not delete project."
-    },
-    "notice_write_done": {
-        "value": "Bug report is successfully sent. Thank you."
-    },
-    "notice_file_import_done": {
-        "value": "File is imported."
-    },
-    "notice_project_delete_done": {
-        "value": "Project is deleted."
-    },
-    "notice_modified_profile": {
-        "value": "User Profile successfully modified."
-    },
-    "alert_collaboration_server_notconnected": {
-        "value": "Server disconnected."
-    },
-    "alert_select_project_item": {
-        "value": "You must select at least one project."
-    },
-    "alert_no_have_data": {
-        "value": "No data to display."
-    },
-    "alert_no_have_project": {
-        "value": "No project to display."
-    },
-    "alert_user_undefined_id": {
-        "value": "Please enter an ID."
-    },
-    "alert_user_undefined_student_id": {
-        "value": "Please enter an Student ID."
-    },
-    "alert_user_unfit_student_id": {
-        "value": "The format of the Student ID is not valid. (10 digits Number)."
-    },
-    "alert_user_unfit_reg_id": {
-        "value": "The format of the ID is not valid. (4~15 digits, Alphabet+Number)."
-    },
-    "alert_user_duplicate_id": {
-        "value": "The ID is duplicated."
-    },
-    "alert_user_duplicate_email": {
-        "value": "The EMAIL is duplicated."
-    },
-    "alert_user_duplicate_student_id": {
-        "value": "The Student ID is duplicated."
-    },
-    "alert_user_unmatched_id": {
-        "value": "Cannot access the user."
-    },
-    "alert_user_undefined_password": {
-        "value": "Please enter a Password."
-    },
-    "alert_user_undefined_re_password": {
-        "value": "Please enter a Repassword"
-    },
-    "alert_user_undefined_password_not_match": {
-        "value": "Please recheck your password. They are not a match."
-    },
-    "alert_user_unfit_req_password": {
-        "value": "The format of the password is not valid. (8~15 digits, Alphabet+Number+Special characters)."
-    },
-    "alert_user_undefined_email": {
-        "value": "Please enter an E-mail."
-    },
-    "alert_user_unfit_email": {
-        "value": "The format of the email is not valid. (ex: goorm@goorm.io)"
-    },
-    "alert_user_undefined_name": {
-        "value": "Please enter a Name."
-    },
-    "alert_user_unfit_name": {
-        "value": "The format of the name is not valid. (3~15 digits, Hangul/Alphabet/Number/Special characters(-/_/./ /))."
-    },
-    "alert_user_limit_comment": {
-        "value": "The comment is too long. (Up to 20 digits)"
-    },
-    "alert_confirm_logout": {
-        "value": "Are you sure you want to logout?"
-    },
-    "alert_login_not_match_password": {
-        "value": "Password is incorrect."
-    },
-    "alert_login_no_id": {
-        "value": "There is no such a member."
-    },
-    "alert_login_undefined_id_or_password": {
-        "value": "ID or Password is not typed."
-    },
-    "alert_npm_limit": {
-        "value": "You can not install more NPM Library.<br/>Limit: "
-    },
-    "alert_npm_version": {
-        "value": "This version not exists."
-    },
-    "notice_no_matched_fild": {
-        "value": "No matching files found."
-    },
-    "notice_welcome_goorm": {
-        "value": "Welcome to cloud coding service goorm."
-    },
-    "alert_cannot_connect_db": {
-        "value": "Fail to connect with database."
-    },
-    "confirmation_change_profile": {
-        "value": "If you want to change your profile, please write your password."
-    },
-    "notice_search_select_project": {
-        "value": "Select Project"
-    },
-    "confirmation_delete_filetype": {
-        "value": "Do you really want to delete this filetype?"
-    },
-    "toast_filetype_save_complete": {
-        "value": "Filetype save complete!"
-    },
-    "alert_too_many_editors": {
-        "value": "Too many editors are opened. <br/>Close unnecessary editors."
-    },
-    "alert_cannot_project_run": {
-        "value": "Cannot run the project. Please select a proper project."
-    },
-    "alert_cannot_project_remote_run": {
-        "value": "Cannot remote run the project. Please select a proper project."
-    },
-    "alert_cannot_project_generate": {
-        "value": "Cannot generate the project. Please select a proper project."
-    },
-    "alert_cannot_project_build": {
-        "value": "Cannot build the project. Please select a proper project."
-    },
-    "alert_cannot_project_debug": {
-        "value": "Debug is not started or supported for this project."
-    },
-    "alert_confirm_duplicate_login": {
-        "value": "This account is already being used on other device.<br/>Do you really want to disconnect this account and re-login on this device?"
-    },
-    "alert_force_logout": {
-        "value": "Current connection will be terminated."
-    },
-    "alert_confirm_delete_co_developer": {
-        "value": "Do you really want to fire the co-developer?"
-    },
-    "alert_confirm_invite_co_developer": {
-        "value": "Do you really want to invite the co-developer?"
-    },
-    "alert_no_display_to_data": {
-        "value": "No developers share this project."
-    },
-    "alert_select_project": {
-        "value": "Please select your project."
-    },
-    "alert_select_file": {
-        "value": "Please select your file at project explorer."
-    },
-    "alert_not_compressed_file": {
-        "value": "Please select your compressed file at project explorer."
-    },
-    "alert_quiz_is_ended": {
-        "value": "Quiz is ended or not started."
-    },
-    "alert_login_not_service_account": {
-        "value": "It's not account of the service mode. Please register a new one."
-    },
-    "dialog_survey": {
-        "value": "Survey"
-    },
-    "survey_title": {
-        "value": "User Survey"
-    },
-    "survey_message": {
-        "value": "If you have suggestions in using goorm, Please let us to know! Thank you~"
-    },
-    "survey_send": {
-        "value": "Send"
-    },
-    "survey_not_send": {
-        "value": "No, Thanks"
-    },
-    "alert_open_file_fail": {
-        "value": "Cannot read this file."
-    },
-    "alert_save_file_fail": {
-        "value": "Fail to save file"
-    },
-    "dictionary_project_list": {
-        "value": "Project List"
-    },
-    "dictionary_my_project": {
-        "value": "My Project"
-    },
-    "dictionary_collaboration_project": {
-        "value": "Collaboration Project"
-    },
-    "dictionary_type": {
-        "value": "Type"
-    },
-    "dictionary_name": {
-        "value": "Name"
-    },
-    "dictionary_author": {
-        "value": "Author"
-    },
-    "dictionary_userid": {
-        "value": "User ID"
-    },
-    "dictionary_history_time": {
-        "value": "Save Time"
-    },
-    "dictionary_history_delay": {
-        "value": "Delay(sec)"
-    },
-    "dictionary_event": {
-        "value": "Event"
-    },
-    "dictionary_line": {
-        "value": "Line"
-    },
-    "dictionary_content": {
-        "value": "Content"
-    },
-    "dictionary_file": {
-        "value": "File"
-    },
-    "dictionary_chat": {
-        "value": "Chat"
-    },
-    "dictionary_add_friend": {
-        "value": "Add Friend"
-    },
-    "dictionary_unfriend": {
-        "value": "Unfriend"
-    },
-    "dictionary_friend_request": {
-        "value": "Request"
-    },
-    "dictionary_friend_cancel": {
-        "value": "Delete Request"
-    },
-    "dictionary_accept": {
-        "value": "Accept"
-    },
-    "dictionary_reject": {
-        "value": "Reject"
-    },
-    "dictionary_package": {
-        "value": "Package"
-    },
-    "dictionary_class": {
-        "value": "Class"
-    },
-    "dictionary_interface": {
-        "value": "Interface"
-    },
-    "dictionary_install": {
-        "value": "Install"
-    },
-    "dictionary_uninstall": {
-        "value": "Uninstall"
-    },
-    "npm_no_libraries": {
-        "value": "No Libraries."
-    },
-    "alert_cannot_template_folder": {
-        "value": "Please do this work on your source folder."
-    },
-    "alert_type_is_empty": {
-        "value": "Type name is empty."
-    },
-    "alert_check_package_name": {
-        "value": "Please check package name again."
-    },
-    "alert_same_file_at_created_package": {
-        "value": "Same name of file already exists at created package."
-    },
-    "alert_check_package": {
-        "value": "Package folder does not exist.<br/>Please make package first."
-    },
-    "alert_cannot_paste_in_darwin": {
-        "value": "Paste operation is impossible in 'Edit' menu, but It's possible using ⌘V key."
-    },
-    "alert_cannot_paste_in_not_darwin": {
-        "value": "Paste operation is impossible in 'Edit' menu, but It's possible using Ctrl+V key."
-    },
-    "alert_cannot_exist_editor": {
-        "value": "There are no available editor."
-    },
-    "alert_project_over_limit": {
-        "value": "You can not make more projects.<br/>Limit: "
-    },
-    "alert_project_exist": {
-        "value": "Same project name exists."
-    },
-    "alert_version_required": {
-        "value": "Version Name required."
-    },
-    "alert_package_name_required": {
-        "value": "Package Name required."
-    },
-    "notice_update_message": {
-        "value": "Hello, goorm dev.team continues to fix bugs and add features.<br/>(Latest Update: "
-    },
-    "confirmation_replace_all_none": {
-        "value": "No matched text."
-    },
-    "confirmation_replace_all_end": {
-        "value": " occurrence(s)?"
-    },
-    "title_replace_all": {
-        "value": "Replace all"
-    },
-    "confirmation_history_merge": {
-        "value": "Merge this snapshot with previous one, and this snapshot will be deleted.<br/>Are you sure?"
-    },
-    "confirmation_history_delete_all": {
-        "value": "All the history logs will be deleted."
-    },
-    "confirmation_not_latest_build": {
-        "value": "It is not the latest build."
-    },
-    "confirmation_not_latest_build_run_msg": {
-        "value": "It is not the latest build.<br/>Please click [Build and Run] button to build the project first."
-    },
-    "confirmation_not_latest_build_debug": {
-        "value": "It is not the latest build.<br/>Please debug after build."
-    },
-    "confirmation_build_and_run": {
-        "value": "Build and Run"
-    },
-    "confirmation_build_and_debug": {
-        "value": "Build and Debug"
-    },
-    "confirmation_not_save": {
-        "value": "It is not the latest code."
-    },
-    "confirmation_not_save_msg": {
-        "value": "Do you want to save after run, <br>click [Save and Run] button or [Run] button."
-    },
-    "confirmation_save_run": {
-        "value": "Save and Run"
-    },
-    "confirmation_run": {
-        "value": "Run"
-    },
-    "server_reconnect_fail": {
-        "value": "A connection failure has occurred. Please reconnect to the server."
-    },
-    "someone_typing_message": {
-        "value": " is typing..."
-    },
-    "someones_typing_message": {
-        "value": " are typing..."
-    },
-    "confirmation_share_history_play": {
-        "value": "Would you like to share Play event with another developers?"
-    },
-    "confirmation_history_play": {
-        "value": " wants to share Play event.<br/>Are you sure?"
-    },
-    "confirmation_reject_friend": {
-        "value": "Do you want to reject friend request?"
-    },
-    "confirmation_accept_friend": {
-        "value": "Do you want to accept friend request?"
-    },
-    "confirmation_del_friend": {
-        "value": "Do you want to delete the friend?"
-    },
-    "confirmation_add_friend": {
-        "value": "Do you want to add the friend?"
-    },
-    "confirmation_cancel_friend": {
-        "value": "Do you want to cancel the friend request?"
-    },
-    "confirmation_accept_project": {
-        "value": "Do you want to accept to share the project?"
-    },
-    "confirmation_reject_project": {
-        "value": "Do you want to reject the project?"
-    },
-    "confirmation_leave_project": {
-        "value": "Do you want to leave the project?"
-    },
-    "notice_invite_project": {
-        "value": " invites you to project."
-    },
-    "confirmation_shortcut_conflict": {
-        "value": "Shortcut you input already exists.<br/>Do you want it to overwrite?"
-    },
-    "confirmation_do_you_want_to_add": {
-        "value": "Do you want to add?"
-    },
-    "confirmation_do_you_want_to_remove_svn": {
-        "value": "Do you want to remove?"
-    },
-    "confirmation_do_you_want_to_remove_git": {
-        "value": "Do you want to remove?<br/>This file also will be deleted from file system and it is irreparable."
-    },
-    "confirmation_do_you_want_to_commit": {
-        "value": "Do you want to commit?"
-    },
-    "confirmation_revert_to_head": {
-        "value": "Do you want to revert to HEAD?<br/>You will lose local changes and it is irreparable."
-    },
-    "confirmation_do_you_want_to_update": {
-        "value": "Do you want to update?"
-    },
-    "confirmation_do_you_want_to_lock": {
-        "value": "Do you want to lock?"
-    },
-    "confirmation_do_you_want_to_unlock": {
-        "value": "Do you want to unlock?"
-    },
-    "confirmation_do_you_want_to_cleanup": {
-        "value": "Do you want to cleanup?"
-    },
-    "confirmation_do_you_want_to_resolve_conflict": {
-        "value": "Do you want to resolve conflict?"
-    },
-    "confirmation_do_you_want_to_project_update": {
-        "value": "Same project name exists in other goorm. Do you want it to overwrite?"
-    },
-    "confirmation_del_profile_image": {
-        "value": "Do you want to delete profile image?<br>Please Enter your password!"
-    },
-    "confirmation_change_profile_image": {
-        "value": "Do you want to change profile image?<br>Please Enter your password!"
-    },
-    "confirmation_close_tab": {
-        "value": "Do you want to close goorm?"
-    },
-    "del_profile_image": {
-        "value": "Delete Profile Image"
-    },
-    "change_profile_image": {
-        "value": "Change Profile Image"
-    },
-    "there_is_not_repository": {
-        "value": "It isn't Git/Subversion repository."
-    },
-    "reject_friend": {
-        "value": "Reject Friend Request"
-    },
-    "accept_friend": {
-        "value": "Accept Friend Request"
-    },
-    "accept_project": {
-        "value": "Accept Project Sharing Request"
-    },
-    "reject_project": {
-        "value": "Reject Project Sharing Request"
-    },
-    "leave_project": {
-        "value": "Leave Shared Project"
-    },
-    "tutorial": {
-        "value": "Tutorial"
-    },
-    "project_share_none": {
-        "value": "This user cannot access this project."
-    },
-    "project_share_readonly": {
-        "value": "This user can only read files"
-    },
-    "project_share_editable": {
-        "value": "This user can modify and files(and projects)"
-    },
-    "project_share_manager": {
-        "value": "This user can modify and files(and projects).<br/>In addition, This user can share projects with other developers"
-    },
-    "editor_saving": {
-        "value": "Saving..."
-    },
-    "editor_saved": {
-        "value": "Changes saved"
-    },
-    "connect_state": {
-        "value": "Connected"
-    },
-    "disconnect_state": {
-        "value": "Disconnected"
-    },
-    "shared_project_open": {
-        "value": "Open"
-    },
-    "shared_project_leave": {
-        "value": "Leave"
-    },
-    "shared_project_manage": {
-        "value": "Manage"
-    },
-    "invitation_waiting": {
-        "value": "Waiting..."
-    },
-    "invitation_accept_open": {
-        "value": "Accept & Open"
-    },
-    "alert_same_file_at_created_class": {
-        "value": "Same name of file already exists at created class."
-    },
-    "alert_same_file_at_created_interface": {
-        "value": "Same name of file already exists at created interface."
-    },
-    "profile_comment": {
-        "value": "Comment..."
-    },
-    "profile_password": {
-        "value": "(8~15), Alphabet+Number+Special"
-    },
-    "profile_password_confirm": {
-        "value": "Please enter your pw again to confirm..."
-    },
-    "signup_id": {
-        "value": "Input ID"
-    },
-    "signup_name": {
-        "value": "2~15 digits, Hangul/Alphabet/Num/( -/_/ . / /)"
-    },
-    "tutorial_prev": {
-        "value": "&laquo; Prev"
-    },
-    "tutorial_next": {
-        "value": "Next &raquo;"
-    },
-    "tutorial_end": {
-        "value": "End tour"
-    },
-    "project_empty": {
-        "value": "Proejct does not exist."
-    },
-    "window_bottom_layout_output": {
-        "value": "Show Output"
-    },
-    "output": {
-        "value": "Output"
-    },
-    "server": {
-        "value": "Server"
-    },
-    "webview": {
-        "value": "Webview"
-    },
-    "window_right_layout_quiz": {
-        "value": "Show Quiz"
-    },
-    "quiz": {
-        "value": "Quiz"
-    },
-    "alert_wrong_tab": {
-        "value": "Wrong Tab"
-    },
-    "alert_select_scm_type": {
-        "value": "Select your SCM type!"
-    },
-    "alert_input_repo_url": {
-        "value": "Input repository URL!"
-    },
-    "alert_scm_test_fail": {
-        "value": "URL is not valid or Authentication failed."
-    },
-    "alert_scm_checkout_fail": {
-        "value": "Checkout fails. Please try again."
-    },
-    "alert_nothing_checked": {
-        "value": "Nothing is checked."
-    },
-    "alert_scm_add_fail": {
-        "value": "Some files are not added.<br/>Cause:<br/>"
-    },
-    "alert_scm_remove_fail": {
-        "value": "Some files are not removed.<br/>Cause:<br/>"
-    },
-    "alert_scm_comment_required": {
-        "value": "Comment is required."
-    },
-    "alert_scm_commit_fail": {
-        "value": "Some files are not committed.<br/>Cause:<br/>"
-    },
-    "alert_scm_push_fail": {
-        "value": "Some files are not pushed.<br/>Cause:<br/>"
-    },
-    "alert_input_right_date": {
-        "value": "Input right date."
-    },
-    "alert_input_right_revision": {
-        "value": "Input right revision."
-    },
-    "alert_nothing_selected": {
-        "value": "Nothing is selected."
-    },
-    "alert_scm_update_fail": {
-        "value": "Update is failed.<br/>Cause:<br/>"
-    },
-    "alert_scm_lock_fail": {
-        "value": "Some files are not locked.<br/>Cause:<br/>"
-    },
-    "alert_scm_unlock_fail": {
-        "value": "Some files are not unlocked.<br/>Cause:<br/>"
-    },
-    "alert_scm_cleanup_fail": {
-        "value": "Some files are not cleaned up.<br/>Cause:<br/>"
-    },
-    "alert_scm_cleanup_fail": {
-        "value": "Some files are not cleaned up.<br/>Cause:<br/>"
-    },
-    "alert_only_for_file": {
-        "value": " is only for files."
-    },
-    "alert_only_for_folder": {
-        "value": " is only for folders."
-    },
-    "alert_auth_fail": {
-        "value": "Authentication fails."
-    },
-    "alert_undo_fail": {
-        "value": "Some files are not undone.<br/>Cause:<br/>"
-    },
-    "alert_pull_fail": {
-        "value": "Some files are not pulled.<br/>Check 'Command Log' tab."
-    },
-    "alert_input_branch_name": {
-        "value": "Input branch name."
-    },
-    "alert_scm_branch_delete_fail": {
-        "value": " is not deleted.<br/>Cause:<br/>"
-    },
-    "alert_scm_branch_merge_fail": {
-        "value": " are not merged.<br/>Cause:<br/>"
-    },
-    "alert_scm_branch_publish_fail": {
-        "value": " is not published.<br/>Cause:<br/>"
-    },
-    "alert_scm_branch_move_fail": {
-        "value": "Can't move to branch "
-    },
-    "alert_scm_input_right_value": {
-        "value": "Please input proper value.<br/>Bad value: "
-    },
-    "alert_not_version_control": {
-        "value": "This file/folder is not in version control."
-    },
-    "confirmation_scm_commit_fail_out_date": {
-        "value": "<br/>Committing is failed.<br/>Cause: Out of date.<br/>Do you want to update this file?<br/>Additional description:<br/>"
-    },
-    "confirmation_scm_want_to_push": {
-        "value": "Do you want to push committed files?"
-    },
-    "confirmation_scm_want_to_undo_change": {
-        "value": "Do you want to discard these local files' changes?<br/>You will lose changes and it is irreparable."
-    },
-    "confirmation_scm_want_to_undo_add": {
-        "value": "Do you want to undo add?"
-    },
-    "confirmation_scm_want_to_undo_commit": {
-        "value": "Do you want to undo(cancel) last commit?"
-    },
-    "confirmation_scm_want_to_undo_push": {
-        "value": "Do you want to undo(cancel) last push?"
-    },
-    "confirmation_scm_want_to_pull": {
-        "value": "Do you want to pull from HEAD?"
-    },
-    "confirmation_scm_want_to_create_branch": {
-        "value": "Do you want to create new branch?<br/>"
-    },
-    "confirmation_scm_want_to_delete_branch": {
-        "value": "Do you want to delete branch?<br/>"
-    },
-    "confirmation_scm_want_to_merge_branch": {
-        "value": "Do you want to merge branch with master?<br/>"
-    },
-    "confirmation_scm_want_to_publish_branch": {
-        "value": "Do you want to publish branch to remote?<br/>"
-    },
-    "confirmation_scm_want_to_move_branch": {
-        "value": "Do you want to move to branch?<br/>"
-    },
-    "please_wait": {
-        "value": "Please Wait..."
-    },
-    "new_project_scm_dialog": {
-        "value": "Get SCM Repository in New Project."
-    },
-    "more_friends": {
-        "value": "More ..."
-    },
-    "checkout_in_progress": {
-        "value": "Checkout is in progress..."
-    },
-    "status_loading": {
-        "value": "Status Loading..."
-    },
-    "log_loading": {
-        "value": "Log Loading..."
-    },
-    "property_loading": {
-        "value": "Project Property Loading..."
-    },
-    "placeholder_editor": {
-        "value": "Code goes here..."
-    },
-    "study": {
-        "value": "Study"
-    },
-    "alert_eval_not_supported": {
-        "value": "This feature is not supported in this filetype."
-    },
-    "send_error_chat": {
-        "value": "Send error to workspace chat room."
-    },
-    "error_chat_msg_occur": {
-        "value": "send error message."
-    },
-    "alert_select_string": {
-        "value": "Please select string."
-    },
-    "confirmation_refactor_want_to_safe_delete": {
-        "value": "Do you want to delete selected string safely?"
-    },
-    "safe_delete": {
-        "value": "Safe Delete"
-    },
-    "places": {
-        "value": "place(s)"
-    },
-    "not_friend_title": {
-        "value": "Not Friend"
-    },
-    "not_friend_message": {
-        "value": "This user is not friend.<br/>Do you want to send a friend request?"
-    },
-    "check_search_tab": {
-        "value": "Please check search tab below."
-    },
-    "history_empty": {
-        "value": "History does not exist."
-    },
-    "shared_project_empty": {
-        "value": "Shared project does not exist."
-    },
-    "friend_empty": {
-        "value": "Friends list does not exist."
-    },
-    "shared_project_unshare": {
-        "value": "Unshare"
-    },
-    "import_in_progress": {
-        "value": "Import is in progress..."
-    },
-    "import_sync_to_file_system": {
-        "value": "Sync to File System..."
-    },
-    "open_project_in_progess": {
-        "value": "Open a project is in progress..."
-    },
-    "alert_project_rename": {
-        "value": "Can't rename project name."
-    },
-    "confirmation_server_running": {
-        "value": "Server is Running."
-    },
-    "confirmation_server_running_delete_msg": {
-        "value": "Server is running.<br/>Do you want to delete project after closing current server."
-    },
-    "edit_no_bookmark": {
-        "value": "No Bookmarks"
-    },
-    "user_plg_cleaned": {
-        "value": "user plugins are deleted!\nToolbar, menu and dialog will be deleted after refresh"
-    },
-    "dialog_storage": {
-        "value": "Storage"
-    },
-    "imported_file_exist_single": {
-        "value": "already exists.<br/>Do you want to overwrite the file?"
-    },
-    "imported_file_exist_multiple": {
-        "value": "already exists.<br/>Do you want to overwrite files?"
-    },
-    "alert_invalide_query": {
-        "value": "Invalid query"
-    },
-    "alert_permission_denied": {
-        "value": "Permission denied"
-    },
-    "processing": {
-        "value": "Import Processing..."
-    },
-    "alert_duplicate_dir": {
-        "value": "There are some duplicate directories"
-    },
-    "alert_invalid_folder_name": {
-        "value": "Only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .) are allowed."
-    },
-    "alert_limit_file_size": {
-        "value": "You cannot upload large files with a size bigger than 50MB."
-    },
-    "alert_cannot_export_file": {
-        "value": "Can not export file"
-    },
-    "alert_cannot_make_directory": {
-        "value": "Can not make directory"
-    },
-    "notice_process_done": {
-        "value": "Process Done"
-    },
-    "alert_not_directory": {
-        "value": "Not a directory"
-    },
-    "alert_delete_shared_file": {
-        "value": "Can't delete this file. It is in collaboration."
-    },
-    "msg_project_find_guide": {
-        "value": "Find"
-    },
-    "msg_project_replace_guide": {
-        "value": "Replace"
-    },
-    "msg_project_match_case_guide": {
-        "value": "Case Sensitive"
-    },
-    "msg_project_whole_word_guide": {
-        "value": "Whole Word"
-    },
-    "msg_project_use_regular_expression_guide": {
-        "value": "Use regular expression."
-    },
-    "msg_find_next": {
-        "value": "Find Next"
-    },
-    "msg_find_previous": {
-        "value": "Find Prev"
-    },
-    "check_property_main": {
-        "value": "Check the location of your main file on your project property."
-    },
-    "check_property_source": {
-        "value": "Check the location of your source directory on your project property."
-    },
-    "alert_invalid_zip_file": {
-        "value": "Invalid zip file"
-    },
-    "alert_invalid_tar_file": {
-        "value": "Invalid tar file"
-    },
-    "alert_invalid_compressed_file": {
-        "value": "Invalid compressed file."
-    },
-    "alert_invalid_project_file": {
-        "value": "Invalid project file"
-    },
-    "scm_check_repository": {
-        "value": "Test your SCM repository first"
-    },
-    "search_user_placeholder": {
-        "value": "Search user by name or email ..."
-    },
-    "output_tab_no_error": {
-        "value": "No error in table."
-    },
-    "alert_project_permission_denied": {
-        "value": "You do not have permission to Access the project."
-    },
-    "alert_project_not_found": {
-        "value": "This project is already Deleted or Losted."
-    },
-    "alert_project_plugin_not_loaded": {
-        "value": "The [PLUGIN] plugin is not currently loaded.<br>Do you want to restart goorm to load the [PLUGIN] plugin? (If many plugins are loaded, goorm may slow down slightly.)"
-    },
-    "alert_positive_value_only": {
-        "value": "Only positive values are allowed."
-    },
-    "select_project": {
-        "value": "Select Project"
-    },
-    "readonly": {
-        "value": "Read-Only"
-    },
-    "editable": {
-        "value": "Editable"
-    },
-    "editable_sharable": {
-        "value": "Editable & Sharable"
-    },
-    "alert_drop_on_editor": {
-        "value": "Can't drop files on editor"
-    },
-    "alert_input_search_keyword": {
-        "value": "Input search keyword."
-    },
-    "alert_same_name_folder": {
-        "value": "Same folder name exists"
-    },
-    "same_folder_exist_title": {
-        "value": "Same File/Directory Exists"
-    },
-    "same_folder_exist": {
-        "value": "Same file/directory exists. If it is file, this file will be deleted and if it is directory, original directory will be merged with the new one. Do you want to go on?"
-    },
-    "confirmation_save_deleted_file": {
-        "value": "This file was deleted. Do you want to re-create this file?"
-    },
-    "alert_folder_upload_is_not_allowed": {
-        "value": "Uploading Folder is not allowed. File is only allowed."
-    },
-    "loading_bar_decompress": {
-        "value": "File decompressing..."
-    },
-    "loading_bar_folder_upload": {
-        "value": "Folder upload processing..."
-    },
-    "loading_bar_search": {
-        "value": "Searching..."
-    },
-    "loading_bar_export": {
-        "value": "Export processing..."
-    },
-    "alert_unknown_error": {
-        "value": "UNKNOWN ERROR!"
-    },
-    "alert_move_error": {
-        "value": "Cannot move."
-    },
-    "alert_dialog_id_used": {
-        "value": "Dialog ID is already used!"
-    },
-    "alert_no_html_file": {
-        "value": "Can not find HTML File!"
-    },
-    "alert_wrong_command": {
-        "value": "Wrong command."
-    },
-    "alert_not_valid_user": {
-        "value": "ID/PW are not valid"
-    },
-    "upload_folder": {
-        "value": "Upload Folder"
-    },
-    "project_duplicate": {
-        "value": "Duplicate Project"
-    },
-    "import_file": {
-        "value": "Upload File"
-    },
-    "shortcut_conflict": {
-        "value": "Shortcut Conflict"
-    },
-    "alert_cannot_overwrite_parent_folder": {
-        "value": "Cannot overwrite a parent folder has the same name."
-    },
-    "alert_cannot_overwrite_itself": {
-        "value": "Cannot overwrite itself."
-    },
-    "alert_root_folder_cannot_be_moved": {
-        "value": "Root folder cannot be moved."
-    },
-    "alert_parent_folder_cannot_be_moved_to_its_child_folder": {
-        "value": "Parent folder cannot be moved to its child folder"
-    },
-    "confirmation_do_you_want_move": {
-        "value": "Do you want to move?<br/>If it is valid overwriting, they will be overwritted,\nbut it is abnormal action, they will be not moved."
-    },
-    "confirmation_do_you_want_overwrite": {
-        "value": "Do you want to overwrite?"
-    },
-    "alert_allow_file_has_valid_name": {
-        "value": "File/folder's name should have only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .)."
-    },
-    "folder_dnd_error": {
-        "value": "You cannot upload the folder by drag and drop!"
-    },
-    "only_chrome_allowed": {
-        "value": "Only chrome browser supports this feature."
-    },
-    "alert_select_auth": {
-        "value": "Please select the authentication method."
-    },
-    "alert_rename_exist_folder": {
-        "value": "Same folder name exists."
-    },
-    "confirmation_reload_window": {
-        "value": "File's content is updated. Do you want to reload these files?<br/>(Modified contents can be gone.)<br/>"
-    },
-    "update_in_progress": {
-        "value": "Update is in progress..."
-    },
-    "in_progress": {
-        "value": " is in progress..."
-    },
-    "alert_select_scm_revision": {
-        "value": "Select checkout revision!"
-    },
-    "alert_duplicate_shortcut_sublime": {
-        "value": "You cannot use this shortcut because it is used in sublime keymap theme."
-    },
-    "notice_scm_account_changed": {
-        "value": "SCM account is changed."
-    },
-    "alert_upload_folder_not_selected": {
-        "value": "Select the folder to upload.<br/>Empty folders will not be uploaded."
-    },
-    "confirmation_commit_merged_files": {
-        "value": "Nothing is checked. Do you want to commit merged state?"
-    },
-    "confirmation_go_mygoorm_save": {
-        "value": "Go after save"
-    },
-    "confirmation_go_mygoorm": {
-        "value": "Go"
-    },
-    "confirmation_go_mygoorm_title": {
-        "value": "Go to my.goorm.io"
-    },
-    "confirmation_upload_image": {
-        "value": "Do you want to upload image?"
-    },
-    "ignored_files": {
-        "value": "Ignored Files"
-    },
-    "ignore_pattern": {
-        "value": "Ignore Pattern"
-    },
-    "ignore_pattern_list": {
-        "value": "Ignore Pattern List"
-    },
-    "alert_input_ignore_pattern": {
-        "value": "Input pattern or select file."
-    },
-    "alert_scm_ignore_import_fail": {
-        "value": "Fail to import file and set ignore property\n"
-    },
-    "making_template_in_progress": {
-        "value": "Making Template..."
-    },
-    "alert_move_not_directory": {
-        "value": "Cannot move, because the destination isn't directory."
-    },
-    "alert_move_is_directory": {
-        "value": "Cannot move, because the destination is directory."
-    },
-    "alert_move_not_empty_directory": {
-        "value": "Cannot move, because the destination isn't empty directory."
-    },
-    "not_joined_yet": {
-        "value": "Not joined yet"
-    },
-    "send_invitation_mail_to_join": {
-        "value": "Send invitation mail to join Goorm"
-    },
-    "search_clear_result": {
-        "value": "Clear Result"
-    },
-    "search_result_refresh": {
-        "value": "Refresh"
-    },
-    "do_safe_go_to_line": {
-        "value": "Go to Line"
-    },
-    "do_safe_delete": {
-        "value": "Delete"
-    },
-    "font_color_white": {
-        "value": "white"
-    },
-    "font_color_red": {
-        "value": "red"
-    },
-    "font_color_blue": {
-        "value": "blue"
-    },
-    "font_color_green": {
-        "value": "green"
-    },
-    "font_color_yellow": {
-        "value": "yellow"
-    },
-    "alert_git_clone_non_empty_repository": {
-        "value": "Can't clone in non-empty directory"
-    },
-    "tab_title_build": {
-        "value": "Build"
-    },
-    "tab_title_run": {
-        "value": "Run"
-    },
-    "tab_title_rebuild": {
-        "value": "Rebuild"
-    },
-    "tab_title_restart": {
-        "value": "Restart"
-    },
-    "tab_button_clear": {
-        "value": "Clear"
-    },
-    "tab_button_stop_server": {
-        "value": "Stop Server"
-    },
-    "tab_msg_sever_running": {
-        "value": "Server is running on "
-    },
-    "tab_msg_sever_running2": {
-        "value": " "
-    },
-    "alert_outline_parse_err": {
-        "value": "Can not parse this file. Please check the error."
-    }
+	"alert_file_name_illegal": {
+		"value": "File name is wrong."
+	},
+	"alert_file_size_too_big": {
+		"value": "Oops! This file is too big to open!<br/>We can open files that are smaller than 10MB."
+	},
+	"alert_file_size_too_big_to_upload": {
+		"value": "Oops! This file is too big to upload!<br/>Total size should be less than 20MB."
+	},
+	"alert_filename_empty": {
+		"value": "File name is empty."
+	},
+	"alert_project_copy": {
+		"value": "Project can't copy."
+	},
+	"alert_file_permission": {
+		"value": "You do not have permission to modify the file."
+	},
+	"alert_scm_permission": {
+		"value": "You do not have permission to access the SCM."
+	},
+	"alert_shortcut_modified": {
+		"value": "Preference modification have been completed!"
+	},
+	"alert_file_not_select": {
+		"value": "Please, select the file."
+	},
+	"alert_folder_duplicate_error": {
+		"value": "Folder can't duplicate."
+	},
+	"alert_folder_not_duplicated": {
+		"value": "Folder wasn't duplicated because it can't."
+	},
+	"alert_file_not_opened": {
+		"value": "Cannot find opened file."
+	},
+	"alert_cannot_find_word": {
+		"value": "Cannot find a word."
+	},
+	"alert_find_id_notexist": {
+		"value": "No ID found. Please check name and email again."
+	},
+	"alert_find_id_exist": {
+		"value": "Your ID is"
+	},
+	"alert_find_pw_notexist": {
+		"value": "No information found. Please check ID, name and email again."
+	},
+	"alert_find_pw_exist": {
+		"value": "Temporary password sent to your email account."
+	},
+	"alert_forgot_info": {
+		"value": "Find ID/PW"
+	},
+	"alert_project_not_selected": {
+		"value": "Please select the project."
+	},
+	"alert_unsupported_file_type": {
+		"value": "We don't support this file type."
+	},
+	"alert_no_imported_file": {
+		"value": "There is no project to be imported"
+	},
+	"alert_project_not_opened": {
+		"value": "Cannot find opened project."
+	},
+	"alert_print_file_error": {
+		"value": "No file opened."
+	},
+	"alert_plugin_check_terminal": {
+		"value": "Check terminal on screen."
+	},
+	"alert_plugin_build_failed": {
+		"value": "Fail to build project.<br/>Check errors below."
+	},
+	"alert_plugin_not_while_running": {
+		"value": "Your program is running...<br/>Try it after end of your program."
+	},
+	"alert_plugin_run_success": {
+		"value": "Successfully excuted.<br/>Check terminal on screen."
+	},
+	"alert_plugin_run_fail": {
+		"value": "Failed excuted.<br/>Check terminal on screen."
+	},
+	"alert_filetype_same_name": {
+		"value": "There is same file extension."
+	},
+	"alert_error": {
+		"value": "Error"
+	},
+	"alert_upload_fail": {
+		"value": "Fail to upload. Please retry upload."
+	},
+	"alert_deny_make_file_in_workspace_root": {
+		"value": "You cannot make a file in workspace root"
+	},
+	"alert_deny_make_folder_in_workspace_root": {
+		"value": "You cannot make a folder in workspace root"
+	},
+	"alert_deny_rename_folder_in_workspace_root": {
+		"value": "You cannot rename a folder in workspace root."
+	},
+	"alert_merge_menu_for_editor": {
+		"value": "Code Merge menu is only for Editor."
+	},
+	"alert_open_editor_more_two": {
+		"value": "Open editor windows more than 2."
+	},
+	"confirmation_cancel": {
+		"value": "Cancel"
+	},
+	"yes": {
+		"value": "Yes"
+	},
+	"no": {
+		"value": "No"
+	},
+	"confirmation_exit_title": {
+		"value": "Exit"
+	},
+	"confirmation_decompress_title": {
+		"value": "Decompress"
+	},
+	"confirmation_delete_title": {
+		"value": "Delete"
+	},
+	"confirmation_title": {
+		"value": "Confirmation"
+	},
+	"confirmation_save": {
+		"value": "Close..."
+	},
+	"confirmation_build": {
+		"value": "Build..."
+	},
+	"confirmation_restore_unsaved_data": {
+		"value": "You have unsaved data. Do you want to recover?"
+	},
+	"confirmation_project_close_and_save": {
+		"value": "You cannot open a project more. Do you want to close oldest project?"
+	},
+	"save_and_close": {
+		"value": "All save and close"
+	},
+	"dont_save_and_close": {
+		"value": "No save and close"
+	},
+	"confirmation_save_message": {
+		"value": " has been modified. Save changes?"
+	},
+	"confirmation_language_message": {
+		"value": "언어설정을 한국어로 변경하시겠습니까?"
+	},
+	"confirmation_logout_save": {
+		"value": "Logout after save"
+	},
+	"confirmation_logout": {
+		"value": "Logout"
+	},
+	"confirmation_not_saved": {
+		"value": " File is not Saved."
+	},
+	"confirmation_auto_logout": {
+		"value": "Auto Logout"
+	},
+	"confirmation_auto_logout_keep_using": {
+		"value": "Keep Using"
+	},
+	"confirmation_auto_logout_warning": {
+		"value": "Second later Auto Logout"
+	},
+	"tutorial_guide": {
+		"value": "Do you want to start tutorial?<br/>(You can go to next/prev step via arrow keys.)"
+	},
+	"alert_project_detailed_type": {
+		"value": "Select the project detailed type."
+	},
+	"alert_project_name": {
+		"value": "Insert the project name."
+	},
+	"alert_allow_character": {
+		"value": "Only alphabets, numbers and _, - are allowed."
+	},
+	"alert_allow_character2": {
+		"value": "Only alphabets, numbers and _ are allowed."
+	},
+	"alert_allow_django": {
+		"value": "Django Project not allowed this project name - 'django' and 'test'"
+	},
+	"notice_file_import_done": {
+		"value": "File import done."
+	},
+	"confirmation_exit": {
+		"value": "Do you want to exit?"
+	},
+	"confirmation_decompress_file": {
+		"value": "Do you want to decompress this file?"
+	},
+	"confirmation_down_file": {
+		"value": "Can not extract file type. Do you want to download?"
+	},
+	"confirmation_delete_file": {
+		"value": "Do you want to delete this file?"
+	},
+	"confirmation_delete_project": {
+		"value": "Do you want to delete this project?"
+	},
+	"confirmation_new_message": {
+		"value": "Same file name already exists. Do you want to create anyway?<br/>(The contents of original file will be gone.)"
+	},
+	"confirmation_rename_message": {
+		"value": "Same file name already exists. Do you want to rename anyway?<br/>(If you choose 'yes', original file will be deleted."
+	},
+	"alert_collaboration_previous_chat": {
+		"value": "Previous Chats"
+	},
+	"alert_collaboration_chat_join": {
+		"value": "joined this workspace!"
+	},
+	"alert_collaboration_chat_leave": {
+		"value": "leaved this workspace!"
+	},
+	"alert_collaboration_chat_unfriend": {
+		"value": "is not your friend."
+	},
+	"alert_collaboration_chat_change": {
+		"value": "change name to "
+	},
+	"alert_collaboration_chat_change2": {
+		"value": "!"
+	},
+	"alert_title_empty": {
+		"value": "Insert the title."
+	},
+	"alert_author_empty": {
+		"value": "Insert the author."
+	},
+	"alert_email_empty": {
+		"value": "Insert the E-mail."
+	},
+	"alert_version_empty": {
+		"value": "Insert the version."
+	},
+	"alert_module_empty": {
+		"value": "Insert the module."
+	},
+	"alert_contents_empty": {
+		"value": "Insert the content."
+	},
+	"alert_cannot_write": {
+		"value": "cannot write"
+	},
+	"alert_cannot_project_delete": {
+		"value": "Can not delete project."
+	},
+	"notice_write_done": {
+		"value": "Bug report is successfully sent. Thank you."
+	},
+	"notice_file_import_done": {
+		"value": "File is imported."
+	},
+	"notice_project_delete_done": {
+		"value": "Project is deleted."
+	},
+	"notice_modified_profile": {
+		"value": "User Profile successfully modified."
+	},
+	"alert_collaboration_server_notconnected": {
+		"value": "Server disconnected."
+	},
+	"alert_select_project_item": {
+		"value": "You must select at least one project."
+	},
+	"alert_no_have_data": {
+		"value": "No data to display."
+	},
+	"alert_no_have_project": {
+		"value": "No project to display."
+	},
+	"alert_user_undefined_id": {
+		"value": "Please enter an ID."
+	},
+	"alert_user_undefined_student_id": {
+		"value": "Please enter an Student ID."
+	},
+	"alert_user_unfit_student_id": {
+		"value": "The format of the Student ID is not valid. (10 digits Number)."
+	},
+	"alert_user_unfit_reg_id": {
+		"value": "The format of the ID is not valid. (4~15 digits, Alphabet+Number)."
+	},
+	"alert_user_duplicate_id": {
+		"value": "The ID is duplicated."
+	},
+	"alert_user_duplicate_email": {
+		"value": "The EMAIL is duplicated."
+	},
+	"alert_user_duplicate_student_id": {
+		"value": "The Student ID is duplicated."
+	},
+	"alert_user_unmatched_id": {
+		"value": "Cannot access the user."
+	},
+	"alert_user_undefined_password": {
+		"value": "Please enter a Password."
+	},
+	"alert_user_undefined_re_password": {
+		"value": "Please enter a Repassword"
+	},
+	"alert_user_undefined_password_not_match": {
+		"value": "Please recheck your password. They are not a match."
+	},
+	"alert_user_unfit_req_password": {
+		"value": "The format of the password is not valid. (8~15 digits, Alphabet+Number+Special characters)."
+	},
+	"alert_user_undefined_email": {
+		"value": "Please enter an E-mail."
+	},
+	"alert_user_unfit_email": {
+		"value": "The format of the email is not valid. (ex: goorm@goorm.io)"
+	},
+	"alert_user_undefined_name": {
+		"value": "Please enter a Name."
+	},
+	"alert_user_unfit_name": {
+		"value": "The format of the name is not valid. (3~15 digits, Hangul/Alphabet/Number/Special characters(-/_/./ /))."
+	},
+	"alert_user_limit_comment": {
+		"value": "The comment is too long. (Up to 20 digits)"
+	},
+	"alert_confirm_logout": {
+		"value": "Are you sure you want to logout?"
+	},
+	"alert_login_not_match_password": {
+		"value": "Password is incorrect."
+	},
+	"alert_login_no_id": {
+		"value": "There is no such a member."
+	},
+	"alert_login_undefined_id_or_password": {
+		"value": "ID or Password is not typed."
+	},
+	"alert_npm_limit": {
+		"value": "You can not install more NPM Library.<br/>Limit: "
+	},
+	"alert_npm_version": {
+		"value": "This version not exists."
+	},
+	"notice_no_matched_fild": {
+		"value": "No matching files found."
+	},
+	"notice_welcome_goorm": {
+		"value": "Welcome to cloud coding service goorm."
+	},
+	"alert_cannot_connect_db": {
+		"value": "Fail to connect with database."
+	},
+	"confirmation_change_profile": {
+		"value": "If you want to change your profile, please write your password."
+	},
+	"notice_search_select_project": {
+		"value": "Select Project"
+	},
+	"confirmation_delete_filetype": {
+		"value": "Do you really want to delete this filetype?"
+	},
+	"toast_filetype_save_complete": {
+		"value": "Filetype save complete!"
+	},
+	"alert_too_many_editors": {
+		"value": "Too many editors are opened. <br/>Close unnecessary editors."
+	},
+	"alert_cannot_project_run": {
+		"value": "Cannot run the project. Please select a proper project."
+	},
+	"alert_cannot_project_remote_run": {
+		"value": "Cannot remote run the project. Please select a proper project."
+	},
+	"alert_cannot_project_generate": {
+		"value": "Cannot generate the project. Please select a proper project."
+	},
+	"alert_cannot_project_build": {
+		"value": "Cannot build the project. Please select a proper project."
+	},
+	"alert_cannot_project_debug": {
+		"value": "Debug is not started or supported for this project."
+	},
+	"alert_confirm_duplicate_login": {
+		"value": "This account is already being used on other device.<br/>Do you really want to disconnect this account and re-login on this device?"
+	},
+	"alert_force_logout": {
+		"value": "Current connection will be terminated."
+	},
+	"alert_confirm_delete_co_developer": {
+		"value": "Do you really want to fire the co-developer?"
+	},
+	"alert_confirm_invite_co_developer": {
+		"value": "Do you really want to invite the co-developer?"
+	},
+	"alert_no_display_to_data": {
+		"value": "No developers share this project."
+	},
+	"alert_select_project": {
+		"value": "Please select your project."
+	},
+	"alert_select_file": {
+		"value": "Please select your file at project explorer."
+	},
+	"alert_not_compressed_file": {
+		"value": "It is not compressed file."
+	},
+	"alert_quiz_is_ended": {
+		"value": "Quiz is ended or not started."
+	},
+	"alert_login_not_service_account": {
+		"value": "It's not account of the service mode. Please register a new one."
+	},
+	"dialog_survey": {
+		"value": "Survey"
+	},
+	"survey_title": {
+		"value": "User Survey"
+	},
+	"survey_message": {
+		"value": "If you have suggestions in using goorm, Please let us to know! Thank you~"
+	},
+	"survey_send": {
+		"value": "Send"
+	},
+	"survey_not_send": {
+		"value": "No, Thanks"
+	},
+	"alert_open_file_fail": {
+		"value": "Cannot read this file."
+	},
+	"alert_save_file_fail": {
+		"value": "Fail to save file"
+	},
+	"dictionary_project_list": {
+		"value": "Project List"
+	},
+	"dictionary_my_project": {
+		"value": "My Project"
+	},
+	"dictionary_collaboration_project": {
+		"value": "Collaboration Project"
+	},
+	"dictionary_type": {
+		"value": "Type"
+	},
+	"dictionary_name": {
+		"value": "Name"
+	},
+	"dictionary_author": {
+		"value": "Author"
+	},
+	"dictionary_userid": {
+		"value": "User ID"
+	},
+	"dictionary_history_time": {
+		"value": "Save Time"
+	},
+	"dictionary_history_delay": {
+		"value": "Delay(sec)"
+	},
+	"dictionary_event": {
+		"value": "Event"
+	},
+	"dictionary_line": {
+		"value": "Line"
+	},
+	"dictionary_content": {
+		"value": "Content"
+	},
+	"dictionary_file": {
+		"value": "File"
+	},
+	"dictionary_chat": {
+		"value": "Chat"
+	},
+	"dictionary_add_friend": {
+		"value": "Add Friend"
+	},
+	"dictionary_unfriend": {
+		"value": "Unfriend"
+	},
+	"dictionary_friend_request": {
+		"value": "Request"
+	},
+	"dictionary_friend_cancel": {
+		"value": "Delete Request"
+	},
+	"dictionary_accept": {
+		"value": "Accept"
+	},
+	"dictionary_reject": {
+		"value": "Reject"
+	},
+	"dictionary_package": {
+		"value": "Package"
+	},
+	"dictionary_class": {
+		"value": "Class"
+	},
+	"dictionary_interface": {
+		"value": "Interface"
+	},
+	"dictionary_install": {
+		"value": "Install"
+	},
+	"dictionary_uninstall": {
+		"value": "Uninstall"
+	},
+	"npm_no_libraries": {
+		"value": "No Libraries."
+	},
+	"alert_cannot_template_folder": {
+		"value": "Please do this work on your source folder."
+	},
+	"alert_type_is_empty": {
+		"value": "Type name is empty."
+	},
+	"alert_check_package_name": {
+		"value": "Please check package name again."
+	},
+	"alert_same_file_at_created_package": {
+		"value": "Same name of file already exists at created package."
+	},
+	"alert_check_package": {
+		"value": "Package folder does not exist.<br/>Please make package first."
+	},
+	"alert_cannot_paste_in_darwin": {
+		"value": "Paste operation is impossible in 'Edit' menu, but It's possible using ⌘V key."
+	},
+	"alert_cannot_paste_in_not_darwin": {
+		"value": "Paste operation is impossible in 'Edit' menu, but It's possible using Ctrl+V key."
+	},
+	"alert_cannot_exist_editor": {
+		"value": "There are no available editor."
+	},
+	"alert_project_over_limit": {
+		"value": "You can not make more projects.<br/>Limit: "
+	},
+	"alert_project_exist": {
+		"value": "Same project name exists."
+	},
+	"alert_version_required": {
+		"value": "Version Name required."
+	},
+	"alert_package_name_required": {
+		"value": "Package Name required."
+	},
+	"notice_update_message": {
+		"value": "Hello, goorm dev.team continues to fix bugs and add features.<br/>(Latest Update: "
+	},
+	"confirmation_replace_all_none": {
+		"value": "No matched text."
+	},
+	"confirmation_replace_all_end": {
+		"value": " occurrence(s)?"
+	},
+	"title_replace_all": {
+		"value": "Replace all"
+	},
+	"confirmation_history_merge": {
+		"value": "Merge this snapshot with previous one, and this snapshot will be deleted.<br/>Are you sure?"
+	},
+	"confirmation_history_delete_all": {
+		"value": "All the history logs will be deleted."
+	},
+	"confirmation_not_latest_build": {
+		"value": "It is not the latest build."
+	},
+	"confirmation_not_latest_build_run_msg": {
+		"value": "It is not the latest build.<br/>Please click [Build and Run] button to build the project first."
+	},
+	"confirmation_not_latest_build_debug": {
+		"value": "It is not the latest build.<br/>Please debug after build."
+	},
+	"confirmation_build_and_run": {
+		"value": "Build and Run"
+	},
+	"confirmation_build_and_debug": {
+		"value": "Build and Debug"
+	},
+	"confirmation_not_save": {
+		"value": "It is not the latest code."
+	},
+	"confirmation_not_save_msg": {
+		"value": "Do you want to save after run, <br>click [Save and Run] button or [Run] button."
+	},
+	"confirmation_save_run": {
+		"value": "Save and Run"
+	},
+	"confirmation_run": {
+		"value": "Run"
+	},
+	"server_reconnect_fail": {
+		"value": "A connection failure has occurred. Please reconnect to the server."
+	},
+	"someone_typing_message": {
+		"value": " is typing..."
+	},
+	"someones_typing_message": {
+		"value": " are typing..."
+	},
+	"confirmation_share_history_play": {
+		"value": "Would you like to share Play event with another developers?"
+	},
+	"confirmation_history_play": {
+		"value": " wants to share Play event.<br/>Are you sure?"
+	},
+	"confirmation_reject_friend": {
+		"value": "Do you want to reject friend request?"
+	},
+	"confirmation_accept_friend": {
+		"value": "Do you want to accept friend request?"
+	},
+	"confirmation_del_friend": {
+		"value": "Do you want to delete the friend?"
+	},
+	"confirmation_add_friend": {
+		"value": "Do you want to add the friend?"
+	},
+	"confirmation_cancel_friend": {
+		"value": "Do you want to cancel the friend request?"
+	},
+	"confirmation_accept_project": {
+		"value": "Do you want to accept to share the project?"
+	},
+	"confirmation_reject_project": {
+		"value": "Do you want to reject the project?"
+	},
+	"confirmation_leave_project": {
+		"value": "Do you want to leave the project?"
+	},
+	"notice_invite_project": {
+		"value": " invites you to project."
+	},
+	"confirmation_shortcut_conflict": {
+		"value": "Shortcut you input already exists.<br/>Do you want it to overwrite?"
+	},
+	"confirmation_do_you_want_to_add": {
+		"value": "Do you want to add?"
+	},
+	"confirmation_do_you_want_to_remove_svn": {
+		"value": "Do you want to remove?"
+	},
+	"confirmation_do_you_want_to_remove_git": {
+		"value": "Do you want to remove?<br/>This file also will be deleted from file system and it is irreparable."
+	},
+	"confirmation_do_you_want_to_commit": {
+		"value": "Do you want to commit?"
+	},
+	"confirmation_revert_to_head": {
+		"value": "Do you want to revert to HEAD?<br/>You will lose local changes and it is irreparable."
+	},
+	"confirmation_do_you_want_to_update": {
+		"value": "Do you want to update?"
+	},
+	"confirmation_do_you_want_to_lock": {
+		"value": "Do you want to lock?"
+	},
+	"confirmation_do_you_want_to_unlock": {
+		"value": "Do you want to unlock?"
+	},
+	"confirmation_do_you_want_to_cleanup": {
+		"value": "Do you want to cleanup?"
+	},
+	"confirmation_do_you_want_to_resolve_conflict": {
+		"value": "Do you want to resolve conflict?"
+	},
+	"confirmation_do_you_want_to_project_update": {
+		"value": "Same project name exists in other goorm. Do you want it to overwrite?"
+	},
+	"confirmation_del_profile_image": {
+		"value": "Do you want to delete profile image?<br>Please Enter your password!"
+	},
+	"confirmation_change_profile_image": {
+		"value": "Do you want to change profile image?<br>Please Enter your password!"
+	},
+	"confirmation_close_tab": {
+		"value": "Do you want to close goorm?"
+	},
+	"del_profile_image": {
+		"value": "Delete Profile Image"
+	},
+	"change_profile_image": {
+		"value": "Change Profile Image"
+	},
+	"there_is_not_repository": {
+		"value": "It isn't Git/Subversion repository."
+	},
+	"reject_friend": {
+		"value": "Reject Friend Request"
+	},
+	"accept_friend": {
+		"value": "Accept Friend Request"
+	},
+	"accept_project": {
+		"value": "Accept Project Sharing Request"
+	},
+	"reject_project": {
+		"value": "Reject Project Sharing Request"
+	},
+	"leave_project": {
+		"value": "Leave Shared Project"
+	},
+	"tutorial": {
+		"value": "Tutorial"
+	},
+	"project_share_none": {
+		"value": "This user cannot access this project."
+	},
+	"project_share_readonly": {
+		"value": "This user can only read files"
+	},
+	"project_share_editable": {
+		"value": "This user can modify and files(and projects)"
+	},
+	"project_share_manager": {
+		"value": "This user can modify and files(and projects).<br/>In addition, This user can share projects with other developers"
+	},
+	"editor_saving": {
+		"value": "Saving..."
+	},
+	"editor_saved": {
+		"value": "Changes saved"
+	},
+	"connect_state": {
+		"value": "Connected"
+	},
+	"disconnect_state": {
+		"value": "Disconnected"
+	},
+	"shared_project_open": {
+		"value": "Open"
+	},
+	"shared_project_leave": {
+		"value": "Leave"
+	},
+	"shared_project_manage": {
+		"value": "Manage"
+	},
+	"invitation_waiting": {
+		"value": "Waiting..."
+	},
+	"invitation_accept_open": {
+		"value": "Accept & Open"
+	},
+	"alert_same_file_at_created_class": {
+		"value": "Same name of file already exists at created class."
+	},
+	"alert_same_file_at_created_interface": {
+		"value": "Same name of file already exists at created interface."
+	},
+	"profile_comment": {
+		"value": "Comment..."
+	},
+	"profile_password": {
+		"value": "(8~15), Alphabet+Number+Special"
+	},
+	"profile_password_confirm": {
+		"value": "Please enter your pw again to confirm..."
+	},
+	"signup_id": {
+		"value": "Input ID"
+	},
+	"signup_name": {
+		"value": "2~15 digits, Hangul/Alphabet/Num/( -/_/ . / /)"
+	},
+	"tutorial_prev": {
+		"value": "&laquo; Prev"
+	},
+	"tutorial_next": {
+		"value": "Next &raquo;"
+	},
+	"tutorial_end": {
+		"value": "End tour"
+	},
+	"project_empty": {
+		"value": "Proejct does not exist."
+	},
+	"window_bottom_layout_output": {
+		"value": "Show Output"
+	},
+	"output": {
+		"value": "Output"
+	},
+	"server": {
+		"value": "Server"
+	},
+	"webview": {
+		"value": "Webview"
+	},
+	"window_right_layout_quiz": {
+		"value": "Show Quiz"
+	},
+	"quiz": {
+		"value": "Quiz"
+	},
+	"alert_wrong_tab": {
+		"value": "Wrong Tab"
+	},
+	"alert_select_scm_type": {
+		"value": "Select your SCM type!"
+	},
+	"alert_input_repo_url": {
+		"value": "Input repository URL!"
+	},
+	"alert_scm_test_fail": {
+		"value": "URL is not valid or Authentication failed."
+	},
+	"alert_scm_checkout_fail": {
+		"value": "Checkout fails. Please try again."
+	},
+	"alert_nothing_checked": {
+		"value": "Nothing is checked."
+	},
+	"alert_scm_add_fail": {
+		"value": "Some files are not added.<br/>Cause:<br/>"
+	},
+	"alert_scm_remove_fail": {
+		"value": "Some files are not removed.<br/>Cause:<br/>"
+	},
+	"alert_scm_comment_required": {
+		"value": "Comment is required."
+	},
+	"alert_scm_commit_fail": {
+		"value": "Some files are not committed.<br/>Cause:<br/>"
+	},
+	"alert_scm_push_fail": {
+		"value": "Some files are not pushed.<br/>Cause:<br/>"
+	},
+	"alert_input_right_date": {
+		"value": "Input right date."
+	},
+	"alert_input_right_revision": {
+		"value": "Input right revision."
+	},
+	"alert_nothing_selected": {
+		"value": "Nothing is selected."
+	},
+	"alert_scm_update_fail": {
+		"value": "Update is failed.<br/>Cause:<br/>"
+	},
+	"alert_scm_lock_fail": {
+		"value": "Some files are not locked.<br/>Cause:<br/>"
+	},
+	"alert_scm_unlock_fail": {
+		"value": "Some files are not unlocked.<br/>Cause:<br/>"
+	},
+	"alert_scm_cleanup_fail": {
+		"value": "Some files are not cleaned up.<br/>Cause:<br/>"
+	},
+	"alert_scm_cleanup_fail": {
+		"value": "Some files are not cleaned up.<br/>Cause:<br/>"
+	},
+	"alert_only_for_file": {
+		"value": " is only for files."
+	},
+	"alert_only_for_folder": {
+		"value": " is only for folders."
+	},
+	"alert_auth_fail": {
+		"value": "Authentication fails."
+	},
+	"alert_undo_fail": {
+		"value": "Some files are not undone.<br/>Cause:<br/>"
+	},
+	"alert_pull_fail": {
+		"value": "Some files are not pulled.<br/>Check 'Command Log' tab."
+	},
+	"alert_input_branch_name": {
+		"value": "Input branch name."
+	},
+	"alert_scm_branch_delete_fail": {
+		"value": " is not deleted.<br/>Cause:<br/>"
+	},
+	"alert_scm_branch_merge_fail": {
+		"value": " are not merged.<br/>Cause:<br/>"
+	},
+	"alert_scm_branch_publish_fail": {
+		"value": " is not published.<br/>Cause:<br/>"
+	},
+	"alert_scm_branch_move_fail": {
+		"value": "Can't move to branch "
+	},
+	"alert_scm_input_right_value": {
+		"value": "Please input proper value.<br/>Bad value: "
+	},
+	"alert_not_version_control": {
+		"value": "This file/folder is not in version control."
+	},
+	"confirmation_scm_commit_fail_out_date": {
+		"value": "<br/>Committing is failed.<br/>Cause: Out of date.<br/>Do you want to update this file?<br/>Additional description:<br/>"
+	},
+	"confirmation_scm_want_to_push": {
+		"value": "Do you want to push committed files?"
+	},
+	"confirmation_scm_want_to_undo_change": {
+		"value": "Do you want to discard these local files' changes?<br/>You will lose changes and it is irreparable."
+	},
+	"confirmation_scm_want_to_undo_add": {
+		"value": "Do you want to undo add?"
+	},
+	"confirmation_scm_want_to_undo_commit": {
+		"value": "Do you want to undo(cancel) last commit?"
+	},
+	"confirmation_scm_want_to_undo_push": {
+		"value": "Do you want to undo(cancel) last push?"
+	},
+	"confirmation_scm_want_to_pull": {
+		"value": "Do you want to pull from HEAD?"
+	},
+	"confirmation_scm_want_to_create_branch": {
+		"value": "Do you want to create new branch?<br/>"
+	},
+	"confirmation_scm_want_to_delete_branch": {
+		"value": "Do you want to delete branch?<br/>"
+	},
+	"confirmation_scm_want_to_merge_branch": {
+		"value": "Do you want to merge branch with master?<br/>"
+	},
+	"confirmation_scm_want_to_publish_branch": {
+		"value": "Do you want to publish branch to remote?<br/>"
+	},
+	"confirmation_scm_want_to_move_branch": {
+		"value": "Do you want to move to branch?<br/>"
+	},
+	"please_wait": {
+		"value": "Please Wait..."
+	},
+	"new_project_scm_dialog": {
+		"value": "Get SCM Repository in New Project."
+	},
+	"more_friends": {
+		"value": "More ..."
+	},
+	"checkout_in_progress": {
+		"value": "Checkout is in progress..."
+	},
+	"status_loading": {
+		"value": "Status Loading..."
+	},
+	"log_loading": {
+		"value": "Log Loading..."
+	},
+	"property_loading": {
+		"value": "Project Property Loading..."
+	},
+	"placeholder_editor": {
+		"value": "Code goes here..."
+	},
+	"study": {
+		"value": "Study"
+	},
+	"alert_eval_not_supported": {
+		"value": "This feature is not supported in this filetype."
+	},
+	"send_error_chat": {
+		"value": "Send error to workspace chat room."
+	},
+	"error_chat_msg_occur": {
+		"value": "send error message."
+	},
+	"alert_select_string": {
+		"value": "Please select string."
+	},
+	"confirmation_refactor_want_to_safe_delete": {
+		"value": "Do you want to delete selected string safely?"
+	},
+	"safe_delete": {
+		"value": "Safe Delete"
+	},
+	"places": {
+		"value": "place(s)"
+	},
+	"not_friend_title": {
+		"value": "Not Friend"
+	},
+	"not_friend_message": {
+		"value": "This user is not friend.<br/>Do you want to send a friend request?"
+	},
+	"check_search_tab": {
+		"value": "Please check search tab below."
+	},
+	"history_empty": {
+		"value": "History does not exist."
+	},
+	"shared_project_empty": {
+		"value": "Shared project does not exist."
+	},
+	"friend_empty": {
+		"value": "Friends list does not exist."
+	},
+	"shared_project_unshare": {
+		"value": "Unshare"
+	},
+	"import_in_progress": {
+		"value": "Import is in progress..."
+	},
+	"import_sync_to_file_system": {
+		"value": "Sync to File System..."
+	},
+	"open_project_in_progess": {
+		"value": "Open a project is in progress..."
+	},
+	"alert_project_rename": {
+		"value": "Can't rename project name."
+	},
+	"confirmation_server_running": {
+		"value": "Server is Running."
+	},
+	"confirmation_server_running_delete_msg": {
+		"value": "Server is running.<br/>Do you want to delete project after closing current server."
+	},
+	"edit_no_bookmark": {
+		"value": "No Bookmarks"
+	},
+	"user_plg_cleaned": {
+		"value": "user plugins are deleted!\nToolbar, menu and dialog will be deleted after refresh"
+	},
+	"dialog_storage": {
+		"value": "Storage"
+	},
+	"imported_file_exist_single": {
+		"value": "already exists.<br/>Do you want to overwrite the file?"
+	},
+	"imported_file_exist_multiple": {
+		"value": "already exists.<br/>Do you want to overwrite files?"
+	},
+	"alert_invalide_query": {
+		"value": "Invalid query"
+	},
+	"alert_permission_denied": {
+		"value": "Permission denied"
+	},
+	"processing": {
+		"value": "Import Processing..."
+	},
+	"alert_duplicate_dir": {
+		"value": "There are some duplicate directories"
+	},
+	"alert_invalid_folder_name": {
+		"value": "Only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .) are allowed."
+	},
+	"alert_limit_file_size": {
+		"value": "You cannot upload large files with a size bigger than 50MB."
+	},
+	"alert_cannot_export_file": {
+		"value": "Can not export file"
+	},
+	"alert_cannot_make_directory": {
+		"value": "Can not make directory"
+	},
+	"notice_process_done": {
+		"value": "Process Done"
+	},
+	"alert_not_directory": {
+		"value": "Not a directory"
+	},
+	"alert_delete_shared_file": {
+		"value": "Can't delete this file. It is in collaboration."
+	},
+	"alert_delete_file_fail": {
+		"value": "Fail to delete the file."
+	},
+	"msg_project_find_guide": {
+		"value": "Find"
+	},
+	"msg_project_replace_guide": {
+		"value": "Replace"
+	},
+	"msg_project_match_case_guide": {
+		"value": "Case Sensitive"
+	},
+	"msg_project_whole_word_guide": {
+		"value": "Whole Word"
+	},
+	"msg_project_use_regular_expression_guide": {
+		"value": "Use regular expression."
+	},
+	"msg_find_next": {
+		"value": "Find Next"
+	},
+	"msg_find_previous": {
+		"value": "Find Prev"
+	},
+	"check_property_main": {
+		"value": "Check the location of your main file on your project property."
+	},
+	"check_property_source": {
+		"value": "Check the location of your source directory on your project property."
+	},
+	"alert_invalid_zip_file": {
+		"value": "Invalid zip file"
+	},
+	"alert_invalid_tar_file": {
+		"value": "Invalid tar file"
+	},
+	"alert_invalid_compressed_file": {
+		"value": "Invalid compressed file."
+	},
+	"alert_invalid_project_file": {
+		"value": "Invalid project file"
+	},
+	"scm_check_repository": {
+		"value": "Test your SCM repository first"
+	},
+	"search_user_placeholder": {
+		"value": "Search user by name or email ..."
+	},
+	"output_tab_no_error": {
+		"value": "No error in table."
+	},
+	"alert_project_permission_denied": {
+		"value": "You do not have permission to Access the project."
+	},
+	"alert_project_not_found": {
+		"value": "This project is already Deleted or Losted."
+	},
+	"alert_project_plugin_not_loaded": {
+		"value": "The [PLUGIN] plugin is not currently loaded.<br>Do you want to restart goorm to load the [PLUGIN] plugin? (If many plugins are loaded, goorm may slow down slightly.)"
+	},
+	"alert_positive_value_only": {
+		"value": "Only positive values are allowed."
+	},
+	"select_project": {
+		"value": "Select Project"
+	},
+	"readonly": {
+		"value": "Read-Only"
+	},
+	"editable": {
+		"value": "Editable"
+	},
+	"editable_sharable": {
+		"value": "Editable & Sharable"
+	},
+	"alert_drop_on_editor": {
+		"value": "Can't drop files on editor"
+	},
+	"alert_input_search_keyword": {
+		"value": "Input search keyword."
+	},
+	"alert_same_name_folder": {
+		"value": "Same folder name exists"
+	},
+	"same_folder_exist_title": {
+		"value": "Same File/Directory Exists"
+	},
+	"same_folder_exist": {
+		"value": "Same file/directory exists. If it is file, this file will be deleted and if it is directory, original directory will be merged with the new one. Do you want to go on?"
+	},
+	"confirmation_save_deleted_file": {
+		"value": "This file was deleted. Do you want to re-create this file?"
+	},
+	"alert_folder_upload_is_not_allowed": {
+		"value": "Uploading Folder is not allowed. File is only allowed."
+	},
+	"loading_bar_decompress": {
+		"value": "File decompressing..."
+	},
+	"loading_bar_folder_upload": {
+		"value": "Folder upload processing..."
+	},
+	"loading_bar_search": {
+		"value": "Searching..."
+	},
+	"loading_bar_export": {
+		"value": "Export processing..."
+	},
+	"alert_unknown_error": {
+		"value": "UNKNOWN ERROR!"
+	},
+	"alert_move_error": {
+		"value": "Cannot move."
+	},
+	"alert_dialog_id_used": {
+		"value": "Dialog ID is already used!"
+	},
+	"alert_no_html_file": {
+		"value": "Can not find HTML File!"
+	},
+	"alert_wrong_command": {
+		"value": "Wrong command."
+	},
+	"alert_not_valid_user": {
+		"value": "ID/PW are not valid"
+	},
+	"upload_folder": {
+		"value": "Upload Folder"
+	},
+	"project_duplicate": {
+		"value": "Duplicate Project"
+	},
+	"import_file": {
+		"value": "Upload File"
+	},
+	"shortcut_conflict": {
+		"value": "Shortcut Conflict"
+	},
+	"alert_cannot_overwrite_parent_folder": {
+		"value": "Cannot overwrite a parent folder has the same name."
+	},
+	"alert_cannot_overwrite_itself": {
+		"value": "Cannot overwrite itself."
+	},
+	"alert_root_folder_cannot_be_moved": {
+		"value": "Root folder cannot be moved."
+	},
+	"alert_parent_folder_cannot_be_moved_to_its_child_folder": {
+		"value": "Parent folder cannot be moved to its child folder"
+	},
+	"confirmation_do_you_want_move": {
+		"value": "Do you want to move?<br/>If it is valid overwriting, they will be overwritted,\nbut it is abnormal action, they will be not moved."
+	},
+	"confirmation_do_you_want_overwrite": {
+		"value": "Do you want to overwrite?"
+	},
+	"alert_allow_file_has_valid_name": {
+		"value": "File/folder's name should have only alphabets, numbers, white space, and some special characters(_, -, (, ), [, ], .)."
+	},
+	"folder_dnd_error": {
+		"value": "You cannot upload the folder by drag and drop!"
+	},
+	"only_chrome_allowed": {
+		"value": "Only chrome browser supports this feature."
+	},
+	"alert_select_auth": {
+		"value": "Please select the authentication method."
+	},
+	"alert_rename_exist_folder": {
+		"value": "Same folder name exists."
+	},
+	"confirmation_reload_window": {
+		"value": "File's content is updated. Do you want to reload these files?<br/>(Modified contents can be gone.)<br/>"
+	},
+	"update_in_progress": {
+		"value": "Update is in progress..."
+	},
+	"in_progress": {
+		"value": " is in progress..."
+	},
+	"alert_select_scm_revision": {
+		"value": "Select checkout revision!"
+	},
+	"alert_duplicate_shortcut_sublime": {
+		"value": "You cannot use this shortcut because it is used in sublime keymap theme."
+	},
+	"notice_scm_account_changed": {
+		"value": "SCM account is changed."
+	},
+	"alert_upload_folder_not_selected": {
+		"value": "Select the folder to upload.<br/>Empty folders will not be uploaded."
+	},
+	"confirmation_commit_merged_files": {
+		"value": "Nothing is checked. Do you want to commit merged state?"
+	},
+	"confirmation_go_mygoorm_save": {
+		"value": "Go after save"
+	},
+	"confirmation_go_mygoorm": {
+		"value": "Go"
+	},
+	"confirmation_go_mygoorm_title": {
+		"value": "Go to my.goorm.io"
+	},
+	"confirmation_upload_image": {
+		"value": "Do you want to upload image?"
+	},
+	"ignored_files": {
+		"value": "Ignored Files"
+	},
+	"ignore_pattern": {
+		"value": "Ignore Pattern"
+	},
+	"ignore_pattern_list": {
+		"value": "Ignore Pattern List"
+	},
+	"alert_input_ignore_pattern": {
+		"value": "Input pattern or select file."
+	},
+	"alert_scm_ignore_import_fail": {
+		"value": "Fail to import file and set ignore property\n"
+	},
+	"making_template_in_progress": {
+		"value": "Making Template..."
+	},
+	"alert_move_not_directory": {
+		"value": "Cannot move, because the destination isn't directory."
+	},
+	"alert_move_is_directory": {
+		"value": "Cannot move, because the destination is directory."
+	},
+	"alert_move_not_empty_directory": {
+		"value": "Cannot move, because the destination isn't empty directory."
+	},
+	"not_joined_yet": {
+		"value": "Not joined yet"
+	},
+	"send_invitation_mail_to_join": {
+		"value": "Send invitation mail to join Goorm"
+	},
+	"search_clear_result": {
+		"value": "Clear Result"
+	},
+	"search_result_refresh": {
+		"value": "Refresh"
+	},
+	"do_safe_go_to_line": {
+		"value": "Go to Line"
+	},
+	"do_safe_delete": {
+		"value": "Delete"
+	},
+	"font_color_white": {
+		"value": "white"
+	},
+	"font_color_red": {
+		"value": "red"
+	},
+	"font_color_blue": {
+		"value": "blue"
+	},
+	"font_color_green": {
+		"value": "green"
+	},
+	"font_color_yellow": {
+		"value": "yellow"
+	},
+	"alert_git_clone_non_empty_repository": {
+		"value": "Can't clone in non-empty directory"
+	},
+	"tab_title_build": {
+		"value": "Build"
+	},
+	"tab_title_run": {
+		"value": "Run"
+	},
+	"tab_title_rebuild": {
+		"value": "Rebuild"
+	},
+	"tab_title_restart": {
+		"value": "Restart"
+	},
+	"tab_button_clear": {
+		"value": "Clear"
+	},
+	"tab_button_stop_server": {
+		"value": "Stop Server"
+	},
+	"tab_msg_sever_running": {
+		"value": "Server is running on "
+	},
+	"tab_msg_sever_running2": {
+		"value": " "
+	},
+	"alert_outline_parse_err": {
+		"value": "Can not parse this file. Please check the error."
+	},
+	"alert_text_file_only": {
+		"value": "Upload a text file."
+	},
+	"alert_paste_fail": {
+		"value": "Fail to paste."
+	}
 }

@@ -37,9 +37,11 @@ goorm.core.file._new.untitled_textfile = {
 			};
 			//$.get("file/new_untitled_text_file", postdata, function (data) {
 			core._socket.once("/file/new_untitled_text_file", function(check_data){
+
 				if (check_data.err_code === 0) {
-					core.module.layout.project_explorer.treeview.open_path(data.path);	
-					core.module.layout.project_explorer.refresh();
+					core.module.layout.project_explorer.treeview.refresh_node(data.path);
+					core.module.layout.project_explorer.treeview.open_path(data.path);
+					core.module.layout.workspace.window_manager.open(data.path+'/', check_data.filename, data.type);
 				} else if (check_data.err_code == 20) {
 					alert.show(core.module.localization.msg[check_data.message]);
 

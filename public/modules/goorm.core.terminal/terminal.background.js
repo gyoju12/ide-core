@@ -8,8 +8,8 @@
  * version: 2.0.0
  **/
 goorm.core.terminal.background = function(name, target) {
-	if (name !== "background") {
-		name = "background_" + name;
+	if (name !== 'background') {
+		name = 'background_' + name;
 	}
 
 	this.terminal = null;
@@ -36,7 +36,7 @@ goorm.core.terminal.background.prototype = {
 		this.terminal = new goorm.core.terminal();
 		this.terminal.init(null, name, false);
 
-		var buffer = "";
+		var buffer = '';
 		this.terminal.on_message = function(msg) {
 			buffer += msg.stdout;
 
@@ -59,25 +59,29 @@ goorm.core.terminal.background.prototype = {
 	 * @param  {String}   callback_prompt []
 	 */
 	command: function(cmd, callback, options, callback_prompt) {
-		if (!this.terminal) return;
-		if (!callback) callback = function() {};
+		if (!this.terminal) {
+			return;
+		}
+		if (!callback) {
+			callback = function() {};
+		}
 
-		this.terminal.send_command(cmd + "\r", options, function(data) {
+		this.terminal.send_command(cmd + '\r', options, function(data) {
 			callback(data);
 		}, callback_prompt);
 	},
 	fs_rm: function(name, callback) {
 		var path = this.get_path(name);
-		this.command("rm -rf \"" + path + "\"", callback);
+		this.command('rm -rf "' + path + '"', callback);
 	},
 	fs_mkdir: function(name, callback) {
 		var path = this.get_path(name);
-		this.command("mkdir -p \"" + path + "\";chmod -R 770 \"" + path + "\"", callback);
+		this.command('mkdir -p "' + path + '";chmod -R 770 "' + path + '"', callback);
 	},
 	fs_move: function(from, to, callback) {
 		var from = this.get_path(from);
 		var to = this.get_path(to);
-		this.command("mv \"" + from + "\" \"" + to + "\"", callback); // jeongmin: remove -n option for overwriting
+		this.command('mv "' + from + '" "' + to + '"', callback); // jeongmin: remove -n option for overwriting
 	},
 	
 	refresh_terminal: function() {
@@ -114,7 +118,9 @@ goorm.core.terminal.background.prototype = {
 	},
 
 	on_ready: function(on_ready) {
-		if (!on_ready) on_ready = function() {};
+		if (!on_ready) {
+			on_ready = function() {};
+		}
 		this.configs.on_ready = on_ready;
 	},
 

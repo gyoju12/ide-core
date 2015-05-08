@@ -49,7 +49,7 @@
     });
     var myRange = cm.markText(range.from, range.to, {
       replacedWith: myWidget,
-      clearOnEnter: true,
+      clearOnEnter: false,  // goorm: changed from true to false
       __isFold: true
     });
     myRange.on("clear", function(from, to) {

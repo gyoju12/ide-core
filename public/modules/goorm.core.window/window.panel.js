@@ -849,6 +849,10 @@ goorm.core.window.panel.prototype = {
 		}
 
 		var window_manager = core.module.layout.workspace.window_manager;
+		var activated_index = window_manager.activated_list.indexOf(this);
+		if (activated_index > -1) {
+			window_manager.activated_list.splice(activated_index, 1);
+		}
 
 		window_manager.history_window = {};
 		window_manager.history_window.filename = this.filename;
@@ -926,8 +930,12 @@ goorm.core.window.panel.prototype = {
 
 			window_manager.activate(window_manager.active_window);
 		} else if (window_manager.window.length > 0) { // jeongmin: only if window exists
-			var next = (this.index > 1) ? this.index - 1 : 0;
-			window_manager.activate(next);
+			if (window_manager.activated_list[0]) {
+				window_manager.activate(window_manager.activated_list[0].index);
+			} else {
+				var next = (this.index > 1) ? this.index - 1 : 0;
+				window_manager.activate(next);
+			}
 		} else if (window_manager.window.length <= 0) {
 			window_manager.active_window = -1;
 		}
@@ -938,6 +946,13 @@ goorm.core.window.panel.prototype = {
 
 	activate: function() {
 		var window_manager = core.module.layout.workspace.window_manager;
+
+		//push panel reference at activated array front
+		var index = window_manager.activated_list.indexOf(this);
+		if (index > -1) {
+			window_manager.activated_list.splice(index, 1);
+		}
+		window_manager.activated_list.unshift(this);
 
 		window_manager.active_window = this.index;
 
@@ -976,6 +991,9 @@ goorm.core.window.panel.prototype = {
 
 			if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
 				core.module.layout.outline.clear();
+				if (this.terminal && this.terminal.Terminal) {
+					this.terminal.Terminal.focus()
+				}
 			}
 		}
 
@@ -983,11 +1001,6 @@ goorm.core.window.panel.prototype = {
 
 		this.activated = true;
 		
-
-		var menu_shown = $('#goorm-mainmenu .dropdown-menu').is(':visible');
-		if (menu_shown) {
-			$(core).trigger('contextmenu_all_hide');
-		}
 	},
 
 	init_title: function() {

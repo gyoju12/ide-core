@@ -8,7 +8,6 @@
  * version: 2.0.0
  **/
 
-
 goorm.core.project.explorer = function() {
 	this.target = null;
 	this.treeview = null;
@@ -31,7 +30,9 @@ goorm.core.project.explorer.prototype = {
 		var self = this;
 
 		// init explorer treeview from localStorage
-		if (!localStorage.explorer_treeview) localStorage.explorer_treeview = JSON.stringify({});
+		if (!localStorage.explorer_treeview) {
+			localStorage.explorer_treeview = JSON.stringify({});
+		}
 		this.load_explorer_treeview();
 
 		// bind selectbox event
@@ -42,26 +43,28 @@ goorm.core.project.explorer.prototype = {
 		//
 		$('#project_loading_gif').css('width', '100%');
 
-		if (!core.status.current_project_path) core.status.current_project_path = "";
+		if (!core.status.current_project_path) {
+			core.status.current_project_path = '';
+		}
 		core.status.selected_file = '';
 		self.current_project = {};
 
 		// drag & drop file upload
 		self.drag_n_drop();
 		$(core).on('project_get_list_complete', function() {
-			if (!$.isEmptyObject(localStorage.current_project) && localStorage.current_project != "") {
+			if (!$.isEmptyObject(localStorage.current_project) && localStorage.current_project != '') {
 				self.current_project = $.parseJSON(localStorage.current_project);
 
-				if (self.current_project.current_project_name !== "" && self.check_project_list(self.current_project.current_project_path)) {
+				if (self.current_project.current_project_name !== '' && self.check_project_list(self.current_project.current_project_path)) {
 					core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
 				} else {
 					self.current_project = {};
 
-					core.status.current_project_name = "";
-					core.status.current_project_path = "";
-					core.status.current_project_type = "";
+					core.status.current_project_name = '';
+					core.status.current_project_path = '';
+					core.status.current_project_type = '';
 
-					localStorage.current_project = "";
+					localStorage.current_project = '';
 
 					
 
@@ -70,11 +73,11 @@ goorm.core.project.explorer.prototype = {
 			} else {
 				self.current_project = {};
 
-				core.status.current_project_name = "";
-				core.status.current_project_path = "";
-				core.status.current_project_type = "";
+				core.status.current_project_name = '';
+				core.status.current_project_path = '';
+				core.status.current_project_type = '';
 
-				localStorage.current_project = "";
+				localStorage.current_project = '';
 
 				
 
@@ -91,7 +94,7 @@ goorm.core.project.explorer.prototype = {
 				for (var i in data) {
 					data[i].name && (core.workspace[data[i].name] = data[i].contents);
 				}
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					self.make_project_list_table();
 
 				} else {}
@@ -101,8 +104,8 @@ goorm.core.project.explorer.prototype = {
 
 			
 			//useonly(mode=goorm-oss)
-			core.socket.once("/project/get_list/owner", get_list_cb);
-			core.socket.emit("/project/get_list", {
+			core.socket.once('/project/get_list/owner', get_list_cb);
+			core.socket.emit('/project/get_list', {
 				'get_list_type': 'owner_list'
 			});
 			
@@ -111,8 +114,8 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		$(core).on('language_loaded', function() {
-			if (core.status.current_project_path === "") {
-				$('#selected_project_name').html($("#project_selector .dropdown-menu li[localization_key=project_list]").text());
+			if (core.status.current_project_path === '') {
+				$('#selected_project_name').html($('#project_selector .dropdown-menu li[localization_key=project_list]').text());
 			}
 		});
 
@@ -120,8 +123,8 @@ goorm.core.project.explorer.prototype = {
 			self.save_explorer_treeview();
 		});
 
-		$(core).on("layout_resized", function() {
-			var table = $("#project_list_table");
+		$(core).on('layout_resized', function() {
+			var table = $('#project_list_table');
 
 			if (table.width() != self.old_project_list_table_width && table.css('display') != 'none') {
 				self.old_project_list_table_width = table.width();
@@ -143,9 +146,9 @@ goorm.core.project.explorer.prototype = {
 		}
 		this.refreshing = true;
 
-		$("#project_loading_div").show();
-		$("#project_treeview").hide();
-		$("#project_list_table").hide();
+		$('#project_loading_div').show();
+		$('#project_treeview').hide();
+		$('#project_list_table').hide();
 
 		function get_list_cb(data) {
 			self.project_data = data;
@@ -156,31 +159,31 @@ goorm.core.project.explorer.prototype = {
 				data[i].name && (core.workspace[data[i].name] = data[i].contents);
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				self.make_project_list_table();
 			} else if (!core.workspace[core.status.current_project_path]) {
 				
 
-				core.current_project_name = "";
-				core.status.current_project_path = "";
-				core.current_projectType = "";
-				self.current_project.current_project_path = "";
-				self.current_project.current_project_name = "";
-				self.current_project.current_projectType = "";
+				core.current_project_name = '';
+				core.status.current_project_path = '';
+				core.current_projectType = '';
+				self.current_project.current_project_path = '';
+				self.current_project.current_project_name = '';
+				self.current_project.current_projectType = '';
 
 				
 
-				$("#project_treeview").hide();
+				$('#project_treeview').hide();
 				self.make_project_list_table();
 			} else {
 				
 
 				var temp_project_path = core.status.current_project_path;
-				$("#project_treeview").css("background-color", "#FFF");
+				$('#project_treeview').css('background-color', '#FFF');
 
 				self.current_project.current_project_path = temp_project_path;
 				if (self.treeview && self.treeview.project_path === self.current_project.current_project_path) {
-					console.log("goormIDE treeview refresh");
+					console.log('goormIDE treeview refresh');
 					self.treeview.refresh();
 				} else {
 					if (self.treeview) {
@@ -195,7 +198,7 @@ goorm.core.project.explorer.prototype = {
 					self.treeview = null;
 
 					var postdata = {
-						kind: "project",
+						kind: 'project',
 						path: temp_project_path
 					};
 
@@ -218,14 +221,16 @@ goorm.core.project.explorer.prototype = {
 				}
 			}
 			self.drag_n_drop();
-			if (callback && typeof(callback) === 'function') callback();
+			if (callback && typeof(callback) === 'function') {
+				callback();
+			}
 			self.refreshing = false;
 		}
 
 		
 		//useonly(mode=goorm-oss)
-		core.socket.once("/project/get_list/owner", get_list_cb);
-		core.socket.emit("/project/get_list", {
+		core.socket.once('/project/get_list/owner', get_list_cb);
+		core.socket.emit('/project/get_list', {
 			'get_list_type': 'owner_list'
 		});
 		
@@ -250,11 +255,10 @@ goorm.core.project.explorer.prototype = {
 			}
 		}
 		
-		if (core.status.current_project_path === "") {
+		if (core.status.current_project_path === '') {
 			// core.module.localization.local_apply("#project_selector", "dict");
-			this.select_project_name($("#project_selector .dropdown-menu li[localization_key=project_list]").text());
+			this.select_project_name($('#project_selector .dropdown-menu li[localization_key=project_list]').text());
 		}
-
 
 		// $("#project_selectbox").empty();
 
@@ -284,7 +288,7 @@ goorm.core.project.explorer.prototype = {
 
 		$('#back_to_project_table').click(function() {
 			core.status.selected_file = '';
-			core.module.localization.local_apply("#project_selector", "dict");
+			core.module.localization.local_apply('#project_selector', 'dict');
 			self.on_project_selectbox_change('');
 		});
 
@@ -328,8 +332,8 @@ goorm.core.project.explorer.prototype = {
 
 		
 		//useonly(mode=goorm-oss)
-		core.socket.once("/project/get_list/owner", get_list_cb);
-		core.socket.emit("/project/get_list", {
+		core.socket.once('/project/get_list/owner', get_list_cb);
+		core.socket.emit('/project/get_list', {
 			'get_list_type': 'owner_list'
 		});
 		
@@ -341,18 +345,17 @@ goorm.core.project.explorer.prototype = {
 
 		
 
-		if (project_idx !== null && project_idx !== undefined && project_idx !== "") {
+		if (project_idx !== null && project_idx !== undefined && project_idx !== '') {
 			self.current_project.current_project_path = self.project_data[project_idx].name;
 			self.current_project.current_project_name = self.project_data[project_idx].contents.name;
 			self.current_project.current_project_type = self.project_data[project_idx].contents.type;
 			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
 		} else {
-			self.current_project.current_project_path = "";
-			self.current_project.current_project_name = "";
-			self.current_project.current_project_type = "";
+			self.current_project.current_project_path = '';
+			self.current_project.current_project_name = '';
+			self.current_project.current_project_type = '';
 			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
 		}
-
 
 	},
 
@@ -360,19 +363,29 @@ goorm.core.project.explorer.prototype = {
 		this.treeview_data = JSON.parse(localStorage.explorer_treeview);
 
 		// init
-		if (!this.treeview_data) this.treeview_data = {};
+		if (!this.treeview_data) {
+			this.treeview_data = {};
+		}
 
 		// sort treeview data to expand childs and avoid sync error during dynamic loading.
-		if (!this.treeview_data[core.status.current_project_path]) return;
-
-		if (this.treeview_data[core.status.current_project_path] && this.treeview_data[core.status.current_project_path].sort)
+		if (!this.treeview_data[core.status.current_project_path]) {
+			return;
+		}
+		if (this.treeview_data[core.status.current_project_path] && this.treeview_data[core.status.current_project_path].sort) {
 			this.treeview_data[core.status.current_project_path].sort();
+		}
 	},
 
 	save_explorer_treeview: function(project_path) {
-		if (!this.treeview_data) this.treeview_data = {};
-		if (!project_path) project_path = core.status.current_project_path;
-		if (!this.treeview) return;
+		if (!this.treeview_data) {
+			this.treeview_data = {};
+		}
+		if (!project_path) {
+			project_path = core.status.current_project_path;
+		}
+		if (!this.treeview) {
+			return;
+		}
 
 		if (this.treeview.project_path === project_path) {
 			this.treeview_data[project_path] = this.treeview.get_state();
@@ -388,112 +401,204 @@ goorm.core.project.explorer.prototype = {
 	// 	this.save_explorer_treeview();
 	// },
 
-	// remove_explorer_treeview: function (path) {
-	// 	if (!this.treeview_data[core.status.current_project_path]) return;
-	// 	for (var i = 0; i < this.treeview_data[core.status.current_project_path].length; i++) {
-	// 		if (this.treeview_data[core.status.current_project_path][i] == path) {
-	// 			this.treeview_data[core.status.current_project_path].remove(i);
-	// 			break;
-	// 		}
-	// 	}
-	// 	this.save_explorer_treeview();
-	// },
+	remove_explorer_treeview: function(path) {
+		delete this.treeview_data[path];
+		localStorage.explorer_treeview = JSON.stringify(this.treeview_data);
+		this.treeview.project_path = '';
+		// console.log(this.treeview.get_state());
+		// if (!this.treeview_data[core.status.current_project_path]) return;
+		// for (var i = 0; i < this.treeview_data[core.status.current_project_path].length; i++) {
+		// 	if (this.treeview_data[core.status.current_project_path][i] == path) {
+		// 		this.treeview_data[core.status.current_project_path].remove(i);
+		// 		break;
+		// 	}
+		// }
+		// this.save_explorer_treeview();
+	},
 
 	set_context_menu: function() {
 		var self = this;
 
 		this.context_menu_file = new goorm.core.menu.context();
-		this.context_menu_file.init("configs/menu/goorm.core.project/project.explorer.file.html", "project.explorer.file_context", $("#project_treeview"), "", null, null, true);
+		this.context_menu_file.init('configs/menu/goorm.core.project/project.explorer.file.html', 'project.explorer.file_context', $('#project_treeview'), '', null, null, true);
 
 		this.context_menu_folder = new goorm.core.menu.context();
-		this.context_menu_folder.init("configs/menu/goorm.core.project/project.explorer.folder.html", "project.explorer.folder_context", $("#project_treeview"), "", null, null, true);
+		this.context_menu_folder.init('configs/menu/goorm.core.project/project.explorer.folder.html', 'project.explorer.folder_context', $('#project_treeview'), '', null, null, true);
 
 		this.context_menu_project = new goorm.core.menu.context();
-		this.context_menu_project.init("configs/menu/goorm.core.project/project.explorer.html", "project.explorer_context", $("#project_explorer"), "", null, null, false);
+		this.context_menu_project.init('configs/menu/goorm.core.project/project.explorer.html', 'project.explorer_context', $('#project_explorer'), '', null, null, false);
+
+		this.context_menu_multi = new goorm.core.menu.context();
+		this.context_menu_multi.init('', 'project.explorer.multi_context', $('#project_treeview'), '', null, null, true);
 	},
 
 	copy: function() {
 		this.clipboard = this.get_tree_selected_path();
 	},
+	// paste file/directory to target. Jeong-Min Im.
 	paste: function() {
 		var self = this;
-		if (this.clipboard && (core.status.selected_file_type == 'folder' || core.status.selected_file_type == 'root')) {
+		var localization_msg = core.module.localization.msg;
+		var target = core.status.selected_file;
 
+		if (this.clipboard && (core.status.selected_file_type === 'folder' || core.status.selected_file_type === 'root')) {
 			var postdata = {
 				source: this.clipboard,
-				target: core.status.selected_file
+				target: target
 			};
-			_$.get("file/copy_file_paste", postdata, function(data) {
-				if (data.result) {
-					// console.log(data.result);
-				}
-				//self.clipboard = false;
-				self.refresh();
-			});
-		}
-	},
-	duplicate: function() {
-		var self = this;
+			var paste_func = function() {
+				_$.get('file/copy_file_paste', postdata, function(result) {
+					if (!result.err_code) {
+						self.treeview.refresh_node(target); // file will be placed below target, so just refresh target
+					} else {
+						var msg = '';
 
-		this.copy();
-		var selected_node = this.clipboard;
-		var path = selected_node.files[0];
-		if (selected_node.files.length > 0) {
-			path = path.substring(0, path.lastIndexOf("/"));
-			if (this.clipboard && path) {
-				var postdata = {
-					source: this.clipboard,
-					target: path
-				};
-				_$.get("file/copy_file_paste", postdata, function(data) {
-					if (data.result) {
-						// console.log(data.result);
+						switch (result.err_code) {
+							case 1:
+								msg = 'alert_invalide_query';
+								break;
+
+							case 2:
+								msg = 'alert_permission_denied';
+								break;
+
+							case 3:
+								msg = 'alert_paste_fail';
+								break;
+
+							default:
+								msg = 'alert_unknown_error';
+						}
+
+						alert.show(localization_msg[msg]);
 					}
-					//self.clipboard = false;
-					self.refresh();
+				});
+			};
+
+			if (this.clipboard.directorys.length) {
+				_$.get('file/directorys_exist', postdata, function(exist) {
+					if (!exist) {
+						paste_func();
+					} else {
+						var msg = '';
+						var err_file = exist.err_file ? exist.err_file.join(', ') : '';
+
+						switch (exist.err_code) {
+							case 1:
+								msg = 'alert_invalide_query';
+								break;
+
+							case 2:
+								confirmation.init({
+									'message': localization_msg.confirmation_do_you_want_overwrite + '<br/>' + err_file,
+									'yes': paste_func
+								}).show();
+								return;
+
+							default:
+								msg = 'alert_unknown_error';
+						}
+
+						alert.show(localization_msg[msg] + '<br/>' + err_file);
+					}
 				});
 			} else {
-				alert.show(core.module.localization.msg.alert_file_not_select);
+				paste_func();
 			}
-		} else if (selected_node.directorys.length > 0) {
-			alert.show(core.module.localization.msg.alert_folder_duplicate_error);
-		} else if (selected_node.files.length === 0 && selected_node.directorys.length === 0) {
-			alert.show(core.module.localization.msg.alert_file_not_select);
+		}
+	},
+	// duplicate file. Jeong-Min Im.
+	duplicate: function() {
+		var self = this;
+		var localization_msg = core.module.localization.msg;
+
+		this.copy(); // get selected files
+
+		var files = this.clipboard.files;
+		var directories = this.clipboard.directorys;
+
+		if (files.length) {
+			_$.get('file/copy_file_paste', {
+				source: this.clipboard
+			}, function(result) {
+				if (result.err_code === 1) {
+					alert.show(localization_msg.alert_invalide_query);
+				} else if (result.err_code === 2) {
+					alert.show(localization_msg.alert_permission_denied);
+				} else if (result.err_file) {
+					var msg = localization_msg.alert_paste_fail + '<br/>' + result.err_file.join(', ');
+
+					if (result.err_file.length !== files.length) {
+						var refresh_files = files.filter(function(item) {
+							return result.err_file.indexOf(item) === -1;
+						});
+
+						for (var i = refresh_files.length - 1; 0 <= i; i--) {
+							self.treeview.refresh_node(refresh_files[i].substring(0, refresh_files[i].lastIndexOf('/')));
+						}
+					}
+
+					if (directories.length) {
+						msg += '<br/>' + localization_msg.alert_folder_not_duplicated;
+					}
+
+					alert.show(msg);
+				} else {
+					for (var i = files.length - 1; 0 <= i; i--) {
+						self.treeview.refresh_node(files[i].substring(0, files[i].lastIndexOf('/')));
+					}
+
+					if (directories.length) {
+						alert.show(localization_msg.alert_folder_not_duplicated);
+					}
+				}
+			});
+		} else if (directories.length) {
+			alert.show(localization_msg.alert_folder_duplicate_error);
+		} else {
+			alert.show(localization_msg.alert_file_not_select);
 		}
 	},
 
 	get_tree_selected_path: function(treeview_id) { // treeview_id: id of various treeviews
-		treeview_id = treeview_id || 'project_treeview';
+		if (core.status.current_project_path !== '') { // except project table
+			treeview_id = treeview_id || 'project_treeview';
 
-		var selected_items = $("#" + treeview_id + " .jstree-clicked");
-		var files = [];
-		var directorys = [];
+			var selected_items = $('#' + treeview_id + ' .jstree-clicked');
+			var files = [];
+			var directorys = [];
 
-		$(selected_items).each(function(i, o) {
-			var $node = $(o).parent();
+			$(selected_items).each(function(i, o) {
+				var $node = $(o).parent();
 
-			if ($node.attr('file_type') !== undefined) {
-				files.push($node.attr('path'));
-			} else {
-				directorys.push($node.attr('path'));
+				if ($node.attr('file_type') !== undefined) {
+					files.push($node.attr('path'));
+				} else {
+					directorys.push($node.attr('path'));
+				}
+
+				// if ($(o).find('span').hasClass("file")) {
+				// 	files.push($(o).find(".fullpath").html());
+				// } else {
+				// 	directorys.push($(o).find(".fullpath").html());
+				// }
+			});
+
+			// jeongmin: remove selected item
+			if (selected_items.length == 0) {
+				this.reset_tree_selected();
 			}
 
-			// if ($(o).find('span').hasClass("file")) {
-			// 	files.push($(o).find(".fullpath").html());
-			// } else {
-			// 	directorys.push($(o).find(".fullpath").html());
-			// }
-		});
-
-		// jeongmin: remove selected item
-		if (selected_items.length == 0) {
-			this.reset_tree_selected();
+			return {
+				files: files,
+				directorys: directorys
+			};
+		} else {
+			return {
+				files: [],
+				directorys: []
+			};
 		}
-
-		return {
-			files: files,
-			directorys: directorys
-		};
 	},
 
 	reset_tree_selected: function() {
@@ -504,7 +609,7 @@ goorm.core.project.explorer.prototype = {
 	},
 
 	refresh_event: function() {
-		core.module.localization.change_language(localStorage.getItem("language"), true);
+		core.module.localization.change_language(localStorage.getItem('language'), true);
 		core.module.action.init();
 	},
 
@@ -530,7 +635,7 @@ goorm.core.project.explorer.prototype = {
 	make_project_list_table: function() {
 		var self = this;
 
-		var project_list_table = $("#project_list_table");
+		var project_list_table = $('#project_list_table');
 
 		var my_project_list = [];
 		var shared_project_list = [];
@@ -550,20 +655,20 @@ goorm.core.project.explorer.prototype = {
 		$('#project_list_table').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="project_list_jquery_table" ></table>');
 
 		this.table = $('#project_list_jquery_table').dataTable({
-			"aaData": my_project_list.concat(shared_project_list),
-			"aoColumns": [{
-					"sTitle": '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>'
+			'aaData': my_project_list.concat(shared_project_list),
+			'aoColumns': [{
+					'sTitle': '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>'
 				}, {
-					"sTitle": '<span localization_key="dictionary_name">' + core.module.localization.msg.dictionary_name + '</span>'
+					'sTitle': '<span localization_key="dictionary_name">' + core.module.localization.msg.dictionary_name + '</span>'
 				}, {
-					"sTitle": '<span localization_key="dictionary_author">' + core.module.localization.msg.dictionary_author + '</span>'
+					'sTitle': '<span localization_key="dictionary_author">' + core.module.localization.msg.dictionary_author + '</span>'
 				}
 
 			],
-			"sDom": '<"H"f>rt',
-			"iDisplayLength": -1,
-			"oLanguage": {
-				"sEmptyTable": '<span localization_key="project_empty">' + core.module.localization.msg.project_empty + '</span>'
+			'sDom': '<"H"f>rt',
+			'iDisplayLength': -1,
+			'oLanguage': {
+				'sEmptyTable': '<span localization_key="project_empty">' + core.module.localization.msg.project_empty + '</span>'
 			}
 		});
 
@@ -571,17 +676,17 @@ goorm.core.project.explorer.prototype = {
 		$('#project_explorer_refresh_tool').click(function(e) {
 			self.refresh();
 		});
-		$("#project_loading_div").css('display', 'none');
-		$("#project_list_table").css('display', '');
+		$('#project_loading_div').css('display', 'none');
+		$('#project_list_table').css('display', '');
 
-		$("#project_list_table td").unbind("hover");
-		$("#project_list_table td").hover(function() {
+		$('#project_list_table td').unbind('hover');
+		$('#project_list_table td').hover(function() {
 			$(this).css('cursor', 'pointer');
 		}, function() {
 			$(this).css('cursor', 'auto');
 		});
-		$("#project_list_table td").unbind("click");
-		$("#project_list_table td").click(function(e) {
+		$('#project_list_table td').unbind('click');
+		$('#project_list_table td').click(function(e) {
 			var aPos = self.table.fnGetPosition(this);
 			var snapshot = self.table.fnGetData(aPos[0]);
 
@@ -602,10 +707,12 @@ goorm.core.project.explorer.prototype = {
 		this.styling_search();
 
 		//force setting of localization when project is deleted by rm -rf on table --heeje
-		if (core.status.current_project_path == "") {
-			if (localStorage.getItem("language") == "us")
-				$('#selected_project_name').text("Project List");
-			else $('#selected_project_name').text("프로젝트 리스트");
+		if (core.status.current_project_path == '') {
+			if (localStorage.getItem('language') == 'us') {
+				$('#selected_project_name').text('Project List');
+			} else {
+				$('#selected_project_name').text('프로젝트 리스트');
+			}
 		}
 	},
 
@@ -614,7 +721,7 @@ goorm.core.project.explorer.prototype = {
 
 		// make div
 		filter.append('<div class="input-group" style="width:95%; margin:0 auto; margin-bottom:5px;"><span class="input-group-addon" localization_key="search">Search</span></div>');
-		core.module.localization.local_apply("#project_list_jquery_table_filter", 'dict');
+		core.module.localization.local_apply('#project_list_jquery_table_filter', 'dict');
 
 		// move to div
 		filter.find('input').addClass('form-control').appendTo(filter.find('.input-group'));
@@ -638,10 +745,14 @@ goorm.core.project.explorer.prototype = {
 				return false;
 			})
 			.on('drop', function(e) {
-				if (isUploading) return false;
+				if (isUploading) {
+					return false;
+				}
 
 				var target = $(e.target).parent();
-				if (target.attr('id') !== 'my_project' && (target.is('[file_type]') || !target.is('[role="treeitem"]'))) return false; // if id === my_project, user dnd to empty space on project_treeview
+				if (target.attr('id') !== 'my_project' && (target.is('[file_type]') || !target.is('[role="treeitem"]'))) {
+					return false; // if id === my_project, user dnd to empty space on project_treeview
+				}
 				var files = e.originalEvent.dataTransfer.files;
 				var items = e.originalEvent.dataTransfer.items;
 
@@ -651,7 +762,9 @@ goorm.core.project.explorer.prototype = {
 
 				// firefox does not support dataTransfer.items. we can't confirm which is file or folder.
 				// so we don't support drag n drop function in firefox. - gangseok.lee
-				if (items === undefined) return false;
+				if (items === undefined) {
+					return false;
+				}
 
 				// is this best way to check folders?
 				// all items data will be gone when confirmataion dialog occur.
@@ -664,12 +777,14 @@ goorm.core.project.explorer.prototype = {
 					}
 				}
 
-				goorm.core.file._import.upload_file_drag(files, target.attr("path") || core.status.current_project_path, callback);
+				goorm.core.file._import.upload_file_drag(files, target.attr('path') || core.status.current_project_path, callback);
 				return false;
 			})
 			.on('dragenter', 'li:not([file_type])', function(e) {
 				var target = $(e.target);
-				if (target.parent().is('[file_type]')) return false;
+				if (target.parent().is('[file_type]')) {
+					return false;
+				}
 
 				var tagName = target.prop('tagName');
 				var sibling = undefined;
@@ -685,7 +800,9 @@ goorm.core.project.explorer.prototype = {
 						//console.log('A dragenter');
 						break;
 					case 'DIV':
-						if (!isWholerow) break;
+						if (!isWholerow) {
+							break;
+						}
 						target.addClass('jstree-wholerow-hovered')
 							.siblings('a').addClass('jstree-hovered');
 						//console.log('DIV dragenter');
@@ -696,7 +813,9 @@ goorm.core.project.explorer.prototype = {
 			})
 			.on('dragleave', 'li:not([file_type])', function(e) {
 				var target = $(e.target);
-				if (target.parent().is('[file_type]')) return false;
+				if (target.parent().is('[file_type]')) {
+					return false;
+				}
 
 				var tagName = target.prop('tagName');
 
@@ -784,10 +903,12 @@ goorm.core.project.explorer.prototype = {
 				var ori_path = []; // jeongmin: files' origin
 
 				var msg = core.module.localization.msg;
-				$("#dnd_custom_style").remove();
+				$('#dnd_custom_style').remove();
 
 				// if(target_path === undefined || target_id === undefined) return false;
-				if (target_path === undefined) return false;
+				if (target_path === undefined) {
+					return false;
+				}
 				var nodes = data.data.nodes;
 				nodes.sort().reverse();
 
@@ -1023,7 +1144,6 @@ goorm.core.project.explorer.prototype = {
 		// 					current_path: current_path
 		// 				};
 
-
 		// 				core.socket.once('/project/move_file', function(data){
 		// 					self.refresh(true);
 
@@ -1060,8 +1180,6 @@ goorm.core.project.explorer.prototype = {
 		// 	}
 		// });
 
-
-
 		// ///////////////////
 		// var doc = document.getElementById('project_treeview');
 		// doc.ondragover = function () { this.className = 'hover'; console.log('hi');return false; };
@@ -1075,8 +1193,6 @@ goorm.core.project.explorer.prototype = {
 		// 	console.log(drop_position_el);
 		// 	core.sim=drop_position_el;
 
-
-
 		// 	var upload_path='';
 		// 	if(drop_position_el.find('.fullpath').length === 1){
 		// 		upload_path=drop_position_el.find('.fullpath').text();
@@ -1089,7 +1205,6 @@ goorm.core.project.explorer.prototype = {
 		// 	}else{
 		// 		upload_path=core.status.current_project_path;
 		// 	}
-
 
 		// 	console.log('');
 		// 	console.log(upload_path);
@@ -1106,20 +1221,16 @@ goorm.core.project.explorer.prototype = {
 		// 		total_size+=parseInt(files[i].size, 10);
 		// 	}
 
-
 		// 	if(total_size>=10000000){
 		// 		alert.show('You can not upload files if total size is bigger than 10MB ');
 		// 		return false;
 		// 	}
-
 
 		// 	var formData = new FormData();
 		// 	for (var i = 0; i < files.length; i++) {
 		// 		formData.append('file', files[i]);
 		// 	}
 		// 	formData.append('file_import_location_path', upload_path);
-
-
 
 		// 	// now post a new XHR request
 		// 	var xhr = new XMLHttpRequest();
@@ -1141,12 +1252,9 @@ goorm.core.project.explorer.prototype = {
 
 		// 	xhr.send(formData);
 
-
 		// 	return false;
 		// };
 		// ////////////////////
-
-
 
 	},
 
@@ -1184,7 +1292,7 @@ goorm.core.project.explorer.prototype = {
 	// },
 
 	fill_tree_data: function(path, state) {
-		if (path === "") {
+		if (path === '') {
 			return false;
 		}
 
@@ -1195,44 +1303,49 @@ goorm.core.project.explorer.prototype = {
 		var on_mousedown = function(e, node) {
 			e.stopPropagation();
 
-			core.status.selected_node = e.target;
-			core.status.selected_file = node.li_attr.path;
-			core.status.selected_file_type = node.type;
-			self.selected_type = node.li_attr.file_type;
-
 			if (e.which == 3) {
-				self.treeview.select_node(node);
-				if (core.status.selected_file_type === "file") {
-					// core.module.localization.local_apply("div[id='project.explorer.file_context']", 'menu');	// hidden by jeongmin: causes delay of showing context menu
-					self.context_menu_file.show(e);
-				} else if (core.status.selected_file_type === "folder" || core.status.selected_file_type === "root") {
-					var folder_context_container = $("div[id='project.explorer.folder_context']");
+				var selected_item = self.get_tree_selected_path();
 
-					if (node.state.opened) {
-						folder_context_container.find('a[action="folder_open_context"]').parent().hide();
-						folder_context_container.find('a[action="folder_close_context"]').parent().show();
-					} else {
-						folder_context_container.find('a[action="folder_open_context"]').parent().show();
-						folder_context_container.find('a[action="folder_close_context"]').parent().hide();
+				if (selected_item.files.length + selected_item.directorys.length > 1) { // multi-select
+					var file = self.context_menu_multi.menu.find('.file');
+					var directory = self.context_menu_multi.menu.find('.directory');
+
+					file.hide();
+					directory.hide();
+
+					if (selected_item.directorys.length === 0) { // only files
+						file.show();
+					} else if (selected_item.files.length === 0) { // only directorys
+						directory.show();
 					}
 
-					// core.module.localization.local_apply("div[id='project.explorer.folder_context']", 'menu');	// hidden by jeongmin: causes delay of showing context menu
-
-					self.context_menu_folder.show(e);
-				}
-
-				var selected_items = node;
-				if (selected_items.length > 1) {
-					$('a[action=delete_context]').hide();
-					$('a[action=delete_all_context]').show();
+					self.context_menu_multi.show(e);
 				} else {
-					$('a[action=delete_all_context]').hide();
-					$('a[action=delete_context]').show();
+					self.treeview.select_node(node);
+
+					core.status.selected_node = e.target;
+					core.status.selected_file = node.li_attr.path;
+					core.status.selected_file_type = node.type;
+					self.selected_type = node.li_attr.file_type;
+
+					if (core.status.selected_file_type === 'file') {
+						self.context_menu_file.show(e);
+					} else if (core.status.selected_file_type === 'folder' || core.status.selected_file_type === 'root') {
+						var folder_context_container = $('div[id="project.explorer.folder_context"]');
+
+						if (node.state.opened) {
+							folder_context_container.find('a[action="folder_open_context"]').parent().hide();
+							folder_context_container.find('a[action="folder_close_context"]').parent().show();
+						} else {
+							folder_context_container.find('a[action="folder_open_context"]').parent().show();
+							folder_context_container.find('a[action="folder_close_context"]').parent().hide();
+						}
+
+						self.context_menu_folder.show(e);
+					}
+
+					
 				}
-
-				
-
-				self.treeview.tree.jstree("select_node", node);
 			}
 		};
 
@@ -1244,15 +1357,14 @@ goorm.core.project.explorer.prototype = {
 			core.status.selected_file_type = node.type;
 			self.selected_type = node.li_attr.file_type;
 
-
 		};
 
 		var on_dblclick = function(e, node) {
-			if (node.type === "file") {
-				var path = node.li_attr.path.split("/");
+			if (node.type === 'file') {
+				var path = node.li_attr.path.split('/');
 				var filename = path.pop();
 				var filetype = node.li_attr.file_type;
-				var filepath = path.join("/") + "/";
+				var filepath = path.join('/') + '/';
 
 				core.status.selected_file = node.li_attr.path;
 
@@ -1290,6 +1402,6 @@ goorm.core.project.explorer.prototype = {
 		if (state) {
 			option.state = state;
 		}
-		this.treeview = new goorm.core.utility.treeview("#project_treeview", option);
+		this.treeview = new goorm.core.utility.treeview('#project_treeview', option);
 	}
 };

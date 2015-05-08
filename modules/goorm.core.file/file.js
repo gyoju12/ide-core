@@ -158,6 +158,7 @@ module.exports = {
 
 							evt.emit('file_do_new_untitled_text_file', data);
 						} else {
+							data.filename = temp_file_name + i + '.txt';
 							
 							evt.emit('file_do_new_untitled_text_file', data);
 						}
@@ -221,22 +222,20 @@ module.exports = {
 					'user_id': query.user_id,
 					'data': query.data,
 					'append': (query.options && query.options.append === true) ? true : false
-				}, function (save) {
+				}, function(save) {
 					if (save.result) {
 						data.err_code = 0;
 						data.message = 'saved';
 
 						evt.emit('file_put_contents', data);
-					}
-					else {
+					} else {
 						data.err_code = 10;
 						data.message = 'Can not save';
 
 						evt.emit('file_put_contents', data);
 					}
 				});
-			}
-			else {
+			} else {
 				if (query.options != undefined && query.options.append == true) {
 					fs.appendFile(abs_path, query.data, function(err) {
 						if (err !== null) {
@@ -331,30 +330,34 @@ module.exports = {
 		}
 	},
 
-	do_delete: function(query, evt) {
-		var data = {};
-		data.err_code = 0;
-		data.message = 'Process Done';
+	do_delete: function(files, evt) {
+		var file_del_func = [];
 
-		if (query.filename !== null) {
-			rimraf(global.__workspace + '/' + query.filename, function(err) {
-				if (err !== null) {
-					data.err_code = 20;
-					data.message = 'Can not delete file';
+		for (var i = files.length - 1; 0 <= i; i--) {
+			file_del_func.push(function(callback) {
+				rimraf(path.join(global.__workspace, files[++i]), function(err) {
+					if (!err) {
+						callback();
+					} else {
+						console.log('file.js', 'do_delete', 'file delete fail', err);
 
-					evt.emit('file_do_delete', data);
-				} else {
-					//success
-					evt.emit('file_do_delete', data);
-				}
+						callback(null, files[i]);
+					}
+				});
 			});
-		} else {
-			data.err_code = 10;
-			data.message = 'Invalide query';
-
-			evt.emit('file_do_delete', data);
 		}
 
+		async.parallel(file_del_func, function(err, result) {
+			result = result.filter(Boolean);
+
+			if (result.length) {
+				evt.emit('file_do_delete', {
+					'err_file': result
+				});
+			} else {
+				evt.emit('file_do_delete', true);
+			}
+		});
 	},
 
 	do_rename: function(query, evt) {
@@ -837,112 +840,145 @@ module.exports = {
 		fs.closeSync(fdr);
 		fs.closeSync(fdw);
 	},
+	// check if paste target directory exists (judge whether overwrite or not). Jeong-Min Im.
+	// req (Object) : {
+	// 	query (Object) : {
+	// 		source (Object) : {
+	// 			directorys (Array) : copied directory.
+	// 		}
+	// 		target (String) : paste target directory.
+	// 	}
+	// }
+	// _callback (Function)
+	do_directory_exist: function(req, _callback) {
+		var directorys = req.query.source.directorys;
+		var target = g_secure.command_filter(req.query.target); // paste target directory
+		var exist_func = []; // for async
 
-	do_delete_all: function(query, callback) {
-		var directorys = query.directorys;
-		var files = query.files;
-		var data = {};
-		if (files) {
-			files.forEach(function(o) {
-				rimraf(global.__workspace + '/' + o, function(err) {
-					if (err !== null) {
-						data.err_code = 20;
-						data.message = 'Can not delete file';
+		for (var i = directorys.length - 1; 0 <= i; i--) {
+			directorys[i] = g_secure.command_filter(directorys[i]);
+
+			exist_func.push(function(callback) {
+				fs.exists(path.join(global.__workspace, target, path.basename(directorys[++i])), function(exist) {
+					if (exist) {
+						callback(null, directorys[i]);
+					} else {
+						callback();
 					}
 				});
 			});
 		}
-		if (directorys) {
-			directorys.forEach(function(o) {
-				rimraf(global.__workspace + '/' + o, function(err) {
-					if (err !== null) {
-						data.err_code = 20;
-						data.message = 'Can not delete file';
-					}
+
+		async.parallel(exist_func, function(err, result) {
+			result = result.filter(Boolean); // remove undefined
+
+			if (result.length) { // ask overwrite
+				_callback({
+					'err_code': 2,
+					'err_file': result
 				});
-			});
-		}
-		callback({
-			result: data
+			} else {
+				_callback(false);
+			}
 		});
 	},
-	do_copy_file_paste: function(req, callback) {
-		var query = req.query;
+	// paste file/directory to target. Jeong-Min Im.
+	// req (Object) : {
+	// 	query (Object) : {
+	// 		source (Object) : {
+	// 			files (Array) : copied files.
+	// 			directorys (Array) : copied directories.
+	// 		}
+	// 	}
+	// }
+	// _callback (Function)
+	do_copy_file_paste: function(req, _callback) {
+		var files = req.query.source.files;
+		var directorys = req.query.source.directorys;
+		var file_copy_func = [];
+		var directory_copy_func = [];
 
-		if (query.source) {
-			var files = query.source.files;
-			var directorys = query.source.directorys;
-			var target = query.target;
-			target = g_secure.command_filter(target);
+		if (files) {
+			for (var i = files.length - 1; 0 <= i; i--) {
+				files[i] = g_secure.command_filter(files[i]);
 
-			if (files) {
+				file_copy_func.push(function(callback) {
+					++i;
 
-				files.forEach(function(o) {
-
-					var filename_split = o.split('/');
-					var filename_full = filename_split[filename_split.length - 1];
-					var filename;
-					var extension;
-
-					//define filename (check if the file has extension)
-					if (filename_full.indexOf('.') < 0) {
-						filename = filename_full;
-						extension = '';
-					} else {
-						filename = filename_full.substr(0, filename_full.lastIndexOf('.'));
-						extension = '.' + filename_split[filename_split.length - 1].substr(filename_full.lastIndexOf('.') + 1);
-					}
+					var target = g_secure.command_filter(req.query.target || path.dirname(files[i]));
+					var ext = path.extname(files[i]);
+					var file_name = path.basename(files[i], ext);
 
 					//check if _copy file is exist and add the count.
-					fs.exists(global.__workspace + target + '/' + filename + extension, function(e) {
-						if (e) {
-							var exist_func = function(i) {
-								fs.exists(global.__workspace + target + '/' + filename + '_copy' + i + extension, function(e) {
-									if (!e) {
-										var path = target + '/' + filename + '_copy' + i + extension;
-										fs.copy(global.__workspace + '/' + o, global.__workspace + path, function(err) {
-											if (err) {
-												console.log(err);
-											} else {
-												
-											}
-										});
-									} else {
-										exist_func(i + 1);
-									}
-								});
-							}
-							exist_func(0);
-
-						} else {
-							var path = target + '/' + filename_full;
-							fs.copy(global.__workspace + '/' + o, global.__workspace + path, function(err) {
+					fs.exists(path.join(global.__workspace, target, file_name + ext), function(exist) {
+						var copy = function(target_path) {
+							fs.copy(path.join(global.__workspace, files[i]), path.join(global.__workspace, target_path), function(err) {
 								if (err) {
-									console.log(err);
+									console.log('file.js', 'do_copy_file_paste', 'file copy fail', err);
+
+									callback(null, files[i]);
 								} else {
 									
+									callback();
 								}
 							});
-						}
+						};
 
-					});
-				});
-			}
-			if (directorys) {
-				directorys.forEach(function(o) {
-					fs.copy(global.__workspace + o, global.__workspace + target, function(err) {
-						o = o.split('/');
-						var path = target + '/' + o[o.length - 1];
-						
-						if (err) {
-							console.log(err);
+						if (exist) {
+							var exist_func = function(j) {
+								fs.exists(path.join(global.__workspace, target, file_name + '_copy' + j + ext), function(_exist) {
+									if (!_exist) {
+										copy(path.join(target, file_name + '_copy' + j + ext));
+									} else {
+										exist_func(j + 1);
+									}
+								});
+							};
+
+							exist_func(0);
+						} else {
+							copy(path.join(target, file_name + ext));
 						}
 					});
 				});
 			}
 		}
-		callback({
-			result: ''
+
+		var target = g_secure.command_filter(req.query.target);
+		if (target && directorys) { // except duplicate
+			for (var j = directorys.length - 1; 0 <= j; j--) {
+				directorys[j] = g_secure.command_filter(directorys[j]);
+
+				directory_copy_func.push(function(callback) {
+					var target_path = path.join(target, path.basename(directorys[++j]));
+
+					fs.copy(path.join(global.__workspace, directorys[j]), path.join(global.__workspace, target_path), function(err) {
+						if (err) {
+							console.log('file.js', 'do_copy_file_paste', 'directory copy fail', err);
+
+							callback(null, directorys[j]);
+						} else {
+							
+							callback();
+						}
+					});
+				});
+			}
+		}
+
+		async.parallel(file_copy_func, function(err, result) {
+			async.parallel(directory_copy_func, function(_err, _result) {
+				result = result.filter(Boolean);
+				_result = _result.filter(Boolean);
+
+				if (result.length || _result.length) {
+					_callback({
+						'err_file': result.concat(_result)
+					});
+				} else {
+					_callback(true);
+				}
+			});
 		});
 	},
 	/*
@@ -1199,6 +1235,7 @@ module.exports = {
 		}
 
 		var abs_path = path.join(global.__workspace, query.path);
+
 		// console.log('get_result_ls');
 		// console.log(abs_path);
 
@@ -1210,6 +1247,10 @@ module.exports = {
 
 		var _read_dir = function() {
 			if (opened_folders.length > 0) {
+				var root_folder = query.path;
+				opened_folders = opened_folders.map(function(_path) {
+					return (_path.indexOf(root_folder) == 0) ? _path.slice(root_folder.length) : _path;
+				});
 				////// push omitted parent folder. Jeong-Min Im. //////
 				for (var i = 0; i < opened_folders.length; i++) {
 					var folder_path = opened_folders[i];
@@ -1222,6 +1263,9 @@ module.exports = {
 						}
 					}
 				}
+				opened_folders = opened_folders.map(function(_path) {
+					return root_folder + _path;
+				});
 				opened_folders.sort();
 
 				var promises = opened_folders.map(function(_path) {

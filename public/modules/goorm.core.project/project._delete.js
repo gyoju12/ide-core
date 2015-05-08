@@ -35,11 +35,10 @@ goorm.core.project._delete = {
 
 			var data = self.project_list.get_data();
 			var delete_project_path = data.path;
-
+			var delete_project_type = data.type;
 			var postdata = {
 				project_path: delete_project_path
 			};
-
 			// var storage = $('#project_delete_storage').find('span').html().toString();	// hidden: storage is deprecated
 
 			// if (storage == 'goormIDE Storage') {
@@ -76,7 +75,7 @@ goorm.core.project._delete = {
 						core.module.debug.button_inactive();
 						$('#project_delete_list .selected_button').blur();
 						notice.show(core.module.localization.msg.notice_project_delete_done);
-
+						core.module.layout.project_explorer.remove_explorer_treeview(delete_project_path);
 						// project list focusing is needed for enable key event. Jeong-Min Im.
 						// notice.panel.one('hidden.bs.modal', function() {
 						// 	$('#project_delete_list').focus();
@@ -89,12 +88,39 @@ goorm.core.project._delete = {
 						// 	$('#project_delete_list').focus();
 						// });
 					}
+					var tab_manager = core.module.layout.tab_manager;
+					
+					$.each(tab_manager.list, function(key, value) {
+						if (~key.indexOf('gLayoutServer_') && ~key.indexOf(delete_project_type) && $('#' + value.id + ' .badge').length > 0) {
+							$('#' + value.id + ' .badge').click();
+						}
+					});
 
 					if (core.status.current_project_path === '' || core.status.current_project_path == data.path) {
+						tab_manager.del_by_tab_name('south', 'tab_title_build');
+						tab_manager.del_by_tab_name('south', 'tab_title_run');
 						core.module.layout.project_explorer.refresh();
 					} else {
+						switch (core.status.current_project_type) {
+							case 'cpp':
+							case 'java':
+							case 'go':
+							case 'dart':
+							case 'jsp':
+								tab_manager.del_by_tab_name('south', 'tab_title_' + delete_project_type);
+								break;
+
+							default:
+								tab_manager.del_by_tab_name('south', 'tab_title_build');
+								break;
+						}
 						core.module.layout.project_explorer.refresh_project_selectbox();
 					}
+
+					$('#gLayoutTab_Terminal').click();
+					$('#south_tab + div.tab-content div.tab-pane').removeClass('active').removeClass('in');
+					$('#south_tab + div.tab-content div.terminal').addClass('active').addClass('in');
+					
 
 					core.module.layout.terminal.resize();
 
@@ -240,7 +266,6 @@ goorm.core.project._delete = {
 
 	show: function(list_callback) {
 		var self = this;
-		// console.log('===show', list_callback);
 		this.project_list.init('#project_delete', list_callback);
 
 		this.project_list.set_keydown_event({

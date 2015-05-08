@@ -77,7 +77,9 @@ goorm.core.file._new = {
 					confirmation.show();
 				} else if (check_data.err_code === 0) {
 					self.panel.modal('hide');
+					core.module.layout.project_explorer.treeview.refresh_node(data.path);
 					core.module.layout.project_explorer.treeview.open_path(data.path);
+					core.module.layout.workspace.window_manager.open(data.path+'/', data.name);
 					if (self.is_new_anyway) { // jeongmin: if exists and opened, close created file
 						var window_manager = core.module.layout.workspace.window_manager;
 						var windows = window_manager.window;
@@ -96,8 +98,6 @@ goorm.core.file._new = {
 							}
 						}
 					}
-
-					core.module.layout.project_explorer.refresh();
 				} else if (check_data.err_code == 20) {
 					var msg = localization[check_data.message] || check_data.message;
 					alert.show(msg);

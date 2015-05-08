@@ -143,23 +143,23 @@ goorm.core.layout.tab.terminal_manager = {
 				// resize tab
 				this.list[name].tab_inner_content.outerHeight($('#goorm_inner_layout_'+this.convert_position(position)).find('.tab-content').height() - 40);	// 40 for initial clr_view height
 
-				this.list[name].fix_scroll = false;
+				this.list[name].fix_scroll = true;
 				this.list[name].max_append = false;
 
 				var inner = this.list[name].tab_inner_content;
-
 				this.list[name].set_fix_scroll = terminal.fix_scroll;
 				this.list[name].set_max_append = terminal.max_append;
 
-				if (this.list[name].set_fix_scroll) {
-					inner.scroll($.debounce(function() {
-						if (inner.get(0).scrollHeight - inner.scrollTop() == inner.outerHeight()) {
-							self.list[name].fix_scroll = true;
-						} else {
-							self.list[name].fix_scroll = false;
-						}
-					}, 30, false));				
-				}
+				inner.empty();
+				// if (this.list[name].set_fix_scroll) {
+				// 	inner.scroll($.debounce(function() {
+				// 		if (inner.get(0).scrollHeight - inner.scrollTop() == inner.outerHeight()) {
+				// 			self.list[name].fix_scroll = true;
+				// 		} else {
+				// 			self.list[name].fix_scroll = false;
+				// 		}
+				// 	}, 30, false));				
+				// }
 
 				if (this.list[name].terminal.on_ready && typeof(this.list[name].terminal.on_ready) === 'function') {
 					this.list[name].terminal.on_ready(function () {

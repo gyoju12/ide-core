@@ -43,7 +43,7 @@ goorm.core.file.open = {
 				alert.show(core.module.localization.msg.alert_file_name_illegal);
 				return false;
 			}
-
+			
 			core.module.layout.workspace.window_manager.open(data.path, data.name, data.type);
 
 			if (typeof(this.hide) !== 'function' && panel) {

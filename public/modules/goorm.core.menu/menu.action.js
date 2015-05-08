@@ -21,22 +21,22 @@ goorm.core.menu.action = {
 
 	init: function() {
 		var self = this;
-		$("[action=chat_button]").hover(function() {
-			$("[action=chat_button]").tooltip();
+		$('[action=chat_button]').hover(function() {
+			$('[action=chat_button]').tooltip();
 		});
 
-		$("[action=new_project]").off("click").tooltip();
-		$("[action=new_project]").click(function() {
-			$("a[href='#new_project_template']").click();
+		$('[action=new_project]').off('click').tooltip();
+		$('[action=new_project]').click(function() {
+			$('a[href="#new_project_template"]').click();
 
 			core.dialog.new_project.show();
 			//$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
 
 		});
 		
-		$("[action=new_project_import]").off("click").tooltip();
-		$("[action=new_project_import]").click(function() {
-			$("a[href='#new_project_import']").click();
+		$('[action=new_project_import]').off('click').tooltip();
+		$('[action=new_project_import]').click(function() {
+			$('a[href="#new_project_import"]').click();
 
 			core.dialog.new_project.show({
 				next_button: false
@@ -45,72 +45,72 @@ goorm.core.menu.action = {
 
 		});
 
-		$("[action=new_file_goorm_project]").off("click").tooltip();
-		$("[action=new_file_goorm_project]").click(function() {
+		$('[action=new_file_goorm_project]').off('click').tooltip();
+		$('[action=new_file_goorm_project]').click(function() {
 			core.dialog.new_project.show();
-			$(".project_wizard_first_button[project-type=goormp]").trigger("click").tooltip();
+			$('.project_wizard_first_button[project-type=goormp]').trigger('click').tooltip();
 		});
 
-		$("[action=new_file_file]").off("click").tooltip();
-		$("[action=new_file_file]").click(function() {
+		$('[action=new_file_file]').off('click').tooltip();
+		$('[action=new_file_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
-			core.dialog.new_file.show("");
+			core.dialog.new_file.show('');
 		});
 
-		$("[action=new_file_folder]").off("click").tooltip();
-		$("[action=new_file_folder]").click(function() {
+		$('[action=new_file_folder]').off('click').tooltip();
+		$('[action=new_file_folder]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
-			core.dialog.new_folder.show("");
+			core.dialog.new_folder.show('');
 		});
 
-		$("[action=new_file_textfile]").off("click").tooltip();
-		$("[action=new_file_textfile]").click(function() {
+		$('[action=new_file_textfile]').off('click').tooltip();
+		$('[action=new_file_textfile]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
-			core.dialog.new_untitled_textfile.show("");
+			core.dialog.new_untitled_textfile.show('');
 		});
 
-		$("[action=new_file_other]").off("click").tooltip();
-		$("[action=new_file_other]").click(function() {
+		$('[action=new_file_other]').off('click').tooltip();
+		$('[action=new_file_other]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
-			core.dialog.new_other_file.show("");
+			core.dialog.new_other_file.show('');
 		});
 
-		$("[action=open_project]").off("click").tooltip();
-		$("[action=open_project]").click(function() {
+		$('[action=open_project]').off('click').tooltip();
+		$('[action=open_project]').click(function() {
 			core.dialog.open_project.show();
 		});
 
-		$("[action=open_file]").off("click").tooltip();
-		$("[action=open_file]").click(function() {
-			if (core.status.current_project_path === "") {
+		$('[action=open_file]').off('click').tooltip();
+		$('[action=open_file]').click(function() {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
@@ -122,8 +122,8 @@ goorm.core.menu.action = {
 
 		
 
-		$("[action=exit]").off("click").tooltip();
-		$("[action=exit]").click(function() {
+		$('[action=exit]').off('click').tooltip();
+		$('[action=exit]').click(function() {
 			
 			//useonly(mode=goorm-oss)
 			window.open('', '_self');
@@ -131,25 +131,25 @@ goorm.core.menu.action = {
 			
 		});
 		
-		$("[action=close_file]").off("click").tooltip();
-		$("[action=close_file]").click(function() {
+		$('[action=close_file]').off('click').tooltip();
+		$('[action=close_file]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			// when clicking file close, editor panel (state is active) remove
 			if (window_manager.window[window_manager.active_window]) {
 				var active_window_title = window_manager.window[window_manager.active_window].title;
 				window_manager.close_by_title(active_window_title);
-				console.log(active_window_title + " close...");
+				console.log(active_window_title + ' close...');
 			}
 		});
 
-		$("[action=close_all]").off("click").tooltip();
-		$("[action=close_all]").click(function() {
+		$('[action=close_all]').off('click').tooltip();
+		$('[action=close_all]').click(function() {
 			core.module.layout.workspace.window_manager.close_all();
 		});
 
-		$("[action=save_file]").off("click").tooltip();
-		$("[action=save_file]").click(function() {
+		$('[action=save_file]').off('click').tooltip();
+		$('[action=save_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -166,8 +166,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=save_all_file]").off("click").tooltip();
-		$("[action=save_all_file]").click(function() {
+		$('[action=save_all_file]').off('click').tooltip();
+		$('[action=save_all_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -175,25 +175,25 @@ goorm.core.menu.action = {
 			core.module.layout.workspace.window_manager.save_all();
 		});
 
-		$("[action=save_as_file]").off("click").tooltip();
-		$("[action=save_as_file]").click(function() {
+		$('[action=save_as_file]').off('click').tooltip();
+		$('[action=save_as_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 			core.dialog.save_as_file.show();
 		});
 
-		$("[action=move_file]").off("click").tooltip();
-		$("[action=move_file]").click(function() {
+		$('[action=move_file]').off('click').tooltip();
+		$('[action=move_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			core.dialog.move_file.show("");
+			core.dialog.move_file.show('');
 		});
 
-		$("[action=rename_file]").off("click").tooltip();
-		$("[action=rename_file]").click(function() {
+		$('[action=rename_file]').off('click').tooltip();
+		$('[action=rename_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -212,121 +212,125 @@ goorm.core.menu.action = {
 			}
 		});
 
-
-
-		$("[action=delete_file]").off("click").tooltip();
-		$("[action=delete_file]").click(function() {
+		$('[action=delete_file]').off('click').tooltip();
+		$('[action=delete_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			// if (core.status.current_project_storage == "goormIDE_Storage") {	// hidden: storage is deprecated
-			// jeongmin: get real selected file
-			var selected_path = core.module.layout.project_explorer.get_tree_selected_path();
+			var selected_path = core.module.layout.project_explorer.get_tree_selected_path(); // get real selected file
 
-			if (selected_path.files.length == 0 && selected_path.directorys.length == 0) {
-				alert.show(core.module.localization.msg.alert_select_file);
-			} else {
-				if (core.status.current_project_path === "") { //case select project
-					var tmp = core.status.selected_file.substring(1); //and select project root
-					if (tmp.indexOf('/') == -1) {
-						core.dialog.delete_project.show(function() {
-							$("#project_delete_list #selector_" + tmp.replace(core.user.id + "_", "")).click();
-						});
-						return;
-					}
-				}
-
-				if (core.status.current_project_path === core.status.selected_file) { //each root
-					core.dialog.delete_project.show(function() {
-						$("#project_delete_list #selector_" + core.status.current_project_name).click();
-					});
-					return;
-				}
-
-				var localization = core.module.localization.msg;
-
+			if (selected_path.files.length || selected_path.directorys.length) {
+				var files = selected_path.files;
+				var directorys = selected_path.directorys;
 				var window_manager = core.module.layout.workspace.window_manager;
 				var window_list = window_manager.window;
-				var opened_window = -1; // window index of selected file
+				var localization = core.module.localization.msg;
+				var err_file = []; // can't delete file
 
-				// jeongmin: check if selected file is opened or in collaboration
-				for (var i = window_list.length - 1; 0 <= i; i--) {
-					if ((window_list[i].title).indexOf(core.status.selected_file) > -1) { // jeongmin: selected file is opened
-						opened_window = i;
+				// clean delete file's traces. Jeong-Min Im.
+				// total_file (Array) : total deleted files.
+				var clean_up = function(total_file) {
+					var project_treeview = core.module.layout.project_explorer.treeview;
+					var bookmark_li = goorm.core.edit.bookmark_list;
 
-						
+					for (var i = 0, total_file_len = total_file.length; i < total_file_len; i++) {
+						project_treeview.refresh_node(total_file[i].substring(0, total_file[i].lastIndexOf('/')));
+
+						for (var j = window_list.length - 1; 0 <= j; j--) { // close window
+							if (window_list[j].title.indexOf(total_file[i] + '/') === 0 || window_list[j].title === total_file[i]) { // directory || file
+								window_list[j].is_saved = true;
+								window_list[j].tab.is_saved = true;
+
+								window_manager.close_by_index(j, j);
+							}
+						}
+
+						for (var name in bookmark_li.list) { // delete bookmark
+							if (name.indexOf(total_file[i] + '/') === 0 || name === total_file[i]) {
+								delete bookmark_li.list[name];
+							}
+						}
+					}
+
+					// these are should be done after deleting selected file
+					core.status.selected_file = '';
+					core.status.selected_file_type = '';
+				};
+
+				
+
+				for (var i = directorys.length - 1; 0 <= i; i--) {
+					if (core.status.current_project_path === directorys[i]) { // root
+						directorys.splice(i, 1); // remove root
+
+						core.dialog.delete_project.show(function() {
+							$('#selector_' + core.status.current_project_name).click();
+						});
+
 						break;
 					}
 				}
 
-				function close_window() {
-					if (opened_window > -1) {
-						window_list[opened_window].is_saved = true;
-						window_list[opened_window].tab.is_saved = true;
-						// window_list[i].close();
+				if (files.length || directorys.length) { // files and directories are removed, so check again
+					confirmation.init({
+						title: localization.confirmation_delete_title,
+						message: localization.confirmation_delete_file,
+						yes: function() {
+							core._socket.once('/file/delete', function(result) {
+								if (result.err_code === 1) {
+									alert.show(localization.alert_invalide_query);
+								} else if (result.err_code === 2) {
+									alert.show(localization.alert_file_permission);
+								} else if (result.err_file) {
+									var msg = localization.alert_delete_file_fail + '<br/>' + result.err_file.join(', ');
+									var total_file = files.concat(directorys).filter(function(item) { // remove error files
+										return result.err_file.indexOf(item) === -1;
+									});
 
-						window_manager.close_by_index(opened_window, opened_window);
+									if (total_file.length) {
+										clean_up(total_file);
+									}
 
-						// jeongmin: these are should be done after deleting selected file
-						core.status.selected_file = "";
-						core.status.selected_file_type = "";
-					}
+									if (err_file.length) {
+										msg += localization.alert_delete_shared_file + '<br/>' + err_file.join(', ');
+									}
+
+									alert.show(msg);
+								} else {
+									clean_up(files.concat(directorys));
+
+									if (err_file.length) {
+										alert.show(localization.alert_delete_shared_file + '<br/>' + err_file.join(', '));
+									}
+								}
+							}, true);
+							core._socket.emit('/file/delete', {
+								'files': files,
+								'directorys': directorys
+							});
+						}
+					}).show();
+				} else if (err_file.length) {
+					alert.show(localization.alert_delete_shared_file + '<br/>' + err_file.join(', ')); // TODO: once 받은 다음에 최종 결과로 알려줘야 함.
 				}
-
-				confirmation.init({
-					title: core.module.localization.msg.confirmation_delete_title,
-					message: core.module.localization.msg.confirmation_delete_file,
-					yes_text: core.module.localization.msg.yes,
-					no_text: core.module.localization.msg.no,
-					yes: function() {
-						var postdata = {
-							filename: core.status.selected_file
-						};
-						// console.log(postdata);
-
-						// if (core.module.terminal.terminal) {
-						// 	core.module.terminal.fs_rm(core.status.selected_file, function on_delete_file() {
-
-						// 		core.module.layout.project_explorer.refresh();
-
-						// 		close_window();
-						// 	});
-						// } else {
-						core._socket.once("/file/delete", function(data) {
-							// m.s("delete: " + core.status.selected_file);
-							if (data.err_code == 20) {
-								alert.show(data.message);
-							}
-
-							core.module.layout.project_explorer.refresh();
-
-							close_window();
-
-							delete goorm.core.edit.bookmark_list.list[core.status.selected_file];
-						}, true);
-						core._socket.emit("/file/delete", postdata);
-						// }
-					},
-					no: null
-				});
-
-				confirmation.show();
+			} else {
+				alert.show(localization.alert_select_file);
 			}
 		});
 
-		$("[action=refresh_project_directory]").off("click").tooltip();
-		$("[action=refresh_project_directory]").click(function() {
+		$('[action=refresh_project_directory]').off('click').tooltip();
+		$('[action=refresh_project_directory]').click(function() {
 			core.module.layout.project_explorer.refresh();
 		});
 		
-		$("[action=import_file]").off("click").tooltip();
-		$("[action=import_file]").click(function() {
+		$('[action=import_file]').off('click').tooltip();
+		$('[action=import_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
@@ -334,22 +338,22 @@ goorm.core.menu.action = {
 		});
 		
 
-		$("[action=export_file]").off("click").tooltip();
-		$("[action=export_file]").click(function() {
+		$('[action=export_file]').off('click').tooltip();
+		$('[action=export_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
 			core.dialog.export_file.show();
 		});
 		
-		$("[action=do_undo]").off("click").tooltip();
-		$("[action=do_undo]").click(function() {
-			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
+		$('[action=do_undo]').off('click').tooltip();
+		$('[action=do_undo]').click(function() {
+			if (self.prevent(this) || $(this).parent().hasClass('disabled') === true) {
 				return false;
 			}
 
@@ -371,9 +375,9 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_redo]").off("click").tooltip();
-		$("[action=do_redo]").click(function() {
-			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
+		$('[action=do_redo]').off('click').tooltip();
+		$('[action=do_redo]').click(function() {
+			if (self.prevent(this) || $(this).parent().hasClass('disabled') === true) {
 				return false;
 			}
 
@@ -444,9 +448,9 @@ goorm.core.menu.action = {
 		// 	}
 		// });
 
-		$("[action=do_delete]").off("click").tooltip();
-		$("[action=do_delete]").click(function() {
-			if (self.prevent(this) || $(this).parent().hasClass("disabled") === true) {
+		$('[action=do_delete]').off('click').tooltip();
+		$('[action=do_delete]').click(function() {
+			if (self.prevent(this) || $(this).parent().hasClass('disabled') === true) {
 				return false;
 			}
 
@@ -459,18 +463,18 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=preference]").off("click").tooltip();
-		$("[action=preference]").click(function() {
+		$('[action=preference]').off('click').tooltip();
+		$('[action=preference]').click(function() {
 			core.dialog.preference.show();
 		});
 
-		$("[action=do_find]").off("click").tooltip();
-		$("[action=do_find]").click(function() {
+		$('[action=do_find]').off('click').tooltip();
+		$('[action=do_find]').click(function() {
 			core.dialog.find_and_replace.show();
 		});
 		
-		$("[action=toggle_use_line_wrapping]").off("click").tooltip();
-		$("[action=toggle_use_line_wrapping]").click(function() {
+		$('[action=toggle_use_line_wrapping]').off('click').tooltip();
+		$('[action=toggle_use_line_wrapping]').click(function() {
 			var v = !core.preference['preference.editor.line_wrapping'];
 
 			$('#use_line_wrapping').css('visibility', v ? 'visible' : 'hidden');
@@ -482,45 +486,45 @@ goorm.core.menu.action = {
 			// core.module.layout.workspace.window_manager.refresh_all();
 		});
 		
-		$("[action=do_go_to_line]").off("click").tooltip();
-		$("[action=do_go_to_line]").click(function() {
-			core.module.layout.edit_toolbar.option("go_to_line"); //jeongmin: show go to line edit toolbar
+		$('[action=do_go_to_line]').off('click').tooltip();
+		$('[action=do_go_to_line]').click(function() {
+			core.module.layout.edit_toolbar.option('go_to_line'); //jeongmin: show go to line edit toolbar
 		});
 
-		$("[action=toggle_bookmark]").off("click").tooltip(); //jeongmin: add toggle bookmark menu action
-		$("[action=toggle_bookmark]").click(function() {
+		$('[action=toggle_bookmark]').off('click').tooltip(); //jeongmin: add toggle bookmark menu action
+		$('[action=toggle_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.toggle();
 			}
 		});
 
-		$("[action=next_bookmark]").off("click").tooltip(); //jeongmin: add next bookmark menu action
-		$("[action=next_bookmark]").click(function() {
+		$('[action=next_bookmark]').off('click').tooltip(); //jeongmin: add next bookmark menu action
+		$('[action=next_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.next();
 			}
 		});
 
-		$("[action=prev_bookmark]").off("click").tooltip(); //jeongmin: add prev bookmark menu action
-		$("[action=prev_bookmark]").click(function() {
+		$('[action=prev_bookmark]').off('click').tooltip(); //jeongmin: add prev bookmark menu action
+		$('[action=prev_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.prev();
 			}
 		});
 
-		$("[action=clear_bookmark]").off("click").tooltip(); //jeongmin: add clear bookmark menu action
-		$("[action=clear_bookmark]").click(function() {
+		$('[action=clear_bookmark]').off('click').tooltip(); //jeongmin: add clear bookmark menu action
+		$('[action=clear_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.clear();
 			}
 		});
 
-		$("[action=do_find_next]").off("click").tooltip();
-		$("[action=do_find_next]").click(function() {
+		$('[action=do_find_next]').off('click').tooltip();
+		$('[action=do_find_next]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			if (window_manager.window[window_manager.active_window]) {
@@ -530,8 +534,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_find_previous]").off("click").tooltip();
-		$("[action=do_find_previous]").click(function() {
+		$('[action=do_find_previous]').off('click').tooltip();
+		$('[action=do_find_previous]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			if (window_manager.window[window_manager.active_window]) {
@@ -541,8 +545,8 @@ goorm.core.menu.action = {
 			}
 		});
 		
-		$("[action=select_all]").off("click").tooltip();
-		$("[action=select_all]").click(function() {
+		$('[action=select_all]').off('click').tooltip();
+		$('[action=select_all]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			if (window_manager.window[window_manager.active_window]) {
@@ -552,16 +556,16 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=search]").off("click").tooltip();
-		$("[action=search]").click(function() {
+		$('[action=search]').off('click').tooltip();
+		$('[action=search]').click(function() {
 			core.dialog.search.show();
 		});
 
 		
 
 		// Sublime keymap
-		$("[action=delete_line_left]").off("click").tooltip();
-		$("[action=delete_line_left]").click(function() {
+		$('[action=delete_line_left]').off('click').tooltip();
+		$('[action=delete_line_left]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -573,8 +577,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=delete_line_right]").off("click").tooltip();
-		$("[action=delete_line_right]").click(function() {
+		$('[action=delete_line_right]').off('click').tooltip();
+		$('[action=delete_line_right]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -586,8 +590,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=insert_line_before]").off("click").tooltip();
-		$("[action=insert_line_before]").click(function() {
+		$('[action=insert_line_before]').off('click').tooltip();
+		$('[action=insert_line_before]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -599,8 +603,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=insert_line_after]").off("click").tooltip();
-		$("[action=insert_line_after]").click(function() {
+		$('[action=insert_line_after]').off('click').tooltip();
+		$('[action=insert_line_after]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -612,8 +616,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_downcase_cursor]").off("click").tooltip();
-		$("[action=do_downcase_cursor]").click(function() {
+		$('[action=do_downcase_cursor]').off('click').tooltip();
+		$('[action=do_downcase_cursor]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -625,8 +629,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_upcase_cursor]").off("click").tooltip();
-		$("[action=do_upcase_cursor]").click(function() {
+		$('[action=do_upcase_cursor]').off('click').tooltip();
+		$('[action=do_upcase_cursor]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -638,8 +642,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_transpose]").off("click").tooltip();
-		$("[action=do_transpose]").click(function() {
+		$('[action=do_transpose]').off('click').tooltip();
+		$('[action=do_transpose]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -651,8 +655,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_join_lines]").off("click").tooltip();
-		$("[action=do_join_lines]").click(function() {
+		$('[action=do_join_lines]').off('click').tooltip();
+		$('[action=do_join_lines]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -664,8 +668,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_duplicate_line]").off("click").tooltip();
-		$("[action=do_duplicate_line]").click(function() {
+		$('[action=do_duplicate_line]').off('click').tooltip();
+		$('[action=do_duplicate_line]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -677,8 +681,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_delete_line]").off("click").tooltip();
-		$("[action=do_delete_line]").click(function() {
+		$('[action=do_delete_line]').off('click').tooltip();
+		$('[action=do_delete_line]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -690,8 +694,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=swap_line_down]").off("click").tooltip();
-		$("[action=swap_line_down]").click(function() {
+		$('[action=swap_line_down]').off('click').tooltip();
+		$('[action=swap_line_down]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -703,8 +707,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=swap_line_up]").off("click").tooltip();
-		$("[action=swap_line_up]").click(function() {
+		$('[action=swap_line_up]').off('click').tooltip();
+		$('[action=swap_line_up]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -716,8 +720,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=select_word]").off("click").tooltip();
-		$("[action=select_word]").click(function() {
+		$('[action=select_word]').off('click').tooltip();
+		$('[action=select_word]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -729,8 +733,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=select_line]").off("click").tooltip();
-		$("[action=select_line]").click(function() {
+		$('[action=select_line]').off('click').tooltip();
+		$('[action=select_line]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -742,8 +746,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=select_scope]").off("click").tooltip();
-		$("[action=select_scope]").click(function() {
+		$('[action=select_scope]').off('click').tooltip();
+		$('[action=select_scope]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -755,8 +759,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=select_between_brackets]").off("click").tooltip();
-		$("[action=select_between_brackets]").click(function() {
+		$('[action=select_between_brackets]').off('click').tooltip();
+		$('[action=select_between_brackets]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -768,8 +772,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=add_previous_line]").off("click").tooltip();
-		$("[action=add_previous_line]").click(function() {
+		$('[action=add_previous_line]').off('click').tooltip();
+		$('[action=add_previous_line]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -781,8 +785,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=add_next_line]").off("click").tooltip();
-		$("[action=add_next_line]").click(function() {
+		$('[action=add_next_line]').off('click').tooltip();
+		$('[action=add_next_line]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -794,8 +798,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_single_selection]").off("click").tooltip();
-		$("[action=do_single_selection]").click(function() {
+		$('[action=do_single_selection]').off('click').tooltip();
+		$('[action=do_single_selection]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -807,8 +811,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_split_into_lines]").off("click").tooltip();
-		$("[action=do_split_into_lines]").click(function() {
+		$('[action=do_split_into_lines]').off('click').tooltip();
+		$('[action=do_split_into_lines]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -820,8 +824,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_fold]").off("click").tooltip();
-		$("[action=do_fold]").click(function() {
+		$('[action=do_fold]').off('click').tooltip();
+		$('[action=do_fold]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -833,8 +837,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_unfold]").off("click").tooltip();
-		$("[action=do_unfold]").click(function() {
+		$('[action=do_unfold]').off('click').tooltip();
+		$('[action=do_unfold]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -846,8 +850,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=do_unfold_all]").off("click").tooltip();
-		$("[action=do_unfold_all]").click(function() {
+		$('[action=do_unfold_all]').off('click').tooltip();
+		$('[action=do_unfold_all]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -859,8 +863,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=go_to_bracket]").off("click").tooltip();
-		$("[action=go_to_bracket]").click(function() {
+		$('[action=go_to_bracket]').off('click').tooltip();
+		$('[action=go_to_bracket]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -872,8 +876,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=go_subword_left]").off("click").tooltip();
-		$("[action=go_subword_left]").click(function() {
+		$('[action=go_subword_left]').off('click').tooltip();
+		$('[action=go_subword_left]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -885,8 +889,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=go_subword_right]").off("click").tooltip();
-		$("[action=go_subword_right]").click(function() {
+		$('[action=go_subword_right]').off('click').tooltip();
+		$('[action=go_subword_right]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -898,8 +902,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=scroll_line_up]").off("click").tooltip();
-		$("[action=scroll_line_up]").click(function() {
+		$('[action=scroll_line_up]').off('click').tooltip();
+		$('[action=scroll_line_up]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -911,8 +915,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=scroll_line_down]").off("click").tooltip();
-		$("[action=scroll_line_down]").click(function() {
+		$('[action=scroll_line_down]').off('click').tooltip();
+		$('[action=scroll_line_down]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -924,8 +928,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=show_in_center]").off("click").tooltip();
-		$("[action=show_in_center]").click(function() {
+		$('[action=show_in_center]').off('click').tooltip();
+		$('[action=show_in_center]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -937,8 +941,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=sort_lines]").off("click").tooltip();
-		$("[action=sort_lines]").click(function() {
+		$('[action=sort_lines]').off('click').tooltip();
+		$('[action=sort_lines]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -950,8 +954,8 @@ goorm.core.menu.action = {
 			}
 		});
 
-		$("[action=sort_lines_case]").off("click").tooltip();
-		$("[action=sort_lines_case]").click(function() {
+		$('[action=sort_lines_case]').off('click').tooltip();
+		$('[action=sort_lines_case]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -977,20 +981,20 @@ goorm.core.menu.action = {
 		// 	}
 		// });
 
-		$("[action=previous_window]").off("click").tooltip();
-		$("[action=previous_window]").click(function() {
+		$('[action=previous_window]').off('click').tooltip();
+		$('[action=previous_window]').click(function() {
 			core.module.layout.workspace.window_manager.previous_window();
 		});
 
-		$("[action=next_window]").off("click").tooltip();
-		$("[action=next_window]").click(function() {
+		$('[action=next_window]').off('click').tooltip();
+		$('[action=next_window]').click(function() {
 			core.module.layout.workspace.window_manager.next_window();
 		});
 
 		
 
-		$("[action=layout_default]").off("click").tooltip();
-		$("[action=layout_default]").click(function() {
+		$('[action=layout_default]').off('click').tooltip();
+		$('[action=layout_default]').click(function() {
 			var window_width = $(window).width();
 			var window_height = $(window).height();
 			core.module.layout.expand('south');
@@ -1001,8 +1005,8 @@ goorm.core.menu.action = {
 			core.module.layout.set_size('south', window_height * 0.25);
 		});
 
-		$("[action=toggle_full_workspace]").off("click").tooltip();
-		$("[action=toggle_full_workspace]").click(function() {
+		$('[action=toggle_full_workspace]').off('click').tooltip();
+		$('[action=toggle_full_workspace]').click(function() {
 			var __pane = ['west', 'east', 'south'];
 
 			$.each(__pane, function(i, o) {
@@ -1012,72 +1016,72 @@ goorm.core.menu.action = {
 
 		
 
-		$("[action=cascade]").off("click").tooltip();
-		$("[action=cascade]").click(function() {
+		$('[action=cascade]').off('click').tooltip();
+		$('[action=cascade]').click(function() {
 			core.module.layout.workspace.window_manager.cascade();
 		});
 
-		$("[action=tile_vertically]").off("click").tooltip();
-		$("[action=tile_vertically]").click(function() {
+		$('[action=tile_vertically]').off('click').tooltip();
+		$('[action=tile_vertically]').click(function() {
 			core.module.layout.workspace.window_manager.tile_vertically();
 		});
 
-		$("[action=tile_horizontally]").off("click").tooltip();
-		$("[action=tile_horizontally]").click(function() {
+		$('[action=tile_horizontally]').off('click').tooltip();
+		$('[action=tile_horizontally]').click(function() {
 			core.module.layout.workspace.window_manager.tile_horizontally();
 		});
 
 		
 
 		//Main Menu : Help
-		$("[action=help_contents]").off("click").tooltip();
-		$("[action=help_contents]").click(function() {
+		$('[action=help_contents]').off('click').tooltip();
+		$('[action=help_contents]').click(function() {
 			core.dialog.help_contents.show();
 		});
 
-		$("[action=view_all_shortcuts]").off("click").tooltip();
-		$("[action=view_all_shortcuts]").click(function() {
+		$('[action=view_all_shortcuts]').off('click').tooltip();
+		$('[action=view_all_shortcuts]').click(function() {
 			core.dialog.help_shortcuts.show();
 		});
 
-		$("[action=help_tutorial_basic_tour]").off("click").tooltip();
-		$("[action=help_tutorial_basic_tour]").click(function() {
+		$('[action=help_tutorial_basic_tour]').off('click').tooltip();
+		$('[action=help_tutorial_basic_tour]').click(function() {
 			core.module.tutorial.start('basic');
 		});
 
-		$("[action=help_tutorial_new_project]").off("click").tooltip();
-		$("[action=help_tutorial_new_project]").click(function() {
+		$('[action=help_tutorial_new_project]').off('click').tooltip();
+		$('[action=help_tutorial_new_project]').click(function() {
 			core.module.tutorial.start('new_project');
 		});
 
-		$("[action=help_tutorial_build_project]").off("click").tooltip();
-		$("[action=help_tutorial_build_project]").click(function() {
+		$('[action=help_tutorial_build_project]').off('click').tooltip();
+		$('[action=help_tutorial_build_project]').click(function() {
 			core.module.tutorial.start('build_project');
 		});
 
-		$("[action=help_tutorial_debug_project]").off("click").tooltip();
-		$("[action=help_tutorial_debug_project]").click(function() {
+		$('[action=help_tutorial_debug_project]').off('click').tooltip();
+		$('[action=help_tutorial_debug_project]').click(function() {
 			core.module.tutorial.start('debug_project');
 		});
 
 		
-		$("[action=help_about]").off("click").tooltip();
-		$("[action=help_about]").click(function() {
+		$('[action=help_about]').off('click').tooltip();
+		$('[action=help_about]').click(function() {
 			core.dialog.help_about.show();
 		});
 
-		$("[action=help_license]").off("click").tooltip();
-		$("[action=help_license]").click(function() {
+		$('[action=help_license]').off('click').tooltip();
+		$('[action=help_license]').click(function() {
 			core.dialog.help_license.show();
 		})
 
-		$("[action=help_bug_report]").off("click").tooltip();
-		$("[action=help_bug_report]").click(function() {
+		$('[action=help_bug_report]').off('click').tooltip();
+		$('[action=help_bug_report]').click(function() {
 			core.dialog.help_bug_report.show();
 		});
-		$("[action=help_facebook]").off("click").tooltip();
-		$("[action=help_facebook]").click(function() {
-			window.open("https://www.facebook.com/goormIDE");
+		$('[action=help_facebook]').off('click').tooltip();
+		$('[action=help_facebook]').click(function() {
+			window.open('https://www.facebook.com/goormIDE');
 		});
 
 		// $("a[action=help_about_private_url]").off("click");
@@ -1086,19 +1090,20 @@ goorm.core.menu.action = {
 		// });
 
 		//Context Menu : File
-		$("[action=open_text_editor]").off("click").tooltip();
-		$("[action=open_text_editor]").click(function() {
-			var filename = (core.status.selected_file.split("/")).pop();
+		$('[action=open_text_editor]').off('click').tooltip();
+		$('[action=open_text_editor]').click(function() {
+			var filename = (core.status.selected_file.split('/')).pop();
 			var filetype = null;
-			if (filename.indexOf(".") != -1)
-				filetype = (filename.split(".")).pop();
-			var filepath = core.status.selected_file.replace(filename, "");
+			if (filename.indexOf('.') != -1) {
+				filetype = (filename.split('.')).pop();
+			}
+			var filepath = core.status.selected_file.replace(filename, '');
 
-			core.module.layout.workspace.window_manager.open(filepath, filename, filetype, "Editor");
+			core.module.layout.workspace.window_manager.open(filepath, filename, filetype, 'Editor');
 		});
 
-		$("[action=delete_bookmark_comment]").off("click").tooltip();
-		$("[action=delete_bookmark_comment]").click(function(e) {
+		$('[action=delete_bookmark_comment]').off('click').tooltip();
+		$('[action=delete_bookmark_comment]').click(function(e) {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.delete_comment();
@@ -1107,14 +1112,14 @@ goorm.core.menu.action = {
 
 		
 		
-		$("a[action=account_logout]").off("click").tooltip();
-		$("a[action=account_logout]").click(function(e) {
-			var msg = "";
+		$('a[action=account_logout]').off('click').tooltip();
+		$('a[action=account_logout]').click(function(e) {
+			var msg = '';
 			var modified = [];
 			$(goorm.core.window.manager.window).each(function(i) {
 				if (!this.is_saved) {
 					modified.push(this);
-					msg = msg + "\"" + this.filename + "\",";
+					msg = msg + '"' + this.filename + '",';
 				}
 			});
 
@@ -1133,7 +1138,7 @@ goorm.core.menu.action = {
 
 			if (modified.length > 0) {
 				confirmation_save.init({
-					message: msg + " " + core.module.localization.msg.confirmation_save_message,
+					message: msg + ' ' + core.module.localization.msg.confirmation_save_message,
 					yes_text: core.module.localization.msg.confirmation_logout_save,
 					no_text: core.module.localization.msg.confirmation_logout,
 					cancel_text: core.module.localization.msg.confirmation_cancel,
@@ -1203,8 +1208,8 @@ goorm.core.menu.action = {
 		var self = this;
 
 		//Main Menu : Project
-		$("[action=run]").off("click").tooltip();
-		$("[action=run]").click(function() {
+		$('[action=run]').off('click').tooltip();
+		$('[action=run]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
@@ -1216,7 +1221,7 @@ goorm.core.menu.action = {
 
 			if (goorm.core.project.is_building === true) {
 				setTimeout(function() {
-					$("[action=run]").click();
+					$('[action=run]').click();
 				}, 300);
 				return false;
 			}
@@ -1231,16 +1236,16 @@ goorm.core.menu.action = {
 			core.module.project.run();
 		});
 
-		$("[action=stop]").off("click").tooltip();
-		$("[action=stop]").click(function() {
-			var cmd = "";
+		$('[action=stop]').off('click').tooltip();
+		$('[action=stop]').click(function() {
+			var cmd = '';
 			var terminal = null;
 
 			if (core.module.project.process_name) {
-				cmd = "ps -ef | grep " + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
+				cmd = 'ps -ef | grep ' + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
 				terminal = core.module.terminal.terminal;
 			} else {
-				cmd = "\x03\n";
+				cmd = '\x03\n';
 				terminal = core.module.layout.terminal;
 			}
 
@@ -1272,8 +1277,8 @@ goorm.core.menu.action = {
 		// 	core.dialog.build_project.show();
 		// });
 
-		$("[action=build_project]").off("click").tooltip();
-		$("[action=build_project]").click(function() {
+		$('[action=build_project]').off('click').tooltip();
+		$('[action=build_project]').click(function() {
 			var project_path = core.status.current_project_path;
 			var project_type = core.status.current_project_type;
 			core.module.project.load_build({
@@ -1295,32 +1300,32 @@ goorm.core.menu.action = {
 		// 	core.dialog.build_clean.show();
 		// });
 
-		$("[action=build_configuration]").off("click").tooltip();
-		$("[action=build_configuration]").click(function() {
+		$('[action=build_configuration]').off('click').tooltip();
+		$('[action=build_configuration]').click(function() {
 			// core.dialog.build_configuration.show();
 			core.module.project.show('configuration');
 		});
 
-		$("[action=import_project]").off("click").tooltip();
-		$("[action=import_project]").click(function() {
-			core.dialog.import_project.show($("#dlg_import_project")); //jeongmin: let function know that this is for import project
-			$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+		$('[action=import_project]').off('click').tooltip();
+		$('[action=import_project]').click(function() {
+			core.dialog.import_project.show($('#dlg_import_project')); //jeongmin: let function know that this is for import project
+			$('.project_wizard_first_button[project-type=all]').trigger('click').tooltip();
 		});
 
-		$("[action=export_project]").off("click").tooltip();
-		$("[action=export_project]").click(function() {
+		$('[action=export_project]').off('click').tooltip();
+		$('[action=export_project]').click(function() {
 			core.dialog.export_project.show();
 		});
 
-		$("[action=delete_project]").off("click").tooltip();
-		$("[action=delete_project]").click(function() {
+		$('[action=delete_project]').off('click').tooltip();
+		$('[action=delete_project]').click(function() {
 			core.dialog.delete_project.show();
 		});
 
 		
 
-		$("a[action=show_properties]").off("click").tooltip();
-		$("a[action=show_properties]").click(function() {
+		$('a[action=show_properties]').off('click').tooltip();
+		$('a[action=show_properties]').click(function() {
 			core.dialog.project_property.show();
 		});
 	},
@@ -1329,61 +1334,61 @@ goorm.core.menu.action = {
 		var self = this;
 
 		//Main Menu : Debug
-		$("[action=debug_stop]").hide();
-		$("[action=debug]").off("click").tooltip();
-		$("[action=debug]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_stop]').hide();
+		$('[action=debug]').off('click').tooltip();
+		$('[action=debug]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 			core.module.debug.debug_start();
 		});
 
-		$("[action=debug_stop]").off("click").tooltip();
-		$("[action=debug_stop]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_stop]').off('click').tooltip();
+		$('[action=debug_stop]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 			core.module.debug.debug_terminate();
 		});
 
-		$("[action=debug_continue]").off("click").tooltip();
-		$("[action=debug_continue]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_continue]').off('click').tooltip();
+		$('[action=debug_continue]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 
 			core.module.debug.debug_continue();
 		});
 
-		$("[action=debug_terminate]").off("click").tooltip();
-		$("[action=debug_terminate]").click(function(event, is_closed) {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_terminate]').off('click').tooltip();
+		$('[action=debug_terminate]').click(function(event, is_closed) {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 			core.module.debug.debug_terminate();
 		});
 
-		$("[action=debug_step_over]").off("click").tooltip();
-		$("[action=debug_step_over]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_step_over]').off('click').tooltip();
+		$('[action=debug_step_over]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 
 			core.module.debug.debug_step_over();
 		});
 
-		$("[action=debug_step_in]").off("click").tooltip();
-		$("[action=debug_step_in]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_step_in]').off('click').tooltip();
+		$('[action=debug_step_in]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 
 			core.module.debug.debug_step_in();
 		});
 
-		$("[action=debug_step_out]").off("click").tooltip();
-		$("[action=debug_step_out]").click(function() {
-			if (self.prevent(this) || $(this).find(".debug_inactive").length || $(this).attr("isdisabled")) {
+		$('[action=debug_step_out]').off('click').tooltip();
+		$('[action=debug_step_out]').click(function() {
+			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
 
@@ -1394,8 +1399,8 @@ goorm.core.menu.action = {
 	editor_context_menu_init: function() {
 		var self = this;
 		// AutoComplete in Editor
-		$("a[action=do_autocomplete]").off("click");
-		$("a[action=do_autocomplete]").click(function() {
+		$('a[action=do_autocomplete]').off('click');
+		$('a[action=do_autocomplete]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			if (window_manager.window[window_manager.active_window]) {
@@ -1405,22 +1410,22 @@ goorm.core.menu.action = {
 					var cursor = target_editor.editor.getCursor();
 					var token = target_editor.editor.getTokenAt(cursor);
 
-					target_editor.dictionary.search(token.string, null, "");
+					target_editor.dictionary.search(token.string, null, '');
 					target_editor.dictionary.show(target_editor.editor);
 				}
 			}
 		});
 
-		$("[action=toggle_breakpoint]").off("click").tooltip();
-		$("[action=toggle_breakpoint]").click(function() {
+		$('[action=toggle_breakpoint]').off('click').tooltip();
+		$('[action=toggle_breakpoint]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.set_breakpoint(editor.editor.getCursor().line);
 			}
 		});
 
-		$("[action=toggle_bookmark]").off("click").tooltip(); //jeongmin: add toggle bookmark menu action
-		$("[action=toggle_bookmark]").click(function() {
+		$('[action=toggle_bookmark]').off('click').tooltip(); //jeongmin: add toggle bookmark menu action
+		$('[action=toggle_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor != null) {
 				editor.bookmark.toggle();
@@ -1429,23 +1434,23 @@ goorm.core.menu.action = {
 
 		
 		// Go to Line in Editor
-		$("[action=do_go_to_line]").off("click").tooltip();
-		$("[action=do_go_to_line]").click(function() {
-			core.module.layout.edit_toolbar.option("go_to_line"); //jeongmin: show go to line edit toolbar
+		$('[action=do_go_to_line]').off('click').tooltip();
+		$('[action=do_go_to_line]').click(function() {
+			core.module.layout.edit_toolbar.option('go_to_line'); //jeongmin: show go to line edit toolbar
 		});
 
-		$("[action=search]").off("click").tooltip();
-		$("[action=search]").click(function() {
+		$('[action=search]').off('click').tooltip();
+		$('[action=search]').click(function() {
 			core.dialog.search.show();
 		});
 
-		$("[action=do_find]").off("click").tooltip();
-		$("[action=do_find]").click(function() {
+		$('[action=do_find]').off('click').tooltip();
+		$('[action=do_find]').click(function() {
 			core.dialog.find_and_replace.show();
 		});
 
-		$("[action=select_all]").off("click").tooltip();
-		$("[action=select_all]").click(function() {
+		$('[action=select_all]').off('click').tooltip();
+		$('[action=select_all]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			if (window_manager.window[window_manager.active_window]) {
@@ -1460,35 +1465,35 @@ goorm.core.menu.action = {
 
 	window_manager_context_menu_init: function() {
 		var self = this;
-		$("[action=new_file_file]").off("click").tooltip();
-		$("[action=new_file_file]").click(function() {
+		$('[action=new_file_file]').off('click').tooltip();
+		$('[action=new_file_file]').click(function() {
 			if (self.prevent(this)) {
 				return false;
 			}
 
-			if (core.status.current_project_path === "") {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
-			core.dialog.new_file.show("");
+			core.dialog.new_file.show('');
 		});
 
-		$("[action=open_file]").off("click").tooltip();
-		$("[action=open_file]").click(function() {
-			if (core.status.current_project_path === "") {
+		$('[action=open_file]').off('click').tooltip();
+		$('[action=open_file]').click(function() {
+			if (core.status.current_project_path === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return; // false prevents closing menu
 			}
 			core.dialog.open_file.show();
 		});
 
-		$("[action=close_all]").off("click").tooltip();
-		$("[action=close_all]").click(function() {
+		$('[action=close_all]').off('click').tooltip();
+		$('[action=close_all]').click(function() {
 			core.module.layout.workspace.window_manager.close_all();
 		});
 
-		$("[action=toggle_full_workspace]").off("click").tooltip();
-		$("[action=toggle_full_workspace]").click(function() {
+		$('[action=toggle_full_workspace]').off('click').tooltip();
+		$('[action=toggle_full_workspace]').click(function() {
 			var __pane = ['west', 'east', 'south'];
 
 			$.each(__pane, function(i, o) {
@@ -1502,33 +1507,33 @@ goorm.core.menu.action = {
 	window_tab_context_menu_init: function() {
 		var self = this;
 		// toggle showing window using tab context menu. Jeong-Min Im.
-		$("[action=show_hide_window]").off("click").tooltip();
-		$("[action=show_hide_window]").click(function() {
-			if ($(this).parent().hasClass("disabled") === true) {
+		$('[action=show_hide_window]').off('click').tooltip();
+		$('[action=show_hide_window]').click(function() {
+			if ($(this).parent().hasClass('disabled') === true) {
 				return false;
 			} else {
 				var tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
 
-				if ($('#' + tab.tab_list_id).find('.tab_restore_button').is(':visible')) // restore button == minimized
+				if ($('#' + tab.tab_list_id).find('.tab_restore_button').is(':visible')) { // restore button == minimized
 					tab.window.restore();
-				else
-					tab.window.minimize();	
+				} else {
+					tab.window.minimize();
+				}
 			}
 
-			
 		});
 
 		// close window using tab context menu. Jeong-Min Im.
-		$("[action=close_window]").off("click").tooltip();
-		$("[action=close_window]").click(function() {
+		$('[action=close_window]').off('click').tooltip();
+		$('[action=close_window]').click(function() {
 			var tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
 
-			$("#" + tab.tab_list_id + " .tab_close_button").click();
+			$('#' + tab.tab_list_id + ' .tab_close_button').click();
 		});
 
 		// close other windows using tab context menu.
-		$("[action=close_other_windows]").off("click").tooltip();
-		$("[action=close_other_windows]").click(function() {
+		$('[action=close_other_windows]').off('click').tooltip();
+		$('[action=close_other_windows]').click(function() {
 			core.module.layout.workspace.window_manager.close_others();
 			// var tabs = core.module.layout.workspace.window_manager.tab;
 			// var clicked_tab = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
@@ -1544,18 +1549,18 @@ goorm.core.menu.action = {
 			// }
 		});
 
-		$("[action=cascade]").off("click").tooltip();
-		$("[action=cascade]").click(function() {
+		$('[action=cascade]').off('click').tooltip();
+		$('[action=cascade]').click(function() {
 			core.module.layout.workspace.window_manager.cascade();
 		});
 
-		$("[action=tile_vertically]").off("click").tooltip();
-		$("[action=tile_vertically]").click(function() {
+		$('[action=tile_vertically]').off('click').tooltip();
+		$('[action=tile_vertically]').click(function() {
 			core.module.layout.workspace.window_manager.tile_vertically();
 		});
 
-		$("[action=tile_horizontally]").off("click").tooltip();
-		$("[action=tile_horizontally]").click(function() {
+		$('[action=tile_horizontally]').off('click').tooltip();
+		$('[action=tile_horizontally]').click(function() {
 			core.module.layout.workspace.window_manager.tile_horizontally();
 		});
 	},
@@ -1564,35 +1569,37 @@ goorm.core.menu.action = {
 		var self = this;
 		//file
 		var file_folder_common_context = function() {
-			$("[action=Copy_context]").off("click").tooltip();
-			$("[action=Copy_context]").click(function() {
+			$('[action=Copy_context]').off('click').tooltip();
+			$('[action=Copy_context]').click(function() {
 				var tmp = core.status.selected_file.substring(1); //and select project root
 				if (tmp.indexOf('/') == -1) {
-					alert.show("프로젝트는 복사할수 없습니다.");
+					alert.show('프로젝트는 복사할수 없습니다.');
 					return;
-				} else core.module.layout.project_explorer.copy();
+				} else {
+					core.module.layout.project_explorer.copy();
+				}
 			});
 
-			$("[action=Paste_context]").off("click").tooltip();
-			$("[action=Paste_context]").click(function() {
+			$('[action=Paste_context]').off('click').tooltip();
+			$('[action=Paste_context]').click(function() {
 				core.module.layout.project_explorer.paste();
 			});
 
-			$("[action=Duplicate_context]").off("click").tooltip();
-			$("[action=Duplicate_context]").click(function() {
+			$('[action=Duplicate_context]').off('click').tooltip();
+			$('[action=Duplicate_context]').click(function() {
 				core.module.layout.project_explorer.duplicate();
 			});
 
-			$("[action=rename_context]").off("click").tooltip();
-			$("[action=rename_context]").click(function() {
+			$('[action=rename_context]').off('click').tooltip();
+			$('[action=rename_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
-				core.dialog.rename_file.show("context");
+				core.dialog.rename_file.show('context');
 			});
 
-			$("[action=duplicate_file]").off("click").tooltip();
-			$("[action=duplicate_file]").click(function() {
+			$('[action=duplicate_file]').off('click').tooltip();
+			$('[action=duplicate_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
@@ -1600,77 +1607,40 @@ goorm.core.menu.action = {
 				core.module.layout.project_explorer.duplicate();
 			});
 
-			$("a[action=move_context]").off("click").tooltip();
-			$("a[action=move_context]").click(function() {
+			$('a[action=move_context]').off('click').tooltip();
+			$('a[action=move_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				core.dialog.move_file.show("context");
+				core.dialog.move_file.show('context');
 			});
 
-			$("[action=delete_context]").off("click").tooltip();
-			$("[action=delete_context]").click(function() {
+			$('[action=delete_context]').off('click').tooltip();
+			$('[action=delete_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
-				$("[action=delete_file]").click();
+				$('[action=delete_file]').click();
 			});
 
-			$("[action=delete_all_context]").off("click").tooltip();
-			$("[action=delete_all_context]").click(function() {
-				var selected_items = $("#project_treeview .jstree-clicked");
-				if (selected_items.length > 1) {
-
-					var files = [],
-						directorys = [];
-
-					$(selected_items).each(function(i, o) {
-						if ($(o).find('img').hasClass("file")) {
-							files.push($(o).find(".fullpath").html());
-						} else {
-							directorys.push($(o).find(".fullpath").html());
-						}
+			$('[action=send_file_link]').off('click').tooltip();
+			$('[action=send_file_link]').click(function() {
+				var selected_file = core.status.selected_file;
+				if (selected_file !== '') {
+					goorm.core.collaboration.chat.message.message_process('@/' + selected_file, {
+						link: true
 					});
-
-					confirmation.init({
-						title: core.module.localization.msg.confirmation_delete_title,
-						message: core.module.localization.msg.confirmation_delete_all,
-						yes_text: core.module.localization.msg.yes,
-						no_text: core.module.localization.msg.no,
-						yes: function() {
-							var postdata = {
-								files: files,
-								directorys: directorys
-							};
-
-							//$.get("file/delete_all", postdata, function (data) {
-							core._socket.once("/file/delete_all", function(data) {
-								if (data.err_code == 20) {
-									alert.show(core.module.localization.msg[data.message]);
-								}
-								core.status.selected_file = "";
-								core.status.selected_file_type = "";
-								core.module.layout.project_explorer.refresh();
-							});
-							core._socket.emit("/file/delete_all", postdata);
-						},
-						no: null
-					});
-					confirmation.show();
-
-				} else {
-					console.log("so small");
 				}
-			});
+			})
 
-			$("[action=export_file]").off("click").tooltip();
-			$("[action=export_file]").click(function() {
+			$('[action=export_file]').off('click').tooltip();
+			$('[action=export_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
@@ -1680,159 +1650,130 @@ goorm.core.menu.action = {
 		};
 
 		var file_context_menu = function() {
-			$("[action=open_context]").off("click").tooltip();
-			$("[action=open_context]").click(function() {
-				var filename = (core.status.selected_file.split("/")).pop();
-				var filetype = null;
-				if (filename.indexOf(".") != -1)
-					filetype = (filename.split(".")).pop();
+			$('[action=open_context]').off('click').tooltip();
+			$('[action=open_context]').click(function() {
+				var selected_file = core.module.layout.project_explorer.get_tree_selected_path().files;
 
-				var filepath = core.status.selected_file.replace(filename, "");
+				for (var i = 0; i < selected_file.length; i++) {
+					var filename = selected_file[i].split('/').pop();
 
-				core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
+					core.module.layout.workspace.window_manager.open(selected_file[i].replace(filename, ''), filename, ~filename.indexOf('.') ? filename.split('.').pop() : null);
+				}
 			});
 
-			$("[action=open_default_editor]").off("click").tooltip();
-			$("[action=open_default_editor]").click(function() {
-				var filename = (core.status.selected_file.split("/")).pop();
-				var filetype = null;
-				if (filename.indexOf(".") != -1)
-					filetype = (filename.split(".")).pop();
-				var filepath = core.status.selected_file.replace(filename, "");
-
-				//core.module.layout.workspace.window_manager.open(filepath, filename, filetype);
-
+			$('[action=open_vim_editor]').off('click').tooltip();
+			$('[action=open_vim_editor]').click(function() {
 				var window_manager = core.module.layout.workspace.window_manager;
-				window_manager.open(filepath, filename, filetype);
+				var window_len = window_manager.window.length;
+				var selected_file = core.module.layout.project_explorer.get_tree_selected_path().files;
 
-				var selected_window = window_manager.get_window(filepath, filename).index;
-				var editor = window_manager.window[selected_window].editor;
-				editor.set_option({
-					"vim_mode": false,
-					"shortcut_theme": "default"
-				});
+				for (var i = 0; i < selected_file.length; i++) {
+					var filename = selected_file[i].split('/').pop();
 
-			});
-
-			$("[action=open_vim_editor]").off("click").tooltip();
-			$("[action=open_vim_editor]").click(function() {
-				var filename = (core.status.selected_file.split("/")).pop();
-				var filetype = null;
-				if (filename.indexOf(".") != -1)
-					filetype = (filename.split(".")).pop();
-				var filepath = core.status.selected_file.replace(filename, "");
-
-				//var editor = core.module.layout.workspace.window_manager.open(filepath, filename, filetype, "Editor").editor;
-
-				var window_manager = core.module.layout.workspace.window_manager;
-				window_manager.open(filepath, filename, filetype, "Editor", null, function() {
-					var selected_window = window_manager.get_window(filepath, filename).index;
-					var editor = window_manager.window[selected_window].editor;
-					editor.set_option({
-						"vim_mode": true,
-						"shortcut_theme": "vim"
+					window_manager.open(selected_file[i].replace(filename, ''), filename, ~filename.indexOf('.') ? filename.split('.').pop() : null, null, {
+						'vim_mode': true
 					});
-				});
+				}
 			});
 			
 		};
 
 		var folder_context_menu = function() {
-			$("[action=new_file_file_context]").off("click").tooltip();
-			$("[action=new_file_file_context]").click(function() {
+			$('[action=new_file_file_context]').off('click').tooltip();
+			$('[action=new_file_file_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
 				var target = core.status.selected_node;
 				if (target) {
-					var node = core.module.layout.project_explorer.treeview.tree.jstree("get_node", target);
+					var node = core.module.layout.project_explorer.treeview.tree.jstree('get_node', target);
 					var target_src = node.li_attr.path;
-					core.dialog.new_file.show("context");
+					core.dialog.new_file.show('context');
 
-					$(core.dialog.new_file.dialog_explorer).off("treeviewRenderComplete");
-					$(core.dialog.new_file.dialog_explorer).on("treeviewRenderComplete", function() {
+					$(core.dialog.new_file.dialog_explorer).off('treeviewRenderComplete');
+					$(core.dialog.new_file.dialog_explorer).on('treeviewRenderComplete', function() {
 						// core.dialog.new_file.expand("#file_new_dir_tree", target_src);
-						core.dialog.new_file.add_items("#file_new_files", target_src);
+						core.dialog.new_file.add_items('#file_new_files', target_src);
 
 						$('#file_new_location_path').val(target_src);
 					});
 
 				} else {
-					core.dialog.new_file.show("context");
+					core.dialog.new_file.show('context');
 				}
 			});
 
-			$("[action=new_file_folder_context]").off("click").tooltip();
-			$("[action=new_file_folder_context]").click(function(e) {
+			$('[action=new_file_folder_context]').off('click').tooltip();
+			$('[action=new_file_folder_context]').click(function(e) {
 				if (self.prevent(this)) {
 					return false;
 				}
 
 				var target = core.status.selected_node;
 				if (target) {
-					var node = core.module.layout.project_explorer.treeview.tree.jstree("get_node", target);
+					var node = core.module.layout.project_explorer.treeview.tree.jstree('get_node', target);
 					var target_src = node.li_attr.path;
-					core.dialog.new_folder.show("context");
+					core.dialog.new_folder.show('context');
 
-					$(core.dialog.new_folder.dialog_explorer).off("treeviewRenderComplete");
-					$(core.dialog.new_folder.dialog_explorer).on("treeviewRenderComplete", function() {
+					$(core.dialog.new_folder.dialog_explorer).off('treeviewRenderComplete');
+					$(core.dialog.new_folder.dialog_explorer).on('treeviewRenderComplete', function() {
 						// core.dialog.new_folder.expand("#folder_new_dir_tree", target_src);
 						$('#folder_new_location_path').val(target_src);
 					});
 				} else {
-					core.dialog.new_folder.show("context");
-					$("#folder_new_target_name").focus();
+					core.dialog.new_folder.show('context');
+					$('#folder_new_target_name').focus();
 				}
 			});
 
-			$("[action=new_file_textfile_context]").off("click").tooltip();
-			$("[action=new_file_textfile_context]").click(function(e) {
+			$('[action=new_file_textfile_context]').off('click').tooltip();
+			$('[action=new_file_textfile_context]').click(function(e) {
 				if (self.prevent(this)) {
 					return false;
 				}
 
 				var target = core.status.selected_node;
 				if (target) {
-					var node = core.module.layout.project_explorer.treeview.tree.jstree("get_node", target);
+					var node = core.module.layout.project_explorer.treeview.tree.jstree('get_node', target);
 					var target_src = node.li_attr.path;
 
-					core.dialog.new_untitled_textfile.show("context");
+					core.dialog.new_untitled_textfile.show('context');
 
-					$(core.dialog.new_untitled_textfile.dialog_explorer).off("treeviewRenderComplete");
-					$(core.dialog.new_untitled_textfile.dialog_explorer).on("treeviewRenderComplete", function() {
+					$(core.dialog.new_untitled_textfile.dialog_explorer).off('treeviewRenderComplete');
+					$(core.dialog.new_untitled_textfile.dialog_explorer).on('treeviewRenderComplete', function() {
 						// core.dialog.new_untitled_textfile.expand("#text_new_dir_tree", target_src);
 						$('#text_new_location_path').val(target_src);
 					});
 				} else {
-					core.dialog.new_untitled_textfile.show("context");
+					core.dialog.new_untitled_textfile.show('context');
 				}
 			});
 
-			$("[action=folder_open_context]").off("click").tooltip();
-			$("[action=folder_open_context]").click(function(e) {
+			$('[action=folder_open_context]').off('click').tooltip();
+			$('[action=folder_open_context]').click(function(e) {
 				var target = core.status.selected_node;
-				core.module.layout.project_explorer.treeview.tree.jstree("open_node", target);
+				core.module.layout.project_explorer.treeview.tree.jstree('open_node', target);
 			});
 
-			$("[action=folder_close_context]").off("click").tooltip();
-			$("[action=folder_close_context]").click(function(e) {
+			$('[action=folder_close_context]').off('click').tooltip();
+			$('[action=folder_close_context]').click(function(e) {
 				var target = core.status.selected_node;
-				core.module.layout.project_explorer.treeview.tree.jstree("close_node", target);
+				core.module.layout.project_explorer.treeview.tree.jstree('close_node', target);
 			});
 
-			$("[action=find_in_folder_context]").off("click").tooltip();
-			$("[action=find_in_folder_context]").click(function() {
+			$('[action=find_in_folder_context]').off('click').tooltip();
+			$('[action=find_in_folder_context]').click(function() {
 				core.dialog.search.show('/' + core.status.selected_file);
 			});
 
-			$("[action=import_file]").off("click").tooltip();
-			$("[action=import_file]").click(function() {
+			$('[action=import_file]').off('click').tooltip();
+			$('[action=import_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
@@ -1843,87 +1784,87 @@ goorm.core.menu.action = {
 
 		//explorer
 		var explorer_context_menu = function() {
-			$("[action=new_project]").off("click").tooltip();
-			$("[action=new_project]").click(function() {
-				$("a[href='#new_project_template']").click();
+			$('[action=new_project]').off('click').tooltip();
+			$('[action=new_project]').click(function() {
+				$('a[href="#new_project_template"]').click();
 
 				core.dialog.new_project.show();
-				$(".project_wizard_first_button[project-type=all]").trigger("click").tooltip();
+				$('.project_wizard_first_button[project-type=all]').trigger('click').tooltip();
 
 			});
 
-			$("[action=open_project]").off("click").tooltip();
-			$("[action=open_project]").click(function() {
+			$('[action=open_project]').off('click').tooltip();
+			$('[action=open_project]').click(function() {
 				core.dialog.open_project.show();
 			});
 
-			$("[action=new_file_file]").off("click").tooltip();
-			$("[action=new_file_file]").click(function() {
+			$('[action=new_file_file]').off('click').tooltip();
+			$('[action=new_file_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
-				core.dialog.new_file.show("");
+				core.dialog.new_file.show('');
 			});
 
-			$("[action=new_file_folder]").off("click").tooltip();
-			$("[action=new_file_folder]").click(function() {
+			$('[action=new_file_folder]').off('click').tooltip();
+			$('[action=new_file_folder]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
-				core.dialog.new_folder.show("");
+				core.dialog.new_folder.show('');
 			});
 
-			$("[action=new_file_textfile]").off("click").tooltip();
-			$("[action=new_file_textfile]").click(function() {
+			$('[action=new_file_textfile]').off('click').tooltip();
+			$('[action=new_file_textfile]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
-				core.dialog.new_untitled_textfile.show("");
+				core.dialog.new_untitled_textfile.show('');
 			});
 
-			$("[action=import_file]").off("click").tooltip();
-			$("[action=import_file]").click(function() {
+			$('[action=import_file]').off('click').tooltip();
+			$('[action=import_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
 				core.dialog.import_file.show();
 			});
 
-			$("[action=export_file]").off("click").tooltip();
-			$("[action=export_file]").click(function() {
+			$('[action=export_file]').off('click').tooltip();
+			$('[action=export_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
 
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 					return; // false prevents closing menu
 				}
 				core.dialog.export_file.show();
 			});
 
-			$("[action=save_all_file]").off("click").tooltip();
-			$("[action=save_all_file]").click(function() {
+			$('[action=save_all_file]').off('click').tooltip();
+			$('[action=save_all_file]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
@@ -1931,28 +1872,28 @@ goorm.core.menu.action = {
 				core.module.layout.workspace.window_manager.save_all();
 			});
 
-			$("[action=refresh_project_directory]").off("click").tooltip();
-			$("[action=refresh_project_directory]").click(function() {
+			$('[action=refresh_project_directory]').off('click').tooltip();
+			$('[action=refresh_project_directory]').click(function() {
 				core.module.layout.project_explorer.refresh();
 			});
 
-			$("a[action=show_properties]").off("click").tooltip();
-			$("a[action=show_properties]").click(function() {
+			$('a[action=show_properties]').off('click').tooltip();
+			$('a[action=show_properties]').click(function() {
 				core.dialog.project_property.show();
 			});
 
 		};
 
 		switch (type) {
-			case "file_context":
+			case 'file_context':
 				file_folder_common_context();
 				file_context_menu();
 				break;
-			case "folder_context":
+			case 'folder_context':
 				file_folder_common_context();
 				folder_context_menu();
 				break;
-			case "explorer_context":
+			case 'explorer_context':
 				explorer_context_menu();
 				break;
 			default:

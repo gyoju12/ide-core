@@ -120,6 +120,17 @@
             cm.execCommand("goCharRight");
           }
         });
+        // goorm : not to select new text
+        if (type == 'surround') {
+          cm.operation(function() {
+            var to_sel = cm.listSelections();
+            for (i = 0; i < to_sel.length; i++) {
+              to_sel[i].anchor.ch += left.length;
+              to_sel[i].head.ch -= left.length;
+            }
+            cm.setSelections(to_sel);  
+          });
+        }
       };
       if (left != right) map["'" + right + "'"] = function(cm) {
         var ranges = cm.listSelections();

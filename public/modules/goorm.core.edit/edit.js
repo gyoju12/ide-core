@@ -129,6 +129,7 @@ goorm.core.edit.prototype = {
 			lineWrapping: self.line_wrapping,
 			wordWrap: true,
 			matchBrackets: true,
+			flattenSpans: true,
 			showCursorWhenSelecting: true // needed for dragover
 		});
 
@@ -156,7 +157,6 @@ goorm.core.edit.prototype = {
 			// }
 
 			// Ryu : Why do this activate window?? window.panel did this already!
-			// console.log('edit.js:mousedown');
 			// window_manager.window[window_target_idx].activate();
 
 			// Set Current Cursor to parent(panel.js) cursor for set_options
@@ -170,7 +170,6 @@ goorm.core.edit.prototype = {
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 
-			//console.log('this may be fucker');
 
 			// e.stopPropagation();
 			// e.preventDefault();
@@ -182,7 +181,7 @@ goorm.core.edit.prototype = {
 			if (e.which === 1) { // left button
 				self.str_selection = self.editor.getSelection();
 				if (!$('#dlg_find_and_replace').hasClass('in') && !($('.cm-matchhighlight:first').html() === self.str_selection) && $('#gLayoutTab_Search').find('.badge').length === 0) {
-
+					goorm.core.edit.find_and_replace.remove_search_focus(self.editor);
 					if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 						self.is_selectiond = true;
 
@@ -192,6 +191,7 @@ goorm.core.edit.prototype = {
 						var reverse = ((ranges[0].to().line < cursor.line) || (ranges[0].to().line == cursor.line && ranges[0].to().ch <= cursor.ch)) ? true : false;
 
 						CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
+						goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
 					}
 				}
 			}
@@ -345,18 +345,23 @@ goorm.core.edit.prototype = {
 			}
 
 			self.scroll_top = scroll_top;
-		}, 100));
-
-		cm_editor.on('scroll', $.throttle(function(i, e) {
 			self.resize_rulers();
-		}, 200));
+		}, 100));
+		cm_editor.on('viewportChange', function() {
+			goorm.core.edit.find_and_replace.draw_search_focus(cm_editor);
+		});
 
 		var linter_timer = $.debounce(function() {
 			core.module.plugin_linter.lint(self.parent);
 		}, 1000);
 
 		
-
+		cm_editor.on('changes', function(cm, event_arr) {
+			if (event_arr.length > 1) {
+				goorm.core.edit.find_and_replace.draw_search_focus(cm_editor);
+			}
+		});
+		
 		cm_editor.on('change', function(i, e, a) {
 			// i = CodeMirror object, e = change informations;
 			if (self.editor.history_mode == 'history') {
@@ -406,6 +411,8 @@ goorm.core.edit.prototype = {
 				self.init_change = true;
 			}
 
+			goorm.core.edit.find_and_replace.draw_search_focus(cm_editor);
+
 			if (self.filetype !== 'c' && self.filetype !== 'cpp' && self.filetype !== 'java') {
 				linter_timer();
 			}
@@ -434,6 +441,8 @@ goorm.core.edit.prototype = {
 
 			if (self.editor.somethingSelected()) {
 				self.str_selection = self.editor.getSelection();
+			} else {
+				goorm.core.edit.find_and_replace.remove_search_focus(cm_editor);
 			}
 			self.str_line = self.editor.getLine(cur.line);
 			self.char_left = self.editor.getRange({
@@ -481,18 +490,15 @@ goorm.core.edit.prototype = {
 		});
 
 		var debounce = $.debounce(function() {
-			// console.log('trigger', self.filepath + '/' + self.filename + self.options.index + '.window_loaded');
 			$(core).trigger(self.filepath + '/' + self.filename + '.window_loaded', self.parent); // remove index: no need
 			debounce = function() {};
 		}, 250);
 
 		cm_editor.on('update', function() {
-			// console.log('updated');
 			$('.CodeMirror-activeline-background', self.target).attr('style', self.theme_cursor_highlight_color);
 			$(self).trigger('editor_update');
 
 			if (self.editor_loaded === true) {
-				// console.log(2);
 				debounce();
 			}
 		});
@@ -594,6 +600,7 @@ goorm.core.edit.prototype = {
 				self.str_selection = self.editor.getSelection();
 				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 					CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
+					goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
 				}
 			}
 		});
@@ -1301,7 +1308,6 @@ goorm.core.edit.prototype = {
 	// },
 
 	undo: function() {
-		//console.log('mungmung');
 		// this.editor.doc.undo(); // jeongmin: codemirror shortcut doesn't work properly!! So, manually undo.
 		// this.editor.undo(); // jeongmin: just do codemirror undo
 		if (this.editor.collaboration) {
@@ -1453,7 +1459,6 @@ goorm.core.edit.prototype = {
 		/*
 		if (this.bookmark.bookmarks) { //only when there is bookmark
 			var original_list = this.bookmark.bookmarks; //save for comment
-			console.log('original_list:', original_list);
 			this.bookmark.bookmarks = {}; //initialize bookmark list
 
 			for (var i = 0; i < this.editor.lineCount(); i++) { //search bookmarks
@@ -1495,7 +1500,6 @@ goorm.core.edit.prototype = {
 
 	////// control gutters bottom empty space. Jeong-Min Im. //////
 	resize_gutter_height: function() {
-		// console.log('resize_gutter_height() is called');
 
 		// hidden by jeongmin: This prevents scrolling full height
 

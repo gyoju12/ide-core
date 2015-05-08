@@ -228,10 +228,10 @@ goorm.core.prototype = {
 
 			$(document).on('contextmenu', function(e) {
 				var target = $(e.target);
-
+				
 				// terminal & chat & find/replace - open browser context menu
 				//
-				if (!(target.parent().attr('id') == 'terminal' || target.parent().hasClass('terminal') || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
+				if (!(target.parents('#terminal').length > 0 || target.parents('.terminal').length > 0 || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
 					e.preventDefault();
 				}
 			});

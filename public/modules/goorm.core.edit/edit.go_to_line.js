@@ -69,7 +69,7 @@ goorm.core.edit.go_to_line = {
 			if (isNaN(keyword) || keyword <= 0) return;
 
 			this.editor.setCursor(parseInt(keyword, 10) - 1, 0);
-
+			CodeMirror.commands.showInCenter(this.editor);
 			//scroll location calculate : no need - KW
 			// var container_id = window_manager.window[window_manager.active_window].container;
 			// var to_mean = ($('#' + container_id + ' .bd').height() / (this.font_size + 3)) / 2;

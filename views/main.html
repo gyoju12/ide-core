@@ -3,7 +3,7 @@
 <!-- manifest="goorm.appcache" -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" value="notranslate" />
 
     <title>
@@ -26,11 +26,11 @@
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.8/addon/tern/tern.css" />
     <!--  -->
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.8/addon/fold/foldgutter.css" />
-	
+    
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-formhelpers.min.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-tour.css" />
-	
+    
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/jquery-ui-1.10.3.custom.css" />
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/themes/default/style.css" />
     <!-- <link rel="stylesheet" type="text/css" href="/lib/intro.js/introjs.css" /> -->
@@ -119,35 +119,35 @@
                 <!--  -->
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="my_project">
-						<nav class="navbar navbar-default" role="navigation">
-							<!-- <div class="collapse navbar-collapse"> -->
-								<!-- <ul class="nav navbar-nav"> -->
-									<div id="project_selector" class='btn-group'>
-										<div class="btn-group">
-											<button id="project_selectbox" class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
-												<span id="selected_project_name">Project List</span>
-												<span class='caret'></span>
-											</button>
-											<ul class='dropdown-menu'>
-												<li role='presentation' class='dropdown-header' localization_key="project_list">Project List</li>
-												<li id="back_to_project_table">
-													<a href='#' localization_key="project_table">Project Table</a>
-												</li>
-												<li class='divider'></li>
-												<li id="my_projects_header" role='presentation' class='dropdown-header' localization_key="my_project">My Projects</li>
-												<!-- <li class='divider'></li> -->
-												<!-- <li id="cloud_projects_header" role='presentation' class='dropdown-header' localization_key="cloud_projects">Cloud Projects</li> -->
+                        <nav class="navbar navbar-default" role="navigation">
+                            <!-- <div class="collapse navbar-collapse"> -->
+                                <!-- <ul class="nav navbar-nav"> -->
+                                    <div id="project_selector" class='btn-group'>
+                                        <div class="btn-group">
+                                            <button id="project_selectbox" class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+                                                <span id="selected_project_name">Project List</span>
+                                                <span class='caret'></span>
+                                            </button>
+                                            <ul class='dropdown-menu'>
+                                                <li role='presentation' class='dropdown-header' localization_key="project_list">Project List</li>
+                                                <li id="back_to_project_table">
+                                                    <a href='#' localization_key="project_table">Project Table</a>
+                                                </li>
+                                                <li class='divider'></li>
+                                                <li id="my_projects_header" role='presentation' class='dropdown-header' localization_key="my_project">My Projects</li>
+                                                <!-- <li class='divider'></li> -->
+                                                <!-- <li id="cloud_projects_header" role='presentation' class='dropdown-header' localization_key="cloud_projects">Cloud Projects</li> -->
 
-												<!--  -->
-											</ul>
+                                                <!--  -->
+                                            </ul>
                                             <button id='project_explorer_refresh_tool' class="btn btn-default">
                                                 <i class="fa fa-refresh"></i>
                                             </button>
-										</div>
-									</div>
-								<!-- </ul> -->
-							<!-- </div> -->
-						</nav>
+                                        </div>
+                                    </div>
+                                <!-- </ul> -->
+                            <!-- </div> -->
+                        </nav>
                         <div id='project_explorer' class='directory_treeview auto-scroll'>
                             <!-- <div id='project_selector'>
                                 <label class='selectbox'>
@@ -967,7 +967,7 @@
                                 </a>
                             </li>
                             <li class="divider"></li>
-							<li>
+                            <li>
                                 <a href="#" action="toggle_breakpoint" name="preference.shortcut.debug.toggle_breakpoint" localization_key="debug_toggle_breakpoint">
                                     Toggle breakpoint
                                     <em class="helptext">Ctrl + B</em>
@@ -1123,7 +1123,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="account_menu_dropdown">
                             <!--  -->
-							<!--  -->
+                            <!--  -->
                             <li>
                                 <a role="menuitem" tabindex="-1" href="#" action='account_logout' localization_key='account_logout'>Logout</a>
                             </li>
@@ -1294,7 +1294,7 @@
                             </div>
                         </button>
                     </div>
-					-->
+                    -->
                     <div class="btn-group" id="toolbar_more_button_group" style="display:none;">
                         <button id="toolbar_more_button" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-container="body" action="">
                             <div class="toolbar_button more_button">
@@ -1517,7 +1517,7 @@
                 <li>
                     <a action="do_go_to_line" localization_key='edit_go_to_line'>Go to Line</a>
                 </li>
-				<li>
+                <li>
                     <a action="toggle_breakpoint" name="preference.shortcut.debug.toggle_breakpoint" localization_key="debug_toggle_breakpoint">
                         Toggle BreakPoint <em class="helptext">Ctrl + B</em>
                     </a>
@@ -1556,7 +1556,7 @@
                     <a localization_key='file_open_as_context'>Open As...</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a action="open_default_editor" localization_key='file_open_as_default_editor_context'>Default Editor</a>
+                            <a action="open_context" localization_key='file_open_as_default_editor_context'>Default Editor</a>
                         </li>
                         <li class="divider"></li>
                         <!-- <li>
@@ -1589,11 +1589,9 @@
                 <li>
                     <a action="delete_context" localization_key='file_delete'>Delete</a>
                 </li>
-                <li>
-                    <a action="delete_all_context" localization_key='delete_all_context'>Delete_All</a>
-                </li>
                 <li class="divider"></li>
                 <li>
+                    <a action="send_file_link" localization_key="file_send_link">Send File Link to Chat</a>
                     <a action="export_file" localization_key="file_export">Export File</a>
                 </li>
                 <!--  -->
@@ -1643,9 +1641,6 @@
                 </li>
                 <li>
                     <a action="delete_context" localization_key='file_delete'>Delete</a>
-                </li>
-                <li>
-                    <a action="delete_all_context" localization_key='delete_all_context'>Delete_All</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -1702,6 +1697,54 @@
                 <li class="divider"></li>
                 <li>
                     <a href="#" action="show_properties" localization_key='project_properties_context'>Project Properties</a>
+                </li>
+            </ul>
+        </div>
+        
+        <!--
+         CONTEXT_MENU : project.explorer.file_context
+        -->
+        <div id="project.explorer.multi_context" class="goorm_menu_item dropdown clearfix">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+                <li class="file">
+                    <a action="open_context" localization_key='file_open_context'>Open</a>
+                </li>
+
+                <li class="dropdown-submenu file">
+                    <a localization_key='file_open_as_context'>Open As...</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a action="open_context" localization_key='file_open_as_default_editor_context'>Default Editor</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a action="open_vim_editor" localization_key='file_open_as_vim_editor_context'>Vim Editor</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="divider file"></li>
+                <!--  -->
+                <li>
+                    <a action="Copy_context" localization_key='edit_copy'>Copy</a>
+                </li>
+                <li class="file">
+                    <a action="Duplicate_context" localization_key='file_duplicate'>Duplicate</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a action="move_context" localization_key='file_move_context'>Move</a>
+                </li>
+                <li>
+                    <a action="delete_context" localization_key='file_delete'>Delete</a>
+                </li>
+                <li class="divider directory"></li>
+                <li class="directory">
+                    <a action="find_in_folder_context" localization_key="find_in_folder_context">Find in Folder</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a action="export_file" localization_key="file_export">Export File</a>
                 </li>
             </ul>
         </div>
@@ -1909,7 +1952,7 @@
                     <div class="modal-body padding-10px">
                         <div class="row">
                             <div id='survey_dialog_message'></div>
-							<br />
+                            <br />
                             <textarea class="form-control" id="survey_inputbox" type="text"></textarea>
                         </div>
                     </div>
@@ -2745,21 +2788,21 @@
                         <div id="save_as_dialog_middle" class="row">
                             <div id="file_save_as_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
                             <div id="file_save_as_files" class="col-md-8 dialog_center"></div>
-						</div>
-						<div class="row">
-							<span class="col-md-3" localization_key='common_filename'>File Name</span>
-							<div class="col-md-9">
-								<input type="text" id="file_save_as_target_name" class="form-control" />
+                        </div>
+                        <div class="row">
+                            <span class="col-md-3" localization_key='common_filename'>File Name</span>
+                            <div class="col-md-9">
+                                <input type="text" id="file_save_as_target_name" class="form-control" />
 
-							</div>
-						</div>
+                            </div>
+                        </div>
 
-						<div class="row">
-							<span class="col-md-3" localization_key='common_filetype'>File Type</span>
-							<div class="col-md-9">
-								<select id='file_save_as_file_type' class="form-control"></select>
-							</div>
-						</div>
+                        <div class="row">
+                            <span class="col-md-3" localization_key='common_filetype'>File Type</span>
+                            <div class="col-md-9">
+                                <select id='file_save_as_file_type' class="form-control"></select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button id="g_saf_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
@@ -3520,7 +3563,7 @@
                             <div class="col-xs-8">
                                 <div style="margin-bottom: 8px;position: relative">
                                     <input class="form-control" id="find_query_inputbox_background" readonly tabindex="-1"/>
-                                    <input class="form-control" id="find_query_inputbox" type="text" class="form-control" placeholder="Find" />
+                                    <input class="form-control" id="find_query_inputbox" type="text" class="form-control" placeholder="Find" autofocus />
                                 </div>
                                 <div>
                                     <input class="form-control" id="replace_query_inputbox" type="text" class="form-control" placeholder="Replace" />
@@ -3914,7 +3957,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="g_ha_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                        <button id="g_hl_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
                     </div>
                 </div>
             </div>
@@ -4696,7 +4739,7 @@
                                                     <input class="shortcut_input form-control" name="preference.shortcut.debug.step_out" id="preference.shortcut.debug.step_out" value="F8"/>
                                                 </div>
                                             </div>
-											<div class="row">
+                                            <div class="row">
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.debug.toggle_breakpoint" localization_key="debug_toggle_breakpoint">Toggle breakpoint</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.debug.toggle_breakpoint" id="preference.shortcut.debug.toggle_breakpoint" value="Ctrl+B"/>
@@ -5158,6 +5201,521 @@
         </div>
 
         <!--  -->
+
+        <!-- //useonly(mode=goorm-standalone,goorm-server) -->        
+        <div class="modal fade" id="dlg_svn" tabindex="-1" role="dialog" aria-labelledby="modal_svn" aria-hidden="true">
+            <div class="modal-dialog" style="width: 1024px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal_svn">Subversion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="svn_treeview" class="dialog_treeview col-md-3"></div>
+                            <div id="svn_tabview" class="dialog_tabview col-md-9">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#svn_status_tab" data-toggle="tab" id='svn_status'>Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_update_tab" data-toggle="tab" id='svn_update'>Update</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_lock_tab" data-toggle="tab" id='svn_lock'>Lock/Unlock</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_resolve_tab" data-toggle="tab" id='svn_resolve'>Resolve</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_blame_tab" data-toggle="tab" id='svn_blame'>Blame</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_diff_tab" data-toggle="tab" id='svn_diff'>Diff</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_log_tab" data-toggle="tab" id='svn_log'>Log</a>
+                                    </li>
+                                    <li>
+                                        <a href="#svn_cmd_log_tab" data-toggle="tab" localization_key="dialog_scm_cmd_log" id='svn_cmd_log'>Command Log</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">   
+                                    <div class="tab-pane fade in active" id="svn_status_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading row margin-0px">
+                                                <div class='col-md-8 scm_guide' localization_key='dialog_scm_status_guide'>
+                                                    Check file's status and do works you need.
+                                                </div>
+                                                <div class="input-group col-md-4">
+                                                    <span class="input-group-addon">Exclude</span>
+                                                    <input type="text" class="form-control exclude_file" placeholder="e.g. libs configs"/>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover table-condensed" id="svn_status_files">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th localization_key='dialog_scm_status'>Status</th>
+                                                            <th localization_key='dialog_scm_path'>Path</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group">
+                                                        <button id="svn_status_selectall" class="btn btn-default" localization_key="common_select_all">Select All</button>
+                                                        <button id="svn_status_deselectall" class="btn btn-default" localization_key="common_deselect_all">Deselect All</button>
+                                                    </div>
+                                                    <div class='btn-toolbar pull-right'>
+                                                        <div class="btn-group">
+                                                            <button id="svn_add_bt" class="btn btn-success">Add</button>
+                                                            <button id="svn_remove_bt" class="btn btn-danger">Remove</button>
+                                                            <button id="svn_commit_bt" class="btn btn-warning">Commit</button>
+                                                            <button id="svn_revert_bt" class="btn btn-primary">Revert</button>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-info ignore">
+                                                                Ignore <i class="fa fa-cog"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_update_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading row margin-0px">
+                                                <div class="col-md-8 scm_guide">
+                                                    <div localization_key='dialog_scm_update_guide'>
+                                                        Update to specific revision or specific date.
+                                                    </div>
+                                                    <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                                    <span class='scm_selected_path'></span>
+                                                </div>
+                                                <div class="input-group col-md-4">
+                                                    <span class="input-group-addon">Exclude</span>
+                                                    <input type="text" class="form-control exclude_file" placeholder="e.g. libs configs"/>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="margin-8px">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <input id="svn_head_revision" type="radio" name="update_option" value="1"/>
+                                                            <label for="svn_head_revision">HEAD Revision</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <input id="svn_update_date" type="radio" name="update_option" value="2"/>
+                                                            <label for="svn_update_date" localization_key='dialog_scm_date'>Date</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input type="date" class="form-control" id="svn_date" disabled="disabled"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <input id="svn_update_revision" type="radio" name="update_option" value="3"/>
+                                                            <label for="svn_update_revision">Revision</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input type="text" class="form-control" disabled="disabled" id="svn_revision" placeholder="e.g. 1303"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group pull-right">
+                                                        <button id="svn_update_bt" class="btn btn-default">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_lock_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" localization_key='dialog_scm_lock_guide'>
+                                                Lock or Unlock files.
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover table-condensed" id="svn_lock_files">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th localization_key='dialog_scm_status'>Status</th>
+                                                            <th localization_key='dialog_scm_path'>Path</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group">
+                                                        <button id="svn_lock_selectall" class="btn btn-default" localization_key="common_select_all">Select All</button>
+                                                        <button id="svn_lock_deselectall" class="btn btn-default" localization_key="common_deselect_all">Deselect All</button>
+                                                    </div>
+                                                    <div class="btn-group pull-right">
+                                                        <button id="svn_lock_bt" class="btn btn-success">Lock</button>
+                                                        <button id="svn_unlock_bt" class="btn btn-danger">Unlock</button>
+                                                        <button id="svn_cleanup_bt" class="btn btn-warning">Clean Up</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_resolve_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div localization_key='dialog_scm_resolve_guide'>
+                                                    Resolve conflicts by accept option.
+                                                </div>
+                                                <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                                <span class='scm_selected_path'></span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="margin-8px">
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_base" value="1"/>
+                                                        <label for="resolve_base">Base</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_working" value="2" />
+                                                        <label for="resolve_working">Working</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_mine_conflict" value="3" />
+                                                        <label for="resolve_mine_conflict">Mine conflict</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_theirs_conflict" value="4" />
+                                                        <label for="resolve_theirs_conflict">Theirs conflict</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_mine_full" value="5" />
+                                                        <label for="resolve_mine_full">Mine full</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="radio" name="resolve_accept" id="resolve_theirs_full" value="6" />
+                                                        <label for="resolve_theirs_full">Theirs full</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group pull-right">
+                                                        <button id="svn_resolve_bt" class="btn btn-default">Resolve</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_blame_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading row margin-0px">
+                                                <div class="col-md-8 scm_guide">
+                                                    <div localization_key='dialog_svn_blame_guide'>
+                                                    Blame specific revision.
+                                                </div>
+                                                    <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                                <span class='scm_selected_path'></span>
+                                                </div>
+                                                <div class="input-group col-md-4">
+                                                    <span class="input-group-addon">Revision</span>
+                                                    <input type="text" class="form-control" placeholder="e.g. 1303" id="svn_blame_revision_select"/>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" id="svn_blame_revision_bt" localization_key='apply'>Apply</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body" id="blame_container">
+                                                <textarea class="code_editor form-control"></textarea>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group">
+                                                        <button id="" class="btn btn-default">Previous</button>
+                                                    </div>
+                                                    <div class="btn-group pull-right">
+                                                        <button id="" class="btn btn-default">Next</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_diff_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading row margin-0px">
+                                                <div class="col-md-8 scm_guide">
+                                                    <div localization_key='dialog_svn_diff_guide'>
+                                                        Show differences between specific revision.
+                                                    </div>
+                                                    <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                                    <span class='scm_selected_path'></span>
+                                                </div>
+                                                <div class="input-group col-md-4">
+                                                    <span class="input-group-addon">Revision</span>
+                                                    <input type="text" class="form-control" placeholder="e.g. 1303" id="svn_diff_revision_select"/>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" id="svn_diff_revision_bt" localization_key='apply'>Apply</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body" id="svn_diff_container">
+                                                <table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="svn_diff_table"></table>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group pull-right">
+                                                        <button id="" class="btn btn-default">Open Merge Editor</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_log_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading row margin-0px">
+                                                <div class="col-md-8 scm_guide">
+                                                    <div localization_key='dialog_svn_log_guide'>
+                                                    Show logs for specific revision.
+                                                </div>
+                                                    <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                                <span class='scm_selected_path'></span>
+                                                </div>
+                                                <div class="input-group col-md-4">
+                                                    <span class="input-group-addon">Revision</span>
+                                                    <input type="text" class="form-control" placeholder="e.g. 1303" id="svn_log_revision_select"/>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" id="svn_log_revision_bt" localization_key='apply'>Apply</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover table-condensed" id="svn_log_contents">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Revision</th>
+                                                            <th>Committer</th>
+                                                            <th localization_key='dialog_scm_date'>Date</th>
+                                                            <th localization_key='dialog_scm_message'>Comment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group">
+                                                        <button id="" class="btn btn-default">Previous</button>
+                                                    </div>
+                                                    <div class="btn-group pull-right">
+                                                        <button id="" class="btn btn-default">Next</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="svn_cmd_log_tab">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" localization_key='dialog_svn_cmd_log_guide'>
+                                                Check subversion command logs.
+                                            </div>
+                                            <div class="panel-body terminal_style user-select-available"></div>
+                                            <div class="panel-footer">
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group pull-right">
+                                                        <button id="" class="btn btn-default">Clear</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--
+     DIALOG : scm.commit
+    -->
+        <div class="modal fade" id="dlg_svn_commit" tabindex="-1" role="dialog" aria-labelledby="modal_svn_commit" aria-hidden="true">
+            <div class="modal-dialog" style="width: 400px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal_svn_commit">Commit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" localization_key='dialog_scm_message'>
+                                Comment
+                            </div>
+                            <div class="panel-body">
+                                <textarea class="form-control" rows="3" id="svn_commit_comment"></textarea>
+                            </div>
+                        </div>
+                        <div style="height:124px; overflow:auto;">
+                            <table class="table table-hover table-condensed" id="svn_commit_files">
+                                <thead>
+                                    <tr>
+                                        <th localization_key='dialog_scm_status'>Status</th>
+                                        <th localization_key='dialog_scm_path'>Path</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" localization_key='ok'>OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--
+     DIALOG : svn.info
+    -->
+        <div class="modal fade" id="dlg_svn_info" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" localization_key="dialog_svn_info_title">Server Certificate Validation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body" id="stdout"></div>
+                            <div class="panel-footer">
+                                <label class="radio-inline">
+                                    <input type="radio" name="certificate_select" value="reject" localization_key="dictionary_reject"> Reject
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="certificate_select" value="permanent" localization_key="dialog_svn_info_permanent"> Accept permanently
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" localization_key='ok'>OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--
+     DIALOG : scm.authentication
+    --> 
+        <div class="modal fade" id="dlg_scm_auth" tabindex="-1" role="dialog" aria-labelledby="modal_scm_auth" aria-hidden="true">
+            <div class="modal-dialog" style="width: 350px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal_scm_auth" localization_key='dialog_project_property_auth_guide'>Authentication</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" localization_key='dialog_scm_auth_guide'>This is for determining whether you have write permission for the SCM repository.</div>
+                            <div class="panel-body">
+                                <label for="scm_auth_id" class="control-label col-md-3" localization_key="dialog_project_property_auth_user">User</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="scm_auth_id" class="form-control" placeholder="SCM ID"/>
+                                </div>
+                                <label for="scm_auth_password" class="control-label col-md-3" localization_key="dialog_project_property_auth_password">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" id="scm_auth_password" class="form-control" placeholder="SCM Password"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="g_scm_auth_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
+                        <button id="g_scm_auth_btn_ok" class="btn btn-primary" data-dismiss="modal" localization_key='ok'>OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--
+     DIALOG : scm.ignore
+    --> 
+        <div class="modal fade" id="dlg_scm_ignore" tabindex="-1" role="dialog" aria-labelledby="modal_scm_ignore" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal_scm_ignore" localization_key='dialog_scm_ignore_title'>Ignore Setting</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading row margin-0px">
+                                <div class='col-md-7 scm_guide'>
+                                    <div localization_key='dialog_scm_ignore_guide'>You can explore and manage the ignore list.</div>
+                                    <b localization_key='dialog_scm_selected_path'>Path: </b>
+                                    <span class='scm_selected_path'></span>
+                                </div>
+                                <div class="input-group col-md-5">
+                                    <input type="text" id='ignore_find' class="form-control" placeholder="directory"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" localization_key='dialog_project_find_guide'>Find</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-hover table-condensed">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer">
+                                <form action="scm/ignore_import" method="post" enctype="multipart/form-data" class="row">
+                                    <label class="control-label col-md-4" localization_key="ignore_pattern_list">Ignore Pattern List</label>
+                                    <div class="col-md-8">
+                                        <input type="file" name='file' class="form-control"/>
+                                    </div>
+                                </form>
+                                <div class='btn-toolbar' role='toolbar'>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input id='ignore_recursive' type="checkbox"> Recursive
+                                        </span>
+                                        <input type="text" id='ignore_text' class="form-control" placeholder="pattern, file or directory"/>
+                                        <span class="input-group-btn">
+                                            <button id='ignore_add' class="btn btn-success">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                            <button id='ignore_remove' class="btn btn-danger">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="g_scm_ignore_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--  -->
 
@@ -5956,7 +6514,7 @@
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.output_manager.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.terminal_manager.js"></script>
-	<script type="text/javascript" src="/modules/goorm.core.layout/layout.workspace.js"></script>
+    <script type="text/javascript" src="/modules/goorm.core.layout/layout.workspace.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.loading_bar.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.utility/utility.toast.js"></script>
@@ -6027,7 +6585,7 @@
     <!--  -->
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.toolbar.js"></script> 
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark.js"></script> 
-	<script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark_list.js"></script> 
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark_list.js"></script> 
     <!--  -->
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_manager.js"></script>   
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_message_box.js"></script>

@@ -310,9 +310,8 @@ goorm.core.file._import = {
 
 			notice.show(core.module.localization.msg.notice_file_import_done);
 
-			layout.project_explorer.treeview.open_path(self.upload_file_path); // jeongmin: open uploaded path
-			layout.project_explorer.refresh();
-
+			layout.project_explorer.treeview.refresh_node(self.upload_file_path);
+			layout.project_explorer.treeview.open_path(self.upload_file_path);
 		} else {
 			switch (data.err_code) {
 				case 10: 	// nothing uploaded
@@ -399,7 +398,7 @@ goorm.core.file._import = {
 							var xhr_o = $.ajaxSettings.xhr();
 
 							if (xhr_o.upload) {
-								xhr_o.upload.addEventListener('progress', function() {
+								xhr_o.upload.addEventListener('progress', function(event) {
 									var percent = 0;
 									var position = event.loaded || event.position;
 									var total = event.total;

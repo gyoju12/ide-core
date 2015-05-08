@@ -18,29 +18,29 @@ goorm.core.menu.context.prototype = {
 	init: function(path, name, trigger, fingerprint, target, fn, nobind) {
 		var self = this;
 		this.target = target;
-		if (name == "none") {
-			$(trigger).on("contextMenu", function(e) {
+		if (name == 'none') {
+			$(trigger).on('contextMenu', function(e) {
 				return false;
 			});
 		} else {
 
-			if (fingerprint !== undefined && fingerprint !== "") {
+			if (fingerprint !== undefined && fingerprint !== '') {
 				var target_id = name + '_\[\{\@FINGERPRINT\}\]';
 				var context = $('[id="' + target_id + '"]').prop('outerHTML');
 
-				while (context.indexOf("[{@FINGERPRINT}]") !== -1) {
-					context = context.replace("[{@FINGERPRINT}]", fingerprint);
+				while (context.indexOf('[{@FINGERPRINT}]') !== -1) {
+					context = context.replace('[{@FINGERPRINT}]', fingerprint);
 				}
 
-				name = name + "_" + fingerprint;
-				$("#goorm_menu_container").find("div[id='" + name + "']").remove();
-				$("#goorm_menu_container").append(context);
+				name = name + '_' + fingerprint;
+				$('#goorm_menu_container').find('div[id="' + name + '"]').remove();
+				$('#goorm_menu_container').append(context);
 			}
 
 			this.name = name;
 			this.menu = $('div[id="' + name + '"]');
 
-			if (trigger === "") {
+			if (trigger === '') {
 				trigger = null;
 			}
 
@@ -48,9 +48,9 @@ goorm.core.menu.context.prototype = {
 				if (nobind === false) {
 					$(trigger).mousedown(function(e) {
 						if (e.which == 3) {
-							if (name == "project.explorer_context") {
+							if (name == 'project.explorer_context') {
 								core.module.layout.project_explorer.reset_tree_selected();
-								trigger.find(".jstree").jstree("deselect_all", false);
+								trigger.find('.jstree').jstree('deselect_all', false);
 							}
 							self.show(e);
 
@@ -72,20 +72,20 @@ goorm.core.menu.context.prototype = {
 				fn.call(self);
 			}
 
-			if (name.indexOf("edit.context") > -1) {
+			if (name.indexOf('edit.context') > -1) {
 				core.module.action.editor_context_menu_init();
-			} else if (name.indexOf("window.tab") > -1) {
+			} else if (name.indexOf('window.tab') > -1) {
 				core.module.action.window_tab_context_menu_init();
 			}
 			
-			else if (name.indexOf("window.manager_context") > -1) {
+			else if (name.indexOf('window.manager_context') > -1) {
 				core.module.action.window_manager_context_menu_init();
-			} else if (name.indexOf("project.explorer") > -1) {
+			} else if (name.indexOf('project.explorer') > -1) {
 				var type = name.split('.').pop();
 				core.module.action.project_explorer_context_menu_init(type);
 			}
 			
-			else if (name.indexOf("bookmark.context") > -1) {
+			else if (name.indexOf('bookmark.context') > -1) {
 
 			} else {
 				core.module.action.init();
@@ -101,7 +101,7 @@ goorm.core.menu.context.prototype = {
 				}
 			});
 
-			document.addEventListener('mousedown', function(e){
+			document.addEventListener('mousedown', function(e) {
 				var context = $('[id="' + name + '"]');
 				if (!context.is(e.target) && context.has(e.target).length === 0) {
 					self.menu.hide();
@@ -117,22 +117,24 @@ goorm.core.menu.context.prototype = {
 			var current_file = $(e.target).parent().attr('path');
 			
 			$(core).trigger('contextmenu_all_hide');
-			height = this.menu.css("height") || this.menu.height();
-			body_height = $("body#goorm").css("height");
+			height = this.menu.css('height') || this.menu.height();
+			body_height = $('body#goorm').css('height');
 			// height = parseInt(height.substring(0, height.length - 2)) + e.pageY;
 			height = parseInt(height) + e.pageY; // jeongmin: parseInt('227px') == 227
 			body_height = parseInt(body_height.substring(0, body_height.length - 2));
-			if (height > body_height)
+			if (height > body_height) {
 				e.pageY -= height - e.pageY;
-			if (e.pageY < 0)
+			}
+			if (e.pageY < 0) {
 				e.pageY = 0;
-			setTimeout(function(){
+			}
+			setTimeout(function() {
 				self.menu.css({
-					"position": "absolute",
-					"display": "block",
-					"left": e.pageX,
-					"top": e.pageY,
-					"z-index": 1301, // jeongmin: 1050 isn't enough in SCM dialog
+					'position': 'absolute',
+					'display': 'block',
+					'left': e.pageX,
+					'top': e.pageY,
+					'z-index': 1301, // jeongmin: 1050 isn't enough in SCM dialog
 				});
 			}, 0);
 		}
@@ -157,7 +159,7 @@ goorm.core.menu.context.prototype = {
 	},
 
 	remove: function() {
-		$("#" + this.target).remove();
+		$('#' + this.target).remove();
 		this.menu.remove();
 		delete this;
 	}
