@@ -349,6 +349,20 @@
                     </span>
                 </li>
             </ol>
+			<ol id="lint_summury" class="breadcrumb navbar-right">
+				<li>
+					<span>
+						<i class="fa fa-times-circle fa-1 err_color"></i>
+						<span class="err_count"> 0</span>
+					</span>
+				</li>
+				<li>
+					<span>
+						<i class="fa fa-exclamation-triangle fa-1 warn_color"></i>
+						<span class="warn_count"> 0</span>
+					</span>
+				</li>
+			</ol>
         </nav>
     </div>
 
@@ -2893,16 +2907,6 @@
                         <div id="move_dialog_middle" class="row">
                             <div id="file_move_dir_tree" class='col-md-4 directory_treeview dialog_left_inner'></div>
                             <div id="file_move_files" class="col-md-8 dialog_center"></div>
-                            <!-- <label for="file_move_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
-                            <div class="col-md-10"> -->
-                                <input type="hidden" id="file_move_ori_path" />
-                                <input type="hidden" id="file_move_ori_file" />
-                                <input type="hidden" id="file_move_target_name" class="form-control col-md-10" />
-                            <!-- </div>
-                            <label for="file_move_file_type" class="col-md-2 control-label" localization_key='common_filetype'>File Type</label>
-                            <div class="col-md-10">
-                                <select id='file_move_file_type' class="form-control col-md-10"></select>
-                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3659,6 +3663,10 @@
                                 <label for="search_path_input" class='col-sm-3 control-label' localization_key="dialog_search_dir">Directory Path</label>
                                 <div class='col-sm-9' style="margin-bottom:8px">
                                     <input id="search_path_input" class="form-control">
+                                </div>
+                                <label for="search_file_extension" class="col-sm-3 control-label" localization_key="dialog_search_files">Files to Search</label>
+                                <div class='col-sm-9' style="margin-bottom:8px">
+                                    <input id="search_file_extension" class="form-control" placeholder="*.txt, goorm.js">
                                 </div>
                             </div>
                         </div>

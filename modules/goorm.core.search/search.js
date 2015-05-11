@@ -55,6 +55,10 @@ module.exports = {
 			if (!is_true(options.match_case)) {
 				grep.push('-i');
 			}
+			
+			if (options.include && options.include.length > 0) {
+				grep = grep.concat(options.include);
+			}
 
 			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']); // jeongmin: in spawn, exclude item should be separated
 
@@ -214,7 +218,6 @@ module.exports = {
 			if (exists) {
 				var option = {};
 				// jeongmin: exec is changed to spawn, because exec has small buffer.
-				
 				
 				var command = spawn('grep', [find_query, global.__workspace.slice(0, -1) + project_path + '/' + folder_path].concat(grep_option), option);
 				var _stdout = '';

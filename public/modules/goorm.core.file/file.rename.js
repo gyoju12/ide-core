@@ -29,13 +29,15 @@ goorm.core.file.rename = {
 			return true;*/
 			if (core.module.file.test(dst_name)) {
 				return false;
-			}else {
+			} else {
 				return true;
 			}
 		};
 
 		var handle_ok = function(panel) {
-			if (self.processing) {return;}
+			if (self.processing) {
+				return;
+			}
 			self.processing = true;
 
 			var ori_path = $('#input_rename_old_filepath').val();
@@ -55,10 +57,10 @@ goorm.core.file.rename = {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				self.processing = false;
 				return false;
-// 			} else if (dst_name.indexOf(' ') != -1) {	// hidden: space is now allowed
-// 				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
-// 				self.processing = false;
-// 				return false;
+				// 			} else if (dst_name.indexOf(' ') != -1) {	// hidden: space is now allowed
+				// 				alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
+				// 				self.processing = false;
+				// 				return false;
 			} else if (!dst_name_check(dst_name)) {
 				alert.show(core.module.localization.msg.alert_invalid_folder_name);
 				self.processing = false;
@@ -123,6 +125,15 @@ goorm.core.file.rename = {
 							var window_manager = core.module.layout.workspace.window_manager;
 							var window_list = window_manager.window;
 							var current_data = null;
+							var old_path = ori_path + ori_name;
+							var new_path = ori_path + dst_name;
+
+							var bookmark_list = goorm.core.edit.bookmark_list.list;
+							if (bookmark_list[old_path]) {
+								bookmark_list[new_path] = bookmark_list[old_path];
+								delete bookmark_list[old_path];
+							}
+
 							for (var i = window_list.length - 1; i >= 0; i--) {
 								if (window_list[i].title == ori_path + dst_name) {
 									window_list[i].is_saved = true;
@@ -136,10 +147,6 @@ goorm.core.file.rename = {
 									}
 									window_list[i].is_saved = true;
 									window_list[i].tab.is_saved = true;
-
-									var old_path = window_list[i].title;
-
-									var new_path = old_path.replace(ori_path + ori_name, ori_path + dst_name);
 
 									var filename = new_path.split('/').pop();
 									var filepath = new_path.substring(0, new_path.length - filename.length);
@@ -158,7 +165,6 @@ goorm.core.file.rename = {
 													window_manager.get_window(file.filepath, file.filename).editor.editor.setValue(current_data);
 													$(core).unbind('editor_loaded.rename');
 
-													
 												}
 											});
 										}
@@ -188,7 +194,7 @@ goorm.core.file.rename = {
 						do_file_rename();
 					}, true);
 					core._socket.emit('/file/delete', _postdata);
-				}else {
+				} else {
 					do_file_rename();
 				}
 

@@ -616,5 +616,8 @@
 	},
 	"dialog_svn_info_permanent": {
 		"value": "Accept permanently"
+	},
+	"dialog_search_files": {
+		"value": "Files to Search"
 	}
 }

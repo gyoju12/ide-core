@@ -3535,6 +3535,13 @@ div.tooltip {
     width: 500px;
 }
 
+.err_color {
+	color: #d9534f;
+}
+.warn_color {
+	color: #f0ad4e;
+}
+
 .resizing {
     border: 1px dotted black;
 }

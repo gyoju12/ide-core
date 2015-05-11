@@ -26,6 +26,10 @@ goorm.core.layout.tab.output_manager = {
 		this.table = $('[id="' + this.context + '_table"]').dataTable({
 			"aaData": [],
 			"aoColumns": [{
+				"mData": 'type',
+				"sTitle": '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>',
+				"sWidth": '40px'
+			}, {
 				"mData": 'file',
 				"sTitle": '<span localization_key="dictionary_file">' + core.module.localization.msg.dictionary_file + '</span>'
 			}, {
@@ -170,7 +174,20 @@ goorm.core.layout.tab.output_manager = {
 	},
 
 	push: function(data) {
-		if (this.table) { //seongho.cha: before was {file : data.file, line : data.line, content: data.content}, I changed it for passing 2D Array.S I Dont think this function needed... 
+		if (this.table) { //seongho.cha: before was {file : data.file, line : data.line, content: data.content}, I changed it for passing 2D Array.S I Dont think this function needed...
+			var self = this;
+			data.map(function(obj) {
+				if (obj.type && obj.type === 'warning') {
+					obj.type = '<span class="warn_color">Warning</span>';
+					obj.content = '<i class="fa fa-exclamation-triangle fa-1 warn_color"></i> ' + obj.content;
+					self.warn_count++;
+				} else {
+					obj.type = '<span class="err_color">Error</span>';
+					obj.content = '<i class="fa fa-times-circle fa-1 err_color"></i> ' + obj.content;
+					self.err_count++;
+				}	
+			});
+			
 			this.table.fnAddData(data);
 		}
 	},

@@ -471,8 +471,10 @@ goorm.core.window.panel.prototype = {
 					core.module.layout.debug.debug_terminate();
 				} else {
 
-					if (self.type == "Editor")
+					if (self.type == "Editor") {
 						$('#editor_status').hide();
+						$('#lint_summury').hide();
+					}
 
 					//if editor, it should be off from ot-server --heeje
 					
@@ -973,13 +975,16 @@ goorm.core.window.panel.prototype = {
 			// this.resize_all('activated');
 			if (this.type == "Editor") {
 				$('#editor_status').show();
-
+				$('#lint_summury .err_count').text(' ' + this.editor.err_count);
+				$('#lint_summury .warn_count').text(' ' + this.editor.warn_count);
+				$('#lint_summury').show();
 				this.enable_edit_menu("Editor");
 
 			}
 			
 			else {
 				$('#editor_status').hide();
+				$('lint_summury').hide();
 
 				$("a[action=do_undo]").parent().addClass("disabled");
 				$("a[action=do_redo]").parent().addClass("disabled");

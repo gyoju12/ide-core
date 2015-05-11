@@ -27,6 +27,8 @@ goorm.plugin.linter = {
 		var result = null;
 		var project_type = core.status.current_project_type;
 
+		__window.editor.err_count = 0;
+		__window.editor.warn_count = 0;
 		if (window_manager.window.indexOf(__window) > -1 && __window.editor && __window.editor.editor.getValue() !== "") {
 			switch (__window.editor.filetype) {
 				case 'js':
@@ -54,6 +56,7 @@ goorm.plugin.linter = {
 					this.lint_php(__window);
 					break;
 				default:
+					$('#lint_summury').hide();
 					return;
 			}
 			/*
@@ -61,6 +64,9 @@ goorm.plugin.linter = {
 							callback(result);
 						}
 						*/
+			$('#lint_summury .err_count').text(' ' + __window.editor.err_count);
+			$('#lint_summury .warn_count').text(' ' + __window.editor.warn_count);
+			$('#lint_summury').show();
 		}
 	},
 
@@ -77,6 +83,9 @@ goorm.plugin.linter = {
 		// add error message in editor & output tab
 		var lint_result = CodeMirror.lint[type](__window.editor.editor.getValue());
 		if (!lint_result) return;
+		output_data = [];
+		__window.editor.err_count = 0;
+		__window.editor.warn_count = 0;
 		for (var i = 0; i < lint_result.length; i++) {
 
 			//
@@ -84,7 +93,11 @@ goorm.plugin.linter = {
 			//	go to 'Codemirror addon jshint.js'
 			//	and add option in 'itself' function.
 			//
-
+			if (lint_result[i].severity === 'warning') {
+				__window.editor.warn_count++;
+			} else {
+				__window.editor.err_count++;
+			}
 			error_data = {
 				'line_number': (isNaN(lint_result[i].from.line)) ? 0 : lint_result[i].from.line,
 				'error_message': lint_result[i].message,
@@ -92,16 +105,23 @@ goorm.plugin.linter = {
 				'error_type': lint_result[i].severity
 			};
 
-			output_data = {
-				'line': lint_result[i].from.line + 1,
-				'content': lint_result[i].severity + ': ' + lint_result[i].message,
-				'file': __window.title
-			};
+// 			output_data = {
+// 				'line': lint_result[i].from.line + 1,
+// 				'content': lint_result[i].severity + ': ' + lint_result[i].message,
+// 				'file': __window.title,
+// 				'type': lint_result[i].severity
+// 			};
 
 			error_manager.add_line(error_data);
-			output_manager.push(output_data);
+			output_data.push({
+				'line': lint_result[i].from.line + 1,
+				'content': lint_result[i].severity + ': ' + lint_result[i].message,
+				'file': __window.title,
+				'type': lint_result[i].severity
+			});
 		}
 		// show error message in editor & output tab
+		output_manager.push(output_data);
 		error_manager.error_message_box.add('#' + __window.panel.attr('id'));
 		error_manager.init_event();
 
@@ -188,6 +208,12 @@ goorm.plugin.linter = {
 			if (w) {
 				e = w.editor;
 				e_m = e.error_manager;
+				
+				if (data.type === 'warning') {
+					e.warn_count++;
+				} else {
+					e.err_count++;
+				}
 
 				var error_data = {
 					'line_number': parseInt(data.line, 10) - 1,
@@ -256,7 +282,11 @@ goorm.plugin.linter = {
 				if (isNaN(line[1])) {
 					continue;
 				}
-
+				if (line[3].trim() === 'warning') {
+					__window.editor.warn_count++;
+				} else {
+					__window.editor.err_count++;
+				}
 				var error_data = {
 					'line_number': parseInt(line[1], 10) - 1,
 					'error_syntax': "",
@@ -270,7 +300,8 @@ goorm.plugin.linter = {
 				table.push({
 					line: error_data.line_number + 1,
 					content: error_data.error_message.split("<br />").shift(),
-					file: editor.filepath + editor.filename
+					file: editor.filepath + editor.filename,
+					type: line[3].trim()
 				});
 				self.flag=1;
 			}
@@ -300,6 +331,7 @@ goorm.plugin.linter = {
 			output = output.join("\n").split(path);
 			output.shift();
 
+			var output_data = [];
 			for (var i = 0; i < output.length; i++) {
 				var line = output[i].split(":");
 
@@ -308,16 +340,18 @@ goorm.plugin.linter = {
 					'error_syntax': "",
 					'error_message': isNaN(parseInt(line[2], 10)) ? line[2].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;") : line[3].replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;")
 				};
-
+				__window.editor.err_count++;
 				error_manager.add_line(error_data);
 				if (i === 0) error_manager.error_message_box.add(editor.target);
 				error_manager.init_event();
-				om.push({
+				output_data.push({
 					line: error_data.line_number + 1,
 					content: error_data.error_message.split("<br />").shift(),
-					file: editor.filepath + editor.filename
+					file: editor.filepath + editor.filename,
+					type: 'error'
 				});
 			}
+			om.push(output_data);
 		});
 	},
 
@@ -339,6 +373,8 @@ goorm.plugin.linter = {
 			output = output.split("\n");
 			output.pop();
 			output.shift();
+			
+			var output_data = [];
 			for (var i = 0; i < output.length; i++) {
 				// parsing(output[i], i);
 				var line = output[i].split(":");
@@ -347,7 +383,11 @@ goorm.plugin.linter = {
 				e = __window.editor;
 				e_m = e.error_manager;
 				line[line.length - 1] = line[line.length - 1].slice(1, line[line.length - 1].length - 1);
-
+				if (type === 'warning') {
+					__window.editor.warn_count++;
+				} else {
+					__window.editor.err_count++;
+				}
 				var error_data = {
 					'line_number': parseInt(line[2].split(",")[0].replace("line ", ""), 10) - 1,
 					'error_syntax': '',
@@ -361,14 +401,16 @@ goorm.plugin.linter = {
 
 
 				// data.content = line[line.length - 1];
-				om.push({
+				output_data.push({
 					'file': __window.editor.filepath + __window.editor.filename,
 					'line': parseInt(line[2].split(",")[0].replace("line ", ""), 10),
-					'content': line[line.length - 1]
+					'content': line[line.length - 1],
+					'type': type
 				});
 				self.flag=1;
 
 			}
+			om.push(output_data)
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_ruby');
 			}
@@ -392,12 +434,18 @@ goorm.plugin.linter = {
 
 			var result = JSON.parse(output.split("\n")[1].replace("<bg$>", ""));
 			var message = result.files[path].messages;
-
+			var output_data = [];
 			for (var i = 0; i < message.length; i++) {
 				var line = message[i].line;
 
 				e = __window.editor;
 				e_m = e.error_manager;
+				
+				if (message[i].type === 'warning') {
+					__window.editor.warn_count++;
+				} else {
+					__window.editor.err_count++;
+				}
 
 				var error_data = {
 					'line_number': line - 1,
@@ -410,14 +458,15 @@ goorm.plugin.linter = {
 				if (i === 0) e.error_manager.error_message_box.add(e.target);
 				e_m.init_event();
 
-				om.push({
+				output_data.push({
 					'file': __window.editor.filepath + __window.editor.filename,
 					'line': line,
-					'content': message[i].message
+					'content': message[i].message,
+					'type': message[i].type
 				});
 				self.flag=1;
-
 			}
+			om.push(output_data);
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_php');
 			}

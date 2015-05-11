@@ -12,38 +12,34 @@ goorm.core.file.move = {
 	dialog: null,
 	buttons: null,
 	dialog_explorer: null,
+	selected_item: null, // selected items in project treeview
+	project_root_error: false,
 
 	init: function() {
 
 		var self = this;
 
-		this.panel = $("#dlg_move_file");
+		this.panel = $('#dlg_move_file');
 
 		var handle_ok = function(panel) {
-
 			var data = self.dialog_explorer.get_data();
 
-			if (data.path === "" || data.name === "") {
+			if (data.path === '') {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 
 				return false;
 			}
 
-			var postdata = {
-				ori_path: $("#file_move_ori_path").val(),
-				ori_file: $("#file_move_ori_file").val(),
+			self.send({
+				ori_path: self.selected_item,
 				dst_path: data.path,
-				dst_file: data.name
-			};
-
-			self.send(postdata);
+			});
 		};
-
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_move",
-			id: "dlg_move_file",
+			id: 'dlg_move_file',
 			handle_ok: handle_ok,
 			show: $.proxy(this.after_show, this),
 			success: function() {
@@ -63,74 +59,38 @@ goorm.core.file.move = {
 			}
 		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer("#file_move", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#file_move', this);
 		this.bind();
 	},
 
-	show: function(context) {
-
+	show: function() {
 		var self = this;
-		self.dialog_explorer.init(true, true, true);
-		self.is_alive_window = false;
-		if (context) {
-			if (core.status.current_project_path === core.status.selected_file) {
-				alert.show(core.module.localization.msg.alert_move_error);
-				return;
-			}
-			var filename = (core.status.selected_file.split("/")).pop();
-			var filepath = core.status.selected_file.slice(0, core.status.selected_file.lastIndexOf('/')); // jeongmin: if file's parent and file have same name, replacing filename to blank will make wrong result
-			filepath = filepath.replace("//", "/");
 
-			$("#file_move_ori_file").attr("value", filename);
-			$("#file_move_ori_path").attr("value", filepath);
-			$("#file_move_target_name").attr("value", filename);
+		this.selected_item = core.module.layout.project_explorer.get_tree_selected_path();
 
-			var window_manager = core.module.layout.workspace.window_manager;
+		if (this.selected_item.files.length || this.selected_item.directorys.length) {
+			this.selected_item = this.selected_item.files.concat(this.selected_item.directorys);
 
-			for (var i = 0; i < window_manager.index; i++) {
-				var window_filename = window_manager.window[i].filename;
-				var window_filepath = window_manager.window[i].filepath;
-				window_filepath = window_filepath + "/";
-				window_filepath = window_filepath.replace("//", "/");
+			var cur_project_path_index = this.selected_item.indexOf(core.status.current_project_path);
 
-				if (window_manager.window[i].alive && window_filename == filename && window_filepath == filepath) {
-					self.is_alive_window = true;
+			if (~cur_project_path_index) {
+				this.project_root_error = true;
+				this.selected_item.splice(cur_project_path_index, 1); // remove root
+
+				if (!this.selected_item.length) { // user selects project root only
+					return;
 				}
 			}
+
+			this.dialog_explorer.init(true, true, true);
+			this.panel.modal('show');
 		} else {
-			var window_manager = core.module.layout.workspace.window_manager;
-
-			for (var i = 0; i < window_manager.index; i++) {
-				if (window_manager.window[i].alive) {
-					self.is_alive_window = true;
-				}
-			}
-
-			if (self.is_alive_window) {
-				$("#file_move_ori_file").attr("value", window_manager.window[window_manager.active_window].filename);
-				$("#file_move_ori_path").attr("value", window_manager.window[window_manager.active_window].filepath);
-				$("#file_move_target_name").attr("value", window_manager.window[window_manager.active_window].filename);
-			} else {
-				var temp_path = core.status.selected_file;
-				var temp_name = temp_path.split("/").pop();
-				temp_path = temp_path.replace(temp_name, "");
-
-				$("#file_move_ori_file").attr("value", temp_name);
-				$("#file_move_ori_path").attr("value", temp_path);
-				$("#file_move_target_name").attr("value", temp_name);
-			}
-
+			alert.show(core.module.localization.msg.alert_select_file);
 		}
-		$("#file_move_target_name").val(core.status.selected_file.split('/').pop());
-
-
-
-		this.panel.modal('show');
-
 	},
 
 	after_show: function() {
-		$("#file_move_dir_tree").find(".jstree-clicked").click();
+		$('#file_move_dir_tree').find('.jstree-clicked').click();
 		// var files = this.dialog_explorer.files;
 		// $(files).click();
 	},
@@ -139,30 +99,29 @@ goorm.core.file.move = {
 		var self = this;
 		var files = this.dialog_explorer.files;
 
-
 		// when enter 'enter' key, dialog OK.
 		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
 				case 13: // 'enter' key
-					$("#g_mf_btn_ok").click();
+					$('#g_mf_btn_ok').click();
 					break;
 			}
 		});
 
-		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_move_dir_tree").keydown(function(e) {
+		// when enter 'tab' key, move from left tree to right file view
+		$('#file_move_dir_tree').keydown(function(e) {
 			switch (e.keyCode) {
 				case 9: // 'tab' key
-					$(files).find("div")[0].click();
+					$(files).find('div')[0].click();
 					return false;
 			}
 		});
 
 		// on selecting file view
-		$(files).on("click", "div.file_item", function() {
-			self.filename = $(this).attr("filename");
-			self.filetype = $(this).attr("filetype");
-			self.filepath = $(this).attr("filepath");
+		$(files).on('click', 'div.file_item', function() {
+			self.filename = $(this).attr('filename');
+			self.filetype = $(this).attr('filetype');
+			self.filepath = $(this).attr('filepath');
 		});
 	},
 
@@ -202,13 +161,10 @@ goorm.core.file.move = {
 		// 		}
 		// 	}
 		// } else {
-		core._socket.once("/file/move", function(data) {
-			var localization_msg = core.module.localization.msg,
-				err_files = '\n';
-
-			//2.open file .....
-			layout.project_explorer.treeview.open_path(postdata.dst_path);
-			layout.project_explorer.refresh();
+		core._socket.once('/file/move', function(data) {
+			var localization_msg = core.module.localization.msg;
+			var err_files = '\n';
+			var treeview = layout.project_explorer.treeview;
 
 			if (data.err_files) {
 				if (data.err_files.length) { // array
@@ -216,14 +172,50 @@ goorm.core.file.move = {
 				} else { // string
 					err_files += data.err_files;
 				}
+
+				if (self.project_root_error) {
+					err_files += '\n' + localization_msg.alert_move_error;
+				}
+
+				postdata.ori_path = postdata.ori_path.filter(function(item) { // remove error files
+					return data.err_files.indexOf(item) === -1;
+				});
 			}
+
+			var bookmark_list = goorm.core.edit.bookmark_list.list;
+			var refreshed_node = [];
+			for (var i = postdata.ori_path.length - 1; 0 <= i; i--) { // update bookmark list
+				var cur_selected_item = postdata.ori_path[i];
+				var file_path = cur_selected_item.split('/');
+				var file_name = file_path.pop();
+
+				if (bookmark_list[cur_selected_item]) {
+					bookmark_list[postdata.dst_path + '/' + file_name] = bookmark_list[cur_selected_item];
+					delete bookmark_list[cur_selected_item]; // have to go to list
+				}
+
+				file_path = file_path.join('/');
+				if (!~refreshed_node.indexOf(file_path)) {
+					refreshed_node.push(file_path);
+					treeview.refresh_node(file_path);
+				}
+			}
+
+			//2.open file .....
+			treeview.refresh_node(postdata.dst_path);
+			treeview.open_path(postdata.dst_path);
 
 			switch (data.err_code) {
 				case 0:
+					if (self.project_root_error) {
+						alert.show(localization_msg.alert_move_error);
+					}
+
 					postdata.change = 'dialog_mv';
 					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
-					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file)
+					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file) {
 						layout.workspace.window_manager.synch_with_fs(postdata);
+					}
 
 					
 					break;
@@ -251,8 +243,10 @@ goorm.core.file.move = {
 				default:
 					alert.show(localization_msg.alert_move_error + err_files);
 			}
+
+			self.project_root_error = false; // initialize
 		});
-		core._socket.emit("/file/move", postdata);
+		core._socket.emit('/file/move', postdata);
 
 		self.panel.modal('hide');
 		// }

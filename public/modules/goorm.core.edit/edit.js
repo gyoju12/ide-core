@@ -71,6 +71,9 @@ goorm.core.edit = function(parent) {
 	this.error_marker = [];
 	this.init_change = false;
 	this.editor_loaded = false; //jeongmin: for bookmark table in outline tab
+	
+	this.err_count = 0;
+	this.warn_count = 0;
 
 	this.dark_themes = ['ambiance', 'blackboard', 'cobalt', 'erlang-dark', 'monokai', 'rubyblue', 'vibrant-ink', 'xq-dark', 'night'];
 };

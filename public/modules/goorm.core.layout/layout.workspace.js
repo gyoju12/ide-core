@@ -91,6 +91,7 @@ goorm.core.layout.workspace = {
 
 		ws.on('click', function(e) {
 			$('#editor_status').hide();
+			$('#lint_summury').hide();
 			if($("#project_selector").find('.btn-group').hasClass('open')) {
 				$("#project_selector").find('.btn-group').removeClass('open');
 			}

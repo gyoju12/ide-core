@@ -47,7 +47,7 @@ goorm.core.search = {
 
 		$('#search_clear>.refresh-btn').click(function() {
 			$(core).one('event_save_all', function(e) {
-				if (self.last_option != null) {
+				if (self.last_option !== null) {
 					self.search(self.last_option);
 				} else {
 					self.refresh();
@@ -121,7 +121,7 @@ goorm.core.search = {
 					} else {
 						$("#search_query_inputbox_background").val('');
 					}
-				})
+				});
 
 				var inputbox = $('#search_query_inputbox'); //document.getElementById('search_query_inputbox');
 				var inputbox_background = $("#search_query_inputbox_background");
@@ -141,7 +141,7 @@ goorm.core.search = {
 						inputbox_background.val(value);
 						inputbox_background.scrollLeft(scroll);
 					}
-				}
+				};
 				inputbox.bind('keydown keyup keypress change select', function(e){
 					setTimeout(make_shadow, 10);
 				});
@@ -270,6 +270,10 @@ goorm.core.search = {
 		grep_option.match_case = this.match_case;
 		grep_option.whole_word = this.whole_word;
 
+		if ($('#search_file_extension').val() !== '') {
+			grep_option.include = this.parse_file_extension($('#search_file_extension').val());
+		}
+		
 		this.query = text;
 
 		this.get_matched_file(text, grep_option, search_path);
@@ -437,7 +441,7 @@ goorm.core.search = {
 		};
 
 		// jeongmin: all projects
-		if (search_path == '') {
+		if (search_path === '') {
 			postdata.project_path = '';
 		}
 
@@ -574,5 +578,13 @@ goorm.core.search = {
 
 			$('#search_project_selectbox').append('<option value="/">All Projects</option>');
 		}
+	},
+	
+	parse_file_extension: function(val) {
+		var result = [];
+		val.split(',').map(function(name) {
+			result.push('--include=' + name.trim());
+		});
+		return result;
 	}
 };

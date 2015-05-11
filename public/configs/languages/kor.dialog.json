@@ -616,5 +616,8 @@
 	},
 	"dialog_svn_info_permanent": {
 		"value": "앞으로도 신뢰"
+	},
+	"dialog_search_files": {
+		"value": "검색할 파일"
 	}
 }

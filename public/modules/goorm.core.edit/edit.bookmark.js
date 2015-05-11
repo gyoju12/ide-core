@@ -125,8 +125,10 @@ goorm.core.edit.bookmark.prototype = {
 			var keyword = linenumber.split('_').pop(); //find real line number from the string
 
 			this.editor.editor.setCursor(parseInt(keyword, 10) - 1, 0); //set cursor to the parsed integer keyword
+			CodeMirror.commands.showInCenter(this.editor.editor);
 		} else {//linenumber is number type
 			this.editor.editor.setCursor(linenumber - 1, 0); //set cursor to the line
+			CodeMirror.commands.showInCenter(this.editor.editor);
 		}
 	},
 
@@ -171,6 +173,7 @@ goorm.core.edit.bookmark.prototype = {
 						var _line = $(this).find('.bookmark_line').attr('id').split('_').pop(); // extract line from bookmark_line
 
 						cm.setCursor(_line - 1);
+						CodeMirror.commands.showInCenter(cm);
 					});
 
 					////// add comment //////

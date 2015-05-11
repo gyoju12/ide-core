@@ -183,15 +183,6 @@ goorm.core.menu.action = {
 			core.dialog.save_as_file.show();
 		});
 
-		$('[action=move_file]').off('click').tooltip();
-		$('[action=move_file]').click(function() {
-			if (self.prevent(this)) {
-				return false;
-			}
-
-			core.dialog.move_file.show('');
-		});
-
 		$('[action=rename_file]').off('click').tooltip();
 		$('[action=rename_file]').click(function() {
 			if (self.prevent(this)) {
@@ -260,16 +251,13 @@ goorm.core.menu.action = {
 
 				
 
-				for (var i = directorys.length - 1; 0 <= i; i--) {
-					if (core.status.current_project_path === directorys[i]) { // root
-						directorys.splice(i, 1); // remove root
+				var cur_project_path_index = directorys.indexOf(core.status.current_project_path);
+				if (~cur_project_path_index) {
+					directorys.splice(cur_project_path_index, 1); // remove root
 
-						core.dialog.delete_project.show(function() {
-							$('#selector_' + core.status.current_project_name).click();
-						});
-
-						break;
-					}
+					core.dialog.delete_project.show(function() {
+						$('#selector_' + core.status.current_project_name).click();
+					});
 				}
 
 				if (files.length || directorys.length) { // files and directories are removed, so check again
@@ -1613,7 +1601,7 @@ goorm.core.menu.action = {
 					return false;
 				}
 
-				core.dialog.move_file.show('context');
+				core.dialog.move_file.show();
 			});
 
 			$('[action=delete_context]').off('click').tooltip();
