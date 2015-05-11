@@ -3534,3 +3534,7 @@ div.tooltip {
 #dlg_svn_info .modal-dialog {
     width: 500px;
 }
+
+.resizing {
+    border: 1px dotted black;
+}

@@ -218,6 +218,7 @@ goorm.core.menu.action = {
 				return false;
 			}
 
+			var localization = core.module.localization.msg;
 			var selected_path = core.module.layout.project_explorer.get_tree_selected_path(); // get real selected file
 
 			if (selected_path.files.length || selected_path.directorys.length) {
@@ -225,7 +226,6 @@ goorm.core.menu.action = {
 				var directorys = selected_path.directorys;
 				var window_manager = core.module.layout.workspace.window_manager;
 				var window_list = window_manager.window;
-				var localization = core.module.localization.msg;
 				var err_file = []; // can't delete file
 
 				// clean delete file's traces. Jeong-Min Im.

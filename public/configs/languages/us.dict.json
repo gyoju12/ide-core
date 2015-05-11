@@ -283,5 +283,8 @@
 	},
 	"keyword": {
 		"value": "Keyword"
+	},
+	"resize_image": {
+		"value": "Resize Image"
 	}
 }

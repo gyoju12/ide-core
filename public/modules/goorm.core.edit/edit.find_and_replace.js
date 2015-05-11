@@ -922,7 +922,7 @@ goorm.core.edit.find_and_replace = {
 		var window_manager = core.module.layout.workspace.window_manager;
 
 		// $("#find_query_inputbox").val("");
-		$("#replace_query_inputbox").val("");
+		// $("#replace_query_inputbox").val("");
 
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window] !== undefined) {

@@ -283,5 +283,8 @@
 	},
 	"keyword": {
 		"value": "검색어"
+	},
+	"resize_image": {
+		"value": "이미지 크기 변경"
 	}
 }
