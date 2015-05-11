@@ -250,7 +250,7 @@ goorm.core.utility.treeview.prototype = {
 
 				if (_this._refresh_node) {
 					var _state = [];
-					$.each(state, function (index, value) { //delete children's opened flag
+					$.each(state, function(index, value) { //delete children's opened flag
 						if (value.indexOf(path) === 0) {
 							_state.push(value);
 						}
@@ -360,14 +360,14 @@ goorm.core.utility.treeview.prototype = {
 								if not, it try to reload already loadead node again. and not be opened all opened node at once.
 							*/
 							callback.call(self, [], function() { // 1
-								if (_this.options.state.core.open.indexOf(obj.li_attr.path) > -1) {//2
+								if (_this.options.state.core.open.indexOf(obj.li_attr.path) > -1) { //2
 									_this.tree.jstree(true)._model.data[obj.id].state.opened = true; //open_node() can't be used beacse children doesn't exist yet
 								}
-								_this.options.state = null;
-								_this.tree.jstree("_append_json_data", obj, data, function() { //3
+								// 								_this.options.state = null;	// hidden: when several refresh_nodes are called at the same time, first node makes state null, then second node can't get state
+								_this.tree.jstree('_append_json_data', obj, data, function() { //3
 									if (_this.is_ready === false) {
 										_this.is_ready = true;
-										if (typeof _this.options.on_ready === "function") {
+										if (typeof _this.options.on_ready === 'function') {
 											_this.options.on_ready();
 										}
 									}
@@ -504,14 +504,14 @@ goorm.core.utility.treeview.prototype = {
 		var self = this;
 
 		if (node.indexOf(this.raw_id) !== 0) {
-			node = this.raw_id + "/" + node;
+			node = this.raw_id + '/' + node;
 		}
 
 		if (node.charAt(node.length - 1) === '/') {
 			node = node.substring(0, node.length - 1);
 		}
 
-		$.each(this.opened_node, function (key, value) { //delete children's opened flag
+		$.each(this.opened_node, function(key, value) { //delete children's opened flag
 			if (key.indexOf(node) === 0) {
 				delete self.opened_node[key];
 			}
@@ -520,7 +520,6 @@ goorm.core.utility.treeview.prototype = {
 		this._refresh_node = node;
 		this.tree.jstree('refresh_node', node);
 	},
-
 
 	/**
 	 * get state (opened files, selected files etc..)
@@ -547,7 +546,7 @@ goorm.core.utility.treeview.prototype = {
 		// seongho.cha : most of cases it is called only 1 time per node, but when treeview refreshed at the same time, open_node need to call again
 		//               200ms is proper.
 		var handle = setInterval(function() {
-			while (self.tree.jstree('is_open', $("[path='" + current_path + "'] a i "))) {
+			while (self.tree.jstree('is_open', $('[path="' + current_path + '"] a i '))) {
 				if (i < path.length) {
 					current_path += '/' + path[i++];
 				} else {
@@ -555,7 +554,7 @@ goorm.core.utility.treeview.prototype = {
 					return;
 				}
 			}
-			self.tree.jstree('open_node', $("[path='" + current_path + "'] a i"));
+			self.tree.jstree('open_node', $('[path="' + current_path + '"] a i'));
 		}, 200);
 		/*
 				this.tree.on("after_open.jstree.set_open", function(){
