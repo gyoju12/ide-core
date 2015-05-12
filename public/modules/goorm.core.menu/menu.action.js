@@ -1620,19 +1620,6 @@ goorm.core.menu.action = {
 						link: true
 					});
 				}
-			})
-
-			$('[action=export_file]').off('click').tooltip();
-			$('[action=export_file]').click(function() {
-				if (self.prevent(this)) {
-					return false;
-				}
-
-				if (core.status.current_project_path === '') {
-					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return; // false prevents closing menu
-				}
-				core.dialog.export_file.show();
 			});
 			
 		};
@@ -1664,6 +1651,16 @@ goorm.core.menu.action = {
 				}
 			});
 			
+
+			// show confirmation directly. Jeong-Min Im.
+			$('[action=export_file_context]').off('click').tooltip();
+			$('[action=export_file_context]').click(function() {
+				if (self.prevent(this)) {
+					return false;
+				}
+
+				core.dialog.export_file.show(true);
+			});
 		};
 
 		var folder_context_menu = function() {
@@ -1836,19 +1833,6 @@ goorm.core.menu.action = {
 					return; // false prevents closing menu
 				}
 				core.dialog.import_file.show();
-			});
-
-			$('[action=export_file]').off('click').tooltip();
-			$('[action=export_file]').click(function() {
-				if (self.prevent(this)) {
-					return false;
-				}
-
-				if (core.status.current_project_path === '') {
-					alert.show(core.module.localization.msg.alert_project_not_selected);
-					return; // false prevents closing menu
-				}
-				core.dialog.export_file.show();
 			});
 
 			$('[action=save_all_file]').off('click').tooltip();

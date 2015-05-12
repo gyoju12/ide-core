@@ -1372,5 +1372,11 @@
 	},
 	"alert_paste_fail": {
 		"value": "복사하지 못했습니다."
+	},
+	"alert_paste_child": {
+		"value": "붙여넣으려는 위치가 복사하는 파일도 일치하거나 자식입니다."
+	},
+	"confirm_file_export": {
+		"value": "이 파일을 내보내시겠습니까?"
 	}
 }

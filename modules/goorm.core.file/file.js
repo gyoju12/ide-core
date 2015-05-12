@@ -562,42 +562,61 @@ module.exports = {
 		}
 	},
 
+	// export file. Jeong-Min Im.
+	// query (Object)
+	// evt (EventEmitter)
 	do_export: function(query, evt) {
-		var data = {};
-		data.err_code = 0;
-		data.message = 'Process Done';
+		fs.mkdir(path.join(global.__temp_dir, query.user), '0777', function(err) {
+			var target = query.path;
 
-		if (query.user && query.path && query.file) {
-			fs.mkdir(__temp_dir + '/' + query.user, '0777', function(err) {
-				if (!err || err.errno == 47) { //errno 47 is exist folder error
+			if (!err || err.errno === 47) { //errno 47 is exist folder error
+				var copy_func = [];
 
-					query.path = g_secure.command_filter(query.path);
-					query.user = g_secure.command_filter(query.user);
-					query.file = g_secure.command_filter(query.file);
+				query.user = g_secure.command_filter(query.user);
 
-					fs.copy(global.__workspace + '/' + query.path + '/' + query.file, __temp_dir + '/' + query.user + '/' + query.file, function(err) {
-						if (!err) {
-							data.path = query.user + '/' + query.file;
-							evt.emit('file_do_export', data);
-						} else {
-							data.err_code = 20;
-							// data.message = 'Cannot export file';
-							evt.emit('file_do_export', data);
-						}
+				for (var i = target.length - 1; 0 <= i; i--) {
+					copy_func.push(function(callback) {
+						i++;
+
+						target[i] = g_secure.command_filter(target[i]);
+
+						fs.copy(path.join(global.__workspace, target[i]), path.join(global.__temp_dir, query.user, target[i]), function(_err) {
+							if (!_err) {
+								callback();
+							} else {
+								console.log('file.js', 'do_export', 'copy file to temp dir fail', _err);
+								callback(null, target[i]);
+							}
+						});
 					});
-				} else {
-					data.err_code = 30;
-					// data.message = 'Cannot make directory';
-
-					evt.emit('file_do_export', data);
 				}
-			});
-		} else {
-			data.err_code = 10;
-			// data.message = 'Invalide query';
 
-			evt.emit('file_do_export', data);
-		}
+				async.parallel(copy_func, function(_err, result) {
+					result = result.filter(Boolean);
+					target = target.filter(function(item) {
+						return result.indexOf(item) === -1;
+					});
+					target = (query.user + '/' + target.join(' ' + query.user + '/')).split(' '); // add user id as prefix
+
+					if (result.length) {
+						evt.emit('file_do_export', {
+							'err_code': 4,
+							'err_file': result,
+							'path': target
+						});
+					} else {
+						evt.emit('file_do_export', {
+							'path': target
+						});
+					}
+				});
+			} else {
+				console.log('file.js', 'do_export', 'make temp dir fail', err);
+				evt.emit('file_do_export', {
+					'err_code': 3
+				});
+			}
+		});
 	},
 	
 	get_property: function(query, evt) {
@@ -859,11 +878,12 @@ module.exports = {
 			directorys[i] = g_secure.command_filter(directorys[i]);
 
 			exist_func.push(function(callback) {
+
 				fs.exists(path.join(global.__workspace, target, path.basename(directorys[++i])), function(exist) {
 					if (exist) {
-						callback(null, directorys[i]);
+						callback(true, directorys[i]);
 					} else {
-						callback();
+						callback(false, directorys[i]);
 					}
 				});
 			});
@@ -872,7 +892,12 @@ module.exports = {
 		async.parallel(exist_func, function(err, result) {
 			result = result.filter(Boolean); // remove undefined
 
-			if (result.length) { // ask overwrite
+			if (path.join(global.__workspace, target, path.basename(result)).indexOf(result) > -1) {
+				_callback({
+					'err_code': 3,
+					'err_file': result
+				});
+			} else if (err) { // ask overwrite
 				_callback({
 					'err_code': 2,
 					'err_file': result

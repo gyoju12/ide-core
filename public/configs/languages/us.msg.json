@@ -1366,5 +1366,11 @@
 	},
 	"alert_paste_fail": {
 		"value": "Fail to paste."
+	},
+	"alert_paste_child": {
+		"value": "Paste target is same or children"
+	},
+	"confirm_file_export": {
+		"value": "Do you want to export this/these file(s)?"
 	}
 }

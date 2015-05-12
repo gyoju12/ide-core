@@ -843,29 +843,32 @@ exports.file.do_rename = function(req, res) {
 };
 
 exports.file.do_export = function(req, res) {
-	var evt = new EventEmitter();
-
-	var path = req.query.path.split('/');
-	var project_path = (path[0] !== '') ? path[0] : path[1];
+	var response = null;
 
 	//useonly(mode=goorm-standalone,goorm-oss)
-	evt.once('file_do_export', function(data) {
-		res.json(data);
-	});
+	response = 'json';
+	
 	
 
-	
+	if (req.__user.id && req.query.path) {
+		var evt = new EventEmitter();
 
-	req.query.user = req.__user.id;
+		evt.once('file_do_export', function(data) {
+			res[response](data);
+		});
 
-	// validate permission
-	
+		req.query.user = req.__user.id;
 
-	
-
-	//useonly(mode=goorm-oss)
-	g_file.do_export(req.query, evt);
-	
+		// validate permission
+		
+		//useonly(mode=goorm-oss)
+		g_file.do_export(req.query, evt);
+		
+	} else {
+		res[response]({
+			'err_code': 1
+		});
+	}
 };
 
 

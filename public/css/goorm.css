@@ -3545,3 +3545,9 @@ div.tooltip {
 .resizing {
     border: 1px dotted black;
 }
+
+#uploaded_image .ui-wrapper {
+	position: relative !imporant;
+	top: 0px !important;
+	left: 0px !important;
+}

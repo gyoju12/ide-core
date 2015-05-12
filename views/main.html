@@ -1606,7 +1606,7 @@
                 <li class="divider"></li>
                 <li>
                     <a action="send_file_link" localization_key="file_send_link">Send File Link to Chat</a>
-                    <a action="export_file" localization_key="file_export">Export File</a>
+                    <a action="export_file_context" localization_key="file_export">Export File</a>
                 </li>
                 <!--  -->
             </ul>
@@ -1757,7 +1757,10 @@
                     <a action="find_in_folder_context" localization_key="find_in_folder_context">Find in Folder</a>
                 </li>
                 <li class="divider"></li>
-                <li>
+                <li class="file">
+                    <a action="export_file_context" localization_key="file_export">Export File</a>
+                </li>
+				<li class="directory">
                     <a action="export_file" localization_key="file_export">Export File</a>
                 </li>
             </ul>
@@ -3993,7 +3996,7 @@
                                 <label for="bug_reports_category" class="col-sm-2 control-label" localization_key="dialog_help_bug_report_category">E-mail</label>
                                 <div class="col-sm-10">
                                     <select id="bug_reports_category" class="form-control">
-                                        <option value="bugs" selected>버그</option>
+                                        <option value="bugs" selected>���그</option>
                                         <option value="new_functions">새기능</option>
                                         <option value="questions">기타 질문, 의견</option>
                                     </select>

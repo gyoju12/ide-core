@@ -466,6 +466,8 @@ goorm.core.project.explorer.prototype = {
 								msg = 'alert_paste_fail';
 								break;
 
+							
+
 							default:
 								msg = 'alert_unknown_error';
 						}
@@ -494,6 +496,10 @@ goorm.core.project.explorer.prototype = {
 									'yes': paste_func
 								}).show();
 								return;
+
+							case 3:
+								msg = 'alert_paste_child';
+								break;
 
 							default:
 								msg = 'alert_unknown_error';

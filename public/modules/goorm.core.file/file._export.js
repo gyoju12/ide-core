@@ -17,101 +17,130 @@ goorm.core.file._export = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_export_file");
+		this.panel = $('#dlg_export_file');
 
-		// this.panel.click(function() {	// hidden: storage is deprecated
-		// 	$("button[localization_key=common_target]").blur();
-		// });
+		// export selected file. Jeong-Min Im.
+		// context (Bool) : from context menu or not
+		this.handle_ok = function(context) {
+			var localization_msg = core.module.localization.msg;
+			var data = null;
 
-		var handle_ok = function() {
-			var data = self.dialog_explorer.get_data();
-
-			if (!data || data.path === "" || data.name === "") {
-				alert.show(core.module.localization.msg.alert_filename_empty);
-				// alert.show("Not Selected.");
-				return false;
+			if (context) {
+				data = core.module.layout.project_explorer.get_tree_selected_path();
+				data = data.files;
+			} else {
+				data = self.dialog_explorer.get_data();
+				data = [data.path + '/' + data.name];
 			}
 
-			// var name = core.user.id;
+			if (data && data.length) {
+				var progress_elements = core.module.loading_bar.start({
+					str: localization_msg.loading_bar_export
+				});
+				_$.get('file/export', {
+					'path': data
+				}, function(result) {
+					progress_elements.stop();
 
-			var postdata = {
-				// user: name,
-				path: data.path,
-				file: data.name
-			};
+					var path = result.path;
 
-			var progress_elements = core.module.loading_bar.start({
-				str: core.module.localization.msg.loading_bar_export
-			});
-			_$.get("file/export", postdata, function(data) {
-				progress_elements.stop();
+					if (path) {
+						var download_frame = $('#download_frame');
+						var download_func = [];
+						
 
-				if (data.err_code === 0) {
-					self.panel.modal('hide');
+						if (!context) {
+							self.panel.modal('hide');
+						}
 
-					//location.href = "download/?file=" + data.path;
-					//var _iframe_download=$('<iframe id="download_frame"/>').attr('src',"download/?file=" + data.path).hide().appendTo
-					$("#download_frame").css('display', 'none');
+						download_frame.css('display', 'none');
 
-					//useonly(mode=goorm-standalone,goorm-oss)
-					$("#download_frame").attr('src', "download/?file=" + data.path);
-					
+						for (var i = path.length - 1; 0 <= i; i--) {
+							download_func.push(function(callback) {
+								//useonly(mode=goorm-standalone,goorm-oss)
+								download_frame.attr('src', 'download/?file=' + path[++i]);
+								
+								
 
-					
-				} else {
-					switch (data.err_code) {
-						case 10:
-							alert.show(core.module.localization.msg.alert_invalide_query);
-							break;
-						case 20:
-							alert.show(core.module.localization.msg.alert_cannot_export_file);
-							break;
-						case 30:
-							alert.show(core.module.localization.msg.alert_cannot_make_directory);
+								$.debounce(callback, 100)();
+							});
+						}
+
+						async.series(download_func);
 					}
-				}
-			});
+
+					if (result.err_code) {
+						switch (result.err_code) {
+							case 1:
+								alert.show(localization_msg.alert_invalide_query);
+								break;
+							case 2:
+								alert.show(localization_msg.alert_permission_denied);
+								break;
+							case 3:
+								alert.show(localization_msg.alert_cannot_make_directory);
+								break;
+							case 4:
+								var msg = localization_msg.alert_cannot_export_file;
+
+								if (result.err_file) {
+									msg += '\n' + result.err_file.join(', ');
+								}
+
+								alert.show(msg);
+								break;
+							default:
+								alert.show(localization_msg.alert_unknown_error);
+						}
+					}
+				});
+			} else {
+				alert.show(localization_msg.alert_filename_empty);
+				return false;
+			}
 		};
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_export_file",
-			id: "dlg_export_file",
-			handle_ok: handle_ok,
-			// success: function() {
-			// 	$(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
-			// 		$("button[localization_key=common_target]").blur();
-			// 	});
-			// },
+			id: 'dlg_export_file',
+			handle_ok: this.handle_ok,
 			show: $.proxy(this.after_show, this)
 		});
 
-
-		this.dialog_explorer = new goorm.core.dialog.explorer("#file_export", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#file_export', this);
 		this.bind();
-
-		//this.dialog.panel.setBody("AA");
 	},
 
-	show: function() {
-		this.is_shown = false;
-		this.dialog_explorer.init(true, true, false);
-		this.panel.modal('show');
+	// choose which dialog will be shown. Jeong-Min Im.
+	// context (Bool) : from context menu or not
+	show: function(context) {
+		var self = this;
+
+		if (context) {
+			this.after_show();
+			confirmation.init({
+				'title': core.module.localization.title.title_export_file,
+				'message': core.module.localization.msg.confirm_file_export,
+				'yes': function() {
+					self.handle_ok(true);
+				}
+			}).show();
+		} else {
+			this.dialog_explorer.init(true, true, false);
+			this.panel.modal('show');
+		}
 	},
 
 	after_show: function() {
-
-		$("#file_export_dir_tree").find(".jstree-clicked").click();
+		$('#file_export_dir_tree .jstree-clicked').click();
 
 		var files = this.dialog_explorer.files;
-		var file_item = $(files).find("div.file_item");
+		var file_item = $(files).find('div.file_item');
+		var target = core.status.selected_file;
 
-
-		if (core.status.selected_file) {
-			var target = core.status.selected_file;
-
+		if (target) {
 			file_item.each(function() {
-				if ($(this).attr("filepath") == target) {
+				if ($(this).attr('filepath') === target) {
 					$(this).click();
 				}
 			});
@@ -131,35 +160,35 @@ goorm.core.file._export = {
 		// 	}
 		// });
 
-		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_export_dir_tree").keydown(function(e) {
+		// when enter 'tab' key, move from left tree to right file view
+		$('#file_export_dir_tree').keydown(function(e) {
 			switch (e.keyCode) {
 				case 9: // 'tab' key
-					$(files).find("div")[0].click();
+					$(files).find('div')[0].click();
 					return false;
 			}
 		});
 
-		$("#g_ef_btn_ok").keydown(function(e) {
+		$('#g_ef_btn_ok').keydown(function(e) {
 			if (e.keyCode == 9) {
-				$("#file_export_dir_tree").find(".jstree-clicked").click();
+				$('#file_export_dir_tree').find('.jstree-clicked').click();
 			}
 			e.preventDefault();
 		});
 
 		// on selecting file view
-		$(files).on("click", "div.file_item", function() {
-			$(self.dialog_explorer.input_file_name).val($(this).attr("filename"));
+		$(files).on('click', 'div.file_item', function() {
+			$(self.dialog_explorer.input_file_name).val($(this).attr('filename'));
 
-			self.filename = $(this).attr("filename");
-			self.filetype = $(this).attr("filetype");
-			self.filepath = $(this).attr("filepath");
+			self.filename = $(this).attr('filename');
+			self.filetype = $(this).attr('filetype');
+			self.filepath = $(this).attr('filepath');
 		});
-		$(files).on("click", "div.folder_item", function() {
-			$(self.dialog_explorer.input_file_name).val("");
-			self.filename = "";
-			self.filetype = "";
-			self.filepath = "";
+		$(files).on('click', 'div.folder_item', function() {
+			$(self.dialog_explorer.input_file_name).val('');
+			self.filename = '';
+			self.filetype = '';
+			self.filepath = '';
 		});
 	}
 };

@@ -21,20 +21,20 @@ goorm.core.project.open = {
 
 		var self = this;
 
-		this.panel = $("#dlg_open_project");
+		this.panel = $('#dlg_open_project');
 		// this.panel.click(function() {	// hidden: storage is deprecated
-		// 	$("button[localization_key=common_target]").blur();
+		// 	$('button[localization_key=common_target]').blur();
 		// });
 
 		this.__handle_open = function() {
 			var data = self.project_list.get_data();
 
-			if (data.path === "" || data.name === "" || data.type === "") {
+			if (data.path === '' || data.name === '' || data.type === '') {
 				alert.show(core.module.localization.msg.alert_project_not_selected);
 				return false;
 			} else {
-				// var storage = $("#project_open_storage").find("span").html().toString();	// hidden: storage is deprecated
-				// if (storage == "goormIDE Storage") {
+				// var storage = $('#project_open_storage').find('span').html().toString();	// hidden: storage is deprecated
+				// if (storage == 'goormIDE Storage') {
 				self.open(data.path, data.name, data.type);
 				// }
 
@@ -42,42 +42,39 @@ goorm.core.project.open = {
 			}
 		};
 
-
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_open_project",
-			id: "dlg_open_project",
+			// localization_key: 'title_open_project',
+			id: 'dlg_open_project',
 			handle_ok: this.__handle_open,
 			show: $.proxy(this.after_show, this),
 			// success: function() {	// hidden: storage is deprecated
-			// 	$("#project_open_storage").find("span").html("goormIDE_Storage");
-			// 	$(document).on("click", "li.open.storage", function() {
-			// 		var storage = $(this).find("a").html();
-			// 		$("button[localization_key=common_target]").blur();
-			// 		$("#project_open_storage").find("span").html(storage);
-			// 		if (storage == "goormIDE Storage") {
-			// 			$("#project_open_list").empty();
-			// 			$("#project_open_information").empty();
+			// 	$('#project_open_storage').find('span').html('goormIDE_Storage');
+			// 	$(document).on('click', 'li.open.storage', function() {
+			// 		var storage = $(this).find('a').html();
+			// 		$('button[localization_key=common_target]').blur();
+			// 		$('#project_open_storage').find('span').html(storage);
+			// 		if (storage == 'goormIDE Storage') {
+			// 			$('#project_open_list').empty();
+			// 			$('#project_open_information').empty();
 			// 			self.project_list = new goorm.core.project.list();
-			// 			self.project_list.init("#project_open");
+			// 			self.project_list.init('#project_open');
 			// 		}
-			// 		// else if (storage == "Google Drive") {
+			// 		// else if (storage == 'Google Drive') {
 
 			// 		// }
 			// 	});
 			// }
-
 		});
-
 
 		this.project_list = new goorm.core.project.list();
 
 		// open으로 이동
-		// $(core).trigger("on_project_binding");
+		// $(core).trigger('on_project_binding');
 	},
 
 	show: function() {
-		this.project_list.init("#project_open");
+		this.project_list.init('#project_open');
 		this.project_list.set_keydown_event({
 			'handler': this.__handle_open
 		});
@@ -86,7 +83,7 @@ goorm.core.project.open = {
 	},
 
 	after_show: function() {
-		$("#project_open_list").focus();
+		$('#project_open_list').focus();
 	},
 
 	bind: function(type, name, fn) {
@@ -108,7 +105,7 @@ goorm.core.project.open = {
 
 		var project_path = path || core.status.current_project_path;
 
-		if (project_path !== "") {
+		if (project_path !== '') {
 			core._socket.set_url('/project/mount' + project_path);
 			core._socket.once('/project/mount_message', function(path) {
 				confirmation_save.init({
@@ -116,34 +113,33 @@ goorm.core.project.open = {
 					yes_text: core.module.localization.msg.save_and_close,
 					cancel_text: core.module.localization.msg.confirmation_cancel,
 					no_text: core.module.localization.msg.dont_save_and_close,
-					title: "Close...",
+					title: 'Close...',
 
 					yes: function() {
 						var wm = core.module.layout.workspace.window_manager;
 						for (var i = wm.window.length - 1; i >= 0; i--) {
 							var w = wm.window[i];
 
-							// if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
+							// if (postdata.project_path == w.project && w.storage == 'goormIDE_Storage') {
 							if (path == w.project) { // hidden: storage is deprecated
-								if(w.is_saved) {
-									w.editor.save("close");
+								if (w.is_saved) {
+									w.editor.save('close');
 								} else {
-									w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
-									wm.close_by_index(i, i);	
+									w.is_saved = true; // jeongmin: don't ask 'save changes confirmation'. Because we delete this project!
+									wm.close_by_index(i, i);
 								}
-								
 							}
-						}						
+						}
 					},
 					no: function() {
 						var wm = core.module.layout.workspace.window_manager;
 						for (var i = wm.window.length - 1; i >= 0; i--) {
 							var w = wm.window[i];
 
-							// if (postdata.project_path == w.project && w.storage == "goormIDE_Storage") {
+							// if (postdata.project_path == w.project && w.storage == 'goormIDE_Storage') {
 							if (path == w.project) { // hidden: storage is deprecated
-								w.is_saved = true; // jeongmin: don't ask "save changes confirmation". Because we delete this project!
-								wm.close_by_index(i, i);	
+								w.is_saved = true; // jeongmin: don't ask 'save changes confirmation'. Because we delete this project!
+								wm.close_by_index(i, i);
 							}
 						}
 					},
@@ -158,16 +154,15 @@ goorm.core.project.open = {
 				if (path && result.path == path) {
 					$(core).trigger('/project/mount.' + path);
 
-					if (callback && typeof(callback) == "function") {
+					if (callback && typeof(callback) == 'function') {
 						callback(result);
 					}
 				} else {
-					if (callback && typeof(callback) == "function") {
+					if (callback && typeof(callback) == 'function') {
 						callback(result);
 					}
 				}
 			});
-		
 
 			core._socket.emit('/project/mount', {
 				'project_path': project_path
@@ -182,7 +177,9 @@ goorm.core.project.open = {
 	unmount: function(path, callback) {
 		var self = this;
 
-		if (this.loading) return;
+		if (this.loading) {
+			return;
+		}
 
 		if (typeof(path) === 'function') {
 			callback = path;
@@ -191,7 +188,7 @@ goorm.core.project.open = {
 
 		var project_path = path || core.status.current_project_path;
 
-		if (project_path !== "") {
+		if (project_path !== '') {
 			this.loading = true;
 
 			core._socket.once('/project/unmount', function(result) {
@@ -213,7 +210,7 @@ goorm.core.project.open = {
 	open: function(current_project_path, current_project_name, current_project_type) {
 		var self = this;
 
-		//$(core).trigger("on_project_binding");
+		//$(core).trigger('on_project_binding');
 
 		//set once-open trigger every call of open so that can get the message of nodejs project --heeje
 		$(core).one('do_open', $.throttle(function() {
@@ -222,7 +219,7 @@ goorm.core.project.open = {
 			
 
 			//useonly(mode=goorm-oss)
-			// core.status.current_project_storage = "goormIDE_Storage";
+			// core.status.current_project_storage = 'goormIDE_Storage';
 			core.status.current_project_path = current_project_path;
 			core.status.current_project_name = current_project_name;
 			core.status.current_project_type = current_project_type;
@@ -244,14 +241,13 @@ goorm.core.project.open = {
 
 			core.module.layout.workspace.window_manager.refresh_all_title(current_project_path);
 
-			$(core).trigger("on_project_open", {
+			$(core).trigger('on_project_open', {
 				'project_path': current_project_path,
 				'project_name': current_project_name,
 				'project_type': current_project_type
 			});
 			
 		}, 2000));
-
 
 		if (this.handler && this.handler[core.status.current_project_type] && this.handler[core.status.current_project_type].before) {
 			this.handler[core.status.current_project_type].before();
