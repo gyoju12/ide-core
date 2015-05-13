@@ -1749,7 +1749,7 @@ goorm.core.menu.action = {
 
 			$('[action=find_in_folder_context]').off('click').tooltip();
 			$('[action=find_in_folder_context]').click(function() {
-				core.dialog.search.show('/' + core.status.selected_file);
+				core.dialog.search.show('/' + core.module.layout.project_explorer.get_tree_selected_path().directorys.join(', /'));
 			});
 
 			$('[action=import_file]').off('click').tooltip();
