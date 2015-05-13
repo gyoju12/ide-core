@@ -707,7 +707,12 @@ goorm.core.edit.dictionary.prototype = {
 			if (code == 17) self.altKey = true;
 
 			if (self.display) {
-				if (code == 38) { // key 'up arrow'
+				
+				if (code == 186) {
+					self.hide();
+					cm_editor.focus();
+				}
+				else if (code == 38) { // key 'up arrow'
 					CodeMirror.e_stop(e);
 
 					self.select(-1);
@@ -736,11 +741,14 @@ goorm.core.edit.dictionary.prototype = {
 			var code = e.keyCode;
 			var cursor = cm_editor.getCursor();
 			var token = cm_editor.getTokenAt(cursor);
-			if (token.type === null || token.type === 'comment') {
+			
+
+			if (token.type === null || token.type === 'comment' || code === 186) {
 				self.hide();
 				cm_editor.focus();
 				return;
 			}
+
 /*
 			if (((code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 219 && code <= 222) || (code > 186 && code <= 192) || code == 32) && !self.metaKey && !self.ctrlKey && !self.altKey) {
 				console.log("keycode = " + code);
