@@ -39,7 +39,9 @@ goorm.plugin.linter = {
 					break;
 				case 'c':
 				case 'cpp':
-					this.lint_cpp(__window, project_type);
+					if (project_type === "cpp" || project_type === "c") {
+						this.lint_cpp(__window, project_type);
+					}
 					break;
 				case 'java':
 					if (project_type === "java") {

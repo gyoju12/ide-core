@@ -11,7 +11,7 @@
 
 var duration = 60 * 60 * 36; // seconds
 
-var EventEmitter = require("events").EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 var spawn = require('child_process').spawn;
@@ -33,7 +33,10 @@ var os = {
 	// Group Add
 	'get_new_group': function(author) {
 		var randomStringfunc = function(bits) {
-			var chars, rand, i, ret;
+			var chars;
+			var rand;
+			var i;
+			var ret;
 
 			chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijkl';
 			ret = '';
@@ -231,10 +234,14 @@ module.exports = {
 		exec(command, function(err, stdout, stderr) {
 			if (err) {
 				console.log(err, stdout, stderr);
-				if (callback) callback(false);
+				if (callback) {
+					callback(false);
+				}
 			} else {
 				var result = stdout || true;
-				if (callback) callback(result);
+				if (callback) {
+					callback(result);
+				}
 			}
 		});
 	},
@@ -243,19 +250,19 @@ module.exports = {
 		var email_content_path = global.__path + 'modules/goorm.core.collaboration/invitation_mail_content_' + user_data.language;
 		var permission = this.convert_permission(_permission, user_data.language);
 
-		fs.readFile(email_content_path, "utf8", function(err, data) {
+		fs.readFile(email_content_path, 'utf8', function(err, data) {
 			var protocol = (global.__secure) ? 'https' : 'http';
 
 			data = data.replace(/\[DEMO_URL\]/gi, protocol + '://' + IDE_HOST + '/user/project/collaboration/invitation/push/email?project_path=' + project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
 
 			// this part must be changed to follow localization data....
-			var subject = "";
-			if (user_data.language == "kor") {
-				subject = user_data.invite_user + " 님께서 " + user_data.name + " 님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
-			} else if (user_data.language == "us") {
-				subject = user_data.invite_user + " invites you (" + user_data.name + ") to '" + user_data.project_name + "' project.";
+			var subject = '';
+			if (user_data.language == 'kor') {
+				subject = user_data.invite_user + ' 님께서 ' + user_data.name + " 님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+			} else if (user_data.language == 'us') {
+				subject = user_data.invite_user + ' invites you (' + user_data.name + ") to '" + user_data.project_name + "' project.";
 			} else {
-				subject = user_data.invite_user + "님께서 " + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+				subject = user_data.invite_user + '님께서 ' + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
 			}
 
 			callback(subject, data);
@@ -266,27 +273,27 @@ module.exports = {
 		var contents = permission;
 
 		switch (permission) {
-			case "readonly":
+			case 'readonly':
 				if (language === 'kor') {
-					contents = "읽기 전용";
+					contents = '읽기 전용';
 				} else {
-					contents = "ReadOnly";
+					contents = 'ReadOnly';
 				}
 				break;
 
-			case "editable":
+			case 'editable':
 				if (language === 'kor') {
-					contents = "수정 가능";
+					contents = '수정 가능';
 				} else {
-					contents = "Writable";
+					contents = 'Writable';
 				}
 				break;
 
-			case "manager":
+			case 'manager':
 				if (language === 'kor') {
-					contents = "수정 및 공유 가능";
+					contents = '수정 및 공유 가능';
 				} else {
-					contents = "Writable & Shareble";
+					contents = 'Writable & Shareble';
 				}
 				break;
 
@@ -371,14 +378,14 @@ module.exports = {
 		}
 	},
 
-	set_last_open_date: function (project_path, callback) {
+	set_last_open_date: function(project_path, callback) {
 		db.project.update({
 			'project_path': project_path
 		}, {
 			$set: {
 				'last_open_date': new Date()
 			}
-		}, function (err) {
+		}, function(err) {
 			if (err) {
 				console.log('auth.project.js:set_last_open_date fail', err);
 			}
@@ -389,5 +396,5 @@ module.exports = {
 		});
 	},
 
-		
+	
 };
