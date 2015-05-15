@@ -71,7 +71,7 @@ goorm.core.edit = function(parent) {
 	this.error_marker = [];
 	this.init_change = false;
 	this.editor_loaded = false; //jeongmin: for bookmark table in outline tab
-	
+
 	this.err_count = 0;
 	this.warn_count = 0;
 
@@ -141,7 +141,16 @@ goorm.core.edit.prototype = {
 			'Ctrl-G': false,
 			'Cmd-G': false,
 			'Shift-Ctrl-G': false,
-			'Shift-Cmd-G': false
+			'Shift-Cmd-G': false,
+			'Ctrl-K Ctrl-Backspace': function (){
+				$('[action=delete_line_left]').click();
+			},
+			'Cmd-K Cmd-Backspace': function (){
+				$('[action=delete_line_left]').click();
+			},
+			'Cmd-Backspace': function (){
+				$('[action=delete_line_left]').click();
+			}
 		});
 
 		
@@ -172,7 +181,6 @@ goorm.core.edit.prototype = {
 			if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
-
 
 			// e.stopPropagation();
 			// e.preventDefault();
@@ -364,9 +372,10 @@ goorm.core.edit.prototype = {
 				goorm.core.edit.find_and_replace.draw_search_focus(cm_editor);
 			}
 		});
-		
-		cm_editor.on('change', function(i, e, a) {
-			// i = CodeMirror object, e = change informations;
+
+		cm_editor.on('change', function(i, e, a) { // i = CodeMirror object, e = change informations;
+			var find_and_replace = core.dialog.find_and_replace;
+
 			if (self.editor.history_mode == 'history') {
 				return;
 			}
@@ -414,14 +423,15 @@ goorm.core.edit.prototype = {
 				self.init_change = true;
 			}
 
-			goorm.core.edit.find_and_replace.draw_search_focus(cm_editor);
+			find_and_replace.draw_search_focus(cm_editor);
+			find_and_replace.change = true;
 
 			if (self.filetype !== 'c' && self.filetype !== 'cpp' && self.filetype !== 'java') {
 				linter_timer();
 			}
 
 			// jeongmin: remove searching highlight
-			if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
+			if (!find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 		});
@@ -1144,8 +1154,6 @@ goorm.core.edit.prototype = {
 					if (option !== 'refresh') {
 						linter_timer();
 					}
-
-
 
 					//to change latest build status once it is true --heeje
 					if (tmpdata[send_data.project_path].is_latest_build) {

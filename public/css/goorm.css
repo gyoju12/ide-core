@@ -3551,3 +3551,40 @@ div.tooltip {
 	top: 0px !important;
 	left: 0px !important;
 }
+
+#search_result {
+    padding-left: 10px;
+}
+
+.search_line {
+    color: #aaa;
+    display: inline;
+}
+.search_match_line {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+.search_filename {
+    border-bottom: 1px solid #007ee5;
+}
+.search_block {
+    float: left;
+    margin-left: 15px;
+}
+.search_num {
+    text-align: right;
+}
+.search_connect {
+    margin-left: 15px;
+}
+.search_code {
+    margin-left: 30px;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+.match_line_over {
+    background-color: #e8f2ff !important;
+}
+.safe_delete_del_button {
+    cursor: pointer;
+}

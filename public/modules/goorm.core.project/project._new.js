@@ -67,22 +67,35 @@ goorm.core.project._new = {
 					/* TODO : make new function or module for validation */
 
 					////// value validation check //////
-					var input_name = $("#input_project_name").val();
+					var input = $("#input_project_name");
+					var input_name = input.val();
 
 					if (input_name === "") {
-						alert.show(core.module.localization.msg.alert_project_name);
+						alert.show(core.module.localization.msg.alert_project_name, function() {
+							input.focus();
+							input.select();
+						});
 						return false;
 					} else if (data.detailed_type !== 'django') {
 						if (!/^[\w-_]*$/.test(input_name)) {
-							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character);
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character, function() {
+								input.focus();
+								input.select();
+							});
 							return false;
 						}
 					} else if (data.detailed_type === 'django') {
 						if (!/^[\w_]*$/.test(input_name)) {
-							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character2);
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_character2, function() {
+								input.focus();
+								input.select();
+							});
 							return false;
 						} else if (input_name === 'django' || input_name === 'test') {
-							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_django);
+							alert.show(core.module.localization.title.project_info_name + core.module.localization.msg.alert_allow_django, function() {
+								input.focus();
+								input.select();
+							});
 							return false;
 						}
 					}

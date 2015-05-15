@@ -560,7 +560,15 @@ goorm.core.menu.action = {
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
 			if (active_window > -1) {
-				CodeMirror.commands.delLineLeft(window_manager.window[active_window].editor.editor);
+				var editor = window_manager.window[active_window].editor.editor;
+				var cursor = editor.getCursor();
+				
+				if (cursor.ch > 0) {
+					editor.execCommand('delLineLeft');	
+				} else {
+					editor.execCommand('delCharBefore');
+				}
+				
 				window_manager.window[active_window].editor.focus();
 			}
 		});

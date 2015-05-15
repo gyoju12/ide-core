@@ -160,6 +160,9 @@ goorm.core.dialog.explorer.prototype = {
 		self.treeview.get_node(this.dir_tree_ori+"/"+path)
 			.then(function(node){
 				self.treeview.select_node(node);
+				setTimeout(function() {
+					$('[id="' + node.id + '"]')[0].scrollIntoView(true);					
+				}, 300);
 			});
 	},
 
@@ -196,6 +199,9 @@ goorm.core.dialog.explorer.prototype = {
 			getnode = self.treeview.get_node(this.dir_tree_ori+"/"+path)
 				.then(function(node){
 					self.treeview.select_node(node);
+					setTimeout(function() {
+						$('[id="' + node.id + '"]')[0].scrollIntoView(true);					
+					}, 300);
 					
 					var data = [];
 					$.each(raw_data, function(i, n){

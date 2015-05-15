@@ -359,7 +359,7 @@
 	"alert_npm_version": {
 		"value": "해당 버젼이 존재하지 않습니다."
 	},
-	"notice_no_matched_fild": {
+	"notice_no_matched_file": {
 		"value": "검색어와 일치하는 파일을 찾을 수 없습니다."
 	},
 	"notice_welcome_goorm": {
@@ -1378,5 +1378,8 @@
 	},
 	"confirm_file_export": {
 		"value": "이 파일을 내보내시겠습니까?"
+	},
+	"alert_scm_revert": {
+		"value": "일부 파일들은 되돌리지 못 했습니다.<br/>원인:<br/>"
 	}
 }

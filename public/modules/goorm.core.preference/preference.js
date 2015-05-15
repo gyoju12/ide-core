@@ -25,7 +25,7 @@ goorm.core.preference = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_preference");
+		this.panel = $('#dlg_preference');
 
 		this.manager = goorm.core.preference.manager;
 		this.manager.init();
@@ -54,7 +54,7 @@ goorm.core.preference = {
 		// init for editor option
 		//
 		// } else {
-		// this.manager.get_default_file("configs/preferences/default.json", function (json) {
+		// this.manager.get_default_file('configs/preferences/default.json', function (json) {
 		// 	self.preference = json;
 		// 	core.preference = json;
 		// 	self.preference_default = $.extend(true, {}, json);
@@ -77,9 +77,11 @@ goorm.core.preference = {
 		var os = goorm.core.shortcut.manager.getOStype();
 		var json = JSON.parse(external_json['public']['configs']['preferences']['default.json']);
 		//console.log(external_json['public']['configs']['preferences']['default.json']);
-		if (!json) json = {};
+		if (!json) {
+			json = {};
+		}
 
-		if (os == "mac") {
+		if (os == 'mac') {
 			$.each(json, function(key, value) {
 				if (/^preference.shortcut/.test(key)) {
 					json[key] = json[key].replace(/Ctrl/g, 'Meta');
@@ -96,7 +98,7 @@ goorm.core.preference = {
 
 		$.each(core.preference, function(key, value) {
 			if (!$.isEmptyObject(localStorage[key])) {
-				if (key != "plugins") {
+				if (key != 'plugins') {
 					core.preference[key] = localStorage[key];
 				} else {
 					// load plugin information
@@ -107,9 +109,9 @@ goorm.core.preference = {
 				}
 			} else if (/^preference.shortcut/.test(key)) { //jeongmin: get shortcut from preference
 				if (localStorage.shortcut) { //jeongmin: if only shortcut property is in the localStorage
-					if (!shortcut && typeof(localStorage.shortcut) == 'string') //jeongmin: if shortcut is valid
+					if (!shortcut && typeof(localStorage.shortcut) == 'string') {//jeongmin: if shortcut is valid
 						shortcut = JSON.parse(localStorage.shortcut); //jeongmin: get shortcut object -> now shortcut variable is not null
-
+					}
 					if (shortcut[key]) { //jeongmin: if shortcut.key is valid
 						core.preference[key] = shortcut[key]; //jeongmin: set shortcut on preference
 					}
@@ -155,10 +157,10 @@ goorm.core.preference = {
 	// save current preferences(core.preference) to localStorage or share.json
 	// save: function () {
 	// 	$.each(core.preference, function (key, value) {
-	// 		if (key == "share") {
+	// 		if (key == 'share') {
 
 	// 		} else {
-	// 			if (typeof value == "object") {
+	// 			if (typeof value == 'object') {
 	// 				localStorage[key] = JSON.stringify(value);
 	// 			} else {
 	// 				localStorage[key] = value;
@@ -176,7 +178,7 @@ goorm.core.preference = {
 			'preference': {}
 		};
 
-		current_project && (current_project != "null") && (postdata.preference.current_project = current_project);
+		current_project && (current_project != 'null') && (postdata.preference.current_project = current_project);
 		language && (postdata.preference.language = language);
 		shortcut && (shortcut.length > 2) && (postdata.preference.shortcut = shortcut); //jeongmin: save shortcut at postdata
 		
@@ -198,22 +200,26 @@ goorm.core.preference = {
 	update_ui: function() {
 		$.each(core.preference, function(key, value) { //jeongmin: make apply button can save preference to localStorage(originally save function)
 
-			if (key === "share") {
+			if (key === 'share') {
 
 			} else {
-				if (key === "preference.editor.rulers") {
-					if (value === true || value === 'true')
+				if (key === 'preference.editor.rulers') {
+					if (value === true || value === 'true') {
 						$('#use_rulers').css('visibility', 'visible');
-					else $('#use_rulers').css('visibility', 'hidden');
+					} else {
+						$('#use_rulers').css('visibility', 'hidden');
+					}
 				}
 
-				if (key === "preference.editor.line_wrapping") {
-					if (value == true || value === 'true')
+				if (key === 'preference.editor.line_wrapping') {
+					if (value == true || value === 'true') {
 						$('#use_line_wrapping').css('visibility', 'visible');
-					else $('#use_line_wrapping').css('visibility', 'hidden');
+					} else {
+						$('#use_line_wrapping').css('visibility', 'hidden');
+					}
 				}
 
-				if (typeof value === "object") {
+				if (typeof value === 'object') {
 					localStorage[key] = JSON.stringify(value);
 				} else {
 					localStorage[key] = value;
@@ -226,11 +232,11 @@ goorm.core.preference = {
 		// core.module.theme.load_css();
 		this.read_dialog(core.preference);
 		if (id === 'line_wrapping' || id === 'rulers') {
-			$(core).trigger("on_global_preference_confirmed");
+			$(core).trigger('on_global_preference_confirmed');
 		} else if (Number(id) >= 3 && Number(id) <= 9) {
-			$(core).trigger("on_preference_shortcut_apply");
+			$(core).trigger('on_preference_shortcut_apply');
 		} else {
-			$(core).trigger("on_preference_confirmed");
+			$(core).trigger('on_preference_confirmed');
 		}
 
 		this.update_ui();
@@ -239,24 +245,23 @@ goorm.core.preference = {
 	},
 
 	restore_default: function(tabName) {
-		var temp_tab = tabName.split("_")[0];
+		var temp_tab = tabName.split('_')[0];
 		if (temp_tab === 'shortcut') {
-			$("#preference_tabview").find(".apply").each(function(i) {
+			$('#preference_tabview').find('.apply').each(function(i) {
 				if (i >= 3 && i <= 9) {
-					$(this).removeAttr("disabled");
+					$(this).removeAttr('disabled');
 				}
 			});
 		}
 		this.fill_dialog(this.preference_default, tabName);
-		$(core).trigger("on_preference_restored"); //jeongmin: for shortcut -> empty temporary modified shortcut
+		$(core).trigger('on_preference_restored'); //jeongmin: for shortcut -> empty temporary modified shortcut
 	},
 
 	read_dialog: function(preference) {
-		var target = "#preference_tabview";
-
+		var target = '#preference_tabview';
 		var targets = $(target).children('div.tab-content').children();
-
 		var key = null;
+
 		$.each(targets, function(index, div) {
 			if ($(targets[index]).attr('plugin') == 'null') {
 				key = preference;
@@ -264,29 +269,31 @@ goorm.core.preference = {
 				key = preference.plugins[$(targets[index]).attr('plugin')];
 			}
 			if (key) {
-				$(targets[index]).find("input").each(function() {
+				$(targets[index]).find('input').each(function() {
 					var value;
 
-					if ($(this).attr("type") === "checkbox") {
-						value = $(this).prop("checked");
-					} else if ($(this).attr("type") === "radio") {
-						if ($(this).prop("checked") === true) {
+					if ($(this).attr('type') === 'checkbox') {
+						value = $(this).prop('checked');
+					} else if ($(this).attr('type') === 'radio') {
+						if ($(this).prop('checked') === true) {
 							value = $(this).val();
-						} else return;
+						} else {
+							return;
+						}
 					} else {
 						value = $(this).val();
 					}
-					if ($(this).attr("name")) {
-						key[$(this).attr("name")] = value;
+					if ($(this).attr('name')) {
+						key[$(this).attr('name')] = value;
 					}
 				});
 
-				$(targets[index]).find("textarea").each(function() {
-					key[$(this).attr("name")] = $(this).val();
+				$(targets[index]).find('textarea').each(function() {
+					key[$(this).attr('name')] = $(this).val();
 				});
 
-				$(targets[index]).find("select.form-control").each(function() {
-					key[$(this).attr("name")] = $(this).children("option:selected").val();
+				$(targets[index]).find('select.form-control').each(function() {
+					key[$(this).attr('name')] = $(this).children('option:selected').val();
 				});
 			}
 
@@ -304,44 +311,46 @@ goorm.core.preference = {
 				key = preference;
 			} else {
 				key = preference.plugins[plugin_name];
-				if (key === undefined) return;
+				if (key === undefined) {
+					return;
+				}
 			}
 
-			if (key[$(this).attr("name")] !== "undefined" || key[$(this).attr("name")] !== undefined) {
-				$(targets[index]).find("input.form-control").each(function() {
-					var name = $(this).attr("name");
-					var type = $(this).attr("type");
+			if (key[$(this).attr('name')] !== 'undefined' || key[$(this).attr('name')] !== undefined) {
+				$(targets[index]).find('input.form-control').each(function() {
+					var name = $(this).attr('name');
+					var type = $(this).attr('type');
 
-					if (key[name] !== "undefined") {
-						if (type == "checkbox") {
+					if (key[name] !== 'undefined') {
+						if (type == 'checkbox') {
 
-							if (key[name] == "true" || key[name] === true) {
-								$(this).iCheck("check"); //jeongmin: change to iCheck
+							if (key[name] == 'true' || key[name] === true) {
+								$(this).iCheck('check'); //jeongmin: change to iCheck
 							} else {
-								$(this).iCheck("uncheck"); //jeongmin: change to iCheck
+								$(this).iCheck('uncheck'); //jeongmin: change to iCheck
 							}
-						} else if (type == "radio") {
+						} else if (type == 'radio') {
 							if (key[name] == $(this).val()) {
-								$(this).iCheck("check"); //jeongmin: change to iCheck
+								$(this).iCheck('check'); //jeongmin: change to iCheck
 							} else {
-								$(this).iCheck("uncheck"); //jeongmin: change to iCheck
+								$(this).iCheck('uncheck'); //jeongmin: change to iCheck
 							}
 						} else {
 							$(this).val(key[name]);
 						}
 					} else { //jeongmin: if there isn't right value
-						$(this).val(""); //jeongmin: just set blank
+						$(this).val(''); //jeongmin: just set blank
 					}
 				});
-				$(target_index).find("textarea").each(function() {
-					if (key[$(this).attr("name")]) {
-						$(this).val(key[$(this).attr("name")]);
+				$(target_index).find('textarea').each(function() {
+					if (key[$(this).attr('name')]) {
+						$(this).val(key[$(this).attr('name')]);
 					}
 				});
-				$(target_index).find("select.form-control").each(function() {
-					if ($(this).attr("name") && $(this).attr("name") !== 'undefined' && key[$(this).attr("name")]) {
-						$(this).children("option[value='" + key[$(this).attr("name")] + "']").attr("selected", "true");
-						$(this).val(key[$(this).attr("name")]);
+				$(target_index).find('select.form-control').each(function() {
+					if ($(this).attr('name') && $(this).attr('name') !== 'undefined' && key[$(this).attr('name')]) {
+						$(this).children('option[value="' + key[$(this).attr('name')] + '"]').attr('selected', 'true');
+						$(this).val(key[$(this).attr('name')]);
 					}
 				});
 			}
@@ -351,10 +360,10 @@ goorm.core.preference = {
 	show: function() {
 		this.set_before();
 		if (this.firstShow) {
-			// $("#preference_tabview #System").show();
+			// $('#preference_tabview #System').show();
 			this.firstShow = false;
 		}
-		core.module.localization.before_language = localStorage.getItem("language");
+		core.module.localization.before_language = localStorage.getItem('language');
 
 		this.panel.modal('show');
 	},
@@ -370,19 +379,19 @@ goorm.core.preference = {
 			var check_input_string = check_input();
 			if (check_input_string.length === 0) {
 				self.apply();
-				// self.save();	//jeongmin: this function is merged with apply function 
+				// self.save();	//jeongmin: this function is merged with apply function
 
 				self.is_saved = true;
 				self.panel.modal('hide');
 			} else {
-				alert.show("[" + check_input_string.join(", ") + "]<br/>" + core.module.localization.msg.alert_positive_value_only);
+				alert.show('[' + check_input_string.join(', ') + ']<br/>' + core.module.localization.msg.alert_positive_value_only);
 			}
 		};
 
 		var handle_cancel = function() {
 
 			if (!self.is_saved) {
-				if (core.module.localization.before_language != localStorage.getItem("language")) {
+				if (core.module.localization.before_language != localStorage.getItem('language')) {
 					core.module.localization.change_language(core.module.localization.before_language, true);
 				}
 			}
@@ -396,11 +405,11 @@ goorm.core.preference = {
 		var check_input = function() {
 			var return_string = [];
 
-			if (!/^[0-9]*$/.test($("#preference\\.editor\\.indent_unit").val())) {
-				return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
+			if (!/^[0-9]*$/.test($('#preference\\.editor\\.indent_unit').val())) {
+				return_string.push($('label[for=preference\\.editor\\.indent_unit]').text());
 			} else {
-				if ($("#preference\\.editor\\.indent_unit").val() < 1) {
-					return_string.push($("label[for=preference\\.editor\\.indent_unit]").text());
+				if ($('#preference\\.editor\\.indent_unit').val() < 1) {
+					return_string.push($('label[for=preference\\.editor\\.indent_unit]').text());
 				}
 			}
 
@@ -410,46 +419,45 @@ goorm.core.preference = {
 
 		var set_dialog_button = function() {
 			// set Apply, restore_default Button
-			// $("#preference_tabview").find(".apply").click(function() {
+			// $('#preference_tabview').find('.apply').click(function() {
 			// 	self.apply();
 			// }).each(function(i) {
-			// 	$(this).attr("id", "preference_applyBt_" + i);
+			// 	$(this).attr('id', 'preference_applyBt_' + i);
 			// });
-			$("#preference_tabview").find(".apply").each(function(i) {
+			$('#preference_tabview').find('.apply').each(function(i) {
 				if (i >= 3 && i <= 9) {
-					$(this).attr("id", "preference_applyBt_" + i).attr("disabled", "disabled");
+					$(this).attr('id', 'preference_applyBt_' + i).attr('disabled', 'disabled');
 				} else {
-					$(this).attr("id", "preference_applyBt_" + i);
+					$(this).attr('id', 'preference_applyBt_' + i);
 				}
 				$(this).click(function() {
 					self.apply(i);
 				});
 			});
 
-			$("#preference_tabview").find(".restore_default").click(function(e) {
-				var tabName = $(this).parents(".tab-pane").attr("id");
+			$('#preference_tabview').find('.restore_default').click(function(e) {
+				var tabName = $(this).parents('.tab-pane').attr('id');
 				self.restore_default(tabName);
 			}).each(function(i) {
-				$(this).attr("id", "preference_restore_defaultBt_" + i);
+				$(this).attr('id', 'preference_restore_defaultBt_' + i);
 			});
-
-
 		};
 
 		var load_plugin_tree = function() {
-			var plugin_node = null,
-				plugin_list = core.module.plugin_manager.list,
-				plugin_count = plugin_list.length,
-				tree_data = [];
+			var plugin_node = null;
+			var plugin_list = core.module.plugin_manager.list;
+			var plugin_count = plugin_list.length;
+			var tree_data = [];
 
 			var get_plugin_data = function(plugin_name) {
 				// if (core.is_optimization) {
 				var json = JSON.parse(external_json.plugins[plugin_name]['tree.json']);
 				if (json.preference) {
-					var data = self.manager.convert_json_to_tree("Plugin", json.preference);
+					var data = self.manager.convert_json_to_tree('Plugin', json.preference);
 					return data;
-				} else return [];
-				// }
+				} else {
+					return [];
+				}
 			};
 
 			// load plugin tree.json
@@ -465,8 +473,8 @@ goorm.core.preference = {
 		// this.load();
 
 		this.dialog.init({
-			// localization_key: "title_preference",
-			id: "dlg_preference",
+			// localization_key: 'title_preference',
+			id: 'dlg_preference',
 			handle_ok: handle_ok,
 			handle_cancel: handle_cancel,
 			success: function() {
@@ -480,11 +488,11 @@ goorm.core.preference = {
 				// self.manager.create_treeview(json[core.module.localization.language]);
 
 				// if (/FileType/.test(label)) {
-				// 	$(".filetype_list").find("div").first().trigger('click');
+				// 	$('.filetype_list').find('div').first().trigger('click');
 				// }
 
 				// 	window.setTimeout(function () {
-				// 		$($("#preference_tabview #" + label).find('input[readonly!=readonly][type=text]')[0]).focus();
+				// 		$($('#preference_tabview #' + label).find('input[readonly!=readonly][type=text]')[0]).focus();
 				// 	}, 200);
 				// });
 
@@ -500,19 +508,26 @@ goorm.core.preference = {
 				$.get('/preference/workspace_path', function(data) {
 					self.preference.workspace_path = data.path;
 				});
-				$(core).on("language_loaded", function(event, change) {
+
+				var load_treeview = function(change) {
 					var lang = core.module.localization.language;
 
 					self.manager.create_treeview(json[lang], change);
 
 					$('[id="preference.language.select"]').val(lang);
 					core.preference['preference.language.select'] = lang;
+				};
+
+				$(core).on('language_loaded', function(event, change) {
+					load_treeview(change);
 				});
-				$(core).trigger("preference_load_complete");
+
+				$(core).one('localization_init_complete', function(event, change) {
+					load_treeview(change);
+				});
+
+				$(core).trigger('preference_load_complete');
 			}
 		});
-
-
 	}
-
 };

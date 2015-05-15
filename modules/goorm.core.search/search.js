@@ -32,7 +32,7 @@ module.exports = {
 		var nodes = {};
 		// console.log('@find_query:', find_query);
 		var make_grep_option = function(options) {
-			var grep = ['-r', '-n', '-R'];
+			var grep = ['-r', '-n', '-R', '--context=2', '--null'];
 			var is_true = function(str) {
 				var r = false;
 				if (str && (str === true || str === 'true')) {
@@ -65,52 +65,104 @@ module.exports = {
 			return grep;
 		};
 
-		var parser = function(matched_files_list) {
+		var parser = function(data) {
 			var nodes = {};
-			if (matched_files_list.length !== 0) {
-				var idx = 0;
-				var node = {};
-				nodes.total_match = 0;
-				for (idx = 0; idx < matched_files_list.length; idx++) {
-					if (matched_files_list[idx].split(':').length > 1) {
-						node = {};
-						node.filename = matched_files_list[idx].split(':')[0].match(/[^/]*$/)[0];
-						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?/, '').split(':')[0].split('.').pop(); // jeongmin: type is the last string after .
-						node.filepath = matched_files_list[idx].split(':')[0].replace(global.__workspace, '').substring(0, matched_files_list[idx].split(':')[0].replace(global.__workspace, '').lastIndexOf('/') + 1);
-						node.matched_line = 0;
-						node.children = [];
-						node.badge = 0;
+			var node = {};
+			var i = 0;
+			var total_match = 0;
+			
+			var temp = [];
+			var saved_filename = '';
+			var current_filename = '';
+			var whole_line = '';
+			var short_filename = '';
 
-						nodes[node.filepath + node.filename] = node;
-					}
+			var make_node = function(arr) {
+				var code = [];
+				var context = '';
+				var line_num = 0;
+				var start_line = 0;
+				var match_line = [];
+				if (arr[0] === '') {
+					total_match++;
+					return {
+						start_line: start_line,
+						match_line: [],
+						code: ['Binary file matches']
+					};
 				}
+				start_line = parseInt(arr[0].match(/^\d+/)[0], 10);
+				for (var i = 0; i < arr.length; i++) {
+					context = arr[i].replace(/^\d+/, '');
+					if (context.substr(0,1) === ':') {
+						match_line.push(parseInt(arr[i].match(/^\d+/)[0], 10));
+						total_match++;
+					}
+					code.push(context.substr(1, context.length-1));
+				}
+				return {
+					start_line: start_line,
+					match_line: match_line,
+					code: code
+				};
+			};
 
-				for (idx = 0; idx < matched_files_list.length; idx++) {
-					if (matched_files_list[idx].split(':').length > 1) {
-						node = {};
-						node.filename = matched_files_list[idx].split(':')[0].match(/[^/]*$/)[0];
-						node.filetype = matched_files_list[idx].replace(/(\/[a-zA-Z0-9_-]+)+\/?./, '').split(':')[0].split('.').pop(); // jeongmin: type is the last string after .
-						node.filepath = matched_files_list[idx].split(':')[0].replace(global.__workspace, '').substring(0, matched_files_list[idx].split(':')[0].replace(global.__workspace, '').lastIndexOf('/') + 1);
-						node.matched_line = matched_files_list[idx].split(':')[1];
-						node.parent = node.filepath + node.filename;
-						if (nodes[node.filepath + node.filename]) {
-							nodes[node.filepath + node.filename].badge++;
-							nodes.total_match++;
-							if (nodes[node.filepath + node.filename].matched_line === 0) {
-								nodes[node.filepath + node.filename].matched_line = node.matched_line;
+			if (data.length !== 0) {
+				for (i = 0; i < data.length; i++) {
+					// end of group
+					if (data[i] === '--') {
+						if (temp.length > 0) {
+							node = make_node(temp);
+							short_filename = saved_filename.replace(global.__workspace, '');
+							if (!nodes[short_filename]) {
+								nodes[short_filename] = [];
+							}
+							nodes[short_filename].push(node);
+							temp = [];	
+						}
+						saved_filename = '';
+					} else {
+						whole_line = data[i].split(/\0/);
+						// same group same file
+						if (whole_line[0] === saved_filename) {
+							whole_line.shift();
+							temp.push(whole_line.join(/\0/));
+						} else {
+							if (temp.length > 0) {	// same group different file
+								node = make_node(temp);
+								short_filename = saved_filename.replace(global.__workspace, '');
+								if (!nodes[short_filename]) {
+									nodes[short_filename] = [];
+								}
+								nodes[short_filename].push(node);
+								temp = [];
+
+								saved_filename = whole_line.shift();
+								temp.push(whole_line.join(/\0/));
+							} else if (temp.length === 0) {	// start of group
+								saved_filename = whole_line.shift();
+								temp.push(whole_line.join(/\0/));
 							}
 						}
-						// node.html = '<span style=\'color: #666; font-weight:bold;\'>Line: ' + node.matched_line + '</span> - <span style=\'color: #808080\'>' + matched_files_list[idx].split(':')[2] + '</span>';
-
-						nodes[node.filepath + node.filename + ':' + node.matched_line] = node;
 					}
 				}
-
-				//nodes.total_match = matched_files_list.length; // jeongmin
+				// last group
+				if (temp.length > 0) {
+					node = make_node(temp);
+					short_filename = saved_filename.replace(global.__workspace, '');
+					if (!nodes[short_filename]) {
+						nodes[short_filename] = [];
+					}
+					nodes[short_filename].push(node);
+					temp = [];	
+				}
+				
 			}
-
-			return nodes;
-		};
+			return {
+				nodes: nodes,
+				total_match: total_match
+			};
+		}
 
 		// make grep option
 		//
@@ -121,53 +173,54 @@ module.exports = {
 
 		//useonly(mode=goorm-oss)
 		g_project.get_list(null, null, function(owner_project_data) {
-				for (var i = 0; i < owner_project_data.length; i++) {
-					owner_roots.push('/' + owner_project_data[i].name);
+			for (var i = 0; i < owner_project_data.length; i++) {
+				owner_roots.push('/' + owner_project_data[i].name);
+			}
+
+			if (project_path === '' && owner_roots.length !== 0) {
+				var all_matched_files_list = [];
+				var count = 0;
+
+				for (var i = 0; i < owner_roots.length; i++) {
+					(function(index) {
+						var __project_path = owner_roots[index];
+						self.get_data_from_project({
+							'find_query': find_query,
+							'project_path': __project_path,
+							'folder_path': folder_path,
+							'grep_option': grep_option
+						}, function(res) {
+							count++;
+							var matched_files_list = res.data;
+
+							all_matched_files_list = all_matched_files_list.concat(matched_files_list);
+
+							if (count === owner_roots.length) {
+								nodes = parser(all_matched_files_list);
+								res.data = nodes;
+								evt.emit('file_do_search_on_project', res);
+							}
+						});
+						F.auth_add_user()
+					})(i);
 				}
-
-				if (project_path === '' && owner_roots.length !== 0) {
-					var all_matched_files_list = [];
-					var count = 0;
-
-					for (var i = 0; i < owner_roots.length; i++) {
-						(function(index) {
-							var __project_path = owner_roots[index];
-							self.get_data_from_project({
-								'find_query': find_query,
-								'project_path': __project_path,
-								'folder_path': folder_path,
-								'grep_option': grep_option
-							}, function(res) {
-								count++;
-								var matched_files_list = res.data;
-
-								all_matched_files_list = all_matched_files_list.concat(matched_files_list);
-
-								if (count === owner_roots.length) {
-									nodes = parser(all_matched_files_list);
-									res.data = nodes;
-									evt.emit('file_do_search_on_project', res);
-								}
-							});
-							F.auth_add_user()
-						})(i);
-					}
-				} else if (owner_roots.indexOf(project_path) > -1) {
-					self.get_data_from_project({
-						'find_query': find_query,
-						'project_path': project_path,
-						'folder_path': folder_path,
-						'grep_option': grep_option
-					}, function(res) {
-						var matched_files_list = res.data;
-						nodes = parser(matched_files_list);
-						res.data = nodes;
-						evt.emit('file_do_search_on_project', res);
-					});
-				} else {
-					evt.emit('file_do_search_on_project', nodes);
-				}
-			})
+			} else if (owner_roots.indexOf(project_path) > -1) {
+				self.get_data_from_project({
+					'find_query': find_query,
+					'project_path': project_path,
+					'folder_path': folder_path,
+					'grep_option': grep_option
+				}, function(res) {
+					var matched_files_list = res.data;
+					nodes = parser(matched_files_list);
+					res.data = nodes;
+					evt.emit('file_do_search_on_project', res);
+				});
+			} else {
+				res.error = true;
+				evt.emit('file_do_search_on_project', res);
+			}
+		});
 		
 	},
 
@@ -217,7 +270,6 @@ module.exports = {
 				var option = {};
 				// jeongmin: exec is changed to spawn, because exec has small buffer.
 				
-				console.log('cmd:', [find_query].concat(folder_path).concat(grep_option));
 				var command = spawn('grep', [find_query].concat(folder_path).concat(grep_option), option);
 				var _stdout = '';
 
@@ -233,8 +285,8 @@ module.exports = {
 
 					//seongho.cha : code === null mean process stoped by user.
 					if (code === 0 || code === null) {
+						// console.log('grep_done:', _stdout);
 						matched_files_list = get_matched_files_list(_stdout);
-
 						res.error = false;
 						res.data = matched_files_list;
 

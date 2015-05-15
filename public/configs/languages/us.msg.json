@@ -347,7 +347,7 @@
 	"alert_npm_version": {
 		"value": "This version not exists."
 	},
-	"notice_no_matched_fild": {
+	"notice_no_matched_file": {
 		"value": "No matching files found."
 	},
 	"notice_welcome_goorm": {
@@ -1372,5 +1372,8 @@
 	},
 	"confirm_file_export": {
 		"value": "Do you want to export this/these file(s)?"
+	},
+	"alert_scm_revert": {
+		"value": "Some files are not reverted.<br/>Cause:<br/>"
 	}
 }

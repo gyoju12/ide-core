@@ -287,7 +287,10 @@
                             <span id="search_keyword"></span>
                         </label>
                     </div>
-                    <div id="search_result" class="rst_view"></div>
+                    <div id="search_result" class="rst_view">
+                        <table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="search_result_table">
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3588,10 +3591,10 @@
                                 <div class="row" style="height:29px; margin-bottom:0px;">
                                     
                                     <div class="btn-group btn-group-sm" style="">
-                                        <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="left" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
+                                        <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
                                             <div class="find_replace_prev"></div>
                                         </button>
-                                        <button id="g_far_btn_find" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="right" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
+                                        <button id="g_far_btn_find" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
                                             <div class="find_replace_next"></div>
                                         </button>
                                     </div>
@@ -6424,6 +6427,7 @@
     <script>
     var use_terminal = <%= use_terminal %>;
     var version = <%= version %>;
+    <!--  -->
     </script>
     <!--  -->
     <!--JS : jquery-->

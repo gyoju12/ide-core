@@ -39,7 +39,7 @@ goorm.core.search = {
 			$('#search_keyword_wrapper').css('display', 'none');
 			$('#search_clear .clr-btn').attr('disabled', 'disabled');
 			$('#search_clear .refresh-btn').attr('disabled', 'disabled');
-			$('#search_result').empty();
+			$('#search_result_table').empty();
 			$('#gLayoutTab_Search .badge').remove();
 			self.last_option = null;
 			self.unmark();
@@ -80,7 +80,7 @@ goorm.core.search = {
 						$input.prop('disabled', true);
 					} else {
 						$input.prop('disabled', false);
-						$input.focus().select();	
+						$input.focus().select();
 					}
 				});
 
@@ -117,15 +117,15 @@ goorm.core.search = {
 						$('#search_match_case').removeClass('disabled');
 					}
 					if (!$('#search_use_regexp').hasClass('active')) {
-						$("#search_query_inputbox").trigger("change");
+						$('#search_query_inputbox').trigger('change');
 					} else {
-						$("#search_query_inputbox_background").val('');
+						$('#search_query_inputbox_background').val('');
 					}
 				});
 
 				var inputbox = $('#search_query_inputbox'); //document.getElementById('search_query_inputbox');
-				var inputbox_background = $("#search_query_inputbox_background");
-				var make_shadow = function () {
+				var inputbox_background = $('#search_query_inputbox_background');
+				var make_shadow = function() {
 					if ($('#search_use_regexp').hasClass('active')) {
 						var value = inputbox.val();
 						var scroll = inputbox.scrollLeft();
@@ -134,15 +134,15 @@ goorm.core.search = {
 								inputbox_background.css('padding-left', '8px');
 							} else {
 								inputbox_background.css('padding-left', '4px');
-								value = "/" + value;
+								value = '/' + value;
 							}
-							value = value + "/";
+							value = value + '/';
 						}
 						inputbox_background.val(value);
 						inputbox_background.scrollLeft(scroll);
 					}
 				};
-				inputbox.bind('keydown keyup keypress change select', function(e){
+				inputbox.bind('keydown keyup keypress change select', function(e) {
 					setTimeout(make_shadow, 10);
 				});
 				// inputbox.on('focus', function() {
@@ -273,143 +273,155 @@ goorm.core.search = {
 		if ($('#search_file_extension').val() !== '') {
 			grep_option.include = this.parse_file_extension($('#search_file_extension').val());
 		}
-		
+
 		this.query = text;
 
 		this.get_matched_file(text, grep_option, search_path);
 	}, 1000),
 	
-	convert_data_to_tree: function(json) {
-		var data = [];
-
-		for (var key in json) {
-
-			//check if manifest file is there -- heeje
-			// if (key.match('.(goorm.manifest)'))	// hidden by jeongmin: done at server part
-			// 	continue;
-
-			var obj = json[key];
-			if (!obj.filepath) {
-				continue;
-			}
-			var d = {};
-
-			if (obj.badge) {
-				d.type = 'root';
-				d.parent = '#';
-				d.text = key + '<span class="badge">' + obj.badge + '</span>';
-			} else {
-				var split_key = key.split(':');
-				d.type = 'file';
-				d.parent = obj.parent;
-				// Set 'filepath:linenumber'
-				// 'line number' is first_line_number + mached_line
-				// d.text = split_key[0] + ':' + (parseInt(split_key[1]) + parseInt(core.preference['preference.editor.first_line_number']) - 1);
-				d.text = key;
-			}
-			d.id = key;
-			d.li_attr = {
-				filename: obj.filename,
-				filepath: obj.filepath,
-				filetype: obj.filetype,
-				matched_line: obj.matched_line,
-				badge: obj.badge
-			};
-			d.icon = false;
-			data.push(d);
-		}
-		return data;
-	},
 	
 	//useonly(mode=goorm-oss)
-	set_search_treeview: function(data) {
+	set_search_table: function(data, refactor) {
 		var self = this;
-
 		core.module.layout.select('search');
 
 		var window_manager = core.module.layout.workspace.window_manager;
 		var firstActivate = window_manager.active_window;
 
-		var search = function(filename, filetype, filepath, matched_line) {
-			window_manager.open(filepath, filename, filetype, null, null, function(__window) {
-				var temp = $.debounce(function() {
-					var cm = __window.editor.editor;
-					cm.focus();
-					cm.setCursor(matched_line - 1);
-
-					if (self.query) {
-						var caseFold = true;
-						var text = self.query;
-
-						if (self.use_regexp) {
-							text = RegExp(text, 'g');
-						} else if (self.match_case === true) {
-							caseFold = false;
-						}
-						self.unmark();
-						for (var cursor = cm.getSearchCursor(text, null, caseFold); cursor.findNext();) {
-							self.marked.push(
-								cm.markText(cursor.from(), cursor.to(), {
-									'className': 'cm-matchhighlight'
-								})
-							);
-						}
-
-						// variable 'searching' means this state is showing yellow marker
-						__window.searching = true;
-					}
-				}, 400);
-				temp();
-			});
-		};
-
 		if (data) {
-			var project_root = this.convert_data_to_tree(data);
+			var string = '';
+			var i = 0;
+			var parent_node = '';
+			var filtering = function(string) {
+				string = ((string.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;');
+				string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').split(/\t/).join('&nbsp;&nbsp;&nbsp;&nbsp;').split(/\s/).join('&nbsp;');
+				return string;
+			};
+			var search = function(filename, filetype, filepath, matched_line) { // jeongmin: callback is used by refactor module
+				window_manager.open(filepath, filename, filetype, null, null, function(__window) {
+					var temp = $.debounce(function() {
+						var cm = __window.editor.editor;
 
-			var on_dblclick = function(e, node) {
-				if (node.li_attr) {
+						if (self.query) {
+							var caseFold = true;
+							var caseMatch = false;
+							var text = self.query;
 
-					var filename = node.li_attr.filename;
-					var filetype = node.li_attr.filetype;
-					var filepath = node.li_attr.filepath;
-					var matched_line = node.li_attr.matched_line;
-					if (node.li_attr.badge === undefined) {
-						search(filename, filetype, filepath, matched_line, function() {
-							var window_manager = core.module.layout.workspace.window_manager;
-							var active_window = window_manager.active_window;
-							if (active_window > -1) {
-								CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
-								window_manager.window[active_window].editor.focus();
+							if (self.use_regexp) {
+								text = RegExp(text, 'g');
+							} else if (self.match_case === true) {
+								caseFold = false;
+							} else if (self.whole_word === true) {
+								caseFold = false;
+								caseMatch = true;
 							}
-						});
-					}
+							self.unmark();
+							for (var cursor = cm.getSearchCursor(text, null, caseFold); cursor.findNext();) {
+								if (caseMatch) {
+									var range = cm.findWordAt(cursor.from());
 
-				}
+									// compare query length + caseFold for performance --> Originally, compare query and word
+									//
+									if (range.head.ch - range.anchor.ch !== self.query.length) {
+										continue;
+									}
+								}
+
+								self.marked.push(
+									cm.markText(cursor.from(), cursor.to(), {
+										'className': 'cm-matchhighlight'
+									})
+								);
+							}
+
+							// variable 'searching' means this state is showing yellow marker
+							__window.searching = true;
+						}
+
+						cm.focus();
+						cm.setCursor(matched_line - 1);
+
+					}, 400);
+					temp();
+				});
 			};
 
-			if (this.treeview) {
-				self.treeview.destroy();
-			}
-			this.treeview = null;
+			/** draw treetable **/
+			$('#search_result_table').empty();
+			$('#search_result_table').treetable({
+				expandable: true,
+				clickableNodeNames: true,
+				initialState: 'collapsed',
+				indent: 5
+			}, true);
 
-			this.treeview = new goorm.core.utility.treeview('#search_result', {
-				project_path: 'search',
-				root_node: project_root,
-				sort: false,
-				auto_load_root: false,
-				on_ready: function() {},
-				on_dblclick: on_dblclick,
-				fetch: function(path, callback) {
-					callback(null);
+			for (var attr in data) {
+				var temp = attr.split('/');
+				var filename = temp.pop();
+				var filepath = temp.join('/') + '/';
+				var filetype = filename.split('.').pop();
+				if (filetype === '') {
+					filetype = 'etc';
 				}
+
+				string = '<tr class="search_filename" data-tt-id=file-' + i + ' filename="' + filename + '" filepath="' + filepath + '" filetype="' + filetype + '"><td><span>' + attr + '</span></td></tr>';
+				$('#search_result_table').treetable('loadBranch', null, string);
+				parent_node = $('#search_result_table').treetable('node', 'file-' + i);
+
+				data[attr].map(function(obj, idx, arr) {
+					string = '<tr data-tt-id=content-' + i + '-' + idx + ' data-tt-parent-id=file-' + i + '><td><div class="search_block">';
+					for (var j = 0; j < obj.code.length; j++) {
+						var current_line = obj.start_line + j;
+						var separator = ' ';
+						if (obj.match_line.indexOf(current_line) > -1) {
+							separator = ':';
+							string += '<div class="search_line search_match_line" data-line="' + current_line + '">';
+						} else {
+							string += '<div class="search_line" data-line="' + current_line + '">';
+						}
+
+						string += '<span class="search_num">' + current_line + '</span>';
+						string += '<span>' + separator + '</span>'
+						string += '<span class="search_code">' + filtering(obj.code[j]) + '</span>';
+						string += '</div><br>';
+					}
+					if (idx < arr.length - 1) {
+						string += '<tr data-tt-id=content-' + i + '-' + idx + '-c data-tt-parent-id=file-' + i + '><td><div class="search_block"><span class="search_connect" style="margin-left:15px;">...</span></div></td></tr>';
+					}
+					string += '</div></td></tr>';
+					$('#search_result_table').treetable('loadBranch', parent_node, string);
+				});
+				i++;
+			}
+
+			/** event **/
+			$('.search_block').off('dblclick');
+			$('.search_block').on('dblclick', function(e) {
+				if (e.target.className === 'search_connect') {
+					return;
+				}
+				var parent_id = $(this).parents('tr').data('ttParentId');
+				var $parent_node = $('.search_filename[data-tt-id="' + parent_id + '"]');
+				var filename = $parent_node.attr('filename');
+				var filepath = $parent_node.attr('filepath');
+				var filetype = $parent_node.attr('filetype');
+				var matched_line = parseInt($($(this).find('.search_match_line .search_num')[0]).text(), 10);
+
+				search(filename, filetype, filepath, matched_line, function() {
+					var active_window = window_manager.active_window;
+					if (active_window > -1) {
+						CodeMirror.commands.showInCenter(window_manager.window[active_window].editor.editor);
+						window_manager.window[active_window].editor.focus();
+					}
+				});
 			});
 
-			var active_window = window_manager.window[window_manager.active_window];
+			$('.search_match_line').off('mouseover');
+			$('.search_match_line').on('mouseover', function(e) {
+				$(this).addClass('match_line_over');
+				$('.match_line_over').not(this).removeClass('match_line_over');
+			});
 
-			if (active_window && active_window.editor) {
-				CodeMirror.commands.clearSearch(window_manager.window[window_manager.active_window].editor.editor); // jeongmin: initialize highlight
-				window_manager.window[window_manager.active_window].searching = false;
-			}
 		} else {
 			if (window_manager.window[window_manager.active_window]) {
 				window_manager.window[window_manager.active_window].editor.clear_highlight();
@@ -417,7 +429,7 @@ goorm.core.search = {
 			}
 
 			$('#search_result').empty();
-			var html = '<div class="node" style="padding: 2px 5px;">' + core.module.localization.msg.notice_no_matched_fild + '</div>';
+			var html = '<div class="node" style="padding: 2px 5px;">' + core.module.localization.msg.notice_no_matched_file + '</div>';
 			$('#search_result').append(html);
 		}
 
@@ -471,11 +483,12 @@ goorm.core.search = {
 				// if finding success.
 				var data = res.data;
 
-				self.set_search_treeview(data);
+				// self.set_search_treeview(data);
+				self.set_search_table(data.nodes, refactor);
 
-				if ($('#gLayoutTab_Search .badge').length > 0) {//jeongmin: if already there is badge
+				if ($('#gLayoutTab_Search .badge').length > 0) { //jeongmin: if already there is badge
 					$('#gLayoutTab_Search .badge').html(data.total_match); //then just change number
-				} else {//if there isn't badge yet
+				} else { //if there isn't badge yet
 					$('#gLayoutTab_Search').prepend('<span class="badge pull-right">' + data.total_match + '</span>'); //then attach badge next to the search tab
 				}
 				$('#search_clear>.clr-btn').removeAttr('disabled');
@@ -514,9 +527,7 @@ goorm.core.search = {
 
 	show: function(path) {
 		if (path) {
-			var dir_path = path.split('/');
-			dir_path.splice(1,1);
-			$('#search_path_input').val(dir_path.join('/'));
+			$('#search_path_input').val(path.replace(RegExp(core.status.current_project_path + '/', 'g'), ''));
 		} else {
 			$('#search_path_input').val('/');
 		}
@@ -579,7 +590,7 @@ goorm.core.search = {
 			$('#search_project_selectbox').append('<option value="/">All Projects</option>');
 		}
 	},
-	
+
 	parse_file_extension: function(val) {
 		var result = [];
 		val.split(',').map(function(name) {

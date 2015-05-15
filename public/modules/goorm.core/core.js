@@ -231,7 +231,7 @@ goorm.core.prototype = {
 				
 				// terminal & chat & find/replace - open browser context menu
 				//
-				if (!(target.parents('#terminal').length > 0 || target.parents('.terminal').length > 0 || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
+				if (!(target.parents('#terminal').length > 0 || target.parents('.terminal').length > 0 || target.hasClass('terminal_style') || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
 					e.preventDefault();
 				}
 			});
@@ -710,6 +710,8 @@ goorm.core.prototype = {
 			alert.show(core.module.localization.msg.alert_logged_out_from_other);
 			core.router.disconnect();
 		});
+		
+
 		
 
 		//useonly(mode=goorm-oss)
