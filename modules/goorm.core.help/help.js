@@ -8,23 +8,8 @@
  * version: 2.0.0
  **/
 
-var user_comments_schema = {
-	user_id: String,
-	name: String,
-	email: String,
-	category: String,
-	where: String,
-	date: String,
-	checked: Boolean,
-	msg: String,
-	send_msg: String,
-	title: String,
-	version: String
-};
-
-var db = {
-	'user_comments': mongoose.model('user_comments', new Schema(user_comments_schema))
-};
+var db_m = require('../goorm.core.db/user_comments_info.js'),
+	db = db_m.get_db();
 
 var http = require('http');
 var fs = require("fs");

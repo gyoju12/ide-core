@@ -61,11 +61,22 @@ goorm.core.dialog.explorer.prototype = {
 		// without tabindex, $().focus not working
 		// keydown event cannot triggered without tabindex.
 		$(this.files).attr("tabindex", "0");
+		
+		var scroll_to_selected = function (){
+			var node = self.treeview.tree.jstree('get_selected');
+			$('[id="' + node[0] + '"]')[0].scrollIntoView(true);
+		}
 
 		if (!self.has_fileview) {
-			self.create_treeview(folder_only, [this.select_on_ready]);
+			self.create_treeview(folder_only, [this.select_on_ready, scroll_to_selected]);
 		} else {
-			self.create_treeview(folder_only, [this.add_file_items, this.add_file_type_selector]);
+			self.create_treeview(folder_only, [this.add_file_items, this.add_file_type_selector, scroll_to_selected]);
+		}
+
+		if (this.caller.panel) {
+			this.caller.panel.on('shown.bs.modal', function () {//without it, scroll goes top after panel shown
+				scroll_to_selected();
+			});
 		}
 
 		self.bind();
@@ -160,9 +171,6 @@ goorm.core.dialog.explorer.prototype = {
 		self.treeview.get_node(this.dir_tree_ori+"/"+path)
 			.then(function(node){
 				self.treeview.select_node(node);
-				setTimeout(function() {
-					$('[id="' + node.id + '"]')[0].scrollIntoView(true);					
-				}, 300);
 			});
 	},
 
@@ -198,10 +206,7 @@ goorm.core.dialog.explorer.prototype = {
 			// console.log(this.dir_tree_ori+"/"+path);
 			getnode = self.treeview.get_node(this.dir_tree_ori+"/"+path)
 				.then(function(node){
-					self.treeview.select_node(node);
-					setTimeout(function() {
-						$('[id="' + node.id + '"]')[0].scrollIntoView(true);					
-					}, 300);
+					self.treeview.select_node(node);					
 					
 					var data = [];
 					$.each(raw_data, function(i, n){

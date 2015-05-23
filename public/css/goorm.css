@@ -540,7 +540,6 @@ Optimized:Start
 }
 
 /* Document Viewer */
-#search_project_selector,
 #select_body {
     padding: 5px;
 }
@@ -1927,6 +1926,7 @@ Toolbar CSS
     font-size: 10px;
 }
 
+#chat_history_container div.chat_msg_time,
 #chat div.chat_msg_time {
     background-color: #ddd !important;
     color: #666;
@@ -1950,14 +1950,14 @@ Toolbar CSS
     margin-left: 5px;
 }
 
-#chat_location {
-    padding: 6px 0 5px 10px;
+#chat_head {
+    padding: 6px 10px 5px 10px;
 }
 
 #blame_container .CodeMirror, 
 #blame_container_git .CodeMirror, 
 #chats,
-#diff_container .CodeMirror, 
+#diff_container .CodeMirror,
 #diff_container_git .CodeMirror,
 #search_treeview {
     height: inherit;
@@ -3421,8 +3421,8 @@ tr.current_bookmark_row{
     background-color: white;
     color: #c0c0c0;
     left: 0;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
     position: absolute;
     top: 0;
 }
@@ -3467,7 +3467,7 @@ div.modal .path {
 
 .talk img {
     max-height: 250px;
-    max-height: 250px;
+    max-width: 250px;
 }
 
 .selector_project {
@@ -3587,4 +3587,80 @@ div.tooltip {
 }
 .safe_delete_del_button {
     cursor: pointer;
+}
+
+.find_row,
+.replace_row {
+    height: 31px;
+    display: none;
+}
+
+.search_row {
+    height: 93px;
+    display: none;
+}
+
+.find_row button,
+.replace_row button {
+    height: 25px;
+}
+
+.find_buttons,
+.search_buttons,
+.replace_buttons {
+    float: right;
+}
+
+#bar_find_and_replace div.row {
+    margin-bottom: 0px;
+}
+
+#bar_find_and_replace label {
+    width: 90px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 2px;
+}
+
+#bar_find_and_replace label + div {
+    display:inline-block;
+}
+
+#far_selector {
+    float: left;
+    margin-right: 5px;
+    width: 90px;
+}
+
+#far_matches_wrap {
+    float: right;
+    height: 25px;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    padding: 2px;
+    margin-left: 5px;
+    min-width: 30px;
+    text-align: center;
+}
+
+#g_far_btn_search {
+    margin-bottom: 2px;
+}
+#chat_joined_panel {
+	position: absolute;
+	width: 400px;
+	height: 100%;
+	right: 0px;
+	z-index: 100;
+	overflow-y: scroll;
+}
+
+#chat_number_container {
+	font-size: 11px;
+	cursor: pointer;
+}
+
+#chat_history_container {
+	max-height: 500px;
+	overflow: auto;
 }

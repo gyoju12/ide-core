@@ -619,5 +619,8 @@
 	},
 	"dialog_search_files": {
 		"value": "Files to Search"
+	},
+	"dialog_chat_history": {
+		"value": "Chat History"
 	}
 }

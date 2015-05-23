@@ -47,7 +47,7 @@
 			// }
 			// Don't fire in text-accepting inputs that we didn't directly bind to
 			if ( this !== event.target && event.target.type === "text") {
-				return;
+// 				return;	// jeongmin: we want to fire even if it is text input
 			}
 			
 			// Keypress represents characters, not special keys

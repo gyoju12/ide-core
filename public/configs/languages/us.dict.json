@@ -286,5 +286,8 @@
 	},
 	"resize_image": {
 		"value": "Resize Image"
+	},
+	"chat_joined_number": {
+		"value": "Online"
 	}
 }

@@ -286,5 +286,8 @@
 	},
 	"resize_image": {
 		"value": "이미지 크기 변경"
+	},
+	"chat_joined_number": {
+		"value": "접속자"
 	}
 }

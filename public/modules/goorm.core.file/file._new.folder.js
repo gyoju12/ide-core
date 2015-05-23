@@ -42,6 +42,7 @@ goorm.core.file._new.folder = {
 				alert.show(localization.alert_invalid_folder_name);
 				return false;
 			}
+
 			if (data.path == '/') {
 				alert.show(localization.alert_deny_make_folder_in_workspace_root);
 				return;
@@ -56,116 +57,30 @@ goorm.core.file._new.folder = {
 				alert.show(localization.alert_filename_empty);
 
 				return false;
-			} else {
-				var postdata = {
-					current_path: data.path,
-					folder_name: data.name
-				};
-
-				// check input name exists or not. Jeong-Min Im.
-				core.dialog.rename_file.check_exist(postdata, 'confirmation_new_message', function(check_data) {
-					// if (core.module.terminal.terminal) {
-					// 	// actual making new folder. Jeong-Min Im.
-					// 	function do_fs_mkdir() {
-					// 		core.module.terminal.fs_mkdir(data.path + "/" + data.name, function on_mkdir(check_data) {
-					// 			var m = check_data.match(/mkdir\:.*/m);
-					// 			if (m) {
-					// 				alert.show(localization.alert_not_directory);
-					// 			} else {
-					// 				core.module.layout.project_explorer.treeview.open_path(data.path);
-					// 				core.module.layout.project_explorer.refresh();
-					// 			}
-					// 		});
-					// 	}
-
-					// 	if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
-					// 		core.module.terminal.fs_rm(data.path + "/" + data.name, function on_delete_file() {
-					// 			core.module.layout.project_explorer.refresh();
-
-					// 			var window_manager = core.module.layout.workspace.window_manager;
-					// 			var window_list = window_manager.window;
-
-					// 			for (var i = window_list.length - 1; i >= 0; i--) {
-					// 				if ((window_list[i].title).indexOf(core.status.selected_file) > -1) {
-					// 					window_list[i].is_saved = true;
-					// 					window_list[i].tab.is_saved = true;
-					// 					// window_list[i].close(i);
-					// 					window_manager.close_by_index(i, i);
-
-					// 					// jeongmin: these are should be done after deleting selected file
-					// 					core.status.selected_file = "";
-					// 					core.status.selected_file_type = "";
-
-					// 					break; // jeongmin: we find our target file, so no need to go further
-					// 				}
-					// 			}
-
-					// 			do_fs_mkdir();
-					// 		});
-					// 	} else { // jeongmin: not exists, new folder
-					// 		do_fs_mkdir();
-					// 	}
-					// } else {
-					// actual making new folder. Jeong-Min Im.
-					function do_file_new_folder() {
-						//$.get("file/new_folder", postdata, function (data) {
-						core._socket.once('/file/new_folder', function(check_data) {
-							if (check_data.err_code === 0) {
-								core.module.layout.project_explorer.treeview.refresh_node(data.path);
-								core.module.layout.project_explorer.treeview.open_path(data.path);
-							} else if (check_data.err_code == 20) {
-								alert.show(localization[check_data.message]);
-
-							} else {
-								alert.show(check_data.message);
-							}
-						});
-
-						core._socket.emit('/file/new_folder', postdata);
-					}
-
-					if (check_data && check_data.exist) { // jeongmin: first, remove exist folder
-						var _postdata = {
-							filename: data.path + '/' + data.name
-						};
-
-						core._socket.once('/file/delete', function(data) {
-							var window_manager = core.module.layout.workspace.window_manager;
-							var window_list = window_manager.window;
-
-							for (var i = window_list.length - 1; i >= 0; i--) {
-								if ((window_list[i].title).indexOf(core.status.selected_file) > -1) {
-									window_list[i].is_saved = true;
-									window_list[i].tab.is_saved = true;
-									// window_list[i].close(i);
-									window_manager.close_by_index(i, i);
-
-									// jeongmin: these are should be done after deleting selected file
-									core.status.selected_file = '';
-									core.status.selected_file_type = '';
-
-									break; // jeongmin: we find our target file, so no need to go further
-								}
-							}
-
-							do_file_new_folder();
-						}, true);
-
-						core._socket.emit('/file/delete', _postdata);
-					} else { // jeongmin: not exists, new folder
-						do_file_new_folder();
-					}
-					// }
-				});
 			}
 
-			if (typeof(this.hide) !== 'function' && panel) {
+			core._socket.once('/file/new_folder', function(result) {
+				if (result.err_code === 0) {
+					core.module.layout.project_explorer.treeview.refresh_node(data.path);
+					core.module.layout.project_explorer.treeview.open_path(data.path);
+				} else if (result.err_code === 1) {
+					alert.show(localization.alert_file_permission);
+				} else if (result.err_code === 10) {
+					alert.show(localization.alert_invalide_query);
+				} else if (result.err_code === 20) {
+					alert.show(localization.alert_rename_exist_folder);
+				} else if (result.err_code === 30) {
+					alert.show(localization.alert_cannot_make_directory);
+				} else {
+					alert.show(localization.alert_unknown_error);
+				}
+			});
+			core._socket.emit('/file/new_folder', {
+				current_path: data.path,
+				folder_name: data.name
+			});
 
-				self.panel.modal('hide');
-			} else {
-
-				self.panel.modal('hide');
-			}
+			self.panel.modal('hide');
 		};
 
 		this.dialog = new goorm.core.dialog();

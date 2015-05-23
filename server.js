@@ -29,7 +29,7 @@ var os = require('os');
 
 // External Variables
 //
-build_version = 'oss-1431669828';
+build_version = '[BUILD_VERSION]';
 
 port = 9999;
 
@@ -438,9 +438,14 @@ goorm.set_expires_date = function(req, res, next) {
 
 goorm.routing = function() {
 	var routes = require('./routes');
+	var g_aws = require('./modules/goorm.core.aws/aws.js');
 	var g_auth_m = require('./modules/goorm.core.auth/auth.manager'); // jeongmin: for update_session
 	var g_port_manager = require('./modules/goorm.core.utility/utility.port_manager');
+	var g_auth_project = require('./modules/goorm.core.auth/auth.project.js');
 	var g_plugin = require('./modules/goorm.plugin/plugin.js');
+
+	// connect
+	g_aws.connect(g_auth_project);
 
 	
 

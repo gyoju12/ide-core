@@ -332,7 +332,8 @@ goorm.core.router = {
 
 				// set Project Data...
 				//
-				core.dialog.open_project.open(core.status.current_project_path, core.status.current_project_name, core.status.current_project_type);
+				// core.dialog.open_project.open(core.status.current_project_path, core.status.current_project_name, core.status.current_project_type);
+				core.dialog.open_project.reopen();
 
 				// set Terminal...
 				//
@@ -415,18 +416,21 @@ goorm.core.router = {
 	get_host: function(project_path) {
 		var permission = core.module.layout.project.get_permission(project_path);
 		var url = '';
+		var host = '';
 
 		if (permission.writable) {
 			var info = this.get_fs_info();
-			var host = (core.user.dns) ? core.user.id + '.' + core.user.dns : info.host;
 
+			host = (core.user.dns) ? core.user.id + '_' + core.user.docker_id + '.' + core.user.dns : info.host;
 			url = info.protocol + '://' + host + ':' + info.port;
 		} else {
-			url = 'http://' + core.user.project_host + ':' + core.user.project_port;
+			host = core.user.project_host;
+			url = 'http://' + host + ':' + core.user.project_port;
 		}
 
 		return {
 			'url': url,
+			'host': host,
 			'permission': permission
 		};
 	},

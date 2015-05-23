@@ -450,6 +450,7 @@ goorm.core.project.explorer.prototype = {
 				_$.get('file/copy_file_paste', postdata, function(result) {
 					if (!result.err_code) {
 						self.treeview.refresh_node(target); // file will be placed below target, so just refresh target
+						self.treeview.open_path(target);
 					} else {
 						var msg = '';
 
@@ -465,8 +466,6 @@ goorm.core.project.explorer.prototype = {
 							case 3:
 								msg = 'alert_paste_fail';
 								break;
-
-							
 
 							default:
 								msg = 'alert_unknown_error';
@@ -513,6 +512,7 @@ goorm.core.project.explorer.prototype = {
 			}
 		}
 	},
+
 	// duplicate file. Jeong-Min Im.
 	duplicate: function() {
 		var self = this;
@@ -535,12 +535,10 @@ goorm.core.project.explorer.prototype = {
 					var msg = localization_msg.alert_paste_fail + '<br/>' + result.err_file.join(', ');
 
 					if (result.err_file.length !== files.length) {
-						var refresh_files = files.filter(function(item) {
-							return result.err_file.indexOf(item) === -1;
-						});
+						var total_file = result.total_file;
 
-						for (var i = refresh_files.length - 1; 0 <= i; i--) {
-							self.treeview.refresh_node(refresh_files[i].substring(0, refresh_files[i].lastIndexOf('/')));
+						for (var i = total_file.length - 1; 0 <= i; i--) {
+							self.treeview.refresh_node(total_file[i].substring(0, total_file[i].lastIndexOf('/')));
 						}
 					}
 

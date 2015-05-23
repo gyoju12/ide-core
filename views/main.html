@@ -185,6 +185,15 @@
     </div>
 
     <div id="goorm_center_inner_layout" class="ui-layout-center goorm_layout">
+		<div id="chat_joined_panel" class="panel panel-default" style="display:none">
+			<div class="panel-heading">
+			  <h4 class="panel-title" localization_key='chat_joined_number'></h4>
+			</div>
+			<div class="panel-body padding-0px">
+				<ul class="media-list">
+				</ul>
+			</div>
+		</div>
         <div id="goorm_inner_layout_center" class="ui-inner-layout-center">
             <ul class="nav nav-tabs" id="g_window_tab_list"></ul>
             <div id='workspace' class="tab-content">
@@ -203,6 +212,83 @@
                 <div id="popup_message" class="chat_message_content my_message">
                     <div id="popup_message_name" style="float:right"></div><br>
                     <div id="popup_message_message" class="cm-s-default triangle-border right"></div>
+                </div>
+            </div>
+            <div id="bar_find_and_replace" style="display:none;">
+                <div style="background-color: #fff; border: 1px solid rgba(0, 0, 0, .2);padding: 4px 4px 0px 4px; border-top:none;">
+                    <div class="find_row">
+                        <select id="far_selector" class="form-control input-sm">
+                            <option value="find" localization_key="edit_find">Find</option>
+                            <option value="replace" localization_key="replace">Replace</option>
+                            <option value="search" localization_key="search">Search</option>
+                        </select>
+                        <div id="f_input_group">
+                            <div id="f_input_wrap" style="position: relative; float:left; margin-right:5px;">
+                                <input class="form-control input-sm" id="find_query_inputbox_background" readonly="" tabindex="-1">
+                                <input class="form-control input-sm" id="find_query_inputbox" type="text" placeholder="Find" autofocus="">
+                            </div>
+                            <div class="find_buttons">
+                                <div class="btn-group btn-group-sm" style="margin-bottom: 2px;">
+                                    <button id="far_match_case" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
+                                    <button id="far_whole_word" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="msg_project_whole_word_guide" data-container="body" tabindex="-1">"  "</button>
+                                    <button id="far_use_regexp" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Use regular expression." tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
+                                </div>
+                                <div class="btn-group btn-group-sm" style="margin-bottom:2px;">
+                                    <button id="g_far_btn_find_prev" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Find Prev" data-container="body" tooltip="msg_find_previous" tabindex="-1">
+                                        <div class="find_replace_prev"></div>
+                                    </button>
+                                    <button id="g_far_btn_find" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
+                                        <div class="find_replace_next"></div>
+                                    </button>
+                                </div>
+                                <div id="far_matches_wrap">
+                                    <span id="find_and_replace_matches" style="line-height:normal;">/</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="s_input_group" style="display:none;">
+
+                            <div id="s_input_wrap" style="position: relative; float:left; margin-right:5px;">
+                                <input class="form-control input-sm" id="search_query_inputbox_background" readonly tabindex="-1"/>
+                                <input class="form-control input-sm" id="search_query_inputbox" type="text" placeholder="Search" />
+                            </div>
+                            
+                            <div class="search_buttons">
+                                <div class="btn-group btn-group-sm" style="margin-bottom: 2px;">
+                                    <button id="search_match_case" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
+                                    <button id="search_whole_word" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="Whole Word" data-container="body" tabindex="-1">"  "</button>
+                                    <button id="search_use_regexp" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Use Regular Expression" tooltip="Use Regular Expression" data-container="body" tabindex="-1">Exp</button>
+                                </div>
+                                <button id="g_far_btn_search" class="btn btn-default" localization_key="search">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="replace_row" style="margin-left:95px;">
+                        <div id="r_input_wrap" style="float:left; margin-right:5px;">
+                            <input class="form-control input-sm" id="replace_query_inputbox" type="text" placeholder="Replace">
+                        </div>
+                        <div class="replace_buttons">
+                            <button id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key="replace">Replace</button> <button id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key="replace_all">Replace All</button>
+                        </div>
+                    </div>
+
+                    <div class="search_row">
+                        <div id='search_project_selector' class='form-group row'>
+                            <label for="search_project_selectbox" class='control-label' localization_key="dialog_search_project">Project</label>
+                            <div style='margin-bottom:4px'>
+                                <select id="search_project_selectbox" class="form-control input-sm"></select>
+                            </div>
+                            <label for="search_path_input" class='control-label' localization_key="dialog_search_dir">Directory Path</label>
+                            <div class='' style="margin-bottom:4px">
+                                <input id="search_path_input" class="form-control input-sm" placeholder="/, /public/modules, /libs">
+                            </div>
+                            <label for="search_file_extension" class="control-label" localization_key="dialog_search_files">Files to Search</label>
+                            <div class='' style="margin-bottom:4px">
+                                <input id="search_file_extension" class="form-control input-sm" placeholder="*.txt, goorm.js">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -265,7 +351,10 @@
                     <a href="#terminal" data-toggle="tab" id='gLayoutTab_Terminal' localization_key='terminal'>Terminal<span class="badge cursor-pointer" action="refresh_bottom_terminal" style="margin-bottom:-1px"><span class="glyphicon glyphicon-refresh"></span></span></a>
                 </li>
                 <li>
-                    <a href="#search_treeview" data-toggle="tab" id='gLayoutTab_Search' localization_key='search'>Search</a>
+                    <a href="#search_treeview" data-toggle="tab" id='gLayoutTab_Search' localization_key='search'>
+                        <span class="badge pull-right" id="search_badge" style="display:none;"></span>
+                        Search
+                    </a>
                 </li>
             </ul>
 
@@ -3560,65 +3649,6 @@
         <!--
      DIALOG : find_and_replace
     -->
-        <div class="modal fade" id="dlg_find_and_replace" tabindex="-1" role="dialog" aria-labelledby="modal_find_and_replace" aria-hidden="true" data-backdrop="false">
-            <div class="modal-dialog" style="width: 430px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_find_and_replace" localization_key='title_find_replace'>Find and Replace</h4>
-                    </div>
-                    <div class="modal-body" style="padding:10px">
-
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <div style="margin-bottom: 8px;position: relative">
-                                    <input class="form-control" id="find_query_inputbox_background" readonly tabindex="-1"/>
-                                    <input class="form-control" id="find_query_inputbox" type="text" class="form-control" placeholder="Find" autofocus />
-                                </div>
-                                <div>
-                                    <input class="form-control" id="replace_query_inputbox" type="text" class="form-control" placeholder="Replace" />
-                                </div>
-                            </div>
-
-                            <div class="col-xs-4">
-                                <div class="row">
-                                    <div class="btn-group btn-group-sm" style="margin-bottom: 5px; width: 100%">
-                                        <button id="far_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
-                                        <button id="far_whole_word" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="msg_project_whole_word_guide" data-container="body" tabindex="-1">"  "</button>
-                                        <button id="far_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="top" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
-                                    </div>
-                                </div>
-                                <div class="row" style="height:29px; margin-bottom:0px;">
-                                    
-                                    <div class="btn-group btn-group-sm" style="">
-                                        <button id="g_far_btn_find_prev" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Previous" data-container="body" tooltip="msg_find_previous" tabindex="-1">
-                                            <div class="find_replace_prev"></div>
-                                        </button>
-                                        <button id="g_far_btn_find" type="button" class="btn btn-default" style="padding:3px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Find Next" data-container="body" tooltip="msg_find_next" tabindex="-1">
-                                            <div class="find_replace_next"></div>
-                                        </button>
-                                    </div>
-                                    <span id="find_and_replace_matches" style="vertical-align:middle; margin-left:5px"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="row">
-                            <div id="find_and_replace_matches" class="col-xs-4 col-xs-offset-8" style="text-align:center;">
-                                <span id="find_and_replace_current">0</span> / <span id="find_and_replace_total">0</span>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="modal-footer" style="padding:13px 13px 13px;">
-                        <!-- depreciated -heeje -->
-                        <!-- <button id="g_far_btn_far" class="btn btn-default btn-sm" localization_key='replace_and_find'>Replace/Find</a> -->
-                        <button id="g_far_btn_find2" class="btn btn-default btn-sm" localization_key='edit_find'>Find</button>
-                        <button id="g_far_btn_replace" class="btn btn-default btn-sm" localization_key='replace'>Replace</button>
-                        <button id="g_far_btn_replace_all" class="btn btn-default btn-sm" localization_key='replace_all'>Replace All</button>
-                        <button id="g_far_btn_close" class="btn btn-default btn-sm" data-dismiss="modal" localization_key='close'>Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!--
     seongho.cha: prior to developing, IDE bug fix is first. It will be restarted after than.
@@ -3650,86 +3680,7 @@
         <!--
      DIALOG : search
     -->
-        <div class="modal fade" id="dlg_search" tabindex="-1" role="dialog" aria-labelledby="modal_open_project" aria-hidden="true" data-backdrop="false">
-            <div class="modal-dialog" style="width: 450px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal_open_project" localization_key='dialog_search'>Search</h4>
-                    </div>
-                    <div class="modal-body" style="padding: 10px">
-                        <div class="row">
-<!--                             <label class="col-xs-2 control-lavel" localization-key="dialog_project_site_guide" style="padding: 5px 0px 0px 15px">Site</label>
- -->
-                            <div id='search_project_selector' class='form-group'>
-                                <label for="search_project_selectbox" class='col-sm-3 control-label' localization_key="dialog_search_project">Project</label>
-                                <div class='col-sm-9' style='margin-bottom:8px'>
-                                    <select id="search_project_selectbox" class="form-control"></select>
-                                </div>
-                                <label for="search_path_input" class='col-sm-3 control-label' localization_key="dialog_search_dir">Directory Path</label>
-                                <div class='col-sm-9' style="margin-bottom:8px">
-                                    <input id="search_path_input" class="form-control" placeholder="/, /public/modules, /libs">
-                                </div>
-                                <label for="search_file_extension" class="col-sm-3 control-label" localization_key="dialog_search_files">Files to Search</label>
-                                <div class='col-sm-9' style="margin-bottom:8px">
-                                    <input id="search_file_extension" class="form-control" placeholder="*.txt, goorm.js">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <div style="position: relative">
-                                    <input class="form-control" id="search_query_inputbox_background" readonly tabindex="-1"/>
-                                    <input class="form-control" id="search_query_inputbox" type="text" placeholder="Find" />
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="btn-group btn-group-sm" style="margin-bottom: 3px; width: 100%">
-                                    <button id="search_match_case" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
-                                    <button id="search_whole_word" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Whole Word" tooltip="Whole Word" data-container="body" tabindex="-1">"  "</button>
-                                    <button id="search_use_regexp" class="btn btn-primary col-xs-4" data-toggle="button" data-placement="bottom" title="" data-original-title="Use Regular Expression" tooltip="Use Regular Expression" data-container="body" tabindex="-1">Exp</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--
-                        <div id="search_project_explorer" class="row">
-                            <label class="col-md-3 control-label" localization_key='dialog_project_site_guide'>Site</label>
-                            <div id='search_project_selector' class='col-md-9'></div>
-
-                            <label class="col-md-3 control-label" localization_key='dialog_project_find_guide'>Find</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="search_query_inputbox" type="text" class="form-control"></textarea>
-                            </div>
-
-                            <label class="col-md-3 control-label" localization_key='dialog_project_option_guide'>Option</label>
-
-                            <div class="col-md-9">
-                                <div id="search_option" class="row">
-                                    <input type="checkbox" id="search_match_case" />
-                                    <label for="search_match_case" localization_key='dialog_project_match_case_guide'>Match case</label>
-                                </div>
-
-                                <div class="row">
-                                    <input type="checkbox" id="search_whole_word" />
-                                    <label for="search_whole_word" localization_key='dialog_project_whole_word_guide'>Igonre whitespace</label>
-                                </div>
-
-                                <div class="row">
-                                    <input type="checkbox" id="search_use_regexp" />
-                                    <label for="search_use_regexp" localization_key='dialog_project_use_regular_expression_guide'>Use regular expression</label>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                    </div>
-                    <div class="modal-footer" style="padding: 13px 13px 13px">
-                        <button id="g_s_btn_cancel" class="btn btn-default" data-dismiss="modal" localization_key='cancel'>Cancel</button>
-                        <button id="g_s_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!--  -->
         <!--
      DIALOG : project_property
@@ -3806,7 +3757,28 @@
                 </div>
             </div>
         </div>
-
+		
+		<!--
+		DIALOG : chat_history
+		-->
+        <div class="modal fade" id="dlg_chat_history" tabindex="-1" role="dialog" aria-labelledby="modal_chat_history" aria-hidden="true">
+            <div class="modal-dialog" style="width: 400px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal_chat_history" localization_key="dialog_chat_history">Chat History</h4>
+                    </div>
+                    <div class="modal-body">
+						<div id="chat_history_container" class="well">
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="g_ch_btn_close" class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--
      DIALOG : help_contents
@@ -3999,7 +3971,7 @@
                                 <label for="bug_reports_category" class="col-sm-2 control-label" localization_key="dialog_help_bug_report_category">E-mail</label>
                                 <div class="col-sm-10">
                                     <select id="bug_reports_category" class="form-control">
-                                        <option value="bugs" selected>���그</option>
+                                        <option value="bugs" selected>버그</option>
                                         <option value="new_functions">새기능</option>
                                         <option value="questions">기타 질문, 의견</option>
                                     </select>

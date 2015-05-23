@@ -178,7 +178,7 @@ goorm.core.edit.prototype = {
 			var window_manager = core.module.layout.workspace.window_manager;
 
 			// jeongmin: remove searching highlight
-			if (!core.dialog.find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
+			if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 
@@ -191,7 +191,7 @@ goorm.core.edit.prototype = {
 		$(target).mouseup(function(e) { // selected string's exist when mouse is up means dragged
 			if (e.which === 1) { // left button
 				self.str_selection = self.editor.getSelection();
-				if (!$('#dlg_find_and_replace').hasClass('in') && !($('.cm-matchhighlight:first').html() === self.str_selection) && $('#gLayoutTab_Search').find('.badge').length === 0) {
+				if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && !($('.cm-matchhighlight:first').html() === self.str_selection) && $('#search_badge:visible').length === 0) {
 					goorm.core.edit.find_and_replace.remove_search_focus(self.editor);
 					if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 						self.is_selectiond = true;
@@ -431,7 +431,7 @@ goorm.core.edit.prototype = {
 			}
 
 			// jeongmin: remove searching highlight
-			if (!find_and_replace.panel.hasClass('in') && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
+			if (!find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 		});
@@ -539,6 +539,14 @@ goorm.core.edit.prototype = {
 					self.pressed_key = '{';
 				}
 			}
+			
+			if (e.keyCode === 27) {	// esc
+				if ($('#f_input_group:visible').length > 0) {
+					core.dialog.find_and_replace.hide();
+				} else {
+					core.dialog.search.hide();
+				}
+			}
 
 			if (key_string == undo_shortcut) { // jeongmin: used at beforeChange event
 				$(core).trigger('undo_redo_pressed_' + self.title, { // title is used for distinguishing windows
@@ -609,7 +617,7 @@ goorm.core.edit.prototype = {
 
 		// set searching hightlight when word is selected. Jeong-Min Im.
 		cm_editor.on('dblclick', function() {
-			if (self.editor.somethingSelected() && !$('#dlg_find_and_replace').hasClass('in') && $('#gLayoutTab_Search').find('.badge').length === 0) {
+			if (self.editor.somethingSelected() && core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && $('#search_badge:visible').length === 0) {
 				self.str_selection = self.editor.getSelection();
 				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 					CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);

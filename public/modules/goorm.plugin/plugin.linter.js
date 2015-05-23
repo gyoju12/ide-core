@@ -26,7 +26,6 @@ goorm.plugin.linter = {
 		var window_manager = core.module.layout.workspace.window_manager;
 		var result = null;
 		var project_type = core.status.current_project_type;
-
 		__window.editor.err_count = 0;
 		__window.editor.warn_count = 0;
 		if (window_manager.window.indexOf(__window) > -1 && __window.editor && __window.editor.editor.getValue() !== "") {
@@ -39,7 +38,7 @@ goorm.plugin.linter = {
 					break;
 				case 'c':
 				case 'cpp':
-					if (project_type === "cpp" || project_type === "c") {
+					if (project_type === "cpp" && core.property) {
 						this.lint_cpp(__window, project_type);
 					}
 					break;
@@ -61,15 +60,13 @@ goorm.plugin.linter = {
 					$('#lint_summury').hide();
 					return;
 			}
-			/*
-						if (callback && typeof(callback) === "function") {
-							callback(result);
-						}
-						*/
-			$('#lint_summury .err_count').text(' ' + __window.editor.err_count);
-			$('#lint_summury .warn_count').text(' ' + __window.editor.warn_count);
-			$('#lint_summury').show();
 		}
+	},
+
+	update_lint_summury: function(ec, wc) {
+		$('#lint_summury .err_count').text(' ' + ec);
+		$('#lint_summury .warn_count').text(' ' + wc);
+		$('#lint_summury').show();
 	},
 
 	lint_codemirror: function(__window, type) {
@@ -126,7 +123,7 @@ goorm.plugin.linter = {
 		output_manager.push(output_data);
 		error_manager.error_message_box.add('#' + __window.panel.attr('id'));
 		error_manager.init_event();
-
+		this.update_lint_summury(__window.editor.err_count, __window.editor.warn_count);
 	},
 
 	// to provide linter function in C, C++, Java
@@ -184,6 +181,7 @@ goorm.plugin.linter = {
 
 		// OUTPUT MANAGER & ERROR MANAGER
 		//
+		var self = this;
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
 
@@ -231,6 +229,7 @@ goorm.plugin.linter = {
 
 			data.content = error_message;
 			om.push(data);
+			self.update_lint_summury(e.err_count, e.warn_count);
 		};
 
 		if (parsed_data && parsed_data.length > 0) {
@@ -247,9 +246,9 @@ goorm.plugin.linter = {
 
 		var property = core.property.plugins["goorm.plugin." + type];
 		var complier_type;
+		
 		if(property){
 			complier_type = property["plugin." + type + ".compiler_type"] || 'gcc';
-
 		}
 
 		core.module.terminal.terminal.send_command("/usr/share/clang/scan-build/scan-build " + complier_type + " -c " + path + "\r", function(output) {
@@ -311,6 +310,7 @@ goorm.plugin.linter = {
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_cpp');
 			}
+			self.update_lint_summury(__window.editor.err_count, __window.editor.warn_count);
 		});
 	},
 
@@ -354,15 +354,16 @@ goorm.plugin.linter = {
 				});
 			}
 			om.push(output_data);
+			self.update_lint_summury(__window.editor.err_count, 0);
 		});
 	},
 
 	lint_ruby: function(__window, type) {
-
+		var self = this;
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
 
-		self.flag=0;
+		this.flag = 0;
 
 		// var parsed_data = om.parse(result, type);
 
@@ -409,22 +410,23 @@ goorm.plugin.linter = {
 					'content': line[line.length - 1],
 					'type': type
 				});
-				self.flag=1;
+				self.flag = 1;
 
 			}
-			om.push(output_data)
+			om.push(output_data);
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_ruby');
 			}
+			self.update_lint_summury(__window.editor.err_count, __window.editor.warn_count);
 		});
 	},
 
 	lint_php: function(__window, type) {
-
+		var self = this;
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
 
-		self.flag=0;
+		this.flag = 0;
 
 		// var parsed_data = om.parse(result, type);
 
@@ -466,12 +468,13 @@ goorm.plugin.linter = {
 					'content': message[i].message,
 					'type': message[i].type
 				});
-				self.flag=1;
+				self.flag = 1;
 			}
 			om.push(output_data);
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_php');
 			}
+			self.update_lint_summury(__window.editor.err_count, __window.editor.warn_count);
 		});
 	}
 };

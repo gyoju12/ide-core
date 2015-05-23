@@ -22,40 +22,40 @@ goorm.core.shortcut.manager = {
 	fixed_shortcut: [], // jeongmin: shortcut that can't be customized
 
 	getOStype: function() {
-		var os = "windows";
-		if (navigator.platform.indexOf("Win") != -1) {
+		var os = 'windows';
+		if (navigator.platform.indexOf('Win') != -1) {
 			// Windows
-			os = "windows";
-		} else if (navigator.platform.indexOf("Mac") != -1) {
+			os = 'windows';
+		} else if (navigator.platform.indexOf('Mac') != -1) {
 			// Mac
-			os = "mac";
-		} else if (navigator.platform.indexOf("Linux") != -1) {
+			os = 'mac';
+		} else if (navigator.platform.indexOf('Linux') != -1) {
 			// Linux
-			os = "linux";
+			os = 'linux';
 		} else {
 			// Else
-			os = "else";
+			os = 'else';
 		}
 		return os;
 	},
 
 	setKeyType: function(os) {
 		var keys = {
-			"ctrl": "ctrl",
-			"alt": "alt",
-			"meta": "meta",
-			"backspace": "backspace"
+			'ctrl': 'ctrl',
+			'alt': 'alt',
+			'meta': 'meta',
+			'backspace': 'backspace'
 		};
 
 		switch (os) {
-			case "mac":
-				keys.ctrl = "meta";
+			case 'mac':
+				keys.ctrl = 'meta';
 				break;
-			case "windows":
+			case 'windows':
 				break;
-			case "linux":
+			case 'linux':
 				break;
-			case "else":
+			case 'else':
 				break;
 			default:
 		}
@@ -67,37 +67,37 @@ goorm.core.shortcut.manager = {
 			var text = this.hotkeys[action];
 			var os = this.getOStype();
 
-			if (os == "mac") {
+			if (os == 'mac') {
 				text = this.replace_hotkey(text);
 			}
 
-			$("[action=" + action + "] .helptext").html(text);
+			$('[action=' + action + '] .helptext').html(text);
 		}
 	},
 
 	//replace hotkey with image. Jeong-Min Im.
 	replace_hotkey: function(text) {
-		text = text.replace("meta", "&#x2318;")
-			.replace("Ctrl", "^")
-			.replace("Alt", "&#x2325;")
-			.replace("Shift", "&#x21E7;")
-			.replace("Backspace", "&#x232b") // jeongmin: backward delete
-			.replace("Del", "&#x2326") // jeongmin: forward delete
-			.replace("Left", "&#8592") //"⇦")
-			.replace("Right", "&#8594") //"⇨")
-			.replace("Up", "&#8593")
-			.replace("Down", "&#8595")
-			.replace("Esc", "&#9099")
-			.replace("Enter", "&#x23CE")
-			.replace("Space", "&#9251")
-			.split("+").join("");
+		text = text.replace('meta', '&#x2318;')
+			.replace('Ctrl', '^')
+			.replace('Alt', '&#x2325;')
+			.replace('Shift', '&#x21E7;')
+			.replace('Backspace', '&#x232b') // jeongmin: backward delete
+			.replace('Del', '&#x2326') // jeongmin: forward delete
+			.replace('Left', '&#8592') //"⇦")
+			.replace('Right', '&#8594') //"⇨")
+			.replace('Up', '&#8593')
+			.replace('Down', '&#8595')
+			.replace('Esc', '&#9099')
+			.replace('Enter', '&#x23CE')
+			.replace('Space', '&#9251')
+			.split('+').join('');
 
 		return text;
 	},
 
 	make_namespace: function(action, key) {
 		if (key && typeof(key) == 'string' && action && typeof(action) == 'string') {
-			return action.toLowerCase() + "_" + key.toLowerCase().replace(/\s+/g, '').replace(/\+/g, '_');
+			return action.toLowerCase() + '_' + key.toLowerCase().replace(/\s+/g, '').replace(/\+/g, '_');
 		} else {
 			return key;
 		}
@@ -107,8 +107,8 @@ goorm.core.shortcut.manager = {
 
 	//register events on custom shortcuts. Jeong-Min Im.
 	custom_events: function() {
-		var self = this,
-			shortcut_input_obj = $(".shortcut_input"); //jeongmin: shortcut input object
+		var self = this;
+		var shortcut_input_obj = $('.shortcut_input'); //jeongmin: shortcut input object
 
 		//get new shortcut string and translate keycode to string. Jeong-Min Im.
 		shortcut_input_obj.keydown(function(e) {
@@ -124,17 +124,18 @@ goorm.core.shortcut.manager = {
 		shortcut_input_obj.keyup(function(e) {
 			if (self.command_key) { //only command keys
 				if (!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) { //all keys are up
-					if (self.history[$(this).attr("name")]) {
-						$(this).val(self.history[$(this).attr("name")]); //past modified value
+					if (self.history[$(this).attr('name')]) {
+						$(this).val(self.history[$(this).attr('name')]); //past modified value
 					} else {
-						$(this).val($(this).attr("value")); //set back to original value
+						$(this).val($(this).attr('value')); //set back to original value
 					}
 				} else { //current downed keys
 					self.shortcut_input = self.make_shortcut_input(e);
 					$(this).val(self.shortcut_input);
 				}
-			} else //normal way
+			} else { //normal way
 				self.check_exist(this); //this: current modified shortcut
+			}
 
 			e.stopPropagation(); //prevent other event occurs
 			e.preventDefault();
@@ -142,11 +143,11 @@ goorm.core.shortcut.manager = {
 		});
 
 		//when user clicked apply or ok button, change shortcut. Jeong-Min Im.
-		$(core).on("on_preference_shortcut_apply", function() {
+		$(core).on('on_preference_shortcut_apply', function() {
 			var progress_elements = core.module.loading_bar.start();
-			$("#preference_tabview").find(".apply").each(function(i) {
+			$('#preference_tabview').find('.apply').each(function(i) {
 				if (i >= 3 && i <= 9) {
-					$(this).attr("disabled", "disabled");
+					$(this).attr('disabled', 'disabled');
 				}
 			});
 			if (Object.keys(self.temp_shortcut).length === 0) { // jeongmin: no temp shortcut -> maybe default
@@ -157,8 +158,8 @@ goorm.core.shortcut.manager = {
 				}
 			} else { // jeongmin: temp shortcut exists
 				for (var new_shortcut in self.temp_shortcut) {
-					var name = self.temp_shortcut[new_shortcut].name,
-						old_shortcut = self.temp_shortcut[new_shortcut].old_shortcut;
+					var name = self.temp_shortcut[new_shortcut].name;
+					var old_shortcut = self.temp_shortcut[new_shortcut].old_shortcut;
 
 					self.change_shortcut(name, new_shortcut, old_shortcut);
 				}
@@ -170,13 +171,13 @@ goorm.core.shortcut.manager = {
 		});
 
 		//scenario: user clicked restore button and clicked ok button -> current modified shortcut will be applied... -> prevent this problem. Jeong-Min Im.
-		$(core).on("on_preference_restored", function() {
+		$(core).on('on_preference_restored', function() {
 			self.temp_shortcut = {}; //initialize
 			self.history = {};
 		});
 
 		//when user closed preference modal, current modified shortcuts are initialized. Jeong-Min Im.
-		$("#dlg_preference").on("hidden.bs.modal", function() {
+		$('#dlg_preference').on('hidden.bs.modal', function() {
 			self.temp_shortcut = {}; //initialize
 			self.history = {};
 		});
@@ -185,132 +186,133 @@ goorm.core.shortcut.manager = {
 	//Refer to www.javascripter.net/faq/keycodes.htm
 	//translate keys that user inputs to string. Jeong-Min Im.
 	make_shortcut_input: function(e) {
-		var shortcut_input = ""; //key string that user inputs
+		var shortcut_input = ''; //key string that user inputs
 
 		this.command_key = false; //for checking if this shortcut_input is made of only command keys
 		this.new_input = true; //for making keyup event is called only one time
 
 		//these keys can be pressed simultaneously
-		if (e.altKey || e.keyCode == 18)
-			shortcut_input = "Alt+";
+		if (e.altKey || e.keyCode == 18) {
+			shortcut_input = 'Alt+';
+		}
 
-		if (e.ctrlKey || e.keyCode == 17)
-			shortcut_input += "Ctrl+";
+		if (e.ctrlKey || e.keyCode == 17) {
+			shortcut_input += 'Ctrl+';
+		}
 
-		if (e.metaKey || e.keyCode == 91)
-			shortcut_input += "Meta+";
+		if (e.metaKey || e.keyCode == 91) {
+			shortcut_input += 'Meta+';
+		}
 
-		if (e.shiftKey)
-			shortcut_input += "Shift+";
+		if (e.shiftKey) {
+			shortcut_input += 'Shift+';
+		}
 
 		//these keys can't be pressed simultaneously except above keys
-		if ((48 <= e.keyCode && e.keyCode <= 57) || (65 <= e.keyCode && e.keyCode <= 90)) //number(0~9), capital alphabet(A~Z)
+		if ((48 <= e.keyCode && e.keyCode <= 57) || (65 <= e.keyCode && e.keyCode <= 90)) { //number(0~9), capital alphabet(A~Z)
 			shortcut_input += String.fromCharCode(e.keyCode);
-
-		else if (96 <= e.keyCode && e.keyCode <= 105) //keypad number(0~9)
+		} else if (96 <= e.keyCode && e.keyCode <= 105) { //keypad number(0~9)
 			shortcut_input += String(e.keyCode - 96);
-
-		else if (112 <= e.keyCode && e.keyCode <= 123) //function key(F1~F12)
-			shortcut_input += "F".concat(String(e.keyCode - 111)); //attach F
-
-		else { //special keys
+		} else if (112 <= e.keyCode && e.keyCode <= 123) { //function key(F1~F12)
+			shortcut_input += 'F'.concat(String(e.keyCode - 111)); //attach F
+		} else { //special keys
 			switch (e.keyCode) {
 				case 8: //Backspace -> remove shortcut
-					shortcut_input = "None";
+					shortcut_input = 'None';
 					break;
 
 				case 9:
-					shortcut_input += "Tab";
+					shortcut_input += 'Tab';
 					break;
 
 				case 12:
-					shortcut_input += "5";
+					shortcut_input += '5';
 					break;
 
 				case 13:
-					shortcut_input += "Return";
+					shortcut_input += 'Return';
 					break;
 
 				case 19:
-					shortcut_input += "Pause";
+					shortcut_input += 'Pause';
 					break;
 
 				case 20:
-					shortcut_input += "CapsLock";
+					shortcut_input += 'CapsLock';
 					break;
 
 				case 27:
-					shortcut_input += "Esc";
+					shortcut_input += 'Esc';
 					break;
 
 				case 32:
-					shortcut_input += "Space";
+					shortcut_input += 'Space';
 					break;
 
 				case 33:
-					shortcut_input += "PageUp";
+					shortcut_input += 'PageUp';
 					break;
 
 				case 34:
-					shortcut_input += "PageDown";
+					shortcut_input += 'PageDown';
 					break;
 
 				case 35:
-					shortcut_input += "End";
+					shortcut_input += 'End';
 					break;
 
 				case 36:
-					shortcut_input += "Home";
+					shortcut_input += 'Home';
 					break;
 
 				case 37:
-					shortcut_input += "Left";
+					shortcut_input += 'Left';
 					break;
 
 				case 38:
-					shortcut_input += "Up";
+					shortcut_input += 'Up';
 					break;
 
 				case 39:
-					shortcut_input += "Right";
+					shortcut_input += 'Right';
 					break;
 
 				case 40:
-					shortcut_input += "Down";
+					shortcut_input += 'Down';
 					break;
 
 				case 42:
 				case 106: //this key codes differ Opera and other browsers
-					shortcut_input += "*";
+					shortcut_input += '*';
 					break;
 
 				case 43:
-					shortcut_input += "+";
+					shortcut_input += '+';
 					break;
 
 				case 45:
-					shortcut_input += "Insert";
+					shortcut_input += 'Insert';
 					break;
 
 				case 46:
-					shortcut_input += "Del";
+					shortcut_input += 'Del';
 					break;
 
 				case 47:
 				case 111:
 				case 191: //this key codes differ Opera and other browsers and also number pad
-					shortcut_input += "/";
+					shortcut_input += '/';
 					break;
 
 				case 59:
 				case 186: //this key codes differ Opera and other browsers
-					shortcut_input += ";";
+					shortcut_input += ';';
 					break;
 
 				case 61:
 				case 107:
 				case 187: //this key codes differ Opera and other browsers
-					shortcut_input += "=";
+					shortcut_input += '=';
 					break;
 
 					// case 91: 	//this keyCode is same as Meta Key
@@ -320,40 +322,40 @@ goorm.core.shortcut.manager = {
 				case 109:
 				case 173: //firefox
 				case 189: //this key codes differ Opera and other browsers
-					shortcut_input += "-";
+					shortcut_input += '-';
 					break;
 
 				case 110:
 				case 190: //number pad or not
-					shortcut_input += ".";
+					shortcut_input += '.';
 					break;
 
 				case 144:
-					shortcut_input += "NumLock";
+					shortcut_input += 'NumLock';
 					break;
 
 				case 145:
-					shortcut_input += "ScrollLock";
+					shortcut_input += 'ScrollLock';
 					break;
 
 				case 188:
-					shortcut_input += ",";
+					shortcut_input += ',';
 					break;
 
 				case 192:
-					shortcut_input += "`";
+					shortcut_input += '`';
 					break;
 
 				case 219:
-					shortcut_input += "[";
+					shortcut_input += '[';
 					break;
 
 				case 220:
-					shortcut_input += "\\";
+					shortcut_input += '\\';
 					break;
 
 				case 221:
-					shortcut_input += "]";
+					shortcut_input += ']';
 					break;
 
 				case 222:
@@ -365,26 +367,28 @@ goorm.core.shortcut.manager = {
 			}
 		}
 
-		if (shortcut_input.lastIndexOf("+") == shortcut_input.length - 1) //if "+" is last character of shortcut_input
+		if (shortcut_input.lastIndexOf('+') == shortcut_input.length - 1) { //if "+" is last character of shortcut_input
 			shortcut_input = shortcut_input.slice(0, shortcut_input.length - 1); //remove "+"
+		}
 
 		return shortcut_input;
 	},
 
 	//check whether custom key that user inputs already exists or not. Jeong-Min Im.
 	check_exist: function(shortcut_input_obj) { //shortcut_input_obj: current modified shortcut
-		var self = this,
-			new_shortcut_name = $(shortcut_input_obj).attr("name"), //current modified shortcut's name
-			new_shortcut = this.shortcut_input,
-			old_shortcut = $(shortcut_input_obj).attr("value"), //current modified shortcut's past shortcut
-			duplicate_in_temp = this.temp_shortcut[new_shortcut]; //duplicates in the modified shortcuts(not applied yet)
+		var self = this;
+		var new_shortcut_name = $(shortcut_input_obj).attr('name'); //current modified shortcut's name
+		var new_shortcut = this.shortcut_input;
+		var old_shortcut = $(shortcut_input_obj).attr('value'); //current modified shortcut's past shortcut
+		var duplicate_in_temp = this.temp_shortcut[new_shortcut]; //duplicates in the modified shortcuts(not applied yet)
 
 		////// when multiple keys are pushed, keyup event is called multiple times. This makes check_exist function is called multiple times //////
 		////// So I gave flag to check this function was called in the past or not. This flag is initialized only when new input is in //////
-		if (this.new_input)
+		if (this.new_input) {
 			this.new_input = false;
-		else //already this function is called in the past
+		} else { //already this function is called in the past
 			return;
+		}
 
 		// Duplication check
 		var is_dup = false;
@@ -408,16 +412,16 @@ goorm.core.shortcut.manager = {
 
 		// check duplicate from sublime theme
 		// if (this.theme == 'sublime') {
-		var norm_new_shortcut = new_shortcut.split("+").join("-");
+		var norm_new_shortcut = new_shortcut.split('+').join('-');
 
 		if (norm_new_shortcut.indexOf('Meta') != -1) {
 
 			var os = this.getOStype();
 
 			if (os == 'mac') {
-				norm_new_shortcut = norm_new_shortcut.replace("Meta", "Cmd");
+				norm_new_shortcut = norm_new_shortcut.replace('Meta', 'Cmd');
 			} else {
-				norm_new_shortcut = norm_new_shortcut.replace("Meta", "Ctrl");
+				norm_new_shortcut = norm_new_shortcut.replace('Meta', 'Ctrl');
 			}
 		}
 
@@ -425,7 +429,7 @@ goorm.core.shortcut.manager = {
 
 		if (duplicate_in_sublime) {
 
-			alert.show("[" + new_shortcut + "]\n" + core.module.localization.msg.alert_duplicate_shortcut_sublime);
+			alert.show('[' + new_shortcut + ']\n' + core.module.localization.msg.alert_duplicate_shortcut_sublime);
 
 			if (self.history[new_shortcut_name]) {
 				old_shortcut = self.history[new_shortcut_name];
@@ -439,28 +443,27 @@ goorm.core.shortcut.manager = {
 		}
 		// }
 
-
 		////// check duplicate shortcut //////
-		if (new_shortcut != "None" && is_dup) {
+		if (new_shortcut != 'None' && is_dup) {
 			// if (new_shortcut != "None" && (this.shortcuts.indexOf(new_shortcut) > -1 || duplicate_in_temp)) { //None can be duplicated
 			confirmation.init({
 				title: core.module.localization.msg.shortcut_conflict,
-				message: new_shortcut + "<br/>" + core.module.localization.msg.confirmation_shortcut_conflict,
+				message: new_shortcut + '<br/>' + core.module.localization.msg.confirmation_shortcut_conflict,
 				//set this shortcut to this menu and remove other menu's shortcut. Jeong-Min Im.
 				yes: function() {
 					if (duplicate_in_temp) { //duplicates in the modified shortcuts
-						var exist_shortcut_name = duplicate_in_temp.name, //exist shortcut's name
-							exist_shortcut_obj = $(".shortcut_input[name='" + exist_shortcut_name + "']"); //exist shortcut object
+						var exist_shortcut_name = duplicate_in_temp.name; //exist shortcut's name
+						var exist_shortcut_obj = $('.shortcut_input[name="' + exist_shortcut_name + '"]'); //exist shortcut object
 					} else { //duplicates in already binded shortcuts
-						var exist_shortcut_obj = $(".shortcut_input[value='" + new_shortcut + "']"), //exist shortcut object
-							exist_shortcut_name = exist_shortcut_obj.attr("name"); //exist shortcut's name
+						var exist_shortcut_obj = $('.shortcut_input[value="' + new_shortcut + '"]'); //exist shortcut object
+						var exist_shortcut_name = exist_shortcut_obj.attr('name'); //exist shortcut's name
 					}
 
 					////// push to shortcut changing list //////
-					push_to_temp(exist_shortcut_name, "None", new_shortcut);
+					push_to_temp(exist_shortcut_name, 'None', new_shortcut);
 					push_to_temp(new_shortcut_name, new_shortcut, old_shortcut);
 
-					exist_shortcut_obj.val("None"); //change exist shortcut input to None
+					exist_shortcut_obj.val('None'); //change exist shortcut input to None
 
 					////// history save //////
 					self.history[new_shortcut_name] = $(shortcut_input_obj).val();
@@ -503,9 +506,9 @@ goorm.core.shortcut.manager = {
 
 			self.temp_shortcut[new_shortcut] = set; // update new shortcuts
 
-			$("#preference_tabview").find(".apply").each(function(i) {
+			$('#preference_tabview').find('.apply').each(function(i) {
 				if (i >= 3 && i <= 9) {
-					$(this).removeAttr("disabled");
+					$(this).removeAttr('disabled');
 				}
 			});
 		}
@@ -514,15 +517,16 @@ goorm.core.shortcut.manager = {
 	//change current shortcut. Jeong-Min Im.
 	change_shortcut: function(name, new_shortcut, old_shortcut, theme) { //name: changing shortcut's name, shortcut: new shortcut
 		////// unbind/bind shortcut event //////
-		var action = this.change_event(name, new_shortcut, old_shortcut),
-			os = this.getOStype();
+		var action = this.change_event(name, new_shortcut, old_shortcut);
+		var os = this.getOStype();
 
 		if (action) {
 			// if (!theme) { ////// set custom shortcut array //////
-			if (this.hotkeys[action] == new_shortcut) //custom shortcut is back to default
+			if (this.hotkeys[action] == new_shortcut) { //custom shortcut is back to default
 				delete this.custom_shortcut[name]; //this shortcut isn't custom anymore
-			else //completely new shortcut
+			} else { //completely new shortcut
 				this.custom_shortcut[name] = new_shortcut; //save new shortcut to custom shortcut list
+			}
 			// } else { ////// set theme shortcut array //////
 			// 	if (this.hotkeys[action] == new_shortcut) //theme shortcut is back to default
 			// 		delete this.theme_shortcut[name]; //this shortcut isn't theme anymore
@@ -543,35 +547,35 @@ goorm.core.shortcut.manager = {
 		var os = this.getOStype();
 
 		if (name && new_shortcut && old_shortcut) {
-			action = $("[name='" + name + "'][action]").attr("action"); //changing shortcut's action -> event namespace
+			action = $('[name="' + name + '"][action]').attr('action'); //changing shortcut's action -> event namespace
 
 			////// old_shortcut is from this.hotkeys object. This.hotkeys' Meta string is lowercase and this.shortcuts' Meta string is capital. So, match this difference. //////
 			old_shortcut = old_shortcut.replace(/meta/g, 'Meta');
 
 			// these shortcuts aren't binded by jquery. These are binded manually.
-			if (action == 'tile_left' || action == 'tile_right')
+			if (action == 'tile_left' || action == 'tile_right') {
 				this.special_shortcut[action] = new_shortcut;
-			else {
+			} else {
 				////// unbind //////
-				if (old_shortcut != "None" && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
+				if (old_shortcut != 'None' && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
 					this.unbind(action, old_shortcut); //unbind old shortcut event
 					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list
 				}
 
 				////// bind //////
-				if (new_shortcut != "None") { //if new shortcut is null -> no need to bind
+				if (new_shortcut != 'None') { //if new shortcut is null -> no need to bind
 					this.bind(action, new_shortcut, this.hotkeys_fn[action]); //bind new shortcut event
 					this.shortcuts.push(new_shortcut); //push new shortcut to the list
 				}
 			}
 
 			////// change value and helptext //////
-			$("input[name='" + name + "']").attr("value", new_shortcut).val(new_shortcut); //change shortcut preference input value to new shortcut
-			if (os == "mac") {
+			$('input[name="' + name + '"]').attr('value', new_shortcut).val(new_shortcut); //change shortcut preference input value to new shortcut
+			if (os == 'mac') {
 				new_shortcut = new_shortcut.replace(/Meta/g, 'meta'); // for replacing to image (image only knows 'm'eta)
 				new_shortcut = this.replace_hotkey(new_shortcut);
 			}
-			$("[name='" + name + "'] .helptext").html(new_shortcut);
+			$('[name="' + name + '"] .helptext').html(new_shortcut);
 		} else {
 			console.log('change_event error:', arguments);
 		}
@@ -581,13 +585,13 @@ goorm.core.shortcut.manager = {
 
 	//load custom shortcut from localStorage. Jeong-Min Im.
 	load_shortcut: function() {
-		var data = (localStorage.getItem('shortcut') && localStorage.getItem('shortcut') != 'null' && localStorage.getItem('shortcut') != 'undefined') ? localStorage.getItem('shortcut') : "{}"; //jeongmin: get shortcut from localStorage
+		var data = (localStorage.getItem('shortcut') && localStorage.getItem('shortcut') != 'null' && localStorage.getItem('shortcut') != 'undefined') ? localStorage.getItem('shortcut') : '{}'; //jeongmin: get shortcut from localStorage
 		var os = this.getOStype();
 
 		this.custom_shortcut = JSON.parse(data); //parse json
 
 		for (var name in this.custom_shortcut) {
-			var action = $("[name='" + name + "'][action]").attr("action"); //changing shortcut's action -> event namespace`
+			var action = $('[name="' + name + '"][action]').attr('action'); //changing shortcut's action -> event namespace`
 
 			if (name && this.custom_shortcut[name] && this.hotkeys[action]) {
 				this.change_event(name, this.custom_shortcut[name], this.hotkeys[action]); //change default shortcut as loaded custom shortcut
@@ -602,8 +606,9 @@ goorm.core.shortcut.manager = {
 
 	// set shortcut theme. Jeong-Min Im.
 	select_theme: function(theme) {
-		if (theme == this.theme) // theme isn't changed
+		if (theme == this.theme) { // theme isn't changed
 			return;
+		}
 
 		this.set_default(); // set back to default first
 
@@ -661,12 +666,14 @@ goorm.core.shortcut.manager = {
 		this.change_shortcut(duplicate_shortcut[2], 'Ctrl+Alt+]', 'Ctrl+Shift+]', true);
 
 		// show sublime keymap
-		var keymap_table = $('#shortcut_theme_keymap_table tbody'),
-			sublime_keymap = CodeMirror.keyMap.sublime;
+		var keymap_table = $('#shortcut_theme_keymap_table tbody');
+		var sublime_keymap = CodeMirror.keyMap.sublime;
 
-		for (var key in sublime_keymap)
-			if (key != 'fallthrough' && typeof(sublime_keymap[key]) == 'string')
-				keymap_table.append("<tr><td>" + key + "</td><td>" + sublime_keymap[key] + "</td></tr>");
+		for (var key in sublime_keymap) {
+			if (key != 'fallthrough' && typeof(sublime_keymap[key]) == 'string') {
+				keymap_table.append('<tr><td>' + key + '</td><td>' + sublime_keymap[key] + '</td></tr>');
+			}
+		}
 
 		$('#shortcut_theme_keymap').show();
 
@@ -676,15 +683,15 @@ goorm.core.shortcut.manager = {
 		var self = this;
 		var os = this.getOStype();
 		var keys = this.setKeyType(os);
-		var hotkey_list = $(".helptext"),
-			shortcut_input_list = $('.shortcut_input');
+		var hotkey_list = $('.helptext');
+		var shortcut_input_list = $('.shortcut_input');
 
 		var doc_obj = $(document);
 		this.shortcuts = []; //jeongmin: total shortcuts list
 
 		hotkey_list.each(function() {
-			if ($(this).parent("[action]").html()) { //jeongmin: object that has action attribute exists, so we have to check its html in order to get right result
-				var action = $(this).parent("[action]").attr("action");
+			if ($(this).parent('[action]').html()) { //jeongmin: object that has action attribute exists, so we have to check its html in order to get right result
+				var action = $(this).parent('[action]').attr('action');
 				// if (os == "mac" && (action != 'tile_left' && action != 'tile_right' && action != 'bottom_debug_show' && action != 'bottom_console_show') && action != 'bottom_search_show') {
 				// 	self.hotkeys[action] = $(this).text().replace(/Ctrl/g, "meta").replace(/	/g, "").split(" ").join("").trim();
 				// } else {
@@ -696,60 +703,62 @@ goorm.core.shortcut.manager = {
 				// do_transpose: Ctrl+Alt+T(win)			Ctrl+T(mac)
 				// select_scope: Shift+Ctrl+Space(win,mac)
 				switch (action) {
-					case "swap_line_down":
-					case "swap_line_up":
-						if (os == "mac") {
-							self.hotkeys[action] = $(this).text().replace("Shift", "meta").replace(/\s+/g, "").trim();
+					case 'swap_line_down':
+					case 'swap_line_up':
+						if (os == 'mac') {
+							self.hotkeys[action] = $(this).text().replace('Shift', 'meta').replace(/\s+/g, '').trim();
 						} else {
-							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim();
 						}
 						break;
-					case "scroll_line_down":
-					case "scroll_line_up":
-						if (os == "mac") {
-							self.hotkeys[action] = "Alt+".concat($(this).text()).replace(/\s+/g, "").trim();
+					case 'scroll_line_down':
+					case 'scroll_line_up':
+						if (os == 'mac') {
+							self.hotkeys[action] = 'Alt+'.concat($(this).text()).replace(/\s+/g, '').trim();
 						} else {
-							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim();
 						}
 						break;
-					case "do_transpose":
-						if (os == "mac") {
-							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim().replace("Alt+", "");
+					case 'do_transpose':
+						if (os == 'mac') {
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim().replace('Alt+', '');
 						} else {
-							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim();
 						}
 						break;
-					case "select_scope":
-					case "tile_left":
-					case "tile_right":
-					case "bottom_debug_show":
-					case "bottom_console_show":
-					case "bottom_search_show":
-						self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+					case 'select_scope':
+					case 'tile_left':
+					case 'tile_right':
+					case 'bottom_debug_show':
+					case 'bottom_console_show':
+					case 'bottom_search_show':
+						self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim();
 						break;
 					default:
 						if (os == 'mac') {
-							self.hotkeys[action] = $(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").trim();
+							self.hotkeys[action] = $(this).text().replace(/Ctrl/g, 'meta').replace(/\s+/g, '').trim();
 						} else {
-							self.hotkeys[action] = $(this).text().replace(/\s+/g, "").trim();
+							self.hotkeys[action] = $(this).text().replace(/\s+/g, '').trim();
 						}
 
 				}
 
-				self.shortcuts.push(self.hotkeys[action].replace(/meta/g, "Meta")); //jeongmin: set total shortcuts list
+				self.shortcuts.push(self.hotkeys[action].replace(/meta/g, 'Meta')); //jeongmin: set total shortcuts list
 			} else if ($(this).text() == 'Ctrl+#Num' && os == 'mac') { // jeongmin: change shortcuts that is only in view all shortcuts dialog
-				$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, "meta").replace(/	/g, "").split(" ").join("").trim()));
+				$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, 'meta').replace(/	/g, '').split(' ').join('').trim()));
 			} else { // for help shortcut dialog
 				if (os == 'mac') {
-					$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, "meta").replace(/\s+/g, "").split("+").join("").trim()));
+					$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, 'meta').replace(/\s+/g, '').split('+').join('').trim()));
 				}
 			}
 		});
 
 		////// mac setting. Jeong-Min Im. //////
-		if (os == 'mac')
-			for (var i = shortcut_input_list.length - 1; 0 <= i; i--)
+		if (os == 'mac') {
+			for (var i = shortcut_input_list.length - 1; 0 <= i; i--) {
 				$(shortcut_input_list[i]).attr('value', $(shortcut_input_list[i]).attr('value').replace(/Ctrl/g, 'Meta'));
+			}
+		}
 
 		this.updateHotkey();
 
@@ -757,7 +766,7 @@ goorm.core.shortcut.manager = {
 
 		//Prevent Backspace Key
 		doc_obj.bind('keydown', keys.backspace, function(e) {
-			if (self.get_focus() === "input") {} else {
+			if (self.get_focus() === 'input') {} else {
 				e.preventDefault();
 			}
 		});
@@ -772,7 +781,7 @@ goorm.core.shortcut.manager = {
 			}
 		});
 
-		$("input").keyup(function(e) {
+		$('input').keyup(function(e) {
 			var ev = e || event;
 
 			if (e.keyCode == 27 || e.keyCode == 13) {
@@ -784,7 +793,7 @@ goorm.core.shortcut.manager = {
 				
 				
 				else if (($(e.currentTarget).attr('id') == 'find_query_inputbox' || $(e.currentTarget).attr('id') == 'replace_query_inputbox') && e.keyCode == 27) {
-					core.dialog.find_and_replace.panel.modal("hide");
+					core.dialog.find_and_replace.hide();
 				} else if ($(e.currentTarget).attr('id') == 'search_query_inputbox' && e.keyCode == 27) {
 					core.dialog.search.hide();
 				}
@@ -798,7 +807,7 @@ goorm.core.shortcut.manager = {
 		});
 
 		//now let user use our shortcuts. Jeong-Min Im.
-		$(core).on("goorm_login_complete", function() {
+		$(core).on('goorm_login_complete', function() {
 			self.default_shortcut();
 			self.load_shortcut(); //custom
 		});
@@ -806,10 +815,10 @@ goorm.core.shortcut.manager = {
 
 	//bind default shortcut events. Done when user logins. Jeong-Min Im.
 	default_shortcut: function() {
-		var self = this,
-			doc_obj = $(document),
-			os = this.getOStype(),
-			keys = this.setKeyType(os);
+		var self = this;
+		var doc_obj = $(document);
+		var os = this.getOStype();
+		var keys = this.setKeyType(os);
 
 		//Main Menu Selection
 
@@ -828,7 +837,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.new_project) {
 			//hotkey event handler. Jeong-Min Im.
 			this.hotkeys_fn.new_project = function(e) {
-				$("[action=new_project]").click();
+				$('[action=new_project]').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -841,7 +850,7 @@ goorm.core.shortcut.manager = {
 		//Open File (Ctrl+O)
 		if (this.hotkeys.open_file) {
 			this.hotkeys_fn.open_file = function(e) {
-				if (core.status.current_project_path === "") {
+				if (core.status.current_project_path === '') {
 					alert.show(core.module.localization.msg.alert_project_not_selected);
 				} else {
 					core.dialog.open_file.show();
@@ -884,7 +893,7 @@ goorm.core.shortcut.manager = {
 
 				// // window_manager.close_by_index(__window.index, __window.tab.index);
 
-				$("[action=close_file]").click(); // jeongmin
+				$('[action=close_file]').click(); // jeongmin
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -893,7 +902,6 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('close_file', this.hotkeys.close_file), this.hotkeys.close_file, this.hotkeys_fn.close_file);
 		}
-
 
 		if (this.hotkeys.tile_left) {
 			this.special_shortcut.tile_left = this.hotkeys.tile_left; // jeongmin
@@ -928,12 +936,11 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('tile_right', this.hotkeys.tile_right), this.hotkeys_fn.tile_right);
 		}
 
-
 		// new_terminal_window (Alt+Shift+T)
 		if (this.hotkeys.new_terminal_window) {
 			this.hotkeys_fn.new_terminal_window = function(e) {
 				if (!core.status.keydown) {
-					$($("a[action=new_terminal_window]").get(0)).trigger("click");
+					$($('a[action=new_terminal_window]').get(0)).trigger('click');
 					core.status.keydown = true;
 				}
 
@@ -945,14 +952,11 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('new_terminal_window', this.hotkeys.new_terminal_window), this.hotkeys.new_terminal_window, this.hotkeys_fn.new_terminal_window);
 		}
 
-
 		//Close All (Alt+Shift+X)
 		if (this.hotkeys.close_all) {
 			this.hotkeys_fn.close_all = function(e) {
 				var window_manager = core.module.layout.workspace.window_manager;
 				window_manager.close_all();
-
-
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1009,8 +1013,6 @@ goorm.core.shortcut.manager = {
 
 				core.module.layout.workspace.window_manager.save_all();
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1024,7 +1026,7 @@ goorm.core.shortcut.manager = {
 			this.hotkeys_fn.move_file = function(e) {
 
 				if (core.status.selected_file) {
-					core.dialog.move_file.show("context");
+					core.dialog.move_file.show('context');
 				} else {
 					alert.show(core.module.localization.msg.alert_select_file);
 				}
@@ -1040,7 +1042,7 @@ goorm.core.shortcut.manager = {
 		//Rename (Ctrl+Shift+R)
 		if (this.hotkeys.rename_file) {
 			this.hotkeys_fn.rename_file = function(e) {
-				$("[action=rename_file]").click();
+				$('[action=rename_file]').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1053,7 +1055,7 @@ goorm.core.shortcut.manager = {
 		//Duplicate (Ctrl+Shift+A)
 		if (this.hotkeys.duplicate_file) {
 			this.hotkeys_fn.duplicate_file = function(e) {
-				$("[action=duplicate_file]").click();
+				$('[action=duplicate_file]').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1071,7 +1073,7 @@ goorm.core.shortcut.manager = {
 				}
 
 				if (core.status.selected_file) {
-					$("[action=delete_file]").click();
+					$('[action=delete_file]').click();
 				} else {
 					alert.show(core.module.localization.msg.alert_select_file);
 				}
@@ -1183,8 +1185,9 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.do_delete) {
 			this.hotkeys_fn.do_delete = function(e) {
 				// jeongmin: if input area is focused, don't trigger this event
-				if ($(e.target).is(':focus'))
+				if ($(e.target).is(':focus')) {
 					return;
+				}
 
 				if (self.prevent($('a[action="do_delete"]').get(0))) {
 					return false;
@@ -1192,8 +1195,7 @@ goorm.core.shortcut.manager = {
 
 				var window_manager = core.module.layout.workspace.window_manager;
 
-
-				$("a[action=do_delete]").trigger("click");
+				$('a[action=do_delete]').trigger('click');
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1223,7 +1225,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.do_find) {
 			this.hotkeys_fn.do_find = function(e) {
 
-				$("a[action=do_find]").click();
+				$('a[action=do_find]').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1240,7 +1242,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.do_go_to_line) {
 			this.hotkeys_fn.do_go_to_line = function(e) {
 
-				$("a[action=do_go_to_line]").get(0).click();
+				$('a[action=do_go_to_line]').get(0).click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1253,7 +1255,7 @@ goorm.core.shortcut.manager = {
 		//Toggle Breakpoint (Ctrl+B).
 		if (this.hotkeys.toggle_breakpoint) {
 			this.hotkeys_fn.toggle_breakpoint = function(e) {
-				$("a[action=toggle_breakpoint]").get(0).click();
+				$('a[action=toggle_breakpoint]').get(0).click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1269,7 +1271,7 @@ goorm.core.shortcut.manager = {
 			//toggle bookmark. Jeong-Min Im.
 			this.hotkeys_fn.toggle_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$("a[action=toggle_bookmark]").get(0).click();
+					$('a[action=toggle_bookmark]').get(0).click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1284,7 +1286,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.next_bookmark) {
 			this.hotkeys_fn.next_bookmark = function(e, editor, context) {
 				if (editor) {
-					$("a[action=next_bookmark]").get(0).click();
+					$('a[action=next_bookmark]').get(0).click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1301,7 +1303,7 @@ goorm.core.shortcut.manager = {
 			//go to previous bookmark from current cursor line. Jeong-Min Im.
 			this.hotkeys_fn.prev_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$("a[action=prev_bookmark]").get(0).click();
+					$('a[action=prev_bookmark]').get(0).click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1317,7 +1319,7 @@ goorm.core.shortcut.manager = {
 			//clear all bookmarks. Jeong-Min Im.
 			this.hotkeys_fn.clear_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$("a[action=clear_bookmark]").get(0).click();
+					$('a[action=clear_bookmark]').get(0).click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1354,7 +1356,7 @@ goorm.core.shortcut.manager = {
 				if (window_manager.window[window_manager.active_window] && window_manager.window[window_manager.active_window].editor) {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
-					if (editor.editor) {
+					if (window_manager.window[window_manager.active_window].editor.editor) {
 						core.dialog.find_and_replace.find();
 					}
 					core.status.keydown = true;
@@ -1378,7 +1380,7 @@ goorm.core.shortcut.manager = {
 					// only called when search highlight not activated.
 					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
 					// if (editor.editor && editor.editor.state.search.query) {
-					if (editor.editor) { // jeongmin: query condition prevents prev, but we need to do prev even though we're not in search state
+					if (window_manager.window[window_manager.active_window].editor.editor) { // jeongmin: query condition prevents prev, but we need to do prev even though we're not in search state
 						core.dialog.find_and_replace.find_prev();
 					}
 					core.status.keydown = true;
@@ -1398,8 +1400,6 @@ goorm.core.shortcut.manager = {
 
 				core.dialog.preference.show();
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1413,8 +1413,9 @@ goorm.core.shortcut.manager = {
 		//Debug (Alt+F5)
 		if (this.hotkeys.debug) {
 			this.hotkeys_fn.debug = function(e) {
-				if (self.prevent($('a[action="debug"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_start();
 
@@ -1429,8 +1430,9 @@ goorm.core.shortcut.manager = {
 		//Debug Terminate (F4)
 		if (this.hotkeys.debug_terminate) {
 			this.hotkeys_fn.debug_terminate = function(e) {
-				if (self.prevent($('a[action="debug_terminate"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug_terminate"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_terminate();
 
@@ -1445,8 +1447,9 @@ goorm.core.shortcut.manager = {
 		//Debug Continue(Ctrl/Meta+Shift+Y)
 		if (this.hotkeys.debug_continue) {
 			this.hotkeys_fn.debug_continue = function(e) {
-				if (self.prevent($('a[action="debug_continue"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug_continue"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_continue();
 
@@ -1461,8 +1464,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step Over(F6)
 		if (this.hotkeys.debug_step_over) {
 			this.hotkeys_fn.debug_step_over = function(e) {
-				if (self.prevent($('a[action="debug_step_over"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug_step_over"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_step_over();
 
@@ -1477,8 +1481,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step In(F7)
 		if (this.hotkeys.debug_step_in) {
 			this.hotkeys_fn.debug_step_in = function(e) {
-				if (self.prevent($('a[action="debug_step_in"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug_step_in"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_step_in();
 
@@ -1493,8 +1498,9 @@ goorm.core.shortcut.manager = {
 		//Debug Step Out(F8)
 		if (this.hotkeys.debug_step_out) {
 			this.hotkeys_fn.debug_step_out = function(e) {
-				if (self.prevent($('a[action="debug_step_out"]').get(0))) // jeongmin: some projects don't support debug...
+				if (self.prevent($('a[action="debug_step_out"]').get(0))) { // jeongmin: some projects don't support debug...
 					return false;
+				}
 
 				core.module.debug.debug_step_out();
 
@@ -1570,8 +1576,6 @@ goorm.core.shortcut.manager = {
 			// if (e.keyCode == 116 && (e.ctrlKey === false && e.metaKey === false) && e.shiftKey === false) {
 			// 	if (core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type] !== undefined) {
 
-
-
 			// 		$.get("project/check_running_project", {},
 			// 			function(data) {
 
@@ -1634,7 +1638,7 @@ goorm.core.shortcut.manager = {
 			// 	return false;
 			// } else
 
-			if (self.get_focus() === "input" && core.status.focus_on_dialog) {
+			if (self.get_focus() === 'input' && core.status.focus_on_dialog) {
 				var selected_dialog = core.status.selected_dialog;
 
 				if (e.keyCode === 27) {
@@ -1679,7 +1683,7 @@ goorm.core.shortcut.manager = {
 				return false;
 			}
 		};
-		doc_obj.bind('keydown.' + this.make_namespace('editor_fold', "Ctrl+Q"), "Ctrl+Q", this.hotkeys_fn.editor_fold);
+		doc_obj.bind('keydown.' + this.make_namespace('editor_fold', 'Ctrl+Q'), 'Ctrl+Q', this.hotkeys_fn.editor_fold);
 		this.fixed_shortcut.push('Ctrl+Q');
 
 		//Editor Hint (Ctrl+Space)
@@ -1687,12 +1691,12 @@ goorm.core.shortcut.manager = {
 		this.hotkeys_fn.editor_hint = function(e, editor, context) { //e: event, editor: codemirror, context: edit object
 			if (editor) {
 				switch (context.mode) {
-					case "application/xml":
+					case 'application/xml':
 						CodeMirror.showHint(editor, CodeMirror.xmlHint);
 						break;
 
 					default:
-						if (context.dictionary.completable && $(context.dictionary.target).find("ul.dictionary_box").css("display") == "block") {
+						if (context.dictionary.completable && $(context.dictionary.target).find('ul.dictionary_box').css('display') == 'block') {
 							context.dictionary.complete();
 							editor.focus();
 						} else {
@@ -1713,7 +1717,7 @@ goorm.core.shortcut.manager = {
 				return false;
 			}
 		};
-		doc_obj.bind('keydown.' + this.make_namespace('editor_hint', "Ctrl+Space"), "Ctrl+Space", this.hotkeys_fn.editor_hint);
+		doc_obj.bind('keydown.' + this.make_namespace('editor_hint', 'Ctrl+Space'), 'Ctrl+Space', this.hotkeys_fn.editor_hint);
 		this.fixed_shortcut.push('Ctrl+Space');
 
 		//Editor Import Java (Ctrl+Shift+O)
@@ -1721,7 +1725,7 @@ goorm.core.shortcut.manager = {
 		this.hotkeys_fn.editor_import_java = function(e, editor, context) { //e: event, editor: codemirror, context: edit object
 			if (editor) {
 				switch (context.mode) {
-					case "text/x-java":
+					case 'text/x-java':
 						var cursor = editor.getCursor();
 
 						var postdata = {};
@@ -1729,7 +1733,9 @@ goorm.core.shortcut.manager = {
 						postdata.missing_symbol = core.status.missing_symbol;
 						postdata.selected_file_path = core.module.layout.workspace.window_manager.active_filename;
 
-						if (!postdata.missing_symbol || postdata.missing_symbol.length === 0) break;
+						if (!postdata.missing_symbol || postdata.missing_symbol.length === 0) {
+							break;
+						}
 						_$.get('/edit/get_auto_import_java', postdata, function(data) {
 							if (data.last_package_def_sentence != -1) {
 
@@ -1738,18 +1744,20 @@ goorm.core.shortcut.manager = {
 
 								var add_statement_line = start;
 								for (var i = start; i <= end; i++) {
-									if (editor.getLine(i) === "") {
+									if (editor.getLine(i) === '') {
 										add_statement_line = i;
 										break;
 									}
 								}
 
-								if (add_statement_line == -1) add_statement_line = 0;
+								if (add_statement_line == -1) {
+									add_statement_line = 0;
+								}
 								if (add_statement_line == end) {
-									editor.setLine(end, "\n" + editor.getLine(end));
+									editor.setLine(end, '\n' + editor.getLine(end));
 								}
 								for (var i = 0; i < data.import_statement.length; i++) {
-									editor.setLine(add_statement_line, editor.getLine(add_statement_line) + "\n" + (data.import_statement[i].content));
+									editor.setLine(add_statement_line, editor.getLine(add_statement_line) + '\n' + (data.import_statement[i].content));
 
 								}
 								context.save(true, true);
@@ -1766,7 +1774,7 @@ goorm.core.shortcut.manager = {
 				return false;
 			}
 		};
-		doc_obj.bind('keydown.' + this.make_namespace('editor_import_java', "Ctrl+Shift+O"), "Ctrl+Shift+O", this.hotkeys_fn.editor_import_java);
+		doc_obj.bind('keydown.' + this.make_namespace('editor_import_java', 'Ctrl+Shift+O'), 'Ctrl+Shift+O', this.hotkeys_fn.editor_import_java);
 		this.fixed_shortcut.push('Ctrl+Shift+O');
 
 		//Editor Close Tags (Ctrl+Shift+C)
@@ -1774,14 +1782,14 @@ goorm.core.shortcut.manager = {
 		this.hotkeys_fn.editor_close_tags = function(e, editor, context) { //e: event, editor: codemirror, context: edit object
 			if (editor) {
 				var state = context.editor.options.autoCloseTags ? false : true;
-				context.editor.setOption("autoCloseTags", state);
+				context.editor.setOption('autoCloseTags', state);
 
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
 			}
 		};
-		doc_obj.bind('keydown.' + this.make_namespace('editor_close_tags', "Ctrl+Shift+C"), "Ctrl+Shift+C", this.hotkeys_fn.editor_close_tags);
+		doc_obj.bind('keydown.' + this.make_namespace('editor_close_tags', 'Ctrl+Shift+C'), 'Ctrl+Shift+C', this.hotkeys_fn.editor_close_tags);
 		this.fixed_shortcut.push('Ctrl+Shift+C');
 
 		//Editor Subtract Indent (Shift+Tab)
@@ -1810,8 +1818,6 @@ goorm.core.shortcut.manager = {
 						core.status.keydown = true;
 					}
 
-
-
 					e.stopPropagation();
 					e.preventDefault();
 					return false;
@@ -1829,8 +1835,6 @@ goorm.core.shortcut.manager = {
 						core.module.layout.workspace.window_manager.next_window();
 						core.status.keydown = true;
 					}
-
-
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1853,8 +1857,6 @@ goorm.core.shortcut.manager = {
 					core.module.layout.toggle('west');
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1873,8 +1875,6 @@ goorm.core.shortcut.manager = {
 		// 			// core.module.layout.left_tabview.selectTab(0);
 		// 			core.module.layout.select('project');
 		// 		}
-
-
 
 		// 		e.stopPropagation();
 		// 		e.preventDefault();
@@ -1913,8 +1913,6 @@ goorm.core.shortcut.manager = {
 					core.module.layout.toggle('east');
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1952,8 +1950,6 @@ goorm.core.shortcut.manager = {
 					}
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1974,8 +1970,6 @@ goorm.core.shortcut.manager = {
 					core.module.layout.toggle('south');
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -1994,8 +1988,6 @@ goorm.core.shortcut.manager = {
 					core.module.layout.select('debug');
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -2012,8 +2004,6 @@ goorm.core.shortcut.manager = {
 					// }
 					core.module.layout.select('terminal');
 				}
-
-
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -2033,8 +2023,6 @@ goorm.core.shortcut.manager = {
 					core.module.layout.select('search');
 				}
 
-
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
@@ -2047,11 +2035,9 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.toggle_full_workspace) {
 			this.hotkeys_fn.toggle_full_workspace = function(e) {
 				if (!core.status.keydown) {
-					$($("a[action=toggle_full_workspace]").get(0)).trigger("click");
+					$($('a[action=toggle_full_workspace]').get(0)).trigger('click');
 					core.status.keydown = true;
 				}
-
-
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -2065,15 +2051,13 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.hide_all_windows) {
 			this.hotkeys_fn.hide_all_windows = function(e) {
 				if (!core.status.keydown) {
-					if ($("[action=hide_all_windows]").parent().hasClass("disabled") === true) {
+					if ($('[action=hide_all_windows]').parent().hasClass('disabled') === true) {
 						return false;
 					} else {
 						core.module.layout.workspace.window_manager.hide_all_windows();
 					}
 
 				}
-
-
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -2087,14 +2071,12 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.show_all_windows) {
 			this.hotkeys_fn.show_all_windows = function(e) {
 				if (!core.status.keydown) {
-					if ($("[action=show_all_windows]").parent().hasClass("disabled") === true) {
+					if ($('[action=show_all_windows]').parent().hasClass('disabled') === true) {
 						return false;
 					} else {
 						core.module.layout.workspace.window_manager.show_all_windows();
 					}
 				}
-
-
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -2232,8 +2214,8 @@ goorm.core.shortcut.manager = {
 	},
 
 	get_focus: function() {
-		if (document.activeElement.tagName === "TEXTAREA" || document.activeElement.tagName === "INPUT") {
-			return "input";
+		if (document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'INPUT') {
+			return 'input';
 		} else {
 			return false;
 		}

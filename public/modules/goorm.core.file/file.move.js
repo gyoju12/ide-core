@@ -182,42 +182,43 @@ goorm.core.file.move = {
 				});
 			}
 
-			var bookmark_list = goorm.core.edit.bookmark_list.list;
-			var refreshed_node = [];
-			for (var i = postdata.ori_path.length - 1; 0 <= i; i--) { // update bookmark list
-				var cur_selected_item = postdata.ori_path[i];
-				var file_path = cur_selected_item.split('/');
-				var file_name = file_path.pop();
+			if (postdata.ori_path.length) { // if there is succeed files
+				var bookmark_list = goorm.core.edit.bookmark_list.list;
+				var refreshed_node = [];
+				for (var i = postdata.ori_path.length - 1; 0 <= i; i--) { // update bookmark list
+					var cur_selected_item = postdata.ori_path[i];
+					var file_path = cur_selected_item.split('/');
+					var file_name = file_path.pop();
 
-				if (bookmark_list[cur_selected_item]) {
-					bookmark_list[postdata.dst_path + '/' + file_name] = bookmark_list[cur_selected_item];
-					delete bookmark_list[cur_selected_item]; // have to go to list
+					if (bookmark_list[cur_selected_item]) {
+						bookmark_list[postdata.dst_path + '/' + file_name] = bookmark_list[cur_selected_item];
+						delete bookmark_list[cur_selected_item]; // have to go to list
+					}
+
+					file_path = file_path.join('/');
+					if (!~refreshed_node.indexOf(file_path)) {
+						refreshed_node.push(file_path);
+						treeview.refresh_node(file_path);
+					}
 				}
 
-				file_path = file_path.join('/');
-				if (!~refreshed_node.indexOf(file_path)) {
-					refreshed_node.push(file_path);
-					treeview.refresh_node(file_path);
-				}
+				//2.open file .....
+				treeview.refresh_node(postdata.dst_path);
+				treeview.open_path(postdata.dst_path);
+
+				// TODO: Below codes close moved file's window. -> Need to choose what work will appropriate (close, re-open, automatic, nothing, etc).
+				// postdata.change = 'dialog_mv';
+				// postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
+				// if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file) {
+				// 	layout.workspace.window_manager.synch_with_fs(postdata);
+				// }
 			}
-
-			//2.open file .....
-			treeview.refresh_node(postdata.dst_path);
-			treeview.open_path(postdata.dst_path);
 
 			switch (data.err_code) {
 				case 0:
 					if (self.project_root_error) {
 						alert.show(localization_msg.alert_move_error);
 					}
-
-					postdata.change = 'dialog_mv';
-					postdata.file_type = core.status.selected_file_type == 'folder' ? 'folder' : 'file';
-					if (postdata.ori_path + postdata.ori_file != postdata.dst_path + postdata.dst_file) {
-						layout.workspace.window_manager.synch_with_fs(postdata);
-					}
-
-					
 					break;
 
 				case 18: // EINVAL

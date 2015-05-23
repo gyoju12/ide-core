@@ -172,7 +172,6 @@ goorm.core.project._import = {
 				// }
 
 				core.module.layout.terminal.resize();
-				$(core).trigger('project_is_created');
 			} else {
 				goorm.core.project._import.progress_elements.stop();
 				alert.show(data.message);

@@ -697,7 +697,9 @@ goorm.core.prototype = {
 
 		goorm.core.utility.ajax_loading.init(this.socket);
 
-		this.socket.on('user_access', function() {
+		this.socket.on('user_access', function(goorm_server_ip) {
+			self.module.router.goorm_server_ip = goorm_server_ip;
+
 			$(core).trigger('goorm_login_complete');
 		});
 

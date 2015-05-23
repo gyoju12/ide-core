@@ -1375,5 +1375,20 @@
 	},
 	"alert_scm_revert": {
 		"value": "Some files are not reverted.<br/>Cause:<br/>"
+	},
+	"alert_file_too_many_ignore_pattern": {
+		"value": "Too many patterns. Upload a file of up to 100 pattern lines."
+	},
+	"confirmation_file_rename_collaboration": {
+		"value": "Co-developer renamed this file. Do you want to reload it?<br/>Your modification can be gone.<br/>"
+	},
+	"confirmation_file_delete_collaboration": {
+		"value": "Co-developer deleted this file. Do you want to reload it?<br/>Your modification can be gone.<br/>"
+	},
+	"confirmation_search_replace": {
+		"value": "Do you want to replace all the keyword in the project?"
+	},
+	"notice_search_replace_changed": {
+		"value": " file(s) changed"
 	}
 }

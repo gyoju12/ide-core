@@ -44,6 +44,7 @@ goorm.core.project._delete = {
 			// if (storage == 'goormIDE Storage') {
 			var do_delete = function() {
 				core._socket.once('/project/delete', function(data) {
+					console.log("---3");
 					$('#project_delete_list').empty();
 
 					var received_data = data;
@@ -143,9 +144,9 @@ goorm.core.project._delete = {
 				}, true, {
 					lock: true
 				}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
+				console.log("---2");
 				core._socket.emit('/project/delete', postdata);
 			}
-
 			if (postdata.project_path == core.status.current_project_path) {
 				$(core).one('on_project_open', function() {
 					do_delete();
@@ -158,6 +159,7 @@ goorm.core.project._delete = {
 				core.status.current_project_type = '';
 				core.dialog.open_project.open('', '', '');
 			} else {
+				console.log("---1");
 				do_delete();
 			}
 

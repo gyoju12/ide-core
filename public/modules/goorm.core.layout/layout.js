@@ -79,27 +79,29 @@ goorm.core.layout = {
 						$(core).trigger('east_tab_openend');
 					}
 				},
-				onclose_start: function(pos) {
+				south__onclose_start: function() {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
-					if (pos == 'south' && !inner_layout.state.south.closing) {
+					if (!inner_layout.state.south.closing) {
 						inner_layout.state.south.closing = true;
 						inner_layout.state.south._size = inner_layout.state.south.size;
 						inner_layout.sizePane('south', '1');
 						return false;
 					}
 				},
-				onclose_end: function(pos) {
+				south__onclose_end: function() {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
-					if (pos == 'south' && inner_layout.state.south.closing) {
+					if (inner_layout.state.south.closing) {
 						inner_layout.state.south.closing = false;
 					}
 				},
-				onopen_start: function(pos) {
+				south__onopen_start: function() {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
-					if (pos == 'south') {
-						inner_layout.sizePane('south', inner_layout.state.south._size || inner_layout.state.south.size);
+					inner_layout.sizePane('south', inner_layout.state.south._size || inner_layout.state.south.size);
+				},
+				east__onclose_start: function(pos) {
+					if ($("#chat_joined_panel").css('display') === 'block') {
+						$("#chat_joined_panel").hide('slide', {direction:'right'});
 					}
-
 				},
 				
 				onresize_end: function(pos) {
@@ -634,7 +636,10 @@ goorm.core.layout = {
 
 		// workspace
 
-		var layout_center_height = $('#goorm_inner_layout_center').height() - 29;
+		var layout_center_height = $('#goorm_inner_layout_center').height() - 29; 
+		if (core.dialog.find_and_replace && core.dialog.find_and_replace.is_visible()) {
+			layout_center_height -= $('#bar_find_and_replace').outerHeight();
+		}
 		$('#workspace').height(layout_center_height);
 
 		var layout_center_width = $('#goorm_inner_layout_center').width() - 2;

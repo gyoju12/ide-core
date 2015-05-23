@@ -176,6 +176,11 @@ goorm.core.layout.tab.output_manager = {
 	push: function(data) {
 		if (this.table) { //seongho.cha: before was {file : data.file, line : data.line, content: data.content}, I changed it for passing 2D Array.S I Dont think this function needed...
 			var self = this;
+
+			if (!Array.isArray(data)) {
+				data = [data];
+			}
+
 			data.map(function(obj) {
 				if (obj.type && obj.type === 'warning') {
 					obj.type = '<span class="warn_color">Warning</span>';

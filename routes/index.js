@@ -168,12 +168,9 @@ exports.project.get_list = function(req, res) {
 
 
 
-
-
-//useonly(mode=goorm-oss)
+//useonly(mode=goorm-client,goorm-oss)
 exports.project.do_import = function(req, res) {
 	var evt = new EventEmitter();
-
 	evt.once('project_do_import', function(data) {
 		res.json(data);
 	});
@@ -563,8 +560,11 @@ exports.file.do_copy_file_paste = function(req, res) {
 	
 	var source = req.query.source;
 	var files = source.files;
+	var id = req.__user.id;
 
 	if (source && (files || source.directorys)) {
+		var project_path = files ? files[0].split('/')[0] : source.directorys[0].split('/')[0];
+
 		
 		//useonly(mode=goorm-oss)
 		g_file.do_copy_file_paste(req, function(result) {

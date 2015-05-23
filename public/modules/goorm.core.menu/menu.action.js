@@ -234,12 +234,16 @@ goorm.core.menu.action = {
 								window_list[j].tab.is_saved = true;
 
 								window_manager.close_by_index(j, j);
+
+								break;
 							}
 						}
 
 						for (var name in bookmark_li.list) { // delete bookmark
 							if (name.indexOf(total_file[i] + '/') === 0 || name === total_file[i]) {
 								delete bookmark_li.list[name];
+
+								break;
 							}
 						}
 					}
@@ -272,12 +276,9 @@ goorm.core.menu.action = {
 									alert.show(localization.alert_file_permission);
 								} else if (result.err_file) {
 									var msg = localization.alert_delete_file_fail + '<br/>' + result.err_file.join(', ');
-									var total_file = files.concat(directorys).filter(function(item) { // remove error files
-										return result.err_file.indexOf(item) === -1;
-									});
 
-									if (total_file.length) {
-										clean_up(total_file);
+									if (result.total_file.length) {
+										clean_up(result.total_file);
 									}
 
 									if (err_file.length) {
@@ -562,13 +563,13 @@ goorm.core.menu.action = {
 			if (active_window > -1) {
 				var editor = window_manager.window[active_window].editor.editor;
 				var cursor = editor.getCursor();
-				
+
 				if (cursor.ch > 0) {
-					editor.execCommand('delLineLeft');	
+					editor.execCommand('delLineLeft');
 				} else {
 					editor.execCommand('delCharBefore');
 				}
-				
+
 				window_manager.window[active_window].editor.focus();
 			}
 		});
@@ -1757,7 +1758,14 @@ goorm.core.menu.action = {
 
 			$('[action=find_in_folder_context]').off('click').tooltip();
 			$('[action=find_in_folder_context]').click(function() {
-				core.dialog.search.show('/' + core.module.layout.project_explorer.get_tree_selected_path().directorys.join(', /'));
+				var directories = core.module.layout.project_explorer.get_tree_selected_path().directorys;
+				var cur_project_path = core.status.current_project_path;
+
+				if (~directories.indexOf(cur_project_path)) {
+					directories[directories.indexOf(cur_project_path)] = cur_project_path + '/'; // for showing root directory(/)
+				}
+
+				core.dialog.search.show(directories.join(', ').replace(RegExp(core.status.current_project_path, 'g'), ''));
 			});
 
 			$('[action=import_file]').off('click').tooltip();

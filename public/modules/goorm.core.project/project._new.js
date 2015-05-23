@@ -126,8 +126,6 @@ goorm.core.project._new = {
 
 							core.dialog.open_project.open(data.project_dir, data.project_name, data.project_type);
 
-							$(core).trigger('project_is_created');
-
 							callback(senddata); // jeongmin: do template or scm callback
 
 							core.module.layout.terminal.resize();

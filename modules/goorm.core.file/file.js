@@ -93,25 +93,18 @@ module.exports = {
 	},
 
 	do_new_folder: function(query, evt) {
-
 		var data = {};
 		data.err_code = 0;
-		data.message = 'Process Done';
 
 		if (query.current_path !== null && query.folder_name !== null) {
-			fs.exists(global.__workspace + '/' + query.path, function(exists) {
+			fs.exists(path.join(global.__workspace, query.current_path, query.folder_name), function(exists) {
 				if (exists) {
 					data.err_code = 20;
-					data.message = 'Exist folder';
-
 					evt.emit('file_do_new_folder', data);
 				} else {
 					fs.mkdir(global.__workspace + '/' + query.current_path + '/' + query.folder_name, '0777', function(err) {
-
 						if (err !== null) {
 							data.err_code = 30;
-							data.message = 'Cannot make directory';
-
 							evt.emit('file_do_new_folder', data);
 						} else {
 							
@@ -122,7 +115,6 @@ module.exports = {
 			});
 		} else {
 			data.err_code = 10;
-			data.message = 'Invalid query';
 			evt.emit('file_do_new_folder', data);
 		}
 	},
@@ -352,10 +344,15 @@ module.exports = {
 
 			if (result.length) {
 				evt.emit('file_do_delete', {
-					'err_file': result
+					'err_file': result,
+					'total_file': files.filter(function(item) { // remove error files
+						return result.indexOf(item) === -1;
+					})
 				});
 			} else {
-				evt.emit('file_do_delete', true);
+				evt.emit('file_do_delete', {
+					'total_file': files
+				});
 			}
 		});
 	},
@@ -406,12 +403,16 @@ module.exports = {
 					data.err_code = err.errno;
 					data.message = 'Can not move file';
 					data.err_files.push(file_data.ori_path + '/' + file_data.ori_file);
-				} else {
-					data.path = file_data.dst_path;
-					data.file = file_data.dst_file;
 				}
 
 				if (last) {
+					data.path = file_data.dst_path;
+					data.file = file_data.dst_file;
+
+					data.total_file = query.ori_path.filter(function(item) { // remove error files
+						return data.err_files.indexOf(item) === -1;
+					});
+
 					evt.emit('file_do_move', data);
 				}
 			});
@@ -465,22 +466,23 @@ module.exports = {
 					var file_path = query.file_import_location_path + '/' + __file.originalname;
 
 					var is = fs.createReadStream(__file.path);
-					var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
+					var os = fs.createWriteStream(global.__workspace + '/' + file_path);
 
 					is.pipe(os);
 
 					is.on('end', function() {
-						callback(null, __file);
+						callback(null, file_path);
 					});
 				}, function(err, results) {
 					if (err) {
 						console.log(err);
 					}
 					if (results) {
+						data.file = results.filter(Boolean); // for letting other co-developers know imported file
+
 						evt.emit('file_do_import', data);
 					}
 				});
-
 			} else { // 덮어쓰기 아닐 경우
 				// 중복되지 않은 파일만 write
 				for (var i = 0; i < file.length; i++) {
@@ -498,11 +500,12 @@ module.exports = {
 						}
 					} else {
 						var is = fs.createReadStream(__file.path);
-						var os = fs.createWriteStream(global.__workspace + '/' + query.file_import_location_path + '/' + __file.originalname);
+						var os = fs.createWriteStream(global.__workspace + '/' + file_path);
 
 						is.pipe(os);
 
 						is.on('end', function() {
+							data.file.push(file_path);
 							// fs.unlink(__file.path, function (err){
 							// 	if (err) console.log(err);
 							// });
@@ -996,12 +999,20 @@ module.exports = {
 				result = result.filter(Boolean);
 				_result = _result.filter(Boolean);
 
+				var total_file = files.concat(directorys).filter(Boolean);
+				var err_file = result.concat(_result);
+
 				if (result.length || _result.length) {
 					_callback({
-						'err_file': result.concat(_result)
+						'err_file': err_file,
+						'total_file': total_file.filter(function(item) {
+							return err_file.indexOf(item) === -1;
+						})
 					});
 				} else {
-					_callback(true);
+					_callback({
+						'total_file': total_file
+					});
 				}
 			});
 		});

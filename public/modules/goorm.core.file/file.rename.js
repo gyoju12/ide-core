@@ -168,8 +168,6 @@ goorm.core.file.rename = {
 												}
 											});
 										}
-
-										
 									}
 								}
 							}
@@ -346,5 +344,34 @@ goorm.core.file.rename = {
 			}
 		});
 		core._socket.emit('/file/exist', postdata);
+	},
+
+	// sync with collaborating project. Jeong-Min Im.
+	// data (Object) = {
+	// 	ori_full_path (String) : original file path (before renamed)
+	// 	ori_path (String) : original parent path
+	// 	dst_name (String) : renamed file name
+	// 	file_type (String) : renamed file's type
+	// }
+	sync: function(data) {
+		confirmation.init({
+			'message': core.module.localization.msg.confirmation_file_rename_collaboration + data.ori_full_path,
+			'yes': function() {
+				core.module.layout.project_explorer.treeview.refresh_node(data.ori_path);
+
+				var window_manager = core.module.layout.workspace.window_manager;
+				var window_list = window_manager.window;
+
+				for (var i = window_list.length - 1; 0 <= i; i--) {
+					if (window_list[i].title === data.ori_full_path) {
+						window_list[i].is_saved = true;
+						window_list[i].tab.is_saved = true;
+
+						window_manager.close_by_index(i, i);
+						window_manager.open(data.ori_path, data.dst_name, data.file_type);
+					}
+				}
+			}
+		}).show();
 	}
 };

@@ -709,8 +709,11 @@ goorm.core.edit.dictionary.prototype = {
 			if (self.display) {
 				
 				if (code == 186) {
+					
+
 					self.hide();
-					cm_editor.focus();
+					//cm_editor.focus();
+
 				}
 				else if (code == 38) { // key 'up arrow'
 					CodeMirror.e_stop(e);

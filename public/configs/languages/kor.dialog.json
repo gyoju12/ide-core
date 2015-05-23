@@ -619,5 +619,8 @@
 	},
 	"dialog_search_files": {
 		"value": "검색할 파일"
+	},
+	"dialog_chat_history": {
+		"value": "채팅 기록"
 	}
 }

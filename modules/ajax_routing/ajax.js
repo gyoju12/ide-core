@@ -14,6 +14,7 @@ var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
 var EventEmitter = require('events').EventEmitter;
+var path = require('path');
 
 var g_file = require('../goorm.core.file/file');
 var g_preference = require('../goorm.core.preference/preference');
@@ -67,8 +68,14 @@ module.exports = {
 							socket.set('version', msg_obj.version.toString());
 						}
 
+						// only goorm-server
 						if (!msg_obj.reconnect) {
-							socket.to().emit('user_access');
+							socket.to().emit('user_access', global.__local_ip);
+						}
+
+						// only goorm-client
+						if (msg_obj.goorm_server_ip) {
+							store.client.set('ip_' + sessionID, msg_obj.goorm_server_ip);
 						}
 
 						
@@ -664,9 +671,12 @@ module.exports = {
 			//API : FS
 			socket.on('/file/new', function(msg) {
 				var evt = new EventEmitter();
+				
 
 				evt.once('file_do_new', function(data) {
 					socket.emit('/file/new', data);
+
+					
 				});
 
 				
@@ -684,9 +694,12 @@ module.exports = {
 			});
 			socket.on('/file/new_folder', function(msg) {
 				var evt = new EventEmitter();
+				
 
 				evt.once('file_do_new_folder', function(data) {
 					socket.emit('/file/new_folder', data);
+
+					
 				});
 
 				
@@ -704,9 +717,12 @@ module.exports = {
 			});
 			socket.on('/file/new_untitled_text_file', function(msg) {
 				var evt = new EventEmitter();
+				
 
 				evt.once('file_do_new_untitled_text_file', function(data) {
 					socket.emit('/file/new_untitled_text_file', data);
+
+					
 				});
 
 				
@@ -762,14 +778,17 @@ module.exports = {
 			socket.on('/file/delete', function(msg) {
 				if (msg.files || msg.directorys) {
 					var evt = new EventEmitter();
+					var id = null;
 					var files = (msg.files || []).concat(msg.directorys || []);
+					var project_path = files[0].split('/')[0];
 
 					evt.once('file_do_delete', function(data) {
 						socket.emit('/file/delete', data);
+
+						
 					});
 
 					
-
 					//useonly(mode=goorm-oss)
 					g_file.do_delete(files, evt);
 					
@@ -918,6 +937,7 @@ module.exports = {
 			// context ....
 			socket.on('/file/move', function(msg) {
 				var evt = new EventEmitter();
+				var id = null;
 				var user_level = null;
 				var author_level = null;
 
@@ -932,6 +952,8 @@ module.exports = {
 				// };
 				evt.once('file_do_move', function(data) {
 					socket.emit('/file/move', data);
+
+					
 				});
 
 				
@@ -943,9 +965,12 @@ module.exports = {
 				var evt = new EventEmitter();
 				var user_level = null;
 				var author_level = null;
+				var id = null;
 
 				evt.once('file_do_rename', function(data) {
 					socket.emit('/file/rename', data);
+
+					
 				});
 
 				if (msg.ori_path === '/' || msg.ori_path === '') {
@@ -964,7 +989,13 @@ module.exports = {
 				}
 			});
 
-			
+			// let other co-developers know project update. Jeong-Min Im.
+			// msg (Object) = {
+			// 	files (Array) : updated files
+			// }
+			socket.on('/file/sync', function(msg) {
+				
+			});
 
 			//context ...
 			socket.on('/file/get_property', function(msg) {
@@ -980,7 +1011,13 @@ module.exports = {
 			socket.on('/file/search_on_project', function(msg) {
 				var evt = new EventEmitter();
 
+				function file_searching_handler(data) {
+					socket.emit('/file/searching', data);
+				}
+				evt.on('file_searching', file_searching_handler);
+
 				evt.once('file_do_search_on_project', function(data) {
+					evt.removeListener('file_searching', file_searching_handler);
 					socket.emit('/file/search_on_project', data);
 				});
 
@@ -988,6 +1025,20 @@ module.exports = {
 
 				//useonly(mode=goorm-oss)
 				g_search.do_search(msg, evt);
+				
+			});
+
+			socket.on('/file/search_and_replace', function(msg) {
+				var evt = new EventEmitter();
+
+				evt.once('file_search_and_replace', function(data) {
+					socket.emit('/file/search_and_replace', data);
+				});
+
+				
+
+				//useonly(mode=goorm-oss)
+				g_search.do_replace(msg, evt);
 				
 			});
 

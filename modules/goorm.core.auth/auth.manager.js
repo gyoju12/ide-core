@@ -10,17 +10,20 @@
 
 
 
-var EventEmitter = require("events").EventEmitter;
-var crypto = require('crypto');
-var http = require('http');
-var querystring = require('querystring');
-
-var g_secure = require("../goorm.core.secure/secure");
-var g_log = require("../goorm.core.log/log");
+var g_secure = require('../goorm.core.secure/secure');
+var g_log = require('../goorm.core.log/log');
 
 // var retricon = require('retricon');
 
 
+
+var async = require('async');
+var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
+var EventEmitter = require('events').EventEmitter;
+var crypto = require('crypto');
+var http = require('http');
+var querystring = require('querystring');
 
 var check_form = {
 	regular_expression_id: /^[0-9a-zA-Z]{4,15}$/,
@@ -28,9 +31,6 @@ var check_form = {
 	regular_expression_name: /^[가-힣 0-9a-zA-Z._-]{2,15}$/,
 	regular_expression_email: /^([0-9a-zA-Z._-]+)@([0-9a-zA-Z_-]+)(\.[a-zA-Z0-9]+)(\.[a-zA-Z]+)?$/
 };
-
-var exec = require('child_process').exec;
-var execFile = require('child_process').execFile;
 
 module.exports = {
 	
@@ -59,7 +59,7 @@ module.exports = {
 		});
 		
 	},
-	
+
 	
 	login: function(user, req, callback) {
 		var self = this;
@@ -90,13 +90,13 @@ module.exports = {
 
 	
 
-
 	
 	filtering: function(data) {
 		var user_data = {};
-		for (var attr in user_schema) {
-			if (attr == 'pw' || attr == 'uid' || attr == 'gid')
+		for (var attr in user_fields) {
+			if (attr == 'pw' || attr == 'uid' || attr == 'gid') {
 				continue;
+			}
 			user_data[attr] = data[attr];
 		}
 
@@ -107,9 +107,10 @@ module.exports = {
 		var user_data = {};
 		var session = req.session;
 
-		for (var attr in user_schema) {
-			if (attr == 'deleted' || attr == 'last_access_time' || attr == 'pw')
+		for (var attr in user_fields) {
+			if (attr == 'deleted' || attr == 'last_access_time' || attr == 'pw') {
 				continue;
+			}
 			user_data[attr] = user[attr];
 		}
 
@@ -166,8 +167,10 @@ module.exports = {
 							store.client.del('session_' + IDE_HOST + '_' + session.id, function() {
 								store.client.del('sess:' + sessionID, function() {
 									store.client.del('socket_' + sessionID, function() {
-										store.client.del('sockets_' + global.__local_ip + "_" + sessionID, function() {
-											callback(true);
+										store.client.del('ip_' + sessionID, function() {
+											store.client.del('sockets_' + global.__local_ip + '_' + sessionID, function() {
+												callback(true);
+											});
 										});
 									});
 								});
@@ -194,8 +197,10 @@ module.exports = {
 									store.client.del('session_' + IDE_HOST + '_' + inner_session.id, function() {
 										store.client.del(sessionID, function() {
 											store.client.del('socket_' + sessionID, function() {
-												store.client.del('sockets_' + global.__local_ip + "_" + sessionID, function() {
-													callback(true);
+												store.client.del('ip_' + sessionID, function() {
+													store.client.del('sockets_' + global.__local_ip + '_' + sessionID, function() {
+														callback(true);
+													});
 												});
 											});
 										});
@@ -218,8 +223,8 @@ module.exports = {
 		});
 	},
 
-	get_user_schema: function() {
-		return user_schema;
+	get_user_fields: function() {
+		return user_fields;
 	},
 
 	
@@ -229,7 +234,7 @@ module.exports = {
 	
 
 	
-	/* 
+	/*
 	 * id / src / coords
 	 */
 	upload_profile: function(options, callback) {
