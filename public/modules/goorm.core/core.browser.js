@@ -9,7 +9,7 @@
  **/
 
 goorm.core.browser = {
-	init: function () {
+	init: function() {
 		// Get the Browser Information
 		var user_agent = navigator.userAgent.toLowerCase();
 
@@ -23,25 +23,26 @@ goorm.core.browser = {
 			firefox: /firefox/.test(user_agent)
 		};
 
-		var _browser = $.browser;	//jeongmin: access object member less
+		var _browser = $.browser; //jeongmin: access object member less
 
-		if (_browser.firefox)
-			this.name = "Firefox";
-		else if (_browser.msie)
-			this.name = "IE";
-		else if (_browser.opera)
-			this.name = "Opera";
-		else if (_browser.chrome)
-			this.name = "Chrome";
-		else if (_browser.safari)
-			this.name = "Safari";
-		else
-			this.name = "Unknown";
+		if (_browser.firefox) {
+			this.name = 'Firefox';
+		} else if (_browser.msie) {
+			this.name = 'IE';
+		} else if (_browser.opera) {
+			this.name = 'Opera';
+		} else if (_browser.chrome) {
+			this.name = 'Chrome';
+		} else if (_browser.safari) {
+			this.name = 'Safari';
+		} else {
+			this.name = 'Unknown';
+		}
 
 		this.version = _browser.version;
 
-		$('.browser_name').html([this.name, " ", this.version].join(""));	//jeongmin: array.join() is better than + for concatenating strings
+		$('.browser_name').html([this.name, ' ', this.version].join('')); //jeongmin: array.join() is better than + for concatenating strings
 		//attach tooltips --heeje
-		$(".browser-icon").attr('title', $('.browser_name').text()).tooltip();
+		$('.browser-icon').attr('title', $('.browser_name').text()).tooltip();
 	}
 };

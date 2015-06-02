@@ -8,33 +8,33 @@
  * version: 2.0.0
  **/
 
-goorm.core.terminal.message = function () {
+goorm.core.terminal.message = function() {
 
 };
 
 goorm.core.terminal.message.prototype = {
 
-	m: function (text, from) {
-		var header = "[MSG] ";
-		var color = "black";
+	m: function(text, from) {
+		var header = '[MSG] ';
+		var color = 'black';
 
-		$("#terminal").prepend(this.make_message(header, color, text, from));
+		$('#terminal').prepend(this.make_message(header, color, text, from));
 	},
 
-	make_message: function (header, color, text, from) {
-		var message = "<font color=" + color + ">";
-		message += header + ": ";
+	make_message: function(header, color, text, from) {
+		var message = '<font color=' + color + '>';
+		message += header + ': ';
 		message += text;
-		message += "</font>";
-		message += "<font color='gray'>";
-		message += " (from " + from + ")";
-		message += "</font>";
-		message += "<br>";
+		message += '</font>';
+		message += '<font color="gray">';
+		message += ' (from ' + from + ')';
+		message += '</font>';
+		message += '<br>';
 
 		return message;
 	},
 
-	clean: function () {
-		$("#terminal").html("");
+	clean: function() {
+		$('#terminal').html('');
 	}
 };

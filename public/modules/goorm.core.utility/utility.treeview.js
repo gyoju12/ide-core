@@ -208,7 +208,7 @@ goorm.core.utility.treeview.prototype = {
 					folder_only: _this.options.folder_only
 				},
 				parent: '#',
-				id: this.raw_id + '/' + path,
+				id: this.raw_id + '/' + path
 			};
 		} else {
 			project_root = this.options.root_node;
@@ -257,7 +257,7 @@ goorm.core.utility.treeview.prototype = {
 					});
 					state = _state;
 				} else if (!_this._refresh) {
-					state = []
+					state = [];
 				}
 
 				var postdata = {
@@ -481,7 +481,7 @@ goorm.core.utility.treeview.prototype = {
 			}
 
 			return data;
-		}
+		};
 
 		return this;
 	},
@@ -585,6 +585,7 @@ goorm.core.utility.treeview.prototype = {
 		var _this = this;
 		// rebind keydown event for custom UX
 		var node = this.tree.jstree('get_node', e.target);
+		var o;
 
 		switch (e.which) {
 			// left key down
@@ -592,7 +593,7 @@ goorm.core.utility.treeview.prototype = {
 				if (_this.tree.jstree('is_open', node)) {
 					_this.tree.jstree('close_node', node);
 				} else {
-					var o = _this.tree.jstree('get_node', node.parent, true);
+					o = _this.tree.jstree('get_node', node.parent, true);
 					if (o && o.length) {
 						_this.tree.jstree('deselect_all');
 						_this.tree.jstree('select_node', o.children('.jstree-anchor'));
@@ -605,7 +606,7 @@ goorm.core.utility.treeview.prototype = {
 				break;
 				// up key down
 			case 38:
-				var o = _this.tree.jstree('get_prev_dom', node);
+				o = _this.tree.jstree('get_prev_dom', node);
 				if (o && o.length) {
 					_this.tree.jstree('deselect_all');
 					_this.tree.jstree('select_node', o.children('.jstree-anchor'));
@@ -622,7 +623,7 @@ goorm.core.utility.treeview.prototype = {
 						_this.tree.jstree('get_node', o, true).children('.jstree-anchor').focus();
 					});
 				} else {
-					var o = _this.tree.jstree('get_children_dom', node);
+					o = _this.tree.jstree('get_children_dom', node);
 					if (o && o.length) {
 						_this.tree.jstree('deselect_all');
 						_this.tree.jstree('select_node', o.eq(0).children('.jstree-anchor'));
@@ -635,7 +636,7 @@ goorm.core.utility.treeview.prototype = {
 				break;
 			case 40:
 				// down key down
-				var o = _this.tree.jstree('get_next_dom', node);
+				o = _this.tree.jstree('get_next_dom', node);
 				if (o && o.length) {
 					_this.tree.jstree('deselect_all');
 					_this.tree.jstree('select_node', o.children('.jstree-anchor'));

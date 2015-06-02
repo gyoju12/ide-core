@@ -28,7 +28,7 @@ goorm.core.file._new = {
 				if (dst_name.indexOf(strings[i]) != -1) return false;
 			return true;*/
 			// if (/[^a-zA-Z0-9\_\-\.\(\)\[\]]/.test(dst_name)) {
-			if (core.module.file.test(dst_name)) {	// unify testing regex
+			if (core.module.file.test(dst_name)) { // unify testing regex
 				return false;
 			} else {
 				return true;
@@ -60,6 +60,8 @@ goorm.core.file._new = {
 			};
 			//$.get("file/new", postdata, function (data) {
 			core._socket.once('/file/new', function(check_data) {
+				var msg;
+
 				if (check_data.err_code == 99) {
 					confirmation.init({
 						message: localization.confirmation_new_message,
@@ -79,7 +81,7 @@ goorm.core.file._new = {
 					self.panel.modal('hide');
 					core.module.layout.project_explorer.treeview.refresh_node(data.path);
 					core.module.layout.project_explorer.treeview.open_path(data.path);
-					core.module.layout.workspace.window_manager.open(data.path+'/', data.name);
+					core.module.layout.workspace.window_manager.open(data.path + '/', data.name);
 					if (self.is_new_anyway) { // jeongmin: if exists and opened, close created file
 						var window_manager = core.module.layout.workspace.window_manager;
 						var windows = window_manager.window;
@@ -99,11 +101,11 @@ goorm.core.file._new = {
 						}
 					}
 				} else if (check_data.err_code == 20) {
-					var msg = localization[check_data.message] || check_data.message;
+					msg = localization[check_data.message] || check_data.message;
 					alert.show(msg);
 
 				} else {
-					var msg = localization[check_data.message] || check_data.message;
+					msg = localization[check_data.message] || check_data.message;
 					alert.show(msg);
 				}
 			});

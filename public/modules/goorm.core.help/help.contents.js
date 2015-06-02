@@ -19,15 +19,15 @@ goorm.core.help.contents = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_help_contents");
+		this.panel = $('#dlg_help_contents');
 
 		this.top = [];
 		this.title = [];
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_help_contents",
-			id: "dlg_help_contents",
+			// localization_key: 'title_help_contents',
+			id: 'dlg_help_contents',
 			success: function() {
 				self.panel.draggable('disable'); // jeongmin: for dragging url
 
@@ -63,10 +63,9 @@ goorm.core.help.contents = {
 	load: function() {
 		var self = this;
 
-		$.getJSON("help/get_readme_markdown?language=" + localStorage.getItem("language"), function(data) {
-			$("#help_contents_middle").empty();
-			$("#help_contents_middle").append(data.html);
-
+		$.getJSON('help/get_readme_markdown?language=' + localStorage.getItem('language'), function(data) {
+			$('#help_contents_middle').empty();
+			$('#help_contents_middle').append(data.html);
 
 			// plugin is applied to a scrollable element, targeting my navigation element
 			// $('#help_contents_middle').scrollspy({ 'target': '.help_contents_nav' });
@@ -85,12 +84,6 @@ goorm.core.help.contents = {
 	},
 
 	show: function() {
-
-
-
 		this.panel.modal('show');
-		var self = this;
-
 	}
-
 };

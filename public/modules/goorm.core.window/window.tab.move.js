@@ -8,7 +8,7 @@
  * version: 2.0.0
  **/
 
-goorm.core.window.tab.move = function () {
+goorm.core.window.tab.move = function() {
 	this.config = {};
 	this.prarent = null;
 	this.ul_container = null;
@@ -16,7 +16,7 @@ goorm.core.window.tab.move = function () {
 };
 
 goorm.core.window.tab.move.prototype = {
-	init: function (parent) {
+	init: function(parent) {
 		// this.parent = parent; // tab object
 		// this.tab_id = parent.tab_id;
 
@@ -26,21 +26,19 @@ goorm.core.window.tab.move.prototype = {
 		//
 		var window_manager = core.module.layout.workspace.window_manager;
 		var tab_container = window_manager.window_list_container;
-		
-		$('#'+tab_container).sortable({
-			containment: "parent",
-			axis: "x",
-			tolerance: "pointer",
+
+		$('#' + tab_container).sortable({
+			containment: 'parent',
+			axis: 'x',
+			tolerance: 'pointer'
 			// start: function(evt, ui){
 			// 	console.log(evt,ui);
 			// 	var width = parseInt($(ui.helper).css('width').split('px')[0], 10) + 2;
 			// 	$(ui.helper).css('width', width+'px');
 			// },
 			// stop: function() {
-			// 	core.module.layout.workspace.window_manager.tab_manager.sort('window');	
+			// 	core.module.layout.workspace.window_manager.tab_manager.sort('window');
 			// }
 		});
-	},
-
-	
+	}
 };

@@ -17,10 +17,10 @@ goorm.core.edit.go_to_line = {
 	success: function() {
 		var self = this;
 
-		if (this.flag == false) { //jeongmin: if keydown isn't binded yet
-			$("#edit_toolbar_inputbox").off("keydown"); //jeongmin: remove event handler which is binded before
-			$("#edit_toolbar_ok").parent().off("mousedown");
-			$("#edit_toolbar_inputbox").keydown(function(e) {
+		if (this.flag === false) { //jeongmin: if keydown isn't binded yet
+			$('#edit_toolbar_inputbox').off('keydown'); //jeongmin: remove event handler which is binded before
+			$('#edit_toolbar_ok').parent().off('mousedown');
+			$('#edit_toolbar_inputbox').keydown(function(e) {
 				var ev = e || event;
 				if (ev.keyCode == 27) { //jeongmin: add this again for esc
 					// esc key
@@ -32,8 +32,7 @@ goorm.core.edit.go_to_line = {
 
 					e.stopPropagation();
 					e.preventDefault();
-					
-					
+
 					return false;
 				} else if ((ev.ctrlKey || ev.metaKey) && ev.shiftKey && ev.keyCode == 76) { //jeongmin: when edit toolbar is shown, if ctrl + shift + l (go to line shortcut) is pushed, exit
 					$(this).blur(); //jeongmin: go to line is done
@@ -41,8 +40,8 @@ goorm.core.edit.go_to_line = {
 				}
 			});
 
-			//button 
-			$("#edit_toolbar_ok").parent().on("mousedown", "#edit_toolbar_ok", function() {
+			//button
+			$('#edit_toolbar_ok').parent().on('mousedown', '#edit_toolbar_ok', function() {
 				self.move();
 				// $("#edit_toolbar").toggleClass('hidden');
 				return false;
@@ -59,14 +58,16 @@ goorm.core.edit.go_to_line = {
 			// Get current active_window's CodeMirror editor
 			// this.editor = window_manager.window[window_manager.active_window].editor.editor;	// hidden by jeongmin: editor is decided at show, so no need to do it again
 			// Get input query of this dialog
-			var keyword = $("#edit_toolbar_inputbox").val();
+			var keyword = $('#edit_toolbar_inputbox').val();
 			var window_manager = core.module.layout.workspace.window_manager;
-			// Call search function of goorm.core.file.findReplace with keyword and editor	
+			// Call search function of goorm.core.file.findReplace with keyword and editor
 
 			//editor error fix --heeje
 			$(this).blur();
 			// $("#edit_toolbar").toggleClass('hidden');
-			if (isNaN(keyword) || keyword <= 0) return;
+			if (isNaN(keyword) || keyword <= 0) {
+				return;
+			}
 
 			this.editor.setCursor(parseInt(keyword, 10) - 1, 0);
 			CodeMirror.commands.showInCenter(this.editor);
@@ -87,7 +88,7 @@ goorm.core.edit.go_to_line = {
 
 		// Get current active_window's editor
 		if (active_window !== undefined) {
-			$("#edit_toolbar_inputbox").val("");
+			$('#edit_toolbar_inputbox').val('');
 
 			// Get current active_window's CodeMirror editor
 			if (active_window.editor) {

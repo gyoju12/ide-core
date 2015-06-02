@@ -12,52 +12,48 @@ var os = require('os');
 var numCPUs = os.cpus().length;
 
 module.exports = {
-	method: "",
-	init: function () {
+	method: '',
+	init: function() {
 		if (global.__redis_mode && this.get_cpu_numbers() !== 1) {
 			if (!global.__jx_mode) {
-				this.method = "multi-processing";
-			}
-			else {
-				this.method = "multi-threading";
+				this.method = 'multi-processing';
+			} else {
+				this.method = 'multi-threading';
 			}
 		}
 	},
 
-	get_method: function () {
+	get_method: function() {
 		return this.method;
 	},
 
-	get_cpu_numbers: function () {
+	get_cpu_numbers: function() {
 		return numCPUs;
 	},
 
-	get_cluster: function () {
+	get_cluster: function() {
 		return cluster;
 	},
 
-	get_worker_id: function () {
+	get_worker_id: function() {
 		var method = this.get_method();
 
-		if (method === "multi-processing" && cluster.worker) {
-			return global.__local_ip + ":" + cluster.worker.id;
-		}
-		else if (method === "multi-threading") {
-			return global.__local_ip + ":" + process.threadId;
-		}
-		else {
+		if (method === 'multi-processing' && cluster.worker) {
+			return global.__local_ip + ':' + cluster.worker.id;
+		} else if (method === 'multi-threading') {
+			return global.__local_ip + ':' + process.threadId;
+		} else {
 			return global.__local_ip;
 		}
 	},
 
-	is_main: function () {
+	is_main: function() {
 		var method = this.get_method();
 
-		if (method === "multi-processing") {
+		if (method === 'multi-processing') {
 			return cluster.isMaster;
-		}
-		else if (method === "multi-threading") {
+		} else if (method === 'multi-threading') {
 			return !process.subThread;
 		}
 	}
-}
+};

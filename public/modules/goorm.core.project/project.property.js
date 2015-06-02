@@ -28,7 +28,7 @@ goorm.core.project.property = {
 
 		this.init_dialog();
 
-		$(core).on("on_project_open", function() {
+		$(core).on('on_project_open', function() {
 			self.firstShow = true;
 			// $('#property_treeview span').first().click(); // Init Project Propery... > there is no span
 			// var plugin_run = core.module.plugin_manager.plugins["goorm.plugin." + core.status.current_project_type].run;
@@ -63,7 +63,7 @@ goorm.core.project.property = {
 					self.manager.plugin_data.map(function(plugin) {
 						if (plugin.li_attr.id.toLowerCase() == plugin_name) {
 							for (var name in core.preference.plugins) {
-								if (self.property.plugins[name] === undefined && name.split(".").pop() == plugin_name) {
+								if (self.property.plugins[name] === undefined && name.split('.').pop() == plugin_name) {
 									self.property.plugins[name] = core.preference.plugins[name];
 								}
 							}
@@ -73,9 +73,9 @@ goorm.core.project.property = {
 						}
 					});
 
-					self.manager.append_data(self.manager.treeview_id + "/Plugin", plugins);
+					self.manager.append_data(self.manager.treeview_id + '/Plugin', plugins);
 
-					// var node = self.manager.treeview.getNodeByProperty("html", "<span localization_key='plugin'>Plugin</span>");
+					// var node = self.manager.treeview.getNodeByProperty('html', "<span localization_key='plugin'>Plugin</span>");
 					// var last_node;
 
 					// last_node && last_node.prev().removeClass("ygtvtn").addClass("ygtvln");
@@ -83,10 +83,11 @@ goorm.core.project.property = {
 					self.fill_dialog(self.property);
 					self.property_default = $.extend(true, {}, self.property);
 
-					if (core.module.plugin_manager.plugins[plugin_name] && core.module.plugin_manager.plugins[plugin_name].compiler_list_up)
-						core.module.plugin_manager.plugins[plugin_name].compiler_list_up($("#project_" + contents.type.toLowerCase() + "_tab").find("select[name='plugin." + contents.type.toLowerCase() + ".compiler_type']"));
+					if (core.module.plugin_manager.plugins[plugin_name] && core.module.plugin_manager.plugins[plugin_name].compiler_list_up) {
+						core.module.plugin_manager.plugins[plugin_name].compiler_list_up($('#project_' + contents.type.toLowerCase() + '_tab').find('select[name="plugin.' + contents.type.toLowerCase() + '.compiler_type"]'));
+					}
 
-					$(core).trigger("property_set_complete"); //jeongmin: when project is created with scm repository, prevent to checkout before project is created completely.
+					$(core).trigger('property_set_complete'); //jeongmin: when project is created with scm repository, prevent to checkout before project is created completely.
 
 					// Check Project Property Option
 					//
@@ -96,7 +97,7 @@ goorm.core.project.property = {
 					// }
 				}
 			});
-			if (core.status.current_project_type === "") {
+			if (core.status.current_project_type === '') {
 				$('[action="run"]').css('display', 'none');
 				$('[action="build_project"]').css('display', 'none');
 			}
@@ -111,13 +112,13 @@ goorm.core.project.property = {
 
 	show: function(node) {
 		var tree_node = node || 'Property/Information';
-		if (core.status.current_project_path !== "") {
+		if (core.status.current_project_path !== '') {
 			if (this.firstShow) {
-				$("#property_tabview .nav > *").hide();
-				$("#property_tabview .nav li").first().show();
+				$('#property_tabview .nav > *').hide();
+				$('#property_tabview .nav li').first().show();
 				this.firstShow = false;
 			}
-			$('#property_treeview').find("li[path='" + tree_node + "'] > a.jstree-anchor").first().click();
+			$('#property_treeview').find('li[path="' + tree_node + '"] > a.jstree-anchor').first().click();
 			this.panel.modal('show');
 		} else {
 			var result = {
@@ -132,11 +133,11 @@ goorm.core.project.property = {
 		var self = this;
 
 		property.description = property.description.replace(/&(lt|gt);/g, function(strMatch, p1) {
-			return (p1 == "lt") ? "<" : ">";
+			return (p1 == 'lt') ? '<' : '>';
 		});
-		property.description = property.description.replace(/<\/?[^>]+(>|$)/g, "");
+		property.description = property.description.replace(/<\/?[^>]+(>|$)/g, '');
 
-		core._socket.once("/project/set_property", function(data) {
+		core._socket.once('/project/set_property', function(data) {
 			if (data.err_code) {
 				alert.show(data.message);
 
@@ -146,15 +147,17 @@ goorm.core.project.property = {
 			} else {	// new property
 				core.property = property;
 			}
-			
+
 			// set property (if property isn't modified in property dialog, need to set property manually)
-			$.extend(true, core.workspace[path], core.property);	
+			$.extend(true, core.workspace[path], core.property);
 			self.fill_dialog(core.property);
-			
-			callback && callback();
+
+			if (callback) {
+				callback();
+			}
 		});
 
-		core._socket.emit("/project/set_property", {
+		core._socket.emit('/project/set_property', {
 			project_path: path,
 			data: JSON.stringify(property)
 		});
@@ -162,28 +165,30 @@ goorm.core.project.property = {
 
 	// save current property(core.property) to goorm.manifest
 	save: function(callback) {
-		var path = core.status.current_project_path,
-			property = core.property;
+		var path = core.status.current_project_path;
+		var	property = core.property;
 
 		this.save_property(path, property, callback);
 	},
 
 	apply: function() {
+		var previous_property;
 		if (core.property.type == 'dev') {
-			var previous_property = $.extend(true, {}, core.property);
+			previous_property = $.extend(true, {}, core.property);
 		}
 
 		if (core.property.type == 'web') {
-			if ($('#web_run_index').val() == "") {
-				$('#web_run_index').val("index.html");
+			if ($('#web_run_index').val() === '') {
+				$('#web_run_index').val('index.html');
 			}
 		}
 
 		this.read_dialog(core.property);
 
 		if (core.property.type == 'dev') {
-			if (core.property.plugins["goorm.plugin.dev"]['plugin.dev.plugin_name'] != previous_property.plugins["goorm.plugin.dev"]['plugin.dev.plugin_name'])
-				$(core).trigger("on_property_confirmed", previous_property);
+			if (core.property.plugins['goorm.plugin.dev']['plugin.dev.plugin_name'] != previous_property.plugins['goorm.plugin.dev']['plugin.dev.plugin_name']) {
+				$(core).trigger('on_property_confirmed', previous_property);
+			}
 		}
 
 		this.save(function() {
@@ -192,13 +197,13 @@ goorm.core.project.property = {
 	},
 
 	restore_default: function() {
-		var current_plugin = "goorm.plugin." + core.status.current_project_type;
+		var current_plugin = 'goorm.plugin.' + core.status.current_project_type;
 		this.property_default.plugins[current_plugin] = core.preference.plugins[current_plugin];
 		this.fill_dialog(this.property_default);
 	},
 
 	read_dialog: function(property) {
-		var target = "#property_tabview";
+		var target = '#property_tabview';
 
 		var targets = $(target).children('div.tab-content').children();
 
@@ -211,53 +216,58 @@ goorm.core.project.property = {
 			} else {
 				key = property.plugins[target_index.attr('plugin')];
 
-				if (key === undefined) return;
+				if (key === undefined) {
+					return;
+				}
 			}
 
-			target_index.find("input").each(function() {
-				if ($(this).attr("name") !== undefined) {
+			target_index.find('input').each(function() {
+				if ($(this).attr('name') !== undefined) {
 					
 
 					var value;
-					if ($(this).attr("type") == "checkbox") {
-						value = $(this).prop("checked");
-					} else if ($(this).attr("type") == "radio") {
-						if ($(this).prop("checked") == true) {
+					if ($(this).attr('type') == 'checkbox') {
+						value = $(this).prop('checked');
+					} else if ($(this).attr('type') == 'radio') {
+						if ($(this).prop('checked') === true) {
 							value = $(this).val();
-						} else return;
+						} else {
+							return;
+						}
 					} else {
 						value = $(this).val();
 					}
-					key[$(this).attr("name")] = value;
+					key[$(this).attr('name')] = value;
 				}
 			});
 
 			//makefile option --heeje
-			target_index.find("input[type=checkbox]").each(function() {
-				if ($(this).attr("name") !== undefined) {
-					if ($(this).parent().hasClass('checked'))
-						key[$(this).attr("name")] = "true";
-					else
-						key[$(this).attr("name")] = "false";
+			target_index.find('input[type=checkbox]').each(function() {
+				if ($(this).attr('name') !== undefined) {
+					if ($(this).parent().hasClass('checked')) {
+						key[$(this).attr('name')] = 'true';
+					} else {
+						key[$(this).attr('name')] = 'false';
+					}
 				}
 			});
 
-			target_index.find("textarea.form-control").each(function() {
-				if ($(this).attr("name") !== undefined) {
-					key[$(this).attr("name")] = $(this).val();
+			target_index.find('textarea.form-control').each(function() {
+				if ($(this).attr('name') !== undefined) {
+					key[$(this).attr('name')] = $(this).val();
 				}
 			});
 
-			target_index.find("select.form-control").each(function() {
-				if ($(this).attr("name") !== undefined) {
-					key[$(this).attr("name")] = $(this).children("option:selected").val();
+			target_index.find('select.form-control').each(function() {
+				if ($(this).attr('name') !== undefined) {
+					key[$(this).attr('name')] = $(this).children('option:selected').val();
 				}
 			});
 		});
 	},
 
 	fill_dialog: function(property) {
-		var targets = $("#property_tabview").children('.tab-content').children();
+		var targets = $('#property_tabview').children('.tab-content').children();
 
 		// 1. initialize
 		targets.find('[type=text]').val('');
@@ -272,40 +282,42 @@ goorm.core.project.property = {
 				key = property;
 			} else {
 				key = property.plugins[plugin_name];
-				if (key === undefined) return;
+				if (key === undefined) {
+					return;
+				}
 			}
 
-			target_index.find("input").each(function() { // jeongmin: don't find with '.form-control' -> radio buttons are icheck, so these will be omitted
+			target_index.find('input').each(function() { // jeongmin: don't find with '.form-control' -> radio buttons are icheck, so these will be omitted
 				
 
 				// if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {	// hidden by jeongmin: undefined and null won't affect to value
-				if ($(this).attr("type") == "checkbox") {
-					if (key[$(this).attr("name")] == "true" || key[$(this).attr("name")] === true) {
-						$(this).iCheck("check");
+				if ($(this).attr('type') == 'checkbox') {
+					if (key[$(this).attr('name')] == 'true' || key[$(this).attr('name')] === true) {
+						$(this).iCheck('check');
 					}
 
-					$(this).iCheck("update");
-				} else if ($(this).attr("type") == "radio") {
-					if (key[$(this).attr("name")] == $(this).val()) { // jeongmin: if scm_revision isn't HEAD, check certain revision
-						$(this).iCheck("check"); //jeongmin: radio button is changed to iCheck
+					$(this).iCheck('update');
+				} else if ($(this).attr('type') == 'radio') {
+					if (key[$(this).attr('name')] == $(this).val()) { // jeongmin: if scm_revision isn't HEAD, check certain revision
+						$(this).iCheck('check'); //jeongmin: radio button is changed to iCheck
 					}
 				} else {
 					
 					//useonly(mode=goorm-oss)
-					$(this).val(key[$(this).attr("name")]);
+					$(this).val(key[$(this).attr('name')]);
 					
 				}
 				// }
 			});
-			target_index.find("textarea.form-control").each(function() {
-				// if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {	// hidden by jeongmin: undefined and null won't affect to value
-				$(this).val(key[$(this).attr("name")]);
+			target_index.find('textarea.form-control').each(function() {
+				// if (key[$(this).attr('name')] !== undefined && key[$(this).attr('name')] !== null) {	// hidden by jeongmin: undefined and null won't affect to value
+				$(this).val(key[$(this).attr('name')]);
 				// }
 			});
-			target_index.find("select.form-control").each(function() {
-				if (key[$(this).attr("name")] !== undefined && key[$(this).attr("name")] !== null) {
-					$(this).children("option[value='" + key[$(this).attr("name")] + "']").attr("selected", "true");
-					$(this).val(key[$(this).attr("name")]);
+			target_index.find('select.form-control').each(function() {
+				if (key[$(this).attr('name')] !== undefined && key[$(this).attr('name')] !== null) {
+					$(this).children('option[value="' + key[$(this).attr('name')] + '"]').attr('selected', 'true');
+					$(this).val(key[$(this).attr('name')]);
 				}
 			});
 
@@ -314,13 +326,15 @@ goorm.core.project.property = {
 
 	load_property: function(path, callback) {
 		var self = this;
-		if (path == '') {
+		if (path === '') {
 			self.property = {};
 			core.property = self.property;
-			callback && callback(null);
+			if (callback) {
+				callback(null);
+			}
 
 		} else {
-			core._socket.once("/project/get_property", function(data) {
+			core._socket.once('/project/get_property', function(data) {
 				if (data.err_code === 0) {
 					////// get scm property //////
 					// if (data.contents) {
@@ -345,7 +359,9 @@ goorm.core.project.property = {
 					// } else { // deletion of project
 					self.property = data.contents || {};
 					core.property = self.property;
-					callback && callback(data.contents);
+					if (callback) {
+						callback(data.contents);
+					}
 					// }
 				} else {
 					
@@ -353,7 +369,7 @@ goorm.core.project.property = {
 				}
 			});
 
-			core._socket.emit("/project/get_property", {
+			core._socket.emit('/project/get_property', {
 				project_path: path
 			});
 		}
@@ -370,7 +386,7 @@ goorm.core.project.property = {
 			data = core.workspace[project_path];
 
 			if (plugin) {
-				data = core.workspace[project_path].plugins['goorm.plugin.' + project_type]
+				data = core.workspace[project_path].plugins['goorm.plugin.' + project_type];
 			}
 		}
 
@@ -417,9 +433,7 @@ goorm.core.project.property = {
 	init_dialog: function() {
 		var self = this;
 
-		this.panel = $("#dlg_project_property");
-
-
+		this.panel = $('#dlg_project_property');
 		// Handler for OK button
 		var handle_ok = function(panel) {
 			self.apply();
@@ -441,24 +455,24 @@ goorm.core.project.property = {
 
 		var set_dialog_button = function() {
 			// set Apply, restore_default Button
-			$("#property_tabview").find(".apply").click(function() {
+			$('#property_tabview').find('.apply').click(function() {
 				self.apply();
 			}).each(function(i) {
-				$(this).attr("id", "property_applyBt_" + i);
+				$(this).attr('id', 'property_applyBt_' + i);
 			});
 
-			$("#property_tabview").find(".restore_default").click(function() {
+			$('#property_tabview').find('.restore_default').click(function() {
 				self.restore_default();
 			}).each(function(i) {
-				$(this).attr("id", "property_restore_defaultBt_" + i);
+				$(this).attr('id', 'property_restore_defaultBt_' + i);
 			});
 		};
 
 		var load_plugin_tree = function() {
-			var plugin_node = null,
-				plugin_list = core.module.plugin_manager.list,
-				plugin_count = plugin_list.length,
-				tree_data = [];
+			var plugin_node = null;
+			var	plugin_list = core.module.plugin_manager.list;
+			var	plugin_count = plugin_list.length;
+			var	tree_data = [];
 
 			var get_plugin_data = function(plugin_name) {
 				var json_string = external_json.plugins[plugin_name]['tree.json'];
@@ -470,9 +484,11 @@ goorm.core.project.property = {
 					console.log(plugin_name, 'Project Plugin Load Fail');
 				}
 				if (json.property) {
-					var data = self.manager.convert_json_to_tree("Plugin", json.property);
+					var data = self.manager.convert_json_to_tree('Plugin', json.property);
 					return data;
-				} else return [];
+				} else {
+					return [];
+				}
 			};
 
 			// load plugin tree.json
@@ -485,7 +501,7 @@ goorm.core.project.property = {
 			set_dialog_button();
 		};
 
-		// hidden : not always want to see information first. 
+		// hidden : not always want to see information first.
 		// $('#dlg_project_property').on('shown.bs.modal', function (e) {
 		// 	$('#property_treeview').find("li[path='Property/Information']>a").click();
 		// });
@@ -493,11 +509,11 @@ goorm.core.project.property = {
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_project_property",
-			id: "dlg_project_property",
+			id: 'dlg_project_property',
 			handle_ok: handle_ok,
 			handle_cancel: handle_cancel,
 			success: function() {
-				var json = JSON.parse(external_json['public']['configs']['dialogs']['goorm.core.project']['tree.json']);
+				var json = JSON.parse(external_json['public'].configs.dialogs['goorm.core.project']['tree.json']);
 
 				// load plugin tree
 				load_plugin_tree();
@@ -505,12 +521,10 @@ goorm.core.project.property = {
 				// construct basic tree structure
 				// self.manager.create_treeview(json);
 
-				$(core).on("language_loaded", function(event, change) {
+				$(core).on('language_loaded', function(event, change) {
 					self.manager.create_treeview(json[core.module.localization.language], change);
 				});
 			}
 		});
-
-
 	}
 };

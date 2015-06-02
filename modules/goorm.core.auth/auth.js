@@ -8,11 +8,11 @@
  * version: 2.0.0
  **/
 
-var list = ["google", "github", "facebook", "twitter", "password"];
+var list = ['google', 'github', 'facebook', 'twitter', 'password'];
 
 var http = require('http');
-var querystring = require('querystring')
-	// var fs = require('fs');
+var querystring = require('querystring');
+// var fs = require('fs');
 
 module.exports = {
 	connect: function(__guest) {
@@ -30,7 +30,7 @@ module.exports = {
 
 		if (req.body.secure_session_id || req.query.secure_session_id) {
 			session_id = (req.body.secure_session_id) ? req.body.secure_session_id : ((req.query.secure_session_id) ? req.query.secure_session_id : req.sessionID);
-			session_id = session_id.replace(/ /g, "+");
+			session_id = session_id.replace(/ /g, '+');
 			force = true;
 		}
 
@@ -42,10 +42,9 @@ module.exports = {
 
 						if (force || USE_SSO) {
 							callback(redis_session);
-						}
-						else { // force --> false
-							store.client.get('session_'+IDE_HOST+'_' + redis_session.id, function(err, data) {
-								// compare ID: session ID 
+						} else { // force --> false
+							store.client.get('session_' + IDE_HOST + '_' + redis_session.id, function(err, data) {
+								// compare ID: session ID
 								if (data === session_id) {
 									callback(redis_session);
 								} else {
@@ -73,7 +72,7 @@ module.exports = {
 	},
 
 	// save to redis ssh_[id]:STRING([data])
-	// 
+	//
 	save_auth_data: function(id, data, callback) {
 		var ssh_id = 'ssh_' + id;
 

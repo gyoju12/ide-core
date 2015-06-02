@@ -19,6 +19,7 @@ var EventEmitter = require('events').EventEmitter;
 var g_file = require('../modules/goorm.core.file/file');
 var g_preference = require('../modules/goorm.core.preference/preference');
 var g_project = require('../modules/goorm.core.project/project');
+var g_project_workspace = require('../modules/goorm.core.project/project.workspace');
 var g_terminal = require('../modules/goorm.core.terminal/terminal');
 var g_plugin = require('../modules/goorm.plugin/plugin');
 var g_help = require('../modules/goorm.core.help/help');
@@ -87,7 +88,7 @@ var formatting = function(str) {
 exports.index = function(req, res, options) {
 	var use_terminal = true;
 
-	if (options != null) {
+	if (options !== null) {
 		if (options.use_terminal !== undefined) {
 			use_terminal = options.use_terminal;
 		}
@@ -116,19 +117,6 @@ exports.index = function(req, res, options) {
 exports.project = function(req, res) {
 	res.send(null);
 };
-
-// exports.project.do_new = function(req, res) {
-// 	var evt = new EventEmitter();
-
-// 	evt.on("project_do_new", function(data) {
-// 		res.json(data);
-// 	});
-
-// 	
-
-// 	
-// 	g_project.do_new(req.query, evt);
-// };
 
 exports.project.do_load = function(req, res) {
 	res.send(null);
@@ -576,7 +564,7 @@ exports.file.do_copy_file_paste = function(req, res) {
 			'err_code': 1
 		});
 	}
-}
+};
 
 exports.file.do_delete = function(req, res) {
 	var evt = new EventEmitter();
@@ -753,7 +741,10 @@ exports.file.get_file = function(req, res) {
 			}
 		});
 
-		g_file.get_file(filepath, filename, evt);
+		g_file.get_file({
+			'filepath': filepath,
+			'filename': filename
+		}, evt);
 	} else {
 		res.json({});
 	}
@@ -778,6 +769,7 @@ exports.file.check_valid_edit = function(req, res) {
 		res.json({});
 		return false;
 	}
+
 	evt.once('check_valid_edit', function(data) {
 		if (!data.result) {
 			switch (data.code) {
@@ -787,9 +779,12 @@ exports.file.check_valid_edit = function(req, res) {
 
 				case 1:
 					console.log('Error: check_valid_edit, project path is not directory.', __workspace + project_path);
+					break;
 
 				case 2:
 					console.log('Error: check_valid_edit, project path cannot read.', __workspace + project_path);
+					break;
+
 					
 				default:
 					break;
@@ -799,7 +794,12 @@ exports.file.check_valid_edit = function(req, res) {
 		res.json(data);
 	});
 
-	g_file.check_valid_edit(project_path, filepath, filename, evt);
+	g_file.check_valid_edit({
+		'user_id': req.__user.id,
+		'project_path': project_path,
+		'filepath': filepath,
+		'filename': filename
+	}, evt);
 };
 exports.file.do_move = function(req, res) {
 	var evt = new EventEmitter();
@@ -861,6 +861,7 @@ exports.file.do_export = function(req, res) {
 
 		// validate permission
 		
+		
 		//useonly(mode=goorm-oss)
 		g_file.do_export(req.query, evt);
 		
@@ -914,7 +915,7 @@ exports.file.do_open = function(req, res) {
 	var query = req.query.q;
 	var __atob = function(str) {
 		return (new Buffer(str, 'base64').toString('binary'));
-	}
+	};
 
 	var decode = __atob(query);
 
@@ -1050,7 +1051,7 @@ exports.help.send_to_bug_report = function(req, res) {
 	req.query.email = req.query.email || req.__user.email;
 
 	g_help.send_to_bug_report(req.query, evt);
-}
+};
 
 
 
@@ -1059,7 +1060,7 @@ exports.project.get_contents = function(req, res) { //(2015/04/16) if you want t
 	var user = req.query.username;
 
 	var command = exec('cd ' + __workspace + path + ';zip -r ' + __temp_dir + path + '.zip *', function(error, stdout, stderr) {
-		if (error == null) {
+		if (error === null) {
 			fs.readFile(__temp_dir + path + '.zip', 'base64', function(err, data) {
 				res.send(data);
 			});
@@ -1068,7 +1069,7 @@ exports.project.get_contents = function(req, res) { //(2015/04/16) if you want t
 			res.send('error : ' + error);
 		}
 	});
-}
+};
 
 
 
@@ -1129,7 +1130,7 @@ exports.upload = function(req, res) {
 	} else {
 		file_list = req.files.file;
 	}
-	if (file_list.length == 0) {
+	if (file_list.length === 0) {
 		// console.log('1-1');
 		res.json({
 			'err_code': 10,
@@ -1163,7 +1164,8 @@ exports.upload = function(req, res) {
 
 		g_file.do_import(req.body, file_list[i], evt);
 	}
-}
+};
+
 exports.send_file = function(req, res) {
 	// console.log('__workspace', __workspace)
 	// console.log('req.query.file', req.query.file);
@@ -1172,7 +1174,7 @@ exports.send_file = function(req, res) {
 	// 	path = path.replace(/\/\//g, "/");
 	// }
 	if (req.query.file.indexOf('..') > -1) {
-		console.log('hacking trial!!')
+		console.log('hacking trial!!');
 		res.json(null);
 		return false;
 	}
@@ -1217,12 +1219,12 @@ exports.download.exe_file = function(req, res) {
 
 exports.edit = function(req, res) {
 	res.send(null);
-}
+};
 
 exports.edit.get_dictionary = function(req, res) {
 	// var evt = new EventEmitter();
 
-	// evt.on("edit_get_dictionary", function (data) {
+	// evt.on("edit_get_dictionary", function(data) {
 	// 	res.json(data);
 	// });
 
@@ -1280,7 +1282,7 @@ exports.edit.save_tags = function(req, res) {
 		res.json(true);
 	});
 	
-}
+};
 
 exports.edit.load_tags = function(req, res) {
 	var option = req.query;
@@ -1292,7 +1294,7 @@ exports.edit.load_tags = function(req, res) {
 		res.json(response);
 	});
 	
-}
+};
 
 
 

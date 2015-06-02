@@ -20,8 +20,8 @@ goorm.core.dialog.alert.prototype = {
 
 		this.panel = $('#dlg_alert');
 
-		this.icon = "<i class=\"fa fa-exclamation-circle fa-3x\"></i>";
-		this.panel.find(".modal-footer button:last-child").last().click(function(){
+		this.icon = '<i class="fa fa-exclamation-circle fa-3x"></i>';
+		this.panel.find('.modal-footer button:last-child').last().click(function() {
 			self.panel.modal('hide');
 		});
 
@@ -36,20 +36,23 @@ goorm.core.dialog.alert.prototype = {
 			$('.modal.in').focus();
 
 			//fix deleting project
-			if($('#dlg_delete_project').attr('class').indexOf('in') >= 0)
-				$("#project_delete_list").focus();
+			if ($('#dlg_delete_project').attr('class').indexOf('in') >= 0) {
+				$('#project_delete_list').focus();
+			}
 
-			if(self.callback) self.callback();
+			if (self.callback) {
+				self.callback();
+			}
 
 		});
 
-		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+		this.panel.on('show.bs.modal', function() { // jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
+			var $dialog = $(this).find('.modal-dialog');
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
+			$(this).css('top', offset_height - 30).css('left', offset_width);
 		});
 
 		// move to Center	//jeongmin: done at dialog.js
@@ -68,7 +71,7 @@ goorm.core.dialog.alert.prototype = {
 		// 		}
 		// 		else {
 		// 			container.css('margin-top', '10px');
-		// 		}			
+		// 		}
 		// 	}, 200); // fade animation: 0.15s -> 150
 		// });
 	},
@@ -80,10 +83,10 @@ goorm.core.dialog.alert.prototype = {
 		this.message = filtered_msg;
 		this.callback = callback;
 
-		var panelContainer_bd = this.panel.find("#alert_content_container");
+		var panelContainer_bd = this.panel.find('#alert_content_container');
 
 		panelContainer_bd.empty();
-		panelContainer_bd.append("<div class='alert_image_div col-md-2'>" + this.icon + "</div><div class='alert_content_div col-md-10'>" + this.message + "</div>");
+		panelContainer_bd.append('<div class="alert_image_div col-md-2">' + this.icon + '</div><div class="alert_content_div col-md-10">' + this.message + '</div>');
 
 		this.panel.modal('show');
 	}

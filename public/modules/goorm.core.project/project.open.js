@@ -209,36 +209,12 @@ goorm.core.project.open = {
 		}
 	},
 
-	reopen: function (next) {
-		var self = this;
-
-		var current_project_path = core.status.current_project_path;
-		var current_project_name = core.status.current_project_name;
-		var current_project_type = core.status.current_project_type;
-
-		if (this.opened_list && this.opened_list.length > 0) {
-			var list = this.opened_list.filter(function (o) {
-				return (o.current_project_path !== current_project_path);
-			});
-
-			if (list && list.length > 0) {
-				var _mount = function (data, next) {
-					self.mount(data.current_project_path, function () {
-						next();
-					});
-				};
-
-				async.map(list, _mount, function () {
-					self.open(current_project_path, current_project_name, current_project_type);
-				});
-			}
-			else {
-				self.open(current_project_path, current_project_name, current_project_type);
-			}
-		}
+	reopen: function(next) {
+		
+		
 	},
 
-	open: function(current_project_path, current_project_name, current_project_type) {
+	open: function(current_project_path, current_project_name, current_project_type, storage) {
 		var self = this;
 
 		//$(core).trigger('on_project_binding');

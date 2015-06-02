@@ -46,7 +46,7 @@ module.exports = {
 			}
 
 			// make new file. Jeong-Min Im.
-			function create_file() {
+			var create_file = function() {
 				fs.writeFile(global.__workspace + '/' + path, '', function(err) {
 					if (err !== null) {
 						data.err_code = 40;
@@ -58,7 +58,7 @@ module.exports = {
 						evt.emit('file_do_new', data);
 					}
 				});
-			}
+			};
 
 			fs.stat(global.__workspace + '/' + path, function(err, stats) {
 				if (err) { // no exist
@@ -68,11 +68,11 @@ module.exports = {
 						data.err_code = 28; // jeongmin: EISDIR
 						data.message = 'alert_same_name_folder';
 						evt.emit('file_do_new', data);
-					} else if (query.new_anyway == 'false' || query.new_anyway == false) { // jeongmin: let user know same name exists
+					} else if (query.new_anyway === 'false' || query.new_anyway === false) { // jeongmin: let user know same name exists
 						data.err_code = 99;
 						data.message = 'exist file';
 						evt.emit('file_do_new', data);
-					} else if ((query.new_anyway == 'true' || query.new_anyway == true) && stats.isFile()) { // jeongmin: overwrite file
+					} else if ((query.new_anyway === 'true' || query.new_anyway === true) && stats.isFile()) { // jeongmin: overwrite file
 						create_file();
 					} else {
 						data.err_code = 10;
@@ -228,7 +228,7 @@ module.exports = {
 					}
 				});
 			} else {
-				if (query.options != undefined && query.options.append == true) {
+				if (query.options !== undefined && query.options.append === true) {
 					fs.appendFile(abs_path, query.data, function(err) {
 						if (err !== null) {
 							data.err_code = 10;
@@ -287,7 +287,7 @@ module.exports = {
 
 			// files on root
 			for (var j = 0; j < files.length; j++) {
-				if (files[j].root == '') {
+				if (files[j].root === '') {
 					marked.push(j);
 					tree.push(files[j]);
 				}
@@ -357,6 +357,7 @@ module.exports = {
 		});
 	},
 
+	//useonly(mode=goorm-standalone,goorm-oss)
 	do_rename: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -385,7 +386,11 @@ module.exports = {
 			evt.emit('file_do_rename', data);
 		}
 	},
+	
 
+	
+
+	//useonly(mode=goorm-standalone,goorm-oss)
 	do_move: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -431,7 +436,7 @@ module.exports = {
 					ori_file: file, // jeongmin: file name is same on drag and drop
 					dst_path: query.dst_path,
 					dst_file: file
-				}, i == 0);
+				}, i === 0);
 			}
 		} else {
 			data.err_code = 18; // EINVAL
@@ -440,7 +445,11 @@ module.exports = {
 			evt.emit('file_do_move', data);
 		}
 	},
+	
 
+	
+
+	//useonly(mode=goorm-standalone,goorm-oss)
 	do_import: function(query, file, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -506,7 +515,7 @@ module.exports = {
 
 						is.on('end', function() {
 							data.file.push(file_path);
-							// fs.unlink(__file.path, function (err){
+							// fs.unlink(__file.path, function(err){
 							// 	if (err) console.log(err);
 							// });
 							load_count++;
@@ -564,10 +573,15 @@ module.exports = {
 			evt.emit('file_do_import', data);
 		}
 	},
+	
+
+	
 
 	// export file. Jeong-Min Im.
 	// query (Object)
 	// evt (EventEmitter)
+
+	//useonly(mode=goorm-standalone,goorm-oss)
 	do_export: function(query, evt) {
 		fs.mkdir(path.join(global.__temp_dir, query.user), '0777', function(err) {
 			var target = query.path;
@@ -621,6 +635,10 @@ module.exports = {
 			}
 		});
 	},
+	
+
+	
+
 	
 	get_property: function(query, evt) {
 
@@ -685,11 +703,11 @@ module.exports = {
 			}
 
 			fs.exists(global.__workspace + '/' + path, function(exists) {
-				if (exists && (query.save_anyway == 'false' || query.save_anyway == false)) {
+				if (exists && (query.save_anyway === 'false' || query.save_anyway === false)) {
 					data.err_code = 99;
 					data.message = 'exist file';
 					evt.emit('file_do_save_as', data);
-				} else if (exists && (query.save_anyway == 'true' || query.save_anyway == true)) {
+				} else if (exists && (query.save_anyway === 'true' || query.save_anyway === true)) {
 					rimraf(global.__workspace + '/' + path, function(err) {
 						if (err) {
 							data.err_code = 88;
@@ -745,10 +763,15 @@ module.exports = {
 		}
 	},
 
-	get_file: function(filepath, filename, evt) {
+	//useonly(mode=goorm-standalone,goorm-oss)
+	get_file: function(options, evt) {
+		var filepath = options.filepath;
+		var filename = options.filename;
+
 		if (!fs.existsSync(__temp_dir)) {
 			fs.mkdirSync(__temp_dir);
 		}
+
 		if (!fs.existsSync(__temp_dir + '/files')) {
 			fs.mkdirSync(__temp_dir + '/files');
 		}
@@ -773,8 +796,20 @@ module.exports = {
 			result: true
 		});
 	},
+	
 
-	check_valid_edit: function(project_path, filepath, filename, evt) {
+	
+
+	
+
+	
+
+	//useonly(mode=goorm-oss)
+	check_valid_edit: function(options, evt) {
+		var project_path = options.project_path;
+		var filepath = options.filepath;
+		var filename = options.filename;
+
 		var project_real_path = global.__workspace + '/' + project_path;
 
 		var valid_path = function(base_path, filepath, filename, evt) {
@@ -785,6 +820,7 @@ module.exports = {
 				});
 				return false;
 			}
+
 			fs.exists(base_path + '/' + filepath + filename, function(exists) {
 				//valid file
 				if (exists) {
@@ -805,7 +841,7 @@ module.exports = {
 
 				}
 			});
-		}
+		};
 
 		fs.exists(project_real_path, function(project_exists) {
 			if (project_exists) {
@@ -846,6 +882,7 @@ module.exports = {
 			}
 		});
 	},
+	
 
 	copy_file_sync: function(srcFile, destFile) {
 		var BUF_LENGTH = 64 * 1024;
@@ -920,6 +957,9 @@ module.exports = {
 	// 	}
 	// }
 	// _callback (Function)
+	
+	
+	//useonly(mode=goorm-oss)
 	do_copy_file_paste: function(req, _callback) {
 		var files = req.query.source.files;
 		var directorys = req.query.source.directorys;
@@ -946,7 +986,6 @@ module.exports = {
 
 									callback(null, files[i]);
 								} else {
-									
 									callback();
 								}
 							});
@@ -986,7 +1025,6 @@ module.exports = {
 
 							callback(null, directorys[j]);
 						} else {
-							
 							callback();
 						}
 					});
@@ -1017,6 +1055,8 @@ module.exports = {
 			});
 		});
 	},
+	
+
 	/*
 	upload_file_dd: function(req, evt) {
 		var data = {
@@ -1096,6 +1136,11 @@ module.exports = {
 	// moving uploaded files to target directories. Jeong-Min Im.
 	// req (Object) : information set for uploading
 	// evt (EventEmitter) : for sending result
+	
+
+	
+
+	//useonly(mode=goorm-oss)
 	upload_dir_file: function(req, evt) {
 		if (req.body) {
 			var files = (req.files && req.files.file) ? req.files.file : req.body.file;
@@ -1142,7 +1187,6 @@ module.exports = {
 								}
 
 								async.series(mv_exec, function() {
-									
 									evt.emit('upload_dir_file', true);
 								});
 							} else {
@@ -1162,6 +1206,7 @@ module.exports = {
 			evt.emit('upload_dir_file', false);
 		}
 	},
+	
 
 	// making skeleton directories of uploaded folder. Jeong-Min Im.
 	// options (Object) : information set for uploading
@@ -1270,22 +1315,25 @@ module.exports = {
 			return false;
 		}
 
+		var project_path = query.project_path;
 		var abs_path = path.join(global.__workspace, query.path);
 
-		// console.log('get_result_ls');
-		// console.log(abs_path);
+		//console.log('get_result_ls');
+		//console.log(abs_path);
 
 		var opened_folders = (query.state) ? query.state : [];
 		var author = query.author;
 		var owner_roots = [];
 
-		// console.log(opened_folders);
+		
+
+		//console.log(opened_folders);
 
 		var _read_dir = function() {
 			if (opened_folders.length > 0) {
 				var root_folder = query.path;
 				opened_folders = opened_folders.map(function(_path) {
-					return (_path.indexOf(root_folder) == 0) ? _path.slice(root_folder.length) : _path;
+					return (_path.indexOf(root_folder) === 0) ? _path.slice(root_folder.length) : _path;
 				});
 				////// push omitted parent folder. Jeong-Min Im. //////
 				for (var i = 0; i < opened_folders.length; i++) {
@@ -1340,17 +1388,21 @@ module.exports = {
 					var file_list = [];
 					list.map(function(files) {
 						files.map(function(file) {
+							
+
 							file_list.push(file);
 						});
 					});
-					// console.log(1);
-					// console.log(file_list);
+					//console.log(1);
+					//console.log(file_list);
 					evt.emit('got_result_ls', file_list);
 				});
 			} else {
 				try {
 					_this._read_dir(query.path, abs_path)
 						.then(function(files) {
+							
+
 							evt.emit('got_result_ls', files);
 						});
 				} catch (e) {
@@ -1419,12 +1471,11 @@ module.exports = {
 								if (abs_path === '') {
 									file.type = 'folder';
 									file_list.push(file);
-								}
-								
-								else {
+								} else {
 									file.type = 'folder';
 									file_list.push(file);
 								}
+								
 							}
 						}
 					}
@@ -1500,6 +1551,7 @@ module.exports = {
 	},
 
 	// check file or folder exists. Jeong-Min Im.
+	//useonly(mode=goorm-standalone,goorm-oss)
 	check_exist: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -1527,5 +1579,7 @@ module.exports = {
 
 			evt.emit('file_check_exist', data);
 		}
-	}
+	},
+	
+	
 };

@@ -26,7 +26,7 @@ goorm.core.edit.bookmark.prototype = {
 		var is_added = true; // jeongmin: whether bookmark will be added or not
 		var line = this.editor.set_bookmark(null, new_bookmark_line); //set bookmark and get bookmark line number
 
-		if (this.bookmarks[line] == undefined) {//if bookmark line isn't in the list
+		if (this.bookmarks[line] === undefined) { //if bookmark line isn't in the list
 			this.bookmarks[line] = ''; //add new bookmark to the window
 		} else {
 			delete this.bookmarks[line];
@@ -88,7 +88,7 @@ goorm.core.edit.bookmark.prototype = {
 				}
 
 				this.move(lines[length - 1]); //if can't find smaller line than current line, just move to last bookmark
-			} else if (index == 0) { //current line is in the list, but this line is first index of the list
+			} else if (index === 0) { //current line is in the list, but this line is first index of the list
 				this.move(lines[length - 1]); //move to last bookmark
 			} else { //current line is in the list and not the first index
 				this.move(lines[index - 1]); //move to previous index of the list
@@ -126,7 +126,7 @@ goorm.core.edit.bookmark.prototype = {
 
 			this.editor.editor.setCursor(parseInt(keyword, 10) - 1, 0); //set cursor to the parsed integer keyword
 			CodeMirror.commands.showInCenter(this.editor.editor);
-		} else {//linenumber is number type
+		} else { //linenumber is number type
 			this.editor.editor.setCursor(linenumber - 1, 0); //set cursor to the line
 			CodeMirror.commands.showInCenter(this.editor.editor);
 		}
@@ -224,7 +224,7 @@ goorm.core.edit.bookmark.prototype = {
 		var placeholder = core.module.localization.msg.profile_comment;
 
 		////// write comment //////
-		if (new_comment && new_comment != '') {
+		if (new_comment && new_comment !== '') {
 			comment_place.html(this.filtering(new_comment));
 		} else {
 			comment_place.html(this.filtering(placeholder));
@@ -261,7 +261,7 @@ goorm.core.edit.bookmark.prototype = {
 						comment = $(this).val();
 
 						$(this).blur();
-					} else if (e.keyCode == 27) {//esc
+					} else if (e.keyCode == 27) { //esc
 						$(this).blur(); // cancel
 					}
 				});
@@ -315,7 +315,7 @@ goorm.core.edit.bookmark.prototype = {
 	de_filtering: function(data) {
 		if (data) {
 			data = data.replace('&lt;', '<').replace('&gt;', '>');
-			data = ((data.replace('&amp;', '&')).replace('&quot;', '"')).replace('&#39;', "'");
+			data = ((data.replace('&amp;', '&')).replace('&quot;', '"')).replace('&#39;', '\'');
 		}
 
 		return data;

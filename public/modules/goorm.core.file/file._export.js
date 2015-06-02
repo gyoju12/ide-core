@@ -25,7 +25,7 @@ goorm.core.file._export = {
 			var localization_msg = core.module.localization.msg;
 			var data = null;
 
-			if (context) {
+			if (context === true) {
 				data = core.module.layout.project_explorer.get_tree_selected_path();
 				data = data.files;
 			} else {
@@ -49,7 +49,7 @@ goorm.core.file._export = {
 						var download_func = [];
 						
 
-						if (!context) {
+						if (context !== true) {
 							self.panel.modal('hide');
 						}
 
@@ -116,7 +116,7 @@ goorm.core.file._export = {
 	show: function(context) {
 		var self = this;
 
-		if (context) {
+		if (context === true) {
 			this.after_show();
 			confirmation.init({
 				'title': core.module.localization.title.title_export_file,

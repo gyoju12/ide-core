@@ -19,17 +19,15 @@ goorm.core.file.save_as = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_save_as_file");
+		this.panel = $('#dlg_save_as_file');
 
 		// this.panel.click(function() {	// hidden: storage is deprecated
 		// 	$("button[localization_key=common_target]").blur();
 		// });
 
-
-
 		self.handle_save = function() {
 			var file_data = self.dialog_explorer.get_data();
-			if (file_data.path === "" || file_data.name === "") {
+			if (file_data.path === '' || file_data.name === '') {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				// alert.show("File name is empty. Please fill it...");
 				return false;
@@ -44,7 +42,7 @@ goorm.core.file.save_as = {
 			};
 
 			//$.get("file/save_as", postdata, function (data) {
-			core._socket.once("/file/save_as", function(data) {
+			core._socket.once('/file/save_as', function(data) {
 				var w_save = core.module.layout.workspace.window_manager.find_by_filename(file_data.path + '/', file_data.name);
 
 				if (data.err_code == 99) {
@@ -52,18 +50,16 @@ goorm.core.file.save_as = {
 						message: core.module.localization.msg.confirmation_new_message,
 						yes_text: core.module.localization.msg.yes,
 						no_text: core.module.localization.msg.no,
-						title: "Confirmation",
+						title: 'Confirmation',
 						yes: function() {
 							self.is_save_anyway = true;
 							self.handle_save();
 						},
 						no: null
 					});
-
-
 					confirmation.show();
 
-					$("#dlg_save_as_file").click(function() {
+					$('#dlg_save_as_file').click(function() {
 						confirmation.hide();
 					});
 				} else if (data.err_code === 0) {
@@ -86,30 +82,28 @@ goorm.core.file.save_as = {
 					alert.show(data.message);
 				}
 			});
-			core._socket.emit("/file/save_as", postdata);
+			core._socket.emit('/file/save_as', postdata);
 		};
-
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_save_as",
-			id: "dlg_save_as_file",
+			id: 'dlg_save_as_file',
 			handle_ok: self.handle_save,
 			// success: function() {
-			// 	$(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
-			// 		$("button[localization_key=common_target]").blur();
+			// 	$(document).on('click', 'li.open.storage', function() {	// hidden: storage is deprecated
+			// 		$('button[localization_key=common_target]').blur();
 			// 	});
 			// },
 			show: $.proxy(this.after_show, this)
 		});
 
-
-		this.dialog_explorer = new goorm.core.dialog.explorer("#file_save_as", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#file_save_as', this);
 		this.bind();
 	},
 
 	show: function() {
-		this.contents_data = "";
+		this.contents_data = '';
 		this.is_save_anyway = false;
 
 		var window_manager = core.module.layout.workspace.window_manager;
@@ -125,18 +119,18 @@ goorm.core.file.save_as = {
 
 		this.dialog_explorer.init(true, true);
 		this.panel.modal('show');
-		$("#file_save_as_target_name").val(window_manager.window[window_manager.active_window].filename);
+		$('#file_save_as_target_name').val(window_manager.window[window_manager.active_window].filename);
 	},
 
 	after_show: function() {
 
 		//fix of duplicating problem --heeje
 		var window_manager = core.module.layout.workspace.window_manager;
-		var path_arr = window_manager.window[window_manager.active_window].title.split("/");
+		var path_arr = window_manager.window[window_manager.active_window].title.split('/');
 		path_arr.pop();
 		// console.log($('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
-		$('#file_save_as_dir_tree').jstree("select_node", $('#file_save_as_dir_tree li[path="' + path_arr.join("/").trim() + '"]').attr('id'));
-		$("#file_save_as_target_name").focus();
+		$('#file_save_as_dir_tree').jstree('select_node', $('#file_save_as_dir_tree li[path="' + path_arr.join('/').trim() + '"]').attr('id'));
+		$('#file_save_as_target_name').focus();
 	},
 
 	bind: function() {
@@ -147,43 +141,42 @@ goorm.core.file.save_as = {
 		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
 				case 13: // 'enter' key
-					$("#g_saf_btn_ok").click();
+					$('#g_saf_btn_ok').click();
 					break;
 			}
 		});
 
-		// when enter 'tab' key, move from left tree to right file view 
-		$("#file_save_as_dir_tree").keydown(function(e) {
+		// when enter 'tab' key, move from left tree to right file view
+		$('#file_save_as_dir_tree').keydown(function(e) {
 			switch (e.keyCode) {
 				case 9: // 'tab' key
-					$(files).find("div")[0].click();
+					$(files).find('div')[0].click();
 					return false;
 			}
 		});
 
-		$("#g_saf_btn_ok").keydown(function(e) {
+		$('#g_saf_btn_ok').keydown(function(e) {
 			if (e.keyCode == 9) {
-				$("#file_save_as_dir_tree").find(".jstree-clicked").click();
+				$('#file_save_as_dir_tree').find('.jstree-clicked').click();
 			}
 			e.preventDefault();
 		});
 
-
-		$(files).on("click", "div.file_item", function() {
-			$("#file_save_as_target_name").val($(this).attr("filename"));
-			self.filename = $(this).attr("filename");
-			self.filetype = $(this).attr("filetype");
-			self.filepath = $(this).attr("filepath");
-		}).on("dblclick", "div.file_item", function() {
+		$(files).on('click', 'div.file_item', function() {
+			$('#file_save_as_target_name').val($(this).attr('filename'));
+			self.filename = $(this).attr('filename');
+			self.filetype = $(this).attr('filetype');
+			self.filepath = $(this).attr('filepath');
+		}).on('dblclick', 'div.file_item', function() {
 			self.handle_save();
 			core.dialog.open_file.panel.modal('hide');
-		});;
+		});
 
-		$(files).on("click", "div.folder_item", function() {
-			$("#file_save_as_target_name").val("");
-			self.filename = "";
-			self.filetype = "";
-			self.filepath = "";
+		$(files).on('click', 'div.folder_item', function() {
+			$('#file_save_as_target_name').val('');
+			self.filename = '';
+			self.filetype = '';
+			self.filepath = '';
 		});
 	}
 };

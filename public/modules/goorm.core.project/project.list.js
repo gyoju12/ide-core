@@ -62,7 +62,7 @@ goorm.core.project.list.prototype = {
 		var dictionary_author = (core.module.localization && core.module.localization.msg && core.module.localization.msg.dictionary_type) ? core.module.localization.msg.dictionary_author : 'author';
 		var project_empty = (core.module.localization && core.module.localization.msg && core.module.localization.msg.project_empty) ? core.module.localization.msg.project_empty : 'Proejct does not exist.';
 
-		$('#' + this.context).html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.table_context + '" ></table>')
+		$('#' + this.context).html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.table_context + '" ></table>');
 		this.table = $('#' + this.table_context).dataTable({
 			'aaData': [],
 			'aoColumns': [{
@@ -119,7 +119,7 @@ goorm.core.project.list.prototype = {
 		if (this.table && data && data.length > 0) {
 			for (var i = 0; i < data.length; i++) {
 				if (data[i].is_check) { // jeongmin: if it is checkbox
-					data[i].check = '<input type="checkbox" class="project_checkbox" />'
+					data[i].check = '<input type="checkbox" class="project_checkbox" />';
 				}
 
 				this.table.fnAddData({
@@ -291,9 +291,9 @@ goorm.core.project.list.prototype = {
 						this.contents.detailedtype = 'edu';
 					}
 					icon_str += '<div id="selector_' + this.contents.name + '" value="' + i + '" class="selector_project media" type="' + this.contents.type + '">';
-					icon_str += '<a class="pull-left project_list_img" href="#"><img class="media-object project_list_img" alt="' + this.contents.type + '" src=' + img_src + '></a>'
+					icon_str += '<a class="pull-left project_list_img" href="#"><img class="media-object project_list_img" alt="' + this.contents.type + '" src=' + img_src + '></a>';
 					icon_str += '<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis">';
-					icon_str += '<h5>' + $('.project_wizard_second_button[project_type=' + this.contents.type + '][detail_type=' + this.contents.detailedtype.replace(' ', '_') + '] .caption p').text() + '</h5>' // jeongmin; remove blank in detailedtype
+					icon_str += '<h5>' + $('.project_wizard_second_button[project_type=' + this.contents.type + '][detail_type=' + this.contents.detailedtype.replace(' ', '_') + '] .caption p').text() + '</h5>'; // jeongmin; remove blank in detailedtype
 					icon_str += '<p>' + this.contents.name + '</p>';
 					icon_str += '</div>';
 
@@ -326,7 +326,7 @@ goorm.core.project.list.prototype = {
 				});
 				var project_list_children = $(self.list).children();
 
-				if (core.status.current_project_name != '') {
+				if (core.status.current_project_name !== '') {
 					for (var i = 0; i < project_list_children.length; i++) {
 						if ($(project_list_children[i]).find('p').text() == core.status.current_project_name) {
 							$(project_list_children[i]).prependTo($(self.list));
@@ -462,7 +462,7 @@ goorm.core.project.list.prototype = {
 					break;
 			}
 
-			if (next_selected == null) {
+			if (next_selected === null) {
 				return;
 			}
 

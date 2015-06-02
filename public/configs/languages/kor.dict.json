@@ -224,6 +224,9 @@
 	"password": {
 		"value": "비밀번호"
 	},
+	"type_name_or_email": {
+		"value": "이름 또는 이메일을 입력해 주세요..."
+	},
 	"type_message": {
 		"value": "메세지를 입력해주세요..."
 	},

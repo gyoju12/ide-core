@@ -24,6 +24,7 @@ goorm.core.edit.find_and_replace = {
 	replace_cursor: null,
 	matched_file_list: [],
 	change: false, // editor contents is change or not
+	last_editor: null,
 
 	init: function() {
 		var self = this;
@@ -57,6 +58,7 @@ goorm.core.edit.find_and_replace = {
 				$('.find_row').show();
 				$('#s_input_group').hide();
 				$('#f_input_group').show();
+				$('#find_query_inputbox').focus().select();
 			} else if (which === 'replace') {
 				$('#g_far_btn_replace').prop('disabled', false);
 				$('.search_row').hide();
@@ -73,7 +75,7 @@ goorm.core.edit.find_and_replace = {
 		});
 
 		$('#bar_find_and_replace').on('keydown', function(e) {
-			if (e.keyCode === 27) {	// esc
+			if (e.keyCode === 27) { // esc
 				self.hide();
 			}
 		});
@@ -124,7 +126,7 @@ goorm.core.edit.find_and_replace = {
 			if ($('#far_selector').val() === 'search') {
 				core.dialog.search.search_replace();
 			} else {
-				self.handle_replace_all();	
+				self.handle_replace_all();
 			}
 		});
 
@@ -306,10 +308,11 @@ goorm.core.edit.find_and_replace = {
 		}
 
 		// reset count
-		if (this.last_query !== text.toString() || this.total_count === 0 || this.current_count === 0 || this.change) { // if editor contents is changed, reset count
+		if (this.last_query !== text.toString() || this.total_count === 0 || this.current_count === 0 || this.change || this.last_editor !== editor) { // if editor contents is changed, reset count
 			this.change = false;
 			this.total_count = 0;
 			this.current_count = 0;
+			this.last_editor = editor;
 
 			var cursor; // iterator - search positions
 			start = editor.getSearchCursor(text, {
@@ -430,7 +433,7 @@ goorm.core.edit.find_and_replace = {
 	remove_search_focus: function(editor) {
 		$(editor.display.wrapper).find('.CodeMirror-lines').children().children('.goorm-search').empty();
 	},
-	
+
 	// search_all: function(keyword, editor) {
 	// 	if (!keyword) {
 	// 		this.progress_elements.stop();
@@ -744,7 +747,7 @@ goorm.core.edit.find_and_replace = {
 		if (n === 0) {
 			core.module.toast.show(core.module.localization.msg.confirmation_replace_all_none);
 		} else {
-			var msg = ("'" + keyword1 + "' " + n + core.module.localization.msg.confirmation_replace_all_end);
+			var msg = ('\'' + keyword1 + '\' ' + n + core.module.localization.msg.confirmation_replace_all_end);
 			var options = {
 				title: core.module.localization.msg.title_replace_all,
 				message: msg,
@@ -794,15 +797,12 @@ goorm.core.edit.find_and_replace = {
 		this.marked.length = 0;
 	},
 
-	is_visible: function () {
+	is_visible: function() {
 		return ($('#bar_find_and_replace:visible').length > 0);
 	},
 
-	show: function() {
-		if (this.is_visible()) {
-			$('#find_query_inputbox').focus().select();
-			return;
-		}
+	show: $.debounce(function() {
+		$('#far_selector').val('find').change();
 
 		var window_manager = core.module.layout.workspace.window_manager;
 
@@ -833,22 +833,20 @@ goorm.core.edit.find_and_replace = {
 			alert.show(core.module.localization.msg.alert_cannot_exist_editor);
 		}
 
-		
-
 		$('#far_match_case').tooltip();
 		$('#far_whole_word').tooltip();
 		$('#far_use_regexp').tooltip();
 		$('#g_far_btn_find_prev').tooltip();
 		$('#g_far_btn_find').tooltip();
 
-	},
+	}, 300, true),
 
 	hide: function() {
 		var h = $('#bar_find_and_replace').height();
 		$('#workspace').height($('#workspace').height() + h);
 		$('#find_and_replace_matches').html('/');
 		$('#bar_find_and_replace').hide();
-		
+
 		this.unmark();
 		// $('#find_and_replace_matches').hide();
 
@@ -875,7 +873,8 @@ goorm.core.edit.find_and_replace = {
 		if (!this.is_visible()) {
 			return;
 		}
-		var h,w;
+		var h;
+		var w;
 		var window_manager = core.module.layout.workspace.window_manager;
 		if (option) {
 			if (option === 'find') {
@@ -898,7 +897,7 @@ goorm.core.edit.find_and_replace = {
 			w = $('.find_row').width() - $('#far_selector').outerWidth() - $('.search_buttons').outerWidth() - 20;
 			$('#s_input_wrap').width(w);
 		}
-		
+
 		if (window_manager.maximized) {
 			window_manager.maximize_all();
 		}

@@ -10,7 +10,9 @@
 
 goorm.core.utility.ajax_loading = {
 	init: function(socket) {
-		if (!socket) return;
+		if (!socket) {
+			return;
+		}
 
 		this.queue = [];
 		var _this = this;
@@ -42,12 +44,11 @@ goorm.core.utility.ajax_loading = {
 					_this.queue.splice(i, 1);
 					if (_this.queue.length === 0) {
 						setTimeout(function() {
-							_this.progress_elements.stop();	
+							_this.progress_elements.stop();
 						}, 150);
-						
 					}
 				}
-			};
+			}
 
 			on.listener = fn;
 			this.on(name, on);
@@ -60,4 +61,4 @@ goorm.core.utility.ajax_loading = {
 			return this;
 		}.bind(socket);
 	}
-}
+};

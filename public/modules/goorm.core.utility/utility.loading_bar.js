@@ -13,14 +13,14 @@ goorm.core.utility.loading_bar = {
 	unique: [], //if progress has unique, compare with it. if in here, ignore start
 	count: 0, // number of progress bars
 	template: '<div id="progress_wrapper" class="progress_wrapper" fingerprint="_fingerprint">' +
-					'<div id="progress_title" class="row text-muted"></div>' +
-						'<div class="progress">' +
-							'<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
-							'</div>' +
-							'<button id="progress_kill" class="close" aria-hidden="true">&times;</button>' +
-						'</div>' +
-					'<div id="progress_contents"></div>' +
-				'</div>', // progress bar template
+		'<div id="progress_title" class="row text-muted"></div>' +
+		'<div class="progress">' +
+		'<div id="progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
+		'</div>' +
+		'<button id="progress_kill" class="close" aria-hidden="true">&times;</button>' +
+		'</div>' +
+		'<div id="progress_contents"></div>' +
+		'</div>', // progress bar template
 	is_hide: false, // is hide called before shown
 	try_to_show: false, // someone tries to show modal
 	status_hide: false,
@@ -151,8 +151,6 @@ goorm.core.utility.loading_bar = {
 		var kill = 'progress_kill_' + fingerprint;
 		var contents = 'progress_contents_' + fingerprint;
 
-
-
 		this.status_hide = false;
 		// count
 		this.list[fingerprint] = option;
@@ -223,13 +221,16 @@ goorm.core.utility.loading_bar = {
 				$(this.title).html(str);
 			},
 			stop: function() { // stops 'this' progress
-				if (typeof(option.beforeStop) === 'function') {
-					option.beforeStop();
+				if ($(this.wrapper).length) { // only if this progress bar exists
+					if (typeof(option.beforeStop) === 'function') {
+						option.beforeStop();
+					}
+					if (option.unique) {
+						self.unique.splice(self.unique.indexOf(option.unique), 1);
+					}
+
+					self.stop(this.wrapper); // this -> returned object
 				}
-				if (option.unique) {
-					self.unique.splice(self.unique.indexOf(option.unique), 1);
-				}
-				self.stop(this.wrapper); // this -> returned object
 			}
 		};
 	},
@@ -245,7 +246,7 @@ goorm.core.utility.loading_bar = {
 			this.count = 0; // nothing left. Last one is stopped
 			$(wrapper).remove();
 			if (this.panel.hasClass('in')) { // loading bar is showing now, so no need to show it again -> just stop
-				if (Object.keys(self.list).length == 0) {
+				if (Object.keys(self.list).length === 0) {
 					self.hide();
 				}
 			} else { // in progressbar.. notice user that progress is done
@@ -266,7 +267,9 @@ goorm.core.utility.loading_bar = {
 			delete this.list[fingerprint]; // delete it from progress bars list
 			$(wrapper).remove();
 		}
-		if(self.status_hide && this.count === 0) core.progressbar.set(0);
+		if (self.status_hide && this.count === 0) {
+			core.progressbar.set(0);
+		}
 	},
 
 	// show loading bar dialog. Jeong-Min Im.

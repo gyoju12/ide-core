@@ -16,7 +16,7 @@ goorm.core.file = {
 
 		return str.replace(/([\.\ \(\)\[\]])/g, '\\$1');
 	},
-
+	
 	get_regex: function() {
 		return this.name_regex;
 	},

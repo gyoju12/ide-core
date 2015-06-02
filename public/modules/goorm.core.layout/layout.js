@@ -98,15 +98,15 @@ goorm.core.layout = {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
 					inner_layout.sizePane('south', inner_layout.state.south._size || inner_layout.state.south.size);
 				},
-				east__onclose_start: function(pos) {
-					if ($("#chat_joined_panel").css('display') === 'block') {
-						$("#chat_joined_panel").hide('slide', {direction:'right'});
+				east__onclose_start: function() {
+					if ($('#chat_joined_panel').css('display') === 'block') {
+						$('#chat_joined_panel').hide('slide', {direction:'right'});
 					}
 				},
 				
-				onresize_end: function(pos) {
+				onresize_end: function(name, elem) {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
-					if (pos == 'south' && inner_layout.state.south.closing) {
+					if (name == 'south' && inner_layout.state.south.closing) {
 						inner_layout.close('south');
 					}
 					self.refresh();
@@ -315,14 +315,6 @@ goorm.core.layout = {
 						}
 
 					}
-				} else if ($(this).parent().children('.dropdown-menu')) {
-					var dmenu = $(this).parent().children('.dropdown-menu');
-					var height = dmenu.height();
-					var pageY = e.pageY;
-
-					//false gaining height of submenu - hide -- heeje
-					//dmenu.css('overflow-y','auto');
-					//dmenu.css('max-height',$('body').height()-pageY);
 				}
 			},
 			function() { // mouseout event
@@ -405,7 +397,11 @@ goorm.core.layout = {
 
 		document.addEventListener('mousedown', function(e) {
 			var context = $(e.target).closest('ul.dropdown-menu');
-			if (context) {
+
+			if ($(e.target).closest('li.dropdown').hasClass('open')) {
+				return;
+			}
+			if (context.length > 0) {
 				var parent = context.attr('parent');
 				if (parent) {
 					context = $('#' + parent).closest('ul.dropdown-menu');
@@ -598,8 +594,7 @@ goorm.core.layout = {
 
 	},
 
-	resize_all: function() {
-
+	resize_all: $.debounce(function() {
 		// -- left --
 		var left_height = $('#goorm_left').height() - $('#west_tab').height() - $('#goorm_left .nav-pills').height() - 7;
 		$('#project_explorer').height(left_height - $('#project_selector').outerHeight());
@@ -629,14 +624,14 @@ goorm.core.layout = {
 			var $parent = $(this).parent();
 
 			// clr_view may not be rendered yet
-			var clr_view_height = $(this).siblings('.clr_view').outerHeight() == 0 ? 38 : $(this).siblings('.clr_view').outerHeight();
+			var clr_view_height = $(this).siblings('.clr_view').outerHeight() === 0 ? 38 : $(this).siblings('.clr_view').outerHeight();
 			$(this).outerHeight($parent.height() - clr_view_height);
 		});
 		// -- center --
 
 		// workspace
 
-		var layout_center_height = $('#goorm_inner_layout_center').height() - 29; 
+		var layout_center_height = $('#goorm_inner_layout_center').height() - 29;
 		if (core.dialog.find_and_replace && core.dialog.find_and_replace.is_visible()) {
 			layout_center_height -= $('#bar_find_and_replace').outerHeight();
 		}
@@ -653,7 +648,7 @@ goorm.core.layout = {
 		$('#goorm-mainmenu .dropdown-menu').css('max-height', max_height + 'px');
 
 		$(core).trigger('layout_resized');
-	},
+	}, 50),
 
 	set_more_toolbar: function() {
 		var self = this;

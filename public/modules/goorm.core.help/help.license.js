@@ -7,15 +7,15 @@ goorm.core.help.license = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_help_license");
+		this.panel = $('#dlg_help_license');
 
 		var handle_ok = function(panel) {
 			self.panel.modal('hide');
 		};
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_about_goorm",
-			id: "dlg_help_license",
+			// localization_key: 'title_about_goorm',
+			id: 'dlg_help_license',
 			handle_ok: handle_ok,
 			success: null
 
@@ -32,29 +32,29 @@ goorm.core.help.license = {
 		} else if (typeof _lib == 'object') {
 			$.each(_lib, function(index, lib) {
 				switch (lib.name) {
-					case "jQuery":
-						$("#jquery_oss_version").html('jQuery ' + lib.version);
+					case 'jQuery':
+						$('#jquery_oss_version').html('jQuery ' + lib.version);
 						break;
-					case "Bootstrap":
-						$("#bootstrap_oss_version").html('Bootstrap ' + lib.version);
+					case 'Bootstrap':
+						$('#bootstrap_oss_version').html('Bootstrap ' + lib.version);
 						break;
-					case "CodeMirror":
-						$("#codemirror_oss_version").html('CodeMirror ' + lib.version);
+					case 'CodeMirror':
+						$('#codemirror_oss_version').html('CodeMirror ' + lib.version);
 						break;
-					case "Bootstrap-tour":
-						$("#bootstrap_tour_oss_version").html('Bootstrap-tour ' + lib.version);
+					case 'Bootstrap-tour':
+						$('#bootstrap_tour_oss_version').html('Bootstrap-tour ' + lib.version);
 						break;
-					case "Bootstrap-formhelpers":
-						$("#bootstrap_form_oss_version").html('Bootstrap-formhelpers ' + lib.version);
+					case 'Bootstrap-formhelpers':
+						$('#bootstrap_form_oss_version').html('Bootstrap-formhelpers ' + lib.version);
 						break;
-					case "pdf.js":
-						$("#pdf_oss_version").html('pdf.js ' + lib.version);
+					case 'pdf.js':
+						$('#pdf_oss_version').html('pdf.js ' + lib.version);
 						break;
-					case "iCheck":
-						$("#icheck_oss_version").html('iCheck ' + lib.version);
+					case 'iCheck':
+						$('#icheck_oss_version').html('iCheck ' + lib.version);
 						break;
-					case "OT.js":
-						$("#ot_oss_version").html('OT.js ' + lib.version);
+					case 'OT.js':
+						$('#ot_oss_version').html('OT.js ' + lib.version);
 				}
 			});
 		}

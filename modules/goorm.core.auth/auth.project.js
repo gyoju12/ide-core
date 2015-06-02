@@ -257,11 +257,11 @@ module.exports = {
 			// this part must be changed to follow localization data....
 			var subject = '';
 			if (user_data.language == 'kor') {
-				subject = user_data.invite_user + ' 님께서 ' + user_data.name + " 님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+				subject = user_data.invite_user + ' 님께서 ' + user_data.name + ' 님을 \'' + user_data.project_name + '\' 프로젝트에 초대하셨습니다.';
 			} else if (user_data.language == 'us') {
-				subject = user_data.invite_user + ' invites you (' + user_data.name + ") to '" + user_data.project_name + "' project.";
+				subject = user_data.invite_user + ' invites you (' + user_data.name + ') to \'' + user_data.project_name + '\' project.';
 			} else {
-				subject = user_data.invite_user + '님께서 ' + user_data.name + "님을 '" + user_data.project_name + "' 프로젝트에 초대하셨습니다.";
+				subject = user_data.invite_user + '님께서 ' + user_data.name + '님을 \'' + user_data.project_name + '\' 프로젝트에 초대하셨습니다.';
 			}
 
 			callback(subject, data);
@@ -313,7 +313,6 @@ module.exports = {
 	// change goorm.manifest's permission and owner. Jeong-Min Im.
 	manifest_setting: function(project_path, callback) {
 		
-
 		
 	},
 
@@ -325,56 +324,29 @@ module.exports = {
 	},
 
 	// check manifest is valid or not. Jeong-Min Im.
-	valid_manifest: function(project_path, cur_manifest, callback) {
+	valid_manifest: function(options, cur_manifest, callback) {
 		var self = this;
+
+		var user_id = '';
+		var project_path = '';
+
+		if (options && typeof (options) === 'string') {
+			user_id = undefined;
+			project_path = options;
+		} else {
+			user_id = options.user_id;
+			project_path = options.project_path;
+		}
+
 		var today = new Date();
 		var today_month = parseInt(today.getMonth(), 10) + 1;
 		var date_string = today.getFullYear() + '/' + today_month + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
-		// validate manifest and fix it. Jeong-Min Im.
-		function fix_manifest() {
-			if (cur_manifest.author + '_' + cur_manifest.name != project_path) { // wrong goorm.manifest -> fix it!
-				
-			} else { // right goorm.manifest
-				self.manifest_setting(project_path, function() {
-					callback(JSON.stringify(cur_manifest));
-				});
-			}
-		}
-
-		if (!cur_manifest) {
-			fs.readFile(global.__workspace + project_path + '/goorm.manifest', { // getting cur_manifest
-				encoding: 'utf8'
-			}, function(err, data) {
-				if (err) { // jeongmin: no goorm.manifest
-					// console.log('goorm.manifest reading error in valid_manifest:', err);
-
-					// jeongmin: dummy cur_manifest
-					cur_manifest = {
-						author: '',
-						name: ''
-					};
-
-					fix_manifest(); // jeongmin: make goorm.manifest
-				} else { // jeongmin: goorm.manifest exists
-					try {
-						cur_manifest = JSON.parse(data);
-					} catch (e) {
-						// console.log('goorm.manifest parsing error in valid_manifest:', e);
-
-						// jeongmin: dummy cur_manifest
-						cur_manifest = {
-							author: '',
-							name: ''
-						};
-					}
-
-					fix_manifest();
-				}
-			});
-		} else {
-			fix_manifest();
-		}
+		
+		
+		//useonly(mode=goorm-oss)
+		callback();
+		
 	},
 
 	set_last_open_date: function(project_path, callback) {

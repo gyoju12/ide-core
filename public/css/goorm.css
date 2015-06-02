@@ -905,6 +905,9 @@ Optimized:Start
     margin-bottom: 0;
     margin-top: 17px;
 }
+#chat .tab-content {
+	overflow: hidden;
+}
 #btn_history_delete,
 .chat_user_item_context_button, 
 .my_message {
@@ -1958,8 +1961,7 @@ Toolbar CSS
 #blame_container_git .CodeMirror, 
 #chats,
 #diff_container .CodeMirror,
-#diff_container_git .CodeMirror,
-#search_treeview {
+#diff_container_git .CodeMirror {
     height: inherit;
 }
 #chat_user_container ul.list-group li {
@@ -3661,6 +3663,20 @@ div.tooltip {
 }
 
 #chat_history_container {
-	max-height: 500px;
+	height: 500px;
 	overflow: auto;
+}
+
+#search_treeview {
+    height: 100%;
+}
+
+#chat_hidden_div {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+	z-index: -1;
 }

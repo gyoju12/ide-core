@@ -10,34 +10,34 @@
 
 goorm.core.help.shortcuts = {
 
-	init: function () {
+	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_help_shortcuts")
+		this.panel = $('#dlg_help_shortcuts');
 
 		this.dialog = new goorm.core.dialog();
 
 		this.dialog.init({
-			id: "dlg_help_shortcuts",
+			id: 'dlg_help_shortcuts',
 			success: null
 		});
 
-		this.panel.on('shown.bs.modal', function () {
+		this.panel.on('shown.bs.modal', function() {
 			self.visible = true;
 		});
 
-		this.panel.on('hidden.bs.modal', function () {
+		this.panel.on('hidden.bs.modal', function() {
 			self.visible = false;
 		});
 
-		this.visible = false;		
+		this.visible = false;
 	},
 
-	show: function () {
+	show: function() {
 		this.panel.modal('show');
 	},
 
-	hide: function () {
+	hide: function() {
 		this.panel.modal('hide');
 	}
 };

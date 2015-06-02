@@ -19,6 +19,7 @@ var path = require('path');
 var g_file = require('../goorm.core.file/file');
 var g_preference = require('../goorm.core.preference/preference');
 var g_project = require('../goorm.core.project/project');
+var g_project_workspace = require('../goorm.core.project/project.workspace');
 var g_search = require('../goorm.core.search/search');
 var g_edit = require('../goorm.core.edit/edit');
 var g_secure = require('../goorm.core.secure/secure');
@@ -62,6 +63,11 @@ module.exports = {
 							var sessionID = socket.handshake.sessionID;
 							store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
 							store.client.sadd('sockets_' + global.__local_ip + '_' + sessionID, socket.id);
+
+							// only goorm-client
+							if (msg_obj.goorm_server_ip) {
+								store.client.set('ip_' + sessionID, msg_obj.goorm_server_ip);
+							}
 						}
 
 						if (msg_obj.version) {
@@ -71,11 +77,6 @@ module.exports = {
 						// only goorm-server
 						if (!msg_obj.reconnect) {
 							socket.to().emit('user_access', global.__local_ip);
-						}
-
-						// only goorm-client
-						if (msg_obj.goorm_server_ip) {
-							store.client.set('ip_' + sessionID, msg_obj.goorm_server_ip);
 						}
 
 						
@@ -194,9 +195,9 @@ module.exports = {
 					if (user_data.result) {
 						user_data = _user_data = user_data.data;
 
-						msg['author'] = {
+						msg.author = {
 							author_id: user_data.id
-						}
+						};
 					}
 
 					
@@ -214,13 +215,9 @@ module.exports = {
 
 					
 
-					// set goorm.manifest's uid as root. Jeong-Min Im.
-					g_auth_project.manifest_setting(data.project_dir, function() {
+					
 
-						
-
-						socket.emit('/project/new', data);
-					});
+					
 				});
 
 				
@@ -233,6 +230,8 @@ module.exports = {
 
 						
 
+						
+						
 						msg.project_author = user_data.id;
 						g_project.do_new(msg, evt);
 					}
@@ -288,9 +287,11 @@ module.exports = {
 					if (user_data.result) {
 						user_data = user_data.data;
 
-						msg['author'] = {
+						msg.author = {
 							author_id: user_data.id
-						}
+						};
+						
+						
 
 						g_project.get_list(msg, evt);
 					}
@@ -346,9 +347,14 @@ module.exports = {
 					}
 				});
 
+				//useonly(mode=goorm-standalone,goorm-oss)
 				g_project.get_property(msg, evt);
+				
+
+				
 			});
 
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/project/set_property', function(msg) {
 				var evt = new EventEmitter();
 				evt.once('set_property', function(data) {
@@ -357,6 +363,9 @@ module.exports = {
 
 				g_project.set_property(msg, evt);
 			});
+			
+
+			
 
 			// socket.on('/project/check_running_project', function(msg) {
 			// 	socket.emit('/project/check_running_project', {
@@ -364,30 +373,33 @@ module.exports = {
 			// 	});
 			// });
 
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/project/check_latest_build', function(msg) {
 				var evt = new EventEmitter();
 				evt.once('check_latest_build', function(data) {
 					socket.emit('/project/check_latest_build', data);
 				});
+
 				g_project.check_latest_build(msg, evt);
 			});
+			
 
+			
+
+			
+
+			
+
+			//useonly(mode=goorm-oss)
 			socket.on('/project/check_valid_property', function(msg) {
 				var evt = new EventEmitter();
 				evt.once('check_valid_property', function(data) {
 					socket.emit('/project/check_valid_property', data);
 				});
 
-				self.get_user_data(socket, function(user_data) {
-					if (user_data.result) {
-						user_data = user_data.data;
-
-						msg.uid = user_data.uid;
-						msg.gid = user_data.gid;
-						g_project.check_valid_property(msg, evt);
-					}
-				});
+				g_project.check_valid_property(msg, evt);
 			});
+			
 
 			
 
@@ -484,7 +496,10 @@ module.exports = {
 							var plugin_name = msg.plugin;
 							var project_data = msg.data;
 
-							var workspace = global.__workspace + '/' + project_data.project_dir;
+							
+
+							
+
 							var template_path = global.__path + 'temp_files/' + user_data.id + '/plugins/' + plugin_name;
 
 							// Default Plugin
@@ -614,10 +629,10 @@ module.exports = {
 			socket.on('/plugin/do_web_run', function(msg) {
 				var uid = null;
 				var gid = null;
-				var copy = function() {
-					var workspace = global.__workspace + '/' + msg.project_path;
+				var copy = function(project_workspace_path) {
+					var workspace = global.__workspace + '/' + project_workspace_path;
 
-					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + msg.project_path : __temp_dir + 'plugins/web/' + msg.project_path;
+					var target_path = (msg.deploy_path) ? msg.deploy_path + '/' + project_workspace_path : __temp_dir + 'plugins/web/' + project_workspace_path;
 
 					var run_path = target_path.split('temp_files').pop();
 					fse.ensureDir(target_path, function(__err1) {
@@ -663,8 +678,9 @@ module.exports = {
 					});
 				};
 				
-				//useonly(mode=goorm-server,goorm-client,goorm-oss)
-				copy();
+				
+				//useonly(mode=goorm-oss)
+				copy(msg.project_dir);
 				
 			});
 
@@ -673,15 +689,13 @@ module.exports = {
 				var evt = new EventEmitter();
 				
 
-				evt.once('file_do_new', function(data) {
-					socket.emit('/file/new', data);
-
-					
-				});
-
 				
 
 				//useonly(mode=goorm-oss)
+				evt.once('file_do_new', function(data) {
+					socket.emit('/file/new', data);
+				});
+
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -696,15 +710,13 @@ module.exports = {
 				var evt = new EventEmitter();
 				
 
-				evt.once('file_do_new_folder', function(data) {
-					socket.emit('/file/new_folder', data);
-
-					
-				});
-
 				
 
 				//useonly(mode=goorm-oss)
+				evt.once('file_do_new_folder', function(data) {
+					socket.emit('/file/new_folder', data);
+				});
+
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -719,15 +731,13 @@ module.exports = {
 				var evt = new EventEmitter();
 				
 
-				evt.once('file_do_new_untitled_text_file', function(data) {
-					socket.emit('/file/new_untitled_text_file', data);
-
-					
-				});
-
 				
 
 				//useonly(mode=goorm-oss)
+				evt.once('file_do_new_untitled_text_file', function(data) {
+					socket.emit('/file/new_untitled_text_file', data);
+				});
+
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;
@@ -738,27 +748,7 @@ module.exports = {
 				});
 				
 			});
-			socket.on('/file/new_other', function(msg) {
 
-				var evt = new EventEmitter();
-
-				evt.once('file_do_new_other', function(data) {
-					socket.emit('/file/new_other', data);
-				});
-
-				
-
-				//useonly(mode=goorm-oss)
-				self.get_user_data(socket, function(user_data) {
-					if (user_data.result) {
-						user_data = user_data.data;
-
-						msg.user_id = user_data.id;
-						g_file.do_new_other(msg, evt);
-					}
-				});
-				
-			}); //context ...
 			socket.on('/file/save_as', function(msg) {
 				var evt = new EventEmitter();
 
@@ -782,14 +772,15 @@ module.exports = {
 					var files = (msg.files || []).concat(msg.directorys || []);
 					var project_path = files[0].split('/')[0];
 
-					evt.once('file_do_delete', function(data) {
-						socket.emit('/file/delete', data);
-
-						
-					});
+					
 
 					
+
 					//useonly(mode=goorm-oss)
+					evt.once('file_do_delete', function(data) {
+						socket.emit('/file/delete', data);
+					});
+
 					g_file.do_delete(files, evt);
 					
 				} else { // invalid query
@@ -801,7 +792,6 @@ module.exports = {
 
 			socket.on('/file/get_contents', function(msg) {
 				var path = msg.path;
-				var abs_path = global.__path + path;
 				var reply_event = '/file/get_contents' + path;
 
 				//1. valid path
@@ -811,26 +801,12 @@ module.exports = {
 					return false;
 				}
 
-				//2. don't need to check (ex) dialog html
-				if (msg.type !== 'get_workspace_file') {
-					// console.log(abs_path);
-					// fs.readFile(abs_path, 'utf8', function(err, data) {
-					// 	if (!err) {
-					// 		socket.emit(reply_event, data);
-					// 	} else {
-					// 		socket.emit(reply_event, false);
-					// 	}
-					// 	//jeongmin: most frequently executable condition should be appeared first
-					// });
-					return true;
-				}
+				
 
-				//from here workspace file!!!!!
-				abs_path = global.__workspace + path;
-				//local -> do not check any thing
+				
 
 				//useonly(mode=goorm-oss)
-				fs.readFile(abs_path, 'utf8', function(err, data) {
+				fs.readFile(global.__workspace + path, 'utf8', function(err, data) {
 					if (!err) {
 						try {
 							encodeURIComponent(data); //seongho.cha: Check it can be encoded and decoded by websocket
@@ -844,8 +820,6 @@ module.exports = {
 					//jeongmin: most frequently executable condition should be appeared first
 				});
 				
-
-				
 			});
 
 			
@@ -855,7 +829,6 @@ module.exports = {
 				var _user_data = {};
 
 				evt.once('file_put_contents', function(data) {
-
 					g_log.save({
 						'user_id': _user_data.id,
 						'type': 'active',
@@ -869,6 +842,8 @@ module.exports = {
 
 				
 
+				
+
 				//useonly(mode=goorm-oss)
 				g_file.put_contents(msg, evt);
 				
@@ -878,13 +853,15 @@ module.exports = {
 			socket.on('/file/get_result_ls', function(msg) {
 				var evt = new EventEmitter();
 
-				evt.once('got_result_ls', function(data) {
-					socket.emit('/file/get_result_ls' + msg.path, data);
-				});
+				
 
 				
 
 				//useonly(mode=goorm-oss)
+				evt.once('got_result_ls', function(data) {
+					socket.emit('/file/get_result_ls' + msg.path, data);
+				});
+
 				g_file.get_result_ls(msg, evt);
 				
 			});
@@ -921,16 +898,24 @@ module.exports = {
 
 							case 1:
 								console.log('Error: check_valid_edit, project path is not directory.', global.__workspace + project_path);
+								break;
 
 							case 2:
 								console.log('Error: check_valid_edit, project path cannot read.', global.__workspace + project_path);
+								break;
+
 							default:
 								break;
 						}
 					}
 					socket.emit('/file/check_valid_edit', data);
 				});
-				g_file.check_valid_edit(project_path, filepath, filename, evt);
+
+				g_file.check_valid_edit({
+					'project_path': project_path,
+					'filepath': filepath,
+					'filename': filename
+				}, evt);
 				
 			});
 
@@ -941,24 +926,16 @@ module.exports = {
 				var user_level = null;
 				var author_level = null;
 
-				// var move_fail = function(fail_msg) {
-				// 	var res_data = {
-				// 		err_code: 20,
-				// 		message: fail_msg,
-				// 		path: msg
-				// 	};
+				
 
-				// 	socket.emit('/file/move', res_data);
-				// };
+				
+
+				//useonly(mode=goorm-oss)
 				evt.once('file_do_move', function(data) {
 					socket.emit('/file/move', data);
 
-					
+					g_file.do_move(msg, evt);
 				});
-
-				
-				//useonly(mode=goorm-oss)
-				g_file.do_move(msg, evt);
 				
 			});
 			socket.on('/file/rename', function(msg) {
@@ -967,26 +944,17 @@ module.exports = {
 				var author_level = null;
 				var id = null;
 
+				
+
+				
+
+				//useonly(mode=goorm-oss)
 				evt.once('file_do_rename', function(data) {
 					socket.emit('/file/rename', data);
-
-					
 				});
 
-				if (msg.ori_path === '/' || msg.ori_path === '') {
-					var res_data = {
-						err_code: 20,
-						message: 'alert_deny_rename_folder_in_workspace_root',
-						path: msg.ori_name
-					};
-					socket.emit('/file/rename', res_data);
-				} else {
-					
-
-					//useonly(mode=goorm-oss)
-					g_file.do_rename(msg, evt);
-					
-				}
+				g_file.do_rename(msg, evt);
+				
 			});
 
 			// let other co-developers know project update. Jeong-Min Im.
@@ -997,7 +965,7 @@ module.exports = {
 				
 			});
 
-			//context ...
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/file/get_property', function(msg) {
 				var evt = new EventEmitter();
 
@@ -1007,6 +975,9 @@ module.exports = {
 
 				g_file.get_property(msg, evt);
 			});
+			
+
+			
 
 			socket.on('/file/search_on_project', function(msg) {
 				var evt = new EventEmitter();
@@ -1049,6 +1020,7 @@ module.exports = {
 				}
 
 				
+				
 				//useonly(mode=goorm-oss)
 				execFile('pkill', [msg.kill], function(err) {
 					if (err) {
@@ -1057,9 +1029,11 @@ module.exports = {
 				});
 				
 
-			})
+			});
 
 			// check file or folder exists. Jeong-Min Im.
+
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/file/exist', function(msg) {
 				var evt = new EventEmitter();
 
@@ -1069,6 +1043,9 @@ module.exports = {
 
 				g_file.check_exist(msg, evt);
 			});
+			
+
+			
 
 			socket.on('/user/friend/list', function(msg) {
 				self.get_user_data(socket, function(user_data) {
@@ -1136,21 +1113,32 @@ module.exports = {
 						
 						
 						////// check user's permission //////
-						if (msg.project_path && msg.project_path != '') { // exist project
+						if (msg.project_path && msg.project_path !== '') { // exist project
 							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
 								if (result) { // have permission
+									//useonly(mode=goorm-standalone,goorm-oss)
+									msg.base_path = msg.project_path;
+
 									g_scm.index(msg, evt); // go to scm.js -> sort commands
+									
+
+									
 								} else { // have no permission
-									var res_data = {
+									socket.emit('/scm/svn/' + msg.mode, {
 										err_code: 20,
 										message: 'alert_scm_permission',
 										path: msg.repository
-									}
-									socket.emit('/scm/svn/' + msg.mode, res_data);
+									});
 								}
 							});
 						} else { // new project
+							//useonly(mode=goorm-standalone,goorm-oss)
+							msg.base_path = msg.project_path;
+
 							g_scm.index(msg, evt); // go to scm.js -> sort commands
+							
+
+							
 						}
 					}
 				});
@@ -1200,7 +1188,13 @@ module.exports = {
 						option.scm = 'svn'; // for indexing
 						option.mode = 'stdin';
 
-						g_scm.index(option);
+						//useonly(mode=goorm-standalone,goorm-oss)
+						msg.base_path = msg.project_path;
+
+						g_scm.index(msg, evt); // go to scm.js -> sort commands
+						
+
+						
 					}
 				});
 			});
@@ -1218,21 +1212,32 @@ module.exports = {
 						
 						
 						////// check user's permission //////
-						if (msg.project_path && msg.project_path != '') { // new project
+						if (msg.project_path && msg.project_path !== '') { // new project
 							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
 								if (result) { // have permission
+									//useonly(mode=goorm-standalone,goorm-oss)
+									msg.base_path = msg.project_path;
+
 									g_scm.index(msg, evt); // go to scm.js -> sort commands
+									
+
+									
 								} else { // have no permission
-									var res_data = {
+									socket.emit('/scm/git' + msg.mode, {
 										err_code: 20,
 										message: 'alert_scm_permission',
 										path: msg.repository
-									}
-									socket.emit('/scm/git' + msg.mode, res_data);
+									});
 								}
 							});
 						} else { // exist project
+							//useonly(mode=goorm-standalone,goorm-oss)
+							msg.base_path = msg.project_path;
+
 							g_scm.index(msg, evt); // go to scm.js -> sort commands
+							
+
+							
 						}
 					}
 				});
@@ -1280,6 +1285,8 @@ module.exports = {
 
 			
 			*/
+
+			//useonly(mode=goorm-standalone,goorm-oss)
 			socket.on('/upload/dir_skeleton', function(msg) {
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
@@ -1311,6 +1318,9 @@ module.exports = {
 					}
 				});
 			});
+			
+
+			
 
 			
 
@@ -1473,4 +1483,4 @@ module.exports = {
 			load_from_socket_id(callback);
 		}
 	}
-}
+};

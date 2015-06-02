@@ -8,7 +8,7 @@
  * version: 2.0.0
  **/
 
-goorm.core.object = function () {
+goorm.core.object = function() {
 
 };
 

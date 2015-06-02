@@ -21,43 +21,46 @@ goorm.core.project.external = {
 
 			// 최근 프로젝트가 자동으로 열리고나서 생성된 프로젝트가 열려서 타이밍이 겹쳐서 에러가나므로,
 			// 최근 프로젝트를 초기화시킨다.
-			localStorage.current_project = "{}";
-			localStorage.workspace_window = "[]";
+			localStorage.current_project = '{}';
+			localStorage.workspace_window = '[]';
 
-			$(core).on("goorm_login_complete", function() {
-				core.socket.once("/share/on_init", function(res) {
+			$(core).on('goorm_login_complete', function() {
+				core.socket.once('/share/on_init', function(res) {
 					if (!res.error && !res.err_code) {
-						if (res.result) res = res.result;
+						if (res.result) {
+							res = res.result;
+						}
 
 						self.data = res;
 
 						goorm.core.project.open.open(res.project_path, res.project_name, res.project_type);
 
-						if (mode == "share") {
+						if (mode == 'share') {
 							if (res.opened_files) {
 								for (var i = 0; i < res.opened_files.length; i++) {
 									var fullpath = res.project_path + res.opened_files[i];
-									var p = fullpath.split("/");
+									var p = fullpath.split('/');
 									var filename = p.pop();
-									var filepath = p.join("/");
-									if (filename.split(".").length > 1) {
-										var ext = filename.split(".").pop();
+									var filepath = p.join('/');
+									var ext;
+									if (filename.split('.').length > 1) {
+										ext = filename.split('.').pop();
 									} else {
-										var ext = "txt";
+										ext = 'txt';
 									}
 
 									// console.log(filepath, filename, ext);
-									core.module.layout.workspace.window_manager.open(filepath + "/", filename, ext);
+									core.module.layout.workspace.window_manager.open(filepath + '/', filename, ext);
 								}
 							}
 						}
 
-						$(core).trigger("goorm_share_ready", res);
+						$(core).trigger('goorm_share_ready', res);
 					} else {
 						alert.show(res.result);
 					}
 				});
-				core.socket.emit("/share/init", senddata);
+				core.socket.emit('/share/init', senddata);
 			});
 		}
 	},
@@ -71,16 +74,16 @@ goorm.core.project.external = {
 		var list = core.module.layout.workspace.window_manager.get_project_windows();
 		for (var i = 0; i < list.length; i++) {
 			var name = list[i].filepath + list[i].filename;
-			name = name.replace(project, "");
+			name = name.replace(project, '');
 			data.opened_files.push(name);
 		}
 		$.extend(data, options);
 
-		core.socket.once("/share/create", function(res) {
+		core.socket.once('/share/create', function(res) {
 			if (res.error) {
 				console.log(res);
 			}
 		});
-		core.socket.emit("/share/create", data);
+		core.socket.emit('/share/create', data);
 	}
 };

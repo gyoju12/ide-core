@@ -25,12 +25,12 @@ goorm.plugin.manager = {
 
 		//useonly(mode=goorm-server,goorm-oss)
 		$.ajax({
-			url: "plugin/get_list",
-			type: "GET",
+			url: 'plugin/get_list',
+			type: 'GET',
 			async: false,
 			success: function(data) {
 				self.list = data;
-				$(core).trigger("plugin_loaded");
+				$(core).trigger('plugin_loaded');
 			}
 		});
 		
@@ -49,7 +49,7 @@ goorm.plugin.manager = {
 			self.get_plugin_data(plugin_name, is_user, callback);
 
 			// callback(true);	// move into get_plugin_data
-		}
+		};
 
 		async.map(this.list, load_plg, function() { // now all plugin is loaded
 			if (Boolean(is_user)) { //if user plugin is completely init
@@ -60,16 +60,20 @@ goorm.plugin.manager = {
 
 			// Sort Plugin Project Menu by youseok.nam
 			//
-			var plugin_project_container = $("li[id='plugin_new_project']");
+			var plugin_project_container = $('li[id="plugin_new_project"]');
 			var plugin_projects = $('li.plugin_project a');
 
 			var sorted = plugin_projects.sort(function(a, b) {
 				var string_a = $(a).html();
 				var string_b = $(b).html();
 
-				if (string_a > string_b) return 1;
-				else if (string_b > string_a) return -1;
-				else return 0;
+				if (string_a > string_b) {
+					return 1;
+				} else if (string_b > string_a) {
+					return -1;
+				} else {
+					return 0;
+				}
 			});
 
 			sorted.each(function(i, o) {
@@ -86,14 +90,14 @@ goorm.plugin.manager = {
 		});
 
 		$(core).one('user_id_loaded', function() {
-			$.get("/plugin/load_userplugin", {
+			$.get('/plugin/load_userplugin', {
 				id: core.user.id
 			}, function(result) {
 				for (var i = 0; i < result.length; i++) {
 					var plg_name = result[i].name;
 
 					self.list.push(result[i]);
-					external_json['plugins'][result[i].name] = {
+					external_json.plugins[result[i].name] = {
 						'localization.json': result[i].localization,
 						'preference.json': result[i].preference,
 						'tree.json': result[i].tree
@@ -111,7 +115,7 @@ goorm.plugin.manager = {
 	get_plugin_data: function(plugin_name, is_user, callback) {
 		var self = this;
 		is_user = Boolean(is_user);
-		var userplugin_path = is_user ? core.user.id + "/plugins/" : "";
+		var userplugin_path = is_user ? core.user.id + '/plugins/' : '';
 
 		if (plugin_name !== undefined) {
 
@@ -121,23 +125,24 @@ goorm.plugin.manager = {
 				'path': userplugin_path + plugin_name + '/plug.css'
 			}, function(result2) {
 				if (result2.check) {
-					$("head").append("<link>");
-					var css = $("head").children(":last");
+					$('head').append('<link>');
+					var css = $('head').children(':last');
 					css.attr({
-						rel: "stylesheet",
-						type: "text/css",
+						rel: 'stylesheet',
+						type: 'text/css',
 						href: userplugin_path + '/' + plugin_name + '/plug.css'
 					});
 				}
 
 				$.getScript(userplugin_path + '/' + plugin_name + '/plug.js', function(plugin) {
 					//Plugin initialization
-					self.plugins[plugin_name] = goorm.plugin[plugin_name.replace("goorm.plugin.", "")];
-					if (self.plugins[plugin_name])
+					self.plugins[plugin_name] = goorm.plugin[plugin_name.replace('goorm.plugin.', '')];
+					if (self.plugins[plugin_name]) {
 						self.plugins[plugin_name].init(userplugin_path);
+					}
 
 					var json_string = external_json.plugins[plugin_name]['preference.json'];
-					var json = "";
+					var json = '';
 
 					if (json_string) {
 						json = JSON.parse(json_string);
@@ -151,9 +156,9 @@ goorm.plugin.manager = {
 						core.module.preference.preference_default.plugins[plugin_name] = $.extend(true, core.module.preference.preference_default.plugins[plugin_name], json);
 					}
 
-
-					if (!is_user)
-						$(core).trigger("goorm_loading");
+					if (!is_user) {
+						$(core).trigger('goorm_loading');
+					}
 
 					callback();
 				});
@@ -170,8 +175,8 @@ goorm.plugin.manager = {
 	
 
 	new_project: function(data) {
-		if ($.isFunction(this.plugins["goorm.plugin." + data.project_type].new_project)) {
-			this.plugins["goorm.plugin." + data.project_type].new_project(data);
+		if ($.isFunction(this.plugins['goorm.plugin.' + data.project_type].new_project)) {
+			this.plugins['goorm.plugin.' + data.project_type].new_project(data);
 		}
 	}
 };

@@ -90,13 +90,13 @@ goorm.core.layout.tab = {
 				var fade = (options.tab_content.fade === false) ? false : true;
 
 				fade = (fade) ? 'fade' : '';
-				
-				$.each(localization_replace,function(i, v) {
-					options.tab_content.content = options.tab_content.content.replace("/"+v+"/", core.module.localization.msg[v]);
+
+				$.each(localization_replace, function(i, v) {
+					options.tab_content.content = options.tab_content.content.replace('/' + v + '/', core.module.localization.msg[v]);
 				});
 
 				tab_container.append('<li><a id="' + tab_id + '" href="#' + tab_content_id + '" data-toggle="tab" localization_key="' + options.localization.tab + '">' + content + '</a></li>');
-				tab_content_container.append('<div class="tab-pane ' + fade + ' ' + classes + '" id="' + tab_content_id + '" style="height:inherit">' + options.tab_content.content + '</div>');
+				tab_content_container.append('<div class="tab-pane ' + fade + ' ' + classes + '" id="' + tab_content_id + '" style="height:100%">' + options.tab_content.content + '</div>');
 
 				this.list[tab_id] = {
 					'id': tab_id,
@@ -286,7 +286,7 @@ goorm.core.layout.tab = {
 				'plugin': plugin_name,
 				'element_id': 'goorm_inner_layout_bottom',
 				'step': {
-					element: '#'+tab_id,
+					element: '#' + tab_id,
 					title: '',
 					content: core.module.localization.msg.tutorial_output_tab,
 					placement: 'top',

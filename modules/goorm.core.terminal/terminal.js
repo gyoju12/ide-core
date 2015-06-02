@@ -10,7 +10,8 @@
 
 var pty = null;
 
-var g_auth_p = require("../goorm.core.auth/auth.project");
+var g_auth_p = require('../goorm.core.auth/auth.project');
+var g_project_workspace = require('../goorm.core.project/project.workspace');
 
 
 
@@ -26,9 +27,9 @@ var utility = require('../../libs/utility.js');
 var os = require('os');
 var platform = null;
 if (/darwin/.test(os.platform())) {
-	platform = "darwin";
+	platform = 'darwin';
 } else if (/linux/.test(os.platform())) {
-	platform = "linux";
+	platform = 'linux';
 } else {}
 
 var spawn = require('child_process').spawn;
@@ -50,7 +51,7 @@ module.exports = {
 
 		
 
-		//useonly(mode=goorm-oss,goorm-client)	
+		//useonly(mode=goorm-oss,goorm-client)
 		self.term = {}; // jeongmin: array -> object for easy management
 		
 
@@ -67,7 +68,10 @@ module.exports = {
 					var name = msg.name;
 
 					var randomStringfunc = function(bits) {
-						var chars, rand, i, ret;
+						var chars;
+						var rand;
+						var i;
+						var ret;
 
 						chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijkl';
 						ret = '';
@@ -86,8 +90,8 @@ module.exports = {
 
 					term_index = randomStringfunc(27) + (new Date()).getTime(); //index++; jeongmin: new terminal is created, list++
 
-					//useonly(mode=goorm-oss)	
-					var bashrc = global.__path + 'configs/bash.bashrc'
+					//useonly(mode=goorm-oss)
+					var bashrc = global.__path + 'configs/bash.bashrc';
 					var command = '--rcfile ' + bashrc;
 
 					self.term[term_index] = {
@@ -103,19 +107,18 @@ module.exports = {
 					};
 
 					self.term[term_index].pty.on('exit', function() {
-						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit('terminal_exited.' + msg.terminal_name, {
 							index: msg.index
 						});
 					});
-
 
 					self.term[term_index].pty.on('data', function(data) {
 						var result = {};
 						result.stdout = data;
 						result.terminal_name = msg.terminal_name;
 						result.user = msg.user;
-						
-						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
+
+						io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit('pty_command_result', result);
 					});
 
 					data = {
@@ -125,12 +128,10 @@ module.exports = {
 					msg.index = data.index;
 
 					socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
-					socket.to().emit("terminal_index." + name, JSON.stringify(data));
+					socket.to().emit('terminal_index.' + name, JSON.stringify(data));
 					
 
 					
-
-
 					
 				} catch (e) {
 					console.log('terminal start error:', e);
@@ -143,7 +144,7 @@ module.exports = {
 
 					
 
-					//useonly(mode=goorm-oss,goorm-client)	
+					//useonly(mode=goorm-oss,goorm-client)
 					if (self.term[msg.index] && self.term[msg.index].pty && self.term[msg.index].pty.readable) {
 						self.term[msg.index].pty.resize(parseInt(msg.cols, 10), parseInt(msg.rows, 10));
 					}
@@ -165,12 +166,12 @@ module.exports = {
 
 					
 
-					//useonly(mode=goorm-oss)	
+					//useonly(mode=goorm-oss)
 					if (self.term[msg.index] && self.term[msg.index].pty) {
 						target_terminal = self.term[msg.index];
 
-						self.destroy(self.term[msg.index].pty, function () {
-							var bashrc = global.__path + 'configs/bash.bashrc'
+						self.destroy(self.term[msg.index].pty, function() {
+							var bashrc = global.__path + 'configs/bash.bashrc';
 							var command = '--rcfile ' + bashrc;
 
 							self.term[msg.index] = {
@@ -184,9 +185,9 @@ module.exports = {
 								workspace: msg.workspace,
 								terminal_name: msg.terminal_name
 							};
-							
+
 							self.term[msg.index].pty.on('exit', function() {
-								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("terminal_exited." + msg.terminal_name, {
+								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit('terminal_exited.' + msg.terminal_name, {
 									index: msg.index
 								});
 							});
@@ -197,7 +198,7 @@ module.exports = {
 								result.terminal_name = msg.terminal_name;
 								result.user = msg.user;
 
-								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit("pty_command_result", result);
+								io.sockets.in(msg.workspace + '/' + msg.terminal_name + '/' + msg.index).emit('pty_command_result', result);
 							});
 
 							socket.join(msg.workspace + '/' + msg.terminal_name + '/' + msg.index);
@@ -220,9 +221,9 @@ module.exports = {
 
 				
 
-				//useonly(mode=goorm-oss)	
+				//useonly(mode=goorm-oss)
 				if (self.term[msg.index] && self.term[msg.index].pty) {
-					self.destroy(self.term[msg.index].pty, function () {
+					self.destroy(self.term[msg.index].pty, function() {
 						delete self.term[msg.user][msg.index]; // jeongmin
 					});
 
@@ -267,10 +268,10 @@ module.exports = {
 
 					
 
-					//useonly(mode=goorm-oss)	
+					//useonly(mode=goorm-oss)
 					if (self.term[msg.index] && self.term[msg.index].pty) {
-						self.term[msg.index].pty.write("cd " + global.__workspace + msg.project_path + ";clear\r");
-						socket.to().emit("on_change_project_dir." + name, msg);
+						self.term[msg.index].pty.write('cd ' + global.__workspace + msg.project_path + ';clear\r');
+						socket.to().emit('on_change_project_dir.' + name, msg);
 					}
 					
 				} catch (e) {
@@ -280,16 +281,15 @@ module.exports = {
 		});
 	},
 
-	destroy: function (pty, callback) {
+	destroy: function(pty, callback) {
 		if (pty && pty.socket) {
-			pty.socket.once('close', function () {
+			pty.socket.once('close', function() {
 				if (callback && typeof(callback) === 'function') {
 					callback();
 				}
 			});
 			pty.destroy();
-		}
-		else {
+		} else {
 			pty.destroy();
 			if (callback && typeof(callback) === 'function') {
 				callback();
@@ -304,7 +304,9 @@ module.exports = {
 			// } else {
 			term.write(command);
 			// }
-		} else {}
+		} else {
+
+		}
 	},
 
 	
@@ -314,8 +316,14 @@ module.exports = {
 	
 
 	_cpu_limit: function(pid, percent) {
-		if (!pid) return;
-		if (!percent) percent = 5;
+		if (!pid) {
+			return;
+		}
+
+		if (!percent) {
+			percent = 5;
+		}
+
 		var child = spawn('cpulimit', ['-l', percent, '-i', '-p', pid]);
 		child.on('error', function(data) {
 			console.log('Failed to start cpulimit.');

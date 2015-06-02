@@ -8,20 +8,20 @@
  * version: 2.0.0
  **/
 
-var db_m = require('../goorm.core.db/user_comments_info.js'),
-	db = db_m.get_db();
+var db_m = require('../goorm.core.db/user_comments_info.js');
+var db = db_m.get_db();
 
 var http = require('http');
-var fs = require("fs");
+var fs = require('fs');
 var querystring = require('querystring');
 
 var g_log = require('../goorm.core.log/log');
 
 module.exports = {
-	send_to_bug_report: function (query, evt) {
+	send_to_bug_report: function(query, evt) {
 		var return_data = {};
 		return_data.err_code = 0;
-		return_data.message = "Process Done";
+		return_data.message = 'Process Done';
 
 		/**
 		 *  PUSH TO DB
@@ -29,7 +29,7 @@ module.exports = {
 		var snapshot = new db.user_comments({
 			'user_id': query.id,
 			'email': query.email,
-			'category': query.category || "questions",
+			'category': query.category || 'questions',
 			'where': IDE_HOST,
 			'date': new Date(),
 			'checked': false,
@@ -38,7 +38,7 @@ module.exports = {
 			'msg': query.explanation
 		});
 
-		snapshot.save(function (err) {
+		snapshot.save(function(err) {
 			if (err) {
 				console.log('help.js:send_to_bug_report fail', err);
 			}
@@ -50,16 +50,16 @@ module.exports = {
 		g_log.report({
 			'mail_options': {
 				from: query.email, // sender address
-				to: "contact@goorm.io", // list of receivers
+				to: 'contact@goorm.io', // list of receivers
 				subject: query.title, // Subject line
 				text: query.explanation // plaintext body
 			}
 		});
 
-		evt.emit("help_send_to_bug_report", return_data);
+		evt.emit('help_send_to_bug_report', return_data);
 	},
 
-	get_readme_markdown: function (language, filename, filepath) {
+	get_readme_markdown: function(language, filename, filepath) {
 		var input;
 		var markdownpath = (filepath === undefined) ? global.__path : global.__path + filepath;
 
@@ -68,9 +68,11 @@ module.exports = {
 			NODEJS_MANUAL
 			EXAMPLE_TUTORIAL
 		*/
-		if (!filename) filename = 'README';
+		if (!filename) {
+			filename = 'README';
+		}
 
-		if (language == "kor") {
+		if (language == 'kor') {
 			input = fs.readFileSync(markdownpath + filename + '_KO.html', 'utf8');
 		} else {
 			input = fs.readFileSync(markdownpath + filename + '.html', 'utf8');

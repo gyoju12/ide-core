@@ -22,7 +22,7 @@ goorm.core.localization = {
 
 	init: function() {
 		this.get_version();
-		$(core).trigger("localization_init_complete");
+		$(core).trigger('localization_init_complete');
 	},
 
 	get_version: function() {
@@ -30,7 +30,7 @@ goorm.core.localization = {
 		var broswer_language = navigator.language || navigator.userLanguage;
 		broswer_language = (/ko/.test(broswer_language)) ? 'kor' : 'us';
 
-		var language = (localStorage.getItem("language") && (localStorage.getItem("language") != 'null') && (localStorage.getItem("language") != 'undefined')) ? localStorage.getItem("language") : broswer_language;
+		var language = (localStorage.getItem('language') && (localStorage.getItem('language') != 'null') && (localStorage.getItem('language') != 'undefined')) ? localStorage.getItem('language') : broswer_language;
 
 		self.language = language;
 		self.load_json();
@@ -38,12 +38,14 @@ goorm.core.localization = {
 		var get_type_list = ['dialog', 'dict', 'menu', 'msg', 'tutorial', 'title'];
 
 		for (var i = 0; i < get_type_list.length; i++) {
-			if (!self.language_data[language])
+			if (!self.language_data[language]) {
 				self.language_data[language] = {};
-			if (self.language_data[language][get_type_list[i]])
+			}
+			if (self.language_data[language][get_type_list[i]]) {
 				self.apply_language(language, get_type_list[i]);
-			else
+			} else {
 				self.get_json(language, get_type_list[i]);
+			}
 		}
 
 		if (Object.keys(core.module.plugin_manager.plugins).length) { // only if there are plugins that can be applied localization
@@ -77,7 +79,7 @@ goorm.core.localization = {
 	get_json: function(language, type, length, callback) { // jeongmin: getJSON is async
 		var self = this;
 
-		$.getJSON("configs/languages/" + language + "." + type + ".json", function(data) {
+		$.getJSON('configs/languages/' + language + '.' + type + '.json', function(data) {
 			self.language_data[language][type] = data;
 		}).done(function() {
 			self.apply_language(language, type);
@@ -93,30 +95,32 @@ goorm.core.localization = {
 
 		var self = this;
 
-		if (!self.language_data[language]) self.language_data[language] = {};
+		if (!self.language_data[language]) {
+			self.language_data[language] = {};
+		}
 		//always initialize plugin language data to apply deleted value of plugin --heeje
-		self.language_data[language]['plugin'] = {};
+		self.language_data[language].plugin = {};
 
 		for (var i = 0; i < core.module.plugin_manager.list.length; i++) {
 
 			var plugin = core.module.plugin_manager.list[i].name;
-			var type = plugin.split(".").pop();
-			var path = external_json['plugins'][plugin]['localization.json'];
+			var type = plugin.split('.').pop();
+			var path = external_json.plugins[plugin]['localization.json'];
 
 			if (path) {
-				var data = JSON.parse(external_json['plugins'][plugin]['localization.json']);
+				var data = JSON.parse(external_json.plugins[plugin]['localization.json']);
 
 				if (data && data[language]) {
-					self.language_data[language]['plugin'][type] = {};
+					self.language_data[language].plugin[type] = {};
 					$.each(data[language], function(key, value) {
-						self.language_data[language]['plugin'][type][key] = value;
+						self.language_data[language].plugin[type][key] = value;
 					});
 				}
 			}
 		}
 
-		self.apply(self.language_data[language]['plugin'], 'plugin');
-		self.apply_message(self.language_data[language]['plugin'], 'plugin');
+		self.apply(self.language_data[language].plugin, 'plugin');
+		self.apply_message(self.language_data[language].plugin, 'plugin');
 		self.store_json();
 	},
 
@@ -137,7 +141,7 @@ goorm.core.localization = {
 	},
 
 	load_json: function() {
-		var data = (localStorage.getItem('language.data') && localStorage.getItem('language.data') != 'null' && localStorage.getItem('language.data') != 'undefined') ? localStorage.getItem('language.data') : "{}";
+		var data = (localStorage.getItem('language.data') && localStorage.getItem('language.data') != 'null' && localStorage.getItem('language.data') != 'undefined') ? localStorage.getItem('language.data') : '{}';
 
 		this.language_data = JSON.parse(data);
 	},
@@ -188,9 +192,11 @@ goorm.core.localization = {
 			for (var key in self.language_data[__language]) {
 				var data = self.language_data[__language][key];
 
-				if (key == 'plugin')
+				if (key == 'plugin') {
 					self.get_plugin_language(__language);
-				else self.apply(data);
+				} else {
+					self.apply(data);
+				}
 
 				if (key == 'msg' || key == 'tutorial' || key == 'plugin' || key == 'title') {
 					self.apply_message(data, key);
@@ -245,24 +251,24 @@ goorm.core.localization = {
 					for (var k in data_key) {
 						var v = data_key[k];
 
-						k = 'plugin.' + key + "." + k;
-						node = $("[localization_key='" + k + "']");
-						if (typeof(node.attr("description")) != "undefined") {
-							node.attr("description", v.value);
+						k = 'plugin.' + key + '.' + k;
+						node = $('[localization_key="' + k + '"]');
+						if (typeof(node.attr('description')) != 'undefined') {
+							node.attr('description', v.value);
 						} else {
 							node.html(v.value);
 						}
 					}
 
-					if (items != null) {
+					if (items !== null) {
 						for (var item_k in items) {
 							var item = items[item_k];
 
-							var name = 'plugin.' + key + "." + item_k + ".name";
-							var description = 'plugin.' + key + "." + item_k + ".description";
+							var name = 'plugin.' + key + '.' + item_k + '.name';
+							var description = 'plugin.' + key + '.' + item_k + '.description';
 
-							$("[localization_key='" + name + "']").html(item.name.value);
-							$("[localization_key='" + description + "']").attr('description', item.description.value);
+							$('[localization_key="' + name + '"]').html(item.name.value);
+							$('[localization_key="' + description + '"]').attr('description', item.description.value);
 						}
 					}
 
@@ -290,13 +296,13 @@ goorm.core.localization = {
 					// 	});
 					// }
 				} else {
-					var localizations = $("[localization_key='" + key + "']");
-					var helptext = $("[localization_key='" + key + "'] > .helptext");
+					var localizations = $('[localization_key="' + key + '"]');
+					var helptext = $('[localization_key="' + key + '"] > .helptext');
 					var helptext_parent = helptext.parent();
-					var placeholder = localizations.attr("placeholder");
-					var caret = $("[localization_key='" + key + "'] > .caret")[0];
+					var placeholder = localizations.attr('placeholder');
+					var caret = $('[localization_key="' + key + '"] > .caret')[0];
 					var applied = localizations.find('.menu-applied')[0];
-					var badge = $("[localization_key='" + key + "'] > .badge")[0];
+					var badge = $('[localization_key="' + key + '"] > .badge')[0];
 					var badge_parent = $(badge).parent(); // jeongmin: some element doesn't have badge but have same localization key, so differ badge parent.
 
 					localizations.html(value);
@@ -309,7 +315,7 @@ goorm.core.localization = {
 					if (caret) {
 						// hidden: storage is deprecated
 						// if (key != "common_target") //jeongmin: if key isn't about target
-						$("[localization_key='" + key + "'].dropdown-toggle").append("<b class='caret'></b>");
+						$('[localization_key="' + key + '"].dropdown-toggle').append('<b class="caret"></b>');
 						// else //jeongmin: if key is about target
 						// $("[localization_key='" + key + "'].dropdown-toggle").append("<span>goormIDE Storage</span><b class='caret'></b>"); //jeongmin: add default target
 					}
@@ -327,7 +333,7 @@ goorm.core.localization = {
 					}
 
 					if (placeholder) {
-						localizations.attr("placeholder", value);
+						localizations.attr('placeholder', value);
 						localizations.empty();
 					}
 
@@ -335,12 +341,14 @@ goorm.core.localization = {
 					//$("[tooltip='" + key + "']").attr("title", value);
 
 					//for bootstrap tooltip
-					$("[tooltip='" + key + "']").attr("data-original-title", value);
+					$('[tooltip="' + key + '"]').attr('data-original-title', value);
 
 					if (children) {
-						if (type && type == 'plugin')
+						if (type && type == 'plugin') {
 							self.apply(children, 'plugin');
-						else self.apply(children);
+						} else {
+							self.apply(children);
+						}
 					}
 					/*
 					if(key=="new_project_scm_dialog"){
@@ -446,15 +454,16 @@ goorm.core.localization = {
 
 		var replace_value = function(area, data) {
 			if (data) {
-				if (type && type == 'plugin')
+				if (type && type == 'plugin') {
 					key = 'plugin.' + key;
+				}
 
 				$.each(data, function(key, value) {
-					var localizations = $(area + " [localization_key='" + key + "']");
-					var helptext = $(area + " [localization_key='" + key + "'] > .helptext");
+					var localizations = $(area + ' [localization_key="' + key + '"]');
+					var helptext = $(area + ' [localization_key="' + key + '"] > .helptext');
 					var helptext_parent = helptext.parent();
 
-					var caret = $(area + " [localization_key='" + key + "'] > .caret")[0];
+					var caret = $(area + ' [localization_key="' + key + '"] > .caret')[0];
 					var applied = localizations.find('.menu-applied')[0];
 
 					localizations.html(this.value);
@@ -465,7 +474,7 @@ goorm.core.localization = {
 					}
 
 					if (caret) {
-						$(area + " [localization_key='" + key + "']").first().append("<b class='caret'></b>");
+						$(area + ' [localization_key="' + key + '"]').first().append('<b class="caret"></b>');
 					}
 
 					if (applied) {
@@ -477,7 +486,7 @@ goorm.core.localization = {
 					}
 
 					// attach tooltip
-					$(area + " [tooltip='" + key + "']").attr("title", this.value);
+					$(area + ' [tooltip="' + key + '"]').attr('title', this.value);
 
 					if (this.children) {
 						replace_value(area, this.children);
@@ -498,13 +507,13 @@ goorm.core.localization = {
 				break;
 
 			default:
-				replace_value(area, self.language_data[language]['dialog']);
-				replace_value(area, self.language_data[language]['dict']);
-				replace_value(area, self.language_data[language]['menu']);
-				replace_value(area, self.language_data[language]['msg']);
-				replace_value(area, self.language_data[language]['tutorial']);
-				replace_value(area, self.language_data[language]['title']);
-				replace_value(area, self.language_data[language]['plugin']);
+				replace_value(area, self.language_data[language].dialog);
+				replace_value(area, self.language_data[language].dict);
+				replace_value(area, self.language_data[language].menu);
+				replace_value(area, self.language_data[language].msg);
+				replace_value(area, self.language_data[language].tutorial);
+				replace_value(area, self.language_data[language].title);
+				replace_value(area, self.language_data[language].plugin);
 				break;
 		}
 	},
@@ -515,9 +524,9 @@ goorm.core.localization = {
 		if (data !== null) {
 			if (lkey == 'plugin') {
 				$.each(data, function(plugin, data) {
-					self['plugin'][plugin] = {};
+					self.plugin[plugin] = {};
 					$.each(data, function(key, value) {
-						self['plugin'][plugin][key] = (value.value) ? value.value : value;
+						self.plugin[plugin][key] = (value.value) ? value.value : value;
 					});
 				});
 			} else {
@@ -568,14 +577,14 @@ goorm.core.localization = {
 
 	refresh: function(flag) {
 		var self = this;
-		var language = "";
+		var language = '';
 		if (flag) {
-			if (localStorage.getItem("language") === null) {
-				if (core.server_language == "client") {
-					if (navigator.language == "ko") {
-						language = "kor";
+			if (localStorage.getItem('language') === null) {
+				if (core.server_language === 'client') {
+					if (navigator.language === 'ko') {
+						language = 'kor';
 					} else {
-						language = "us";
+						language = 'us';
 					}
 				} else {
 					language = core.server_language;
@@ -583,16 +592,16 @@ goorm.core.localization = {
 
 				self.change_language(language, true);
 			} else {
-				self.change_language(localStorage.getItem("language"), true);
+				self.change_language(localStorage.getItem('language'), true);
 			}
 
 		} else {
-			if (localStorage.getItem("language") === null) {
-				if (core.server_language == "client") {
-					if (navigator.language == "ko") {
-						language = "kor";
+			if (localStorage.getItem('language') === null) {
+				if (core.server_language === 'client') {
+					if (navigator.language === 'ko') {
+						language = 'kor';
 					} else {
-						language = "us";
+						language = 'us';
 					}
 				} else {
 					language = core.server_language;
@@ -600,7 +609,7 @@ goorm.core.localization = {
 
 				self.change_language(language);
 			} else {
-				self.change_language(localStorage.getItem("language"));
+				self.change_language(localStorage.getItem('language'));
 			}
 		}
 	}

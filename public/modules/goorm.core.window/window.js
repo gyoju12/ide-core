@@ -8,8 +8,8 @@
  * version: 2.0.0
  **/
 
-goorm.core.window = function () {
-	this.opened_list={};
+goorm.core.window = function() {
+	this.opened_list = {};
 };
 
 goorm.core.window.prototype = {

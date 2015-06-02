@@ -27,7 +27,7 @@ var querystring = require('querystring');
 
 var check_form = {
 	regular_expression_id: /^[0-9a-zA-Z]{4,15}$/,
-	regular_expression_password: /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[`!@#$%^&+=\(\)\*\-\_\|\[\]\{\}\<\>\?\,\.\/\;\'\:]).*$/,
+	regular_expression_password: /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[`!@#$%^&+=\(\)\*\-\_\|\[\]\{\}<\>\?\,\.\/\;\'\:]).*$/,
 	regular_expression_name: /^[가-힣 0-9a-zA-Z._-]{2,15}$/,
 	regular_expression_email: /^([0-9a-zA-Z._-]+)@([0-9a-zA-Z_-]+)(\.[a-zA-Z0-9]+)(\.[a-zA-Z]+)?$/
 };

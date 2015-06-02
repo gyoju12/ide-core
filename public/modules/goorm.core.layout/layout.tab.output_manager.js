@@ -24,26 +24,26 @@ goorm.core.layout.tab.output_manager = {
 	create: function() {
 		$('[id="' + this.context + '"]').addClass('output_tab').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.context + '_table" ></table>');
 		this.table = $('[id="' + this.context + '_table"]').dataTable({
-			"aaData": [],
-			"aoColumns": [{
-				"mData": 'type',
-				"sTitle": '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>',
-				"sWidth": '40px'
+			'aaData': [],
+			'aoColumns': [{
+				'mData': 'type',
+				'sTitle': '<span localization_key="dictionary_type">' + core.module.localization.msg.dictionary_type + '</span>',
+				'sWidth': '40px'
 			}, {
-				"mData": 'file',
-				"sTitle": '<span localization_key="dictionary_file">' + core.module.localization.msg.dictionary_file + '</span>'
+				'mData': 'file',
+				'sTitle': '<span localization_key="dictionary_file">' + core.module.localization.msg.dictionary_file + '</span>'
 			}, {
-				"mData": 'line',
-				"sTitle": '<span localization_key="dictionary_line">' + core.module.localization.msg.dictionary_line + '</span>'
+				'mData': 'line',
+				'sTitle': '<span localization_key="dictionary_line">' + core.module.localization.msg.dictionary_line + '</span>'
 			}, {
-				"mData": 'content',
-				"sTitle": '<span localization_key="dictionary_content">' + core.module.localization.msg.dictionary_content + '</span>'
-			} ],
-			"sDom": '<"H">Rrt',
-			"paging": false,
-			"iDisplayLength": -1,
-			"oLanguage": {
-				"sEmptyTable": '<span localization_key="output_tab_no_error">' + core.module.localization.msg.output_tab_no_error + '</span>'
+				'mData': 'content',
+				'sTitle': '<span localization_key="dictionary_content">' + core.module.localization.msg.dictionary_content + '</span>'
+			}],
+			'sDom': '<"H">Rrt',
+			'paging': false,
+			'iDisplayLength': -1,
+			'oLanguage': {
+				'sEmptyTable': '<span localization_key="output_tab_no_error">' + core.module.localization.msg.output_tab_no_error + '</span>'
 			}
 		});
 
@@ -64,7 +64,7 @@ goorm.core.layout.tab.output_manager = {
 				line = parseInt(line, 10) - 1; // CodeMirror Start Line Number --> 0
 
 				var filename = file.pop();
-				filename = filename.split(":")[0];
+				filename = filename.split(':')[0];
 				var filepath = file.join('/') + '/';
 
 				var w = core.module.layout.workspace.window_manager.get_window(filepath, filename);
@@ -84,9 +84,9 @@ goorm.core.layout.tab.output_manager = {
 			$(document).on('mousedown', '[id="' + this.context + '_table"] tbody td', function(e) {
 				if (e.button == 2) {
 					var parent = $(this).parent();
-					var filepath = $(parent).children("td:nth-child(1)").text();
-					var line = $(parent).children("td:nth-child(2)").text();
-					var content = $(parent).children("td:nth-child(3)").text();
+					var filepath = $(parent).children('td:nth-child(1)').text();
+					var line = $(parent).children('td:nth-child(2)').text();
+					var content = $(parent).children('td:nth-child(3)').text();
 
 					
 				}
@@ -98,7 +98,7 @@ goorm.core.layout.tab.output_manager = {
 		var data = [];
 		var regex = null;
 
-		if (type === "cpp" || type === "java") {
+		if (type === 'cpp' || type === 'java') {
 			data = [];
 			regex = /(.*)\/([^:]*):(\d+):(\d+)?:?(.*)/; // jeongmin: add (.*) -> contents
 
@@ -109,8 +109,11 @@ goorm.core.layout.tab.output_manager = {
 			// raw = raw.split(' ');
 
 			var find_error = function(i, m) {
-				if (/:(\d+):/.test(m)) return true;
-				else return false;
+				if (/:(\d+):/.test(m)) {
+					return true;
+				} else {
+					return false;
+				}
 			};
 
 			var get_content = function(i, msg) { // msg: start of error contents
@@ -135,6 +138,22 @@ goorm.core.layout.tab.output_manager = {
 				return m;
 			};
 
+			var shared = core.module.project.check_shared();
+			var check_path = function(path) {
+				var check = false;
+
+				if (path) {
+					if (shared && path === core.status.current_project_path) {
+						check = true;
+					}
+					else if (!shared && path === core.status.current_project_name) {
+						check = true;
+					}
+				}
+
+				return check;
+			};
+
 			for (var i = 0; i < raw.length; i++) {
 				if (find_error(i, raw[i])) {
 
@@ -142,18 +161,28 @@ goorm.core.layout.tab.output_manager = {
 					//var content = match.pop()+": ";
 					var filename = match[2];
 					var line = match[3];
-					var filepath = "";
+					var filepath = '';
 					var temp_path = match[1].split('/');
 					var is_path = false;
 					var msg = match[5]; // jeongmin: start of error contents
 					var error_type = match[5].split(':')[0].trim();
 
 					for (var k = 0; k < temp_path.length; k++) {
-						if (temp_path[k] && temp_path[k] == core.status.current_project_path) is_path = true;
-						if (!temp_path[k] || !is_path) continue;
-						if (temp_path[k] == filename) return;
+						if (check_path(temp_path[k])) {
+							is_path = true;
+						}
+						if (!temp_path[k] || !is_path) {
+							continue;
+						}
+						if (temp_path[k] == filename) {
+							return;
+						}
 
 						filepath += temp_path[k] + '/';
+					}
+
+					if (!shared) {
+						filepath = filepath.replace(core.status.current_project_name, core.status.current_project_path);
 					}
 
 					var content = get_content(i, msg);
@@ -190,9 +219,9 @@ goorm.core.layout.tab.output_manager = {
 					obj.type = '<span class="err_color">Error</span>';
 					obj.content = '<i class="fa fa-times-circle fa-1 err_color"></i> ' + obj.content;
 					self.err_count++;
-				}	
+				}
 			});
-			
+
 			this.table.fnAddData(data);
 		}
 	},

@@ -19,19 +19,17 @@ goorm.core.project._export = {
 
 		var self = this;
 
-		this.panel = $("#dlg_export_project");
+		this.panel = $('#dlg_export_project');
 
 		// this.panel.click(function() {	// hidden: storage is deprecated
-		// 	$("button[localization_key=common_target]").blur();
+		// 	$('button[localization_key=common_target]').blur();
 		// });
-
-
 
 		var handle_ok = $.debounce(function() { // jeongmin: prevent multiple export
 			var data = self.project_list.get_data();
-			var type = $("#dlg_export_project label.active").text().trim();
+			var type = $('#dlg_export_project label.active').text().trim();
 
-			if (data.path === "" || data.name === "" || !type) {
+			if (data.path === '' || data.name === '' || !type) {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				return false;
 			}
@@ -48,21 +46,21 @@ goorm.core.project._export = {
 			var progress_elements = core.module.loading_bar.start({
 				str: core.module.localization.msg.loading_bar_export
 			});
-			core._socket.on("/project/do_export", function(data) {
+			core._socket.on('/project/do_export', function(data) {
 				progress_elements.contents(data);
 			});
-			core._socket.emit("/project/do_export", postdata);
+			core._socket.emit('/project/do_export', postdata);
 
-			core._socket.once("/project/done_export", function(data) {
+			core._socket.once('/project/done_export', function(data) {
 				progress_elements.stop();
 
 				if (data.err_code === 0) {
 					self.panel.modal('hide');
 
-					$("#download_frame").css('display', 'none');
+					$('#download_frame').css('display', 'none');
 
 					//useonly(mode=goorm-standalone,goorm-oss)
-					$("#download_frame").attr('src', "download/?file=" + data.path);
+					$('#download_frame').attr('src', 'download/?file=' + data.path);
 					
 
 					
@@ -93,7 +91,7 @@ goorm.core.project._export = {
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_export_project",
-			id: "dlg_export_project",
+			id: 'dlg_export_project',
 			handle_ok: handle_ok,
 			success: function() {
 				$('#project_export_datatype1').iCheck('check'); // jeongmin: default
@@ -104,28 +102,28 @@ goorm.core.project._export = {
 					$(this).parent().parent().addClass('active'); // set active this button (hierarchy: label > iCheck > input)
 				});
 
-				// $(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
-				// 	$("button[localization_key=common_target]").blur();
+				// $(document).on('click', 'li.open.storage', function() {	// hidden: storage is deprecated
+				// 	$('button[localization_key=common_target]').blur();
 				// });
 			},
 
 			//the modal has been made visible to the user! Jeong-min Im.
 			show: function() {
 				self.project_list.init_project(); //let's set initial project
-				$("#project_export_list").focus();
+				$('#project_export_list').focus();
 			}
 		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer("file_export", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('file_export', this);
 	},
 
 	show: function() {
 		var self = this;
 		this.dialog_explorer.init(true, true);
-		this.project_list.init("#project_export");
+		this.project_list.init('#project_export');
 		this.project_list.set_keydown_event({
 			'handler': function() {
-				$("#g_ep_btn_ok").click();
+				$('#g_ep_btn_ok').click();
 			}
 		});
 

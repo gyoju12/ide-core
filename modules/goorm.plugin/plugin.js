@@ -10,26 +10,26 @@
 
 var fs = require('fs');
 var walk = require('walk');
-var EventEmitter = require("events").EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 var rimraf = require('rimraf');
 var async = require('async');
 
 var initial_list = {
-	'ide': ["goorm.plugin.cpp", "goorm.plugin.java", "goorm.plugin.dart", "goorm.plugin.go", "goorm.plugin.jsp", "goorm.plugin.nodejs", "goorm.plugin.php", "goorm.plugin.python", "goorm.plugin.ruby"],
-	'edu': ["goorm.plugin.edu", "goorm.plugin.lecture"],
-	'dev': ["goorm.plugin.nodejs", "goorm.plugin.dev"],
-	'book': ["goorm.plugin.nodejs", "goorm.plugin.jquery"],
-	'cpp': ["goorm.plugin.cpp"],
-	'java': ["goorm.plugin.java"],
-	'nodejs': ["goorm.plugin.nodejs"],
-	'python': ["goorm.plugin.python"],
-	'ruby': ["goorm.plugin.ruby"],
-	'go': ["goorm.plugin.go"],
-	'dart': ["goorm.plugin.dart"],
-	'jsp': ["goorm.plugin.jsp"],
-	'php': ["goorm.plugin.php"],
-	'android': ["goorm.plugin.android"],
-	'phonegap': ["goorm.plugin.phonegap"]
+	'ide': ['goorm.plugin.cpp', 'goorm.plugin.java', 'goorm.plugin.dart', 'goorm.plugin.go', 'goorm.plugin.jsp', 'goorm.plugin.nodejs', 'goorm.plugin.php', 'goorm.plugin.python', 'goorm.plugin.ruby'],
+	'edu': ['goorm.plugin.edu', 'goorm.plugin.lecture'],
+	'dev': ['goorm.plugin.nodejs', 'goorm.plugin.dev'],
+	'book': ['goorm.plugin.nodejs', 'goorm.plugin.jquery'],
+	'cpp': ['goorm.plugin.cpp'],
+	'java': ['goorm.plugin.java'],
+	'nodejs': ['goorm.plugin.nodejs'],
+	'python': ['goorm.plugin.python'],
+	'ruby': ['goorm.plugin.ruby'],
+	'go': ['goorm.plugin.go'],
+	'dart': ['goorm.plugin.dart'],
+	'jsp': ['goorm.plugin.jsp'],
+	'php': ['goorm.plugin.php'],
+	'android': ['goorm.plugin.android'],
+	'phonegap': ['goorm.plugin.phonegap']
 };
 
 var resource_list = [
@@ -67,16 +67,16 @@ module.exports = {
 		if (mode === 'init') {
 			var plugins = [];
 
-			var walker = walk.walk(global.__path + "plugins", {
+			var walker = walk.walk(global.__path + 'plugins', {
 				followLinks: false
 			});
 
-			walker.on("directories", function(root, dirStatsArray, next) {
-				if (root == global.__path + "plugins") {
+			walker.on('directories', function(root, dirStatsArray, next) {
+				if (root == global.__path + 'plugins') {
 					for (var i = 0; i < dirStatsArray.length; i++) {
 						var name = dirStatsArray[i].name;
 
-						if (name !== ".svn") {
+						if (name !== '.svn') {
 							plugins.push({
 								name: name
 							});
@@ -87,7 +87,7 @@ module.exports = {
 				next();
 			});
 
-			walker.on("end", function() {
+			walker.on('end', function() {
 				global.plugins_list = plugins;
 			});
 		} else {
@@ -95,12 +95,12 @@ module.exports = {
 
 			var plugins = [];
 
-			var walker = walk.walk(global.__path + "plugins", {
+			var walker = walk.walk(global.__path + 'plugins', {
 				followLinks: false
 			});
 
-			walker.on("directories", function(root, dirStatsArray, next) {
-				if (root == global.__path + "plugins") {
+			walker.on('directories', function(root, dirStatsArray, next) {
+				if (root == global.__path + 'plugins') {
 					for (var i = 0; i < dirStatsArray.length; i++) {
 						var name = dirStatsArray[i].name;
 
@@ -115,9 +115,9 @@ module.exports = {
 				next();
 			});
 
-			walker.on("end", function() {
+			walker.on('end', function() {
 				if (evt) {
-					evt.emit("plugin_get_list", plugins);
+					evt.emit('plugin_get_list', plugins);
 				}
 			});
 		}
@@ -169,36 +169,36 @@ module.exports = {
 	},
 
 	do_new: function(req, res) {
-		var plugin = require("../../plugins/" + req.plugin + "/modules/");
+		var plugin = require('../../plugins/' + req.plugin + '/modules/');
 		plugin.do_new(req, res);
 	},
 	make_template: function(req, res) {
 
-		var plugin = require("../../plugins/" + req.plugin + "/modules/");
+		var plugin = require('../../plugins/' + req.plugin + '/modules/');
 		plugin.make_template(req, res);
 
 	},
 	debug_server: function(io) {
-		console.log("debug server started");
+		console.log('debug server started');
 		io.set('log level', 0);
 		io.sockets.on('connection', function(socket) {
 			var plugin = null;
 			var evt = new EventEmitter();
 
-			console.log("debug server connected");
+			console.log('debug server connected');
 
-			evt.on("response", function(data) {
-				socket.emit("debug_response", data);
+			evt.on('response', function(data) {
+				socket.emit('debug_response', data);
 			});
 
 			socket.on('debug', function(msg) {
-				if (msg.mode == "init") {
+				if (msg.mode == 'init') {
 					if (plugin !== null) {
 						plugin.debug({
-							"mode": "close"
+							'mode': 'close'
 						}, evt);
 					}
-					plugin = require("../../plugins/" + msg.plugin + "/modules/");
+					plugin = require('../../plugins/' + msg.plugin + '/modules/');
 				}
 				if (plugin !== null) {
 					plugin.debug(msg, evt);
@@ -209,12 +209,12 @@ module.exports = {
 
 	run: function(req, res) {
 		// console.log(req);
-		var plugin = require("../../plugins/" + req.plugin + "/modules/");
+		var plugin = require('../../plugins/' + req.plugin + '/modules/');
 		plugin.run(req, res);
 	},
 
 	extend_function: function(req, res) {
-		var plugin = require("../../plugins/" + req.query.plugin + "/modules/");
+		var plugin = require('../../plugins/' + req.query.plugin + '/modules/');
 		plugin.extend_function(req, res);
 	},
 
@@ -227,18 +227,18 @@ module.exports = {
 					for (var i = 0; i < files.length; i++) {
 						fstat = fs.statSync(user_plg_path + files[i]);
 						if (fstat.isDirectory()) {
-							if (fs.existsSync(user_plg_path + files[i] + "/plug.js")) {
-								var pref_string = "{}";
-								var tree_string = "{}";
-								var loc_string = "{}";
-								if (fs.existsSync(user_plg_path + files[i] + "/preference.json")) {
-									pref_string = fs.readFileSync(user_plg_path + files[i] + "/preference.json", 'utf8');
+							if (fs.existsSync(user_plg_path + files[i] + '/plug.js')) {
+								var pref_string = '{}';
+								var tree_string = '{}';
+								var loc_string = '{}';
+								if (fs.existsSync(user_plg_path + files[i] + '/preference.json')) {
+									pref_string = fs.readFileSync(user_plg_path + files[i] + '/preference.json', 'utf8');
 								}
-								if (fs.existsSync(user_plg_path + files[i] + "/tree.json")) {
-									tree_string = fs.readFileSync(user_plg_path + files[i] + "/tree.json", 'utf8');
+								if (fs.existsSync(user_plg_path + files[i] + '/tree.json')) {
+									tree_string = fs.readFileSync(user_plg_path + files[i] + '/tree.json', 'utf8');
 								}
-								if (fs.existsSync(user_plg_path + files[i] + "/localization.json")) {
-									loc_string = fs.readFileSync(user_plg_path + files[i] + "/localization.json", 'utf8');
+								if (fs.existsSync(user_plg_path + files[i] + '/localization.json')) {
+									loc_string = fs.readFileSync(user_plg_path + files[i] + '/localization.json', 'utf8');
 								}
 								plug_name_list.push({
 									name: files[i],
@@ -249,7 +249,7 @@ module.exports = {
 							}
 						}
 					}
-					cb((plug_name_list.length != 0), plug_name_list);
+					cb((plug_name_list.length !== 0), plug_name_list);
 				});
 			} else {
 				cb(false);
@@ -265,31 +265,36 @@ module.exports = {
 		var del_num = 0;
 		var plug_name_list = [];
 		var del_type_list = [];
-		fs.exists(absolute_path + ".plg_list", function(exists) {
+		fs.exists(absolute_path + '.plg_list', function(exists) {
 			if (exists) {
-				plug_name_list = fs.readFileSync(absolute_path + ".plg_list", "utf8").split("\n");
+				plug_name_list = fs.readFileSync(absolute_path + '.plg_list', 'utf8').split('\n');
 				plug_name_list.pop();
-				rimraf.sync(absolute_path + ".plg_list");
+				rimraf.sync(absolute_path + '.plg_list');
 			}
-			if (plug_name_list.length)
+
+			if (plug_name_list.length) {
 				for (var i = 0; i < plug_name_list.length; i++) {
 					del_type_list.push(plug_name_list[i]);
-					rimraf(user_plg_path + "goorm.plugin." + plug_name_list[i], function(err) {
+
+					rimraf(user_plg_path + 'goorm.plugin.' + plug_name_list[i], function(err) {
 						if (!err) {
 							del_num++;
 						}
-						if (++complete_num == plug_name_list.length)
+
+						if (++complete_num == plug_name_list.length) {
 							res.json({
 								del_num: del_num,
 								del_type_list: del_type_list
 							});
+						}
 					});
-
-				} else
+				}
+			} else {
 				res.json({
 					del_num: del_num,
 					del_type_list: del_type_list
 				});
+			}
 		});
 	},
 
@@ -297,31 +302,34 @@ module.exports = {
 		var workspace_path = query.workspace_path;
 		var prev_name = query.prev_name;
 		var replace_name = query.replace_name;
-		var property_html = prev_name + ".property.html";
-		var preference_html = prev_name + ".preference.html";
-		var plug_js = "plug.js";
-		var tree_json = "tree.json";
-		var preference_json = "preference.json";
-		var modules_js = "modules/index.js";
-		var images1_png = "images/" + prev_name + ".png";
-		var images2_png = "images/" + prev_name + "_console.png";
+		var property_html = prev_name + '.property.html';
+		var preference_html = prev_name + '.preference.html';
+		var plug_js = 'plug.js';
+		var tree_json = 'tree.json';
+		var preference_json = 'preference.json';
+		var modules_js = 'modules/index.js';
+		var images1_png = 'images/' + prev_name + '.png';
+		var images2_png = 'images/' + prev_name + '_console.png';
 		async.parallel({
 				property_html: function(callback) {
 					var someFile = workspace_path + property_html;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace(RegExp(prev_name, "g"), replace_name);
+
+						var result = data.replace(RegExp(prev_name, 'g'), replace_name);
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
+							if (err) {
+								return callback(null, 'write error');
+							} else {
 								fs.rename(someFile, someFile.replace(prev_name, replace_name), function() {
-									if (err)
-										return callback(null, "File name change error");
-									else
-										return callback(null, "Modify Success");
+									if (err) {
+										return callback(null, 'File name change error');
+									} else {
+										return callback(null, 'Modify Success');
+									}
 								});
 							}
 						});
@@ -331,15 +339,16 @@ module.exports = {
 					var someFile = workspace_path + preference_html;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace(RegExp(prev_name, "g"), replace_name);
+						var result = data.replace(RegExp(prev_name, 'g'), replace_name);
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
+							if (err) {
+								return callback(null, 'write error');
+							} else {
 								fs.rename(someFile, someFile.replace(prev_name, replace_name), function() {
-									return callback(null, "Modify Success");
+									return callback(null, 'Modify Success');
 								});
 							}
 						});
@@ -349,15 +358,17 @@ module.exports = {
 					var someFile = workspace_path + tree_json;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace(RegExp(prev_name, "g"), replace_name);
-						var result = result.replace(RegExp(prev_name.toUpperCase(), "g"), replace_name.toUpperCase());
+
+						var result = data.replace(RegExp(prev_name, 'g'), replace_name);
+						result = result.replace(RegExp(prev_name.toUpperCase(), 'g'), replace_name.toUpperCase());
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
-								return callback(null, "Modify Success");
+							if (err) {
+								return callback(null, 'write error');
+							} else {
+								return callback(null, 'Modify Success');
 							}
 						});
 					});
@@ -366,15 +377,17 @@ module.exports = {
 					var someFile = workspace_path + plug_js;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace('name: "' + prev_name + '"', 'name: "' + replace_name + '"');
-						var result = result.replace('goorm.plugin.' + prev_name, 'goorm.plugin.' + replace_name);
+
+						var result = data.replace('name: \'' + prev_name + '\'', 'name: \'' + replace_name + '\'');
+						result = result.replace('goorm.plugin.' + prev_name, 'goorm.plugin.' + replace_name);
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
-								return callback(null, "Modify Success");
+							if (err) {
+								return callback(null, 'write error');
+							} else {
+								return callback(null, 'Modify Success');
 							}
 						});
 					});
@@ -383,14 +396,16 @@ module.exports = {
 					var someFile = workspace_path + preference_json;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace(RegExp(prev_name, "g"), replace_name);
+
+						var result = data.replace(RegExp(prev_name, 'g'), replace_name);
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
-								return callback(null, "Modify Success");
+							if (err) {
+								return callback(null, 'write error');
+							} else {
+								return callback(null, 'Modify Success');
 							}
 						});
 					});
@@ -399,14 +414,16 @@ module.exports = {
 					var someFile = workspace_path + modules_js;
 					fs.readFile(someFile, 'utf8', function(err, data) {
 						if (err) {
-							return callback(null, "read error");
+							return callback(null, 'read error');
 						}
-						var result = data.replace(RegExp(prev_name, "g"), replace_name);
+
+						var result = data.replace(RegExp(prev_name, 'g'), replace_name);
 
 						fs.writeFile(someFile, result, 'utf8', function(err) {
-							if (err) return callback(null, "write error");
-							else {
-								return callback(null, "Modify Success");
+							if (err) {
+								return callback(null, 'write error');
+							} else {
+								return callback(null, 'Modify Success');
 							}
 						});
 					});
@@ -414,19 +431,21 @@ module.exports = {
 				images1_png: function(callback) {
 					var someFile = workspace_path + images1_png;
 					fs.rename(someFile, someFile.replace(prev_name, replace_name), function(err) {
-						if (err)
-							return callback(null, "File name change error");
-						else
-							return callback(null, "Modify Success");
+						if (err) {
+							return callback(null, 'File name change error');
+						} else {
+							return callback(null, 'Modify Success');
+						}
 					});
 				},
 				images2_png: function(callback) {
 					var someFile = workspace_path + images2_png;
 					fs.rename(someFile, someFile.replace(prev_name, replace_name), function(err) {
-						if (err)
-							return callback(null, "File name change error");
-						else
-							return callback(null, "Modify Success");
+						if (err) {
+							return callback(null, 'File name change error');
+						} else {
+							return callback(null, 'Modify Success');
+						}
 					});
 				}
 			},

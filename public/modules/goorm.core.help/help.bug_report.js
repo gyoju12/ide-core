@@ -18,31 +18,31 @@ goorm.core.help.bug_report = {
 		regular_expression_email: /^([0-9a-zA-Z._-]+)@([0-9a-zA-Z_-]+)(\.[a-zA-Z0-9]+)(\.[a-zA-Z]+)?$/
 	},
 
-	init: function () {
+	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_help_bug_report")
+		this.panel = $('#dlg_help_bug_report');
 
-		var handle_ok = function () {
-			if ($("#bug_reports_title").val() === "") {
+		var handle_ok = function() {
+			if ($('#bug_reports_title').val() === '') {
 				alert.show(core.module.localization.msg.alert_title_empty);
 				return false;
-			} else if ($("#bug_reports_email").val() === "") {
+			} else if ($('#bug_reports_email').val() === '') {
 				alert.show(core.module.localization.msg.alert_email_empty);
 				return false;
-			} else if (!self.check_form.regular_expression_email.test($("#bug_reports_email").val())) {
+			} else if (!self.check_form.regular_expression_email.test($('#bug_reports_email').val())) {
 				alert.show(core.module.localization.msg.alert_user_unfit_email);
 				return false;
 			}
 
 			var postdata = {
-				title: $("#bug_reports_title").val(),
-				email: $("#bug_reports_email").val(),
+				title: $('#bug_reports_title').val(),
+				email: $('#bug_reports_email').val(),
 				category: $('#bug_reports_category').val(),
-				explanation: $("#bug_reports_content").val().split("<").join("").split(">").join("")
+				explanation: $('#bug_reports_content').val().split('<').join('').split('>').join('')
 			};
 
-			$.get("/help/send_to_bug_report", postdata, function (data) {
+			$.get('/help/send_to_bug_report', postdata, function(data) {
 				if (data.err_code === 0) {
 					notice.show(core.module.localization.msg.notice_write_done);
 
@@ -57,20 +57,20 @@ goorm.core.help.bug_report = {
 		this.dialog = new goorm.core.dialog();
 
 		this.dialog.init({
-			// localization_key: "title_send_bug_report",
-			id: "dlg_help_bug_report",
+			// localization_key: 'title_send_bug_report',
+			id: 'dlg_help_bug_report',
 			handle_ok: handle_ok,
 			success: null
 		});
-		
+
 	},
 
-	show: function () {
+	show: function() {
 		var email = core.user.email;
 
-		$("#bug_reports_title").val("");
-		$("#bug_reports_email").val(email);
-		$("#bug_reports_content").val("");
+		$('#bug_reports_title').val('');
+		$('#bug_reports_email').val(email);
+		$('#bug_reports_content').val('');
 
 		this.panel.modal('show');
 	}

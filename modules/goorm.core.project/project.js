@@ -21,6 +21,7 @@ var execFile = require('child_process').execFile;
 
 var g_secure = require('../goorm.core.secure/secure.js');
 var g_auth_project = require('../goorm.core.auth/auth.project');
+var g_project_workspace = require('../goorm.core.project/project.workspace');
 
 
 
@@ -38,6 +39,275 @@ module.exports = {
 		return project_limit;
 	},
 
+	create_to_workspace: function(query, evt) {
+		var self = this;
+		var data = {};
+		data.err_code = 0;
+		data.message = 'Process Done';
+		
+		var project_dir = query.project_author + '_' + query.project_name;
+
+		fs.readdir(global.__workspace + '/', function(err, files) {
+			if (err) {
+				data.err_code = 10;
+				data.message = 'Server can not response';
+
+				evt.emit('project_do_new', data);
+			} else {
+				var project_dir = query.project_author + '_' + query.project_name;
+				var project_name = project_dir;
+				
+				
+				
+				if (files.hasObject(project_name)) {
+					data.err_code = 20;
+					data.message = 'Same project name is exist.';
+					fs.readFile(global.__workspace + '/' + project_name + '/goorm.manifest', 'utf-8', function(err, goorm_manifest_json) {
+						data.prev_project_type = JSON.parse(goorm_manifest_json).type;
+						evt.emit('project_do_new', data);
+					});
+				} else {
+					//check limit
+					var evt_check = new EventEmitter();
+					evt_check.on('count_project_by_id', function(count) {
+						var limit = self.get_limit();
+						count = count * 1;
+						if (count >= limit) {
+							//exceed limit
+							data.err_code = 40;
+							data.message = 'You can not make more than ' + limit + ' projects';
+							evt.emit('project_do_new', data);
+						} else {
+							//not exceed limit --> okay make
+							if (query.project_name.length > 50) {
+								data.err_code = 39;
+								data.message = 'Project name is too long';
+								evt.emit('project_do_new', data);
+							} else {
+								fs.mkdir(global.__workspace + '/' + project_name, '0777', function(err) {
+									if (err) {
+										if (err.code == 'ENAMETOOLONG') {
+											data.err_code = 39;
+											data.message = 'Project name is too long';
+										} else {
+											data.err_code = 30;
+											data.message = 'Cannot make directory';
+										}
+										console.log('new project mkdir error:', err, data.message);
+										evt.emit('project_do_new', data);
+									} else {
+										var today = new Date();
+										var today_month = parseInt(today.getMonth(), 10) + 1;
+										var date_string = today.getFullYear() + '/' + today_month + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+
+										var file_contents = {
+											type: query.project_type,
+											detailedtype: query.project_detailed_type,
+											author: query.project_author,
+											name: query.project_name,
+											description: query.project_desc,
+											date: date_string,
+											collaboration: query.use_collaboration,
+											plugins: query.plugins,
+											is_user_plugin: false
+										};
+										if (global.plugins_list && global.plugins_list.length > 0) {
+											var is_default_plg = global.plugins_list.some(function(o) {
+												if (o && o.name === ('goorm.plugin.' + query.project_type)) {
+													return true;
+												}
+											});
+											if (!is_default_plg) {
+												file_contents.is_user_plugin = true;
+											}
+										}
+										fs.writeFile(global.__workspace + '/' + project_name + '/goorm.manifest', JSON.stringify(file_contents), {
+											mode: 0700
+										}, function(err) {
+											if (err) {
+												data.err_code = 40;
+												data.message = 'Can not make project file';
+
+												evt.emit('project_do_new', data);
+											} else {
+												data.project_dir = project_dir;
+												data.project_name = query.project_name;
+												data.project_author = query.project_author;
+												data.project_type = query.project_type;
+
+												var project_db_data = {
+													project_author: query.project_author,
+													project_name: query.project_name,
+													project_path: project_dir,
+													project_type: query.project_type,
+													detailedtype: query.project_detailed_type,
+													description: query.project_desc,
+													date: date_string,
+													is_user_plugin: false,
+													storage: 'container',
+													storage_name: query.docker_id || ""
+												};
+
+												var project_permission_data = {
+													project_path: project_name
+												};
+
+												
+												
+												
+											}
+										});
+									}
+								});
+							}
+						}
+					});
+
+					self.count_project_by_id(query.project_author, evt_check);
+				}
+			}
+		});		
+	},
+	
+	create_to_s3: function(query, evt) {
+		var self = this;
+		var data = {};
+		data.err_code = 0;
+		data.message = 'Process Done';
+		
+		var project_dir = query.project_author + '_' + query.project_name;
+		
+		g_auth_project.get_owner_list({
+			'author_id': query.project_author
+		}, function(project_list) {
+			if (project_list) {
+				if (project_list.length >= self.get_limit()) {
+					data.err_code = 40;
+					data.message = 'You can not make more than ' + limit + ' projects';
+					evt.emit('project_do_new', data);
+				} else if (query.project_name.length > 50) {
+					data.err_code = 39;
+					data.message = 'Project name is too long';
+					evt.emit('project_do_new', data);
+				} else {
+					g_aws.do_new({
+						'user_id': query.project_author,
+						'project_path': project_dir
+					}, function(do_new) {
+						if (do_new && do_new.result) {
+							var account = do_new.account;
+
+							account.user_id = query.project_author;
+							account.project_name = query.project_name;
+							account.do_new = true;
+
+							// mount
+							//
+							g_auth_project.mount(account, function(mount, err) {
+								if (mount) {
+
+									// make goorm.manifest
+									//
+									var today = new Date();
+									var today_month = parseInt(today.getMonth(), 10) + 1;
+									var date_string = today.getFullYear() + '/' + today_month + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+
+									var file_contents = {
+										type: query.project_type,
+										detailedtype: query.project_detailed_type,
+										author: query.project_author,
+										name: query.project_name,
+										description: query.project_desc,
+										date: date_string,
+										collaboration: query.use_collaboration,
+										plugins: query.plugins,
+										is_user_plugin: false
+									};
+
+									if (global.plugins_list && global.plugins_list.length > 0) {
+										var is_default_plg = global.plugins_list.some(function(o) {
+											if (o && o.name === ('goorm.plugin.' + query.project_type)) {
+												return true;
+											}
+										});
+										if (!is_default_plg) {
+											file_contents.is_user_plugin = true;
+										}
+									}
+
+									fs.writeFile(global.__workspace + '/' + query.project_name + '/goorm.manifest', JSON.stringify(file_contents), {
+										mode: 0700
+									}, function(err) {
+										if (err) {
+											data.err_code = 40;
+											data.message = 'Can not make project file';
+
+											evt.emit('project_do_new', data);
+										} else {
+
+											// set db
+											//
+											data.project_dir = project_dir;
+											data.project_name = query.project_name;
+											data.project_author = query.project_author;
+											data.project_type = query.project_type;
+
+											var project_db_data = {
+												project_author: query.project_author,
+												project_name: query.project_name,
+												project_path: project_dir,
+												project_type: query.project_type,
+												detailedtype: query.project_detailed_type,
+												description: query.project_desc,
+												date: date_string,
+												is_user_plugin: false,
+												storage: 's3'
+											};
+
+											var workspace_path = global.__workspace + '/';
+											if (workspace_path && workspace_path[workspace_path.length - 1] && workspace_path[workspace_path.length - 2] && workspace_path[workspace_path.length - 1] == '/' && workspace_path[workspace_path.length - 2] == '/') {
+												workspace_path = workspace_path.substring(0, workspace_path.length - 1);
+											}
+
+											evt.emit('project_add_db', project_db_data, data);
+										}
+									});
+								} else {
+									data.err_code = 30;
+									data.message = 'Server can not response';
+
+									evt.emit('project_do_new', data);
+								}
+							});
+						} else {
+							data.err_code = do_new.code;
+
+							if (!data.err_code) {
+								data.err_code = 30;
+							}
+
+							switch (data.err_code) {
+								case 20:
+									data.message = 'Same project name is exist.';
+									break;
+								case 30:
+									data.message = 'Server can not response';
+									break;
+							}
+
+							evt.emit('project_do_new', data);
+						}
+					});
+				}
+			} else {
+				data.err_code = 30;
+				data.message = 'Server can not response';
+
+				evt.emit('project_do_new', data);
+			}
+		});
+	},
+	
 	do_new: function(query, evt) {
 		var self = this;
 		var data = {};
@@ -151,7 +421,7 @@ module.exports = {
 		var me = {
 			'user': query.id,
 			'project_path': query.project_path
-		}
+		};
 
 		
 
@@ -182,8 +452,7 @@ module.exports = {
 	},
 
 	do_import_check: function(query, file, evt) {
-
-		if (file == null) {
+		if (file === null) {
 			return false;
 		}
 
@@ -210,7 +479,7 @@ module.exports = {
 				cmd_get_list.opt = ('-Z -1 ' + file.path).split(' ');
 
 				cmd_get_manifest.cmd = 'unzip';
-				cmd_get_manifest.opt = ['-p', file.path]
+				cmd_get_manifest.opt = ['-p', file.path];
 				break;
 
 			case 'gz':
@@ -320,7 +589,7 @@ module.exports = {
 							// some codes are hidden by jeongmin: These move codes are no need.
 
 							// if (!error) {
-							if (error == 0) { // error == code
+							if (error === 0) { // error == code
 								//mv
 								fs.readdir(project_abs_path, function(err, stdout) {
 
@@ -484,7 +753,10 @@ module.exports = {
 						// data.message = 'goorm.manifest doesn't exist';
 						// evt.emit('project_do_import', data);
 
-						g_auth_project.valid_manifest(query.project_import_location, { // jeongmin: if author and name are '', make new goorm.manifest
+						g_auth_project.valid_manifest({
+							'user_id': query.user_id,
+							'project_path': query.project_import_location
+						}, { // jeongmin: if author and name are '', make new goorm.manifest
 							author: '',
 							name: ''
 						}, _callback);
@@ -494,7 +766,10 @@ module.exports = {
 				if (!err) { // jeongmin: goorm.manifest exists
 					_callback(project_json_data);
 				} else { // jeongmin: goorm.manifest exists
-					g_auth_project.valid_manifest(query.project_import_location, { // jeongmin: if author and name are '', make new goorm.manifest
+					g_auth_project.valid_manifest({
+						'user_id': query.user_id,
+						'project_path': query.project_import_location
+					}, { // jeongmin: if author and name are '', make new goorm.manifest
 						author: '',
 						name: ''
 					}, _callback);
@@ -629,8 +904,7 @@ module.exports = {
 		
 	},
 
-	
-
+	//useonly(mode=goorm-standalone,goorm-oss)
 	set_property: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -705,7 +979,10 @@ module.exports = {
 				}
 
 				if (err) { // jeongmin: goorm.manifest doesn't exist
-					g_auth_project.valid_manifest(query.project_path, { // jeongmin: if author and name are '', make new goorm.manifest
+					g_auth_project.valid_manifest({
+						'user_id': query.user_id,
+						'project_path': query.project_path
+					}, { // jeongmin: if author and name are '', make new goorm.manifest
 						author: '',
 						name: ''
 					}, _callback);
@@ -719,7 +996,9 @@ module.exports = {
 			evt.emit('set_property', data);
 		}
 	},
-
+	
+	
+	//useonly(mode=goorm-standalone,goorm-oss)
 	get_property: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -769,43 +1048,45 @@ module.exports = {
 			evt.emit('get_property', data);
 		}
 	},
+	
+	
 
-	do_clean: function(query, evt) {
-		var self = this;
-		var data = {};
-		data.err_code = 0;
-		data.message = 'Process Done';
+	// do_clean: function(query, evt) {
+	// 	var self = this;
+	// 	var data = {};
+	// 	data.err_code = 0;
+	// 	data.message = 'Process Done';
 
-		if (query.project_list) {
+	// 	if (query.project_list) {
 
-			var total_count = query.project_list.length;
-			var clean_count = 0;
-			var evt_clean = new EventEmitter();
+	// 		var total_count = query.project_list.length;
+	// 		var clean_count = 0;
+	// 		var evt_clean = new EventEmitter();
 
-			evt_clean.on('do_delete_for_clean', function() {
+	// 		evt_clean.on('do_delete_for_clean', function() {
 
-				clean_count++;
-				if (clean_count < total_count) {
-					self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
-				} else {
-					evt.emit('project_do_clean', data);
-				}
-			});
+	// 			clean_count++;
+	// 			if (clean_count < total_count) {
+	// 				self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
+	// 			} else {
+	// 				evt.emit('project_do_clean', data);
+	// 			}
+	// 		});
 
-			self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
-		} else {
-			data.err_code = 10;
-			data.message = 'Invalide query';
+	// 		self.do_delete_for_clean(query.project_list[clean_count], evt_clean);
+	// 	} else {
+	// 		data.err_code = 10;
+	// 		data.message = 'Invalide query';
 
-			evt.emit('project_do_clean', data);
-		}
-	},
+	// 		evt.emit('project_do_clean', data);
+	// 	}
+	// },
 
-	do_delete_for_clean: function(project_path, evt_clean) {
-		rimraf(global.__workspace + '/' + project_path + '/build', function(err) {
-			evt_clean.emit('do_delete_for_clean');
-		});
-	},
+	// do_delete_for_clean: function(project_path, evt_clean) {
+	// 	rimraf(global.__workspace + '/' + project_path + '/build', function(err) {
+	// 		evt_clean.emit('do_delete_for_clean');
+	// 	});
+	// },
 
 	check_running_project: function(req, evt) {
 		var res = {};
@@ -819,7 +1100,7 @@ module.exports = {
 		id = g_secure.command_filter(id);
 
 		//get user's bash
-		exec('ps -lu ' + id + "  | awk '{print $4, $5, $14}' | grep -v PID ", function(err, stdout, stderr) {
+		exec('ps -lu ' + id + '  | awk \'{print $4, $5, $14}\' | grep -v PID ', function(err, stdout, stderr) {
 			//pid ppid cmd
 			if (err || stderr) {
 				evt.emit('check_running_project', res);
@@ -860,13 +1141,16 @@ module.exports = {
 
 	//Check property's file is available --heeje
 	//query: project_path, project_type, class_name, source_path
+	
+
+	
+
+	//useonly(mode=goorm-oss)
 	check_valid_property: function(query, evt) {
 		var source_path = g_secure.command_filter(__workspace + query.project_path + '/' + query.source_path);
 		var source_file = g_secure.command_filter(source_path + query.class_name);
+
 		var makefile = g_secure.command_filter(__workspace + query.project_path + '/make');
-		
-		
-		//useonly(mode=goorm-oss)
 		fs.exists(makefile, function(exist) {
 			if (!exist) {
 				if (query.project_type == 'java' || query.project_type == 'java_examples') {
@@ -882,9 +1166,9 @@ module.exports = {
 						}
 					});
 				}
-			};
+			}
 		});
-		
+
 		//2. directory and main file check
 		switch (query.project_type) {
 			case 'c_examples':
@@ -977,6 +1261,7 @@ module.exports = {
 				break;
 		}
 	},
+	
 
 	//checking latest build with whether build file exist --heeje
 	check_latest_build: function(query, evt) {
@@ -989,7 +1274,6 @@ module.exports = {
 			var exec_option = {};
 
 			query.run_file_path = g_secure.command_filter(query.run_file_path);
-			query.project_path = g_secure.command_filter(query.project_path);
 
 			fs.exists(global.__workspace + query.run_file_path, function(exist) {
 				if (!exist) {
@@ -1059,8 +1343,8 @@ module.exports = {
 	},
 
 	count_project_by_id: function(author_id, evt) {
-
 		var __evt = new EventEmitter();
+		
 		__evt.once('project_get_list', function(projects) {
 			if (!projects) {
 				projects = [];
@@ -1070,14 +1354,10 @@ module.exports = {
 
 		this.get_list({
 			'author': {
-				'author_id': author_id,
+				'author_id': author_id
 			},
 			'get_list_type': 'owner_list'
 		}, __evt);
-	},
-
-	authorize_project_by_id: function(id, project_path, evt) {
-
 	},
 
 	valid: function(msg, evt) {
@@ -1095,7 +1375,7 @@ module.exports = {
 				// check duplicate name
 				//
 				var exist_project = projects.some(function(p) {
-					if (p.project_path === project_name) {
+					if (p.name === author_id + '_' + project_name) {
 						return true;
 					} else {
 						return false;

@@ -8,14 +8,14 @@
  * version: 2.0.0
  **/
 
-goorm.core.object.explorer = function () {
+goorm.core.object.explorer = function() {
 	this.target = null;
 	this.treeview_object = null;
 	this.data = null;
 };
 
 goorm.core.object.explorer.prototype = {
-	init: function (target) {
+	init: function(target) {
 		$(target).empty();
 		var self = this;
 
@@ -27,29 +27,27 @@ goorm.core.object.explorer.prototype = {
 		$('#object_explorer').css('height', container_height);
 		$('#object_tree').css('height', tree_height).css('overflow-y', 'auto').css('overflow-x', 'hidden').css('margin-left', '5px');
 
-		$(core).on("layout_resized", function () {
+		$(core).on('layout_resized', function() {
 			var container_height = $('#goorm_inner_layout_right').height();
 			var tree_height = $('#goorm_inner_layout_right>.tab-content').height() - 99;
 
 			$('#object_explorer').css('height', container_height);
 			$('#object_tree').css('height', tree_height);
 		});
-
-		
 	},
 
-	clear : function(){
-		$("#current_object_explorer").empty();
-		$("#object_tree").empty();
+	clear : function() {
+		$('#current_object_explorer').empty();
+		$('#object_tree').empty();
 	},
 
-	refresh: function (target, treedata) {
+	refresh: function(target, treedata) {
 		//console.log('object_tree_ refresh');
 		var self = this;
-		$("#current_object_explorer").empty();
-		$("#object_tree").empty();
+		$('#current_object_explorer').empty();
+		$('#object_tree').empty();
 
-		var selected_file_path = "";
+		var selected_file_path = '';
 		if (core.module.layout.workspace.window_manager === null || core.module.layout.workspace.window_manager === undefined) {
 			selected_file_path = '';
 		} else if (core.module.layout.workspace.window_manager.active_filename === null || core.module.layout.workspace.window_manager.active_filename === undefined) {
@@ -58,14 +56,16 @@ goorm.core.object.explorer.prototype = {
 			selected_file_path = core.module.layout.workspace.window_manager.active_filename;
 		}
 
-		if (selected_file_path === "") return;
+		if (selected_file_path === '') {
+			return;
+		}
 		// if (!(selected_file_path.split(".").pop() == 'c' || selected_file_path.split(".").pop() == 'cpp')) return;
 
 		//pass succeed
-		var current_path_html = "";
-		current_path_html += "<div style='padding:8px;'>" + selected_file_path + "</div>";
+		var current_path_html = '';
+		current_path_html += '<div style="padding:8px;">' + selected_file_path + '</div>';
 
-		$("#current_object_explorer").html(current_path_html);
+		$('#current_object_explorer').html(current_path_html);
 
 		self.target = target; //jQuery.extend(true,{},target);
 		self.data = jQuery.extend(true, {}, treedata);
@@ -80,65 +80,70 @@ goorm.core.object.explorer.prototype = {
 		self.treeview_object.render();
 
 		self.treeview_object.unsubscribe('clickEvent');
-		self.treeview_object.subscribe('clickEvent', function (node_data){
+		self.treeview_object.subscribe('clickEvent', function(node_data) {
 			var extra_data = node_data.node.data;
+			var line;
+			var active_window;
+			var editor;
+			var linedata;
+			var active_line;
 
-			switch(extra_data.filetype) {
+			switch (extra_data.filetype) {
 				case 'c/cpp':
-					var line = extra_data.line;
+					line = extra_data.line;
 
-					var active_window = core.module.layout.workspace.window_manager.active_window;
-					var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
+					active_window = core.module.layout.workspace.window_manager.active_window;
+					editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-					var linedata = editor.getLine(line-1);
-					var active_line = line - 1;
+					linedata = editor.getLine(line - 1);
+					active_line = line - 1;
 					if (linedata.indexOf(extra_data.name) == -1) {
-						active_line = line; 
+						active_line = line;
 					}
 
 					editor.setCursor(active_line);
 					break;
 
 				case 'java':
-					var line = extra_data.line;
+					line = extra_data.line;
 
-					var active_window = core.module.layout.workspace.window_manager.active_window;
-					var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
+					active_window = core.module.layout.workspace.window_manager.active_window;
+					editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-					var linedata = editor.getLine(line-1);
-					var active_line = line - 1;
+					linedata = editor.getLine(line - 1);
+					active_line = line - 1;
 					if (linedata.indexOf(extra_data.name) == -1) {
-						active_line = line; 
+						active_line = line;
 					}
 
 					editor.setCursor(active_line);
 					break;
 
 				case 'py':
-					var line = extra_data.line;
+					line = extra_data.line;
 
-					var active_window = core.module.layout.workspace.window_manager.active_window;
-					var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
+					active_window = core.module.layout.workspace.window_manager.active_window;
+					editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-					var active_line = (line - 2 < 0) ? line - 1 : line - 2;
-					var linedata = editor.getLine(active_line);
+					active_line = (line - 2 < 0) ? line - 1 : line - 2;
+					linedata = editor.getLine(active_line);
 					if (linedata.indexOf(extra_data.name) == -1) {
-						active_line = line - 1; 
+						active_line = line - 1;
 					}
 
 					editor.setCursor(active_line);
 					break;
 
 				case 'css':
-					var line = extra_data.line;
+					line = extra_data.line;
 
-					var active_window = core.module.layout.workspace.window_manager.active_window;
-					var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
+					active_window = core.module.layout.workspace.window_manager.active_window;
+					editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-					editor.setCursor(line-1);
+					editor.setCursor(line - 1);
 					break;
 				case 'html':
-					var line = extra_data.line;
+					line = extra_data.line;
 
 					var filepath = extra_data.filepath;
 					filepath = filepath.split('/');
@@ -157,24 +162,24 @@ goorm.core.object.explorer.prototype = {
 					// 	editor.setCursor(line-1);
 					// });
 
-					core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, null, function cb(){
+					core.module.layout.workspace.window_manager.open(filepath, filename, filetype, null, null, function cb() {
 						var active_window = core.module.layout.workspace.window_manager.active_window;
 						var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-						editor.setCursor(line-1);
+						editor.setCursor(line - 1);
 					});
 
-					var active_window = core.module.layout.workspace.window_manager.active_window;
-					var editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
+					active_window = core.module.layout.workspace.window_manager.active_window;
+					editor = core.module.layout.workspace.window_manager.window[active_window].editor.editor;
 
-					editor.setCursor(line-1);
+					editor.setCursor(line - 1);
 					break;
 				default:
 					break;
 			}
 		});
 	},
-	makeTreeData: function (input) {
+	makeTreeData: function(input) {
 		var self = this;
 		if (input.children === undefined) {
 			self.data = null;
@@ -186,20 +191,21 @@ goorm.core.object.explorer.prototype = {
 		}
 	},
 	//object tree build
-	build: function (input) {
+	build: function(input) {
 		var self = this;
 
-		if(!input.detailed_type) input.detailed_type = input.type;
+		if (!input.detailed_type) {
+			input.detailed_type = input.type;
+		}
 		input.cls = input.type;
-		input.type = "html";
-		input.html = "<div class='node'>";
+		input.type = 'html';
+		input.html = '<div class="node">';
 		input.html += '<img src="/images/goorm.core.outline/' + input.cls + '_type.png"  style="width:10px;margin-left:2px;margin-right:6px;">';
 
-		if(input.use_detailed === false) {
-			input.html += input.name + "</div>";
-		}
-		else{
-			input.html += input.name + "(" + input.detailed_type + ")" + "</div>";
+		if (input.use_detailed === false) {
+			input.html += input.name + '</div>';
+		} else {
+			input.html += input.name + '(' + input.detailed_type + ')' + '</div>';
 		}
 
 		if (input.children === undefined) {

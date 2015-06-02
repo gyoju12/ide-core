@@ -158,7 +158,7 @@ goorm.core.router = {
 					}
 				}
 			}
-		}
+		};
 
 		this._$ = function() {
 			var self = this;
@@ -463,7 +463,7 @@ goorm.core.router = {
 	is_connected: function() {
 		
 
-		
+		s
 	},
 
 	_wait: function(callback) {
@@ -471,6 +471,8 @@ goorm.core.router = {
 	},
 
 	_call: function() {
+		var i;
+		var cb;
 		
 
 		

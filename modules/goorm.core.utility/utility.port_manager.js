@@ -12,10 +12,15 @@ var port_list = [];
 var port_init = 10001;
 
 module.exports = {
-	alloc_port: function (portItem) {
+	alloc_port: function(portItem) {
 		// port, process_name
-		if (!portItem.process_name) portItem.process_name = "goorm_unknown";
-		if (!portItem.port) portItem.port = port_init;
+		if (!portItem.process_name) {
+			portItem.process_name = 'goorm_unknown';
+		}
+
+		if (!portItem.port) {
+			portItem.port = port_init;
+		}
 
 		var has_port = false;
 
@@ -34,13 +39,12 @@ module.exports = {
 			return portItem;
 		}
 
-		var port = this.new_port();
-		portItem.port = port;
+		portItem.port = this.new_port();
 		port_list.push(portItem);
 		return portItem;
 	},
 
-	new_port: function () {
+	new_port: function() {
 		// allocate port
 		var alloc_flag = true;
 		for (var i = port_init; i <= 65535; i++) {
@@ -57,7 +61,7 @@ module.exports = {
 		}
 	},
 
-	remove_port: function (req) {
+	remove_port: function(req) {
 		var port = req.port;
 		for (var i = 0; i < port_list.length; i++) {
 			if (port_list[i].port == port) {

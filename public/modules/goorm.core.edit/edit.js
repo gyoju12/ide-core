@@ -142,13 +142,13 @@ goorm.core.edit.prototype = {
 			'Cmd-G': false,
 			'Shift-Ctrl-G': false,
 			'Shift-Cmd-G': false,
-			'Ctrl-K Ctrl-Backspace': function (){
+			'Ctrl-K Ctrl-Backspace': function() {
 				$('[action=delete_line_left]').click();
 			},
-			'Cmd-K Cmd-Backspace': function (){
+			'Cmd-K Cmd-Backspace': function() {
 				$('[action=delete_line_left]').click();
 			},
-			'Cmd-Backspace': function (){
+			'Cmd-Backspace': function() {
 				$('[action=delete_line_left]').click();
 			}
 		});
@@ -191,9 +191,9 @@ goorm.core.edit.prototype = {
 		$(target).mouseup(function(e) { // selected string's exist when mouse is up means dragged
 			if (e.which === 1) { // left button
 				self.str_selection = self.editor.getSelection();
-				if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && !($('.cm-matchhighlight:first').html() === self.str_selection) && $('#search_badge:visible').length === 0) {
+				if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && $('.cm-matchhighlight:first').html() !== self.str_selection && $('#search_badge:visible').length === 0) {
 					goorm.core.edit.find_and_replace.remove_search_focus(self.editor);
-					if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
+					if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 						self.is_selectiond = true;
 
 						var ranges = self.editor.listSelections();
@@ -539,8 +539,8 @@ goorm.core.edit.prototype = {
 					self.pressed_key = '{';
 				}
 			}
-			
-			if (e.keyCode === 27) {	// esc
+
+			if (e.keyCode === 27) { // esc
 				if ($('#f_input_group:visible').length > 0) {
 					core.dialog.find_and_replace.hide();
 				} else {
@@ -619,7 +619,7 @@ goorm.core.edit.prototype = {
 		cm_editor.on('dblclick', function() {
 			if (self.editor.somethingSelected() && core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && $('#search_badge:visible').length === 0) {
 				self.str_selection = self.editor.getSelection();
-				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'\<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
+				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 					CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
 					goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
 				}

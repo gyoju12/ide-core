@@ -26,11 +26,11 @@
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.8/addon/tern/tern.css" />
     <!--  -->
     <link rel="stylesheet" type="text/css" href="/lib/codemirror-4.8/addon/fold/foldgutter.css" />
-    
+
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-formhelpers.min.css" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap-tour.css" />
-    
+
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/jquery-ui-1.10.3.custom.css" />
     <link rel="stylesheet" type="text/css" href="/lib/com.jqueryui.code/themes/default/style.css" />
     <!-- <link rel="stylesheet" type="text/css" href="/lib/intro.js/introjs.css" /> -->
@@ -204,7 +204,7 @@
                         </select>
                     </span>
                 -->
-                    <input id="edit_toolbar_inputbox" type="text" class="form-control"/>   
+                    <input id="edit_toolbar_inputbox" type="text" class="form-control"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" id="edit_toolbar_ok">Go</button>
                     </span>
@@ -250,9 +250,9 @@
 
                             <div id="s_input_wrap" style="position: relative; float:left; margin-right:5px;">
                                 <input class="form-control input-sm" id="search_query_inputbox_background" readonly tabindex="-1"/>
-                                <input class="form-control input-sm" id="search_query_inputbox" type="text" placeholder="Search" />
+                                <input class="form-control input-sm" id="search_query_inputbox" type="text" localization_key="edit_search" placeholder="Search"/>
                             </div>
-                            
+
                             <div class="search_buttons">
                                 <div class="btn-group btn-group-sm" style="margin-bottom: 2px;">
                                     <button id="search_match_case" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
@@ -316,13 +316,13 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="bookmark">
-                    <div class="panel-group" id="bookmark_tab"> 
+                    <div class="panel-group" id="bookmark_tab">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <span class="panel-title" localization_key="edit_bookmark">
                                     Bookmarks
-                                    
-                                    
+
+
                                 </span>
                             </div>
                             <div id="bookmark_contents">
@@ -586,7 +586,7 @@
                             Edit <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                            <li id="menu_cut" style="display:none;">    
+                            <li id="menu_cut" style="display:none;">
                                 <a href="#" action="do_cut" name="preference.shortcut.edit.cut" localization_key="edit_cut">
                                     Cut
                                     <em class="helptext">Ctrl + X</em>
@@ -861,7 +861,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li id="main-submenu-bookmark" class="dropdown-submenu">    
+                            <li id="main-submenu-bookmark" class="dropdown-submenu">
                                 <a id="parent_bookmark_menu" child="child_bookmark_menu" href="#Bookmark" localization_key="edit_bookmark">Bookmark...</a>
                                 <ul id="child_bookmark_menu" parent="parent_bookmark_menu" class="dropdown-menu">
                                     <li>
@@ -941,7 +941,7 @@
                             <li class="divider"></li>
                             <!--  -->
                             <!--  -->
-                            
+
                             <!--  -->
                             <li>
                                 <a href="#" action="preference" name="preference.shortcut.edit.preference" localization_key="edit_preference">
@@ -1281,7 +1281,7 @@
                         </button>
                     </div>
                     <div id="main_edit_toolbar" class="btn-group grm_toolbar">
-                        <!-- 
+                        <!--
                         <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title data-original-title="Tooltip on bottom" data-container="body" action="do_undo" tooltip="edit_undo">
                             <div class="toolbar_button">
                                 <div class="toolbar-undo"></div>
@@ -1806,7 +1806,7 @@
                 </li>
             </ul>
         </div>
-        
+
         <!--
          CONTEXT_MENU : project.explorer.file_context
         -->
@@ -1948,7 +1948,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a action="close_window" href="#" localization_key="close">Close</a> 
+                    <a action="close_window" href="#" localization_key="close">Close</a>
                 </li>
                 <li>
                     <a action="close_other_windows" href="#" localization_key="close_others">Close others</a>
@@ -2086,7 +2086,7 @@
                         <div id="loading_bar_row" class="row margin-10px">
                         </div>
                     </div>
-                    <div class="modal-footer">  
+                    <div class="modal-footer">
                         <button id="g_lb_btn_hide" class="btn btn-default" localization_key='hide'>Hide</button>
                         <!-- <button id="g_lb_btn_cancel" class="btn btn-default" localization_key='cancel'>Cancel</button> --> <!-- jeongmin: changed to x button in progress bar -->
                         <button id="g_lb_btn_ok" class="btn btn-default" localization_key='ok'>OK</button>
@@ -2126,7 +2126,7 @@
                     </div>
                     <div id="project_new" class="modal-body">
                         <div class="wizard_step" step="1">
-                            <ul class="nav nav-tabs">   
+                            <ul class="nav nav-tabs">
                                 <li class="active"><a href="#new_project_template" data-toggle="tab" localization_key="dialog_new_project_template">Template</a></li>
                                 <!--  -->
                                 <li><a href="#new_project_import" data-toggle="tab" localization_key="dialog_new_project_import">Import</a></li>
@@ -2163,17 +2163,8 @@
                                         <div class="project_import">
                                             <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
 
-                                            <!-- <div class="row">
-                                                <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
-                                                <div class="col-md-10">
-                                                    <select class="import_storage form-control">
-                                                        <option value="goormIDE_Storage">goorm Storage</option>
-                                                        <option value="Dropbox" disabled>Dropbox</option>
-                                                                <option value="Google_Drive" disabled>Google Drive</option>
-                                                    </select>
-                                                </div>
-                                            </div>-->
-                                        </div>
+                                            <!--  -->
+										</div>
 
                                         <div class="project_author_name row">
                                             <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
@@ -2230,20 +2221,11 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="wizard_step next_wizard_step" step="2">
                             <div class="well well-sm" localization_key='dialog_new_project_guide2'>Input Information for New Project</div>
 
-                            <!-- <div class="row">
-                                <label for="new_project_storage" class="col-md-2 control-label" localization_key='dialog_storage'>Storage</label>
-                                <div class="col-md-10">
-                                    <select id="new_project_storage" class="form-control">
-                                        <option value="goormIDE_Storage">goorm Storage</option>
-                                        <option value="Dropbox" disabled>Dropbox</option>
-                                                                        <option value="Google_Drive" disabled>Google Drive</option>
-                                    </select>
-                                </div>
-                            </div> -->
+                            <!--  -->
 
                             <div class="row project_author_name">
                                 <label for="input_project_author_name" class="col-md-2 control-label" localization_key='dialog_new_project_author_name'>Author Name</label>
@@ -3329,16 +3311,7 @@
                             <div class="project_import">
                                 <div class="well well-sm" localization_key="import_dialog_message">Input Information for Import Project</div>
 
-                                <!-- <div class="row">
-                                    <label for="import_storage" class="col-md-2 control-label" localization_key='storage'>Storage</label>
-                                    <div class="col-md-10">
-                                        <select class="import_storage form-control">
-                                            <option value="goormIDE_Storage">goorm Storage</option>
-                                            <option value="Dropbox" disabled>Dropbox</option>
-                                            <option value="Google_Drive" disabled>Google Drive</option>
-                                        </select>
-                                    </div>
-                                </div> -->
+                                <!--  -->
 
                                 <div class="project_author_name row">
                                     <label for="input_import_project_author" class="col-sm-2 control-label" localization_key="dialog_new_project_author_name">Author Name</label>
@@ -3431,7 +3404,7 @@
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav path">
                                         <li>
-                                            <ol class="breadcrumb" id="project_delete_location"></ol>    
+                                            <ol class="breadcrumb" id="project_delete_location"></ol>
                                         </li>
                                     </ul>
                                     <!-- <ul class="nav navbar-nav navbar-right">
@@ -3606,7 +3579,7 @@
         <!--  -->
         <!--
      DIALOG : go_to_line
-    --> 
+    -->
         <!-- <div class="modal fade" id="dlg_go_to_line" tabindex="-1" role="dialog" aria-labelledby="modal_go_to_line" aria-hidden="true">
             <div class="modal-dialog" style="width: 300px;">
                 <div class="modal-content">
@@ -3680,7 +3653,7 @@
         <!--
      DIALOG : search
     -->
-        
+
         <!--  -->
         <!--
      DIALOG : project_property
@@ -3693,8 +3666,8 @@
                         <h4 class="modal-title" id="modal_project_property" localization_key='dialog_project_property'>Project Property</h4>
                     </div>
                     <div class="modal-body row">
-                            <div id="property_treeview" class="col-md-3 dialog_treeview"></div> 
-                            <div class="col-md-9 dialog_tabview"> 
+                            <div id="property_treeview" class="col-md-3 dialog_treeview"></div>
+                            <div class="col-md-9 dialog_tabview">
                                 <div id="property_tabview">
                                     <ul class="nav nav-tabs">
                                         <li target="Information" class="active">
@@ -3705,7 +3678,7 @@
                                     </ul>
 
                                     <!-- Tab panes -->
-                                    <div class="tab-content">   
+                                    <div class="tab-content">
                                         <div class="tab-pane fade in active" id="information_tab" plugin="null">
                                             <div class="row">
                                                 <label for="prop_prj_type" localization_key="dialog_project_property_project_type" class="col-md-3">Project Type</label>
@@ -3757,7 +3730,7 @@
                 </div>
             </div>
         </div>
-		
+
 		<!--
 		DIALOG : chat_history
 		-->
@@ -3770,7 +3743,7 @@
                     </div>
                     <div class="modal-body">
 						<div id="chat_history_container" class="well">
-                                
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3823,8 +3796,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9 user-select-available"></div> 
-                            
+                            <div id="help_contents_middle" data-spy="scroll" data-target=".help_contents_nav" class="col-md-9 user-select-available"></div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -3939,6 +3912,13 @@
                                         <li>License: MIT(<a href='https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE' target='_blank'>https://github.com/Operational-Transformation/ot.js/blob/master/LICENSE</a>)</li>
                                     </ul>
                                 </li>
+								<li class='list-group-item'>
+                                    <p><b>Chat alarm - Tim tum</b></p>
+                                    <ul>
+										<li><a href='http://www.freesfx.co.uk' target='_blank'>http://www.freesfx.co.uk</a></li>
+                                        <li>License: EULA(<a href='http://www.freesfx.co.uk/info/eula/' target='_blank'>http://www.freesfx.co.uk/info/eula/</a>)</li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -4044,16 +4024,16 @@
                                     <li target="Language" style="display:none;">
                                         <a href="#language_tab" data-toggle="tab" localization_key="language" id='language'>Language</a>
                                     </li>
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_file_tab" data-toggle="tab" localization_key="file" id='shortcut_file'>File</a>
                                     </li>
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_edit_tab" data-toggle="tab" localization_key="edit" id='shortcut_edit'>Edit</a>
                                     </li>
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_project_tab" data-toggle="tab" localization_key="project" id='shortcut_project'>Project</a>
                                     </li>
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_debug_tab" data-toggle="tab" localization_key="debug" id='shortcut_debug'>Debug</a>
                                     </li>
                                     <!--  -->
@@ -4062,10 +4042,10 @@
                                         <a href="#shortcut_cloud_tab" data-toggle="tab" localization_key="cloud" id='shortcut_cloud'>Cloud</a>
                                     </li>
                                     -->
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_window_tab" data-toggle="tab" localization_key="window" id='shortcut_window'>Window</a>
                                     </li>
-                                    <li target="Shortcut" style="display:none;">    
+                                    <li target="Shortcut" style="display:none;">
                                         <a href="#shortcut_help_tab" data-toggle="tab" localization_key="help" id='shortcut_help'>Help</a>
                                     </li>
                                     <!-- <li target="Shortcut" style="display:none;">
@@ -4076,7 +4056,7 @@
                                 </ul>
 
                                 <!-- Tab panes -->
-                                <div class="tab-content">   
+                                <div class="tab-content">
 <!--                                     <div class="tab-pane fade in active" id="system_info_tab" plugin="null">
                                         <fieldset>
                                             <div style="width:100%; height:22px;">
@@ -4089,7 +4069,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="system_libraries_tab" plugin="null">
                                             <fieldset>
-                                                <div id="core_version" style="float:left;"><b>goorm Core</b> : </div>   
+                                                <div id="core_version" style="float:left;"><b>goorm Core</b> : </div>
                                             </fieldset>
                                             <fieldset>
                                                 <div id="jquery_version"><b>jQuery</b> : </div>
@@ -4451,7 +4431,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <!-- <div class="pull-left"> -->    
+                                        <!-- <div class="pull-left"> -->
                                             <!-- <button id="filetype_delete" class="btn btn-default restore_default" localization_key="delete">Delete</button>
                                             <button id="filetype_add" class="btn btn-default apply" localization_key="add">Add</button>
                                         </div>
@@ -4467,7 +4447,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="shortcut_file_tab" class="shortcut_tab" plugin="null">    
+                                    <div class="tab-pane fade" id="shortcut_file_tab" class="shortcut_tab" plugin="null">
                                         <div class="shortcut_tab row">
                                             <div class="row">
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.new_project" localization_key="file_new_project">Project</label>
@@ -4531,7 +4511,7 @@
                                             </div>
                                             <!--  -->
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -4649,7 +4629,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -4681,7 +4661,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -4732,7 +4712,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -4863,7 +4843,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -4878,7 +4858,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-right">    
+                                        <div class="text-right">
                                             <button class="btn btn-default restore_default" localization_key="default">Default</button>
                                             <button class="btn btn-default apply" localization_key="apply">Apply</button>
                                         </div>
@@ -5003,11 +4983,11 @@
                                     <input type="text" name="find_pw_id_input" class="goorm_find_pw_input form-control"></div> -->
                                 <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_email">E-mail :</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="find_pw_email_input" class="goorm_find_pw_input form-control"></div>    
+                                    <input type="text" name="find_pw_email_input" class="goorm_find_pw_input form-control"></div>
                                 <label class="goorm_find_pw_span col-md-3" localization_key="dialog_goorm_profile_name">Name :</label>
                                 <div class="col-md-9">
                                     <input type="text" name="find_pw_name_input" class="goorm_find_pw_input form-control"></div>
-                                
+
                             </div>
                         </div>
 
@@ -5190,7 +5170,7 @@
 
         <!--  -->
 
-        <!-- //useonly(mode=goorm-standalone,goorm-server) -->        
+        <!-- //useonly(mode=goorm-standalone,goorm-server) -->
         <div class="modal fade" id="dlg_svn" tabindex="-1" role="dialog" aria-labelledby="modal_svn" aria-hidden="true">
             <div class="modal-dialog" style="width: 1024px;">
                 <div class="modal-content">
@@ -5230,7 +5210,7 @@
                                 </ul>
 
                                 <!-- Tab panes -->
-                                <div class="tab-content">   
+                                <div class="tab-content">
                                     <div class="tab-pane fade in active" id="svn_status_tab">
                                         <div class="panel panel-default">
                                             <div class="panel-heading row margin-0px">
@@ -5611,7 +5591,7 @@
 
     <!--
      DIALOG : scm.authentication
-    --> 
+    -->
         <div class="modal fade" id="dlg_scm_auth" tabindex="-1" role="dialog" aria-labelledby="modal_scm_auth" aria-hidden="true">
             <div class="modal-dialog" style="width: 350px;">
                 <div class="modal-content">
@@ -5644,7 +5624,7 @@
 
     <!--
      DIALOG : scm.ignore
-    --> 
+    -->
         <div class="modal fade" id="dlg_scm_ignore" tabindex="-1" role="dialog" aria-labelledby="modal_scm_ignore" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -5969,7 +5949,7 @@
                     <h4 class="modal-title" id="modal_help_shortcuts" localization_key='dialog_help_shortcuts'>goorm Shortcuts</h4>
                 </div>
                 <div class="modal-body" data-dismiss="modal">
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-md-4">
                             <h5 localization_key="file">File</h5>
                             <span name="preference.shortcut.file.new_project" localization_key="file_new_project">
@@ -6168,19 +6148,19 @@
                                 Show in Center
                                 <em class="helptext">Ctrl + K + C</em>
                             </span>
-                            <span name="preference.shortcut.edit.toggle_bookmark" localization_key="edit_toggle_bookmark"> 
+                            <span name="preference.shortcut.edit.toggle_bookmark" localization_key="edit_toggle_bookmark">
                                 Toggle Bookmark
                                 <em class="helptext">Ctrl + F2</em>
                             </span>
-                            <span name="preference.shortcut.edit.next_bookmark" localization_key="edit_next_bookmark"> 
+                            <span name="preference.shortcut.edit.next_bookmark" localization_key="edit_next_bookmark">
                                 Next Bookmark
                                 <em class="helptext">F2</em>
                             </span>
-                            <span name="preference.shortcut.edit.prev_bookmark" localization_key="edit_prev_bookmark"> 
+                            <span name="preference.shortcut.edit.prev_bookmark" localization_key="edit_prev_bookmark">
                                 Previous Bookmark
                                 <em class="helptext">Shift + F2</em>
                             </span>
-                            <span name="preference.shortcut.edit.clear_bookmark" localization_key="edit_clear_bookmark"> 
+                            <span name="preference.shortcut.edit.clear_bookmark" localization_key="edit_clear_bookmark">
                                 Clear Bookmark
                                 <em class="helptext">Ctrl + Shift + F2</em>
                             </span>
@@ -6214,13 +6194,13 @@
                             </span>
                             <!--  -->
                             <!--  -->
-                            
-                            
+
+
                             <span name="preference.shortcut.edit.preference" localization_key="edit_preference">
                                 Preference
                                 <em class="helptext">Alt + P</em>
                             </span>
-                        
+
                             <h5 localization_key="project">Project</h5>
                             <span name="preference.shortcut.project.run" localization_key="project_run">
                                 Run
@@ -6234,7 +6214,7 @@
                                 Build Projects
                                 <em class="helptext">Alt + Shift + F5</em>
                             </span> -->
-                            <span name="preference.shortcut.project.refresh" localization_key="project_refresh">   
+                            <span name="preference.shortcut.project.refresh" localization_key="project_refresh">
                                 Refresh
                                 <em class="helptext">Ctrl + R</em>
                             </span>
@@ -6341,7 +6321,7 @@
                                 Show All Window
                                 <em class="helptext">Alt + Shift + S</em>
                             </span>
-                            <span localization_key="window_show_specific_window">  
+                            <span localization_key="window_show_specific_window">
                                 Show Specific Window
                                 <em class="helptext">Ctrl+#Num</em>
                             </span>
@@ -6357,10 +6337,10 @@
                             <h5 localization_key="help">Help</h5>
                             <span name="preference.shortcut.help.view_all_shortcuts" localization_key="help_view_all_shortcuts">
                                 View All Shortcuts
-                                <em class="helptext">Ctrl + H</em>    
+                                <em class="helptext">Ctrl + H</em>
                             </span>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -6428,8 +6408,8 @@
     <!--JS : codemirror-->
     <script type="text/javascript" src="/lib/codemirror-4.8/lib/codemirror.js"></script>
     <!--<script type="text/javascript" src="/lib/codemirror-4.8/addon/dialog/dialog.js"></script>-->
-    <!-- <script type="text/javascript" src="/lib/codemirror-4.8/addon/display/rulers.js"></script> -->  
-    <script type="text/javascript" src="/lib/codemirror-4.8/addon/display/placeholder.js"></script> 
+    <!-- <script type="text/javascript" src="/lib/codemirror-4.8/addon/display/rulers.js"></script> -->
+    <script type="text/javascript" src="/lib/codemirror-4.8/addon/display/placeholder.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/edit/closebrackets.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/edit/closetag.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/edit/matchbrackets.js"></script>
@@ -6446,7 +6426,7 @@
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/hint/anyword-hint.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/hint/show-hint.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/hint/xml-hint.js"></script>
-    <script type="text/javascript" src="/lib/codemirror-4.8/addon/lint/lint.js"></script>   
+    <script type="text/javascript" src="/lib/codemirror-4.8/addon/lint/lint.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/lint/javascript-lint.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/lint/dep/jshint.js"></script>
     <script type="text/javascript" src="/lib/codemirror-4.8/addon/lint/css-lint.js"></script>
@@ -6572,11 +6552,11 @@
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.find_and_replace.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.dictionary.js"></script>
     <!--  -->
-    <script type="text/javascript" src="/modules/goorm.core.edit/edit.toolbar.js"></script> 
-    <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark.js"></script> 
-    <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark_list.js"></script> 
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.toolbar.js"></script>
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark.js"></script>
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.bookmark_list.js"></script>
     <!--  -->
-    <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_manager.js"></script>   
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_manager.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_message_box.js"></script>
     <!--  -->
 
@@ -6599,10 +6579,10 @@
     <script type="text/javascript" src="/modules/goorm.plugin/plugin.js"></script>
     <script type="text/javascript" src="/modules/goorm.plugin/plugin.manager.js"></script>
     <script type="text/javascript" src="/modules/goorm.plugin/plugin.loader.js"></script>
-    <script type="text/javascript" src="/modules/goorm.plugin/plugin.linter.js"></script>   
+    <script type="text/javascript" src="/modules/goorm.plugin/plugin.linter.js"></script>
 
     <script type="text/javascript" src="/modules/goorm.core.dev/dev.js"></script>
-    
+
     <script type="text/javascript" src="/goorm_json.min.js"></script>
 
     <!--

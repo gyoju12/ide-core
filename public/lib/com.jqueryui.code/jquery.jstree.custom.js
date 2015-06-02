@@ -1826,6 +1826,7 @@
 							}
 							m[dat[i].id.toString()] = dat[i];
 						}
+
 						// 2) populate children (foreach)
 						for (i = 0, j = dat.length; i < j; i++) {
 							m[dat[i].parent.toString()].children.push(dat[i].id.toString());

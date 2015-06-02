@@ -102,10 +102,10 @@ goorm.core.search = {
 				$('#search_match_case').removeClass('disabled');
 			}
 			if (!$('#search_use_regexp').hasClass('active')) {
-				$('#search_use_regexp').addClass('active')
+				$('#search_use_regexp').addClass('active');
 				$('#search_query_inputbox').trigger('change');
 			} else {
-				$('#search_use_regexp').removeClass('active')
+				$('#search_use_regexp').removeClass('active');
 				$('#search_query_inputbox_background').val('');
 			}
 		});
@@ -240,7 +240,7 @@ goorm.core.search = {
 			parent_node = $('#search_result_table').treetable('node', attr);
 			if (!parent_node) {
 				string = '<tr class="search_filename" data-tt-id="' + attr + '" filename="' + filename + '" filepath="' + filepath + '" filetype="' + filetype + '"><td><span>' + attr + '</span></td></tr>';
-				$('#search_result_table').treetable('loadBranch', null, string);	
+				$('#search_result_table').treetable('loadBranch', null, string);
 			} else {
 				$('#search_result_table').treetable('loadBranch', parent_node, '<tr data-tt-id="content-' + attr + '-' + data[attr][0].start_line + '-b" data-tt-parent-id="' + attr + '"><td><div class="search_block"><span class="search_connect" style="margin-left:15px;">...</span></div></td></tr>');
 			}
@@ -258,7 +258,7 @@ goorm.core.search = {
 					}
 
 					string += '<span class="search_num">' + current_line + '</span>';
-					string += '<span>' + separator + '</span>'
+					string += '<span>' + separator + '</span>';
 					string += '<span class="search_code">' + filtering(obj.code[j]) + '</span>';
 					string += '</div><br>';
 				}
@@ -394,7 +394,7 @@ goorm.core.search = {
 		$('#search_result').on('scroll', $.throttle(function(e) {
 			if (self.unload_data.length > 0) {
 				var scroll_height = $(this).scrollTop() + $(this).height();
-				if ((scroll_height + $(this).height()*2) > $('#search_result_table').height()) {
+				if ((scroll_height + $(this).height() * 2) > $('#search_result_table').height()) {
 					var rows = self.unload_data.shift();
 					self.convert_data_to_table(rows.data.nodes);
 					self.attach_table_event();
@@ -407,6 +407,8 @@ goorm.core.search = {
 
 			if (res.error || res.data.total_match === 0) {
 				// if it can't search keyword...
+				$('#search_badge').html('0').hide();
+				$('#search_keyword_wrapper').css('display', 'none');
 				core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, null, function() {
 					$('#search_query_inputbox').focus();
 				});
@@ -421,12 +423,6 @@ goorm.core.search = {
 				self.total_match = parseInt(res.total_match, 10);
 				$('#search_badge').html(self.total_match);
 				$('#search_badge').show();
-				/*
-				if ($('#gLayoutTab_Search .badge').length > 0) { //jeongmin: if already there is badge
-					$('#gLayoutTab_Search .badge').html(self.total_match); //then just change number
-				} else { //if there isn't badge yet
-					$('#gLayoutTab_Search').prepend('<span class="badge pull-right">' + self.total_match + '</span>'); //then attach badge next to the search tab
-				}*/
 
 				$('#search_clear>.clr-btn').removeAttr('disabled');
 				$('#search_clear>.refresh-btn').removeAttr('disabled');
@@ -443,14 +439,15 @@ goorm.core.search = {
 	},
 	
 	unmark: function() {
-		for (var i = 0; i < this.marked.length; ++i) {
+		var i;
+		for (i = 0; i < this.marked.length; ++i) {
 			this.marked[i].clear();
 		}
 		this.marked.length = 0;
 
 		var windows = core.module.layout.workspace.window_manager.window;
 
-		for (var i = windows.length - 1; 0 <= i; i--) {
+		for (i = windows.length - 1; 0 <= i; i--) {
 			windows[i].searching = false;
 		}
 	},
@@ -473,16 +470,12 @@ goorm.core.search = {
 		}
 	},
 
-	show: function(path) {
-		if ($('#s_input_group:visible').length > 0) {
-			$('#search_query_inputbox').focus().select();
-			return;
-		}
+	show: $.debounce(function(path) {
 		$('#bar_find_and_replace').show();
 		$('.find_row').show();
 		// $('#f_input_group').hide();
 		// $('#s_input_group').show();
-		
+
 		$('#search_path_input').val(path || '/');
 
 		// $('#search_query_inputbox').val('');
@@ -510,7 +503,7 @@ goorm.core.search = {
 		$('#search_use_regexp').tooltip();
 
 		$('#far_selector').val('search').change();
-	},
+	}, 300, true),
 
 	hide: function() {
 		core.dialog.find_and_replace.hide();
@@ -560,7 +553,7 @@ goorm.core.search = {
 		this.match_case = $('#search_match_case').hasClass('active');
 		this.use_regexp = $('#search_use_regexp').hasClass('active');
 		this.whole_word = $('#search_whole_word').hasClass('active');
-		
+
 		if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
 			alert.show(core.module.localization.msg.alert_project_not_selected);
 			return;
@@ -633,7 +626,7 @@ goorm.core.search = {
 			$('#g_s_btn_replace').attr('disabled', 'disabled');
 
 			core._socket.once('/file/search_and_replace', function(res) {
-				
+
 				core.progressbar.set(80, self.progress_elements.bar);
 
 				if (res.error || res.total_match === 0) {
@@ -673,7 +666,7 @@ goorm.core.search = {
 			core._socket.emit('/file/search_and_replace', postdata);
 		};
 
-		var msg = '"' + keyword + '" > "' + replace_word + '"<br/>' + core.module.localization.msg.confirmation_search_replace
+		var msg = '"' + keyword + '" > "' + replace_word + '"<br/>' + core.module.localization.msg.confirmation_search_replace;
 		var confirm_option = {
 			title: core.module.localization.msg.title_replace_all,
 			message: msg,

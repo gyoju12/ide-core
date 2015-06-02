@@ -18,12 +18,12 @@ goorm.core.help.about_private_url = {
 	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_about_private_url");
+		this.panel = $('#dlg_about_private_url');
 
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
-			// localization_key: "title_about_goorm",
-			id: "dlg_about_private_url",
+			// localization_key: 'title_about_goorm',
+			id: 'dlg_about_private_url',
 			success: function() {
 				$('#dlg_about_private_url li.list-group-item').click(function(e) {
 					$('#dlg_about_private_url li.list-group-item.active').removeClass('active');

@@ -359,7 +359,7 @@ goorm.core.shortcut.manager = {
 					break;
 
 				case 222:
-					shortcut_input += "'";
+					shortcut_input += '\'';
 					break;
 
 				default: //this shortcut input is made of only command keys
@@ -451,12 +451,14 @@ goorm.core.shortcut.manager = {
 				message: new_shortcut + '<br/>' + core.module.localization.msg.confirmation_shortcut_conflict,
 				//set this shortcut to this menu and remove other menu's shortcut. Jeong-Min Im.
 				yes: function() {
+					var exist_shortcut_name;
+					var exist_shortcut_obj;
 					if (duplicate_in_temp) { //duplicates in the modified shortcuts
-						var exist_shortcut_name = duplicate_in_temp.name; //exist shortcut's name
-						var exist_shortcut_obj = $('.shortcut_input[name="' + exist_shortcut_name + '"]'); //exist shortcut object
+						exist_shortcut_name = duplicate_in_temp.name; //exist shortcut's name
+						exist_shortcut_obj = $('.shortcut_input[name="' + exist_shortcut_name + '"]'); //exist shortcut object
 					} else { //duplicates in already binded shortcuts
-						var exist_shortcut_obj = $('.shortcut_input[value="' + new_shortcut + '"]'); //exist shortcut object
-						var exist_shortcut_name = exist_shortcut_obj.attr('name'); //exist shortcut's name
+						exist_shortcut_obj = $('.shortcut_input[value="' + new_shortcut + '"]'); //exist shortcut object
+						exist_shortcut_name = exist_shortcut_obj.attr('name'); //exist shortcut's name
 					}
 
 					////// push to shortcut changing list //////
@@ -910,7 +912,7 @@ goorm.core.shortcut.manager = {
 				if (self.make_shortcut_input(e) == self.special_shortcut.tile_left) {
 					// if (e.keyCode === 219 && e.shiftKey && (e.ctrlKey || e.metaKey)) {
 					core.module.layout.workspace.window_manager.tile_left();
-					e.stopPropagation()
+					e.stopPropagation();
 					e.preventDefault();
 					return false;
 				}
@@ -1741,9 +1743,9 @@ goorm.core.shortcut.manager = {
 
 								var start = data.last_package_def_sentence - 1;
 								var end = data.first_class_def_sentence - 1;
-
+								var i;
 								var add_statement_line = start;
-								for (var i = start; i <= end; i++) {
+								for (i = start; i <= end; i++) {
 									if (editor.getLine(i) === '') {
 										add_statement_line = i;
 										break;
@@ -1756,7 +1758,7 @@ goorm.core.shortcut.manager = {
 								if (add_statement_line == end) {
 									editor.setLine(end, '\n' + editor.getLine(end));
 								}
-								for (var i = 0; i < data.import_statement.length; i++) {
+								for (i = 0; i < data.import_statement.length; i++) {
 									editor.setLine(add_statement_line, editor.getLine(add_statement_line) + '\n' + (data.import_statement[i].content));
 
 								}

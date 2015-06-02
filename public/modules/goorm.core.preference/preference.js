@@ -75,7 +75,7 @@ goorm.core.preference = {
 
 	parse_json: function() {
 		var os = goorm.core.shortcut.manager.getOStype();
-		var json = JSON.parse(external_json['public']['configs']['preferences']['default.json']);
+		var json = JSON.parse(external_json['public'].configs.preferences['default.json']);
 		//console.log(external_json['public']['configs']['preferences']['default.json']);
 		if (!json) {
 			json = {};
@@ -118,7 +118,9 @@ goorm.core.preference = {
 				}
 			}
 		});
-		localStorage.workspace && (core.preference.workspace = JSON.parse(localStorage.workspace));
+		if (localStorage.workspace) {
+			core.preference.workspace = JSON.parse(localStorage.workspace);
+		}
 		var v = core.preference['preference.editor.line_wrapping'];
 
 		if (v === true || v === 'true') {
@@ -172,18 +174,31 @@ goorm.core.preference = {
 	save_to_database: function() {
 		var current_project = localStorage.getItem('current_project');
 		var language = localStorage.getItem('language');
+		var _preference = core.preference;
 		var shortcut = localStorage.getItem('shortcut'); //jeongmin: get shortcut object from localStorage
 		
 		var postdata = {
 			'preference': {}
 		};
+		if (_preference) {
+			$.each(_preference, function(key, val) {
+				if (key.indexOf('preference.editor') === 0 || key.indexOf('preference.terminal') === 0) {
+					postdata.preference[key] = val;
+				}
+			});
+		}
 
-		current_project && (current_project != 'null') && (postdata.preference.current_project = current_project);
-		language && (postdata.preference.language = language);
-		shortcut && (shortcut.length > 2) && (postdata.preference.shortcut = shortcut); //jeongmin: save shortcut at postdata
+		if (current_project && (current_project != 'null')) {
+			postdata.preference.current_project = current_project;
+		}
+		if (language) {
+			postdata.preference.language = language;
+		}
+		if (shortcut && (shortcut.length > 2)) {
+			postdata.preference.shortcut = shortcut; //jeongmin: save shortcut at postdata
+		}
 		
 		postdata.preference = JSON.stringify(postdata.preference);
-
 		$.ajax({
 			'type': 'POST',
 			'url': '/user/preference/save',
@@ -212,7 +227,7 @@ goorm.core.preference = {
 				}
 
 				if (key === 'preference.editor.line_wrapping') {
-					if (value == true || value === 'true') {
+					if (value === true || value === 'true') {
 						$('#use_line_wrapping').css('visibility', 'visible');
 					} else {
 						$('#use_line_wrapping').css('visibility', 'hidden');
@@ -479,7 +494,7 @@ goorm.core.preference = {
 			handle_cancel: handle_cancel,
 			success: function() {
 				// create default dialog tree and tabview
-				var json = JSON.parse(external_json['public']['configs']['dialogs']['goorm.core.preference']['tree.json']);
+				var json = JSON.parse(external_json['public'].configs.dialogs['goorm.core.preference']['tree.json']);
 
 				// load plugin tree
 				load_plugin_tree();

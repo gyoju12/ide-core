@@ -8,11 +8,11 @@
  * version: 2.0.0
  **/
 
-var fs = require("fs");
+var fs = require('fs');
 var encryptor = require('file-encryptor');
 var execFile = require('child_process').execFile;
 
-var regexp_filter = /^([가-힣0-9a-zA-Z \\\/._-{-}\=\[\]\(\)\/\/]|\:)*/g // jeongmin: add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}).
+var regexp_filter = /^([가-힣0-9a-zA-Z \\\/._-{-}\=\[\]\(\)\/\/]|\:)*/g; // jeongmin: add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}).
 var ecrypt_key = 'cordlfrwk)!(@';
 
 module.exports = {
@@ -54,44 +54,41 @@ module.exports = {
 		return str;
 	},
 
-	is_encrypted: function (path, callback) {
-		execFile('file', [path], function (err, stdout, stderr) {
+	is_encrypted: function(path, callback) {
+		execFile('file', [path], function(err, stdout, stderr) {
 			if (err) {
 				console.log('secure.js:is_encrypted fail', err);
 				callback(false);
-			}
-			else if(stdout) {
+			} else if (stdout) {
 				if (stdout.split(': ').pop().trim() === 'data') {
 					callback(true);
-				}
-				else {
+				} else {
 					callback(false);
 				}
-			}
-			else {
+			} else {
 				console.log('secure.js:is_encrypted fail', err, stdout, stderr);
 				callback(false);
 			}
 		});
 	},
 
-	get_temp_path: function (path, user_id) {
+	get_temp_path: function(path, user_id) {
 		return path + '.' + (new Date()).getTime() + '.' + user_id;
 	},
 
-	read: function (options, callback) {
+	read: function(options, callback) {
 		var self = this;
 
 		var path = options.path;
 		var user_id = options.user_id;
 
-		this.is_encrypted(path, function (encrypted) {
+		this.is_encrypted(path, function(encrypted) {
 			if (encrypted) {
 				// decrypt
 				self.decrypt({
 					'path': path,
 					'user_id': user_id
-				}, function (decrypt) {
+				}, function(decrypt) {
 					if (decrypt.result) {
 						try {
 							var data = decrypt.data;
@@ -106,16 +103,14 @@ module.exports = {
 								'result': false
 							});
 						}
-					}
-					else {
+					} else {
 						callback({
 							'result': false
 						});
 					}
 				});
-			}
-			else {
-				fs.readFile(path, "utf8", function(err, data) {
+			} else {
+				fs.readFile(path, 'utf8', function(err, data) {
 					if (!err) {
 						try {
 							encodeURIComponent(data); //seongho.cha: Check it can be encoded and decoded by websocket
@@ -139,7 +134,7 @@ module.exports = {
 		});
 	},
 
-	save: function (options, callback) {
+	save: function(options, callback) {
 		var self = this;
 
 		var path = options.path;
@@ -149,22 +144,20 @@ module.exports = {
 		var append = options.append;
 
 		if (append) {
-			this.read(path, function (read) {
+			this.read(path, function(read) {
 				if (read.result) {
 					self.encrypt({
 						'path': path,
 						'user_id': user_id,
 						'data': read.data + append
 					}, callback);
-				} 
-				else {
+				} else {
 					callback({
 						'result': false
 					});
 				}
 			});
-		}
-		else {
+		} else {
 			this.encrypt({
 				'path': path,
 				'user_id': user_id,
@@ -173,7 +166,7 @@ module.exports = {
 		}
 	},
 
-	encrypt: function (options, callback) {
+	encrypt: function(options, callback) {
 		var path = options.path;
 		var user_id = options.user_id;
 
@@ -181,23 +174,21 @@ module.exports = {
 
 		var temp_path = this.get_temp_path(path, user_id);
 
-		fs.writeFile(temp_path, data, function (err) {
+		fs.writeFile(temp_path, data, function(err) {
 			if (err) {
 				console.log('secure.js:encrypt fail', err);
 				callback({
 					'result': false
 				});
-			}
-			else {
+			} else {
 				encryptor.encryptFile(temp_path, path, ecrypt_key, function(err) {
-					fs.unlink(temp_path, function () {
+					fs.unlink(temp_path, function() {
 						if (err) {
 							console.log('secure.js:encrypt fail', err);
 							callback({
 								'result': false
 							});
-						}
-						else {
+						} else {
 							callback({
 								'result': true
 							});
@@ -208,7 +199,7 @@ module.exports = {
 		});
 	},
 
-	decrypt: function (options, callback) {
+	decrypt: function(options, callback) {
 		var path = options.path;
 		var user_id = options.user_id;
 
@@ -220,17 +211,15 @@ module.exports = {
 				callback({
 					'result': false
 				});
-			}
-			else {
-				fs.readFile(temp_path, 'utf8', function (err, data) {
-					fs.unlink(temp_path, function () {
+			} else {
+				fs.readFile(temp_path, 'utf8', function(err, data) {
+					fs.unlink(temp_path, function() {
 						if (err) {
 							console.log('secure.js:decrypt fail', err);
 							callback({
 								'result': false
 							});
-						}
-						else {
+						} else {
 							callback({
 								'result': true,
 								'data': data
@@ -241,5 +230,5 @@ module.exports = {
 			}
 		});
 	}
-}
+};
 // console.log(command_filter('../*/test.txt test'));

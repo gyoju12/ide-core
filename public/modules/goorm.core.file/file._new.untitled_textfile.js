@@ -13,21 +13,21 @@ goorm.core.file._new.untitled_textfile = {
 	buttons: null,
 	dialog_explorer: null,
 
-	init: function () {
+	init: function() {
 		var self = this;
 
-		this.panel = $("#dlg_new_untitled_textfile");
+		this.panel = $('#dlg_new_untitled_textfile');
 
-		var handle_ok = function (panel) {
+		var handle_ok = function(panel) {
 
 			var data = self.dialog_explorer.get_data();
 
-			if (data.path === "") {
+			if (data.path === '') {
 				alert.show(core.module.localization.msg.alert_filename_empty);
 				return false;
 			}
 
-			if (data.path == "/") {
+			if (data.path == '/') {
 				alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
 				return;
 			}
@@ -36,12 +36,12 @@ goorm.core.file._new.untitled_textfile = {
 				current_path: data.path
 			};
 			//$.get("file/new_untitled_text_file", postdata, function (data) {
-			core._socket.once("/file/new_untitled_text_file", function(check_data){
+			core._socket.once('/file/new_untitled_text_file', function(check_data) {
 
 				if (check_data.err_code === 0) {
 					core.module.layout.project_explorer.treeview.refresh_node(data.path);
 					core.module.layout.project_explorer.treeview.open_path(data.path);
-					core.module.layout.workspace.window_manager.open(data.path+'/', check_data.filename, data.type);
+					core.module.layout.workspace.window_manager.open(data.path + '/', check_data.filename, data.type);
 				} else if (check_data.err_code == 20) {
 					alert.show(core.module.localization.msg[check_data.message]);
 
@@ -50,80 +50,80 @@ goorm.core.file._new.untitled_textfile = {
 				}
 
 			});
-			core._socket.emit("/file/new_untitled_text_file", postdata);
+			core._socket.emit('/file/new_untitled_text_file', postdata);
 
 			if (typeof(this.hide) !== 'function' && panel) {
-				
+
 				self.panel.modal('hide');
-			}
-			else{
-				
+			} else {
+
 				self.panel.modal('hide');
 			}
 		};
 
-
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: "title_new_untitled_text_file",
-			id: "dlg_new_untitled_textfile",
+			id: 'dlg_new_untitled_textfile',
 			handle_ok: handle_ok,
 			success: null,
 			show: $.proxy(this.after_show, this)
 		});
 
 		// enter key 'OK'
-		this.panel.keydown(function (e) {
+		this.panel.keydown(function(e) {
 			switch (e.keyCode) {
-				case 13: 	// enter key
-					$("#g_nut_btn_ok").click();
+				case 13: // enter key
+					$('#g_nut_btn_ok').click();
 					break;
 			}
-		});		
+		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer("#text_new", this);
+		this.dialog_explorer = new goorm.core.dialog.explorer('#text_new', this);
 		this.bind();
 	},
 
-	show: function (context) {
+	show: function(context) {
 		this.dialog_explorer.init(false, true);
-		
 
 		this.panel.modal('show');
 	},
 
-	after_show: function(){
-		$("#text_new_dir_tree").find(".jstree-clicked").click();
+	after_show: function() {
+		$('#text_new_dir_tree').find('.jstree-clicked').click();
 	},
 
-	bind: function(){
+	bind: function() {
 		var self = this;
 		var files = this.dialog_explorer.files;
-		
-		$("#g_nut_btn_ok").keydown(function(e) {
-			if(e.keyCode == 9 ) {
-				$("#text_new_dir_tree").find(".jstree-clicked").click();
+
+		$('#g_nut_btn_ok').keydown(function(e) {
+			if (e.keyCode == 9) {
+				$('#text_new_dir_tree').find('.jstree-clicked').click();
 			}
 			e.preventDefault();
 		});
-		
-		$(files).on("click", "div.file_item", function(){
-			self.filename = $(this).attr("filename");
-			self.filetype = $(this).attr("filetype");
-			self.filepath = $(this).attr("filepath");
+
+		$(files).on('click', 'div.file_item', function() {
+			self.filename = $(this).attr('filename');
+			self.filetype = $(this).attr('filetype');
+			self.filepath = $(this).attr('filepath');
 		});
 	},
 
-	expand: function (tree_div, src) {
+	expand: function(tree_div, src) {
 		var self = this;
 		var nodes = src.split('/');
 
-		var target_parent = "";
-		var target_name = "";
+		var target_parent = '';
+		var target_name = '';
 
 		function get_node_by_path(node) {
-			if (node.data.parent_label == target_parent && node.data.name == target_name) return true;
-			else return false;
+			if (node.data.parent_label == target_parent && node.data.name == target_name) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		for (var i = 0; i < nodes.length; i++) {

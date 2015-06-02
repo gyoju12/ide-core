@@ -212,7 +212,7 @@ goorm.init = function() {
 				}
 			}
 		}
-	}
+	};
 
 	set_global();
 	set_goorm_config();
@@ -233,14 +233,14 @@ goorm.init = function() {
 		// Update Store
 		//
 		if (global.__redis_mode) {
-			RedisStore = require('connect-redis')(express)
+			RedisStore = require('connect-redis')(express);
 			global.store = new RedisStore({
 				'host': REDIS_HOST,
 				'port': REDIS_PORT
 			});
 			// global.store = new RedisStore
 		} else {
-			global.store = new express.session.MemoryStore;
+			global.store = new express.session.MemoryStore();
 		}
 
 		global.__set_redis_client = false;
@@ -249,7 +249,7 @@ goorm.init = function() {
 	} else {
 		return false;
 	}
-}
+};
 
 
 
@@ -269,7 +269,7 @@ goorm.config = function() {
 		limits: {
 			fileSize: 1024 * 1024 * LIMIT_FILE_SIZE
 		},
-		// rename: function (fieldname, filename) {	// hidden: it causes overlapping files that have same name
+		// rename: function(fieldname, filename) {	// hidden: it causes overlapping files that have same name
 		// 	return filename;
 		// },
 		onFileSizeLimit: function(req, file) {
@@ -365,7 +365,6 @@ goorm.config = function() {
 		if (!fs.existsSync('./error_log/' + date_now + '.log')) {
 			fs.writeFileSync('./error_log/' + date_now + '.log', 'Caught exception: \n' + err + err.stack + '\n', 'utf8');
 		} else {
-			console.log('come on')
 			fs.appendFileSync('./error_log/' + date_now + '.log', 'Caught exception: \n' + err + err.stack + '\n', 'utf8');
 		}
 
@@ -402,7 +401,7 @@ goorm.config = function() {
 	}
 
 	g_cluster.init();
-}
+};
 
 goorm.check_session = function(req, res, next) {
 	//useonly(mode=goorm-oss)
@@ -429,7 +428,7 @@ goorm.set_expires_date = function(req, res, next) {
 	var time = (new Date(new Date().getTime() + expires_time)).toGMTString();
 
 	if (/.css$/.test(url) || /.png$/.test(url) || /.gif$/.test(url) || /.js$/.test(url) || /.ico$/.test(url)) {
-		res.setHeader('Cache-Control', 'public, max-age=' + parseInt((expires_time / 1000), 10))
+		res.setHeader('Cache-Control', 'public, max-age=' + parseInt((expires_time / 1000), 10));
 		res.setHeader('Expires', time);
 	}
 
@@ -479,8 +478,6 @@ goorm.routing = function() {
 	
 
 	//for project
-	// goorm.post('/project/new', goorm.check_session, routes.project.make_project);
-	
 	// goorm.get('/project/new', goorm.check_session, routes.project.do_new);
 	// goorm.get('/project/delete', goorm.check_session, routes.project.do_delete);
 	goorm.get('/project/get_list', goorm.check_session, routes.project.get_list);
@@ -610,6 +607,8 @@ goorm.routing = function() {
 
 	
 
+	
+
 	goorm.get('/remove_port', function(req, res) {
 		// req : port
 		res.json(g_port_manager.remove_port(req.query));
@@ -651,7 +650,7 @@ goorm.load = function() {
 
 	
 
-	var g_ajax = require('./modules/ajax_routing/ajax.js')
+	var g_ajax = require('./modules/ajax_routing/ajax.js');
 
 	
 
@@ -686,12 +685,12 @@ goorm.load = function() {
 
 		console.log();
 		console.log('If you want to change a workspace, use -w option.');
-		console.log('node goorm.js start -w [workspace]')
+		console.log('node goorm.js start -w [workspace]');
 		console.log();
 		console.log('goormIDE:: starting...'.yellow);
 		console.log('--------------------------------------------------------'.grey);
 		console.log('Open your browser and connect to');
-		console.log("'http://localhost:" + port + "' or 'http://[YOUR IP/DOMAIN]:" + port + "'");
+		console.log('\'http://localhost:' + port + '\' or \'http://[YOUR IP/DOMAIN]:' + port + '\'');
 		console.log('--------------------------------------------------------'.grey);
 	};
 
@@ -767,7 +766,7 @@ goorm.load = function() {
 
 							accept(null, true);
 						});
-					})
+					});
 				}
 
 				g_terminal.start(io);

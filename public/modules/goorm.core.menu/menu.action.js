@@ -1239,7 +1239,7 @@ goorm.core.menu.action = {
 			var terminal = null;
 
 			if (core.module.project.process_name) {
-				cmd = 'ps -ef | grep ' + core.module.project.process_name + " | grep -v 'grep ' | awk '{print $2}' | xargs -I @@ kill -9 @@\n";
+				cmd = 'ps -ef | grep ' + core.module.project.process_name + ' | grep -v \'grep \' | awk \'{print $2}\' | xargs -I @@ kill -9 @@\n';
 				terminal = core.module.terminal.terminal;
 			} else {
 				cmd = '\x03\n';
@@ -1630,6 +1630,8 @@ goorm.core.menu.action = {
 					});
 				}
 			});
+			
+			
 			
 		};
 

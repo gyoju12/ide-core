@@ -9,19 +9,17 @@
  * project_name : goormIDE
  * version: 2.0.0
  **/
-var commander = require('commander'),
-	fs = require('fs'),
-	colors = require('colors'),
-	forever = require('forever'),
-	os = require('os')
-	// , exec = require('child_process').exec
-	,
-	http = require('http'),
-	querystring = require('querystring');
+var commander = require('commander');
+var	fs = require('fs');
+var	colors = require('colors');
+var	forever = require('forever');
+var	os = require('os');
+var http = require('http');
+var querystring = require('querystring');
 
-fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
-	if (err != null) {
-		console.log("Can not find file:info_goorm.json");
+fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
+	if (err !== null) {
+		console.log('Can not find file:info_goorm.json');
 	} else {
 		var info = JSON.parse(contents);
 		commander.version('goormIDE ' + info.version + '.alpha');
@@ -92,12 +90,12 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 				console.log('');
 				console.log('    + Option:');
 				console.log('');
-				console.log('      -w, --workspace       set the workspace directory. default value is "workspace"');
+				console.log('      -w, --workspace       set the workspace directory. default value is \'workspace\'');
 				console.log('');
 				console.log('      $ node goorm.js set -w workspace');
 				console.log('      $ goorm start --workspace my_workspace');
 				console.log('');
-				console.log('      -t, --temp-directory  set the temporary directory. default value is "temp_files"');
+				console.log('      -t, --temp-directory  set the temporary directory. default value is \'temp_files\'');
 				console.log('');
 				console.log('      $ node goorm.js set -t temp');
 				console.log('      $ goorm set --temp-directory temp_files');
@@ -145,32 +143,36 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 							},
 							'options': process_options
 						});
-						console.log("goormIDE server is started...");
+						console.log('goormIDE server is started...');
 					} else {
 						forever.start(__dirname + '/server.js', {
 							'options': process_options
 						});
 					}
-				}
+				};
 
-				//useonly(mode=goorm-oss)	
+				//useonly(mode=goorm-oss)
 				fs.exists(process.env.HOME + '/.goorm/config.json', function(exists) {
 					if (!exists) {
 						////prepare config.json
 						if (!fs.existsSync(process.env.HOME + '/.goorm/')) {
 							fs.mkdirSync(process.env.HOME + '/.goorm/');
-							fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+							fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 						} else if (!fs.existsSync(process.env.HOME + '/.goorm/config.json')) {
-							fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+							fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 						}
 					}
 
 					var config_data = {};
 					var raw_config_data = fs.readFileSync(process.env.HOME + '/.goorm/config.json', 'utf8');
-					if (raw_config_data && typeof(raw_config_data) != 'object') config_data = JSON.parse(raw_config_data);
+					if (raw_config_data && typeof(raw_config_data) != 'object') {
+						config_data = JSON.parse(raw_config_data);
+					}
 
-					if (!config_data.users || config_data.users.length == 0) {
-						if (!config_data.users) config_data.users = [];
+					if (!config_data.users || config_data.users.length === 0) {
+						if (!config_data.users) {
+							config_data.users = [];
+						}
 
 						var readline = require('readline');
 						var crypto = require('crypto');
@@ -182,16 +184,16 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 						});
 
 						console.log('Please initialize your ID & PW ...'.yellow);
-						rl.question("id : ", function(user_id) {
-							process.stdout.write('password : ')
+						rl.question('id : ', function(user_id) {
+							process.stdout.write('password : ');
 							process.stdout.write = function() {};
 
-							rl.question("password : ", function(user_pw) {
+							rl.question('password : ', function(user_pw) {
 								process.stdout.write = old_write;
-								process.stdout.write('\nconfirm password : ')
+								process.stdout.write('\nconfirm password : ');
 								process.stdout.write = function() {};
 
-								rl.question("confirm password : ", function(confirm_pw) {
+								rl.question('confirm password : ', function(confirm_pw) {
 									process.stdout.write = old_write;
 
 									if (user_pw != confirm_pw) {
@@ -208,14 +210,14 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 									var user = {
 										'id': user_id,
 										'pw': user_pw
-									}
+									};
 
 									config_data.users.push(user);
 									fs.writeFileSync(process.env.HOME + '/.goorm/config.json', JSON.stringify(config_data), 'utf8');
 
 									rl.close();
 									start();
-								})
+								});
 							});
 						});
 					} else {
@@ -248,7 +250,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 						path = path.join('/');
 
 						return path;
-					}
+					};
 
 					var current_project_path = get_current_project_path(env);
 
@@ -275,29 +277,33 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 									'options': options
 								});
 
-								console.log("goormIDE server is restarted...");
-							}
+								console.log('goormIDE server is restarted...');
+							};
 
 							forever.stop(target_index);
 
-							//useonly(mode=goorm-oss)	
+							//useonly(mode=goorm-oss)
 							fs.exists(process.env.HOME + '/.goorm/config.json', function(exists) {
 								if (!exists) {
 									////prepare config.json
 									if (!fs.existsSync(process.env.HOME + '/.goorm/')) {
 										fs.mkdirSync(process.env.HOME + '/.goorm/');
-										fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+										fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 									} else if (!fs.existsSync(process.env.HOME + '/.goorm/config.json')) {
-										fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+										fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 									}
 								}
 
 								var config_data = {};
 								var raw_config_data = fs.readFileSync(process.env.HOME + '/.goorm/config.json', 'utf8');
-								if (raw_config_data && typeof(raw_config_data) != 'object') config_data = JSON.parse(raw_config_data);
+								if (raw_config_data && typeof(raw_config_data) != 'object') {
+									config_data = JSON.parse(raw_config_data);
+								}
 
-								if (!config_data.users || config_data.users.length == 0) {
-									if (!config_data.users) config_data.users = [];
+								if (!config_data.users || config_data.users.length === 0) {
+									if (!config_data.users) {
+										config_data.users = [];
+									}
 
 									var readline = require('readline');
 									var crypto = require('crypto');
@@ -309,16 +315,16 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 									});
 
 									console.log('Please initialize your ID & PW ...'.yellow);
-									rl.question("id : ", function(user_id) {
-										process.stdout.write('password : ')
+									rl.question('id : ', function(user_id) {
+										process.stdout.write('password : ');
 										process.stdout.write = function() {};
 
-										rl.question("password : ", function(user_pw) {
+										rl.question('password : ', function(user_pw) {
 											process.stdout.write = old_write;
-											process.stdout.write('\nconfirm password : ')
+											process.stdout.write('\nconfirm password : ');
 											process.stdout.write = function() {};
 
-											rl.question("confirm password : ", function(confirm_pw) {
+											rl.question('confirm password : ', function(confirm_pw) {
 												process.stdout.write = old_write;
 
 												if (user_pw != confirm_pw) {
@@ -335,14 +341,14 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 												var user = {
 													'id': user_id,
 													'pw': user_pw
-												}
+												};
 
 												config_data.users.push(user);
 												fs.writeFileSync(process.env.HOME + '/.goorm/config.json', JSON.stringify(config_data), 'utf8');
 
 												rl.close();
 												start();
-											})
+											});
 										});
 									});
 								} else {
@@ -353,10 +359,10 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 							
 						} else {
-							console.log("goormIDE server not found...");
+							console.log('goormIDE server not found...');
 						}
 					} else {
-						console.log("goormIDE server not found...");
+						console.log('goormIDE server not found...');
 					}
 				});
 			});
@@ -371,7 +377,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 						path = path.join('/');
 
 						return path;
-					}
+					};
 
 					var current_project_path = get_current_project_path(env);
 
@@ -389,12 +395,12 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 							var options = list[i].options;
 
 							forever.stop(target_index);
-							console.log("goormIDE server is stopped...");
+							console.log('goormIDE server is stopped...');
 						} else {
-							console.log("goormIDE server not started...");
+							console.log('goormIDE server not started...');
 						}
 					} else {
-						console.log("goormIDE server not started...");
+						console.log('goormIDE server not started...');
 					}
 				});
 			});
@@ -410,52 +416,60 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 				if (!fs.existsSync(process.env.HOME + '/.goorm/')) {
 					fs.mkdirSync(process.env.HOME + '/.goorm/');
-					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 				} else if (!fs.existsSync(process.env.HOME + '/.goorm/config.json')) {
-					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "", 'utf8');
+					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '', 'utf8');
 				}
 				////prepare config.json
 
 				if (fs.existsSync(process.env.HOME + '/.goorm/')) {
 					var config_data = {};
 					var raw_config_data = fs.readFileSync(process.env.HOME + '/.goorm/config.json', 'utf8');
-					if (raw_config_data && typeof(raw_config_data) != 'object') config_data = JSON.parse(fs.readFileSync(process.env.HOME + '/.goorm/config.json', 'utf8'));
 
-					var workspace = config_data.workspace || process.env.PWD + '/' + "workspace/";
-					var temp_dir = config_data.temp_dir || process.env.PWD + '/' + "temp_files/";
+					if (raw_config_data && typeof(raw_config_data) != 'object') {
+						config_data = JSON.parse(fs.readFileSync(process.env.HOME + '/.goorm/config.json', 'utf8'));
+					}
+
+					var workspace = config_data.workspace || process.env.PWD + '/workspace/';
+					var temp_dir = config_data.temp_dir || process.env.PWD + '/temp_files/';
 
 					
 
 					if (options.workspace) {
-						workspace = options.workspace || process.env.PWD + '/' + "workspace/";
+						workspace = options.workspace || process.env.PWD + '/workspace/';
 
 						if (!fs.existsSync(workspace)) {
 							fs.mkdirSync(workspace);
 						} else {
-							console.log("That directory already exists!");
+							console.log('That directory already exists!');
 						}
 					}
 
-					if (options['tempDirectory']) {
-						temp_dir = options['tempDirectory'] || process.env.PWD + '/' + "temp_files/";
+					if (options.tempDirectory) {
+						temp_dir = options.tempDirectory || process.env.PWD + '/temp_files/';
 
 						if (!fs.existsSync(temp_dir)) {
 							fs.mkdirSync(temp_dir);
 						} else {
-							console.log("That directory already exists!");
+							console.log('That directory already exists!');
 						}
 					}
 
 					
 
-					if (workspace && workspace[workspace.length - 1] != '/') workspace = workspace + '/';
-					if (temp_dir && temp_dir[temp_dir.length - 1] != '/') temp_dir = temp_dir + '/';
+					if (workspace && workspace[workspace.length - 1] != '/') {
+						workspace = workspace + '/';
+					}
 
-					//useonly(mode=goorm-oss)	
+					if (temp_dir && temp_dir[temp_dir.length - 1] != '/') {
+						temp_dir = temp_dir + '/';
+					}
+
+					//useonly(mode=goorm-oss)
 					var users = config_data.users || [];
 
-					if (options['user']) {
-						if (options['user'] === true) {
+					if (options.user) {
+						if (options.user === true) {
 							console.log('Please input your id'.red);
 							console.log('node goorm set (-u/--user) [user_id]');
 							console.log('or');
@@ -463,7 +477,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 							process.exit();
 						}
 
-						var user_id = options['user'];
+						var user_id = options.user;
 
 						var readline = require('readline');
 						var crypto = require('crypto');
@@ -474,15 +488,15 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 							output: process.stdout
 						});
 
-						process.stdout.write('password : ')
+						process.stdout.write('password : ');
 						process.stdout.write = function() {};
 
-						rl.question("password : ", function(user_pw) {
+						rl.question('password : ', function(user_pw) {
 							process.stdout.write = old_write;
-							process.stdout.write('\nconfirm password : ')
+							process.stdout.write('\nconfirm password : ');
 							process.stdout.write = function() {};
 
-							rl.question("confirm password : ", function(confirm_pw) {
+							rl.question('confirm password : ', function(confirm_pw) {
 								process.stdout.write = old_write;
 
 								if (user_pw != confirm_pw) {
@@ -499,7 +513,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 								var user = {
 									'id': user_id,
 									'pw': user_pw
-								}
+								};
 
 								rl.close();
 
@@ -509,33 +523,30 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 									users: [user]
 								};
 
-
 								fs.writeFileSync(process.env.HOME + '/.goorm/config.json', JSON.stringify(config_data), 'utf8');
-								console.log("goormIDE: your configs are successfully added!");
+								console.log('goormIDE: your configs are successfully added!');
 							});
 						});
 					} else {
-						var config_data = {
+						fs.writeFileSync(process.env.HOME + '/.goorm/config.json', JSON.stringify({
 							workspace: workspace,
 							temp_dir: temp_dir,
 							users: users
-						};
-
-						fs.writeFileSync(process.env.HOME + '/.goorm/config.json', JSON.stringify(config_data), 'utf8');
-						console.log("goormIDE: your configs are successfully added!");
+						}), 'utf8');
+						console.log('goormIDE: your configs are successfully added!');
 					}
 					
 
 					
 				}
-			})
+			});
 
 		commander
 			.command('clean')
 			.action(function(env, options) {
 				if (fs.existsSync(process.env.HOME + '/.goorm/')) {
-					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', "");
-					console.log("goormIDE: your configs are successfully removed!");
+					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '');
+					console.log('goormIDE: your configs are successfully removed!');
 				}
 			});
 
@@ -547,7 +558,7 @@ fs.readFile(__dirname + "/info_goorm.json", "utf8", function(err, contents) {
 
 			argv = ['node']; // init
 
-			for (var i=0; i<process.argv.length; i++) {
+			for (var i = 0; i < process.argv.length; i++) {
 				var arg = process.argv[i];
 
 				if (arg && arg.indexOf('goorm.js') > -1) {
@@ -579,18 +590,18 @@ function send_log(title, callback) {
 	ori_data.language = 'ko';
 
 	var server_info = {};
-	server_info.os = os.type() + " " + os.release();
+	server_info.os = os.type() + ' ' + os.release();
 	var ori_cpus = os.cpus();
 	var cpus = [];
-	for (k in ori_cpus) {
-		cpus.push(ori_cpus[k].model + " : " + ori_cpus[k].speed);
+	for (var _k in ori_cpus) {
+		cpus.push(ori_cpus[_k].model + ' : ' + ori_cpus[_k].speed);
 	}
 	server_info.cpus = cpus;
 	server_info.memory = os.totalmem();
 	var interfaces = os.networkInterfaces();
 	var addresses = [];
-	for (k in interfaces) {
-		for (k2 in interfaces[k]) {
+	for (var k in interfaces) {
+		for (var k2 in interfaces[k]) {
 			var address = interfaces[k][k2];
 			if (address.family == 'IPv4' && !address.internal) {
 				addresses.push(address.address);
@@ -600,11 +611,11 @@ function send_log(title, callback) {
 	server_info.ip_address = addresses;
 	server_info.start = new Date();
 
-	var contents = "";
-	contents += "<b>OS : </b>" + server_info.os + "<br/>";
-	contents += "<b>CPU : </b>" + server_info.cpus + "<br/>";
-	contents += "<b>MEMORY : </b>" + server_info.memory + "<br/>";
-	contents += "<b>IP : </b>" + server_info.ip_address;
+	var contents = '';
+	contents += '<b>OS : </b>' + server_info.os + '<br/>';
+	contents += '<b>CPU : </b>' + server_info.cpus + '<br/>';
+	contents += '<b>MEMORY : </b>' + server_info.memory + '<br/>';
+	contents += '<b>IP : </b>' + server_info.ip_address;
 	ori_data.content = contents;
 
 	var post_data = querystring.stringify(ori_data);
@@ -623,14 +634,14 @@ function send_log(title, callback) {
 	var post_req = http.request(post_options, function(res) {
 		res.setEncoding('utf8');
 
-		var data = "";
+		var data = '';
 
 		res.on('data', function(chunk) {
 			data += chunk;
 		});
 
 		res.on('end', function() {
-			console.log("Information was sent.");
+			console.log('Information was sent.');
 			callback();
 		});
 	});

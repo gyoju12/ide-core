@@ -7,23 +7,23 @@
  * project_name : goormIDE
  * version: 2.0.0
  **/
- 
+
 goorm.core.terminal.dummy = function() {
-	var set_dummy = function(){
-		$("#terminal_dummy").css("font-size", parseInt(core.preference["preference.terminal.font_size"], 10) )
-			.css("line-height", core.preference["preference.terminal.line_spacing"] / 10 + 1)
-			.css("color", core.preference["preference.terminal.font_color"])
-			.css("font-family", core.preference["preference.terminal.font_family"]);
-	};	
+	var set_dummy = function() {
+		$('#terminal_dummy').css('font-size', parseInt(core.preference['preference.terminal.font_size'], 10))
+			.css('line-height', core.preference['preference.terminal.line_spacing'] / 10 + 1)
+			.css('color', core.preference['preference.terminal.font_color'])
+			.css('font-family', core.preference['preference.terminal.font_family']);
+	};
 
 	var set_css = function() {
-		$(".inner_content.rst_view").css("font-size", parseInt(core.preference["preference.terminal.font_size"], 10) )
-			.css("line-height", core.preference["preference.terminal.line_spacing"] / 10 + 1)
-			.css("color", core.preference["preference.terminal.font_color"])
-			.css("font-family", core.preference["preference.terminal.font_family"]);
-	}
+		$('.inner_content.rst_view').css('font-size', parseInt(core.preference['preference.terminal.font_size'], 10))
+			.css('line-height', core.preference['preference.terminal.line_spacing'] / 10 + 1)
+			.css('color', core.preference['preference.terminal.font_color'])
+			.css('font-family', core.preference['preference.terminal.font_family']);
+	};
 
-	$(core).on("on_preference_confirmed", function() { // 
+	$(core).on('on_preference_confirmed', function() { //
 		set_dummy();
 		set_css();
 	});

@@ -8,29 +8,29 @@
  * version: 2.0.0
  **/
 
-goorm.core.debug.message = function () {
+goorm.core.debug.message = function() {
 
 };
 
 goorm.core.debug.message.prototype = {
 
-	m: function (color, text, from, line_no, filename) {
+	m: function(color, text, from, line_no, filename) {
 		var self = this;
 
-		var header = "[" + filename + ":" + line_no + "] ";
+		var header = '[' + filename + ':' + line_no + '] ';
 
-		$("#debug_tab").prepend(this.make_message(header, color, text, from, line_no, filename));
-		$("#debug_tab").find("div:first").click(function () {
-			var line_no = $(this).attr("line_no");
-			var filename = $(this).attr("filename");
+		$('#debug_tab').prepend(this.make_message(header, color, text, from, line_no, filename));
+		$('#debug_tab').find('div:first').click(function() {
+			var line_no = $(this).attr('line_no');
+			var filename = $(this).attr('filename');
 
-			if (line_no !== "" && filename !== "") {
+			if (line_no !== '' && filename !== '') {
 				self.highlight(line_no, filename);
 			}
 		});
 	},
 
-	highlight: function (line_no, filename) {
+	highlight: function(line_no, filename) {
 		var window_manager = core.module.layout.workspace.window_manager;
 
 		for (var i = 0; i < window_manager.index; i++) {
@@ -42,24 +42,24 @@ goorm.core.debug.message.prototype = {
 		}
 	},
 
-	make_message: function (header, color, text, from, line_no, filename) {
-		var message = "<div class='debug_tab_line_selection' line_no='" + line_no + "' filename='" + filename + "'><font color=" + color + ">";
-		message += header + ": ";
+	make_message: function(header, color, text, from, line_no, filename) {
+		var message = '<div class="debug_tab_line_selection" line_no="' + line_no + '" filename="' + filename + '"><font color=' + color + '>';
+		message += header + ': ';
 		message += text;
-		message += "</font>";
-		message += "<font color='gray'>";
-		message += " (from " + from + ")";
-		message += "</font></div>";
+		message += '</font>';
+		message += '<font color="gray">';
+		message += ' (from ' + from + ')';
+		message += '</font></div>';
 
 		return message;
 	},
 
-	clean: function () {
+	clean: function() {
 		core.module.layout.select('terminal');
-		var message = "<pre>";
-		message += "Project clean complete";
-		message += "</pre>";
+		var message = '<pre>';
+		message += 'Project clean complete';
+		message += '</pre>';
 
-		$("#debug_tab").prepend(message);
+		$('#debug_tab').prepend(message);
 	}
 };

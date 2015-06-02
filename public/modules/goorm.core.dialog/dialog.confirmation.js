@@ -96,7 +96,7 @@ goorm.core.dialog.confirmation.prototype = {
 		if (this.option) {
 			var localization_msg = core.module.localization.msg;
 
-			$('#confirmation_title').html(this.option.title || localization_msg.confirmation_title || 'Confirmation')
+			$('#confirmation_title').html(this.option.title || localization_msg.confirmation_title || 'Confirmation');
 			$('#confirmation_content_container').empty().append(this.option.message);
 			this.yes_bt.html(this.option.yes_text || localization_msg.yes || 'Yes');
 			this.no_bt.html(this.option.no_text || localization_msg.no || 'Yes');

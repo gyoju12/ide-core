@@ -73,7 +73,7 @@ goorm.core.project._import = {
 			return false;
 
 			//}else if(!self.target_zip_file || (self.target_zip_file.type!=='application/x-zip-compressed'  && self.target_zip_file.type!=='application/zip') ){
-		} else if (where.find('.project_import_file').val() == '') {
+		} else if (where.find('.project_import_file').val() === '') {
 			alert.show(localization_msg.alert_no_imported_file);
 			return false;
 		} else if (where.find('.project_import_file').val().split('.').pop() !== 'zip' && where.find('.project_import_file').val().split('.').pop() !== 'tar' && where.find('.project_import_file').val().split('.').pop() !== 'gz') {
@@ -94,7 +94,9 @@ goorm.core.project._import = {
 		var plugin_name = where.find('.select_import_project_detail_type').attr('plugin_name');
 		//goorm.plugins.dart.....
 		var plugin = {};
-		core.preference.plugins[plugin_name] && (plugin[plugin_name] = core.preference.plugins[plugin_name]);
+		if (core.preference.plugins[plugin_name]) {
+			plugin[plugin_name] = core.preference.plugins[plugin_name];
+		}
 
 		var project_desc = where.find('.input_import_project_desc').val();
 		project_desc = project_desc.replace(/&(lt|gt);/g, function(strMatch, p1) {
@@ -102,6 +104,8 @@ goorm.core.project._import = {
 		});
 		project_desc = project_desc.replace(/<\/?[^>]+(>|$)/g, '');
 
+		var storage = where.find('.select_new_project_storage').val();
+		
 		var senddata = {
 			project_type: where.find('.select_import_project_type').attr('project_type'),
 			//
@@ -112,7 +116,7 @@ goorm.core.project._import = {
 			project_name: where.find('.input_import_project_name').val(),
 			project_desc: project_desc,
 			plugins: plugin,
-
+			storage: storage
 		};
 		//$.get('project/new', senddata, function(data) {	// jeongmin: current new project uses socket
 		var cb = function(data) {
@@ -226,7 +230,6 @@ goorm.core.project._import = {
 							message: localization_msg.confirmation_do_you_want_to_project_update,
 							yes_text: localization_msg.yes,
 							no_text: localization_msg.no,
-							title: localization_msg.confirmation_title,
 							yes: function() {
 								project_new();
 							},
@@ -345,14 +348,14 @@ goorm.core.project._import = {
 		var __check = function() {
 			where.find('.project_import_form').attr('action', 'project/import/check');
 			where.find('.project_import_form').submit();
-		}
+		};
 
 		var __load = function() {
 			where.find('.project_import_form').attr('action', 'project/import');
-		}
+		};
 
 		where.find('.project_import_file').change(function() {
-			if (where.find('.project_import_file').val() != '') {
+			if (where.find('.project_import_file').val() !== '') {
 				__check();
 				__load();
 			} else {
@@ -402,8 +405,7 @@ goorm.core.project._import = {
 
 		if (where.attr('id') == 'dlg_import_project') {
 			this.panel.modal('show');
-			
-		}		
+		}
 	},
 
 	// make project type list from new project wizard dialog. Jeong-Min Im.
@@ -426,44 +428,6 @@ goorm.core.project._import = {
 			if (project_type == 'all') {
 				continue;
 			}
-
-			// align project types...
-			// switch (project_type) {
-			// 	case 'dartp':
-			// 		project_type = 'dart';
-			// 		break;
-
-			// 	case 'javap':
-			// 		project_type = 'java';
-			// 		break;
-
-			// 	case 'javaexamp':
-			// 		project_type = 'java_examples';
-			// 		break;
-
-			// 	case 'jqueryp1':
-			// 		project_type = 'jquery';
-			// 		break;
-
-			// 	case 'jspp':
-			// 		project_type = 'jsp';
-			// 		break;
-
-			// 	case 'nodejsp':
-			// 		project_type = 'nodejs';
-			// 		break;
-
-			// 	case 'phonegapp':
-			// 		project_type = 'phonegap';
-			// 		break;
-
-			// 	case 'phpp':
-			// 		project_type = 'php';
-			// 		break;
-
-			// 	case 'webp':
-			// 		project_type = 'web';
-			// }
 
 			select_project_type.append('<option value="' + project_type + '">' + project_name + '</option>');
 		}

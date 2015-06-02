@@ -44,7 +44,6 @@ goorm.core.project._delete = {
 			// if (storage == 'goormIDE Storage') {
 			var do_delete = function() {
 				core._socket.once('/project/delete', function(data) {
-					console.log("---3");
 					$('#project_delete_list').empty();
 
 					var received_data = data;
@@ -93,7 +92,7 @@ goorm.core.project._delete = {
 						// });
 					}
 					var tab_manager = core.module.layout.tab_manager;
-					
+
 					$.each(tab_manager.list, function(key, value) {
 						if (~key.indexOf('gLayoutServer_') && ~key.indexOf(delete_project_type) && $('#' + value.id + ' .badge').length > 0) {
 							$('#' + value.id + ' .badge').click();
@@ -124,7 +123,6 @@ goorm.core.project._delete = {
 					$('#gLayoutTab_Terminal').click();
 					$('#south_tab + div.tab-content div.tab-pane').removeClass('active').removeClass('in');
 					$('#south_tab + div.tab-content div.terminal').addClass('active').addClass('in');
-					
 
 					core.module.layout.terminal.resize();
 
@@ -133,7 +131,7 @@ goorm.core.project._delete = {
 						self.project_list.init_project(); //let's set first project
 						$('#project_delete_list').focus();
 						var data = self.project_list.get_data();
-						if (data.path == '') {
+						if (data.path === '') {
 							$('#project_delete_location').hide();
 						} else {
 							$('#project_delete_location').show();
@@ -144,9 +142,8 @@ goorm.core.project._delete = {
 				}, true, {
 					lock: true
 				}); // jeongmin: last parameter means hiding lock. True -> Can't hide loading bar.
-				console.log("---2");
 				core._socket.emit('/project/delete', postdata);
-			}
+			};
 			if (postdata.project_path == core.status.current_project_path) {
 				$(core).one('on_project_open', function() {
 					do_delete();
@@ -159,7 +156,6 @@ goorm.core.project._delete = {
 				core.status.current_project_type = '';
 				core.dialog.open_project.open('', '', '');
 			} else {
-				console.log("---1");
 				do_delete();
 			}
 
@@ -175,7 +171,7 @@ goorm.core.project._delete = {
 				if (!self.processing) {
 					var data = self.project_list.get_data();
 
-					if (data.path == '') {
+					if (data.path === '') {
 						alert.show(core.module.localization.msg.alert_project_not_selected);
 					} else {
 						if (typeof core.status.current_running_server[data.path] !== 'undefined') {
@@ -260,7 +256,7 @@ goorm.core.project._delete = {
 				self.project_list.init_project(); //let's set first project
 				$('#project_delete_list').focus();
 				var data = self.project_list.get_data();
-				if (data.path == '') {
+				if (data.path === '') {
 					$('#project_delete_location').hide();
 				} else {
 					$('#project_delete_location').show();
@@ -277,7 +273,7 @@ goorm.core.project._delete = {
 			'handler': function() {
 				if (!self.processing && $('.modal:visible').length === 1) { // only when there is delete project dialog
 					var data = self.project_list.get_data();
-					if (data.path == '') {
+					if (data.path === '') {
 						alert.show(core.module.localization.msg.alert_project_not_selected);
 					} else {
 						confirmation.init({
@@ -327,7 +323,7 @@ goorm.core.project._delete = {
 
 		//real delete start
 
-		for (o in core.workspace) {
+		for (var o in core.workspace) {
 			if (!o) {
 				continue;
 			}

@@ -153,7 +153,7 @@ module.exports = {
 						class_method_obj.use_detailed = false;
 						class_method_obj.type = 'method';
 						class_method_obj.filetype = 'c/cpp';
-						class_method_obj.line = line
+						class_method_obj.line = line;
 						class_method_obj.query = data[2];
 
 						response = class_method_obj;
@@ -166,10 +166,10 @@ module.exports = {
 						class_property_obj.parent = data[5].split(':')[1];
 						class_property_obj.name = data[0];
 						class_property_obj.use_detailed = false;
-						class_property_obj.parent_type = 'class'
+						class_property_obj.parent_type = 'class';
 						class_property_obj.type = 'property';
 						class_property_obj.filetype = 'c/cpp';
-						class_property_obj.line = line
+						class_property_obj.line = line;
 						class_property_obj.query = data[2];
 
 						response = class_property_obj;
@@ -210,10 +210,18 @@ module.exports = {
 			}
 
 			response.type = items[type_index];
-			items[type_index + 2] && (response.class = items[type_index + 2]);
+
+			if (items[type_index + 2]) {
+				response.class = items[type_index + 2];
+			}
+
 			response.name = items[0];
 			response.filepath = items[1];
-			items[type_index + 1] && (response.line = parseInt(items[type_index + 1].split('line:')[1]), 10);
+
+			if (items[type_index + 1]) {
+				response.line = parseInt(items[type_index + 1].split('line:')[1], 10);
+			}
+
 			response.query = '';
 			for (var i = 2; i < type_index; i++) {
 				response.query += items[i];
@@ -239,10 +247,18 @@ module.exports = {
 			}
 
 			response.type = items[type_index];
-			items[type_index + 2] && (response.class = items[type_index + 2]);
+
+			if (items[type_index + 2]) {
+				response.class = items[type_index + 2];
+			}
+
 			response.name = items[0];
 			response.filepath = items[1];
-			items[type_index + 1] && (response.line = parseInt(items[type_index + 1].split('line:')[1]), 10);
+
+			if (items[type_index + 1]) {
+				response.line = parseInt(items[type_index + 1].split('line:')[1], 10);
+			}
+
 			response.query = '';
 			for (var i = 2; i < type_index; i++) {
 				response.query += items[i];
@@ -344,7 +360,7 @@ module.exports = {
 						});
 					}
 				}
-			}
+			};
 
 			var ctags = spawn('cat', ctags_command.split(' '), {
 				'cwd': absolute_workspace_path,
@@ -384,7 +400,7 @@ module.exports = {
 					}, 100);
 				} else {}
 			});
-		}
+		};
 
 		fs.exists(absolute_workspace_path + '/.tags', function(exists) {
 			if (exists) {
@@ -487,57 +503,6 @@ module.exports = {
 				});
 			}
 		});
-	},
-
-	proposal_import: function(query) {
-		//query form : "java.i" "java." "java"
-		if (query === '' || query === null || query === undefined) {
-			return [];
-		}
-		last_point_index = query.split('.').pop().length;
-		last_query = query.split('.').pop();
-		prefix_query = query.substring(0, query.length - last_point_index - 1);
-		prefix_query_origin = prefix_query + '';
-
-		prefix_query = prefix_query.replace(/\./g, "']['");
-		prefix_query = "['" + prefix_query + "']";
-
-		var list = {};
-		list = eval('java_libs');
-		for (var i = 0; i < prefix_query_origin.split('.').length; i++) {
-			list = list[prefix_query_origin.split('.')[i]];
-			if (!list) {
-				return [];
-			}
-		}
-
-		var res = [];
-		for (var l in list) {
-			var o = eval('java_libs' + prefix_query + "['" + l + "']");
-			var res_entry = {};
-			if (o.import_code !== undefined && o.import_code.indexOf(query) === 0) {
-				var target = o.import_code;
-				if (target.indexOf('$') != -1) {
-					continue;
-				}
-
-				if (o.type.toString() == 'class') {
-					//ex)java.awt.Queue
-					res_entry.keyword = target;
-					res_entry.type = 'class';
-					res_entry.description = target + '   description';
-				} else {
-					//ex)java.io.*
-					res_entry.keyword = target + '.*';
-					res_entry.type = 'package';
-					res_entry.description = target + '   description';
-				}
-				res.push(res_entry);
-			}
-
-		} //for end
-
-		return res;
 	},
 
 	get_proposal_java: function(query, evt) {

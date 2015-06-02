@@ -100,10 +100,12 @@ goorm.core.project = {
 
 	get_tab: function(name, callback) {
 		var self = this;
+		var on_click;
+		var on_clear;
 
 		if (!this.tab[name]) {
 			if (name === 'build') {
-				var on_click = function() {
+				on_click = function() {
 					if (self.tab.build) {
 						var content = self.tab.build.tab_content;
 						var inner_content = self.tab.build.tab_inner_content;
@@ -116,7 +118,7 @@ goorm.core.project = {
 					}
 				};
 
-				var on_clear = function() {
+				on_clear = function() {
 					if (self.tab.build) {
 						self.tab.build.tab_inner_content.html('');
 					}
@@ -155,7 +157,7 @@ goorm.core.project = {
 
 				this.tab.build = core.module.layout.tab_manager.terminal_manager.load('build', build_configs);
 			} else if (name === 'run') {
-				var on_click = function() {
+				on_click = function() {
 					if (self.tab.run) {
 						var content = self.tab.run.tab_content;
 						var inner_content = self.tab.run.tab_inner_content;
@@ -168,7 +170,7 @@ goorm.core.project = {
 					}
 				};
 
-				var on_clear = function() {
+				on_clear = function() {
 					if (self.tab.run) {
 						self.tab.run.terminal.send_command('clear\r');
 					}
@@ -210,6 +212,81 @@ goorm.core.project = {
 		} else {
 			callback(this.tab[name]);
 		}
+	},
+
+	check_shared: function(project_path) {
+		var shared = true;
+
+		if (!project_path) {
+			project_path = core.status.current_project_path;
+		}
+
+		if (project_path && core.workspace && core.workspace[project_path]) {
+			var project_data = core.workspace[project_path];
+
+			if (project_data.author === core.user.id) {
+				shared = false;
+			}
+		}
+
+		return shared;
+	},
+
+	get_storage: function (project_path) {
+		var storage = 's3';
+		
+		if (!project_path) {
+			project_path = core.status.current_project_path;
+		}
+		
+		if (project_path && core.workspace && core.workspace[project_path]) {
+			storage = core.workspace[project_path].storage || "s3";
+		}
+		
+		return storage;
+	},
+	
+	get_path: function(project_path) {
+		if (!project_path) {
+			project_path = core.status.current_project_path;
+		}
+
+		return core.preference.workspace_path + this.get_name(project_path) + '/';
+	},
+
+	get_name: function(project_path) {
+		var path = '';
+
+		if (!project_path) {
+			project_path = core.status.current_project_path;
+		}
+
+		
+
+		//useonly(mode=goorm-standalone,goorm-oss)
+		path = project_path;
+		
+
+		return path;
+	},
+
+	get_realpath: function(filepath, filename) {
+		var path = '';
+
+		if (!filename) {
+			filename = '';
+		}
+
+		if (filepath) {
+			filepath = filepath.split('/');
+
+			var project_path = filepath.shift();
+			var relative_path = filepath.join('/');
+
+			path = this.get_path(project_path) + relative_path + filename;
+		}
+
+		return path;
 	},
 
 	build: function(cmd, options, callback) {
@@ -281,7 +358,6 @@ goorm.core.project = {
 			self.tab.build.tab_inner_content.empty();
 			self.show('build');
 
-
 			var terminal = tab.terminal.terminal;
 
 			terminal.flush_command_queue();
@@ -342,11 +418,12 @@ goorm.core.project = {
 		var project_data = core.workspace[project_path];
 		var property = project_data.plugins;
 		var check = options.check;
+		var socket;
 
 		
 
 		//useonly(mode=goorm-oss)
-		var socket = io.connect();
+		socket = io.connect();
 		
 
 		// Delete unnecessary Project_data
@@ -575,14 +652,14 @@ goorm.core.project = {
 			}
 		} else {
 			if (core.module.plugin_manager.plugins['goorm.plugin.' + core.status.current_project_type] !== undefined) {
-				core.status.current_project_absolute_path = core.preference.workspace_path + core.status.current_project_path + '/';
+				core.status.current_project_absolute_path = this.get_path();
 				//useonly(mode=goorm-oss)
-				self.send_run_cmd();
+				this.send_run_cmd();
 				
 
 				
 			} else if (core.status.current_project_type == 'edu') {
-				self.send_run_cmd();
+				this.send_run_cmd();
 			} else {
 				var result = {
 					result: false,
@@ -680,10 +757,10 @@ goorm.core.project = {
 			}
 		});
 
-		var run_file_path = core.status.current_project_path + '/' + build_path + build_main;
+		var run_file_path = core.status.current_project_path + '/' +build_path + build_main;
 
 		if (core.status.current_project_type == 'dart') {
-			run_file_path = core.status.current_project_path + '/' + build_main + '.dart.js';
+			run_file_path = core.status.current_project_path + '/' +build_main + '.dart.js';
 		}
 
 		// console.log(run_file_path, core.status.current_project_path);
@@ -786,18 +863,24 @@ goorm.core.project = {
 
 		var type = options.type;
 		var categories = options.categories;
+		var img;
+		var items;
+		var name;
+		var description;
+		var localization;
+		var i;
 
 		if (categories && categories.length > 0) {
 			// for (var i=0; i<categories.length; i++) {
-			for (var i = 0; i < categories.length; i++) {
+			for (i = 0; i < categories.length; i++) {
 				var _category = categories[i];
 
-				var img = _category.img;
-				var items = _category.items;
-				var name = options.name || '';
+				img = _category.img;
+				items = _category.items;
+				name = options.name || '';
 				var category = _category.category;
-				var description = options.description || '';
-				var localization = 'plugin.' + type + '.' + category + '.';
+				description = options.description || '';
+				localization = 'plugin.' + type + '.' + category + '.';
 
 				// Project New 왼쪽에 Project Type 버튼 추가
 				if (!$('.project_wizard_first_button[project_type="' + type + '"][category="' + category + '"]').length) {
@@ -833,18 +916,18 @@ goorm.core.project = {
 				});
 			}
 		} else {
-			var img = options.img;
-			var items = options.items;
-			var name = options.name || '';
-			var localization = 'plugin.' + type + '.';
-			var description = options.description || '';
+			img = options.img;
+			items = options.items;
+			name = options.name || '';
+			localization = 'plugin.' + type + '.';
+			description = options.description || '';
 
 			// Project New 왼쪽에 Project Type 버튼 추가
 			if (!$('.project_wizard_first_button[project_type="' + type + '"]').length) {
 				$('#project_new').find('.project_types').append('<a href="#" class="list-group-item project_wizard_first_button" project_type="' + type + '"><img src="' + img + '" class="project_icon" /><h4 class="list-group-item-heading" class="project_type_title" localization_key="' + localization + 'name">' + name + '</h4><p class="list-group-item-text" class="project_type_description" localization_key="' + localization + 'description">' + description + '</p></a>');
 
 				// Project New 오른쪽에 새 Project Button 추가
-				for (var i = 0; i < items.length; i++) {
+				for (i = 0; i < items.length; i++) {
 					items[i].name = items[i].name || '';
 					items[i].description = items[i].description || '';
 					$('#project_new').find('.project_items').append('<div class="col-sm-6 col-md-3 project_wizard_second_button all ' + type + ' thumbnail" description="' + items[i].description + '" localization_key="' + localization + items[i].key + '.description"  project_type="' + type + '" plugin_name="goorm.plugin.' + type + '" detail_type="' + items[i].detail_type + '"><img src="' + items[i].img + '" class="project_item_icon"><div class="caption"><p localization_key="' + localization + items[i].key + '.name">' + items[i].name + '</p></div></div>');

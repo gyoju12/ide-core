@@ -228,7 +228,7 @@ goorm.core.prototype = {
 
 			$(document).on('contextmenu', function(e) {
 				var target = $(e.target);
-				
+
 				// terminal & chat & find/replace - open browser context menu
 				//
 				if (!(target.parents('#terminal').length > 0 || target.parents('.terminal').length > 0 || target.hasClass('terminal_style') || target.attr('id') == 'input_chat_message' || target.parent().hasClass('chat_message_container') || target.parent().hasClass('chat_message_content') || target.attr('id') == 'find_query_inputbox' || target.attr('id') == 'replace_query_inputbox' || target.attr('id') == 'search_query_inputbox')) {
@@ -303,30 +303,30 @@ goorm.core.prototype = {
 		});
 
 		window.onerror = function(errorMsg, url, lineNumber, column) {
-				var postdata = {
-					user_id: core.user.id,
-					error_msg: errorMsg,
-					url: url,
-					line_number: lineNumber,
-					col_number: column || -1, // old browsers do not support this param
-					browser: navigator.userAgent,
-					os: navigator.platform
-				};
+			var postdata = {
+				user_id: core.user.id,
+				error_msg: errorMsg,
+				url: url,
+				line_number: lineNumber,
+				col_number: column || -1, // old browsers do not support this param
+				browser: navigator.userAgent,
+				os: navigator.platform
+			};
 
-				$.ajax({
-					'type': 'POST',
-					'url': '/log/save_error_log',
-					'data': postdata,
-					'async': false,
-					'success': function(result) {
-						if (result) {
-							console.log('error reported');
-						}
+			$.ajax({
+				'type': 'POST',
+				'url': '/log/save_error_log',
+				'data': postdata,
+				'async': false,
+				'success': function(result) {
+					if (result) {
+						console.log('error reported');
 					}
-				});
-			}
-			// window.onbeforeunload = function (e) {
-			// 	if (core.module.auth.open_keep_session_dialog) return;
+				}
+			});
+		};
+		// window.onbeforeunload = function (e) {
+		// 	if (core.module.auth.open_keep_session_dialog) return;
 
 		// 	//1. logout
 		//     if(core.logout){
@@ -880,7 +880,7 @@ goorm.core.prototype = {
 	},
 
 	check_localStorage_version: function() {
-		var server_version = JSON.parse(external_json['public']['configs']['version']['version.json']);
+		var server_version = JSON.parse(external_json['public'].configs.version['version.json']);
 		var current_version = (localStorage.version) ? JSON.parse(localStorage.version) : {};
 		for (var key in server_version) {
 			if (current_version[key] === undefined || current_version[key] < server_version[key]) {

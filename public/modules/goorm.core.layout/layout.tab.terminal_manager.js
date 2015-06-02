@@ -25,7 +25,7 @@ goorm.core.layout.tab.terminal_manager = {
 				'class': 'server_tab',
 				'fade': true
 			},
-			fn: function () {}
+			fn: function() {}
 		},
 
 		/**
@@ -37,8 +37,8 @@ goorm.core.layout.tab.terminal_manager = {
 			max_append: false,
 			max_contents: 50,
 
-			on_ready: function () {},
-			on_message: function (msg) {
+			on_ready: function() {},
+			on_message: function(msg) {
 				return msg;
 			}
 		},
@@ -49,7 +49,7 @@ goorm.core.layout.tab.terminal_manager = {
 		}
 	},
 
-	load: function (name, options) {
+	load: function(name, options) {
 		var configs = this.configs;
 
 		var configs_tab = $.extend({}, configs.tab_manager);
@@ -64,7 +64,7 @@ goorm.core.layout.tab.terminal_manager = {
 		tab_manager.tab_content.id = _id.tab_content_id;
 		tab_manager.localization = {
 			tab: _id.tab_localization
-		}
+		};
 
 		return this.create(name, tab_manager, terminal, {
 			'success': options.success,
@@ -73,7 +73,7 @@ goorm.core.layout.tab.terminal_manager = {
 		});
 	},
 
-	create: function (name, tab_manager, terminal, fn) {
+	create: function(name, tab_manager, terminal, fn) {
 		var self = this;
 
 		var fn_success = fn.success;
@@ -83,14 +83,12 @@ goorm.core.layout.tab.terminal_manager = {
 		if (!this.list[name]) {
 			var position = tab_manager.position;
 
-
-
 			core.module.layout.tab_manager.add(position, tab_manager);
-			
+
 			this.list[name] = {
-				'tab': $('#'+tab_manager.tab.id),
-				'tab_content': $('#'+tab_manager.tab_content.id),
-				'tab_inner_content': $('#'+tab_manager.tab_content.id).find('.inner_content')
+				'tab': $('#' + tab_manager.tab.id),
+				'tab_content': $('#' + tab_manager.tab_content.id),
+				'tab_inner_content': $('#' + tab_manager.tab_content.id).find('.inner_content')
 			};
 
 			// attach hide badge
@@ -99,7 +97,7 @@ goorm.core.layout.tab.terminal_manager = {
 			var hide = false;
 
 			// show
-			this.list[name].tab.click(function () {
+			this.list[name].tab.click(function() {
 				hide = false;
 
 				self.list[name].tab.show();
@@ -110,7 +108,7 @@ goorm.core.layout.tab.terminal_manager = {
 			});
 
 			// hide
-			this.list[name].tab.on('hidden.bs.tab', function () {
+			this.list[name].tab.on('hidden.bs.tab', function() {
 				if (hide) {
 					self.list[name].tab.hide();
 
@@ -121,13 +119,12 @@ goorm.core.layout.tab.terminal_manager = {
 				return false;
 			});
 
-			this.list[name].tab.on("click", ".hide_tab", function (e) {
+			this.list[name].tab.on('click', '.hide_tab', function(e) {
 				hide = true;
 
 				if (self.list[name].tab.parent().hasClass('active')) { // --> show another tab
 					core.module.layout.select('terminal');
-				}
-				else {
+				} else {
 					self.list[name].tab.hide();
 
 					if (fn_hide && typeof(fn_hide) === 'function') {
@@ -141,7 +138,7 @@ goorm.core.layout.tab.terminal_manager = {
 			if (terminal.type === 'background') {
 				this.list[name].terminal = new goorm.core.terminal.background(name);
 				// resize tab
-				this.list[name].tab_inner_content.outerHeight($('#goorm_inner_layout_'+this.convert_position(position)).find('.tab-content').height() - 40);	// 40 for initial clr_view height
+				this.list[name].tab_inner_content.outerHeight($('#goorm_inner_layout_' + this.convert_position(position)).find('.tab-content').height() - 40);	// 40 for initial clr_view height
 
 				this.list[name].fix_scroll = true;
 				this.list[name].max_append = false;
@@ -158,11 +155,11 @@ goorm.core.layout.tab.terminal_manager = {
 				// 		} else {
 				// 			self.list[name].fix_scroll = false;
 				// 		}
-				// 	}, 30, false));				
+				// 	}, 30, false));
 				// }
 
 				if (this.list[name].terminal.on_ready && typeof(this.list[name].terminal.on_ready) === 'function') {
-					this.list[name].terminal.on_ready(function () {
+					this.list[name].terminal.on_ready(function() {
 						if (terminal.on_ready) {
 							terminal.on_ready();
 						}
@@ -174,20 +171,20 @@ goorm.core.layout.tab.terminal_manager = {
 				}
 
 				if (this.list[name].terminal.on_message && typeof(this.list[name].terminal.on_message) === 'function') {
-					this.list[name].terminal.on_message(function (msg) {
+					this.list[name].terminal.on_message(function(msg) {
 						if (terminal.on_message) {
 							msg = terminal.on_message(msg);
 						}
 
 						if (/\n/.test(msg.stdout)) {
-							inner.append(msg.stdout.replace(/\n/g, "<br>").replace(/\[\d+m/g, ""));
+							inner.append(msg.stdout.replace(/\n/g, '<br>').replace(/\[\d+m/g, ''));
 
 							if (self.list[name].set_fix_scroll && self.list[name].fix_scroll) {
 								inner.scrollTop(inner[0].scrollHeight);
 							}
 						} else {
-							inner.append(msg.stdout.replace(/\[\d+m/g, ""));
-						} 
+							inner.append(msg.stdout.replace(/\[\d+m/g, ''));
+						}
 
 						if (self.list[name].set_max_append) {
 							if (!self.list[name].max_append && inner.text().split('\n').length > self.list[name].terminal.max_contents) {
@@ -203,12 +200,11 @@ goorm.core.layout.tab.terminal_manager = {
 						}
 					});
 				}
-			}
-			else {
+			} else {
 				this.list[name].terminal = new goorm.core.terminal();
-				this.list[name].terminal.init($(terminal.target), name+'_terminal');
+				this.list[name].terminal.init($(terminal.target), name + '_terminal');
 
-				this.list[name].terminal.on_ready = function () {
+				this.list[name].terminal.on_ready = function() {
 					if (terminal.on_ready) {
 						terminal.on_ready();
 					}
@@ -223,13 +219,13 @@ goorm.core.layout.tab.terminal_manager = {
 		return this.list[name];
 	},
 
-	get_id: function (name) {
+	get_id: function(name) {
 		var configs = this.configs;
 		return {
 			'tab_id': configs.prev.tab_id + name,
 			'tab_content_id': configs.prev.tab_content_id + name,
 			'tab_localization': 'tab_title_' + name
-		}
+		};
 	},
 
 	convert_position: function(p) {

@@ -37,7 +37,7 @@ goorm.core.file._new.folder = {
 			var localization = core.module.localization.msg;
 			var data = self.dialog_explorer.get_data();
 
-			if (data == false) {
+			if (data === false) {
 				// when folder name has space(' '), get_data returns false
 				alert.show(localization.alert_invalid_folder_name);
 				return false;

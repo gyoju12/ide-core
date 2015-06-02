@@ -11,7 +11,7 @@
 goorm.core.edit.find_and_replace.dialog = {
 	dialog: null,
 
-	init: function (option) {
+	init: function(option) {
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init(option);
 

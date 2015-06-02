@@ -26,20 +26,19 @@ goorm.core.dialog.notice.prototype = {
 	init: function() {
 		var self = this;
 
-
 		// this.title = "Notice";
 		this.panel = $('#dlg_notice');
 
 		// this.title = "Alert";
-		this.icon = "<i class=\"fa fa-bullhorn fa-3x\"></i>";
-		this.panel.find(".modal-footer button:last-child").last().click(function() {
+		this.icon = '<i class="fa fa-bullhorn fa-3x"></i>';
+		this.panel.find('.modal-footer button:last-child').last().click(function() {
 			self.panel.modal('hide');
 		});
 
 		this.panel.bind('keydown', function(e) {
 			switch (e.keyCode) {
-				case 13:  // enter key
-					$("#dlg_notice").modal('hide');	
+				case 13: // enter key
+					$('#dlg_notice').modal('hide');
 					e.stopPropagation();
 					e.preventDefault();
 					break;
@@ -50,23 +49,24 @@ goorm.core.dialog.notice.prototype = {
 			$('.modal.in').focus();
 
 			//fix deleting project
-			if($('#dlg_delete_project').attr('class').indexOf('in') >= 0)
-				$("#project_delete_list").focus();
+			if ($('#dlg_delete_project').attr('class').indexOf('in') >= 0) {
+				$('#project_delete_list').focus();
+			}
 		});
 
-		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+		this.panel.on('show.bs.modal', function() { // jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
+			var $dialog = $(this).find('.modal-dialog');
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
+			$(this).css('top', offset_height - 30).css('left', offset_width);
 		});
 
-		this.panel.on('shown.bs.modal', function () {
-			$("#project_delete_list").blur();
+		this.panel.on('shown.bs.modal', function() {
+			$('#project_delete_list').blur();
 			$(this).focus();
-// 			console.log(document.activeElement);
+			// 			console.log(document.activeElement);
 		});
 
 		// this.panel.on("show.bs.modal", function (){	//jeongmin: done at dialog.js
@@ -83,7 +83,7 @@ goorm.core.dialog.notice.prototype = {
 		// 		}
 		// 		else {
 		// 			container.css('margin-top', '10px');
-		// 		}			
+		// 		}
 		// 	}, 200); // fade animation: 0.15s -> 150
 		// });
 
@@ -95,16 +95,16 @@ goorm.core.dialog.notice.prototype = {
 
 		this.message = filtered_msg;
 		//this.title="Notice";
-		var panelContainer_bd = this.panel.find("#notice_content_container");
-		panelContainer_bd.empty().append("<div class='notice_content_div col-md-10'>" + this.message + "</div>");
+		var panelContainer_bd = this.panel.find('#notice_content_container');
+		panelContainer_bd.empty().append('<div class="notice_content_div col-md-10">' + this.message + '</div>');
 
 		if (!no_image) {
 			panelContainer_bd.css('text-align', 'left');
 
 			if (!option_icon) {
-				panelContainer_bd.prepend("<div class='notice_image_div col-md-2'>" + this.icon + "</div>");
+				panelContainer_bd.prepend('<div class="notice_image_div col-md-2">' + this.icon + '</div>');
 			} else {
-				panelContainer_bd.prepend("<div class='notice_image_div col-md-2'><img style='width:80%; height:80%' src='" + option_icon + "'/></div>");
+				panelContainer_bd.prepend('<div class="notice_image_div col-md-2"><img style="width:80%; height:80%" src="' + option_icon + '"/></div>');
 			}
 		} else {
 			panelContainer_bd.css('text-align', 'center');

@@ -87,7 +87,7 @@ goorm.core.terminal.prototype = {
 
 				self.Terminal = new Terminal({
 					cols: geometry.cols,
-					rows: geometry.rows,
+					rows: geometry.rows
 				}); //seongho.cha: if not calculate when new Terminal, first line will be not refreshed correctly fisrt time.
 
 				self.Terminal.open(self, self.target, {
@@ -109,7 +109,7 @@ goorm.core.terminal.prototype = {
 					'workspace': core.status.current_project_path,
 					'terminal_name': self.terminal_name,
 					'uid': core.user.uid,
-					'gid': core.user.gid,
+					'gid': core.user.gid
 					// "user": core.user.id
 				};
 
@@ -253,13 +253,13 @@ goorm.core.terminal.prototype = {
 			// result write
 			self.socket.on('pty_command_result', function(msg) {
 				//build stop fix --heeje
-				if ((core.module.project.is_running && msg.stdout.indexOf('^C') == 0) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m$') == msg.stdout.length - 6) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m#') == msg.stdout.length - 6)) {
+				if ((core.module.project.is_running && msg.stdout.indexOf('^C') === 0) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m$') == msg.stdout.length - 6) || (core.module.project.is_running && msg.stdout.lastIndexOf('[00m#') == msg.stdout.length - 6)) {
 					this.is_running = false;
 					$('button[action="stop"]').addClass('debug_not_active');
 					$('button[action="stop"]').attr('isdisabled', 'disabled');
-					$('a[action="stop"]').parent().addClass('disabled')
+					$('a[action="stop"]').parent().addClass('disabled');
 				}
-
+				var regex;
 				
 
 				//useonly(mode=goorm-oss)
@@ -272,7 +272,7 @@ goorm.core.terminal.prototype = {
 						$(self.target).scrollTop($(self.target).parent().prop('scrollHeight'));
 
 						if (msg.stdout && self.debug_endstr) {
-							var regex = new RegExp(self.debug_endstr);
+							regex = new RegExp(self.debug_endstr);
 							if (regex.test(msg.stdout)) {
 								$(core.module.debug).trigger('debug_end');
 							}
@@ -339,7 +339,7 @@ goorm.core.terminal.prototype = {
 
 		//useonly(mode=goorm-standalone,goorm-oss)
 		if (this.socket && this.socket.socket && this.socket.socket.connected) {
-			data.name = this.terminal_name
+			data.name = this.terminal_name;
 
 			if (stringify) {
 				data = JSON.stringify(data);
@@ -366,8 +366,8 @@ goorm.core.terminal.prototype = {
 				var port = core.user.user_ports[0];
 
 				for (var i = 0; i < core.user.user_ports.length; i++) {
-					var port = core.user.user_ports[i];
-					if (i == 0) {
+					port = core.user.user_ports[i];
+					if (i === 0) {
 						this.send_command('export PORT=' + port + '\r'); // PORT
 					} else {
 						this.send_command('export PORT' + i + '=' + port + '\r'); // PORT1, 2 ..
@@ -412,8 +412,8 @@ goorm.core.terminal.prototype = {
 	},
 	calculate_geometry: function() {
 		var geometry = {};
-		var div_height = parseInt($(this.target).css('line-height'));
-		var font_size = parseInt($(this.target).css('font-size'));
+		var div_height = parseInt($(this.target).css('line-height'), 10);
+		var font_size = parseInt($(this.target).css('font-size'), 10);
 		var height;
 		var width;
 
@@ -426,8 +426,8 @@ goorm.core.terminal.prototype = {
 			var parent = $(this.target).parents('.tab-content');
 
 			// for target space
-			height = parseInt(parent.height() - 10); // 10 for leaving margins
-			width = parseInt(parent.width() - 10); // 10 for leaving margins
+			height = parseInt(parent.height() - 10, 10); // 10 for leaving margins
+			width = parseInt(parent.width() - 10, 10); // 10 for leaving margins
 
 			if (!$(this.target).parent().hasClass('tab-content') && $(this.target).parent().children().length !== 1) {
 				$(this.target).parent().children().map(function(i, o) {
@@ -442,8 +442,8 @@ goorm.core.terminal.prototype = {
 			geometry.cols = Math.floor((width - 10) / font_width); // 10 for leaving margins
 		} else {
 			if (core.module.layout.workspace.window_manager.maximized) {
-				height = parseInt($('#workspace').css('height')) - 10;
-				width = parseInt($('#workspace').css('width')) - 12;
+				height = parseInt($('#workspace').css('height'), 10) - 10;
+				width = parseInt($('#workspace').css('width'), 10) - 12;
 			} else {
 				// 10 for terminal padding
 				height = $(this.target).parent().height() - $(this.target).siblings('.ui-dialog-titlebar').outerHeight() - 10;
@@ -532,7 +532,7 @@ goorm.core.terminal.prototype = {
 			}
 
 			return t;
-		}
+		};
 
 		
 
@@ -730,7 +730,7 @@ goorm.core.terminal.prototype = {
 				this.resize();
 			} else {
 				if (!core.module.layout.workspace.window_manager.maximized) {
-					var workspace_height = parseInt($('#workspace').css('height'));
+					var workspace_height = parseInt($('#workspace').css('height'), 10);
 					var workspace_width = parseInt($('#workspace').css('width'));
 					var this_top = parseInt($(this.target).parent().css('top'));
 					var this_left = parseInt($(this.target).parent().css('left'));

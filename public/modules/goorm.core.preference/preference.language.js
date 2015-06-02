@@ -13,7 +13,7 @@ goorm.core.preference.language = {
 
 	init: function() {
 
-		var language = "";
+		var language = '';
 		var progress_elements = null;
 
 		$('[id="preference.language.select"]').change(function() {

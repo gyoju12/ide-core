@@ -67,7 +67,7 @@ goorm.core.layout.workspace = {
 			// Make File Description
 			//
 			if (files) {
-				goorm.core.file._import.upload_file_drag(files);	
+				goorm.core.file._import.upload_file_drag(files);
 			}
 		});
 
@@ -83,7 +83,7 @@ goorm.core.layout.workspace = {
 		ws.on('dragend', function(e) {
 			ws.css('border', 'none');
 			self.window_manager.tab_resize_window_relocation();
-			
+
 			e.stopPropagation();
 			e.preventDefault();
 			return false; // added by ryu
@@ -92,8 +92,8 @@ goorm.core.layout.workspace = {
 		ws.on('click', function(e) {
 			$('#editor_status').hide();
 			$('#lint_summury').hide();
-			if($("#project_selector").find('.btn-group').hasClass('open')) {
-				$("#project_selector").find('.btn-group').removeClass('open');
+			if ($('#project_selector').find('.btn-group').hasClass('open')) {
+				$('#project_selector').find('.btn-group').removeClass('open');
 			}
 			return false;
 		});

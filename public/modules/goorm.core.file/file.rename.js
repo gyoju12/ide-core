@@ -141,8 +141,8 @@ goorm.core.file.rename = {
 									window_manager.close_by_index(i, i);
 									//window_list[i].tab.close();
 									//window_list[i].close();
-								} else if (window_list[i].title == ori_path + ori_name) {
-									if (window_list[i].is_saved == false) {
+								} else if (window_list[i].title === ori_path + ori_name) {
+									if (window_list[i].is_saved === false) {
 										current_data = window_list[i].editor.editor.getValue();
 									}
 									window_list[i].is_saved = true;
@@ -232,8 +232,12 @@ goorm.core.file.rename = {
 			alert.show(core.module.localization.msg.alert_project_rename);
 			return;
 		}
+
+		var window_manager = core.module.layout.workspace.window_manager;
+		var i;
+		var fullpath = '';
+
 		if (context) {
-			var fullpath = '';
 			var selected_file = core.module.layout.project_explorer.get_tree_selected_path();
 			if (selected_file.files.length !== 0) {
 				fullpath = selected_file.files.pop();
@@ -254,9 +258,7 @@ goorm.core.file.rename = {
 			$('#input_rename_old_filepath').val(filepath);
 			$('#input_rename_old_filename').val(filename);
 
-			var window_manager = core.module.layout.workspace.window_manager;
-
-			for (var i = 0; i < window_manager.index; i++) {
+			for (i = 0; i < window_manager.index; i++) {
 				var window_filename = window_manager.window[i].filename;
 				var window_filepath = window_manager.window[i].filepath;
 				window_filepath = window_filepath + '/';
@@ -269,9 +271,7 @@ goorm.core.file.rename = {
 
 			this.panel.modal('show');
 		} else {
-			var window_manager = core.module.layout.workspace.window_manager;
-
-			for (var i = 0; i < window_manager.index; i++) {
+			for (i = 0; i < window_manager.index; i++) {
 				if (window_manager.window[i].alive) {
 					this.is_alive_window = true;
 				}
@@ -282,7 +282,7 @@ goorm.core.file.rename = {
 				$('#input_rename_old_filepath').val(window_manager.window[window_manager.active_window].filepath);
 				$('#input_rename_old_filename').val(window_manager.window[window_manager.active_window].filename);
 			} else if (core.status.selected_file) {
-				var fullpath = core.status.selected_file.split('/');
+				fullpath = core.status.selected_file.split('/');
 
 				var temp_name = fullpath.pop();
 				var temp_path = fullpath.join('/') + '/';
@@ -309,7 +309,7 @@ goorm.core.file.rename = {
 		var self = this;
 		var localization = core.module.localization.msg;
 		core._socket.once('/file/exist', function(data) {
-			if (data.err_code == 0) {
+			if (data.err_code === 0) {
 				if (data.exist) {
 					if (data.type === 'file') {
 						confirmation.init({

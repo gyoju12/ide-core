@@ -78,11 +78,6 @@ goorm.core.terminal.background.prototype = {
 		var path = this.get_path(name);
 		this.command('mkdir -p "' + path + '";chmod -R 770 "' + path + '"', callback);
 	},
-	fs_move: function(from, to, callback) {
-		var from = this.get_path(from);
-		var to = this.get_path(to);
-		this.command('mv "' + from + '" "' + to + '"', callback); // jeongmin: remove -n option for overwriting
-	},
 	
 	refresh_terminal: function() {
 		if (this.terminal) {
@@ -132,5 +127,5 @@ goorm.core.terminal.background.prototype = {
 		}
 
 		this.configs.on_message = on_message;
-	},
+	}
 };

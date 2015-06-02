@@ -40,7 +40,7 @@ goorm.core.window.tab.prototype = {
 		this.done = [];
 		// this.tabview = tabview;
 		// this.list_menu = list_menu;
-		this.title = options.title || "";
+		this.title = options.title || '';
 		this.filename = options.filename || options.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 		this.filepath = options.filepath;
 
@@ -50,98 +50,91 @@ goorm.core.window.tab.prototype = {
 		// changed to timestamp. not using file path anymore for window id
 		var morphed_title = options.id;
 
-		this.tab_list_id = "g_window_tab_" + morphed_title;
-		this.tab_content_id = "g_wndw_tab_ctnt_" + morphed_title;
-		
+		this.tab_list_id = 'g_window_tab_' + morphed_title;
+		this.tab_content_id = 'g_wndw_tab_ctnt_' + morphed_title;
+
 		var tooltip_contents = this.title;
 		var chunks = [];
 		var chunkSize = 40;
-		
+
 		if (tooltip_contents.length > chunkSize) {
 			while (tooltip_contents) {
 				if (tooltip_contents.length < chunkSize) {
 					chunks.push(tooltip_contents);
 					break;
-				}
-				else {
+				} else {
 					chunks.push(tooltip_contents.substr(0, chunkSize));
 					tooltip_contents = tooltip_contents.substr(chunkSize);
 				}
 			}
-			
-			tooltip_contents = chunks.join("\n");
+
+			tooltip_contents = chunks.join('\n');
 		}
-		if (typeof core.status.current_opened_list[this.filename] === "undefined") {
-			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'><i class='fa fa-share-alt'></i></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + "</span><button class='tab_restore_button' type='button'><i class='fa fa-square-o'></i></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'><i class='fa fa-times'></i></button><button class='tab_modified_button tab_close_button' type='button'><i class='fa fa-circle'></i></button></a></li>"); // jeongmin: put tab_option before file_name	
-			if (__options.filepath === "/" && __options.filename.indexOf('terminal') != -1 && __options.title && __options.title.indexOf('terminal') != -1) {
+		if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
+			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
+			if (__options.filepath === '/' && __options.filename.indexOf('terminal') != -1 && __options.title && __options.title.indexOf('terminal') != -1) {
 				// not to count terminal window
 				core.status.current_opened_list[this.filename] = -1;
-			}
-			else {
+			} else {
 				core.status.current_opened_list[this.filename] = 1;
 			}
 		} else {
-			$("#g_window_tab_list").append("<li class='g_windows_tab_li'><a id='g_window_tab_" + morphed_title + "' href='#g_wndw_tab_ctnt_" + morphed_title + "' data-toggle='tooltip tab' data-placement='top' data-original-title='" + tooltip_contents + "' data-container='body' class='goorm_tab_menu'><span class='tab_option'></span><div class='panel_image window_tab-toolbar-disconnect' tabindex='-1'><i class='fa fa-share-alt'></i></div><span class='tab_title' id='tab_title_" + morphed_title + "' filename='" + this.filename + "' filepath='" + this.filepath + "'>" + this.filename + " - " + this.filepath + "</span><button class='tab_restore_button' type='button'><i class='fa fa-square-o'></i></button><button class='close tab_close_button' id='close_tab_" + morphed_title + "' type='button'><i class='fa fa-times'></i></button><button class='tab_modified_button tab_close_button' type='button'><i class='fa fa-circle'></i></button></a></li>"); // jeongmin: put tab_option before file_name		
+			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + ' - ' + this.filepath + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
 			core.status.current_opened_list[this.filename] ++;
 		}
 
-
-		$("#g_window_tab_contents").append("<div class='tab-pane' id='g_wndw_tab_ctnt_" + morphed_title + "'></div>");
-		if (core.status.current_project_name != "eduWeb") {
-			self.set_tooltip(morphed_title); // Tooltip - Donguk Kim	
+		$('#g_window_tab_contents').append('<div class="tab-pane" id="g_wndw_tab_ctnt_' + morphed_title + '"></div>');
+		if (core.status.current_project_name != 'eduWeb') {
+			self.set_tooltip(morphed_title); // Tooltip - Donguk Kim
 		}
-
 
 		var cnt = core.status.current_opened_list[this.filename];
 		var title = null;
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $("#g_window_tab_list").find('.tab_title[filename="' + this.filename + '"]');
+			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
-					var name = temp.attr("filename");
-					var path = temp.attr("filepath").split("/")[0];
+					var name = temp.attr('filename');
+					var path = temp.attr('filepath').split('/')[0];
 					var current_project_path = core.status.current_project_path;
-					if(path != current_project_path) {
-						title = name + " - " + temp.attr("filepath");
+					if (path != current_project_path) {
+						title = name + ' - ' + temp.attr('filepath');
 					} else {
 						title = name;
 					}
 					temp.html(title);
-					$(".ui-dialog").find("[path='"+temp.attr("filepath")+name+"']").parent().find('.ui-dialog-title').html(title);
+					$('.ui-dialog').find('[path="' + temp.attr('filepath') + name + '"]').parent().find('.ui-dialog-title').html(title);
 				} else if (cnt > 1) {
 					temp.each(function(index) {
-						var path = $(this).attr("filepath");
-						var name = $(this).attr("filename");
-						title = name + " - " + path;
+						var path = $(this).attr('filepath');
+						var name = $(this).attr('filename');
+						title = name + ' - ' + path;
 						$(this).html(title);
-						$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
+						$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
 					});
 				}
-
-				
-				
 			}
 		}
 
 		//bootstrap end
 
-		$("#g_window_tab_" + morphed_title).click(function() {
-			$("#g_window_" + morphed_title).dialog("moveToTop");
+		$('#g_window_tab_' + morphed_title).click(function() {
+			$('#g_window_' + morphed_title).dialog('moveToTop');
 			//self.window.panel.mousedown();
 			self.window.activate();
 		});
 
-		$("#" + this.tab_list_id + " .tab_close_button").click(function() {
+		$('#' + this.tab_list_id + ' .tab_close_button').click(function() {
 			// core.module.layout.workspace.window_manager.close_by_index(self.window.index, self.window.index);
 			// self.close();
 			// self.window.close();
 			$('.tooltip').remove(); // tooltip remove : Donguk Kim
 			self.window.panel.siblings('.ui-dialog-titlebar').find('.ui-dialog-titlebar-close').click(); // jeongmin: for showing confirmation_save dialog
-			$("#workspace").find(".ui-dialog");
+			$('#workspace').find('.ui-dialog');
 			core.module.layout.resize_all();
 		});
 
-		$('#' + this.tab_list_id + " .tab_restore_button").click(function() {
+		$('#' + this.tab_list_id + ' .tab_restore_button').click(function() {
 			var wm = core.module.layout.workspace.window_manager;
 
 			if (wm.maximized) {
@@ -151,12 +144,11 @@ goorm.core.window.tab.prototype = {
 			}
 		});
 
-
-		this.tab = $("#g_window_tab_" + morphed_title);
+		this.tab = $('#g_window_tab_' + morphed_title);
 
 		////// jeongmin: initialize context menu //////
 		this.context_menu = new goorm.core.menu.context();
-		this.context_menu.init(null, "window.tab", this.tab, this.title.replace('.', '_'));
+		this.context_menu.init(null, 'window.tab', this.tab, this.title.replace('.', '_'));
 		// tab context menu. Jeong-Min Im.
 		this.tab.mousedown(function(e) {
 			if (e.which == 3) { // right click and only for workspace_tab_list
@@ -175,27 +167,25 @@ goorm.core.window.tab.prototype = {
 		this.move = new goorm.core.window.tab.move();
 		this.move.init(this);
 
-
 		// when click tab, window panel restore...
 		var window_manager = core.module.layout.workspace.window_manager;
 		$(this.tab).dblclick(function() {
 			var panel = self.window.panel;
-			if (!window_manager.maximized)
-				panel.dialogExtend("restore");
-			else {
+			if (!window_manager.maximized) {
+				panel.dialogExtend('restore');
+			} else {
 				// if state is maximize, all window panel restore
 				window_manager.unmaximize_all();
 			}
 		});
 
-
-		$("#g_window_tab_list").sortable("refresh");
+		$('#g_window_tab_list').sortable('refresh');
 
 		// when tab is moved(sorted), arrange indexes of window and tab. Jeong-Min Im.
 		$('#g_window_tab_list').on('sortstop', function(e, ui) {
-			var new_tab_list = $(this).find('a.goorm_tab_menu'), // moved(sorted) tab list
-				old_tab_list = window_manager.tab, // original tab list
-				window_list = window_manager.window;
+			var new_tab_list = $(this).find('a.goorm_tab_menu'); // moved(sorted) tab list
+			var	old_tab_list = window_manager.tab; // original tab list
+			var	window_list = window_manager.window;
 
 			for (var i = new_tab_list.length - 1; 0 <= i; i--) {
 				if ($(new_tab_list[i]).attr('id') != old_tab_list[i].tab_list_id) { // true: need to arrange
@@ -237,13 +227,13 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_tooltip: function(morphed_title) { // Tooltip - Donguk Kim
-		$("[id=g_window_tab_" + morphed_title + "]").off("click").tooltip();
+		$('[id=g_window_tab_' + morphed_title + ']').off('click').tooltip();
 
-		$("[id=g_window_tab_" + morphed_title + "]").click(function() {
+		$('[id=g_window_tab_' + morphed_title + ']').click(function() {
 			$(this).tooltip('hide');
 		});
-		$("[id=close_tab_" + morphed_title + "]").click(function() {
-			$("[id=g_window_tab_" + morphed_title + "]").tooltip('hide');
+		$('[id=close_tab_' + morphed_title + ']').click(function() {
+			$('[id=g_window_tab_' + morphed_title + ']').tooltip('hide');
 		});
 		/*
 		$("[id=g_window_tab_" + morphed_title + "]").on('shown.bs.tooltip', function(e) {
@@ -258,17 +248,17 @@ goorm.core.window.tab.prototype = {
 	set_title: function(title) {
 		// console.log("===tab_set_title");
 		if (title) {
-			if (typeof core.status.current_opened_list[this.filename] === "undefined") {
-				$("#" + this.tab_list_id).find('.tab_title').html(title + "-" + this.filepath);
+			if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
+				$('#' + this.tab_list_id).find('.tab_title').html(title + '-' + this.filepath);
 			} else {
-				$("#" + this.tab_list_id).find('.tab_title').html(title);
+				$('#' + this.tab_list_id).find('.tab_title').html(title);
 			}
 		} else if (this.title) {
 			//var morphed_title = this.title.split("/").join("_").split(".").join("_");
-			if (typeof core.status.current_opened_list[this.filename] === "undefined") {
-				$("#" + this.tab_list_id).find('.tab_title').html(this.filename + "-" + this.filepath);
+			if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
+				$('#' + this.tab_list_id).find('.tab_title').html(this.filename + '-' + this.filepath);
 			} else {
-				$("#" + this.tab_list_id).find('.tab_title').html(this.filename);
+				$('#' + this.tab_list_id).find('.tab_title').html(this.filename);
 			}
 		}
 	},
@@ -279,7 +269,7 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_modified: function() {
-		
+
 		if (this.saved) { // jeongmin: it is saved by panel, so don't modify
 			this.saved = false; // jeongmin: initialize
 
@@ -288,9 +278,9 @@ goorm.core.window.tab.prototype = {
 
 		var self = this;
 
-		var morphed_title = this.title.split("/").join("_").split(".").join("_");
+		var morphed_title = this.title.split('/').join('_').split('.').join('_');
 
-		$("#" + this.tab_list_id).find('.tab_option').html("<i class='fa fa-asterisk'></i>");
+		$('#' + this.tab_list_id).find('.tab_option').html('<i class="fa fa-asterisk"></i>');
 
 		$('#' + this.tab_list_id).find('.tab_close_button').hide().end()
 			.find('.tab_modified_button').show();
@@ -302,38 +292,38 @@ goorm.core.window.tab.prototype = {
 
 	set_saved: function() {
 		var self = this;
-		var morphed_title = this.title.split("/").join("_").split(".").join("_");
+		var morphed_title = this.title.split('/').join('_').split('.').join('_');
 
 		$.each(core.status.current_opened_list, function(index, value) {
 			cnt = value;
 			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-				var temp = $("#g_window_tab_list").find('.tab_title[filename="' + index + '"]');
+				var temp = $('#g_window_tab_list').find('.tab_title[filename="' + index + '"]');
 				if (temp) {
 					if (cnt == 1) {
-						var name = temp.attr("filename");
-						var path = temp.attr("filepath").split("/")[0];
+						var name = temp.attr('filename');
+						var path = temp.attr('filepath').split('/')[0];
 						var current_project_path = core.status.current_project_path;
-						if(path != current_project_path) {
-							title = name + " - " + temp.attr("filepath");
+						if (path != current_project_path) {
+							title = name + ' - ' + temp.attr('filepath');
 						} else {
 							title = name;
 						}
 						temp.html(title);
-						$(".ui-dialog").find("[path='"+temp.attr("filepath")+name+"']").parent().find('.ui-dialog-title').html(title);
+						$('.ui-dialog').find('[path="' + temp.attr('filepath') + name + '"]').parent().find('.ui-dialog-title').html(title);
 					} else if (cnt > 1) {
 						temp.each(function(index) {
-							var path = $(this).attr("filepath");
-							var name = $(this).attr("filename");
-							title = name + " - " + path;
+							var path = $(this).attr('filepath');
+							var name = $(this).attr('filename');
+							title = name + ' - ' + path;
 							$(this).html(title);
-							$(".ui-dialog").find("[path='"+path+name+"']").parent().find('.ui-dialog-title').html(title);
+							$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
 						});
 					}
 				}
 			}
 		});
 
-		$("#" + this.tab_list_id).find('.tab_option').html("");
+		$('#' + this.tab_list_id).find('.tab_option').html('');
 
 		$('#' + this.tab_list_id).find('.tab_close_button').show().end().find('.tab_modified_button').hide();
 
@@ -345,8 +335,9 @@ goorm.core.window.tab.prototype = {
 	connect: function(window) {
 		this.window = window;
 		if (this.window) {
-			if (this.window.state() === "maximized")
+			if (this.window.state() === 'maximized') {
 				this.maximize();
+			}
 		}
 	},
 
@@ -373,22 +364,22 @@ goorm.core.window.tab.prototype = {
 
 		this.empty_tab_dom();
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $("#g_window_tab_list").find('.tab_title[filename="' + this.filename + '"]');
+			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + this.filename + '"]');
 			if (temp) {
 				if (cnt == 1) {
-					var name = temp.attr("filename");
-					var path = temp.attr("filepath").split("/")[0];
+					var name = temp.attr('filename');
+					var path = temp.attr('filepath').split('/')[0];
 					var current_project_path = core.status.current_project_path;
-					if(path != current_project_path) {
-						temp.html(name + " - " + temp.attr("filepath"));
+					if (path != current_project_path) {
+						temp.html(name + ' - ' + temp.attr('filepath'));
 					} else {
-						temp.html(name);	
+						temp.html(name);
 					}
 				} else if (cnt > 1) {
 					temp.each(function(index) {
-						var path = $(this).attr("filepath");
-						var name = $(this).attr("filename");
-						$(this).html(name + " - " + path);
+						var path = $(this).attr('filepath');
+						var name = $(this).attr('filename');
+						$(this).html(name + ' - ' + path);
 					});
 				}
 			}
@@ -398,7 +389,7 @@ goorm.core.window.tab.prototype = {
 
 		// });
 
-		$("#goorm_inner_layout_center").css("min-width", window_manager.min_tab_width * (window_manager.tab.length));
+		$('#goorm_inner_layout_center').css('min-width', window_manager.min_tab_width * (window_manager.tab.length));
 		window_manager.tab_resize_window_relocation();
 
 		if (this.title == 'debug') {
@@ -409,50 +400,48 @@ goorm.core.window.tab.prototype = {
 	empty_tab_dom: function() {
 		var self = this;
 
-		$("#" + this.tab_list_id).parent().remove();
-		$("#" + this.tab_content_id).remove();
-		$("#g_window_tab_list").sortable("refresh");
+		$('#' + this.tab_list_id).parent().remove();
+		$('#' + this.tab_content_id).remove();
+		$('#g_window_tab_list').sortable('refresh');
 	},
 
 	activate: function() {
-		this.tab.tab("show");
+		this.tab.tab('show');
 		var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();
 		switch (current_file_type) {
-            case 'c':
-            case 'cpp':
-            case 'java':
-            case 'py':
-            case 'js':
-            	$("[action=do_jump_to_definition]").parent().show();
-            	$("#gLayoutTab_Outline").show();
-            	$("a[action='right_outline_show']").parent().show();
-            	break;
-            	
-            case 'html':
-            case 'css':
-            	$("[action=do_jump_to_definition]").parent().hide();
-                $("#gLayoutTab_Outline").show();
-                $("a[action='right_outline_show']").parent().show();
-                break;
+			case 'c':
+			case 'cpp':
+			case 'java':
+			case 'py':
+			case 'js':
+				$('[action=do_jump_to_definition]').parent().show();
+				$('#gLayoutTab_Outline').show();
+				$('a[action="right_outline_show"]').parent().show();
+				break;
 
-            default:
-            	$("[action=do_jump_to_definition]").parent().hide();
-            	$("#gLayoutTab_Outline").hide();
-            	$("a[action='right_outline_show']").parent().hide();
-            	if($("#gLayoutTab_Outline").parent().hasClass('active')) {
-            		$("#gLayoutTab_chat").click();
-            	}
-                break;
-        }
+			case 'html':
+			case 'css':
+				$('[action=do_jump_to_definition]').parent().hide();
+				$('#gLayoutTab_Outline').show();
+				$('a[action="right_outline_show"]').parent().show();
+				break;
+
+			default:
+				$('[action=do_jump_to_definition]').parent().hide();
+				$('#gLayoutTab_Outline').hide();
+				$('a[action="right_outline_show"]').parent().hide();
+				if ($('#gLayoutTab_Outline').parent().hasClass('active')) {
+					$('#gLayoutTab_chat').click();
+				}
+				break;
+		}
 	},
 
 	resize: function() {
 		var window_manager = core.module.layout.workspace.window_manager;
-		var each_width = Math.floor((parseInt($("#goorm_inner_layout_center")[0].style.width) - 10) / window_manager.tab.length) - 1; // seongho.cha : style.width will get real width
-		this.tab.parent().css("width", each_width + "px");
+		var each_width = Math.floor((parseInt($('#goorm_inner_layout_center')[0].style.width) - 10) / window_manager.tab.length) - 1; // seongho.cha : style.width will get real width
+		this.tab.parent().css('width', each_width + 'px');
 		this.resize_title();
-
-
 	},
 
 	////// adjust title's width. This is for keeping title and other buttons inline at tab. Jeong-Min Im. //////
@@ -460,8 +449,6 @@ goorm.core.window.tab.prototype = {
 		var tab_button_width = (this.tab.find('.close').outerWidth() > this.tab.find('.tab_modified_button').outerWidth()) ? this.tab.find('.close').outerWidth() : this.tab.find('.tab_modified_button').outerWidth(); // max width of buttons
 		var tab_contents_width = this.tab.find('.tab_option').outerWidth() + tab_button_width; // width of modifying star and button
 		var temp = null;
-
-
 
 		this.tab.find('.tab_title').css('width', this.tab.width() - tab_contents_width - 20 + 'px'); // set the title width as excepted other contents' width from whole tap length
 	}

@@ -21,18 +21,23 @@ goorm.core.dialog.prototype = {
 		this.success = option.success;
 		this.opacity = option.opacity;
 
-		var goorm_dialog_container = $("[id='" + option.id + "']");
+		var goorm_dialog_container = $('[id="' + option.id + '"]');
 
 		goorm_dialog_container.draggable({});
 		// modal centering optimized - heeje
-		goorm_dialog_container.on("show.bs.modal", function() { // jeongmin: event should be binded to only one element, not .modal
+		goorm_dialog_container.on('show.bs.modal', function() { // jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
-			var offset_height = (($(window).height() - $dialog.height()) / 2);
+			var $dialog = $(this).find('.modal-dialog');
+			var offset_height = (($(window).height() - $dialog.height()) / 2) - 30;
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
-
+			if (offset_height < 0) {
+				offset_height = 0;
+			}
+			if (offset_width < 0) {
+				offset_width = 0;
+			}
+			$(this).css('top', offset_height).css('left', offset_width);
 
 		});
 		// 		goorm_dialog_container.css("overflow", "hidden");
@@ -41,39 +46,39 @@ goorm.core.dialog.prototype = {
 			$('.modal.in').modal('hide');
 		});
 
-		goorm_dialog_container.on("hide.bs.modal", function() {
-			core.status.selected_dialog = "";
-			core.status.selected_dialog_container = "";
+		goorm_dialog_container.on('hide.bs.modal', function() {
+			core.status.selected_dialog = '';
+			core.status.selected_dialog_container = '';
 			core.status.focus_on_dialog = false;
 		});
 
-		goorm_dialog_container.on("shown.bs.modal", function() {
-			goorm_dialog_container.find("input[autofocus]").focus();
+		goorm_dialog_container.on('shown.bs.modal', function() {
+			goorm_dialog_container.find('input[autofocus]').focus();
 		});
 
-		if (typeof option.handle_ok == "function") {
-			goorm_dialog_container.find(".modal-footer button:last-child").last().click(option.handle_ok);
+		if (typeof option.handle_ok == 'function') {
+			goorm_dialog_container.find('.modal-footer button:last-child').last().click(option.handle_ok);
 		}
 
-		if (typeof option.handle_cancel == "function") {
+		if (typeof option.handle_cancel == 'function') {
 			goorm_dialog_container.on('hidden.bs.modal', option.handle_cancel);
 		}
 
-		if (typeof option.show == "function") {
-			goorm_dialog_container.on("shown.bs.modal", this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._export.js)
+		if (typeof option.show == 'function') {
+			goorm_dialog_container.on('shown.bs.modal', this.show); //jeongmin: when the modal has been made visible to the user, specify this (go to project._export.js)
 		}
-
 
 		if ($.isFunction(this.success)) {
 			this.success();
 		}
 
-		if (this.opacity)
+		if (this.opacity) {
 			this.insert_opacity_slide(goorm_dialog_container, option.id);
+		}
 
 		core.dialog.loaded_count++;
 
-		$(core).trigger("goorm_loading");
+		$(core).trigger('goorm_loading');
 
 		return this;
 	},

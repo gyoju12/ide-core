@@ -7,20 +7,20 @@
  * project_name : goormIDE
  * version: 2.0.0
  **/
- 
-Array.prototype.remove = function (from, to) {
+
+Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
 };
 
-Array.prototype.diff = function (a) {
-	return this.filter(function (i) {
-		return !(a.indexOf(i) > -1);
+Array.prototype.diff = function(a) {
+	return this.filter(function(i) {
+		return (a.indexOf(i) === -1);
 	});
 };
 
-Array.prototype.unique = function () {
+Array.prototype.unique = function() {
 	var r = [];
 	o: for (var i = 0, n = this.length; i < n; i++) {
 		for (var x = 0, y = r.length; x < y; x++) {
@@ -33,7 +33,7 @@ Array.prototype.unique = function () {
 	return r;
 };
 
-Array.prototype.contains = function (element) {
+Array.prototype.contains = function(element) {
 	for (var i = 0; i < this.length; i++) {
 		if (this[i] == element) {
 			return true;
@@ -42,7 +42,7 @@ Array.prototype.contains = function (element) {
 	return false;
 };
 
-Array.prototype.inArray = function (element) {
+Array.prototype.inArray = function(element) {
 	for (var i = 0; i < this.length; i++) {
 		if (this[i] == element) {
 			return i;
@@ -51,9 +51,11 @@ Array.prototype.inArray = function (element) {
 	return -1;
 };
 
-Array.prototype.shuffle = function () {
-	var i = this.length,
-		j, t;
+Array.prototype.shuffle = function() {
+	var i = this.length;
+	var j;
+	var t;
+
 	var arr = this;
 	while (i--) {
 		j = Math.floor((i + 1) * Math.random());
@@ -63,7 +65,7 @@ Array.prototype.shuffle = function () {
 	}
 };
 
-Array.prototype.hasObject = (!Array.indexOf ? function (o) {
+Array.prototype.hasObject = (!Array.indexOf ? function(o) {
 	var l = this.length + 1;
 	while (l--) {
 		if (this[l - 1] === o) {
@@ -71,10 +73,8 @@ Array.prototype.hasObject = (!Array.indexOf ? function (o) {
 		}
 	}
 	return false;
-} : function (o) {
+} : function(o) {
 	return (this.indexOf(o) !== -1);
 });
-
-
 
 

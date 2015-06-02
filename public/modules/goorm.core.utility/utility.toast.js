@@ -12,26 +12,26 @@ goorm.core.utility.toast = {
 	panel: null,
 	default_duration: 0.5,
 
-	init: function () {
+	init: function() {
 		var self = this;
 
 		this.panel = $('#dlg_toast');
 
 		// give focus to current top modal for keyboard events. Jeong-Min Im.
 		this.panel.on('hidden.bs.modal', function() {
-			$('.modal.in').focus();			
+			$('.modal.in').focus();
 		});
 
-		this.panel.on("show.bs.modal", function() {	// jeongmin: event should be binded to only one element, not .modal
+		this.panel.on('show.bs.modal', function() {	// jeongmin: event should be binded to only one element, not .modal
 
 			$(this).css('display', 'block');
-			var $dialog = $(this).find(".modal-dialog");
+			var $dialog = $(this).find('.modal-dialog');
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
-			$(this).css("top", offset_height - 30).css("left", offset_width);
+			$(this).css('top', offset_height - 30).css('left', offset_width);
 		});
 
-		// this.panel.on("show.bs.modal", function (){	//jeongmin: done at dialog.js
+		// this.panel.on('show.bs.modal", function (){	//jeongmin: done at dialog.js
 		// 	setTimeout(function () {
 		// 		self.panel.css('top', '0px');
 
@@ -45,28 +45,31 @@ goorm.core.utility.toast = {
 		// 		}
 		// 		else {
 		// 			container.css('margin-top', '10px');
-		// 		}			
+		// 		}
 		// 	}, 200); // fade animation: 0.15s -> 150
 		// });
 	},
 
-	show: function (str, duration, callback) {
+	show: function(str, duration, callback) {
 		var self = this;
+		var temp;
 
-		if(!str) str = "";
+		if (!str) {
+			str = '';
+		}
 
 		this.panel.find('.modal-body .row').html(str);
 		this.panel.modal('show');
 
-		if (duration !== undefined && typeof (duration) == "number") {
+		if (duration !== undefined && typeof (duration) == 'number') {
 			// window.setTimeout(function() {
-        	var temp = $.debounce(function() {
+			temp = $.debounce(function() {
 				self.panel.modal('hide');
 
 				if (callback) {
-					window.setTimeout(function () {
+					window.setTimeout(function() {
 						callback();
-					}, self.default_duration*1000 + 100);
+					}, self.default_duration * 1000 + 100);
 				}
 
 				core.restore_prev_focus();
@@ -77,13 +80,13 @@ goorm.core.utility.toast = {
 		} else {
 			//default
 			// window.setTimeout(function() {
-        	var temp = $.debounce(function() {
+			temp = $.debounce(function() {
 				self.panel.modal('hide');
 
 				if (callback) {
-					window.setTimeout(function (){
+					window.setTimeout(function() {
 						callback();
-					}, self.default_duration*1000 + 100);
+					}, self.default_duration * 1000 + 100);
 				}
 
 				core.restore_prev_focus();

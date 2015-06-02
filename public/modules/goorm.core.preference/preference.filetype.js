@@ -30,15 +30,13 @@ goorm.core.preference.filetype = {
 				$('#filetype_add').click(function() {
 					self.add();
 				});
-
-
 				$('#filetype_delete').click(function() {
 					confirmation.init({
 						message: core.module.localization.msg.confirmation_delete_filetype,
 						yes_text: core.module.localization.msg.yes,
 						no_text: core.module.localization.msg.no,
 
-						title: "Confirmation",
+						title: 'Confirmation',
 
 						yes: function() {
 							self.del();
@@ -48,7 +46,6 @@ goorm.core.preference.filetype = {
 
 					confirmation.show();
 				});
-
 
 				$('#filetype_save').click(function() {
 					self.save();
@@ -70,9 +67,9 @@ goorm.core.preference.filetype = {
 
 			self.update();
 			// Temporary type element is added to file type list.
-			var filetype_list = $(".filetype_contents").find(".filetype_list");
+			var filetype_list = $('.filetype_contents').find('.filetype_list');
 
-			filetype_list.append("<div class='list_item new_extension'>New Extention</div>");
+			filetype_list.append('<div class="list_item new_extension">New Extention</div>');
 			filetype_list.scrollTop(9999999);
 
 			// Event handler for creating filetype detail view is registered
@@ -100,8 +97,8 @@ goorm.core.preference.filetype = {
 	del: function() {
 
 		// This part find file type is viewing in filetype detail view from filetype list and remove it.
-		$(".filetype_contents").find(".filetype_list").children().each(function() {
-			var target = $(".filetype_contents").find(".file_extension").val() || 'new_extension';
+		$('.filetype_contents').find('.filetype_list').children().each(function() {
+			var target = $('.filetype_contents').find('.file_extension').val() || 'new_extension';
 
 			if ($(this).text() == target) {
 				var temp = [];
@@ -122,8 +119,8 @@ goorm.core.preference.filetype = {
 				var filedata = JSON.stringify(core.filetypes, null, '\t');
 
 				$.ajax({
-					url: "preference/put_filetypes",
-					type: "GET",
+					url: 'preference/put_filetypes',
+					type: 'GET',
 					data: {
 						data: filedata
 					}
@@ -132,7 +129,7 @@ goorm.core.preference.filetype = {
 		});
 
 		// Remove this filetype detail from filetype detail view.
-		$(".filetype_contents").find(".filetype_detail").children().each(function() {
+		$('.filetype_contents').find('.filetype_detail').children().each(function() {
 			$(this).remove();
 		});
 
@@ -142,9 +139,9 @@ goorm.core.preference.filetype = {
 		var self = this;
 		var found = false;
 
-		var filetype_detail = $(".filetype_contents").find(".filetype_detail");
-		var old_extension = filetype_detail.find(".file_extension_hidden").val();
-		var new_extension = filetype_detail.find(".file_extension").val();
+		var filetype_detail = $('.filetype_contents').find('.filetype_detail');
+		var old_extension = filetype_detail.find('.file_extension_hidden').val();
+		var new_extension = filetype_detail.find('.file_extension').val();
 
 		// If the file type of current information is already exist, update the information
 		$(core.filetypes).each(function(i) {
@@ -161,8 +158,8 @@ goorm.core.preference.filetype = {
 			var filedata = JSON.stringify(core.filetypes, null, '\t');
 
 			$.ajax({
-				url: "preference/put_filetypes",
-				type: "GET",
+				url: 'preference/put_filetypes',
+				type: 'GET',
 				data: {
 					data: filedata
 				},
@@ -181,11 +178,11 @@ goorm.core.preference.filetype = {
 		var self = this;
 
 		var found = false;
-		var filetype_detail = $(".filetype_contents").find(".filetype_detail");
+		var filetype_detail = $('.filetype_contents').find('.filetype_detail');
 
-		if (filetype_detail.find(".file_extension").length !== 0) {
-			var old_extension = filetype_detail.find(".file_extension_hidden").val();
-			var new_extension = filetype_detail.find(".file_extension").val();
+		if (filetype_detail.find('.file_extension').length !== 0) {
+			var old_extension = filetype_detail.find('.file_extension_hidden').val();
+			var new_extension = filetype_detail.find('.file_extension').val();
 
 			// If the file type of current information is already exist, update the information
 			for (var i = 0; i < core.filetypes.length; i++) {
@@ -193,31 +190,31 @@ goorm.core.preference.filetype = {
 					found = true;
 
 					core.filetypes[i].file_extension = new_extension;
-					core.filetypes[i].editor = filetype_detail.find(".editor").val();
-					core.filetypes[i].type = filetype_detail.find(".type").val();
-					core.filetypes[i].mode = filetype_detail.find(".mode").val();
-					core.filetypes[i].description = filetype_detail.find(".description").val();
+					core.filetypes[i].editor = filetype_detail.find('.editor').val();
+					core.filetypes[i].type = filetype_detail.find('.type').val();
+					core.filetypes[i].mode = filetype_detail.find('.mode').val();
+					core.filetypes[i].description = filetype_detail.find('.description').val();
 
-					$(".filetype_contents .filetype_list ." + old_extension).html(core.filetypes[i].file_extension);
-					$(".filetype_contents .filetype_list ." + old_extension).removeClass(old_extension).addClass(new_extension);
+					$('.filetype_contents .filetype_list .' + old_extension).html(core.filetypes[i].file_extension);
+					$('.filetype_contents .filetype_list .' + old_extension).removeClass(old_extension).addClass(new_extension);
 				}
 			}
 			// If the file type is new, add the information of the new file type
-			if (found === false && new_extension !== "") {
+			if (found === false && new_extension !== '') {
 				var temp = {
 					file_extension: new_extension,
-					editor: filetype_detail.find(".editor").val(),
-					description: filetype_detail.find(".description").val(),
-					type: filetype_detail.find(".type").val(),
-					mode: filetype_detail.find(".mode").val()
+					editor: filetype_detail.find('.editor').val(),
+					description: filetype_detail.find('.description').val(),
+					type: filetype_detail.find('.type').val(),
+					mode: filetype_detail.find('.mode').val()
 				};
 				core.filetypes.push(temp);
 
 				// Temporary name in file type list have to be updated to right file type name
-				var ext = filetype_detail.find(".file_extension").val();
+				var ext = filetype_detail.find('.file_extension').val();
 
-				$(".filetype_contents").find(".filetype_list .new_extension").html(ext);
-				$(".filetype_contents").find(".filetype_list .new_extension").addClass(ext);
+				$('.filetype_contents').find('.filetype_list .new_extension').html(ext);
+				$('.filetype_contents').find('.filetype_list .new_extension').addClass(ext);
 
 				// $(".filetype_contents").find("." + ext).click(function () {
 
@@ -228,7 +225,7 @@ goorm.core.preference.filetype = {
 				// 	});
 				// 	$(this).css('background-color', '#b3d4ff');
 
-				// 	// clearing type information area 
+				// 	// clearing type information area
 				// 	// filetype_detail.children().each(function () {
 				// 	// 	$(this).remove();
 				// 	// });
@@ -249,14 +246,15 @@ goorm.core.preference.filetype = {
 
 		for (var i = 0; i < core.filetypes.length; i++) {
 			if (core.filetypes[i].file_extension == ext) {
-				if (attr == "editor")
+				if (attr == 'editor') {
 					return core.filetypes[i].editor;
-				else if (attr == "description")
+				} else if (attr == 'description') {
 					return core.filetypes[i].description;
-				else if (attr == "type")
+				} else if (attr == 'type') {
 					return core.filetypes[i].type;
-				else if (attr == "mode")
+				} else if (attr == 'mode') {
 					return core.filetypes[i].mode;
+				}
 			}
 		}
 	},
@@ -265,7 +263,7 @@ goorm.core.preference.filetype = {
 
 		var self = this;
 
-		var data = JSON.parse(external_json['public']['configs']['filetype']['filetype.json']);
+		var data = JSON.parse(external_json['public'].configs.filetype['filetype.json']);
 		core.filetypes = data;
 
 		// setTimeout(function(){
@@ -275,9 +273,9 @@ goorm.core.preference.filetype = {
 		var filetypes = core.filetypes;
 		// var list = $(".filetype_contents").find(".filetype_list");
 
-		// For all filetypes, 
+		// For all filetypes,
 		// for (var i = 0; i < filetypes.length; i++) {
-		// 	var extension_name = filetypes[i].file_extension;				
+		// 	var extension_name = filetypes[i].file_extension;
 		// 	list.append("<div class='list_item " + extension_name + "'>" + extension_name + "</div>");
 		// }
 
@@ -298,7 +296,7 @@ goorm.core.preference.filetype = {
 		// 	self.create_filetype_detail(extension, editor, description, type, mode);
 		// });
 
-		// For all filetypes, 
+		// For all filetypes,
 		// for (var i = 0; i < core.filetypes.length; i++) {
 
 		// 	var extension_name = filetypes[i].file_extension;
@@ -316,7 +314,7 @@ goorm.core.preference.filetype = {
 		// 		});
 		// 		$(this).css('background-color', '#b3d4ff');
 
-		// 		// clearing type information area 
+		// 		// clearing type information area
 		// 		// $(".filetype_contents").find(".filetype_detail").children().each(function () {
 		// 		// 	$(this).remove();
 		// 		// });
@@ -334,10 +332,10 @@ goorm.core.preference.filetype = {
 	},
 
 	create_filetype_detail: function(extension_name, editor, description, type, mode) {
-		var filetype_detail = $(".filetype_contents .filetype_detail");
+		var filetype_detail = $('.filetype_contents .filetype_detail');
 
 		if (!extension_name) {
-			extension_name = "";
+			extension_name = '';
 		}
 
 		if (!editor) {
@@ -345,7 +343,7 @@ goorm.core.preference.filetype = {
 		}
 
 		if (!description) {
-			description = "";
+			description = '';
 		}
 
 		if (!type) {
@@ -382,7 +380,7 @@ goorm.core.preference.filetype = {
 		// 	"<option value='ui'>ui</option>" +
 		// 	"<option value='xml'>xml</option></select></div>");
 
-		// "selected" decision.												
+		// "selected" decision.
 		filetype_detail.find('.type').val(type);
 
 		// Creating syntax highlighting mode field.
@@ -429,11 +427,11 @@ goorm.core.preference.filetype = {
 		filetype_detail.find('.description').val(description);
 
 		if (this.readonly) {
-			filetype_detail.find(".file_extension").attr("readonly", "readonly");
-			filetype_detail.find(".editor").attr("disabled", "disabled");
-			filetype_detail.find(".type").attr("disabled", "disabled");
-			filetype_detail.find(".mode").attr("disabled", "disabled");
-			filetype_detail.find(".description").attr("readonly", "readonly");
+			filetype_detail.find('.file_extension').attr('readonly', 'readonly');
+			filetype_detail.find('.editor').attr('disabled', 'disabled');
+			filetype_detail.find('.type').attr('disabled', 'disabled');
+			filetype_detail.find('.mode').attr('disabled', 'disabled');
+			filetype_detail.find('.description').attr('readonly', 'readonly');
 		}
 	}
 };

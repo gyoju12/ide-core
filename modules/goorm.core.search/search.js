@@ -14,6 +14,7 @@ var spawn = require('child_process').spawn;
 
 var g_auth_project = require('../goorm.core.auth/auth.project');
 var g_project = require('../goorm.core.project/project');
+var g_project_workspace = require('../goorm.core.project/project.workspace');
 
 var g_secure = require('../goorm.core.secure/secure.js');
 
@@ -69,7 +70,7 @@ module.exports = {
 			var node = {};
 			var i = 0;
 			var total_match = 0;
-			
+
 			var temp = [];
 			var saved_filename = '';
 			var current_filename = '';
@@ -93,11 +94,11 @@ module.exports = {
 				start_line = parseInt(arr[0].match(/^\d+/)[0], 10);
 				for (var i = 0; i < arr.length; i++) {
 					context = arr[i].replace(/^\d+/, '');
-					if (context.substr(0,1) === ':') {
+					if (context.substr(0, 1) === ':') {
 						match_line.push(parseInt(arr[i].match(/^\d+/)[0], 10));
 						total_match++;
 					}
-					code.push(context.substr(1, context.length-1));
+					code.push(context.substr(1, context.length - 1));
 				}
 				return {
 					start_line: start_line,
@@ -117,7 +118,7 @@ module.exports = {
 								nodes[short_filename] = [];
 							}
 							nodes[short_filename].push(node);
-							temp = [];	
+							temp = [];
 						}
 						saved_filename = '';
 					} else {
@@ -153,21 +154,23 @@ module.exports = {
 						nodes[short_filename] = [];
 					}
 					nodes[short_filename].push(node);
-					temp = [];	
+					temp = [];
 				}
-				
+
 			}
 			return {
 				nodes: nodes,
 				total_match: total_match
 			};
-		}
+		};
 
 		// make grep option
 		//
 		grep_option = make_grep_option(grep_option);
 
 		var owner_roots = [];
+		
+
 		
 
 		//useonly(mode=goorm-oss)
@@ -190,9 +193,9 @@ module.exports = {
 							'grep_option': grep_option
 						}, evt, function(res) {
 							count++;
-							
+
 							if (res.total_match) {
-								total_match += res.total_match;	
+								total_match += res.total_match;
 							}
 							if (count === owner_roots.length) {
 								res.total_match = total_match;
@@ -213,7 +216,7 @@ module.exports = {
 				}, evt);
 			} else {
 				evt.emit('file_do_search_on_project', {
-					error: true;
+					error: true
 				});
 			}
 		});
@@ -270,7 +273,7 @@ module.exports = {
 			var replace_string = 's/' + old_word + '/' + new_word + '/g';
 			xargs = xargs.concat([replace_string]);
 			return xargs;
-		}
+		};
 
 		// var grep = spawn('grep', make_grep_option(grep_option));
 		// var xargs_sed = spawn('xargs', make_xargs_option(find_query, replace_query));
@@ -278,6 +281,8 @@ module.exports = {
 		grep_option = make_grep_option(grep_option);
 
 		var owner_roots = [];
+		
+
 		
 
 		//useonly(mode=goorm-oss)
@@ -301,7 +306,7 @@ module.exports = {
 							'grep_option': grep_option
 						}, evt, function(res) {
 							count++;
-							
+
 							if (res.total_match) {
 								total_match += res.total_match;
 							}
@@ -373,8 +378,7 @@ module.exports = {
 			var matched_files_list = [];
 
 			if (stdout) {
-				matched_files_list = stdout.split(/\n/);
-				matched_files_list.pop();
+				matched_files_list = stdout.trim().split(/\n/);
 
 				matched_files_list = matched_files_list.map(function(o) {
 					return self.prevent_duplicate_slash(o);
@@ -389,7 +393,7 @@ module.exports = {
 			var node = {};
 			var i = 0;
 			var match_count = 0;
-			
+
 			var temp = [];
 			var saved_filename = '';
 			var current_filename = '';
@@ -414,12 +418,12 @@ module.exports = {
 				start_line = parseInt(arr[0].match(/^\d+/)[0], 10);
 				for (var i = 0; i < arr.length; i++) {
 					context = arr[i].replace(/^\d+/, '');
-					if (context.substr(0,1) === ':') {
+					if (context.substr(0, 1) === ':') {
 						match_line.push(parseInt(arr[i].match(/^\d+/)[0], 10));
 						match_count++;
 						total_match++;
 					}
-					code.push(context.substr(1, context.length-1));
+					code.push(context.substr(1, context.length - 1));
 				}
 				return {
 					start_line: start_line,
@@ -439,7 +443,7 @@ module.exports = {
 								nodes[short_filename] = [];
 							}
 							nodes[short_filename].push(node);
-							temp = [];	
+							temp = [];
 						}
 						saved_filename = '';
 					} else {
@@ -475,9 +479,9 @@ module.exports = {
 						nodes[short_filename] = [];
 					}
 					nodes[short_filename].push(node);
-					temp = [];	
+					temp = [];
 				}
-				
+
 			}
 			return {
 				nodes: nodes,
@@ -495,17 +499,25 @@ module.exports = {
 
 				command.stdout.on('data', function(data) {
 					var res = {};
-					var str = data.toString();
-					var last_index = str.lastIndexOf('\n--\n');
+					data = _stdout + data.toString();
+					var last_index = data.lastIndexOf('\n--\n'); // for different file
+					var check_newline = data.lastIndexOf('\n'); // for line splited
+
+					var str = '';
 
 					if (last_index > 0) {
-						found = true;
-						res.data = parser(get_matched_files_list(_stdout + str.substring(0, last_index)));
-						_stdout = str.substring(last_index + 4, str.length);
+						str = data.substring(0, last_index);
+						_stdout = data.substring(last_index + 4, data.length);
+					} else if (check_newline < data.length - 1) {
+						str = data.substring(0, check_newline);
+						_stdout = data.substring(check_newline + 1, data.length);
 					} else {
-						found = true;
-						res.data = parser(get_matched_files_list(_stdout + str));
+						str = data;
+						_stdout = '';
 					}
+
+					found = true;
+					res.data = parser(get_matched_files_list(str));
 					evt.emit('file_searching', res);
 				});
 				command.stderr.on('data', function(data) {
@@ -536,11 +548,19 @@ module.exports = {
 					}
 				});
 			} else {
-				callback({
-					error: 'Incorrect path provided.',
-					total_match : 0,
-					data: []
-				});
+				if (callback && typeof(callback) === 'function') {
+					callback({
+						error: 'Incorrect path provided.',
+						total_match : 0,
+						data: []
+					});
+				} else {
+					evt.emit('file_do_search_on_project', {
+						error: 'Incorrect path provided.',
+						total_match : 0,
+						data: []
+					});
+				}
 			}
 		});
 	},
@@ -548,7 +568,7 @@ module.exports = {
 	replace_on_project: function(options, callback) {
 		var self = this;
 		var find_query = options.find_query;
-		var replace_query = options.replace_query
+		var replace_query = options.replace_query;
 		var project_path = g_secure.command_filter(options.project_path);
 		var folder_path = options.folder_path;
 		var grep_option = options.grep_option;
