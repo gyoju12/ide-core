@@ -241,7 +241,7 @@
 				"value": "찾기",
 				"children": {
 					"edit_find_and_replace": {
-						"value": "찾기/바꾸기"
+						"value": "찾기"
 					},
 					"edit_find_next": {
 						"value": "다음 찾기"
@@ -250,6 +250,9 @@
 						"value": "이전 찾기"
 					}
 				}
+			},
+			"edit_replace": {
+				"value": "바꾸기"
 			},
 			"edit_search": {
 				"value": "검색"

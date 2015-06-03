@@ -526,8 +526,14 @@ module.exports = {
 				command.on('close', function(code) {
 					var res = {};
 					var matched_files_list = [];
-					//seongho.cha : code === null mean process stoped by user.
-					if (code === 0 || code === null) {
+					console.log('time');
+					console.log(code);
+					/*
+						seongho.cha : code === 0 -> no error
+									  code === null -> process stoped by user.
+									  code === 2 && total_match > 0 -> some files has wrong path, but some file can get the result
+					*/
+					if (code === 0 || code === null || (code === 2 && total_match > 0)) {
 						res.error = 0;
 						if (_stdout.length > 0) {
 							res.data = parser(get_matched_files_list(_stdout));

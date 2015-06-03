@@ -96,7 +96,7 @@
         "value": "다음 버튼을 눌러주세요."
     },
     "storage_field": {
-        "value": "프로젝트가 저장될 저장소를 선택해주세요. 당신은 구름에 있는 저장소, Dropbox, Google Drive등을 사용할 수 있습니다."
+        "value": "프로젝트가 저장될 저장소를 선택해주세요. AWS S3와 현재 컨테이너를 저장소로 사용할 수 있습니다."
     },
     "new_project_infomation": {
         "value": "프로젝트 정보에 들어갑니다."

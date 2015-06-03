@@ -32,10 +32,14 @@ goorm.core.edit.find_and_replace = {
 		$(core).one('localization_init_complete', function() {
 			$('#find_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_find_guide);
 			$('#replace_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_replace_guide);
+			$('#search_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_search);
+			$('#s_replace_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_replace_guide);
 		});
 		$(core).on('language_loaded', function() {
 			$('#find_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_find_guide);
 			$('#replace_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_replace_guide);
+			$('#search_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_search);
+			$('#s_replace_query_inputbox').attr('placeholder', core.module.localization.msg.msg_project_replace_guide);
 		});
 		$(core).on('layout_resized', function() {
 			self.resize();
@@ -62,13 +66,17 @@ goorm.core.edit.find_and_replace = {
 			} else if (which === 'replace') {
 				$('#g_far_btn_replace').prop('disabled', false);
 				$('.search_row').hide();
+				$('.find_row').show();
+				$('#s_input_group').hide();
+				$('#f_input_group').show();
 				$('.replace_row').show();
 			} else if (which === 'search') {
 				$('.search_row').show();
 				$('#f_input_group').hide();
+				$('.replace_row').hide();
 				$('#s_input_group').show();
 				$('#g_far_btn_replace').prop('disabled', true);
-				core.dialog.search.make_search_project_selectbox();
+				// core.dialog.search.make_search_project_selectbox();
 				$('#search_query_inputbox').focus().select();
 			}
 			self.resize();
@@ -123,11 +131,7 @@ goorm.core.edit.find_and_replace = {
 		// Replace All
 		//
 		$('#g_far_btn_replace_all').click(function() {
-			if ($('#far_selector').val() === 'search') {
-				core.dialog.search.search_replace();
-			} else {
-				self.handle_replace_all();
-			}
+			self.handle_replace_all();
 		});
 
 		$('#find_query_inputbox, #replace_query_inputbox').keydown(function(e) {
@@ -801,8 +805,12 @@ goorm.core.edit.find_and_replace = {
 		return ($('#bar_find_and_replace:visible').length > 0);
 	},
 
-	show: $.debounce(function() {
-		$('#far_selector').val('find').change();
+	show: $.debounce(function(what) {
+		// $('#far_selector').val('find').change();
+		var _what = 'find';
+		if (what) {
+			_what = what;
+		}
 
 		var window_manager = core.module.layout.workspace.window_manager;
 
@@ -813,7 +821,7 @@ goorm.core.edit.find_and_replace = {
 		if (window_manager.window[window_manager.active_window] !== undefined) {
 
 			$('#bar_find_and_replace').show();
-			$('#far_selector').val('find').change();
+			$('#far_selector').val(_what).change();
 
 			$('#find_query_inputbox').focus().select();
 
@@ -893,6 +901,9 @@ goorm.core.edit.find_and_replace = {
 
 			w = $('.search_row').width() - 100;
 			$('.search_row label + div').width(w);
+
+			w = w - $('#g_s_btn_replace').outerWidth() - 5;
+			$('#s_r_input_wrap').width(w);
 
 			w = $('.find_row').width() - $('#far_selector').outerWidth() - $('.search_buttons').outerWidth() - 20;
 			$('#s_input_wrap').width(w);

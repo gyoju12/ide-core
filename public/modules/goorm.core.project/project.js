@@ -270,6 +270,18 @@ goorm.core.project = {
 		return path;
 	},
 
+	get_project_path: function (path) { // project name or project path
+		var project_path = '';
+		
+		if (core.workspace[path]) { // project path
+			project_path = path;
+		} else if (core.workspace[core.user.id + '_' + path]) {
+			project_path = core.user.id + '_' + path;
+		}
+		
+		return project_path;
+	},
+	
 	get_realpath: function(filepath, filename) {
 		var path = '';
 

@@ -543,7 +543,7 @@ goorm.core.edit.prototype = {
 			if (e.keyCode === 27) { // esc
 				if ($('#f_input_group:visible').length > 0) {
 					core.dialog.find_and_replace.hide();
-				} else {
+				} else if ($('#s_input_group:visible').length > 0) {
 					core.dialog.search.hide();
 				}
 			}

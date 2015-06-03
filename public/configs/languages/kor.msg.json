@@ -2794,5 +2794,8 @@
 	},
 	"notice_search_replace_changed": {
 		"value": "개의 파일이 변경되었습니다."
+	},
+	"msg_project_search": {
+		"value": "검색"
 	}
 }

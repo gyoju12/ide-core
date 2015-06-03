@@ -96,7 +96,7 @@
         "value": "Click the Next button."
     },
     "storage_field": {
-        "value": "Select storage your project will be saved. You can use goorm storage, Dropbox, and Google Drive."
+        "value": "Select storage your project will be saved. You can use AWS S3 and Current Container."
     },
     "new_project_infomation": {
         "value": "Enter project information."

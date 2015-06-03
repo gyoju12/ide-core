@@ -130,12 +130,7 @@ goorm.core.project._delete = {
 					self.project_list.init('#project_delete', function() {
 						self.project_list.init_project(); //let's set first project
 						$('#project_delete_list').focus();
-						var data = self.project_list.get_data();
-						if (data.path === '') {
-							$('#project_delete_location').hide();
-						} else {
-							$('#project_delete_location').show();
-						}
+						
 						self.processing = false;
 						self.show();
 					});
@@ -255,12 +250,6 @@ goorm.core.project._delete = {
 			show: function() {
 				self.project_list.init_project(); //let's set first project
 				$('#project_delete_list').focus();
-				var data = self.project_list.get_data();
-				if (data.path === '') {
-					$('#project_delete_location').hide();
-				} else {
-					$('#project_delete_location').show();
-				}
 			}
 		});
 	},

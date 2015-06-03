@@ -523,6 +523,17 @@ goorm.core.menu.action = {
 			}
 		});
 
+		$('[action=do_replace]').off('click').tooltip();
+		$('[action=do_replace]').click(function() {
+			var window_manager = core.module.layout.workspace.window_manager;
+
+			if (window_manager.window[window_manager.active_window]) {
+				if (window_manager.window[window_manager.active_window].editor) {
+					core.dialog.find_and_replace.show('replace');
+				}
+			}
+		})
+
 		$('[action=do_find_previous]').off('click').tooltip();
 		$('[action=do_find_previous]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;

@@ -520,15 +520,15 @@ goorm.core.tutorial = {
 				}
 			},
 			// new project wizard step 2
-			// {	// hidden: storage is deprecated
-			// 	element: "#project_new #new_project_storage",
-			// 	title: '',
-			// 	content: core.module.localization.tutorial.storage_field,
-			// 	placement: "top",
-			// 	onPrev: function(tour) {
-			// 		$("#g_np_btn_previous").click();
-			// 	}
-			// },
+			{
+				element: "#project_new #select_new_project_storage",
+				title: '',
+				content: core.module.localization.tutorial.storage_field,
+				placement: "top",
+				onPrev: function(tour) {
+					$("#g_np_btn_previous").click();
+				}
+			},
 			{
 				element: '#project_new #input_project_name',
 				title: '',

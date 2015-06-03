@@ -231,7 +231,7 @@ module.exports = {
 						
 
 						
-						
+
 						msg.project_author = user_data.id;
 						g_project.do_new(msg, evt);
 					}
@@ -290,7 +290,7 @@ module.exports = {
 						msg.author = {
 							author_id: user_data.id
 						};
-						
+
 						
 
 						g_project.get_list(msg, evt);
@@ -1116,13 +1116,7 @@ module.exports = {
 						if (msg.project_path && msg.project_path !== '') { // exist project
 							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
 								if (result) { // have permission
-									//useonly(mode=goorm-standalone,goorm-oss)
-									msg.base_path = msg.project_path;
-
 									g_scm.index(msg, evt); // go to scm.js -> sort commands
-									
-
-									
 								} else { // have no permission
 									socket.emit('/scm/svn/' + msg.mode, {
 										err_code: 20,
@@ -1132,13 +1126,7 @@ module.exports = {
 								}
 							});
 						} else { // new project
-							//useonly(mode=goorm-standalone,goorm-oss)
-							msg.base_path = msg.project_path;
-
 							g_scm.index(msg, evt); // go to scm.js -> sort commands
-							
-
-							
 						}
 					}
 				});
@@ -1188,13 +1176,7 @@ module.exports = {
 						option.scm = 'svn'; // for indexing
 						option.mode = 'stdin';
 
-						//useonly(mode=goorm-standalone,goorm-oss)
-						msg.base_path = msg.project_path;
-
 						g_scm.index(msg, evt); // go to scm.js -> sort commands
-						
-
-						
 					}
 				});
 			});
@@ -1215,13 +1197,7 @@ module.exports = {
 						if (msg.project_path && msg.project_path !== '') { // new project
 							valid_project(user_data.id, msg.project_path, 'writable', function(result) {
 								if (result) { // have permission
-									//useonly(mode=goorm-standalone,goorm-oss)
-									msg.base_path = msg.project_path;
-
 									g_scm.index(msg, evt); // go to scm.js -> sort commands
-									
-
-									
 								} else { // have no permission
 									socket.emit('/scm/git' + msg.mode, {
 										err_code: 20,
@@ -1231,13 +1207,7 @@ module.exports = {
 								}
 							});
 						} else { // exist project
-							//useonly(mode=goorm-standalone,goorm-oss)
-							msg.base_path = msg.project_path;
-
 							g_scm.index(msg, evt); // go to scm.js -> sort commands
-							
-
-							
 						}
 					}
 				});

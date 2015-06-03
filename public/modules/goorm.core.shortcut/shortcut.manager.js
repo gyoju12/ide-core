@@ -175,6 +175,21 @@ goorm.core.shortcut.manager = {
 			self.temp_shortcut = {}; //initialize
 			self.history = {};
 		});
+		
+		$(core).on('on_preference_confirmed', function() {
+			var changed = false;
+			$('#preference_tabview').find('.apply').each(function(i) {
+				if (i >= 3 && i <= 9) {
+					if ($(this).attr('disabled') === undefined || $(this).attr('disabled') !== 'disabled') {
+						changed = true;
+					}
+					$(this).attr('disabled', 'disabled');
+				}
+			});
+			if (changed) {
+				$(core).trigger('on_preference_shortcut_apply');
+			}
+		});
 
 		//when user closed preference modal, current modified shortcuts are initialized. Jeong-Min Im.
 		$('#dlg_preference').on('hidden.bs.modal', function() {
@@ -1348,6 +1363,27 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('search', this.hotkeys.search), this.hotkeys.search, this.hotkeys_fn.search);
 		}
 
+		//Replace (Alt+Ctrl+F)
+		if (this.hotkeys.do_replace) {
+			this.hotkeys_fn.do_replace = function(e) {
+				var window_manager = core.module.layout.workspace.window_manager;
+
+				if (window_manager.window[window_manager.active_window] && window_manager.window[window_manager.active_window].editor) {
+					// only called when search highlight not activated.
+					// codemirror default shortcut will be activated in search mode. we need to remove duplicate action.
+					if (window_manager.window[window_manager.active_window].editor.editor) {
+						core.dialog.find_and_replace.show('replace');
+					}
+					core.status.keydown = true;
+				}
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('do_replace', this.hotkeys.do_replace), this.hotkeys.do_replace, this.hotkeys_fn.do_replace);
+		}
 		//Find Next (Ctrl+G)
 
 		if (this.hotkeys.do_find_next) {

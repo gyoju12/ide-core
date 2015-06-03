@@ -217,6 +217,15 @@
 			},
 			"dialog_new_project_import": {
 				"value": "가져오기"
+			},
+			"dialog_new_project_storage": {
+				"value": "스토리지"
+			},
+			"dialog_project_storage_s3": {
+				"value": "AWS S3 (협업 가능 & 모든 컨테이너 - 조금 느린 파일시스템)"
+			},
+			"dialog_project_storage_container": {
+				"value": "Container (협업 불가능 & 현재 컨테이너 - 매우 빠른 파일시스템)"
 			}
 		}
 	},
@@ -367,6 +376,9 @@
 			},
 			"dialog_project_property_project_date": {
 				"value": "프로젝트 작성일"
+			},
+			"dialog_project_property_project_storage": {
+				"value": "프로젝트 스토리지"	
 			},
 			"dialog_project_property_scm_type": {
 				"value": "유형"

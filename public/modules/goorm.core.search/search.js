@@ -68,18 +68,18 @@ goorm.core.search = {
 			});
 		});
 
-		$('#search_project_selectbox').change(function(e) {
-			var selected_option = e.target.selectedOptions[0].value;
-			var $input = $('#search_path_input');
+		// $('#search_project_selectbox').change(function(e) {
+		// 	var selected_option = e.target.selectedOptions[0].value;
+		// 	var $input = $('#search_path_input');
 
-			if (selected_option === '/' || selected_option === 'null') {
-				$input.val('');
-				$input.prop('disabled', true);
-			} else {
-				$input.prop('disabled', false);
-				$input.focus().select();
-			}
-		});
+		// 	if (selected_option === '/' || selected_option === 'null') {
+		// 		$input.val('');
+		// 		$input.prop('disabled', true);
+		// 	} else {
+		// 		$input.prop('disabled', false);
+		// 		$input.focus().select();
+		// 	}
+		// });
 
 		$('#search_query_inputbox').keydown(function(e) {
 			var ev = e || event;
@@ -118,8 +118,12 @@ goorm.core.search = {
 			$(this).toggleClass('active');
 		});
 
-		$('#g_far_btn_search').on('click', function(e) {
+		$('#g_far_btn_search').on('click', function() {
 			self.search();
+		});
+
+		$('#g_s_btn_replace').on('click', function() {
+			self.search_replace();
 		});
 
 		var inputbox = $('#search_query_inputbox'); //document.getElementById('search_query_inputbox');
@@ -175,16 +179,16 @@ goorm.core.search = {
 		this.use_regexp = $('#search_use_regexp').hasClass('active');
 		this.whole_word = $('#search_whole_word').hasClass('active');
 
-		if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
-			alert.show(core.module.localization.msg.alert_project_not_selected);
-			return;
-		}
+		// if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
+		// 	alert.show(core.module.localization.msg.alert_project_not_selected);
+		// 	return;
+		// }
 		var keyword = $('#search_query_inputbox').val();
 		if (!keyword) {
 			alert.show(core.module.localization.msg.alert_input_search_keyword);
 			return;
 		}
-		search_path = $('#search_project_selectbox option:selected').val() + $('#search_path_input').val();
+		search_path = '/' + core.status.current_project_path + $('#search_path_input').val();
 		if ($('#search_file_extension').val() !== '') {
 			include = this.parse_file_extension($('#search_file_extension').val());
 		}
@@ -271,6 +275,7 @@ goorm.core.search = {
 			i++;
 		}
 	},
+	
 	
 	//useonly(mode=goorm-oss)
 	attach_table_event: function() {
@@ -554,17 +559,17 @@ goorm.core.search = {
 		this.use_regexp = $('#search_use_regexp').hasClass('active');
 		this.whole_word = $('#search_whole_word').hasClass('active');
 
-		if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
-			alert.show(core.module.localization.msg.alert_project_not_selected);
-			return;
-		}
+		// if ($('#search_project_selectbox option:selected').val() == 'null') { // jeongmin: only 'null' search_path has to be filtered
+		// 	alert.show(core.module.localization.msg.alert_project_not_selected);
+		// 	return;
+		// }
 		keyword = $('#search_query_inputbox').val();
 		if (!keyword) {
 			alert.show(core.module.localization.msg.alert_input_search_keyword);
 			return;
 		}
-		search_path = $('#search_project_selectbox option:selected').val() + $('#search_path_input').val();
-		replace_word = $('#replace_query_inputbox').val();
+		search_path = '/' + core.status.current_project_path + $('#search_path_input').val();
+		replace_word = $('#s_replace_query_inputbox').val();
 
 		this.current_options = {
 			keyword: keyword,

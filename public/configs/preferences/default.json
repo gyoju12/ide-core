@@ -33,6 +33,7 @@
 	"preference.shortcut.edit.find_and_replace": "Ctrl+F",
 	"preference.shortcut.edit.find_next": "Ctrl+G",
 	"preference.shortcut.edit.find_previous": "Ctrl+Shift+G",
+	"preference.shortcut.edit.replace": "Alt+Ctrl+F",
 	"preference.shortcut.edit.go_to_line": "Alt+Ctrl+L",
 	"preference.shortcut.edit.magnify_font": "Ctrl+=",
 	"preference.shortcut.edit.minify_font": "Ctrl+-",

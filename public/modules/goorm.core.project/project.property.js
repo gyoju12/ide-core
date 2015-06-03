@@ -54,7 +54,10 @@ goorm.core.project.property = {
 				}
 				$('[action="run"]').show();
 
-				self.property.plugins || (self.property.plugins = {});
+				if (!self.property.plugins) {
+					self.property.plugins = {};
+				}
+				
 				if (contents) {
 					core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], contents);
 
@@ -80,6 +83,8 @@ goorm.core.project.property = {
 
 					// last_node && last_node.prev().removeClass("ygtvtn").addClass("ygtvln");
 
+					
+					
 					self.fill_dialog(self.property);
 					self.property_default = $.extend(true, {}, self.property);
 

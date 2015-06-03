@@ -385,7 +385,6 @@ goorm.core.project.list.prototype = {
 			$(this.path).val('');
 			$(this.name).val('');
 			$(this.type).val('');
-			$('#project_delete_location').html('');
 		}
 	},
 

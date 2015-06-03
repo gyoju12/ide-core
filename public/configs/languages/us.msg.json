@@ -1390,5 +1390,8 @@
 	},
 	"notice_search_replace_changed": {
 		"value": " file(s) changed"
+	},
+	"msg_project_search": {
+		"value": "Search"
 	}
 }

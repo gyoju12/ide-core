@@ -241,7 +241,7 @@
 				"value": "Find",
 				"children": {
 					"edit_find_and_replace": {
-						"value": "Find/Replace"
+						"value": "Find"
 					},
 					"edit_find_next": {
 						"value": "Find Next"
@@ -250,6 +250,9 @@
 						"value": "Find Previous"
 					}
 				}
+			},
+			"edit_replace": {
+				"value": "Replace"
 			},
 			"edit_search": {
 				"value": "Search"

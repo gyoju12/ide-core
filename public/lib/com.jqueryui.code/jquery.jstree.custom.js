@@ -60,7 +60,6 @@
 	_node.appendChild(_temp1);
 	_temp1 = _temp2 = null;
 
-
 	/**
 	 * holds all jstree related functions and variables, including the actual class and methods to create, access and manipulate instances.
 	 * @name $.jstree
@@ -697,28 +696,28 @@
 							e.preventDefault();
 							this.element.find('.jstree-anchor').filter(':visible').last().focus();
 							break;
-							/*
-							// delete
-							case 46:
-								e.preventDefault();
-								o = this.get_node(e.currentTarget);
-								if(o && o.id && o.id !== '#') {
-									o = this.is_selected(o) ? this.get_selected() : o;
-									this.delete_node(o);
-								}
-								break;
-							// f2
-							case 113:
-								e.preventDefault();
-								o = this.get_node(e.currentTarget);
-								if(o && o.id && o.id !== '#') {
-									// this.edit(o);
-								}
-								break;
-							default:
-								// console.log(e.which);
-								break;
-							*/
+						/*
+						// delete
+						case 46:
+							e.preventDefault();
+							o = this.get_node(e.currentTarget);
+							if(o && o.id && o.id !== '#') {
+								o = this.is_selected(o) ? this.get_selected() : o;
+								this.delete_node(o);
+							}
+							break;
+						// f2
+						case 113:
+							e.preventDefault();
+							o = this.get_node(e.currentTarget);
+							if(o && o.id && o.id !== '#') {
+								// this.edit(o);
+							}
+							break;
+						default:
+							// console.log(e.which);
+							break;
+						*/
 					}
 				}, this))
 				.on("load_node.jstree", $.proxy(function(e, data) {
@@ -2563,7 +2562,6 @@
 				node.childNodes[1].innerHTML += obj.text;
 			}
 
-
 			if (deep && obj.children.length && (obj.state.opened || force_render) && obj.state.loaded) {
 				k = d.createElement('UL');
 				k.setAttribute('role', 'group');
@@ -2609,9 +2607,9 @@
 				}
 			}
 			if (obj.state.opened && !obj.state.loaded) {
-				obj.state.opened = false;
+				// 				obj.state.opened = false;	// hidden by jeongmin: this causes confusion of opened state (node is visually opened, but its opened state is false because of this code)
 				setTimeout($.proxy(function() {
-					this.open_node(obj.id, false, 0);
+					this.open_node(obj.id, false, 0, true);
 				}, this), 100); // jeongmin: wait for loading children
 			}
 			return node;
@@ -2622,9 +2620,10 @@
 		 * @param {mixed} obj the node to open
 		 * @param {Function} callback a function to execute once the node is opened
 		 * @param {Number} animation the animation duration in milliseconds when opening the node (overrides the `core.animation` setting). Use `false` for no animation.
+		 * @param {Bool} open forcingly regardless of opened state (jeongmin)
 		 * @trigger open_node.jstree, after_open.jstree, before_open.jstree
 		 */
-		open_node: function(obj, callback, animation) {
+		open_node: function(obj, callback, animation, force) {
 			var t1, t2, d, t;
 			if ($.isArray(obj)) {
 				obj = obj.slice();
@@ -2638,7 +2637,7 @@
 				return false;
 			}
 			animation = animation === undefined ? this.settings.core.animation : animation;
-			if (!this.is_closed(obj)) {
+			if (!force && !this.is_closed(obj)) { // jeongmin: if force is true, no matter what opened state, just open
 				if (callback) {
 					callback.call(this, obj, false);
 				}
@@ -3731,7 +3730,7 @@
 					'a_attr': $.extend(true, {}, obj.a_attr),
 					'state': {},
 					'data': options && options.no_data ? false : $.extend(true, {}, obj.data)
-						//( this.get_node(obj, true).length ? this.get_node(obj, true).data() : obj.data ),
+					//( this.get_node(obj, true).length ? this.get_node(obj, true).data() : obj.data ),
 				},
 				i, j;
 			if (options && options.flat) {
@@ -4713,7 +4712,6 @@
 			h2.css(fn).width(Math.min(h1.text("pW" + h2[0].value).width(), w))[0].select();
 		},
 
-
 		/**
 		 * changes the theme
 		 * @name set_theme(theme_name [, theme_url])
@@ -5016,7 +5014,6 @@
 		var tmp = $.inArray(item, array);
 		return tmp !== -1 ? $.vakata.array_remove(array, tmp) : array;
 	};
-
 
 	/**
 	 * ### Checkbox plugin
@@ -6615,7 +6612,6 @@
 						.children().attr('class', 'jstree-' + ins.get_theme() + ' jstree-' + ins.get_theme() + '-' + ins.get_theme_variant() + ' ' + (ins.settings.core.themes.responsive ? ' jstree-dnd-responsive' : ''))
 						.find('.jstree-copy').first()[data.data.origin && (data.data.origin.settings.dnd.always_copy || (data.data.origin.settings.dnd.copy && (data.event.metaKey || data.event.ctrlKey))) ? 'show' : 'hide']();
 
-
 					// if are hovering the container itself add a new root node
 					if ((data.event.target === ins.element[0] || data.event.target === ins.get_container_ul()[0]) && ins.get_container_ul().children().length === 0) {
 						ok = true;
@@ -7097,7 +7093,6 @@
 
 	// include the dnd plugin by default
 	// $.jstree.defaults.plugins.push("dnd");
-
 
 	/**
 	 * ### Search plugin
@@ -8144,7 +8139,6 @@
 	// include the unique plugin by default
 	// $.jstree.defaults.plugins.push("unique");
 
-
 	/**
 	 * ### Wholerow plugin
 	 *
@@ -8260,7 +8254,6 @@
 	};
 	// include the wholerow plugin by default
 	// $.jstree.defaults.plugins.push("wholerow");
-
 
 	(function($) {
 		if (document.registerElement && Object && Object.create) {

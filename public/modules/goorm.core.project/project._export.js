@@ -114,12 +114,12 @@ goorm.core.project._export = {
 			}
 		});
 
-		this.dialog_explorer = new goorm.core.dialog.explorer('file_export', this);
+		// this.dialog_explorer = new goorm.core.dialog.explorer('file_export', this);
 	},
 
 	show: function() {
 		var self = this;
-		this.dialog_explorer.init(true, true);
+		// this.dialog_explorer.init(true, true);
 		this.project_list.init('#project_export');
 		this.project_list.set_keydown_event({
 			'handler': function() {
