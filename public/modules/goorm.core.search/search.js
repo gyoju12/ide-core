@@ -415,9 +415,8 @@ goorm.core.search = {
 				// if it can't search keyword...
 				$('#search_badge').html('0').hide();
 				$('#search_keyword_wrapper').css('display', 'none');
-				core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, null, function() {
-					$('#search_query_inputbox').focus();
-				});
+
+				self.show_no_word_toast();
 			} else {
 				if (res.data) {
 					// self.unload_data.push(res);
@@ -637,9 +636,7 @@ goorm.core.search = {
 
 				if (res.error || res.total_match === 0) {
 					// if it can't search keyword...
-					core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, null, function() {
-						$('#search_query_inputbox').focus().select();
-					});
+					self.show_no_word_toast();
 				} else {
 					// if finding success.
 					if (res.data) {
@@ -649,7 +646,10 @@ goorm.core.search = {
 						var opened_window = [];
 						for (var i = window_manager.window.length - 1; i >= 0; i--) {
 							for (var j = 0; j < res.data.length; j++) {
-								if (window_manager.window[i].title === res.data[j]) {
+								var _data = res.data[j].split('/');
+								var filtered_path = core.module.project.get_project_path(_data.shift()) + '/' + _data.join('/');
+
+								if (window_manager.window[i].title === filtered_path) {
 									opened_window.push({
 										filepath: window_manager.window[i].filepath,
 										filename: window_manager.window[i].filename,
@@ -685,5 +685,14 @@ goorm.core.search = {
 		};
 		confirmation.init(confirm_option);
 		confirmation.show();
+	},
+
+	// show 'cannot find word' toast. Jeong-Min Im.
+	show_no_word_toast: function() {
+		core.status.focus_obj = null; // give input focus
+
+		$('#search_query_inputbox').focus().select();
+
+		core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, null);
 	}
 };

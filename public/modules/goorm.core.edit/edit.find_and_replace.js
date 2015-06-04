@@ -380,10 +380,8 @@ goorm.core.edit.find_and_replace = {
 
 		if (this.total_count === 0) { // no such words in text.
 			core.status.focus_obj = null;
-			core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, 550, function() {
-				$('#find_query_inputbox').focus();
-				$('#find_query_inputbox').select();
-			});
+			$('#find_query_inputbox').focus().select();
+			core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, 550);
 		} else {
 			this.draw_search_focus(editor);
 		}

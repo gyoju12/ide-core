@@ -1182,6 +1182,9 @@ goorm.core.window.manager = {
 		});
 	},
 
+	// set tab/window title as current project. Jeong-Min Im.
+	// current_project_path (String)
+	// file_name (String) : window name
 	refresh_title: function(current_project_path, file_name, cnt) {
 		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
 			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + file_name + '"]');
