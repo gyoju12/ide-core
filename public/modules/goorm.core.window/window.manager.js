@@ -430,6 +430,10 @@ goorm.core.window.manager = {
 		var window_index = -1;
 		var empty_windows = [];
 
+		if (filepath.indexOf(core.user.id) !== 0) {
+			filepath = core.user.id + '_' + filepath;
+		}
+
 		$(this.window).each(function(i) {
 			if (this.filepath === null && this.filename === null) {
 				empty_windows.push(i);
@@ -1189,7 +1193,7 @@ goorm.core.window.manager = {
 						var name = temp.attr('filename');
 						var path = temp.attr('filepath').split('/')[0];
 						if (typeof current_project_path == 'string' && path != current_project_path) {
-							title = name + ' - ' + temp.attr('filepath');
+							title = name + ' - ' + temp.attr('filepath').split(core.user.id + '_').pop();
 						} else {
 							title = name;
 						}
@@ -1200,7 +1204,7 @@ goorm.core.window.manager = {
 							var path = $(this).attr('filepath');
 							var name = $(this).attr('filename');
 
-							title = name + ' - ' + path;
+							title = name + ' - ' + path.split(core.user.id + '_').pop();
 							$(this).html(title);
 							$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
 						});

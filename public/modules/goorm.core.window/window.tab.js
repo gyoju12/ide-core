@@ -53,7 +53,7 @@ goorm.core.window.tab.prototype = {
 		this.tab_list_id = 'g_window_tab_' + morphed_title;
 		this.tab_content_id = 'g_wndw_tab_ctnt_' + morphed_title;
 
-		var tooltip_contents = this.title;
+		var tooltip_contents = this.title.split(core.user.id + '_').pop(); // remove user id in project name
 		var chunks = [];
 		var chunkSize = 40;
 
@@ -184,8 +184,8 @@ goorm.core.window.tab.prototype = {
 		// when tab is moved(sorted), arrange indexes of window and tab. Jeong-Min Im.
 		$('#g_window_tab_list').on('sortstop', function(e, ui) {
 			var new_tab_list = $(this).find('a.goorm_tab_menu'); // moved(sorted) tab list
-			var	old_tab_list = window_manager.tab; // original tab list
-			var	window_list = window_manager.window;
+			var old_tab_list = window_manager.tab; // original tab list
+			var window_list = window_manager.window;
 
 			for (var i = new_tab_list.length - 1; 0 <= i; i--) {
 				if ($(new_tab_list[i]).attr('id') != old_tab_list[i].tab_list_id) { // true: need to arrange
@@ -246,17 +246,18 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_title: function(title) {
+		var clean_filepath = this.filepath.split(core.user.id + '_').pop();
 		// console.log("===tab_set_title");
 		if (title) {
 			if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
-				$('#' + this.tab_list_id).find('.tab_title').html(title + '-' + this.filepath);
+				$('#' + this.tab_list_id).find('.tab_title').html(title + '-' + clean_filepath);
 			} else {
 				$('#' + this.tab_list_id).find('.tab_title').html(title);
 			}
 		} else if (this.title) {
 			//var morphed_title = this.title.split("/").join("_").split(".").join("_");
 			if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
-				$('#' + this.tab_list_id).find('.tab_title').html(this.filename + '-' + this.filepath);
+				$('#' + this.tab_list_id).find('.tab_title').html(this.filename + '-' + clean_filepath);
 			} else {
 				$('#' + this.tab_list_id).find('.tab_title').html(this.filename);
 			}
