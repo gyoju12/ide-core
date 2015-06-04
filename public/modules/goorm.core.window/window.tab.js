@@ -79,7 +79,7 @@ goorm.core.window.tab.prototype = {
 				core.status.current_opened_list[this.filename] = 1;
 			}
 		} else {
-			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + ' - ' + this.filepath + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
+			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + ' - ' + this.filepath.split(core.user.id + '_').pop() + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
 			core.status.current_opened_list[this.filename] ++;
 		}
 
@@ -88,33 +88,9 @@ goorm.core.window.tab.prototype = {
 			self.set_tooltip(morphed_title); // Tooltip - Donguk Kim
 		}
 
-		var cnt = core.status.current_opened_list[this.filename];
-		var title = null;
-		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + this.filename + '"]');
-			if (temp) {
-				if (cnt == 1) {
-					var name = temp.attr('filename');
-					var path = temp.attr('filepath').split('/')[0];
-					var current_project_path = core.status.current_project_path;
-					if (path != current_project_path) {
-						title = name + ' - ' + temp.attr('filepath');
-					} else {
-						title = name;
-					}
-					temp.html(title);
-					$('.ui-dialog').find('[path="' + temp.attr('filepath') + name + '"]').parent().find('.ui-dialog-title').html(title);
-				} else if (cnt > 1) {
-					temp.each(function(index) {
-						var path = $(this).attr('filepath');
-						var name = $(this).attr('filename');
-						title = name + ' - ' + path;
-						$(this).html(title);
-						$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
-					});
-				}
-			}
-		}
+		var window_manager = core.module.layout.workspace.window_manager;
+
+		window_manager.refresh_title(core.status.current_project_path, this.filename, core.status.current_opened_list[this.filename]);
 
 		//bootstrap end
 
@@ -168,7 +144,6 @@ goorm.core.window.tab.prototype = {
 		this.move.init(this);
 
 		// when click tab, window panel restore...
-		var window_manager = core.module.layout.workspace.window_manager;
 		$(this.tab).dblclick(function() {
 			var panel = self.window.panel;
 			if (!window_manager.maximized) {
@@ -295,34 +270,7 @@ goorm.core.window.tab.prototype = {
 		var self = this;
 		var morphed_title = this.title.split('/').join('_').split('.').join('_');
 
-		$.each(core.status.current_opened_list, function(index, value) {
-			cnt = value;
-			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-				var temp = $('#g_window_tab_list').find('.tab_title[filename="' + index + '"]');
-				if (temp) {
-					if (cnt == 1) {
-						var name = temp.attr('filename');
-						var path = temp.attr('filepath').split('/')[0];
-						var current_project_path = core.status.current_project_path;
-						if (path != current_project_path) {
-							title = name + ' - ' + temp.attr('filepath');
-						} else {
-							title = name;
-						}
-						temp.html(title);
-						$('.ui-dialog').find('[path="' + temp.attr('filepath') + name + '"]').parent().find('.ui-dialog-title').html(title);
-					} else if (cnt > 1) {
-						temp.each(function(index) {
-							var path = $(this).attr('filepath');
-							var name = $(this).attr('filename');
-							title = name + ' - ' + path;
-							$(this).html(title);
-							$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
-						});
-					}
-				}
-			}
-		});
+		core.module.layout.workspace.window_manager.refresh_all_title(core.status.current_project_path);
 
 		$('#' + this.tab_list_id).find('.tab_option').html('');
 
@@ -364,27 +312,7 @@ goorm.core.window.tab.prototype = {
 		window_manager.delete_window_in_tab(this.window.index);
 
 		this.empty_tab_dom();
-		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + this.filename + '"]');
-			if (temp) {
-				if (cnt == 1) {
-					var name = temp.attr('filename');
-					var path = temp.attr('filepath').split('/')[0];
-					var current_project_path = core.status.current_project_path;
-					if (path != current_project_path) {
-						temp.html(name + ' - ' + temp.attr('filepath'));
-					} else {
-						temp.html(name);
-					}
-				} else if (cnt > 1) {
-					temp.each(function(index) {
-						var path = $(this).attr('filepath');
-						var name = $(this).attr('filename');
-						$(this).html(name + ' - ' + path);
-					});
-				}
-			}
-		}
+		window_manager.refresh_title(core.status.current_project_path, this.filename, cnt);
 		// $.each(core.status.current_opened_list, function(index, value) {
 		// 	temp = $("#g_window_tab_list").find('.tab_title').html();
 

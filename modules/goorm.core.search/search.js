@@ -269,7 +269,7 @@ module.exports = {
 		};
 
 		var make_xargs_option = function(old_word, new_word) {
-			var xargs = ['-0', 'sed', '-i', '', '-e'];
+			var xargs = ['-0', 'sed', '-i', '-e'];
 			var replace_string = 's/' + old_word + '/' + new_word + '/g';
 			xargs = xargs.concat([replace_string]);
 			return xargs;
@@ -526,8 +526,6 @@ module.exports = {
 				command.on('close', function(code) {
 					var res = {};
 					var matched_files_list = [];
-					console.log('time');
-					console.log(code);
 					/*
 						seongho.cha : code === 0 -> no error
 									  code === null -> process stoped by user.

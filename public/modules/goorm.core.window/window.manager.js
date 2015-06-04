@@ -1176,42 +1176,39 @@ goorm.core.window.manager = {
 
 	refresh_all_title: function(current_project_path) {
 		var self = this;
-		var tabs = self.tab;
-		var panels = self.window;
-		// for (var i = 0; i < tabs.length; i++) {
-		// 	tabs[i].set_title();
-		// 	panels[i].set_title();
-		// }
 
-		var title = null;
 		$.each(core.status.current_opened_list, function(index, value) {
-			cnt = value;
-			if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
-				var temp = $('#g_window_tab_list').find('.tab_title[filename="' + index + '"]');
-				if (temp) { // && index.indexOf('terminal')!=0
-					if (cnt == 1) {
-						var name = temp.attr('filename');
-						var path = temp.attr('filepath').split('/')[0];
-						if (typeof current_project_path == 'string' && path != current_project_path) {
-							title = name + ' - ' + temp.attr('filepath').split(core.user.id + '_').pop();
-						} else {
-							title = name;
-						}
-						temp.html(title);
-						$('.ui-dialog').find('[path="' + temp.attr('filepath') + name + '"]').parent().find('.ui-dialog-title').html(title);
-					} else if (cnt > 1) {
-						temp.each(function(index2) {
-							var path = $(this).attr('filepath');
-							var name = $(this).attr('filename');
+			self.refresh_title(current_project_path, index, value);
+		});
+	},
 
-							title = name + ' - ' + path.split(core.user.id + '_').pop();
-							$(this).html(title);
-							$('.ui-dialog').find('[path="' + path + name + '"]').parent().find('.ui-dialog-title').html(title);
-						});
+	refresh_title: function(current_project_path, file_name, cnt) {
+		if (cnt > 0) { // Donguk Kim : File Name Duplication Check & File Path Adding
+			var temp = $('#g_window_tab_list').find('.tab_title[filename="' + file_name + '"]');
+
+			if (temp) {
+				if (cnt == 1) {
+					var file_path = temp.attr('filepath');
+					var path = file_path.split('/')[0];
+					var title = file_name;
+
+					if (typeof current_project_path == 'string' && path != current_project_path) {
+						title += ' - ' + file_path.split(core.user.id + '_').pop();
 					}
+
+					temp.html(title);
+					$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);
+				} else if (cnt > 1) {
+					temp.each(function() {
+						var path = $(this).attr('filepath');
+						var title = file_name + ' - ' + path.split(core.user.id + '_').pop();
+
+						$(this).html(title);
+						$('.ui-dialog').find('[path="' + path + file_name + '"]').parent().find('.ui-dialog-title').html(title);
+					});
 				}
 			}
-		});
+		}
 	},
 
 	close_by_title: function(target_title) {
