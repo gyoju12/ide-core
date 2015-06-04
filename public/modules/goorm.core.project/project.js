@@ -52,6 +52,7 @@ goorm.core.project = {
 			hide: function(_tab) {
 				var terminal = _tab.terminal;
 
+				terminal._write = false;
 				terminal.flush_command_queue();
 				terminal.send_command('\x03\r');
 			},
@@ -234,18 +235,18 @@ goorm.core.project = {
 
 	get_storage: function (project_path) {
 		var storage = 's3';
-		
+
 		if (!project_path) {
 			project_path = core.status.current_project_path;
 		}
-		
+
 		if (project_path && core.workspace && core.workspace[project_path]) {
 			storage = core.workspace[project_path].storage || "s3";
 		}
-		
+
 		return storage;
 	},
-	
+
 	get_path: function(project_path) {
 		if (!project_path) {
 			project_path = core.status.current_project_path;
@@ -272,16 +273,16 @@ goorm.core.project = {
 
 	get_project_path: function (path) { // project name or project path
 		var project_path = '';
-		
+
 		if (core.workspace[path]) { // project path
 			project_path = path;
 		} else if (core.workspace[core.user.id + '_' + path]) {
 			project_path = core.user.id + '_' + path;
 		}
-		
+
 		return project_path;
 	},
-	
+
 	get_realpath: function(filepath, filename) {
 		var path = '';
 
@@ -404,6 +405,7 @@ goorm.core.project = {
 
 			var terminal = tab.terminal;
 
+			terminal._write = true;
 			terminal.flush_command_queue();
 			terminal.send_command('\x03\r', function() {
 				terminal.send_command(cmd + '\r', options, function(result) {

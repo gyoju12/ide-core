@@ -266,7 +266,7 @@ goorm.core.terminal.prototype = {
 				if (self.terminal_name == msg.terminal_name) {
 					self.work_queue(msg.stdout);
 					if (self.target) {
-						self.Terminal.write(msg.stdout);
+						self.write(msg.stdout);
 					}
 					if (self.terminal_name == 'debug') {
 						$(self.target).scrollTop($(self.target).parent().prop('scrollHeight'));
@@ -331,6 +331,14 @@ goorm.core.terminal.prototype = {
 		// initialize js event
 		init_event();
 		
+	},
+
+	write: function (stdout) {
+		var self = this;
+
+		if (this._write !== false) {
+			this.Terminal.write(stdout);
+		}
 	},
 
 	send: function(namespace, options) {

@@ -134,7 +134,7 @@ goorm.core.edit.find_and_replace = {
 			self.handle_replace_all();
 		});
 
-		$('#find_query_inputbox, #replace_query_inputbox').keydown(function(e) {
+		$('#replace_query_inputbox').keydown(function(e) {
 			var ev = e || event;
 
 			if (ev.keyCode == 13) { // enter key
@@ -165,7 +165,25 @@ goorm.core.edit.find_and_replace = {
 				inputbox_background.scrollLeft(scroll);
 			}
 		};
-		inputbox.bind('keydown keyup keypress change select', function(e) {
+		var handle_multiline = function() {
+			var line_num = inputbox.val().split('\n').length;
+
+			if (line_num != parseInt(inputbox.prop('rows'), 10)) {
+				inputbox.prop('rows', line_num.toString());
+				inputbox_background.prop('rows', line_num.toString());
+				self.resize('height');
+			}
+		};
+		inputbox.on('keydown keyup change select paste', function(e) {
+			if ((e.type === 'keydown') && e.keyCode === 13) {
+				e.stopPropagation();
+				e.preventDefault();
+				
+				self.find();
+				return false;
+			} else {
+				$.throttle(handle_multiline(), 100);
+			}
 			setTimeout(make_shadow, 10);
 		});
 	},
@@ -283,32 +301,34 @@ goorm.core.edit.find_and_replace = {
 			'ignore_case': !this.match_case
 		};
 
-		if (this.use_regexp) { // special case : regexp
-			try {
-				text = new RegExp(text);
-			} catch (e) {
-				text = '';
-			}
-		} else { // others.
-			var flag = 'g';
-			text = text.replace(/[^\w\d]/g, '\\$&'); // add backslash to non alphbet, underbar, number
+		if (keyword.split('\n').length === 1) {
+			if (this.use_regexp) { // special case : regexp
+				try {
+					text = new RegExp(text);
+				} catch (e) {
+					text = '';
+				}
+			} else { // others.
+				var flag = 'g';
+				text = text.replace(/[^\w\d]/g, '\\$&'); // add backslash to non alphbet, underbar, number
 
-			for (var option in options) {
-				// common handling
-				if (options[option]) {
-					switch (option) {
-						case 'whole_word':
-							text = length > 1 ? '\\b' + text + '\\b' : text;
-							break;
+				for (var option in options) {
+					// common handling
+					if (options[option]) {
+						switch (option) {
+							case 'whole_word':
+								text = length > 1 ? '\\b' + text + '\\b' : text;
+								break;
 
-						case 'ignore_case':
-							flag += 'i';
-							break;
+							case 'ignore_case':
+								flag += 'i';
+								break;
+						}
 					}
 				}
-			}
 
-			text = new RegExp(text, flag);
+				text = new RegExp(text, flag);
+			}
 		}
 
 		// reset count
@@ -817,21 +837,20 @@ goorm.core.edit.find_and_replace = {
 
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window] !== undefined) {
-			var find_query_inputbox = $('#find_query_inputbox');
 
 			$('#bar_find_and_replace').show();
 			$('#far_selector').val(_what).change();
 
-			find_query_inputbox.focus().select();
+			$('#find_query_inputbox').focus().select();
 
 			// this.panel.modal('show');
 			// Get current active_window's CodeMirror editor
-			var editor_selection = window_manager.window[window_manager.active_window].editor.editor.getSelection();
+			var editor = window_manager.window[window_manager.active_window].editor.editor;
 
-			if (find_query_inputbox.val() === '' && editor_selection !== '') { // only if there isn't previous query
-				find_query_inputbox.val(editor_selection);
+			if (editor.getSelection() !== '') {
+				$('#find_query_inputbox').val(editor.getSelection());
 			}
-			find_query_inputbox.select();
+			$('#find_query_inputbox').select();
 
 			if (window_manager.window[window_manager.active_window].searching) { // jeongmin: only when searching
 				core.dialog.search.unmark(); // jeongmin: remove search highlight
@@ -887,6 +906,12 @@ goorm.core.edit.find_and_replace = {
 			if (option === 'find') {
 				w = $('.find_row').width() - $('#far_selector').outerWidth() - $('.find_buttons').outerWidth() - 20;
 				$('#f_input_wrap').width(w);
+			} else if (option === 'height') {
+				h = $('#find_query_inputbox').outerHeight() + 4;
+				$('.find_row').height(h);
+				
+				h = $('#goorm_inner_layout_center').height() - $('#g_window_tab_list').outerHeight() - $('#bar_find_and_replace').height() - 1;
+				$('#workspace').height(h);
 			}
 		} else {
 			h = $('#goorm_inner_layout_center').height() - $('#g_window_tab_list').outerHeight() - $('#bar_find_and_replace').height() - 1;

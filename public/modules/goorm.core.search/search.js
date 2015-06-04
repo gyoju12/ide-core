@@ -81,11 +81,23 @@ goorm.core.search = {
 		// 	}
 		// });
 
-		$('#search_query_inputbox').keydown(function(e) {
+		$('#search_query_inputbox, #search_path_input, #search_file_extension').keydown(function(e) {
 			var ev = e || event;
 
 			if (ev.keyCode == 13) {
 				handle_ok();
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			}
+		});
+
+		$('#s_replace_query_inputbox').keydown(function(e) {
+			var ev = e || event;
+
+			if (ev.keyCode == 13) {
+				self.search_replace();
 
 				e.stopPropagation();
 				e.preventDefault();
