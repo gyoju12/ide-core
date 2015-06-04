@@ -249,8 +249,9 @@ goorm.core.search = {
 				$('#search_result_table').treetable('loadBranch', parent_node, '<tr data-tt-id="content-' + attr + '-' + data[attr][0].start_line + '-b" data-tt-parent-id="' + attr + '"><td><div class="search_block"><span class="search_connect" style="margin-left:15px;">...</span></div></td></tr>');
 			}
 
+			string = '';
 			data[attr].map(function(obj, idx, arr) {
-				string = '<tr data-tt-id="content-' + attr + '-' + obj.start_line + '" data-tt-parent-id="' + attr + '"><td><div class="search_block">';
+				string += '<tr data-tt-id="content-' + attr + '-' + obj.start_line + '" data-tt-parent-id="' + attr + '"><td><div class="search_block">';
 				for (var j = 0; j < obj.code.length; j++) {
 					var current_line = obj.start_line + j;
 					var separator = ' ';
@@ -270,8 +271,8 @@ goorm.core.search = {
 					string += '<tr data-tt-id="content-' + attr + '-' + obj.start_line + '-c" data-tt-parent-id="' + attr + '"><td><div class="search_block"><span class="search_connect" style="margin-left:15px;">...</span></div></td></tr>';
 				}
 				string += '</div></td></tr>';
-				$('#search_result_table').treetable('loadBranch', parent_node, string);
 			});
+			$('#search_result_table').treetable('loadBranch', parent_node, string);
 			i++;
 		}
 	},
@@ -493,7 +494,7 @@ goorm.core.search = {
 			if (editor) {
 				editor = window_manager.window[window_manager.active_window].editor.editor;
 
-				if (editor && editor.getSelection() !== '') {
+				if ($('#search_query_inputbox').val() === '' && editor && editor.getSelection() !== '') {
 					$('#search_query_inputbox').val(editor.getSelection());
 				}
 			}

@@ -22,7 +22,7 @@ goorm.core.layout.tab.output_manager = {
 	},
 
 	create: function() {
-		$('[id="' + this.context + '"]').addClass('output_tab').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.context + '_table" ></table>');
+		$('[id="' + this.context + '"]').addClass('output_tab user-select-available').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="' + this.context + '_table" ></table>');
 		this.table = $('[id="' + this.context + '_table"]').dataTable({
 			'aaData': [],
 			'aoColumns': [{
@@ -55,29 +55,35 @@ goorm.core.layout.tab.output_manager = {
 		var self = this;
 
 		if (this.context && this.table) {
+			var is_dragging = false;
+			
 			$(document).on('click', '[id="' + this.context + '_table"] tbody td', function() {
-				var aPos = self.table.fnGetPosition(this);
-				var row = self.table.fnGetData(aPos[0]);
+				if (!is_dragging) {
+					var aPos = self.table.fnGetPosition(this);
+					var row = self.table.fnGetData(aPos[0]);
 
-				var file = row.file.split('/');
-				var line = row.line;
-				line = parseInt(line, 10) - 1; // CodeMirror Start Line Number --> 0
+					var file = row.file.split('/');
+					var line = row.line;
+					line = parseInt(line, 10) - 1; // CodeMirror Start Line Number --> 0
 
-				var filename = file.pop();
-				filename = filename.split(':')[0];
-				var filepath = file.join('/') + '/';
+					var filename = file.pop();
+					filename = filename.split(':')[0];
+					var filepath = file.join('/') + '/';
 
-				var w = core.module.layout.workspace.window_manager.get_window(filepath, filename);
-				if (w) {
-					w.activate();
-					w.editor.editor.setCursor(line);
+					var w = core.module.layout.workspace.window_manager.get_window(filepath, filename);
+					if (w) {
+						w.activate();
+						w.editor.editor.setCursor(line);
+					} else {
+						$(core).one(filepath + '/' + filename + '.window_loaded', function() {
+							var __w = core.module.layout.workspace.window_manager.get_window(filepath, filename);
+							__w.editor.editor.setCursor(line);
+						});
+
+						core.module.layout.workspace.window_manager.open(filepath, filename, filename.split('.').pop());
+					}
 				} else {
-					$(core).one(filepath + '/' + filename + '.window_loaded', function() {
-						var __w = core.module.layout.workspace.window_manager.get_window(filepath, filename);
-						__w.editor.editor.setCursor(line);
-					});
-
-					core.module.layout.workspace.window_manager.open(filepath, filename, filename.split('.').pop());
+					is_dragging = false;
 				}
 			});
 
@@ -89,6 +95,12 @@ goorm.core.layout.tab.output_manager = {
 					var content = $(parent).children('td:nth-child(3)').text();
 
 					
+				} else if (e.button == 0) {
+					is_dragging = false;
+					 $(document).on('mousemove.output', function() {
+						is_dragging = true;
+						$(document).unbind("mousemove.output");
+					});
 				}
 			});
 		}

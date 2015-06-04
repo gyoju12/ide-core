@@ -819,20 +819,21 @@ goorm.core.edit.find_and_replace = {
 
 		// Get current active_window's editor
 		if (window_manager.window[window_manager.active_window] !== undefined) {
+			var find_query_inputbox = $('#find_query_inputbox');
 
 			$('#bar_find_and_replace').show();
 			$('#far_selector').val(_what).change();
 
-			$('#find_query_inputbox').focus().select();
+			find_query_inputbox.focus().select();
 
 			// this.panel.modal('show');
 			// Get current active_window's CodeMirror editor
-			var editor = window_manager.window[window_manager.active_window].editor.editor;
+			var editor_selection = window_manager.window[window_manager.active_window].editor.editor.getSelection();
 
-			if (editor.getSelection() !== '') {
-				$('#find_query_inputbox').val(editor.getSelection());
+			if (find_query_inputbox.val() === '' && editor_selection !== '') { // only if there isn't previous query
+				find_query_inputbox.val(editor_selection);
 			}
-			$('#find_query_inputbox').select();
+			find_query_inputbox.select();
 
 			if (window_manager.window[window_manager.active_window].searching) { // jeongmin: only when searching
 				core.dialog.search.unmark(); // jeongmin: remove search highlight
