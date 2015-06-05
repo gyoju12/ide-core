@@ -103,6 +103,7 @@ goorm.core.project._delete = {
 						tab_manager.del_by_tab_name('south', 'tab_title_build');
 						tab_manager.del_by_tab_name('south', 'tab_title_run');
 						core.module.layout.project_explorer.refresh();
+						document.title = 'goorm - cloud coding service';
 					} else {
 						switch (core.status.current_project_type) {
 							case 'cpp':

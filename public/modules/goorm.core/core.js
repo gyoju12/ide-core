@@ -889,5 +889,74 @@ goorm.core.prototype = {
 		}
 		localStorage.setItem('version', JSON.stringify(server_version));
 
+	},
+
+	// initialize validation state. Jeong-Min Im.
+	// wrapper (jQuery) : input wrapper
+	init_input_validation: function(wrapper) {
+		wrapper.removeClass('has-success has-error');
+		wrapper.find('.form-control-feedback').removeClass('glyphicon-ok glyphicon-remove').hide(); // icon
+		wrapper.find('.help-block').hide(); // error message
+	},
+
+	// show input validation result. Jeong-Min Im.
+	// dialog (jQuery) : dialog that has input
+	input_validation: function(dialog) {
+		var self = this;
+
+		dialog.find('.has-feedback .form-control').keyup(function() {
+			var localization_msg = self.module.localization.msg;
+			var text = $(this).val();
+			var input_wrapper = $(this).parents('.has-feedback');
+			var help_block = input_wrapper.find('.help-block');
+			var msg = '';
+			var success = function() {
+				input_wrapper.addClass('has-success');
+				input_wrapper.find('.form-control-feedback').addClass('glyphicon-ok').show();
+			};
+			var fail = function() {
+				input_wrapper.addClass('has-error');
+				input_wrapper.find('.form-control-feedback').addClass('glyphicon-remove').show();
+				help_block.html(msg).show();
+			};
+
+			self.init_input_validation(input_wrapper);
+
+			if (text.length) {
+				if (~dialog.attr('id').indexOf('file')) {
+					var test_result = self.module.file.test(text);
+
+					if (test_result) { // invalid
+						msg = localization_msg.alert_invalid_folder_name + '<br/>"' + test_result.join(', ') + '"';
+
+						fail();
+					} else { // valid
+						success();
+					}
+				} else { // project
+					var test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('[project_detailed_type]').attr('project_detailed_type'));
+
+					if (test_result && test_result.char) {
+						var char = '<br/>"' + test_result.char.join(', ') + '"';
+
+						if (test_result.code === 1) {
+							msg = localization_msg.alert_allow_character;
+						} else { // django
+							msg = localization_msg.alert_allow_character2;
+						}
+
+						msg += char;
+
+						fail();
+					} else {
+						success();
+					}
+				}
+			} else { // blank
+				msg = localization_msg.alert_filename_empty;
+
+				fail();
+			}
+		});
 	}
 };

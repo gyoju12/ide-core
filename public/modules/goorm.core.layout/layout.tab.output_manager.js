@@ -223,7 +223,7 @@ goorm.core.layout.tab.output_manager = {
 			}
 
 			data.map(function(obj) {
-				if (obj.type && obj.type === 'warning') {
+				if (obj.type && obj.type.toLowerCase() === 'warning') {
 					obj.type = '<span class="warn_color">Warning</span>';
 					obj.content = '<i class="fa fa-exclamation-triangle fa-1 warn_color"></i> ' + obj.content;
 					self.warn_count++;

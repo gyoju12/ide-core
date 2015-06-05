@@ -87,9 +87,10 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		$(core).on('goorm_login_complete', function() {
-			function get_list_cb(data) {
+			var get_list_cb = function(data) {
 				self.project_data = data;
 				self.make_project_selectbox();
+				
 				core.workspace = {};
 				for (var i in data) {
 					if (data[i].name) {
@@ -98,11 +99,12 @@ goorm.core.project.explorer.prototype = {
 				}
 				if (core.status.current_project_path === '') {
 					self.make_project_list_table();
+				}
 
-				} else {}
-
+				self.project_init = true;
+				
 				$(core).trigger('project_get_list_complete');
-			}
+			};
 
 			
 			//useonly(mode=goorm-oss)
@@ -294,6 +296,7 @@ goorm.core.project.explorer.prototype = {
 			core.status.selected_file = '';
 			core.module.localization.local_apply('#project_selector', 'dict');
 			self.on_project_selectbox_change('');
+			document.title = 'goorm - cloud coding service';
 		});
 
 		$(document).on('click', 'li.project_item', function() {
@@ -314,7 +317,6 @@ goorm.core.project.explorer.prototype = {
 
 	set_default_project_list: function() { // default: DataTable
 		$('#back_to_project_table').click();
-		this.project_init = true;
 	},
 
 	clear: function() {

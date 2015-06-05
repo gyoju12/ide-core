@@ -445,20 +445,26 @@ goorm.plugin.linter = {
 
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 
-		core.module.terminal.terminal.send_command('phpcs --severity=6 --report=json ' + path + '\r', function(output) {
+		core.module.terminal.terminal.send_command('phpcs --severity=5 --report=json ' + path + '\r', function(output) {
 			om.clear();
 			wm.all_clear();
 
 			var result = JSON.parse(output.split('\n')[1].replace('<bg$>', ''));
 			var message = result.files[path].messages;
 			var output_data = [];
+
 			for (var i = 0; i < message.length; i++) {
 				var line = message[i].line;
 
 				e = __window.editor;
 				e_m = e.error_manager;
+				
+				// handle special case temporarily...igonore
+				if (message[i].message === 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.') {
+					continue;
+				}
 
-				if (message[i].type === 'warning') {
+				if (message[i].type.toLowerCase() === 'warning') {
 					__window.editor.warn_count++;
 				} else {
 					__window.editor.err_count++;

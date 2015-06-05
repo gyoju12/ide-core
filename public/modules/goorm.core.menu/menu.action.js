@@ -192,7 +192,7 @@ goorm.core.menu.action = {
 			// jeongmin: get real selected file
 			var selected_path = core.module.layout.project_explorer.get_tree_selected_path();
 
-			if (selected_path.files.length == 0 && selected_path.directorys.length == 0) {
+			if (selected_path.files.length === 0 && selected_path.directorys.length === 0) {
 				if (core.module.layout.workspace.window_manager.active_window > -1) {
 					core.dialog.rename_file.show();
 				} else {
@@ -1113,7 +1113,7 @@ goorm.core.menu.action = {
 		$('[action=delete_bookmark_comment]').off('click').tooltip();
 		$('[action=delete_bookmark_comment]').click(function(e) {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.delete_comment();
 			}
 		});
@@ -1792,6 +1792,15 @@ goorm.core.menu.action = {
 					return; // false prevents closing menu
 				}
 				core.dialog.import_file.show();
+			});
+			
+			$('[action=refresh_folder]').off('click');
+			$('[action=refresh_folder]').on('click', function() {
+				var selected_node = core.status.selected_file;
+				var treeview = core.module.layout.project_explorer.treeview;
+				if (selected_node && treeview && treeview.is_ready) {
+					treeview.refresh_node(selected_node);
+				}
 			});
 			
 		};

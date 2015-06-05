@@ -37,6 +37,8 @@ goorm.core.dialog.wizard.prototype = {
 			var offset_height = (($(window).height() - $dialog.height()) / 2);
 			var offset_width = (($(window).width() - $dialog.width()) / 2);
 			$(this).css('top', offset_height - 30).css('left', offset_width);
+
+			core.init_input_validation($(this).find('.has-feedback')); // clear validator as initial state
 		});
 
 		var handle_next = function() {
@@ -130,6 +132,8 @@ goorm.core.dialog.wizard.prototype = {
 		core.dialog.loaded_count++;
 
 		self.show_previous_button(false);
+
+		core.input_validation(goorm_dialog_container); // bind validator on input
 
 		return this;
 	},

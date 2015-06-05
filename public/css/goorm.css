@@ -3703,3 +3703,12 @@ div.tooltip {
 .cm-tab-wrap-hack .cm-tab {
     border:none;
 }
+
+.form-control-feedback {
+	margin-right: 10px;
+}
+
+.row > .form-control-feedback {
+	margin-right: 0;
+	margin-top: 5px;
+}

@@ -233,7 +233,7 @@ goorm.core.project = {
 		return shared;
 	},
 
-	get_storage: function (project_path) {
+	get_storage: function(project_path) {
 		var storage = 's3';
 
 		if (!project_path) {
@@ -241,7 +241,7 @@ goorm.core.project = {
 		}
 
 		if (project_path && core.workspace && core.workspace[project_path]) {
-			storage = core.workspace[project_path].storage || "s3";
+			storage = core.workspace[project_path].storage || 's3';
 		}
 
 		return storage;
@@ -271,7 +271,7 @@ goorm.core.project = {
 		return path;
 	},
 
-	get_project_path: function (path) { // project name or project path
+	get_project_path: function(path) { // project name or project path
 		var project_path = '';
 
 		if (core.workspace[path]) { // project path
@@ -771,10 +771,10 @@ goorm.core.project = {
 			}
 		});
 
-		var run_file_path = core.status.current_project_path + '/' +build_path + build_main;
+		var run_file_path = core.status.current_project_path + '/' + build_path + build_main;
 
 		if (core.status.current_project_type == 'dart') {
-			run_file_path = core.status.current_project_path + '/' +build_main + '.dart.js';
+			run_file_path = core.status.current_project_path + '/' + build_main + '.dart.js';
 		}
 
 		// console.log(run_file_path, core.status.current_project_path);
@@ -966,6 +966,27 @@ goorm.core.project = {
 				$('#project_new a[href="#new_project_template"]').trigger('click');
 				$('.project_wizard_first_button[project_type=' + type + ']').trigger('click').trigger('focus');
 			});
+		}
+	},
+
+	// test project name's validation. Jeong-Min Im.
+	// detailed_type (String) : project's detailed type
+	// return (Object || Bool) : test result
+	name_test: function(str, detailed_type) {
+		if (detailed_type !== 'django') {
+			return {
+				'char': str.match(/[^\w\-_]/g),
+				'code': 1
+			};
+		} else {
+			if (str === 'django' || str === 'test') { // django has its own django and test folder, so project name is also django and test, it causes error
+				return false;
+			} else {
+				return {
+					'char': str.match(/[^\w_]/g),
+					'code': 2
+				};
+			}
 		}
 	}
 };

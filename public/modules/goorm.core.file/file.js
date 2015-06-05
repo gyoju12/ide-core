@@ -9,14 +9,14 @@
  **/
 
 goorm.core.file = {
-	name_regex: /[^a-zA-Z0-9_\ \-\.\(\)\[\]]/,
+	name_regex: /[^a-zA-Z0-9_\ \-\.\(\)\[\]]/g, // g is needed for show wrong character
 
 	filter: function(_str) {
 		var str = _str || '';
 
 		return str.replace(/([\.\ \(\)\[\]])/g, '\\$1');
 	},
-	
+
 	get_regex: function() {
 		return this.name_regex;
 	},
@@ -24,6 +24,6 @@ goorm.core.file = {
 	test: function(str, _regex) {
 		var regex = _regex || this.name_regex;
 
-		return regex.test(str);
+		return str.match(regex); // if valid, return null, if invalid, return invalid text
 	}
 };

@@ -22,6 +22,7 @@ goorm.core.dialog.prototype = {
 		this.opacity = option.opacity;
 
 		var goorm_dialog_container = $('[id="' + option.id + '"]');
+		var input = goorm_dialog_container.find('input[autofocus]');
 
 		goorm_dialog_container.draggable({});
 		// modal centering optimized - heeje
@@ -39,6 +40,7 @@ goorm.core.dialog.prototype = {
 			}
 			$(this).css('top', offset_height).css('left', offset_width);
 
+			core.init_input_validation($(this).find('.has-feedback'));
 		});
 		// 		goorm_dialog_container.css("overflow", "hidden");
 
@@ -53,7 +55,7 @@ goorm.core.dialog.prototype = {
 		});
 
 		goorm_dialog_container.on('shown.bs.modal', function() {
-			goorm_dialog_container.find('input[autofocus]').focus();
+			input.focus();
 		});
 
 		if (typeof option.handle_ok == 'function') {
@@ -75,6 +77,8 @@ goorm.core.dialog.prototype = {
 		if (this.opacity) {
 			this.insert_opacity_slide(goorm_dialog_container, option.id);
 		}
+
+		core.input_validation(goorm_dialog_container);
 
 		core.dialog.loaded_count++;
 

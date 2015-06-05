@@ -134,7 +134,7 @@ goorm.core.menu.context.prototype = {
 					'display': 'block',
 					'left': e.pageX,
 					'top': e.pageY,
-					'z-index': 1301, // jeongmin: 1050 isn't enough in SCM dialog
+					'z-index': 1301 // jeongmin: 1050 isn't enough in SCM dialog
 				});
 			}, 0);
 		}

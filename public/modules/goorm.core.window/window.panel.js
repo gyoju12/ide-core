@@ -959,6 +959,7 @@ goorm.core.window.panel.prototype = {
 			}
 		} else if (window_manager.window.length <= 0) {
 			window_manager.active_window = -1;
+			document.title = core.status.current_project_name + ' - goorm';
 		}
 
 		$(core).trigger('bookmark_table_refresh'); //jeongmin
@@ -998,7 +999,7 @@ goorm.core.window.panel.prototype = {
 				$('#lint_summury .warn_count').text(' ' + this.editor.warn_count);
 				$('#lint_summury').show();
 				this.enable_edit_menu('Editor');
-
+				document.title = this.filename + ' - goorm';
 			}
 			
 			else {
@@ -1010,7 +1011,7 @@ goorm.core.window.panel.prototype = {
 				$('button[action=do_redo]').addClass('disabled');
 				$('button[action=do_undo]').addClass('disabled');
 				this.disable_edit_menu();
-
+				document.title = this.type + ' - goorm';
 			}
 
 			if (this.type == 'Terminal') { // jeongmin: terminal doesn't have outline
@@ -1026,7 +1027,6 @@ goorm.core.window.panel.prototype = {
 		}
 
 		this.activated = true;
-		
 	},
 
 	init_title: function() {

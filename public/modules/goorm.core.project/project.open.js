@@ -49,7 +49,7 @@ goorm.core.project.open = {
 			// localization_key: 'title_open_project',
 			id: 'dlg_open_project',
 			handle_ok: this.__handle_open,
-			show: $.proxy(this.after_show, this),
+			show: $.proxy(this.after_show, this)
 			// success: function() {	// hidden: storage is deprecated
 			// 	$('#project_open_storage').find('span').html('goormIDE_Storage');
 			// 	$(document).on('click', 'li.open.storage', function() {
@@ -268,6 +268,14 @@ goorm.core.project.open = {
 					core.module.layout.tab_manager.del_by_tab_name('south', 'output');
 					if (output_index >= 0) {
 						core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
+					}
+					
+					if (core.module.layout.workspace.window_manager.window.length === 0) {
+						if (core.status.current_project_name === '') {
+							document.title = 'goorm - cloud coding service';
+						} else {
+							document.title = core.status.current_project_name + ' - goorm';
+						}
 					}
 				}, 700);
 			});

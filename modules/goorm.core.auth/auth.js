@@ -14,6 +14,8 @@ var http = require('http');
 var querystring = require('querystring');
 // var fs = require('fs');
 
+
+
 module.exports = {
 	connect: function(__guest) {
 		this.g_auth_g = __guest;

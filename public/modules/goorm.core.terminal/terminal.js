@@ -81,6 +81,7 @@ goorm.core.terminal.prototype = {
 					$(self.target).parent().css('outline', 'none').css('overflow', 'hidden'); //.css('background-color', 'rgb(70,70,70)');
 
 					$(self).trigger(self.terminal_name + '_open_complete');
+					$(self.target).parent().click();
 				};
 
 				var geometry = self.calculate_geometry();
@@ -95,7 +96,7 @@ goorm.core.terminal.prototype = {
 					'terminal_name': self.terminal_name
 				}, terminal_open_complete);
 
-				self.Terminal.bindKeys(self.target[0]);
+				//self.Terminal.bindKeys(self.target[0]);
 
 				$(self.target).on('dialogfocus', function(event, ui) {
 					setTimeout(function() {

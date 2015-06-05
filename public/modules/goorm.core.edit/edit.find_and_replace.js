@@ -883,7 +883,10 @@ goorm.core.edit.find_and_replace = {
 			// Get current active_window's CodeMirror editor
 			var editor = active_window.editor.editor;
 			// jeongmin: remove all the highlights
-			CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
+			if ($('.find_row:visible').length > 0 && $('#find_query_inputbox').val() === $(active_window.editor.target + ' .cm-searching:first').text()) {
+				CodeMirror.commands.clearSearch(editor);
+			}
+// 			CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
 			this.remove_search_focus(editor);
 			editor.focus(); // jeongmin: user can edit source code right after finding
 		}

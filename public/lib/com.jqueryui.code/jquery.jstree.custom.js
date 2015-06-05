@@ -8179,7 +8179,9 @@
 					}
 				}, this))
 				.on("open_node.jstree", $.proxy(function(e, data) {
-					this.get_node(data.node, true).find('.jstree-clicked').parent().children('.jstree-wholerow').addClass('jstree-wholerow-clicked');
+					if (this.get_node(data.node, true)) {
+						this.get_node(data.node, true).find('.jstree-clicked').parent().children('.jstree-wholerow').addClass('jstree-wholerow-clicked');
+					}
 				}, this))
 				.on("hover_node.jstree dehover_node.jstree", $.proxy(function(e, data) {
 					if (e.type === "hover_node" && this.is_disabled(data.node)) {

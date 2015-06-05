@@ -191,7 +191,8 @@ goorm.core.edit.prototype = {
 		$(target).mouseup(function(e) { // selected string's exist when mouse is up means dragged
 			if (e.which === 1) { // left button
 				self.str_selection = self.editor.getSelection();
-				if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && $('.cm-matchhighlight:first').html() !== self.str_selection && $('#search_badge:visible').length === 0) {
+				if ($(self.target + ' .cm-searching').length === 0 && $('.cm-matchhighlight:first').html() !== self.str_selection && $('#search_badge:visible').length === 0) {
+					CodeMirror.commands.clearSearch(self.editor);
 					goorm.core.edit.find_and_replace.remove_search_focus(self.editor);
 					if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
 						self.is_selectiond = true;
@@ -204,6 +205,8 @@ goorm.core.edit.prototype = {
 						CodeMirror.commands.find(self.editor, reverse, self.str_selection, true); // RegExp makes conflict with Original CodeMirror serach concept. Don't add RegExp
 						goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
 					}
+				} else if ($('.find_row:visible').length > 0 && $('#find_query_inputbox').val() !== $(self.target + ' .cm-searching:first').text()) {
+					CodeMirror.commands.clearSearch(self.editor);
 				}
 			}
 		});
@@ -615,16 +618,17 @@ goorm.core.edit.prototype = {
 			
 		});
 
+		// hidden - mouseup event handles it
 		// set searching hightlight when word is selected. Jeong-Min Im.
-		cm_editor.on('dblclick', function() {
-			if (self.editor.somethingSelected() && core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && $('#search_badge:visible').length === 0) {
-				self.str_selection = self.editor.getSelection();
-				if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
-					CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
-					goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
-				}
-			}
-		});
+		// cm_editor.on('dblclick', function() {
+		// 	if (self.editor.somethingSelected() && $(self.target + ' .cm-searching').length === 0 && $('#search_badge:visible').length === 0) {
+		// 		self.str_selection = self.editor.getSelection();
+		// 		if (self.str_selection.length > 0 && !/[\$\&\+\,\:\;\=\?\@\#\|\'<\>\.\^\*\(\)\[\]\{\}\%\!\-\s\t]/.test(self.str_selection)) { // except special character
+		// 			CodeMirror.commands.find(self.editor, true, RegExp('\\b' + self.str_selection + '\\b'), true);
+		// 			goorm.core.edit.find_and_replace.draw_search_focus(self.editor);
+		// 		}
+		// 	}
+		// });
 
 		// showing drag destination by cursor. Jeong-Min Im.
 		cm_editor.on('dragover', function(cm, e) {
