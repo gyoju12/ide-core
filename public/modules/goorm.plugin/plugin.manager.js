@@ -41,7 +41,6 @@ goorm.plugin.manager = {
 	load: function(index, is_user) {
 		// console.log("load");
 		var self = this;
-		var css_path = null;
 
 		var load_plg = function(plg, callback) {
 			var plugin_name = plg.name;
@@ -134,7 +133,7 @@ goorm.plugin.manager = {
 					});
 				}
 
-				$.getScript(userplugin_path + '/' + plugin_name + '/plug.js', function(plugin) {
+				$.getScript(userplugin_path + '/' + plugin_name + '/plug.js', function() {
 					//Plugin initialization
 					self.plugins[plugin_name] = goorm.plugin[plugin_name.replace('goorm.plugin.', '')];
 					if (self.plugins[plugin_name]) {

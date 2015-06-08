@@ -155,7 +155,7 @@ goorm.core.edit.prototype = {
 
 		
 
-		$(target).mousedown(function(e) {
+		$(target).mousedown(function() {
 			// self.dictionary.hide();
 			// find target editor
 			// var window_manager = core.module.layout.workspace.window_manager;
@@ -174,8 +174,6 @@ goorm.core.edit.prototype = {
 			// Set Current Cursor to parent(panel.js) cursor for set_options
 			//
 			self.parent.cursor = self.editor.getCursor();
-
-			var window_manager = core.module.layout.workspace.window_manager;
 
 			// jeongmin: remove searching highlight
 			if (core.dialog.find_and_replace && !core.dialog.find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
@@ -228,7 +226,7 @@ goorm.core.edit.prototype = {
 			self.set_part_of_option();
 		});
 
-		$(target).on('dialogfocus', function(event, ui) {
+		$(target).on('dialogfocus', function() {
 			var windows = core.module.layout.workspace.window_manager.window;
 
 			$(windows).each(function(index) {
@@ -325,7 +323,7 @@ goorm.core.edit.prototype = {
 
 		var __target = $(self.target);
 
-		cm_editor.on('focus', function(i, e) {
+		cm_editor.on('focus', function() {
 			core.status.focus_obj = self;
 
 			var cur = self.editor.getCursor();
@@ -335,11 +333,11 @@ goorm.core.edit.prototype = {
 			self.update_editor_status(line, ch);
 		});
 
-		cm_editor.on('mousedown', $.throttle(function(i, e) {
+		cm_editor.on('mousedown', $.throttle(function() {
 			self.parent.activate();
 		}, 200));
 
-		cm_editor.on('scroll', $.throttle(function(i, e) {
+		cm_editor.on('scroll', $.throttle(function() {
 			var last_scroll_top = self.scroll_top;
 			var scroll_top = cm_editor.getScrollInfo().top;
 			var changed_scroll_top_val = last_scroll_top - scroll_top;
@@ -376,7 +374,7 @@ goorm.core.edit.prototype = {
 			}
 		});
 
-		cm_editor.on('change', function(i, e, a) { // i = CodeMirror object, e = change informations;
+		cm_editor.on('change', function(i, e) { // i = CodeMirror object, e = change informations;
 			var find_and_replace = core.dialog.find_and_replace;
 
 			if (self.editor.history_mode == 'history') {
@@ -472,8 +470,6 @@ goorm.core.edit.prototype = {
 		});
 
 		cm_editor.on('gutterClick', function(codemirror, linenumber, gutter, clickevent) {
-			var markerHtml;
-			var info = codemirror.lineInfo(linenumber);
 			self.editor.refresh();
 			//set a breakpoint only if a click event is fired by the left mouse button
 			if (clickevent.button === 0) {
@@ -959,8 +955,6 @@ goorm.core.edit.prototype = {
 			this.editor.setOption('readOnly', this.readonly);
 		}
 
-		var tmp_scroll_top = self.scroll_top;
-
 		self.font_manager.refresh(self.font_size);
 		// window.setTimeout(function() {
 		// var temp = $.debounce(function() {
@@ -987,7 +981,7 @@ goorm.core.edit.prototype = {
 
 	
 
-	load: function(filepath, filename, filetype, options, callback) {
+	load: function(filepath, filename, filetype, options) {
 		var self = this;
 
 		options = options || {};
@@ -1113,15 +1107,10 @@ goorm.core.edit.prototype = {
 			project_path: path.split('/')[0]
 		};
 
-		var target_project_name = path.split('/')[0];
-		var target_project_type;
 		var tmpdata = core.workspace;
-
-		var save_complete = false;
 
 		// for close & save
 		//
-		var window_manager = core.module.layout.workspace.window_manager;
 		var __window = self.parent;
 
 		// to show state on Goorm IDE bottom
@@ -1144,9 +1133,6 @@ goorm.core.edit.prototype = {
 						alert.show(localization_msg.alert_save_file_fail);
 						return false;
 					}
-
-					var date = new Date();
-					var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
 					__window.set_saved();
 					__window.tab.set_saved();
@@ -1408,8 +1394,6 @@ goorm.core.edit.prototype = {
 
 	reset_highlighted_line: function(delta, from, to, text) {
 		var old_line = this.highlighted_line;
-		var new_line = null;
-
 		var num = parseInt(old_line, 10);
 		if (isNaN(num)) {
 			return;
@@ -1427,7 +1411,7 @@ goorm.core.edit.prototype = {
 		}
 	},
 
-	reset_breakpoints: function(delta, from, to, text) {
+	reset_breakpoints: function(delta, from) {
 		var old_list = this.breakpoints;
 		var new_list = [];
 
@@ -1453,7 +1437,7 @@ goorm.core.edit.prototype = {
 	},
 
 	//if line is changed, reset bookmarks. Jeong-Min Im.
-	reset_bookmarks: function(delta, from, to, text) {
+	reset_bookmarks: function(delta, from) {
 		var old_list = this.bookmark.bookmarks;
 		var new_list = {};
 

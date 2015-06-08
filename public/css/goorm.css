@@ -3712,3 +3712,10 @@ div.tooltip {
 	margin-right: 0;
 	margin-top: 5px;
 }
+
+.help-block {
+	overflow: hidden;
+	text-align: right;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

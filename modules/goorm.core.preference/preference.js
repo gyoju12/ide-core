@@ -25,13 +25,13 @@ module.exports = {
 		data.message = 'Process Done';
 
 		var get_os_version = function(callback) {
-			exec('uname -sr', function(err, version, stderr) {
+			exec('uname -sr', function(err, version) {
 				callback(version);
 			});
 		};
 
 		var get_node_version = function(callback) {
-			exec('node --version', function(err, version, stderr) {
+			exec('node --version', function(err, version) {
 				callback(version);
 			});
 		};
@@ -122,7 +122,7 @@ module.exports = {
 		var tools_version_info = [];
 
 		evt_get_tools_version.on('gcc', function(data) {
-			exec('gcc --version', function(err, stdout, stderr) {
+			exec('gcc --version', function(err, stdout) {
 				if (!err) {
 					// gcc (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
 					stdout = stdout.split('\n')[0];
@@ -137,7 +137,7 @@ module.exports = {
 		});
 
 		evt_get_tools_version.on('gdb', function(data) {
-			exec('gdb -v', function(err, stdout, stderr) {
+			exec('gdb -v', function(err, stdout) {
 				if (!err) {
 					//   GNU gdb (GDB) 7.5-ubuntu
 					stdout = stdout.split('\n')[0];
@@ -154,7 +154,7 @@ module.exports = {
 		});
 
 		evt_get_tools_version.on('node', function(data) {
-			exec('node --version', function(err, stdout, stderr) {
+			exec('node --version', function(err, stdout) {
 				if (!err) {
 					data.push({
 						'name': 'Node',
@@ -168,7 +168,7 @@ module.exports = {
 
 		evt_get_tools_version.on('java', function(data) {
 			//java version '1.7.0_04'
-			exec('java -version', function(err, stdout, stderr) {
+			exec('java -version', function(err, stdout) {
 				if (!err && stdout !== '') {
 					stdout = stdout.split('\n')[0];
 					// stdout = stdout.split("\"")[1];
@@ -183,7 +183,7 @@ module.exports = {
 		});
 
 		evt_get_tools_version.on('python', function(data) {
-			exec('python -V', function(err, stdout, stderr) {
+			exec('python -V', function(err, stdout) {
 				if (!err && stdout !== '') {
 					stdout = stdout.split(' ')[1];
 					data.push({

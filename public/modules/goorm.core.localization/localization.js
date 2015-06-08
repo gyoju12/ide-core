@@ -458,7 +458,7 @@ goorm.core.localization = {
 					key = 'plugin.' + key;
 				}
 
-				$.each(data, function(key, value) {
+				$.each(data, function(key) {
 					var localizations = $(area + ' [localization_key="' + key + '"]');
 					var helptext = $(area + ' [localization_key="' + key + '"] > .helptext');
 					var helptext_parent = helptext.parent();

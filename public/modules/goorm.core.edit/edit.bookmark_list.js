@@ -13,9 +13,6 @@ goorm.core.edit.bookmark_list = { //initialize bookmark. Jeong-Min Im.
 
 	init: function() {
 		var self = this;
-		var is_there = false; //default bookmark list flag(default or not)
-		var bookmark_tab = $('#bookmark_tab');
-		var bookmark_tab_list = $('#bookmark_tab_list');
 		var bookmark_contents = $('#bookmark_contents');
 
 		this.load_json();

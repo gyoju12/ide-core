@@ -109,14 +109,14 @@ goorm.core.window.panel.prototype = {
 		var window_manager = core.module.layout.workspace.window_manager;
 		var target_active_window = window_manager.active_window;
 
-		var workspace_offset = $('#workspace').offset();
+		// var workspace_offset = $('#workspace').offset();
 
 		var x = 5;
 		var y = 10;
 
 		//var previous_window = window_manager.window[target_active_window];
 
-		var previous_window = window_manager.window[window_manager.window.length - 1];
+		// var previous_window = window_manager.window[window_manager.window.length - 1];
 
 		var flag = 1;
 		var cnt = 0;
@@ -255,7 +255,7 @@ goorm.core.window.panel.prototype = {
 		//useonly(mode=goorm-oss)
 		else if (this.filename == 'debug' && editor == 'Terminal') {
 			this.panel = $('<div id="g_window_' + morphed_title + '" title="' + this.title + '"></div>');
-			$(this.panel).on('mousedown', $.throttle(function(i, e) {
+			$(this.panel).on('mousedown', $.throttle(function() {
 				self.activate();
 			}, 200));
 		}
@@ -396,10 +396,10 @@ goorm.core.window.panel.prototype = {
 					self.activate();
 				}
 			},
-			create: function(event, ui) {
+			create: function() {
 				// $(core).trigger("panel_create" + self.index);	// jeongmin: move to open function for sync
 			},
-			open: function(event, ui) {
+			open: function(event) {
 				var dlg = $(event.target).parent();
 
 				if (options.container !== undefined) {
@@ -411,7 +411,7 @@ goorm.core.window.panel.prototype = {
 				on_panel_create();
 
 				// when all editor panels are closed, hide bottom status bar(line, col)
-				if ($.grep(window_manager.window, function(n, i) {
+				if ($.grep(window_manager.window, function(n) {
 						return n.editor !== null;
 					}).length > 0) {
 					$('#goorm_bottom nav ol:nth-child(3)').show();
@@ -431,7 +431,7 @@ goorm.core.window.panel.prototype = {
 				self.history_edit.redo = 0;
 				self.history_edit.undone = 0;
 			},
-			beforeClose: function(evnet, ui) {
+			beforeClose: function() {
 				if (self.is_saved) {
 					return true;
 				} else {
@@ -470,7 +470,7 @@ goorm.core.window.panel.prototype = {
 					return false;
 				}
 			},
-			close: function(event, ui) {
+			close: function() {
 				//to prevent multiple event calling on debug window closing --heeje
 				// console.log(self.filename);
 				if (self.filename == 'debug') {
@@ -489,14 +489,14 @@ goorm.core.window.panel.prototype = {
 				}
 			},
 
-			resizeStart: function(event, ui) {},
-			resize: $.throttle(function(event, ui) {
+			resizeStart: function() {},
+			resize: $.throttle(function() {
 				self.resize_all();
 			}, 200),
-			resizeStop: function(event, ui) {
+			resizeStop: function() {
 				self.resize_all();
 			},
-			dragStop: function(event, ui) {
+			dragStop: function() {
 				var dlg_content_position = $(event.target).parent().position();
 
 				if (parseInt(self.panel.offsetParent().css('top'), 10) < 0) {
@@ -513,7 +513,7 @@ goorm.core.window.panel.prototype = {
 			//collapsable : true,
 			//closable: true,
 			minimizeLocation: 'left',
-			maximize: function(evt, dlg) {
+			maximize: function() {
 				// if one window panel is maximize, all panel are maximized
 				// 					var left = parseInt($("#goorm_inner_layout_center").offset().left, 10);
 				// 					var top = parseInt($("#goorm_inner_layout_center").offset().top, 10) + 30;
@@ -558,7 +558,7 @@ goorm.core.window.panel.prototype = {
 				// }
 
 			},
-			minimize: function(evt, dlg) {
+			minimize: function() {
 				self.status = 'minimized';
 
 				if (self.tab) {
@@ -566,7 +566,7 @@ goorm.core.window.panel.prototype = {
 				}
 			},
 			// when restore dialog, set drag and resize containment.
-			_restore_maximized: function(evt, dlg) {
+			_restore_maximized: function(evt) {
 				$(evt.target).parent().draggable('option', 'containment', self.workspace);
 				$(evt.target).parent().resizable('option', 'containment', self.workspace);
 				panel.dialog('widget').removeClass('ui-dialog-maximize');
@@ -591,7 +591,7 @@ goorm.core.window.panel.prototype = {
 					core.module.merge.refresh(self.filename);
 				}
 			},
-			_restore_minimized: function(evt, dlg) {
+			_restore_minimized: function(evt) {
 				$(evt.target).parent().draggable('option', 'containment', self.workspace);
 				$(evt.target).parent().resizable('option', 'containment', self.workspace);
 
@@ -737,7 +737,6 @@ goorm.core.window.panel.prototype = {
 		this.is_saved = false;
 	},
 	set_saved: function() {
-		var self = this;
 		var titlebar = null;
 
 		if ($('#' + this.panel[0].id).length !== 0) {
@@ -1032,7 +1031,6 @@ goorm.core.window.panel.prototype = {
 	init_title: function() {
 		var $title_container = $(this.panel).siblings('.ui-dialog-titlebar');
 
-		var project = this.filepath.split('/').shift();
 		// var title = (this.options.title) ? this.options.title : this.title; //annotation - Donguk Kim
 		var title = (this.options.filename) ? this.options.filename : this.title; // jeongmin: in case of url, filename is undefined. So, put title instead.
 
@@ -1120,10 +1118,6 @@ goorm.core.window.panel.prototype = {
 		}
 	},
 
-	init_context_event: function() {
-		var self = this;
-	},
-
 	inArray: function(keyword) {
 		var i;
 
@@ -1167,7 +1161,7 @@ goorm.core.window.panel.prototype = {
 		$(core).trigger('window_panel_plug', [this.filename, this.filepath, this.filetype, this.title]);
 	},
 
-	disable_edit_menu: function(type) {
+	disable_edit_menu: function() {
 
 		$('a[action=do_delete]').parent().addClass('disabled');
 		$('a[action=select_all]').parent().addClass('disabled');
@@ -1180,7 +1174,7 @@ goorm.core.window.panel.prototype = {
 		$('a[action=comment_selected]').parent().addClass('disabled');
 		
 	},
-	enable_edit_menu: function(type) {
+	enable_edit_menu: function() {
 		$('a[action=do_delete]').parent().removeClass('disabled');
 		$('a[action=select_all]').parent().removeClass('disabled');
 		$('a[action=do_go_to_line]').parent().removeClass('disabled');

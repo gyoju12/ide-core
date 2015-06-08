@@ -8,17 +8,10 @@
  * version: 2.0.0
  **/
 
-var exec = require('child_process').exec;
-var execFile = require('child_process').execFile;
-
 // var EventEmitter = require("events").EventEmitter;
 var fs = require('fs-extra');
 var spawn = require('child_process').spawn;
 
-var g_secure = require('../goorm.core.secure/secure.js');
-
-var java_libs = {};
-var java_basic_class_arr = [];
 
 
 module.exports = {
@@ -315,12 +308,12 @@ module.exports = {
 				console.log('error:' + buf.toString());
 			});
 
-			ctags.on('close', function(code) {
+			ctags.on('close', function() {
 				callback(true);
 			});
 		};
 
-		var make_called_data = function(workspace, callback) {
+		var make_called_data = function(workspace) {
 			var ctags_command = './.tags';
 
 			var init = function(workspace) {
@@ -379,7 +372,7 @@ module.exports = {
 				process(ctags_data);
 			});
 
-			ctags.on('close', function(code) {
+			ctags.on('close', function() {
 				var data_file_path = absolute_workspace_path + '/.tags_result';
 				fs.writeFile(data_file_path, JSON.stringify(__called_data), function(err) {
 					if (err) {
@@ -498,7 +491,7 @@ module.exports = {
 					ctags_result += ctags_data;
 				});
 
-				ctags.on('close', function(code) {
+				ctags.on('close', function() {
 					make_response();
 				});
 			}
@@ -590,46 +583,4 @@ module.exports = {
 
 	},
 	*/
-
 };
-
-//java lib ready
-//only once executed when server is on
-var get_ready_for_java = function(package_root_name, callback) {
-	var each_lib_root = package_root_name;
-	//java lib object read
-	if (JSON.stringify(java_libs) == '{}') {
-		fs.readFile('./plugins/goorm.plugin.java/java_basic_libs.json', 'utf-8', function(err, data) {
-			if (err) {
-				return;
-			}
-			try { // jeongmin: try catching
-				java_libs = JSON.parse(data);
-				if (JSON.stringify(java_libs) == '{}') {
-					console.log('no java_basic');
-				}
-			} catch (e) {
-				console.log('getting library ready for java error:', e);
-			}
-		});
-	}
-
-	//class path save
-	if (JSON.stringify(java_basic_class_arr) == '[]') {
-
-		fs.readFile('./plugins/goorm.plugin.java/java_basic_class_arr.json', 'utf-8', function(err, data) {
-			if (err) {
-				return;
-			}
-			try { // jeongmin: try catching
-				java_basic_class_arr = JSON.parse(data);
-			} catch (e) {
-				console.log('getting class ready for java error:', e);
-			}
-		});
-	}
-
-};
-
-//if java plugin included then right action happen else just return;
-get_ready_for_java();

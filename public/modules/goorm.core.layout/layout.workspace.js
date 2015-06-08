@@ -16,7 +16,7 @@ goorm.core.layout.workspace = {
 	ready_files: [],
 	files: [],
 
-	init: function(target) {
+	init: function() {
 
 		
 
@@ -89,7 +89,7 @@ goorm.core.layout.workspace = {
 			return false; // added by ryu
 		});
 
-		ws.on('click', function(e) {
+		ws.on('click', function() {
 			$('#editor_status').hide();
 			$('#lint_summury').hide();
 			if ($('#project_selector').find('.btn-group').hasClass('open')) {

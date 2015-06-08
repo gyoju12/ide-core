@@ -30,7 +30,6 @@ module.exports = {
 		var folder_path = query.folder_path;
 		var grep_option = query.grep_option || {};
 
-		var nodes = {};
 		var make_grep_option = function(options) {
 			var grep = ['-r', '-n', '--context=2', '--null'];
 			var is_true = function(str) {
@@ -63,105 +62,6 @@ module.exports = {
 			grep = grep.concat(['--exclude=.*', '--exclude={bin,file.list}', '--exclude=goorm.manifest', '--exclude-dir=.*']); // jeongmin: in spawn, exclude item should be separated
 
 			return grep;
-		};
-
-		var parser = function(data) {
-			var nodes = {};
-			var node = {};
-			var i = 0;
-			var total_match = 0;
-
-			var temp = [];
-			var saved_filename = '';
-			var current_filename = '';
-			var whole_line = '';
-			var short_filename = '';
-
-			var make_node = function(arr) {
-				var code = [];
-				var context = '';
-				var line_num = 0;
-				var start_line = 0;
-				var match_line = [];
-				if (arr[0] === '') {
-					total_match++;
-					return {
-						start_line: start_line,
-						match_line: [],
-						code: ['Binary file matches']
-					};
-				}
-				start_line = parseInt(arr[0].match(/^\d+/)[0], 10);
-				for (var i = 0; i < arr.length; i++) {
-					context = arr[i].replace(/^\d+/, '');
-					if (context.substr(0, 1) === ':') {
-						match_line.push(parseInt(arr[i].match(/^\d+/)[0], 10));
-						total_match++;
-					}
-					code.push(context.substr(1, context.length - 1));
-				}
-				return {
-					start_line: start_line,
-					match_line: match_line,
-					code: code
-				};
-			};
-
-			if (data.length !== 0) {
-				for (i = 0; i < data.length; i++) {
-					// end of group
-					if (data[i] === '--') {
-						if (temp.length > 0) {
-							node = make_node(temp);
-							short_filename = saved_filename.replace(global.__workspace, '');
-							if (!nodes[short_filename]) {
-								nodes[short_filename] = [];
-							}
-							nodes[short_filename].push(node);
-							temp = [];
-						}
-						saved_filename = '';
-					} else {
-						whole_line = data[i].split(/\0/);
-						// same group same file
-						if (whole_line[0] === saved_filename) {
-							whole_line.shift();
-							temp.push(whole_line.join(/\0/));
-						} else {
-							if (temp.length > 0) {	// same group different file
-								node = make_node(temp);
-								short_filename = saved_filename.replace(global.__workspace, '');
-								if (!nodes[short_filename]) {
-									nodes[short_filename] = [];
-								}
-								nodes[short_filename].push(node);
-								temp = [];
-
-								saved_filename = whole_line.shift();
-								temp.push(whole_line.join(/\0/));
-							} else if (temp.length === 0) {	// start of group
-								saved_filename = whole_line.shift();
-								temp.push(whole_line.join(/\0/));
-							}
-						}
-					}
-				}
-				// last group
-				if (temp.length > 0) {
-					node = make_node(temp);
-					short_filename = saved_filename.replace(global.__workspace, '');
-					if (!nodes[short_filename]) {
-						nodes[short_filename] = [];
-					}
-					nodes[short_filename].push(node);
-					temp = [];
-				}
-
-			}
-			return {
-				nodes: nodes,
-				total_match: total_match
-			};
 		};
 
 		// make grep option
@@ -268,16 +168,27 @@ module.exports = {
 			return grep;
 		};
 
-		var make_xargs_option = function(old_word, new_word) {
-			var xargs = ['-0', 'sed', '-i', '-e'];
+		var make_xargs_option = function(old_word, new_word, options) {
+			var is_true = function(str) {
+				var r = false;
+				if (str && (str === true || str === 'true')) {
+					r = true;
+				}
+
+				return r;
+			};
+			var xargs = ['-0', 'perl', '-pi', '-e'];
 			var replace_string = 's/' + old_word + '/' + new_word + '/g';
+			if (!is_true(options.match_case)) {
+				replace_string += 'i';
+			}
 			xargs = xargs.concat([replace_string]);
 			return xargs;
 		};
 
 		// var grep = spawn('grep', make_grep_option(grep_option));
 		// var xargs_sed = spawn('xargs', make_xargs_option(find_query, replace_query));
-		var xargs_option = make_xargs_option(find_query, replace_query);
+		var xargs_option = make_xargs_option(find_query, replace_query, grep_option);
 		grep_option = make_grep_option(grep_option);
 
 		var owner_roots = [];
@@ -396,14 +307,12 @@ module.exports = {
 
 			var temp = [];
 			var saved_filename = '';
-			var current_filename = '';
 			var whole_line = '';
 			var short_filename = '';
 
 			var make_node = function(arr) {
 				var code = [];
 				var context = '';
-				var line_num = 0;
 				var start_line = 0;
 				var match_line = [];
 				if (arr[0] === '') {
@@ -525,7 +434,6 @@ module.exports = {
 				});
 				command.on('close', function(code) {
 					var res = {};
-					var matched_files_list = [];
 					/*
 						seongho.cha : code === 0 -> no error
 									  code === null -> process stoped by user.
@@ -572,7 +480,6 @@ module.exports = {
 	replace_on_project: function(options, callback) {
 		var self = this;
 		var find_query = options.find_query;
-		var replace_query = options.replace_query;
 		var project_path = g_secure.command_filter(options.project_path);
 		var folder_path = options.folder_path;
 		var grep_option = options.grep_option;
@@ -607,17 +514,16 @@ module.exports = {
 		fs.exists(absolute_path, function(exists) {
 			if (exists) {
 				var option = {};
-				var found = false;
 				// jeongmin: exec is changed to spawn, because exec has small buffer.
 				
 
 				var grep = spawn('grep', [find_query].concat(folder_path).concat(grep_option));
-				var xargs_sed = spawn('xargs', xargs_option);
+				var xargs_perl = spawn('xargs', xargs_option);
 				var _stdout = '';
 
 				grep.stdout.on('data', function(data) {
 					_stdout += data.toString();
-					xargs_sed.stdin.write(data);
+					xargs_perl.stdin.write(data);
 				});
 
 				grep.stderr.on('data', function(data) {
@@ -634,18 +540,18 @@ module.exports = {
 							});
 						}
 					}
-					xargs_sed.stdin.end();
+					xargs_perl.stdin.end();
 				});
 
-				// xargs_sed.stdout.on('data', function(data) {
+				// xargs_perl.stdout.on('data', function(data) {
 				// 	console.log('sed:', data.toString());
 				// });
 
-				xargs_sed.stderr.on('data', function(data) {
-					console.log('[search.js] sed error:', data.toString());
+				xargs_perl.stderr.on('data', function(data) {
+					console.log('[search.js] perl error:', data.toString());
 				});
 
-				xargs_sed.on('close', function(code) {
+				xargs_perl.on('close', function(code) {
 					if (code === 0) {
 						var list = get_replaced_file_list(_stdout);
 						callback({

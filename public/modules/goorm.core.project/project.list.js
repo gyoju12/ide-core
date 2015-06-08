@@ -26,8 +26,6 @@ goorm.core.project.list = function() {
 goorm.core.project.list.prototype = {
 
 	init: function(context, list_callback) {
-		var self = this;
-
 		this.location = context + '_location';
 		this.types = context + '_types';
 		this.list = context + '_list';
@@ -100,7 +98,7 @@ goorm.core.project.list.prototype = {
 
 		// Click Event
 		//
-		$('#' + this.context).on('click', 'tbody td:not(.project_list_check)', function(e) {
+		$('#' + this.context).on('click', 'tbody td:not(.project_list_check)', function() {
 			var aPos = self.table.fnGetPosition(this);
 			var row = self.table.fnGetData(aPos[0]);
 
@@ -284,21 +282,26 @@ goorm.core.project.list.prototype = {
 			if (data && data.length) {
 				information.find('.project_informations').css('display', 'block');
 				information.find('.project_no_information').css('display', 'none');
+
+				var icon_str = [];
 				$(data).each(function(i) {
-					var icon_str = '';
 					var img_src = (this.contents.is_user_plugin ? '/' + core.user.id + '/plugins' : '') + '/goorm.plugin.' + this.contents.type + '/images/' + this.contents.type + '.png';
 					if (this.contents.type == 'edu') {
 						this.contents.detailedtype = 'edu';
 					}
-					icon_str += '<div id="selector_' + this.contents.name + '" value="' + i + '" class="selector_project media" type="' + this.contents.type + '">';
-					icon_str += '<a class="pull-left project_list_img" href="#"><img class="media-object project_list_img" alt="' + this.contents.type + '" src=' + img_src + '></a>';
-					icon_str += '<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis">';
-					icon_str += '<h5>' + $('.project_wizard_second_button[project_type=' + this.contents.type + '][detail_type=' + this.contents.detailedtype.replace(' ', '_') + '] .caption p').text() + '</h5>'; // jeongmin; remove blank in detailedtype
-					icon_str += '<p>' + this.contents.name + '</p>';
-					icon_str += '</div>';
 
-					$(self.list).append(icon_str);
+					icon_str.push(
+						'<div id="selector_' + this.contents.name + '" value="' + i + '" class="selector_project media" type="' + this.contents.type + '">',
+						'<a class="pull-left project_list_img" href="#"><img class="media-object project_list_img" alt="' + this.contents.type + '" src=' + img_src + '></a>',
+						'<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis">',
+						'<h5>' + $('.project_wizard_second_button[project_type=' + this.contents.type + '][detail_type=' + this.contents.detailedtype.replace(' ', '_') + '] .caption p').text() + '</h5>', // jeongmin; remove blank in detailedtype
+						'<p>' + this.contents.name + '</p>',
+						'</div>',
+						'</div>'
+					);
 				});
+
+				$(self.list).append(icon_str.join(''));
 
 				$(self.list + ' .selector_project').click(function() {
 					$(self.list + ' .selector_project').removeClass('selected_button');

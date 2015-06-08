@@ -26,7 +26,7 @@ goorm.core.terminal.background = function(name, target) {
 	this.init(name, target);
 };
 goorm.core.terminal.background.prototype = {
-	init: function(name, target) {
+	init: function(name) {
 		var self = this;
 
 		//if (!target) {

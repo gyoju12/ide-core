@@ -36,7 +36,7 @@ goorm.core.layout.tab = {
 			var $tab = $(o);
 			var position = $tab.attr('position');
 
-			var key = self.tab_key[position] + self.tab_index[position] ++;
+			var key = self.tab_key[position] + self.tab_index[position]++;
 
 			$tab.find('.helptext').html(key);
 		});
@@ -203,26 +203,37 @@ goorm.core.layout.tab = {
 		var action = 'toggle_' + position + '_' + tab.id;
 
 		// var key = ((os === 'mac') ? this.tab_key[position].replace(/Ctrl/g, 'meta') : this.tab_key[position]) + this.tab_index[position]++;
-		var key = this.tab_key[position] + this.tab_index[position] ++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
+		var key = this.tab_key[position] + this.tab_index[position]++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
 		var html_key = (os === 'mac') ? sm.replace_hotkey(key).replace(/ /g, '') : key;
 		var content = (core.module.localization && core.module.localization.msg && core.module.localization.msg[tab.localization.menu]) ? core.module.localization.msg[tab.localization.menu] : tab.content;
 		// Bind Event
 		//
-		core.module.shortcut_manager.bind(action, key, fn);
+		core.module.shortcut_manager.bind(action, key, function(e) {
+			var index = parseInt(e.data.slice(-1));
+
+			if (index) { // just toggle nth tab as default
+				core.module.layout.select({
+					'index': index - 1,
+					'position': position
+				});
+			}
+
+			fn(e);
+		});
 
 		// Make UI (MainMenu - Perpectives & All ShortCut)
 		//
 		var li = '<li class="' + action + '" key="' + key + '">' +
-					'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '">' +
-						content +
-						'<em class="helptext">' + html_key + '</em>' +
-					'</a>' +
-				'</li>';
+			'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '">' +
+			content +
+			'<em class="helptext">' + html_key + '</em>' +
+			'</a>' +
+			'</li>';
 
 		var span = '<span class="' + action + '" localization_key="' + tab.localization.menu + '">' +
-                         content +
-                        '<em class="helptext">' + html_key + '</em>' +
-                    '</span>';
+			content +
+			'<em class="helptext">' + html_key + '</em>' +
+			'</span>';
 
 		$('li.goorm_perspectives_menu_end[position="' + position + '"]').before(li);
 		$('span.goorm_perspectives_menu_end[position="' + position + '"]').before(span);
@@ -241,6 +252,31 @@ goorm.core.layout.tab = {
 		var key = $('li.' + action).attr('key');
 
 		if (key) {
+			// Off Action
+			//
+			$('.' + action).off('click');
+
+			this.tab_index[position]--;
+
+			// decrease other tabs
+			var added_tabs = $('li.' + action).nextAll('[key]');
+			var added_tabs_len = added_tabs.length - 1;
+
+			for (var i = added_tabs_len; 0 <= i; i--) {
+				var added_tab = $(added_tabs[i]);
+				var old_key = added_tab.attr('key');
+				var index = parseInt(old_key.slice(-1));
+				var helptext = added_tab.find('.helptext').html();
+
+				// update shortcut html
+				added_tab.attr('key', old_key.replace(index, index - 1));
+				$('.' + added_tab.attr('class')).find('.helptext').html(helptext.replace(index, index - 1));
+
+				if (i === added_tabs_len) { // last key
+					key = old_key;
+				}
+			}
+
 			// UnBind Event
 			//
 			core.module.shortcut_manager.unbind(action, key);
@@ -249,12 +285,6 @@ goorm.core.layout.tab = {
 			//
 			$('li.' + action).remove();
 			$('span.' + action).remove();
-
-			// Off Action
-			//
-			$('.' + action).off('click');
-
-			this.tab_index[position] --;
 		}
 	},
 
@@ -274,7 +304,7 @@ goorm.core.layout.tab = {
 				'content': ''
 			},
 			fn: function(e) {
-				core.module.layout.select(tab_id);
+				// 				core.module.layout.select(tab_id);	// will be done as default
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -290,7 +320,7 @@ goorm.core.layout.tab = {
 					title: '',
 					content: core.module.localization.msg.tutorial_output_tab,
 					placement: 'top',
-					onShow: function(tour) {
+					onShow: function() {
 						$('#south_tab #' + tab_id).tab('show');
 					}
 				}

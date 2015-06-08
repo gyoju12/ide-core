@@ -47,9 +47,9 @@ goorm.core.tutorial = {
 			reflex: false,
 			template: default_template,
 			backdrop: true,
-			afterGetState: function(key, value) {},
-			afterSetState: function(key, value) {},
-			afterRemoveState: function(key, value) {},
+			afterGetState: function() {},
+			afterSetState: function() {},
+			afterRemoveState: function() {},
 			onStart: function(tour) {
 				if (tour._options.backdrop) {
 					self.tutorial._onResize(function() {
@@ -60,14 +60,14 @@ goorm.core.tutorial = {
 			onEnd: function(tour) {
 				tour.setCurrentStep(0);
 			},
-			onShow: function(tour) {},
-			onShown: function(tour) {},
-			onHide: function(tour) {},
-			onHidden: function(tour) {},
-			onNext: function(tour) {},
-			onPrev: function(tour) {},
-			onPause: function(tour, duration) {},
-			onResume: function(tour, duration) {},
+			onShow: function() {},
+			onShown: function() {},
+			onHide: function() {},
+			onHidden: function() {},
+			onNext: function() {},
+			onPrev: function() {},
+			onPause: function() {},
+			onResume: function() {},
 		});
 
 		$(window).one('beforeunload', function() {
@@ -223,19 +223,19 @@ goorm.core.tutorial = {
 		this.custom_steps.tutorial._options.orphan = true;
 
 		var elem = null;
-		this.custom_steps.tutorial._options.onNext = function(tour) {
+		this.custom_steps.tutorial._options.onNext = function() {
 			elem = self.custom_steps.tutorial.getStep(self.custom_steps.tutorial.getCurrentStep() + 1).element;
 			$(options.content_container).scrollTop($(elem).position().top);
 			$(options.content_container).find('.edu-highlight').removeClass('edu-highlight-yellow');
 		};
 
-		this.custom_steps.tutorial._options.onPrev = function(tour) {
+		this.custom_steps.tutorial._options.onPrev = function() {
 			elem = self.custom_steps.tutorial.getStep(self.custom_steps.tutorial.getCurrentStep() - 1).element;
 			$(options.content_container).scrollTop($(elem).position().top);
 			$(options.content_container).find('.edu-highlight').removeClass('edu-highlight-yellow');
 		};
 
-		this.custom_steps.tutorial._options.onShown = function(tour) {
+		this.custom_steps.tutorial._options.onShown = function() {
 			elem = self.custom_steps.tutorial.getStep(self.custom_steps.tutorial.getCurrentStep()).element;
 			// $(options.content_container).scrollTop($(elem).position().top);
 			$(elem).find('.edu-highlight').addClass('edu-highlight-yellow');
@@ -374,12 +374,12 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.project_table_tut,
 				placement: 'right',
-				onShow: function(tour) {
+				onShow: function() {
 					$('#bubble_toolbar').css('display', 'none');
 					core.module.layout.expand('west');
 					$('#west_tab #gLayoutTab_project').tab('show');
 				},
-				onShown: function(tour) {},
+				onShown: function() {},
 			}, {
 				element: '#goorm_inner_layout_center',
 				title: '',
@@ -394,7 +394,7 @@ goorm.core.tutorial = {
 				content: core.module.localization.tutorial.outline_tab,
 				placement: 'left',
 				detailed_case: 'left_outline',
-				onShown: function(tour) {
+				onShown: function() {
 					$('#east_tab #gLayoutTab_Outline').tab('show');
 				},
 			},
@@ -404,7 +404,7 @@ goorm.core.tutorial = {
 				content: core.module.localization.tutorial.bookmark_tab,
 				placement: 'left',
 				detailed_case: 'left_bookmark',
-				onShown: function(tour) {
+				onShown: function() {
 					$('#east_tab #gLayoutTab_Bookmark').tab('show');
 				},
 			},
@@ -414,10 +414,10 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.debug_tab,
 				placement: 'top',
-				onShow: function(tour) {
+				onShow: function() {
 					core.module.layout.expand('south');
 				},
-				onShown: function(tour) {
+				onShown: function() {
 					$('#south_tab #gLayoutTab_Debug').tab('show');
 				},
 			}, {
@@ -425,7 +425,7 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.terminal_tab,
 				placement: 'top',
-				onShown: function(tour) {
+				onShown: function() {
 					$('#south_tab #gLayoutTab_Terminal').tab('show');
 				},
 			}, {
@@ -433,7 +433,7 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.search_tab,
 				placement: 'top',
-				onShown: function(tour) {
+				onShown: function() {
 					$('#south_tab #gLayoutTab_Search').tab('show');
 				},
 			},
@@ -450,7 +450,7 @@ goorm.core.tutorial = {
 					title: '',
 					content: core.module.localization.tutorial.quiz_tab,
 					placement: 'left',
-					onShown: function(tour) {
+					onShown: function() {
 						$('#east_tab #g_layout_quiz').tab('show');
 					}
 				}
@@ -468,7 +468,7 @@ goorm.core.tutorial = {
 				title: core.module.localization.tutorial.title_new_project,
 				content: core.module.localization.tutorial.new_project,
 				placement: 'bottom',
-				onNext: function(tour) {
+				onNext: function() {
 					$('#main_toolbar button[action=new_project]').click();
 				}
 			}, {
@@ -476,10 +476,10 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.new_project_wizard,
 				placement: 'top',
-				onPrev: function(tour) {
+				onPrev: function() {
 					$('#dlg_new_project').modal('hide');
 				},
-				onShown: function(tour) {
+				onShown: function() {
 					// setTimeout(function () {
 					// 	core.module.tutorial.rearrange_tutorial_backdrop();
 					// }, 150);
@@ -502,10 +502,10 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.project_select_dtype,
 				placement: 'top',
-				onPrev: function(tour) {
+				onPrev: function() {
 					$('#new_project_template .dialog_center .project_wizard_second_button').removeClass('selected_button');
 				},
-				onShown: function(tour) {
+				onShown: function() {
 					$('#new_project_template .dialog_center .project_wizard_second_button')[0].click();
 
 					core.dialog.new_project.select = false;
@@ -515,18 +515,18 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.nextbutton,
 				placement: 'top',
-				onNext: function(tour) {
+				onNext: function() {
 					$('#g_np_btn_next').click();
 				}
 			},
 			// new project wizard step 2
 			{
-				element: "#project_new #select_new_project_storage",
+				element: '#project_new #select_new_project_storage',
 				title: '',
 				content: core.module.localization.tutorial.storage_field,
-				placement: "top",
-				onPrev: function(tour) {
-					$("#g_np_btn_previous").click();
+				placement: 'top',
+				onPrev: function() {
+					$('#g_np_btn_previous').click();
 				}
 			},
 			{
@@ -534,7 +534,7 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.input_project_name,
 				placement: 'top',
-				onPrev: function(argument) {
+				onPrev: function() {
 					$('#g_np_btn_previous').click();
 				}
 			}, {
@@ -561,7 +561,7 @@ goorm.core.tutorial = {
 				title: core.module.localization.tutorial.title_build_project,
 				content: core.module.localization.tutorial.build_project_start,
 				placement: 'bottom',
-				onShow: function(tour) {
+				onShow: function() {
 					$('#bubble_toolbar').css('display', 'block');
 				},
 			});
@@ -582,15 +582,15 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.build_project_select,
 				placement: 'right',
-				onShow: function(tour) {
+				onShow: function() {
 					// 'project' dropdown
 					$($('#goorm-mainmenu .dropdown-toggle')[2]).click();
 				},
-				onPrev: function(tour) {
+				onPrev: function() {
 					// 'project' dropdown
 					$($('#goorm-mainmenu .dropdown-toggle')[2]).click();
 				},
-				onNext: function(tour) {
+				onNext: function() {
 					// 'project' dropdown
 					$('#goorm-mainmenu a[action=build_project]').click();
 				}
@@ -599,7 +599,7 @@ goorm.core.tutorial = {
 				title: '',
 				content: core.module.localization.tutorial.build_project_result,
 				placement: 'top',
-				onShow: function(tour) {
+				onShow: function() {
 					$('#south_tab #gLayoutServer_build').tab('show');
 				},
 			}, {
@@ -623,7 +623,7 @@ goorm.core.tutorial = {
 				title: core.module.localization.tutorial.title_debug_project,
 				content: core.module.localization.tutorial.debug_project_start,
 				placement: 'bottom',
-				onShow: function(tour) {
+				onShow: function() {
 					$('#bubble_toolbar').css('display', 'block');
 				}
 			});

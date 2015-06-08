@@ -70,7 +70,7 @@ goorm.core.terminal.prototype = {
 							}
 						});
 						core.adapt_smart_pad($(self.target)[0]);
-						$(self.target)[0].addEventListener('touchstart', function(e) {
+						$(self.target)[0].addEventListener('touchstart', function() {
 							$(self.target).parent().find('textarea.inputbox').focus();
 						});
 
@@ -98,7 +98,7 @@ goorm.core.terminal.prototype = {
 
 				//self.Terminal.bindKeys(self.target[0]);
 
-				$(self.target).on('dialogfocus', function(event, ui) {
+				$(self.target).on('dialogfocus', function() {
 					setTimeout(function() {
 						$('#workspace').scrollTop(0).scrollLeft(0);
 					}, 100);
@@ -202,7 +202,6 @@ goorm.core.terminal.prototype = {
 					cols: self.cols,
 					rows: self.rows
 				};
-
 				self.send('terminal_resize', {
 					'data': msg,
 					'stringify': true
@@ -334,9 +333,7 @@ goorm.core.terminal.prototype = {
 		
 	},
 
-	write: function (stdout) {
-		var self = this;
-
+	write: function(stdout) {
 		if (this._write !== false) {
 			this.Terminal.write(stdout);
 		}
@@ -390,6 +387,7 @@ goorm.core.terminal.prototype = {
 				self.default_prompt = /.*@.*:.*(\#|\$)/;
 			}
 		}
+		this.resize();
 	},
 
 	focus: function() {

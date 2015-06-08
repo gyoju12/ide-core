@@ -63,7 +63,8 @@ goorm.core.layout.tab.terminal_manager = {
 		tab_manager.tab.id = _id.tab_id;
 		tab_manager.tab_content.id = _id.tab_content_id;
 		tab_manager.localization = {
-			tab: _id.tab_localization
+			tab: _id.tab_localization,
+			'menu': _id.menu_localization
 		};
 
 		return this.create(name, tab_manager, terminal, {
@@ -119,7 +120,7 @@ goorm.core.layout.tab.terminal_manager = {
 				return false;
 			});
 
-			this.list[name].tab.on('click', '.hide_tab', function(e) {
+			this.list[name].tab.on('click', '.hide_tab', function() {
 				hide = true;
 
 				if (self.list[name].tab.parent().hasClass('active')) { // --> show another tab
@@ -138,7 +139,7 @@ goorm.core.layout.tab.terminal_manager = {
 			if (terminal.type === 'background') {
 				this.list[name].terminal = new goorm.core.terminal.background(name);
 				// resize tab
-				this.list[name].tab_inner_content.outerHeight($('#goorm_inner_layout_' + this.convert_position(position)).find('.tab-content').height() - 40);	// 40 for initial clr_view height
+				this.list[name].tab_inner_content.outerHeight($('#goorm_inner_layout_' + this.convert_position(position)).find('.tab-content').height() - 40); // 40 for initial clr_view height
 
 				this.list[name].fix_scroll = true;
 				this.list[name].max_append = false;
@@ -224,7 +225,8 @@ goorm.core.layout.tab.terminal_manager = {
 		return {
 			'tab_id': configs.prev.tab_id + name,
 			'tab_content_id': configs.prev.tab_content_id + name,
-			'tab_localization': 'tab_title_' + name
+			'tab_localization': 'tab_title_' + name,
+			'menu_localization': 'window_bottom_layout_' + name
 		};
 	},
 

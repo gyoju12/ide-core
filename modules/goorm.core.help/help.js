@@ -11,9 +11,7 @@
 var db_m = require('../goorm.core.db/user_comments_info.js');
 var db = db_m.get_db();
 
-var http = require('http');
 var fs = require('fs');
-var querystring = require('querystring');
 
 var g_log = require('../goorm.core.log/log');
 

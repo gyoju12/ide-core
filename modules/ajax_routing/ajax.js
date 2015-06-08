@@ -10,14 +10,12 @@
 
 var fs = require('fs');
 var execFile = require('child_process').execFile;
-var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 
 var EventEmitter = require('events').EventEmitter;
 var path = require('path');
 
 var g_file = require('../goorm.core.file/file');
-var g_preference = require('../goorm.core.preference/preference');
 var g_project = require('../goorm.core.project/project');
 var g_project_workspace = require('../goorm.core.project/project.workspace');
 var g_search = require('../goorm.core.search/search');
@@ -39,8 +37,6 @@ var check_valid_path = function(str) {
 	}
 	return !(/\.\.|~|;|&|\|/.test(str));
 };
-
-
 
 module.exports = {
 	start: function(io) {
@@ -549,7 +545,7 @@ module.exports = {
 								}
 							});
 
-							copy_progress.on('close', function(code, signal) {
+							copy_progress.on('close', function() {
 								var make_manifest = function() {
 									fs.readFile(workspace + '/goorm.manifest', 'utf-8', function(err, file_data) {
 										var contents = JSON.parse(file_data);
@@ -606,8 +602,6 @@ module.exports = {
 								};
 
 								if (msg.replace) {
-									var replace = msg.replace;
-
 									async.map(msg.replace, _replace, function() {
 										make_manifest();
 									});
@@ -656,9 +650,9 @@ module.exports = {
 								};
 								//if msg.chown exist, do chown. if msg.chmod exist, do chmod, when everything done, callback
 								if (msg.chown) {
-									execFile('chown', ['-R', msg.chown, target_path], function(err) {
+									execFile('chown', ['-R', msg.chown, target_path], function() {
 										if (msg.chmod) {
-											execFile('chmod', ['-R', msg.chmod, target_path], function(err) {
+											execFile('chmod', ['-R', msg.chmod, target_path], function() {
 												callback(socket, run_path);
 											});
 										} else {
@@ -666,7 +660,7 @@ module.exports = {
 										}
 									});
 								} else if (msg.chmod) {
-									execFile('chmod', ['-R', msg.chmod, target_path], function(err) {
+									execFile('chmod', ['-R', msg.chmod, target_path], function() {
 										callback(socket, run_path);
 									});
 								} else {
@@ -923,8 +917,6 @@ module.exports = {
 			socket.on('/file/move', function(msg) {
 				var evt = new EventEmitter();
 				var id = null;
-				var user_level = null;
-				var author_level = null;
 
 				
 
@@ -940,8 +932,6 @@ module.exports = {
 			});
 			socket.on('/file/rename', function(msg) {
 				var evt = new EventEmitter();
-				var user_level = null;
-				var author_level = null;
 				var id = null;
 
 				

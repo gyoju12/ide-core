@@ -83,7 +83,7 @@ goorm.core.file._new.untitled_textfile = {
 		this.bind();
 	},
 
-	show: function(context) {
+	show: function() {
 		this.dialog_explorer.init(false, true);
 
 		this.panel.modal('show');

@@ -9,7 +9,7 @@ goorm.core.help.license = {
 
 		this.panel = $('#dlg_help_license');
 
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			self.panel.modal('hide');
 		};
 		this.dialog = new goorm.core.dialog();

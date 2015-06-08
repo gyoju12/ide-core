@@ -15,8 +15,6 @@ goorm.core.preference.info = {
 	
 
 	init: function() {
-		var self = this;
-
 		$(core).on('goorm_login_complete', function() {
 			// _$.get("/preference/get_server_info", null, function(data) {
 			// 	if (data.err_code === 0) {

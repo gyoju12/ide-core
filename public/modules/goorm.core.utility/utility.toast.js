@@ -13,8 +13,6 @@ goorm.core.utility.toast = {
 	default_duration: 0.5,
 
 	init: function() {
-		var self = this;
-
 		this.panel = $('#dlg_toast');
 
 		// give focus to current top modal for keyboard events. Jeong-Min Im.

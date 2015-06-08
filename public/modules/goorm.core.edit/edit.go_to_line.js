@@ -59,7 +59,6 @@ goorm.core.edit.go_to_line = {
 			// this.editor = window_manager.window[window_manager.active_window].editor.editor;	// hidden by jeongmin: editor is decided at show, so no need to do it again
 			// Get input query of this dialog
 			var keyword = $('#edit_toolbar_inputbox').val();
-			var window_manager = core.module.layout.workspace.window_manager;
 			// Call search function of goorm.core.file.findReplace with keyword and editor
 
 			//editor error fix --heeje

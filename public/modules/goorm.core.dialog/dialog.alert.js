@@ -11,7 +11,7 @@
 goorm.core.dialog.alert = function() {
 	this.panel = null;
 	this.message = null;
-	this.icon = null;
+	this.message_container = null;
 };
 
 goorm.core.dialog.alert.prototype = {
@@ -19,8 +19,8 @@ goorm.core.dialog.alert.prototype = {
 		var self = this;
 
 		this.panel = $('#dlg_alert');
-
-		this.icon = '<i class="fa fa-exclamation-circle fa-3x"></i>';
+		this.message_container = this.panel.find('.alert_content_div');
+		
 		this.panel.find('.modal-footer button:last-child').last().click(function() {
 			self.panel.modal('hide');
 		});
@@ -77,17 +77,13 @@ goorm.core.dialog.alert.prototype = {
 	},
 
 	show: function(message, callback) {
-		var filtered_msg = message || '';
-		filtered_msg = core.module.bookmark_list.filtering(filtered_msg.replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
+		var filtered_msg = core.module.bookmark_list.filtering((message || '').replace(/<br\/?>/g, '\n')).replace(/\n/g, '<br/>'); // jeongmin: replacing is for keeping new line alive
 
 		this.message = filtered_msg;
 		this.callback = callback;
 
-		var panelContainer_bd = this.panel.find('#alert_content_container');
-
-		panelContainer_bd.empty();
-		panelContainer_bd.append('<div class="alert_image_div col-md-2">' + this.icon + '</div><div class="alert_content_div col-md-10">' + this.message + '</div>');
-
+		this.message_container.html(this.message);
+		
 		this.panel.modal('show');
 	}
 };

@@ -33,7 +33,7 @@ goorm.core.file._new.folder = {
 			// return true;
 		};
 
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			var localization = core.module.localization.msg;
 			var data = self.dialog_explorer.get_data();
 

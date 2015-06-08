@@ -141,8 +141,6 @@ goorm.core.edit.dictionary.prototype = {
 		var self = this;
 
 		var __target = $(this.target);
-		var dictionary_box = $('ul.dictionary_box', __target);
-		var dictionary_list = $('li.dictionary_list', dictionary_box);
 		var dictionary_desc = $('li.dictionary_desc', __target);
 		var dictionary_list_table = $('ul.dictionary_box table.dictionary_list_table', __target);
 
@@ -178,16 +176,6 @@ goorm.core.edit.dictionary.prototype = {
 				words.push(o);
 			}
 		});
-
-		var is_duplicated = function(keyword, result) {
-			if (result && result.length > 0) {
-				return result.some(function(o) {
-					return (o.keyword == keyword);
-				});
-			} else {
-				return false;
-			}
-		};
 
 		var i = 0;
 
@@ -343,10 +331,6 @@ goorm.core.edit.dictionary.prototype = {
 				var g_ele_target = $(this).attr('id');
 
 				display_desc(g_ele_target);
-
-				var guide_html = (dictionary_desc.css('display') == 'none') ? 0 : dictionary_desc.height();
-				var list_height = dictionary_list.height();
-				var box_height = list_height + guide_html;
 			});
 
 			var dictionary_element = __target.find('li.dictionary_list tr.dictionary_element');
@@ -476,8 +460,6 @@ goorm.core.edit.dictionary.prototype = {
 		var dictionary_box = $('ul.dictionary_box', __target);
 		var workspace = $('#workspace');
 		var dictionary_list = $('li.dictionary_list', __target);
-		var dictionary_list_table = $('ul.dictionary_box table.dictionary_list_table', __target);
-
 		// 		this.hide();
 
 		var dictionary_box_height = dictionary_box.height();
@@ -545,7 +527,7 @@ goorm.core.edit.dictionary.prototype = {
 		this.display = false;
 	},
 
-	search: function(keyword, type, line_content) {
+	search: function(keyword) {
 		if (keyword == '/*' || /[^\-\+=\[{\]}\\\|\;\:\'\"\,<\.>\/\?\!\@#\$%\^&\*\(\)~\`]+/g.test(keyword) === false) {
 			return false;
 		}
@@ -555,7 +537,7 @@ goorm.core.edit.dictionary.prototype = {
 
 		var special_characters = ['\\', '!', '@', '#', '$', '%', '^', '&', '*', '[', ']', '(', ')', '-', '+', '=', '`', '~', '{', '}', ':', ';', '"', '\'', '<', '>', '/', '?', '|'];
 
-		$(special_characters).each(function(i) {
+		$(special_characters).each(function() {
 			keyword = keyword.split(this).join('\\' + this);
 		});
 		// 		if (special_characters.indexOf(keyword) > -1) {
@@ -567,7 +549,7 @@ goorm.core.edit.dictionary.prototype = {
 		// 		keyword_object.keyword = keyword + "";
 		// 		keyword_object.line_content = line_content + "";
 
-		$(self.contents).each(function(i) {
+		$(self.contents).each(function() {
 			if (reg_exp.test(this.keyword)) {
 				self.result.push(this);
 			}
@@ -685,7 +667,6 @@ goorm.core.edit.dictionary.prototype = {
 
 		var $target = $(this.target);
 		var cm_editor = this.editor;
-		var dictionary_box = this.$container;
 
 		// 		if (dictionary_box.get(0)) {	// jeongmin: if there isn't container, error will be occured
 		// 			CodeMirror.on(dictionary_box.get(0), "keydown", function(e) {
@@ -849,7 +830,7 @@ goorm.core.edit.dictionary.prototype = {
 			}
 		}, 200));
 
-		cm_editor.on('scroll', $.throttle(function(i, e) {
+		cm_editor.on('scroll', $.throttle(function() {
 			if (self.display) {
 				self.hide();
 				cm_editor.focus();
@@ -890,7 +871,7 @@ goorm.core.edit.dictionary.prototype = {
 		//             }
 		//         });
 
-		$target.mousedown(function(e) {
+		$target.mousedown(function() {
 			self.hide();
 		});
 

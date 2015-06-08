@@ -11,7 +11,6 @@
 var fs = require('fs-extra');
 var async = require('async');
 // var walk = require('walk');
-var EventEmitter = require('events').EventEmitter;
 var rimraf = require('rimraf');
 var http = require('http');
 var https = require('https');
@@ -463,10 +462,6 @@ module.exports = {
 
 			var load_count = 0;
 			var unload_count = 0;
-			var exist_file = [];
-			var exist_dir = [];
-			var is_exist_file = false;
-			var is_exist_dir = false;
 
 			// 덮어쓰기일 경우, 무조건 write
 			if (query.is_overwrite == 'true') {
@@ -831,7 +826,7 @@ module.exports = {
 					base_path = g_secure.command_filter(base_path);
 					filepath = g_secure.command_filter(filepath);
 
-					fs.mkdirs(base_path + '/' + filepath, function(err) {
+					fs.mkdirs(base_path + '/' + filepath, function() {
 						evt.emit('check_valid_edit', {
 							result: true,
 							code: 10,
@@ -1368,7 +1363,7 @@ module.exports = {
 					});
 
 					// Remove duplicated path.
-					opened_folders.map(function(path, i) {
+					opened_folders.map(function(path) {
 						file_list.map(function(path2, j) {
 							if (path === path2) {
 								file_list.splice(j, 1);

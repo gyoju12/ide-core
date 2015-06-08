@@ -292,8 +292,9 @@ function Terminal(options) {
   this.postfix = '';
 
   this.lines = [];
-  for (var i=0; i<this.rows; i++) {
-    this.lines[i] = this.blankLine();
+  var i = this.rows;
+  while (i--) {
+    this.lines.push(this.blankLine());
   }
 
   this.tabs;

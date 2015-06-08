@@ -53,9 +53,9 @@ goorm.core.edit.find_and_replace = {
 	init_event: function() {
 		var self = this;
 
-		$('#far_selector').on('change', function(e) {
+		$('#far_selector').on('change', function() {
 			var which = $(this).val();
-			var base_height = $('#goorm_inner_layout_center').height() - $('#g_window_tab_list').outerHeight();
+
 			if (which === 'find') {
 				$('.replace_row').hide();
 				$('.search_row').hide();
@@ -178,7 +178,7 @@ goorm.core.edit.find_and_replace = {
 			if ((e.type === 'keydown') && e.keyCode === 13) {
 				e.stopPropagation();
 				e.preventDefault();
-				
+
 				self.find();
 				return false;
 			} else {
@@ -741,7 +741,6 @@ goorm.core.edit.find_and_replace = {
 			return;
 		}
 
-		var self = this;
 		var text = keyword1;
 		var replace = keyword2;
 		var caseFold = true;
@@ -886,7 +885,7 @@ goorm.core.edit.find_and_replace = {
 			if ($('.find_row:visible').length > 0 && $('#find_query_inputbox').val() === $(active_window.editor.target + ' .cm-searching:first').text()) {
 				CodeMirror.commands.clearSearch(editor);
 			}
-// 			CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
+			// 			CodeMirror.commands.clearSearch(editor); // using codemirror search API (clearSearch function (cm)) -> see addon/search.js
 			this.remove_search_focus(editor);
 			editor.focus(); // jeongmin: user can edit source code right after finding
 		}
@@ -912,7 +911,7 @@ goorm.core.edit.find_and_replace = {
 			} else if (option === 'height') {
 				h = $('#find_query_inputbox').outerHeight() + 4;
 				$('.find_row').height(h);
-				
+
 				h = $('#goorm_inner_layout_center').height() - $('#g_window_tab_list').outerHeight() - $('#bar_find_and_replace').height() - 1;
 				$('#workspace').height(h);
 			}

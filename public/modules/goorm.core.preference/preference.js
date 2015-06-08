@@ -23,8 +23,6 @@ goorm.core.preference = {
 	is_saved: false,
 
 	init: function() {
-		var self = this;
-
 		this.panel = $('#dlg_preference');
 
 		this.manager = goorm.core.preference.manager;
@@ -82,7 +80,7 @@ goorm.core.preference = {
 		}
 
 		if (os == 'mac') {
-			$.each(json, function(key, value) {
+			$.each(json, function(key) {
 				if (/^preference.shortcut/.test(key)) {
 					json[key] = json[key].replace(/Ctrl/g, 'Meta');
 				}
@@ -96,7 +94,7 @@ goorm.core.preference = {
 	load: function() {
 		var shortcut = null;
 
-		$.each(core.preference, function(key, value) {
+		$.each(core.preference, function(key) {
 			if (!$.isEmptyObject(localStorage[key])) {
 				if (key != 'plugins') {
 					core.preference[key] = localStorage[key];
@@ -109,7 +107,7 @@ goorm.core.preference = {
 				}
 			} else if (/^preference.shortcut/.test(key)) { //jeongmin: get shortcut from preference
 				if (localStorage.shortcut) { //jeongmin: if only shortcut property is in the localStorage
-					if (!shortcut && typeof(localStorage.shortcut) == 'string') {//jeongmin: if shortcut is valid
+					if (!shortcut && typeof(localStorage.shortcut) == 'string') { //jeongmin: if shortcut is valid
 						shortcut = JSON.parse(localStorage.shortcut); //jeongmin: get shortcut object -> now shortcut variable is not null
 					}
 					if (shortcut[key]) { //jeongmin: if shortcut.key is valid
@@ -277,7 +275,7 @@ goorm.core.preference = {
 		var targets = $(target).children('div.tab-content').children();
 		var key = null;
 
-		$.each(targets, function(index, div) {
+		$.each(targets, function(index) {
 			if ($(targets[index]).attr('plugin') == 'null') {
 				key = preference;
 			} else {
@@ -318,7 +316,7 @@ goorm.core.preference = {
 	fill_dialog: function(preference, tabName) {
 		var targets = tabName ? $('#' + tabName) : $('#preference_tabview').children('div.tab-content').children();
 		var key = null;
-		$.each(targets, function(index, div) {
+		$.each(targets, function(index) {
 			var target_index = $(targets[index]);
 
 			var plugin_name = target_index.attr('plugin');
@@ -390,7 +388,7 @@ goorm.core.preference = {
 
 	init_dialog: function() {
 		var self = this;
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			var check_input_string = check_input();
 			if (check_input_string.length === 0) {
 				self.apply();
@@ -450,7 +448,7 @@ goorm.core.preference = {
 				});
 			});
 
-			$('#preference_tabview').find('.restore_default').click(function(e) {
+			$('#preference_tabview').find('.restore_default').click(function() {
 				var tabName = $(this).parents('.tab-pane').attr('id');
 				self.restore_default(tabName);
 			}).each(function(i) {
@@ -459,9 +457,6 @@ goorm.core.preference = {
 		};
 
 		var load_plugin_tree = function() {
-			var plugin_node = null;
-			var plugin_list = core.module.plugin_manager.list;
-			var plugin_count = plugin_list.length;
 			var tree_data = [];
 
 			var get_plugin_data = function(plugin_name) {

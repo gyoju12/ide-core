@@ -57,7 +57,7 @@ goorm.core.project.property = {
 				if (!self.property.plugins) {
 					self.property.plugins = {};
 				}
-				
+
 				if (contents) {
 					core.workspace[core.status.current_project_path] = $.extend(true, core.workspace[core.status.current_project_path], contents);
 
@@ -84,7 +84,7 @@ goorm.core.project.property = {
 					// last_node && last_node.prev().removeClass("ygtvtn").addClass("ygtvln");
 
 					
-					
+
 					self.fill_dialog(self.property);
 					self.property_default = $.extend(true, {}, self.property);
 
@@ -440,7 +440,7 @@ goorm.core.project.property = {
 
 		this.panel = $('#dlg_project_property');
 		// Handler for OK button
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			self.apply();
 			// self.save(function() {	// hidden: this will be done at apply
 			// 	core.module.layout.project_explorer.refresh();
@@ -474,9 +474,7 @@ goorm.core.project.property = {
 		};
 
 		var load_plugin_tree = function() {
-			var plugin_node = null;
 			var	plugin_list = core.module.plugin_manager.list;
-			var	plugin_count = plugin_list.length;
 			var	tree_data = [];
 
 			var get_plugin_data = function(plugin_name) {

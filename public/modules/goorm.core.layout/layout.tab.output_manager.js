@@ -15,7 +15,6 @@ goorm.core.layout.tab.output_manager = {
 	
 
 	load: function(context) {
-		var self = this;
 		this.context = context;
 		
 		this.create();
@@ -56,7 +55,7 @@ goorm.core.layout.tab.output_manager = {
 
 		if (this.context && this.table) {
 			var is_dragging = false;
-			
+
 			$(document).on('click', '[id="' + this.context + '_table"] tbody td', function() {
 				if (!is_dragging) {
 					var aPos = self.table.fnGetPosition(this);
@@ -95,11 +94,11 @@ goorm.core.layout.tab.output_manager = {
 					var content = $(parent).children('td:nth-child(3)').text();
 
 					
-				} else if (e.button == 0) {
+				} else if (e.button === 0) {
 					is_dragging = false;
-					 $(document).on('mousemove.output', function() {
+					$(document).on('mousemove.output', function() {
 						is_dragging = true;
-						$(document).unbind("mousemove.output");
+						$(document).unbind('mousemove.output');
 					});
 				}
 			});
@@ -157,8 +156,7 @@ goorm.core.layout.tab.output_manager = {
 				if (path) {
 					if (shared && path === core.status.current_project_path) {
 						check = true;
-					}
-					else if (!shared && path === core.status.current_project_name) {
+					} else if (!shared && path === core.status.current_project_name) {
 						check = true;
 					}
 				}

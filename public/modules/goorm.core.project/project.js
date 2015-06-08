@@ -491,7 +491,7 @@ goorm.core.project = {
 								'project_path': project_path,
 								'property': property,
 								'detailed_type': project_data.detailedtype
-							}, function(build_result) {
+							}, function() {
 								_$.get('project/set_bin', { // jeongmin: change bin's group permission
 									project_path: project_path
 								}, function(build_result) {
@@ -563,7 +563,7 @@ goorm.core.project = {
 						'project_path': project_path,
 						'property': property,
 						'detailed_type': project_data.detailedtype
-					}, function(data) {
+					}, function() {
 						
 
 						//useonly(mode=goorm-oss)
@@ -618,8 +618,6 @@ goorm.core.project = {
 	},
 
 	run: function(options, callback) {
-		var self = this;
-
 		this.process_name = null;
 
 		if (options) {

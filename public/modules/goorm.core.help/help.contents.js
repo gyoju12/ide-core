@@ -61,8 +61,6 @@ goorm.core.help.contents = {
 	},
 
 	load: function() {
-		var self = this;
-
 		$.getJSON('help/get_readme_markdown?language=' + localStorage.getItem('language'), function(data) {
 			$('#help_contents_middle').empty();
 			$('#help_contents_middle').append(data.html);

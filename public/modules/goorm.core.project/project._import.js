@@ -17,7 +17,7 @@ goorm.core.project._import = {
 	import_list_done: false, // jeongmin: whether project type list is made or not in import dialog
 	new_list_done: false, // jeongmin: whether project type list is made or not in new project dialog
 
-	init: function(where) {
+	init: function() {
 
 		var self = this;
 
@@ -105,7 +105,7 @@ goorm.core.project._import = {
 		project_desc = project_desc.replace(/<\/?[^>]+(>|$)/g, '');
 
 		var storage = where.find('.select_new_project_storage').val();
-		
+
 		var senddata = {
 			project_type: where.find('.select_import_project_type').attr('project_type'),
 			//
@@ -382,12 +382,12 @@ goorm.core.project._import = {
 		//where.find('.select_import_project_detail_type option')[0].selected = true;
 
 		if (!this.import_list_done && where.attr('id') == 'dlg_import_project') {
-			this.make_project_detailed_type_list(where);
+			this.make_project_detailed_type_list();
 			this.make_project_type_list(where);
 
 			this.import_list_done = true;
 		} else if (!this.new_list_done && where.attr('id') == 'dlg_new_project') {
-			this.make_project_detailed_type_list(where);
+			this.make_project_detailed_type_list();
 			this.make_project_type_list(where);
 
 			this.new_list_done = true;
@@ -399,7 +399,7 @@ goorm.core.project._import = {
 		this.target_zip_file = null;
 		where.find('.project_import_upload_output').text('');
 
-		where.one('shown.bs.modal', function(e) {
+		where.one('shown.bs.modal', function() {
 			where.find('.input_import_project_name').focus();
 		});
 
@@ -433,7 +433,7 @@ goorm.core.project._import = {
 		}
 
 		// make this project type's detail list
-		select_project_type.on('change', function(e) {
+		select_project_type.on('change', function() {
 			var project_type = $(this).val();
 
 			$(this).attr('project_type', project_type);
@@ -454,7 +454,7 @@ goorm.core.project._import = {
 	},
 
 	//only once executed
-	make_project_detailed_type_list: function(where) { //where(jQuery object): new project or import project dialog
+	make_project_detailed_type_list: function() { //where(jQuery object): new project or import project dialog
 		var self = this;
 		var detail_button = $('.project_wizard_second_button');
 

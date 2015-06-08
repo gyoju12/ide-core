@@ -157,7 +157,7 @@ goorm.core.window.tab.prototype = {
 		$('#g_window_tab_list').sortable('refresh');
 
 		// when tab is moved(sorted), arrange indexes of window and tab. Jeong-Min Im.
-		$('#g_window_tab_list').on('sortstop', function(e, ui) {
+		$('#g_window_tab_list').on('sortstop', function() {
 			var new_tab_list = $(this).find('a.goorm_tab_menu'); // moved(sorted) tab list
 			var old_tab_list = window_manager.tab; // original tab list
 			var window_list = window_manager.window;
@@ -239,23 +239,12 @@ goorm.core.window.tab.prototype = {
 		}
 	},
 
-	set_event: function() {
-		var self = this;
-
-	},
-
 	set_modified: function() {
-
 		if (this.saved) { // jeongmin: it is saved by panel, so don't modify
 			this.saved = false; // jeongmin: initialize
 
 			return;
 		}
-
-		var self = this;
-
-		var morphed_title = this.title.split('/').join('_').split('.').join('_');
-
 		$('#' + this.tab_list_id).find('.tab_option').html('<i class="fa fa-asterisk"></i>');
 
 		$('#' + this.tab_list_id).find('.tab_close_button').hide().end()
@@ -267,9 +256,6 @@ goorm.core.window.tab.prototype = {
 	},
 
 	set_saved: function() {
-		var self = this;
-		var morphed_title = this.title.split('/').join('_').split('.').join('_');
-
 		core.module.layout.workspace.window_manager.refresh_all_title(core.status.current_project_path);
 
 		$('#' + this.tab_list_id).find('.tab_option').html('');
@@ -303,8 +289,6 @@ goorm.core.window.tab.prototype = {
 	},
 
 	close: function() {
-		var self = this;
-
 		var cnt = --core.status.current_opened_list[this.filename];
 		var window_manager = core.module.layout.workspace.window_manager;
 		this.tab_manager.off_event(); // jeongmin: off this tab's shortcut
@@ -327,8 +311,6 @@ goorm.core.window.tab.prototype = {
 	},
 
 	empty_tab_dom: function() {
-		var self = this;
-
 		$('#' + this.tab_list_id).parent().remove();
 		$('#' + this.tab_content_id).remove();
 		$('#g_window_tab_list').sortable('refresh');
@@ -377,7 +359,6 @@ goorm.core.window.tab.prototype = {
 	resize_title: function() {
 		var tab_button_width = (this.tab.find('.close').outerWidth() > this.tab.find('.tab_modified_button').outerWidth()) ? this.tab.find('.close').outerWidth() : this.tab.find('.tab_modified_button').outerWidth(); // max width of buttons
 		var tab_contents_width = this.tab.find('.tab_option').outerWidth() + tab_button_width; // width of modifying star and button
-		var temp = null;
 
 		this.tab.find('.tab_title').css('width', this.tab.width() - tab_contents_width - 20 + 'px'); // set the title width as excepted other contents' width from whole tap length
 	}

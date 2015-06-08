@@ -10,7 +10,6 @@
 
 var fs = require('fs-extra');
 var os = require('os');
-var path = require('path');
 var rimraf = require('rimraf');
 var EventEmitter = require('events').EventEmitter;
 var exec = require('child_process').exec;
@@ -44,8 +43,6 @@ module.exports = {
 		var data = {};
 		data.err_code = 0;
 		data.message = 'Process Done';
-		
-		var project_dir = query.project_author + '_' + query.project_name;
 
 		fs.readdir(global.__workspace + '/', function(err, files) {
 			if (err) {
@@ -203,7 +200,7 @@ module.exports = {
 
 							// mount
 							//
-							g_auth_project.mount(account, function(mount, err) {
+							g_auth_project.mount(account, function(mount) {
 								if (mount) {
 
 									// make goorm.manifest
@@ -309,7 +306,6 @@ module.exports = {
 	},
 	
 	do_new: function(query, evt) {
-		var self = this;
 		var data = {};
 		data.err_code = 0;
 		data.message = 'Process Done';
@@ -501,7 +497,6 @@ module.exports = {
 		if (cmd_get_manifest.cmd !== '') {
 			var check_cmd = spawn(cmd_get_list.cmd, cmd_get_list.opt);
 			var stdout = '';
-			var stderr = '';
 			var find = false;
 			var contents = null;
 
@@ -582,9 +577,9 @@ module.exports = {
 
 						// var clear_command = 'rm -rf  ' + project_abs_path + '/* ;';	// hidden by jeongmin: this command is redefined below
 
-						var callback = function(error, stdout, stderr) {
+						var callback = function(error) {
 							//temp_file delete
-							rimraf(file.path, function(err) {});
+							rimraf(file.path, function() {});
 
 							// some codes are hidden by jeongmin: These move codes are no need.
 
@@ -605,7 +600,7 @@ module.exports = {
 
 												// jeongmin: delete mac's additional unzip result directory
 												if (stdout[i] == '__MACOSX') {
-													rimraf(project_abs_path + '/__MACOSX', function(err) {});
+													rimraf(project_abs_path + '/__MACOSX', function() {});
 												}
 											}
 
@@ -637,7 +632,7 @@ module.exports = {
 											fs.writeFile(project_abs_path + '/goorm.manifest', JSON.stringify(save_project_json), {
 												mode: 0700,
 												flag: 'w'
-											}, function(err) {});
+											}, function() {});
 										};
 
 										var lostfound = stdout.indexOf('lost+found');
@@ -689,7 +684,7 @@ module.exports = {
 								evt.emit('project_do_import', data);
 								fs.writeFile(project_abs_path + '/goorm.manifest', JSON.stringify(save_project_json), {
 									mode: 0700
-								}, function(err) {});
+								}, function() {});
 							}
 						};
 
@@ -702,7 +697,7 @@ module.exports = {
 						// jeongmin: first, clear target project
 						var clear_command = spawn('rm', ['-rf', project_abs_path + '/*']);
 						clear_command.stdout.on('data', function() {}); // for preventing process kill
-						clear_command.on('close', function(code) {
+						clear_command.on('close', function() {
 							var _stdout = '';
 							var _stderr = '';
 							var zip_process = null;
@@ -818,12 +813,6 @@ module.exports = {
 
 	get_list: function(project_option, evt, callback) {
 		var projects = [];
-
-		var options = {
-			followLinks: false
-		};
-
-		var is_empty = true;
 
 		//useonly(mode=goorm-oss)
 		fs.readdir(global.__workspace + '/', function(err, files) {
@@ -1271,8 +1260,6 @@ module.exports = {
 		}
 
 		if (/linux/.test(os.platform()) || /darwin/.test(os.platform())) {
-			var exec_option = {};
-
 			query.run_file_path = g_secure.command_filter(query.run_file_path);
 
 			fs.exists(global.__workspace + query.run_file_path, function(exist) {

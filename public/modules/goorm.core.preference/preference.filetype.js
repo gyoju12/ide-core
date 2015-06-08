@@ -144,7 +144,7 @@ goorm.core.preference.filetype = {
 		var new_extension = filetype_detail.find('.file_extension').val();
 
 		// If the file type of current information is already exist, update the information
-		$(core.filetypes).each(function(i) {
+		$(core.filetypes).each(function() {
 			if (this.file_extension == new_extension && this.file_extension != old_extension) {
 				found = true;
 			}
@@ -163,7 +163,7 @@ goorm.core.preference.filetype = {
 				data: {
 					data: filedata
 				},
-				success: function(data) {
+				success: function() {
 					core.module.toast.show(core.module.localization.msg.toast_filetype_save_complete);
 
 					if (self.is_adding === true) {
@@ -175,8 +175,6 @@ goorm.core.preference.filetype = {
 	},
 
 	update: function() {
-		var self = this;
-
 		var found = false;
 		var filetype_detail = $('.filetype_contents').find('.filetype_detail');
 
@@ -260,9 +258,6 @@ goorm.core.preference.filetype = {
 	},
 
 	init_filetype_tab: function() {
-
-		var self = this;
-
 		var data = JSON.parse(external_json['public'].configs.filetype['filetype.json']);
 		core.filetypes = data;
 
@@ -270,7 +265,6 @@ goorm.core.preference.filetype = {
 		// 	core.filetypes[0] = {file_extension: "html", editor: "Editor", description: "Hyper Text Markup Language", type: "Code", mode: "text/html"};
 		// }, 3000);
 
-		var filetypes = core.filetypes;
 		// var list = $(".filetype_contents").find(".filetype_list");
 
 		// For all filetypes,

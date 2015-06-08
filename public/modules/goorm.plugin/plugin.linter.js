@@ -26,7 +26,6 @@ goorm.plugin.linter = {
 		}
 
 		var window_manager = core.module.layout.workspace.window_manager;
-		var result = null;
 		var project_type = core.status.current_project_type;
 		__window.editor.err_count = 0;
 		__window.editor.warn_count = 0;
@@ -72,7 +71,6 @@ goorm.plugin.linter = {
 	},
 
 	lint_codemirror: function(__window, type) {
-		var self = this;
 		var error_data = {};
 		var output_data = [];
 		var error_manager = __window.editor.error_manager;
@@ -136,7 +134,6 @@ goorm.plugin.linter = {
 	lint_build: function(__window, type) {
 		// console.log("----");
 		var self = this;
-		var active_file_type = __window.filetype;
 
 		var property = core.property.plugins['goorm.plugin.' + type];
 		var compiler_type = property['plugin.' + type + '.compiler_type'];
@@ -189,7 +186,6 @@ goorm.plugin.linter = {
 		var wm = core.module.layout.workspace.window_manager;
 
 		var parsed_data = om.parse(result, type);
-		var build_result = (result && result.indexOf('Build Complete') > -1) ? true : false;
 
 		om.clear();
 		wm.all_clear();
@@ -323,7 +319,7 @@ goorm.plugin.linter = {
 		});
 	},
 
-	lint_python: function(__window, type) {
+	lint_python: function(__window) {
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 
 		core.module.terminal.terminal.send_command('pyflakes ' + path + '\r', function(output) {
@@ -370,7 +366,7 @@ goorm.plugin.linter = {
 		});
 	},
 
-	lint_ruby: function(__window, type) {
+	lint_ruby: function(__window) {
 		var self = this;
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
@@ -434,7 +430,7 @@ goorm.plugin.linter = {
 		});
 	},
 
-	lint_php: function(__window, type) {
+	lint_php: function(__window) {
 		var self = this;
 		var om = core.module.layout.tab_manager.output_manager;
 		var wm = core.module.layout.workspace.window_manager;
@@ -458,7 +454,7 @@ goorm.plugin.linter = {
 
 				e = __window.editor;
 				e_m = e.error_manager;
-				
+
 				// handle special case temporarily...igonore
 				if (message[i].message === 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.') {
 					continue;

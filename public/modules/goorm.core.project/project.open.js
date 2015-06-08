@@ -209,7 +209,7 @@ goorm.core.project.open = {
 		}
 	},
 
-	reopen: function(next) {
+	reopen: function() {
 		
 		
 	},
@@ -269,7 +269,7 @@ goorm.core.project.open = {
 					if (output_index >= 0) {
 						core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
 					}
-					
+
 					if (core.module.layout.workspace.window_manager.window.length === 0) {
 						if (core.status.current_project_name === '') {
 							document.title = 'goorm - cloud coding service';

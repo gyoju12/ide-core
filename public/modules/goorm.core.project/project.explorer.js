@@ -90,7 +90,7 @@ goorm.core.project.explorer.prototype = {
 			var get_list_cb = function(data) {
 				self.project_data = data;
 				self.make_project_selectbox();
-				
+
 				core.workspace = {};
 				for (var i in data) {
 					if (data[i].name) {
@@ -102,7 +102,7 @@ goorm.core.project.explorer.prototype = {
 				}
 
 				self.project_init = true;
-				
+
 				$(core).trigger('project_get_list_complete');
 			};
 
@@ -217,8 +217,8 @@ goorm.core.project.explorer.prototype = {
 			var windows = core.module.layout.workspace.window_manager.window;
 			var window_index = -1;
 
-			for (window_index = core.module.layout.workspace.window_manager.window.length - 1; window_index >= 0; window_index--) {
-				var o = core.module.layout.workspace.window_manager.window[window_index];
+			for (window_index = windows.length - 1; window_index >= 0; window_index--) {
+				var o = windows[window_index];
 				var project = o.project;
 
 				if (o.type == 'Editor' && !core.workspace[project]) {
@@ -423,8 +423,6 @@ goorm.core.project.explorer.prototype = {
 	},
 
 	set_context_menu: function() {
-		var self = this;
-
 		this.context_menu_file = new goorm.core.menu.context();
 		this.context_menu_file.init('configs/menu/goorm.core.project/project.explorer.file.html', 'project.explorer.file_context', $('#project_treeview'), '', null, null, true);
 
@@ -625,8 +623,6 @@ goorm.core.project.explorer.prototype = {
 	},
 
 	check_project_list: function(project_path) {
-		var self = this;
-
 		if (this.project_data) {
 			var project_data = this.project_data;
 			var exist = false;
@@ -646,7 +642,7 @@ goorm.core.project.explorer.prototype = {
 	make_project_list_table: function() {
 		var self = this;
 
-		var project_list_table = $('#project_list_table');
+		var $project_list_table = $('#project_list_table');
 
 		var my_project_list = [];
 		var shared_project_list = [];
@@ -663,7 +659,7 @@ goorm.core.project.explorer.prototype = {
 			}
 		}
 
-		$('#project_list_table').html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="project_list_jquery_table" ></table>');
+		$project_list_table.html('<table cellpadding="0" cellspacing="0" border="0" class="display table table-hover table-condensed table-striped" id="project_list_jquery_table" ></table>');
 
 		this.table = $('#project_list_jquery_table').dataTable({
 			'aaData': my_project_list.concat(shared_project_list),
@@ -684,11 +680,11 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		$('#project_explorer_refresh_tool').off('click');
-		$('#project_explorer_refresh_tool').click(function(e) {
+		$('#project_explorer_refresh_tool').click(function() {
 			self.refresh();
 		});
 		$('#project_loading_div').css('display', 'none');
-		$('#project_list_table').css('display', '');
+		$project_list_table.css('display', '');
 
 		$('#project_list_table td').unbind('hover');
 		$('#project_list_table td').hover(function() {
@@ -697,7 +693,7 @@ goorm.core.project.explorer.prototype = {
 			$(this).css('cursor', 'auto');
 		});
 		$('#project_list_table td').unbind('click');
-		$('#project_list_table td').click(function(e) {
+		$('#project_list_table td').click(function() {
 			var aPos = self.table.fnGetPosition(this);
 			var snapshot = self.table.fnGetData(aPos[0]);
 
@@ -752,7 +748,7 @@ goorm.core.project.explorer.prototype = {
 		treeview.off('drop');
 		treeview.off('dragenter');
 		treeview.off('dragleave');
-		treeview.on('dragover', function(e) {
+		treeview.on('dragover', function() {
 				return false;
 			})
 			.on('drop', function(e) {
@@ -798,7 +794,6 @@ goorm.core.project.explorer.prototype = {
 				}
 
 				var tagName = target.prop('tagName');
-				var sibling;
 
 				switch (tagName) {
 					case 'A':
@@ -880,7 +875,7 @@ goorm.core.project.explorer.prototype = {
 		});
 
 		$(document)
-			.off('dnd_start.vakata').on('dnd_start.vakata', function(e, data, helper, more) {
+			.off('dnd_start.vakata').on('dnd_start.vakata', function() {
 				$('head').append('<style id="dnd_custom_style">.jstree-er {display:none !important;}</style>');
 			})
 			.off('dnd_move.vakata').on('dnd_move.vakata', $.throttle(function(e, data) {
@@ -933,7 +928,7 @@ goorm.core.project.explorer.prototype = {
 				// });
 				// }
 
-				nodes.forEach(function(id, index) {
+				nodes.forEach(function(id) {
 					var node = $('#' + id.replace(/[\/|\.]/g, '\\$&'));
 					// 	var is_folder = !node.is('[file_type]');
 					// 	var name = id.split('/').slice(-1)[0];
@@ -1401,7 +1396,7 @@ goorm.core.project.explorer.prototype = {
 			check_callback: function(op, node, parent, pos, more) {
 				var args = arguments;
 				var return_value = true;
-				self.check_callbacks.forEach(function(handle_callback, index) {
+				self.check_callbacks.forEach(function(handle_callback) {
 					return_value = return_value && handle_callback.apply(this, args);
 				});
 

@@ -275,9 +275,6 @@ goorm.core.utility.treeview.prototype = {
 			};
 		}
 
-		var fetch_children = 0;
-		var count = 0;
-
 		_this.tree.jstree({
 			// the `plugins` array allows you to configure the active plugins on this instance
 			'plugins': plugins,
@@ -305,7 +302,7 @@ goorm.core.utility.treeview.prototype = {
 							// if its tree already have full tree then set auto_load_root to false.
 							if (_this.options.auto_load_root === true) {
 								// console.log("# 에서 다음스탭 로딩", obj);
-								var root_node = _this.get_children(obj).then(function() {
+								_this.get_children(obj).then(function() {
 									nodes = arguments;
 									// console.log("루트노드 로딩완료", nodes);
 									if (nodes.length) {
@@ -437,7 +434,7 @@ goorm.core.utility.treeview.prototype = {
 			for (var i = 0; i < data.length; i++) {
 				// Set state for opened folders
 				if (_this.options.state && _this.options.state.core) {
-					_this.options.state.core.open.map(function(opened_file, idx) {
+					_this.options.state.core.open.map(function(opened_file) {
 						var name = data[i].id;
 						if (name === opened_file) {
 							data[i].state = {
@@ -460,7 +457,7 @@ goorm.core.utility.treeview.prototype = {
 			// Filter files on folder only mode.
 			if (_this.options.folder_only) {
 				var tmp = [];
-				data.map(function(node, i) {
+				data.map(function(node) {
 					_this.raw_data[node.id] = node;
 					// add only folders
 					// console.log(node.type, node.id);
@@ -471,7 +468,7 @@ goorm.core.utility.treeview.prototype = {
 				data = tmp;
 				// console.log("data:",data, _this.raw_data);
 			} else {
-				data.map(function(node, i) {
+				data.map(function(node) {
 					// Adjust icon.
 					if (node.type === 'file' && node.li_attr && node.li_attr.file_type) {
 						node.icon = './images/icons/filetype/' + node.li_attr.file_type + '.filetype.png';
@@ -511,7 +508,7 @@ goorm.core.utility.treeview.prototype = {
 			node = node.substring(0, node.length - 1);
 		}
 
-		$.each(this.opened_node, function(key, value) { //delete children's opened flag
+		$.each(this.opened_node, function(key) { //delete children's opened flag
 			if (key.indexOf(node) === 0) {
 				delete self.opened_node[key];
 			}

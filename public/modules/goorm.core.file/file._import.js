@@ -66,7 +66,7 @@ goorm.core.file._import = {
 				// 	$("button[localization_key=common_target]").blur();
 				// });
 
-				self.input.on('change', function(e) {
+				self.input.on('change', function() {
 					var data = self.dialog_explorer.get_data();
 					if (data.path === '' || data.path === '/') {
 						alert.show(core.module.localization.msg.alert_deny_make_file_in_workspace_root);
@@ -213,7 +213,7 @@ goorm.core.file._import = {
 			});
 
 			var _path;
-			
+
 			if (where === 'dialog') {
 				_path = self.dialog_explorer.get_data().path;
 			} else {
@@ -303,7 +303,6 @@ goorm.core.file._import = {
 
 			if (self.upload_file_name) { // jeongmin: close opened windows and reopen these windows
 				var window_manager = layout.workspace.window_manager;
-				var opening_window = [];
 
 				for (var i = window_manager.window.length - 1; 0 <= i; i--) {
 					for (var j = self.upload_file_name.length - 1; 0 <= j; j--) {

@@ -19,7 +19,7 @@ goorm.core.menu.context.prototype = {
 		var self = this;
 		this.target = target;
 		if (name == 'none') {
-			$(trigger).on('contextMenu', function(e) {
+			$(trigger).on('contextMenu', function() {
 				return false;
 			});
 		} else {
@@ -111,7 +111,6 @@ goorm.core.menu.context.prototype = {
 	},
 
 	show: function(e) {
-		var max_height = 500;
 		var self = this;
 		if (this.menu) {
 			var current_file = $(e.target).parent().attr('path');

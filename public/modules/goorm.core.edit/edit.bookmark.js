@@ -134,7 +134,6 @@ goorm.core.edit.bookmark.prototype = {
 
 	//make bookmark list in the outline tab. Jeong-Min Im.
 	outline_tab: function(is_added, target_line) {
-		var is_there = false; //'No Bookmark' sign is in the list or not
 		var self = this;
 		var lines = Object.keys(this.bookmarks);
 		var bookmark_table = $('#bookmark_table');

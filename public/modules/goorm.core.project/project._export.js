@@ -118,7 +118,6 @@ goorm.core.project._export = {
 	},
 
 	show: function() {
-		var self = this;
 		// this.dialog_explorer.init(true, true);
 		this.project_list.init('#project_export');
 		this.project_list.set_keydown_event({

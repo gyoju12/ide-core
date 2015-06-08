@@ -21,7 +21,7 @@ goorm.core.file.move = {
 
 		this.panel = $('#dlg_move_file');
 
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			var data = self.dialog_explorer.get_data();
 
 			if (data.path === '') {
@@ -64,8 +64,6 @@ goorm.core.file.move = {
 	},
 
 	show: function() {
-		var self = this;
-
 		this.selected_item = core.module.layout.project_explorer.get_tree_selected_path();
 
 		if (this.selected_item.files.length || this.selected_item.directorys.length) {

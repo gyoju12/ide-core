@@ -1993,7 +1993,11 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_alert" localization_key='dialog_alert'>Alert</h4>
                     </div>
-                    <div id="alert_content_container" class="modal-body row padding-10px"></div>
+                    <div id="alert_content_container" class="modal-body row padding-10px">
+						<div class="alert_image_div col-md-2"><i class="fa fa-exclamation-circle fa-3x"></i></div>
+						<div class="alert_content_div col-md-10">
+						</div>
+					</div>
                     <div class="modal-footer">
                         <button id="g_alert_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
@@ -2011,7 +2015,11 @@
                         <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal_notice" localization_key='dialog_notice'>Notice</h4>
                     </div>
-                    <div id="notice_content_container" class="modal-body row padding-10px"></div>
+                    <div id="notice_content_container" class="modal-body row padding-10px">
+						<div class="notice_image_div col-md-2"><i class="fa fa-bullhorn fa-3x"></i></div>
+						<div class="notice_content_div col-md-10">
+						</div>
+					</div>
                     <div class="modal-footer">
                         <button id="g_nt_btn_ok" class="btn btn-primary" localization_key='ok'>OK</button>
                     </div>
@@ -2203,7 +2211,7 @@
                                         <div class="project_name row has-feedback">
                                             <label for="input_import_project_name" class="col-sm-2 control-label" localization_key="dialog_new_project_name">Project Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" name="input_import_project_name" class="input_import_project_name form-control" />
+                                                <input type="text" name="input_import_project_name" class="input_import_project_name form-control" maxlength="25"/>
 												<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                             </div>
 											<span class="help-block margin-10px pull-right"></span>
@@ -2438,10 +2446,10 @@
 						<div class="row has-feedback">
                             <label for="file_new_target_name" class="col-md-2 control-label" localization_key='common_filename'>File Name</label>
                             <div class="col-md-10">
-                                <input type="text" id="file_new_target_name" class="form-control" autofocus />
+                                <input type="text" id="file_new_target_name" class="form-control" autofocus maxlength="200"/>
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             </div>
-							<span class="help-block margin-10px pull-right"></span>
+							<span class="help-block margin-10px pull-right" style="width: 750px;"></span>
                         </div>
                         <div class="row">
                             <label for="file_new_file_type" class="col-md-2 control-label" localization_key='common_filetype'>File Type</label>
@@ -2603,10 +2611,10 @@
                         <div class="row has-feedback">
                             <label for="folder_new_target_name" class="col-md-3 control-label" localization_key='dialog_file_new_folder_foldername'>Folder Name</label>
                             <div class="col-md-9">
-                                <input type="text" id="folder_new_target_name" class="form-control" />
+                                <input type="text" id="folder_new_target_name" class="form-control" maxlength="200"/>
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             </div>
-							<span class="help-block margin-10px pull-right"></span>
+							<span class="help-block margin-10px pull-right" style="width: 450px;"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -2934,9 +2942,9 @@
                     <div class="modal-body">
 						<div class="row margin-10px has-feedback">
                             <label for="input_rename_new_filename" localization_key="dialog_file_rename_new_name">New Name</label>
-                            <input type="text" id="input_rename_new_filename" class="form-control" />
+                            <input type="text" id="input_rename_new_filename" class="form-control" maxlength="200"/>
 							<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-							<span class="help-block margin-10px pull-right"></span>
+							<span class="help-block margin-10px pull-right" style="width: 350px;"></span>
 							
 							<input type="hidden" id="input_rename_old_filepath" />
                             <input type="hidden" id="input_rename_old_filename" />
@@ -3319,7 +3327,7 @@
                                 <div class="project_name row has-feedback">
                                     <label for="input_import_project_name" class="col-sm-2 control-label" localization_key="dialog_new_project_name">Project Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="input_import_project_name" class="input_import_project_name form-control" />
+                                        <input type="text" name="input_import_project_name" class="input_import_project_name form-control" maxlength="25"/>
 										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     </div>
 									<span class="help-block margin-10px pull-right"></span>
@@ -6243,6 +6251,10 @@
                             <span name="preference.shortcut.window.right_layout_toggle_outline" localization_key="window_right_layout_toggle_outline">
                                 Show Outline
                                 <em class="helptext">Alt + Shift + 6</em>
+                            </span>
+							<span name="preference.shortcut.window.right_layout_toggle_bookmark" localization_key="window_right_layout_toggle_bookmark">
+                                Show Bookmark
+                                <em class="helptext">Alt + 5</em>
                             </span>
                             <span style="display:none;" class="goorm_perspectives_menu_end" position="right"></span>
                             <span name="preference.shortcut.window.bottom_layout_show_hide" localization_key="window_bottom_layout_show_hide">

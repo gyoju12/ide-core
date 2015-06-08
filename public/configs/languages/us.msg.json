@@ -1340,6 +1340,12 @@
 	"tab_title_run": {
 		"value": "Run"
 	},
+	"window_bottom_layout_run": {
+		"value": "Show Run"
+	},
+	"window_bottom_layout_build": {
+		"value": "Show Build"
+	},
 	"tab_title_rebuild": {
 		"value": "Rebuild"
 	},
@@ -1393,5 +1399,8 @@
 	},
 	"msg_project_search": {
 		"value": "Search"
+	},
+	"alert_need_change_name": {
+		"value": "Please change the name."
 	}
 }

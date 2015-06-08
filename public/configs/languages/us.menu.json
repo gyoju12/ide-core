@@ -432,6 +432,9 @@
 					"window_right_layout_toggle_outline": {
 						"value": "Show Outline"
 					},
+					"window_right_layout_toggle_bookmark": {
+						"value": "Show Bookmarks"
+					},
 					"window_bottom_layout_show_hide": {
 						"value": "Bottom Pane Show/Hide"
 					},

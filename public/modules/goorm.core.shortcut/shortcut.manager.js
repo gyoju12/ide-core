@@ -175,7 +175,7 @@ goorm.core.shortcut.manager = {
 			self.temp_shortcut = {}; //initialize
 			self.history = {};
 		});
-		
+
 		$(core).on('on_preference_confirmed', function() {
 			var changed = false;
 			$('#preference_tabview').find('.apply').each(function(i) {
@@ -532,10 +532,9 @@ goorm.core.shortcut.manager = {
 	},
 
 	//change current shortcut. Jeong-Min Im.
-	change_shortcut: function(name, new_shortcut, old_shortcut, theme) { //name: changing shortcut's name, shortcut: new shortcut
+	change_shortcut: function(name, new_shortcut, old_shortcut) { //name: changing shortcut's name, shortcut: new shortcut
 		////// unbind/bind shortcut event //////
 		var action = this.change_event(name, new_shortcut, old_shortcut);
-		var os = this.getOStype();
 
 		if (action) {
 			// if (!theme) { ////// set custom shortcut array //////
@@ -603,7 +602,6 @@ goorm.core.shortcut.manager = {
 	//load custom shortcut from localStorage. Jeong-Min Im.
 	load_shortcut: function() {
 		var data = (localStorage.getItem('shortcut') && localStorage.getItem('shortcut') != 'null' && localStorage.getItem('shortcut') != 'undefined') ? localStorage.getItem('shortcut') : '{}'; //jeongmin: get shortcut from localStorage
-		var os = this.getOStype();
 
 		this.custom_shortcut = JSON.parse(data); //parse json
 
@@ -673,14 +671,14 @@ goorm.core.shortcut.manager = {
 		var os = this.getOStype();
 
 		if (os == 'mac') {
-			this.change_shortcut(duplicate_shortcut[0], 'Alt+Shift+D', 'Meta+Shift+D', true);
+			this.change_shortcut(duplicate_shortcut[0], 'Alt+Shift+D', 'Meta+Shift+D');
 		} else {
-			this.change_shortcut(duplicate_shortcut[0], 'Alt+Shift+D', 'Ctrl+Shift+D', true);
+			this.change_shortcut(duplicate_shortcut[0], 'Alt+Shift+D', 'Ctrl+Shift+D');
 		}
 
 		// tile_left and tile_right can't be binded as meta
-		this.change_shortcut(duplicate_shortcut[1], 'Ctrl+Alt+[', 'Ctrl+Shift+[', true);
-		this.change_shortcut(duplicate_shortcut[2], 'Ctrl+Alt+]', 'Ctrl+Shift+]', true);
+		this.change_shortcut(duplicate_shortcut[1], 'Ctrl+Alt+[', 'Ctrl+Shift+[');
+		this.change_shortcut(duplicate_shortcut[2], 'Ctrl+Alt+]', 'Ctrl+Shift+]');
 
 		// show sublime keymap
 		var keymap_table = $('#shortcut_theme_keymap_table tbody');
@@ -799,8 +797,6 @@ goorm.core.shortcut.manager = {
 		});
 
 		$('input').keyup(function(e) {
-			var ev = e || event;
-
 			if (e.keyCode == 27 || e.keyCode == 13) {
 				
 				//useonly(mode=goorm-oss)
@@ -987,7 +983,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.save_file) {
 			var ctrlsEventLock = false;
 
-			this.hotkeys_fn.save_file = function(e) {
+			this.hotkeys_fn.save_file = function() {
 				if (!self.prevent($('a[action="save_file"]').get(0)) && !ctrlsEventLock) {
 					ctrlsEventLock = true;
 
@@ -1210,8 +1206,6 @@ goorm.core.shortcut.manager = {
 					return false;
 				}
 
-				var window_manager = core.module.layout.workspace.window_manager;
-
 				$('a[action=do_delete]').trigger('click');
 				e.stopPropagation();
 				e.preventDefault();
@@ -1286,7 +1280,7 @@ goorm.core.shortcut.manager = {
 		//Toggle Bookmark (Ctrl+F2). Jeong-Min Im.
 		if (this.hotkeys.toggle_bookmark) {
 			//toggle bookmark. Jeong-Min Im.
-			this.hotkeys_fn.toggle_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
+			this.hotkeys_fn.toggle_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
 					$('a[action=toggle_bookmark]').get(0).click();
 
@@ -1301,7 +1295,7 @@ goorm.core.shortcut.manager = {
 
 		//Next Bookmark (F2). Jeong-Min Im.
 		if (this.hotkeys.next_bookmark) {
-			this.hotkeys_fn.next_bookmark = function(e, editor, context) {
+			this.hotkeys_fn.next_bookmark = function(e, editor) {
 				if (editor) {
 					$('a[action=next_bookmark]').get(0).click();
 
@@ -1318,7 +1312,7 @@ goorm.core.shortcut.manager = {
 		//Prev Bookmark (Shift+F2). Jeong-Min Im.
 		if (this.hotkeys.prev_bookmark) {
 			//go to previous bookmark from current cursor line. Jeong-Min Im.
-			this.hotkeys_fn.prev_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
+			this.hotkeys_fn.prev_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
 					$('a[action=prev_bookmark]').get(0).click();
 
@@ -1334,7 +1328,7 @@ goorm.core.shortcut.manager = {
 		//Clear Bookmark (Ctrl+Shift+F2). Jeong-Min Im.
 		if (this.hotkeys.clear_bookmark) {
 			//clear all bookmarks. Jeong-Min Im.
-			this.hotkeys_fn.clear_bookmark = function(e, editor, context) { //e:event, editor: codemirror, context: edit object
+			this.hotkeys_fn.clear_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
 					$('a[action=clear_bookmark]').get(0).click();
 
@@ -1350,9 +1344,6 @@ goorm.core.shortcut.manager = {
 		//Search (Alt+H)
 		if (this.hotkeys.search) {
 			this.hotkeys_fn.search = function(e) {
-
-				var window_manager = core.module.layout.workspace.window_manager;
-
 				core.dialog.search.show();
 
 				e.stopPropagation();
@@ -1764,8 +1755,6 @@ goorm.core.shortcut.manager = {
 			if (editor) {
 				switch (context.mode) {
 					case 'text/x-java':
-						var cursor = editor.getCursor();
-
 						var postdata = {};
 						postdata.err_java_file = core.status.err_java_file;
 						postdata.missing_symbol = core.status.missing_symbol;
@@ -1994,6 +1983,21 @@ goorm.core.shortcut.manager = {
 			};
 
 			doc_obj.bind('keydown.' + this.make_namespace('right_outline_show', this.hotkeys.right_outline_show), this.hotkeys.right_outline_show, this.hotkeys_fn.right_outline_show);
+		}
+
+		//Right Layout Bookmark (Alt+5)
+		if (this.hotkeys.right_bookmark_show) {
+			this.hotkeys_fn.right_bookmark_show = function(e) {
+				if (!core.status.keydown) {
+					core.module.layout.select('bookmark');
+				}
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('right_bookmark_show', this.hotkeys.right_bookmark_show), this.hotkeys.right_bookmark_show, this.hotkeys_fn.right_bookmark_show);
 		}
 
 		//Bottom Layout Show/Hide (Alt+Shift+B)

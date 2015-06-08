@@ -114,12 +114,11 @@ goorm.core.debug.prototype = {
 		*/
 	},
 
-	init_css: function(argument) {
+	init_css: function() {
 		var debug_layout = $('#debug_tab');
 		var debug_wrapper = $('#debug_wrapper');
 
 		var layout_bottom_height = $('#goorm_inner_layout_bottom .tab-content').height();
-		var layout_bottom_width = $('#goorm_inner_layout_bottom .tab-content').width();
 
 		debug_layout.height(layout_bottom_height);
 		debug_wrapper.height(layout_bottom_height);
@@ -278,10 +277,6 @@ goorm.core.debug.prototype = {
 				$('#g_window_debug').dialog('destroy').remove();
 			});
 		} else {
-			var result = {
-				result: false,
-				code: 6
-			};
 			//core.module.project.display_error_message(result, 'alert');
 		}
 	},
@@ -520,14 +515,13 @@ goorm.core.debug.prototype = {
 	},
 
 	bind_edit_box: function(edit_boxs) {
-		var sendData = {};
 		var ev = {};
 		var self = this;
 		ev.keyDown = 13;
 
 		edit_boxs.addClass('edit_ready');
 
-		edit_boxs.on('blur', '.edit_box', function(e) {
+		edit_boxs.on('blur', '.edit_box', function() {
 			var edit_box = $(this).parent();
 			self.debug_value_change(edit_box);
 		});

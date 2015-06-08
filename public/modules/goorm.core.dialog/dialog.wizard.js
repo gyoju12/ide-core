@@ -98,7 +98,7 @@ goorm.core.dialog.wizard.prototype = {
 		// 	}, 200); // fade animation: 0.15s -> 150
 		// });
 
-		$(document).on('keydown', 'return', function(e) {
+		$(document).on('keydown', 'return', function() {
 			if (confirmation.panel === null || confirmation.panel === undefined) {
 				confirmation.panel = {};
 				confirmation.panel.cfg = {};
@@ -108,7 +108,7 @@ goorm.core.dialog.wizard.prototype = {
 			}
 
 			if (self.buttons && self.panel.cfg.config.visible.value && !core.status.keydown && !alert.panel.cfg.config.visible.value && !notice.panel.cfg.config.visible.value && !confirmation.panel.cfg.config.visible.value) {
-				$(self.buttons).each(function(i) {
+				$(self.buttons).each(function() {
 					if (this.isDefault) {
 						this.hide = function() {};
 						this.handler();

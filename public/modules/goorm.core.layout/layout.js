@@ -46,8 +46,6 @@ goorm.core.layout = {
 
 		self.toolbar_width = 20; // default padding value for calling set_more_toolbar()
 
-		var is_hide = false;
-
 		this.layout = $('body#goorm').layout({
 			enableCursorHotkey: false,
 			west__size: 250,
@@ -100,11 +98,13 @@ goorm.core.layout = {
 				},
 				east__onclose_start: function() {
 					if ($('#chat_joined_panel').css('display') === 'block') {
-						$('#chat_joined_panel').hide('slide', {direction:'right'});
+						$('#chat_joined_panel').hide('slide', {
+							direction: 'right'
+						});
 					}
 				},
 				
-				onresize_end: function(name, elem) {
+				onresize_end: function(name) {
 					var inner_layout = goorm.core.layout.layout.center.children.layout1;
 					if (name == 'south' && inner_layout.state.south.closing) {
 						inner_layout.close('south');
@@ -112,10 +112,10 @@ goorm.core.layout = {
 					self.refresh();
 				}
 			},
-			onload: function(obj, state, options, name) {
+			onload: function() {
 				$('div.goorm_layout').show();
 
-				$('#main_toolbar ul.navbar-nav .grm_toolbar').each(function(i) {
+				$('#main_toolbar ul.navbar-nav .grm_toolbar').each(function() {
 					if ($(this).is(':visible')) {
 						self.toolbar_width += $(this).outerWidth();
 					}
@@ -353,7 +353,7 @@ goorm.core.layout = {
 				$('.ui-layout-resizer-east').removeClass('ui-layout-resizer-temp');
 			});
 		
-		$('#toolbar_more_button').click(function(e) {
+		$('#toolbar_more_button').click(function() {
 			goorm.core.layout.reposition_bubble_toolbar();
 			$('#bubble_toolbar').fadeToggle('fast', function() {
 				// when bubble toolbar show, add click event(click outside of element, hide bubble toolbar)
@@ -391,7 +391,7 @@ goorm.core.layout = {
 			}
 		});
 
-		$(document).on('click', '#goorm-mainmenu .disabled,.dropdown-submenu', function(e) {
+		$(document).on('click', '#goorm-mainmenu .disabled,.dropdown-submenu', function() {
 			return false;
 		});
 
@@ -417,6 +417,7 @@ goorm.core.layout = {
 
 		$(core).on('contextmenu_all_hide', function() {
 			$('#goorm-mainmenu li.dropdown.open').removeClass('open');
+			$('#main_toolbar div.btn-group.open').removeClass('open');
 		});
 
 		$(core).on('goorm_login_complete', function() {
@@ -463,7 +464,7 @@ goorm.core.layout = {
 		$('.ul-layout-resizer-north').unbind('click');
 		$('.ul-layout-resizer-north').unbind('drag');
 		$('.ui-layout-toggler-north').unbind('click');
-		$('.ui-layout-toggler-north').click(function(e) {
+		$('.ui-layout-toggler-north').click(function() {
 			// self.north_layout_toggle(e);
 			var north_state = core.module.layout.layout.north.state;
 			if (!north_state.isClosed) {
@@ -549,7 +550,7 @@ goorm.core.layout = {
 		this.north_step = step;
 	},
 
-	attach_project_explorer: function(target) {
+	attach_project_explorer: function() {
 		this.project_explorer = new goorm.core.project.explorer();
 		this.project_explorer.init();
 	},
@@ -557,11 +558,11 @@ goorm.core.layout = {
 	
 	
 
-	attach_toolbar: function(target) {
+	attach_toolbar: function() {
 		$(core).trigger('context_menu_complete');
 	},
 
-	attach_debug: function(target) {
+	attach_debug: function() {
 		this.debug = new goorm.core.debug();
 		this.debug.init();
 		core.module.debug = this.debug;
@@ -569,7 +570,7 @@ goorm.core.layout = {
 
 	
 
-	attach_terminal: function(target) {
+	attach_terminal: function() {
 		var self = this;
 
 		this.terminal = new goorm.core.terminal();
@@ -580,19 +581,15 @@ goorm.core.layout = {
 		});
 	},
 
-	attach_search: function(target) {
-
-	},
+	attach_search: function() {},
 
 	//attach edit_toolbar. Jeong-Min Im.
-	attach_edit_toolbar: function(target) {
+	attach_edit_toolbar: function() {
 		this.edit_toolbar = goorm.core.edit.toolbar; //jeongmin: declare edit toolbar
 		this.edit_toolbar.init(); //jeongmin: initialize edit toolbar
 	},
 
-	refresh_terminal: function() {
-
-	},
+	refresh_terminal: function() {},
 
 	resize_all: $.debounce(function() {
 		// -- left --
@@ -650,8 +647,6 @@ goorm.core.layout = {
 	}, 50),
 
 	set_more_toolbar: function() {
-		var self = this;
-
 		var $more_button = $('#toolbar_more_button_group');
 
 		var $toolbars = $('#main_toolbar ul.navbar-nav .grm_toolbar').not('.disabled');
@@ -697,17 +692,16 @@ goorm.core.layout = {
 		}
 	},
 
-	set_scroll_ui: function() {
-		var $menus = $('#goorm-mainmenu .dropdown-menu');
-		var ui = '<li class="scroll_controller">Scroll</li>';
-	},
+	set_scroll_ui: function() {},
 
 	refresh: function() {
 		this.resize_all();
 		// self.layout.getUnitByPosition('top').set('height', $('#goorm_mainmenu').height() + $('#goorm_main_toolbar').height() + 55);
 	},
 
-	select: function(tab_name, cb) {
+	// select tab in layout. Jeong-Min Im.
+	// tab_name (String || Object) : tab's name or nth tab in which layout
+	select: function(tab_name) {
 		var $parent = null;
 		var pane = '';
 		var id = '';
@@ -715,90 +709,133 @@ goorm.core.layout = {
 		var plugin_manager = core.module.plugin_manager.plugins['goorm.plugin.' + core.status.current_project_type];
 
 		if (tab_name) {
-			switch (tab_name) {
+			if (typeof tab_name === 'string') {
+				switch (tab_name) {
 
-				/* west */
-				case 'project':
-					id = 'gLayoutTab_project';
-					pane = 'west';
-					break;
+					/* west */
+					case 'project':
+						id = 'gLayoutTab_project';
+						pane = 'west';
+						break;
 
-				case 'packages':
-					id = 'gLayoutTab_Packages';
-					pane = 'west';
+					case 'packages':
+						id = 'gLayoutTab_Packages';
+						pane = 'west';
+						$parent = $('#goorm_left');
+						break;
+
+					case 'cloud':
+						id = 'gLayoutTab_Cloud';
+						pane = 'west';
+						$parent = $('#goorm_left');
+						break;
+
+						/* south */
+					case 'debug':
+						id = 'gLayoutTab_Debug';
+						pane = 'south';
+						$parent = $('#goorm_inner_layout_bottom');
+						break;
+
+					case 'terminal':
+						id = 'gLayoutTab_Terminal';
+						pane = 'south';
+						$parent = $('#goorm_inner_layout_bottom');
+						break;
+
+					case 'search':
+						id = 'gLayoutTab_Search';
+						pane = 'south';
+						$parent = $('#goorm_inner_layout_bottom');
+						break;
+
+						/* east */
+						
+					case 'outline':
+						if (plugin_manager) {
+							if (plugin_manager.outline) {
+								id = 'gLayoutTab_Outline';
+								pane = 'east';
+								$parent = $('#goorm_inner_layout_right');
+							} else {
+
+								return false;
+							}
+						}
+
+						break;
+
+					case 'bookmark':
+						id = 'gLayoutTab_Bookmark';
+						pane = 'east';
+						$parent = $('#goorm_inner_layout_right');
+						break;
+
+					default:
+						if (this.tab_manager.list[tab_name]) {
+							id = tab_name;
+							pane = this.tab_manager.list[tab_name].pane;
+						}
+
+						break;
+				}
+
+				if (pane == 'west') {
 					$parent = $('#goorm_left');
-					break;
-
-				case 'cloud':
-					id = 'gLayoutTab_Cloud';
-					pane = 'west';
-					$parent = $('#goorm_left');
-					break;
-
-					/* south */
-				case 'debug':
-					id = 'gLayoutTab_Debug';
-					pane = 'south';
+				} else if (pane == 'south') {
 					$parent = $('#goorm_inner_layout_bottom');
-					break;
+				} else if (pane == 'east') {
+					$parent = $('#goorm_inner_layout_right');
+				}
 
-				case 'terminal':
-					id = 'gLayoutTab_Terminal';
-					pane = 'south';
-					$parent = $('#goorm_inner_layout_bottom');
-					break;
+				if (id && $parent && pane) {
+					var tab = $parent.find('#' + id);
+					if (tab.length) {
+						tab.click();
+						this.expand(pane);
+						if (tab_name == 'terminal') {
+							if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
+								core.module.layout.terminal.Terminal.focus();
+							}
 
-				case 'search':
-					id = 'gLayoutTab_Search';
-					pane = 'south';
-					$parent = $('#goorm_inner_layout_bottom');
-					break;
-
-					/* east */
-					
-				case 'outline':
-					if (plugin_manager) {
-						if (plugin_manager.outline) {
-							id = 'gLayoutTab_Outline';
-							pane = 'east';
-							$parent = $('#goorm_inner_layout_right');
-						} else {
-
-							return false;
+							$('#terminal').click();
 						}
 					}
+				}
+			} else { // just toggle nth tab
+				switch (tab_name.position) {
+					case 'left':
+						$parent = $('#goorm_left');
+						pane = 'west';
+						break;
 
-					break;
+					case 'bottom':
+						$parent = $('#goorm_inner_layout_bottom');
+						pane = 'south';
+						break;
 
-				default:
-					if (this.tab_manager.list[tab_name]) {
-						id = tab_name;
-						pane = this.tab_manager.list[tab_name].pane;
+					case 'right':
+						$parent = $('#goorm_inner_layout_right');
+						pane = 'east';
+				}
+
+				var tab = $parent.find('.nav-tabs a:eq(' + tab_name.index + ')');
+
+				if (tab.length) {
+					if (~tab.attr('href').indexOf('outline') && !(plugin_manager && plugin_manager.outline)) {
+						return false;
+					} else if (~tab.attr('href').indexOf('terminal')) {
+						var terminal = core.module.layout.terminal.Terminal;
+
+						if (terminal && terminal.focus) {
+							terminal.focus();
+						}
+
+						$('#terminal').click();
 					}
 
-					break;
-			}
-		}
-
-		if (pane == 'west') {
-			$parent = $('#goorm_left');
-		} else if (pane == 'south') {
-			$parent = $('#goorm_inner_layout_bottom');
-		} else if (pane == 'east') {
-			$parent = $('#goorm_inner_layout_right');
-		}
-
-		if (id && $parent && pane) {
-			var tab = $parent.find('#' + id);
-			if (tab.length) {
-				tab.click();
-				this.expand(pane);
-				if (tab_name == 'terminal') {
-					if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
-						core.module.layout.terminal.Terminal.focus();
-					}
-
-					$('#terminal').click();
+					tab.click();
+					this.expand(pane);
 				}
 			}
 		}
@@ -822,7 +859,6 @@ goorm.core.layout = {
 	// pane : north, south, east, west
 	//
 	is_open: function(pane) {
-		var self = this;
 		var __pane = ['north', 'south', 'east', 'west'];
 
 		if (pane && typeof(pane) == 'string' && __pane.indexOf(pane) > -1) {
@@ -837,7 +873,7 @@ goorm.core.layout = {
 		if (pane && typeof(pane) == 'string') {
 
 			if (pane == 'all') {
-				__pane.forEach(function(o, i) {
+				__pane.forEach(function(o) {
 					var parent = self.__get_parent(o);
 					parent.toggle(o);
 				});
@@ -855,7 +891,7 @@ goorm.core.layout = {
 		if (pane && typeof(pane) == 'string') {
 
 			if (pane == 'all') {
-				__pane.forEach(function(o, i) {
+				__pane.forEach(function(o) {
 					var parent = self.__get_parent(o);
 					parent.open(o);
 				});
@@ -873,7 +909,7 @@ goorm.core.layout = {
 		if (pane && typeof(pane) == 'string') {
 
 			if (pane == 'all') {
-				__pane.forEach(function(o, i) {
+				__pane.forEach(function(o) {
 					var parent = self.__get_parent(o);
 					parent.close(o);
 				});
@@ -1011,15 +1047,15 @@ goorm.core.layout = {
 						//  THIS IS A MODAL TEMPLATE
 						var modal_template = '<div class="modal fade" id="ID_FOOTPRINT" tabindex="-1" role="dialog" aria-hidden="true">' +
 							'<div class="modal-dialog" style="width: WIDTH_FOOTPRINT;height: HEIGHT_FOOTPRINT;">' +
-								'<div class="modal-content">' +
-									'<div class="modal-header">' +
-										'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-										'<h4 class="modal-title">TITLE_FOOTPRINT</h4>' +
-									'</div>' +
-									'<div class="modal-body row" >html_contents_FOOTPRINT</div>' +
-								'</div>' +
+							'<div class="modal-content">' +
+							'<div class="modal-header">' +
+							'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+							'<h4 class="modal-title">TITLE_FOOTPRINT</h4>' +
 							'</div>' +
-						'</div> ';
+							'<div class="modal-body row" >html_contents_FOOTPRINT</div>' +
+							'</div>' +
+							'</div>' +
+							'</div> ';
 
 						if (html_contents) {
 
@@ -1062,15 +1098,15 @@ goorm.core.layout = {
 					});
 				} else { // IS HTML CONTENTS
 					var modal_template = '<div class="modal fade" id="ID_FOOTPRINT" tabindex="-1" role="dialog" aria-hidden="true">' +
-							'<div class="modal-dialog" style="width: WIDTH_FOOTPRINT;height: HEIGHT_FOOTPRINT;">' +
-								'<div class="modal-content">' +
-									'<div class="modal-header">' +
-										'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-										'<h4 class="modal-title">TITLE_FOOTPRINT</h4>' +
-									'</div>' +
-									'<div class="modal-body row" >html_contents_FOOTPRINT</div>' +
-								'</div>' +
-							'</div>' +
+						'<div class="modal-dialog" style="width: WIDTH_FOOTPRINT;height: HEIGHT_FOOTPRINT;">' +
+						'<div class="modal-content">' +
+						'<div class="modal-header">' +
+						'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+						'<h4 class="modal-title">TITLE_FOOTPRINT</h4>' +
+						'</div>' +
+						'<div class="modal-body row" >html_contents_FOOTPRINT</div>' +
+						'</div>' +
+						'</div>' +
 						'</div> ';
 
 					// SET ID, TITLE, WIDTH, HEIGHT, html_contents

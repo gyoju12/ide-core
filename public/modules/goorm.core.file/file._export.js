@@ -184,6 +184,7 @@ goorm.core.file._export = {
 			self.filetype = $(this).attr('filetype');
 			self.filepath = $(this).attr('filepath');
 		});
+		
 		$(files).on('click', 'div.folder_item', function() {
 			$(self.dialog_explorer.input_file_name).val('');
 			self.filename = '';

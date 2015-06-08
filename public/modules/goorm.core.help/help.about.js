@@ -19,7 +19,7 @@ goorm.core.help.about = {
 
 		this.panel = $('#dlg_help_about');
 
-		var handle_ok = function(panel) {
+		var handle_ok = function() {
 			self.panel.modal('hide');
 		};
 

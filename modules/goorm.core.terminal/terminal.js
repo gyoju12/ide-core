@@ -23,7 +23,6 @@ if (/v0.10/.test(process.version)) {
 }
 
 
-var utility = require('../../libs/utility.js');
 var os = require('os');
 var platform = null;
 if (/darwin/.test(os.platform())) {
@@ -297,7 +296,7 @@ module.exports = {
 		}
 	},
 
-	exec: function(term, command, special_key) {
+	exec: function(term, command) {
 		if (term) {
 			// if (special_key) { //Special Key
 			// 	term.write(command);
@@ -325,7 +324,7 @@ module.exports = {
 		}
 
 		var child = spawn('cpulimit', ['-l', percent, '-i', '-p', pid]);
-		child.on('error', function(data) {
+		child.on('error', function() {
 			console.log('Failed to start cpulimit.');
 		});
 	}

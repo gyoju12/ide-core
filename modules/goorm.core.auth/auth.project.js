@@ -13,7 +13,6 @@
 var EventEmitter = require('events').EventEmitter;
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
-var spawn = require('child_process').spawn;
 var fs = require('fs');
 var async = require('async');
 var platform = require('os');
@@ -30,7 +29,7 @@ var g_log = require('../goorm.core.log/log');
 var os = {
 
 	// Group Add
-	'get_new_group': function(author) {
+	'get_new_group': function() {
 		var randomStringfunc = function(bits) {
 			var chars;
 			var rand;
@@ -165,7 +164,7 @@ module.exports = {
 		async.each(user_list, function(item, callback) {
 			var user = item;
 
-			self.g_exec(os.user_add(group_name, user), function(result) {
+			self.g_exec(os.user_add(group_name, user), function() {
 				callback();
 			});
 		}, function(err) {
@@ -177,25 +176,11 @@ module.exports = {
 
 	del_user: function(user_list, group_name, callback) {
 		var self = this;
-		var evt = new EventEmitter();
 
-		// evt.on('del_user', function(evt, i) {
-		// 	if (user_list[i]) {
-		// 		// var user = user_list[i].split('_')[0];
-		// 		var user = user_list[i];
-
-		// 		self.g_exec(os.user_del(group_name, user), function(result) {
-		// 			evt.emit('del_user', evt, ++i);
-		// 		});
-		// 	} else {
-		// 		callback(true);
-		// 	}
-		// });
-		// evt.emit('del_user', evt, 0);
 		async.each(user_list, function(item, callback) {
 			var user = item;
 
-			self.g_exec(os.user_del(group_name, user), function(result) {
+			self.g_exec(os.user_del(group_name, user), function() {
 				callback();
 			});
 		}, function(err) {
@@ -210,7 +195,7 @@ module.exports = {
 	
 
 	
-	add_group: function(option, callback) {
+	add_group: function(option) {
 		var self = this;
 
 		var author = option.author; // user id
@@ -220,7 +205,7 @@ module.exports = {
 		var new_group = os.get_new_group(author);
 
 		// 2-1. add group to ubuntu
-		self.g_exec(os.group_generate(author), function(group_generate_result) {
+		self.g_exec(os.group_generate(author), function() {
 
 			// 3. user add
 
@@ -318,7 +303,7 @@ module.exports = {
 
 	// change bin's group permission. Jeong-Min Im.
 	bin_setting: function(project_path, callback) {
-		execFile('chmod', ['-R', '774', global.__workspace + project_path + '/bin'], function(err) {
+		execFile('chmod', ['-R', '774', global.__workspace + project_path + '/bin'], function() {
 			callback();
 		});
 	},

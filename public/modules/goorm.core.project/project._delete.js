@@ -29,7 +29,7 @@ goorm.core.project._delete = {
 		});
 
 		
-		this.__handle_delete = $.debounce(function(panel) { // jeongmin: prevent multiple export
+		this.__handle_delete = $.debounce(function() { // jeongmin: prevent multiple export
 			self.processing = true;
 			$(core).trigger('on_project_before_delete');
 
@@ -131,7 +131,7 @@ goorm.core.project._delete = {
 					self.project_list.init('#project_delete', function() {
 						self.project_list.init_project(); //let's set first project
 						$('#project_delete_list').focus();
-						
+
 						self.processing = false;
 						self.show();
 					});
@@ -318,7 +318,7 @@ goorm.core.project._delete = {
 				continue;
 			}
 
-			core._socket.once('/project/delete', function(data) {
+			core._socket.once('/project/delete', function() {
 				core.module.layout.project_explorer.refresh();
 			}, true);
 			core._socket.emit('/project/delete', {

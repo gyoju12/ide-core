@@ -483,7 +483,7 @@ goorm.core.menu.action = {
 		$('[action=toggle_bookmark]').off('click').tooltip(); //jeongmin: add toggle bookmark menu action
 		$('[action=toggle_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.toggle();
 			}
 		});
@@ -491,7 +491,7 @@ goorm.core.menu.action = {
 		$('[action=next_bookmark]').off('click').tooltip(); //jeongmin: add next bookmark menu action
 		$('[action=next_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.next();
 			}
 		});
@@ -499,7 +499,7 @@ goorm.core.menu.action = {
 		$('[action=prev_bookmark]').off('click').tooltip(); //jeongmin: add prev bookmark menu action
 		$('[action=prev_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.prev();
 			}
 		});
@@ -507,7 +507,7 @@ goorm.core.menu.action = {
 		$('[action=clear_bookmark]').off('click').tooltip(); //jeongmin: add clear bookmark menu action
 		$('[action=clear_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.clear();
 			}
 		});
@@ -532,7 +532,7 @@ goorm.core.menu.action = {
 					core.dialog.find_and_replace.show('replace');
 				}
 			}
-		})
+		});
 
 		$('[action=do_find_previous]').off('click').tooltip();
 		$('[action=do_find_previous]').click(function() {
@@ -1081,7 +1081,7 @@ goorm.core.menu.action = {
 		$('[action=help_license]').off('click').tooltip();
 		$('[action=help_license]').click(function() {
 			core.dialog.help_license.show();
-		})
+		});
 
 		$('[action=help_bug_report]').off('click').tooltip();
 		$('[action=help_bug_report]').click(function() {
@@ -1111,7 +1111,7 @@ goorm.core.menu.action = {
 		});
 
 		$('[action=delete_bookmark_comment]').off('click').tooltip();
-		$('[action=delete_bookmark_comment]').click(function(e) {
+		$('[action=delete_bookmark_comment]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
 			if (editor !== null) {
 				editor.bookmark.delete_comment();
@@ -1121,10 +1121,10 @@ goorm.core.menu.action = {
 		
 		
 		$('a[action=account_logout]').off('click').tooltip();
-		$('a[action=account_logout]').click(function(e) {
+		$('a[action=account_logout]').click(function() {
 			var msg = '';
 			var modified = [];
-			$(goorm.core.window.manager.window).each(function(i) {
+			$(goorm.core.window.manager.window).each(function() {
 				if (!this.is_saved) {
 					modified.push(this);
 					msg = msg + '"' + this.filename + '",';
@@ -1155,7 +1155,7 @@ goorm.core.menu.action = {
 					cancel: function() {},
 					yes: function() {
 						var save_counter = 0;
-						$(modified).each(function(i) {
+						$(modified).each(function() {
 							this.editor.save('logout', function() {
 								save_counter++;
 								if (save_counter >= modified.length) {
@@ -1263,7 +1263,7 @@ goorm.core.menu.action = {
 				core.module.project.is_running = false;
 				$('button[action="stop"]').addClass('debug_inactive');
 				$('button[action="stop"]').attr('isdisabled', 'disabled');
-				$('a[action="stop"]').parent().addClass('disabled')
+				$('a[action="stop"]').parent().addClass('disabled');
 			}
 		});
 
@@ -1369,7 +1369,7 @@ goorm.core.menu.action = {
 		});
 
 		$('[action=debug_terminate]').off('click').tooltip();
-		$('[action=debug_terminate]').click(function(event, is_closed) {
+		$('[action=debug_terminate]').click(function() {
 			if (self.prevent(this) || $(this).find('.debug_inactive').length || $(this).attr('isdisabled')) {
 				return false;
 			}
@@ -1427,7 +1427,7 @@ goorm.core.menu.action = {
 		$('[action=toggle_breakpoint]').off('click').tooltip();
 		$('[action=toggle_breakpoint]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.set_breakpoint(editor.editor.getCursor().line);
 			}
 		});
@@ -1435,7 +1435,7 @@ goorm.core.menu.action = {
 		$('[action=toggle_bookmark]').off('click').tooltip(); //jeongmin: add toggle bookmark menu action
 		$('[action=toggle_bookmark]').click(function() {
 			var editor = core.module.bookmark_list.get_active_editor();
-			if (editor != null) {
+			if (editor !== null) {
 				editor.bookmark.toggle();
 			}
 		});
@@ -1513,7 +1513,6 @@ goorm.core.menu.action = {
 	},
 
 	window_tab_context_menu_init: function() {
-		var self = this;
 		// toggle showing window using tab context menu. Jeong-Min Im.
 		$('[action=show_hide_window]').off('click').tooltip();
 		$('[action=show_hide_window]').click(function() {
@@ -1661,7 +1660,6 @@ goorm.core.menu.action = {
 			$('[action=open_vim_editor]').off('click').tooltip();
 			$('[action=open_vim_editor]').click(function() {
 				var window_manager = core.module.layout.workspace.window_manager;
-				var window_len = window_manager.window.length;
 				var selected_file = core.module.layout.project_explorer.get_tree_selected_path().files;
 
 				for (var i = 0; i < selected_file.length; i++) {
@@ -1712,7 +1710,7 @@ goorm.core.menu.action = {
 			});
 
 			$('[action=new_file_folder_context]').off('click').tooltip();
-			$('[action=new_file_folder_context]').click(function(e) {
+			$('[action=new_file_folder_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
@@ -1735,7 +1733,7 @@ goorm.core.menu.action = {
 			});
 
 			$('[action=new_file_textfile_context]').off('click').tooltip();
-			$('[action=new_file_textfile_context]').click(function(e) {
+			$('[action=new_file_textfile_context]').click(function() {
 				if (self.prevent(this)) {
 					return false;
 				}
@@ -1758,13 +1756,13 @@ goorm.core.menu.action = {
 			});
 
 			$('[action=folder_open_context]').off('click').tooltip();
-			$('[action=folder_open_context]').click(function(e) {
+			$('[action=folder_open_context]').click(function() {
 				var target = core.status.selected_node;
 				core.module.layout.project_explorer.treeview.tree.jstree('open_node', target);
 			});
 
 			$('[action=folder_close_context]').off('click').tooltip();
-			$('[action=folder_close_context]').click(function(e) {
+			$('[action=folder_close_context]').click(function() {
 				var target = core.status.selected_node;
 				core.module.layout.project_explorer.treeview.tree.jstree('close_node', target);
 			});
@@ -1793,7 +1791,7 @@ goorm.core.menu.action = {
 				}
 				core.dialog.import_file.show();
 			});
-			
+
 			$('[action=refresh_folder]').off('click');
 			$('[action=refresh_folder]').on('click', function() {
 				var selected_node = core.status.selected_file;

@@ -49,7 +49,7 @@ goorm.core.search = {
 		});
 
 		$('#search_clear>.refresh-btn').click(function() {
-			$(core).one('event_save_all', function(e) {
+			$(core).one('event_save_all', function() {
 				if (self.last_option !== null) {
 					self.search(self.last_option);
 				} else {
@@ -157,7 +157,7 @@ goorm.core.search = {
 				inputbox_background.scrollLeft(scroll);
 			}
 		};
-		inputbox.bind('keydown keyup keypress change select', function(e) {
+		inputbox.bind('keydown keyup keypress change select', function() {
 			setTimeout(make_shadow, 10);
 		});
 
@@ -344,7 +344,7 @@ goorm.core.search = {
 		};
 		/** event **/
 		$('.search_match_line').off('dblclick');
-		$('.search_match_line').on('dblclick', function(e) {
+		$('.search_match_line').on('dblclick', function() {
 			var parent_id = $(this).parents('tr').data('ttParentId');
 			var $parent_node = $('.search_filename[data-tt-id="' + parent_id + '"]');
 			var filename = $parent_node.attr('filename');
@@ -356,7 +356,7 @@ goorm.core.search = {
 		});
 
 		$('.search_match_line').off('mouseover');
-		$('.search_match_line').on('mouseover', function(e) {
+		$('.search_match_line').on('mouseover', function() {
 			$(this).addClass('match_line_over');
 			$('.match_line_over').not(this).removeClass('match_line_over');
 		});
@@ -409,7 +409,7 @@ goorm.core.search = {
 		core.module.layout.select('search');
 
 		$('#search_result').off('scroll');
-		$('#search_result').on('scroll', $.throttle(function(e) {
+		$('#search_result').on('scroll', $.throttle(function() {
 			if (self.unload_data.length > 0) {
 				var scroll_height = $(this).scrollTop() + $(this).height();
 				if ((scroll_height + $(this).height() * 2) > $('#search_result_table').height()) {
@@ -530,8 +530,6 @@ goorm.core.search = {
 		$('#search_project_selectbox').empty();
 
 		$('#search_project_selectbox').append('<option value="null" localization_key="dialog_search_project_select_guide" selected>' + core.module.localization.msg.notice_search_select_project + '</option>');
-
-		var max_num = $('#search_project_selector').width(); //jeongmin: set max_num as selectbox's width
 
 		if (core.module.layout.project_explorer.project_data) {
 			for (var project_idx = 0; project_idx < core.module.layout.project_explorer.project_data.length; project_idx++) {
@@ -683,7 +681,7 @@ goorm.core.search = {
 			});
 			core._socket.emit('/file/search_and_replace', postdata);
 		};
-		
+
 		var filtering = function(string) {
 			string = ((string.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;');
 			string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').split(/\t/).join('&nbsp;&nbsp;&nbsp;&nbsp;').split(/\s/).join('&nbsp;');

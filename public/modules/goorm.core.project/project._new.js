@@ -356,7 +356,6 @@ goorm.core.project._new = {
 	},
 
 	show: function(option, callback) { //jeongmin: this callback is setting scrollTop
-		var self = this;
 		//for init
 		this.callback = callback; //jeongmin: update callback variable
 
@@ -392,7 +391,7 @@ goorm.core.project._new = {
 		var project_types = $('#project_new').find('div[class="wizard_step"] .project_types');
 		var project_items = $('#project_new').find('div[class="wizard_step"] .project_items');
 
-		$('#dlg_new_project').on('shown.bs.modal', function(e) {
+		$('#dlg_new_project').on('shown.bs.modal', function() {
 			$('#project_new').find('div[class="wizard_step"] .project_types').find('.active').click().trigger('focus');
 		});
 

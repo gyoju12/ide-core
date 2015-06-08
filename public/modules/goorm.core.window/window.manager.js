@@ -94,7 +94,7 @@ goorm.core.window.manager = {
 
 						editor_exist = true;
 
-						var open_cb = function(result) {
+						var open_cb = function() {
 							if (opened && opened.indexOf(project_path) === -1) {
 								opened.push(project_path);
 							}
@@ -221,7 +221,6 @@ goorm.core.window.manager = {
 
 	save_workspace: function() {
 		var window_data = [];
-		var self = this;
 
 		var cursor;
 		var scroll_top;
@@ -298,7 +297,6 @@ goorm.core.window.manager = {
 				return self.window[i];
 			} else {
 				// 콜백은 add되고 모든 프로세스가 끝난 이후에 실행되어야함
-				var idx = self.window.length - 1;
 
 				options.id = new Date().getTime();
 				options.index = self.window_count++;
@@ -416,7 +414,7 @@ goorm.core.window.manager = {
 	find_by_filename: function(filepath, filename) {
 		var result = null;
 
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			if (this.filepath == filepath && this.filename == filename) {
 				result = this;
 			}
@@ -440,7 +438,7 @@ goorm.core.window.manager = {
 			}
 		});
 
-		$(empty_windows).each(function(i) {
+		$(empty_windows).each(function() {
 			self.window.pop(this);
 		});
 
@@ -512,14 +510,14 @@ goorm.core.window.manager = {
 	},
 
 	maximize_all: function() {
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			this.maximize();
 		});
 		this.maximized = true;
 	},
 
 	unmaximize_all: function() {
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			if (this.state() === 'maximized') {
 				this.restore();
 			}
@@ -587,7 +585,7 @@ goorm.core.window.manager = {
 					target_window.restore();
 				}
 
-				var width = 350;
+				// var width = 350;
 				var height = 250;
 
 				if (top + height > workspace_height) {
@@ -855,11 +853,10 @@ goorm.core.window.manager = {
 
 	close_all: function() {
 		var self = this;
-		var are_saved = true;
 		var modified = [];
 		var not_modifed = [];
 		var msg = '';
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			if (!this.is_saved) {
 				modified.push(this);
 				msg = msg + '"' + this.filename + '",';
@@ -881,7 +878,7 @@ goorm.core.window.manager = {
 				title: 'Close...',
 
 				yes: function() {
-					$(modified).each(function(i) {
+					$(modified).each(function() {
 						this.editor.save('close');
 					});
 					$(not_modifed).each(function(i) {
@@ -891,7 +888,7 @@ goorm.core.window.manager = {
 				},
 				cancel: function() {},
 				no: function() {
-					$(modified).each(function(i) {
+					$(modified).each(function() {
 						this.is_saved = true;
 						this.tab.is_saved = true;
 					});
@@ -953,10 +950,10 @@ goorm.core.window.manager = {
 				title: 'Close...',
 
 				yes: function() {
-					$(modified).each(function(i) {
+					$(modified).each(function() {
 						this.editor.save('close');
 					});
-					$(not_modifed).each(function(i) {
+					$(not_modifed).each(function() {
 
 						$('#' + this.tab.tab_list_id + ' .tab_close_button').click();
 
@@ -964,7 +961,7 @@ goorm.core.window.manager = {
 				},
 				cancel: function() {},
 				no: function() {
-					$(modified).each(function(i) {
+					$(modified).each(function() {
 						this.is_saved = true;
 						this.tab.is_saved = true;
 					});
@@ -988,7 +985,7 @@ goorm.core.window.manager = {
 		var __window = null;
 
 		if (this.window && this.window.length > 0) {
-			this.window.forEach(function(e, i) {
+			this.window.forEach(function(e) {
 				if ((e.filepath == filepath || e.filepath + '/' == filepath || e.filepath == filepath + '/') && e.filename == filename) {
 					__window = e;
 				}
@@ -1118,7 +1115,7 @@ goorm.core.window.manager = {
 
 				for (i = 0; i < new_window_list.length; i++) {
 					var target_window = new_window_list[i];
-					var index = target_window.index;
+					// var index = target_window.index;
 
 					// $("#" + parent.workspace_container).find("#filewindow" + index + '_h').parent().attr("id", 'filewindow' + index);
 				}
@@ -1215,7 +1212,6 @@ goorm.core.window.manager = {
 	},
 
 	close_by_title: function(target_title) {
-		var self = this;
 		var window_list = this.window;
 		var tab_list = this.tab;
 
@@ -1282,14 +1278,14 @@ goorm.core.window.manager = {
 
 		var workspace_top = $('#g_window_tab_list').offset().top;
 		workspace_top += $('#g_window_tab_list').outerHeight();
-		var workspace_left = $(this.workspace).offset().left;
+		// var workspace_left = $(this.workspace).offset().left;
 
 		var workspace_height = parseInt($(this.workspace).css('height'), 10);
 		var workspace_width = parseInt($(this.workspace).css('width'), 10);
 
 		// 						var is_maxmized = this.maximized;
 
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			// move window when workspace too small
 			// window relocation
 			// 							if (is_maxmized) {

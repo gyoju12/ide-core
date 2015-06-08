@@ -11,11 +11,7 @@
  **/
 var commander = require('commander');
 var	fs = require('fs');
-var	colors = require('colors');
 var	forever = require('forever');
-var	os = require('os');
-var http = require('http');
-var querystring = require('querystring');
 
 fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 	if (err !== null) {
@@ -242,7 +238,7 @@ fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 
 		commander
 			.command('restart')
-			.action(function(env, options) {
+			.action(function(env) {
 				forever.list(null, function(format, list) {
 					var get_current_project_path = function(raw) {
 						var path = raw.parent.rawArgs[1].split('/');
@@ -369,7 +365,7 @@ fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 
 		commander
 			.command('stop')
-			.action(function(env, options) {
+			.action(function(env) {
 				forever.list(null, function(format, list) {
 					var get_current_project_path = function(raw) {
 						var path = raw.parent.rawArgs[1].split('/');
@@ -392,8 +388,6 @@ fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 						}
 
 						if (target_index != -1) {
-							var options = list[i].options;
-
 							forever.stop(target_index);
 							console.log('goormIDE server is stopped...');
 						} else {
@@ -543,7 +537,7 @@ fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 
 		commander
 			.command('clean')
-			.action(function(env, options) {
+			.action(function() {
 				if (fs.existsSync(process.env.HOME + '/.goorm/')) {
 					fs.writeFileSync(process.env.HOME + '/.goorm/config.json', '');
 					console.log('goormIDE: your configs are successfully removed!');
@@ -580,74 +574,3 @@ fs.readFile(__dirname + '/info_goorm.json', 'utf8', function(err, contents) {
 		commander.parse(argv);
 	}
 });
-
-function send_log(title, callback) {
-
-	var ori_data = {};
-	ori_data.board_id = 'ide_log';
-	ori_data.subject = title;
-	ori_data.content = '';
-	ori_data.language = 'ko';
-
-	var server_info = {};
-	server_info.os = os.type() + ' ' + os.release();
-	var ori_cpus = os.cpus();
-	var cpus = [];
-	for (var _k in ori_cpus) {
-		cpus.push(ori_cpus[_k].model + ' : ' + ori_cpus[_k].speed);
-	}
-	server_info.cpus = cpus;
-	server_info.memory = os.totalmem();
-	var interfaces = os.networkInterfaces();
-	var addresses = [];
-	for (var k in interfaces) {
-		for (var k2 in interfaces[k]) {
-			var address = interfaces[k][k2];
-			if (address.family == 'IPv4' && !address.internal) {
-				addresses.push(address.address);
-			}
-		}
-	}
-	server_info.ip_address = addresses;
-	server_info.start = new Date();
-
-	var contents = '';
-	contents += '<b>OS : </b>' + server_info.os + '<br/>';
-	contents += '<b>CPU : </b>' + server_info.cpus + '<br/>';
-	contents += '<b>MEMORY : </b>' + server_info.memory + '<br/>';
-	contents += '<b>IP : </b>' + server_info.ip_address;
-	ori_data.content = contents;
-
-	var post_data = querystring.stringify(ori_data);
-
-	var post_options = {
-		host: 'www.goorm.io',
-		port: '80',
-		path: '/api/article/write',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Content-Length': post_data.length
-		}
-	};
-
-	var post_req = http.request(post_options, function(res) {
-		res.setEncoding('utf8');
-
-		var data = '';
-
-		res.on('data', function(chunk) {
-			data += chunk;
-		});
-
-		res.on('end', function() {
-			console.log('Information was sent.');
-			callback();
-		});
-	});
-
-	post_req.on('error', function(e) {});
-
-	post_req.write(post_data);
-	post_req.end();
-}

@@ -65,9 +65,7 @@ goorm.core.help.about_private_url = {
 		});
 
 		this.panel.on('shown.bs.modal', function() {
-			$('help_about_private_url_middle[data-spy="scroll"]').each(function() {
-				var $spy = $(this).scrollspy('refresh');
-			});
+			$('help_about_private_url_middle[data-spy="scroll"]').each(function() {});
 		});
 	},
 

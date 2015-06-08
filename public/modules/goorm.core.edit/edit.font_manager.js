@@ -126,7 +126,7 @@ goorm.core.edit.font_manager.prototype = {
 		// }, 100);
 	},
 
-	user_cursor_resize: function(delta) {
+	user_cursor_resize: function() {
 		var self = this;
 		var container = $(self.target);
 		var code_mirror = $('div.CodeMirror', container);
@@ -162,7 +162,7 @@ goorm.core.edit.font_manager.prototype = {
 		}
 	},
 
-	refresh: function(font_size, callback) {
+	refresh: function(font_size) {
 		var self = this;
 
 		//var __target = $(self.target);

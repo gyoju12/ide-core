@@ -12,14 +12,15 @@
 
 // Dependency
 //
+require('colors');
+require('./modules/goorm.core.utility/utility');
+
 var express = require('express');
 var fs = require('fs');
 
 var socketio = require('socket.io');
 var http = require('http');
-var colors = require('colors');
 var redis = require('socket.io/node_modules/redis');
-var connect = require('express/node_modules/connect');
 var cookie = require('express/node_modules/cookie');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -88,7 +89,6 @@ var home = null;
 var workspace = null;
 var goorm = module.exports = express();
 var config_data = {};
-var users = [];
 var server = null;
 var io = null;
 
@@ -585,7 +585,7 @@ goorm.routing = function() {
 
 		res.json(response);
 	});
-	goorm.post('/local_logout', function(req, res) {
+	goorm.post('/local_logout', function() {
 
 	});
 	
@@ -645,7 +645,6 @@ goorm.load = function() {
 	var g_terminal = require('./modules/goorm.core.terminal/terminal');
 	var g_file = require('./modules/goorm.core.file/file');
 	var g_plugin = require('./modules/goorm.plugin/plugin');
-	var g_utility = require('./modules/goorm.core.utility/utility');
 	var g_port_manager = require('./modules/goorm.core.utility/utility.port_manager');
 
 	
@@ -722,17 +721,17 @@ goorm.load = function() {
 				cluster.fork();
 			}
 
-			cluster.on('exit', function(worker, code, signal) {
+			cluster.on('exit', function(worker) {
 				var exitCode = worker.process.exitCode;
 				console.log('worker ' + worker.process.pid + ' died (' + exitCode + '). restarting...');
 				cluster.fork();
 			});
 
-			cluster.on('online', function(worker) {
+			cluster.on('online', function() {
 				// console.log("worker %s (%s) online", worker.id, worker.process.pid);
 			});
 
-			cluster.on('listening', function(worker, address) {
+			cluster.on('listening', function(worker) {
 
 				
 

@@ -427,10 +427,13 @@
 						"value": "문서 뷰어 보기"
 					},
 					"window_right_layout_toggle_history": {
-						"value": "히스토리 보기"
+						"value": "작업 내역 보기"
 					},
 					"window_right_layout_toggle_outline": {
 						"value": "아웃라인 보기"
+					},
+					"window_right_layout_toggle_bookmark": {
+						"value": "북마크 보기"
 					},
 					"window_bottom_layout_show_hide": {
 						"value": "아래쪽 영역 보이기/숨기기"
@@ -668,13 +671,13 @@
 		"value": "정지"
 	},
 	"History Rollback": {
-		"value": "작업내역 되돌리기"
+		"value": "작업 내역 되돌리기"
 	},
 	"History Delete": {
-		"value": "작업내역 삭제"
+		"value": "작업 내역 삭제"
 	},
 	"History Delete All": {
-		"value": "작업내역 모두 삭제"
+		"value": "작업 내역 모두 삭제"
 	},
 	"scm_commit": {
 		"value": "커밋"

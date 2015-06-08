@@ -230,39 +230,38 @@ goorm.core.dialog.explorer.prototype = {
 				};
 
 				data.sort(_sort);
+
+				var icon_str = '';
 				for (var idx = 0; idx < data.length; idx++) {
-					var icon_str = '';
+					var text_str = (data[idx].text.length > 28) ? data[idx].text.substr(0, 24) + ' ...' : data[idx].text;
+
 					if (data[idx].type == 'folder') {
-						icon_str += '<div class="col-xs-3 col-md-3 project_wizard_second_button folder_item thumbnail"'; //jeongmin: adding grid and css for highlight
-						icon_str += ' filename="' + data[idx].text + '" filepath="' + data[idx].li_attr.path + '">';
-						icon_str += '<img src="images/goorm.core.file/folder.png">';
+						icon_str += [
+							'<div class="col-xs-3 col-md-3 project_wizard_second_button folder_item thumbnail" filename="' + data[idx].text + '" filepath="' + data[idx].li_attr.path + '">',
+							'<img src="images/goorm.core.file/folder.png">',
+							'<div style="word-break:break-all; width:100px; line-height:12px; height: 20px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom:5px; text-align: center;">',
+							text_str,
+							'</div>',
+							'</div>'
+						].join('');
 					} else {
-						icon_str += '<div class="col-xs-3 col-md-3 project_wizard_second_button file_item thumbnail"'; //jeongmin: adding grid and css for highlight
-						icon_str += ' filename="' + data[idx].text + '" filetype="' + data[idx].li_attr.file_type + '" filepath="' + data[idx].li_attr.path + '">';
-						icon_str += '<img src="images/goorm.core.file/file.png">';
+						icon_str += [
+							'<div class="col-xs-3 col-md-3 project_wizard_second_button file_item thumbnail" filename="' + data[idx].text + '" filetype="' + data[idx].li_attr.file_type + '" filepath="' + data[idx].li_attr.path + '">',
+							'<img src="images/goorm.core.file/file.png">',
+							'<div style="word-break:break-all; width:100px; line-height:12px; height: 20px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom:5px; text-align: center;">',
+							text_str,
+							'</div>',
+							'</div>'
+						].join('');
 					}
-
-					icon_str += '<div style="word-break:break-all; width:100px; line-height:12px; height: 20px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom:5px; text-align: center;">';
-
-					// if (data[idx].type == "folder") {
-					// 	icon_str += data[idx].text;
-					// } else {
-					// 	icon_str += data[idx].text;
-					// }
-					if (data[idx].text.length > 28) {
-						icon_str += data[idx].text.substr(0, 24) + ' ...';
-					} else {
-						icon_str += data[idx].text;
-					}
-
-					icon_str += '</div>';
-
-					files.append(icon_str);
 				}
+
+				files.append(icon_str);
 			}
 
 			folder_item = files.find('div.folder_item');
 			file_item = files.find('div.file_item');
+
 			folder_item.dblclick(function() {
 				self.current_path = $(this).attr('filepath');
 				var target = self.dir_tree_ori + '/' + self.current_path;
@@ -280,31 +279,6 @@ goorm.core.dialog.explorer.prototype = {
 				self.filename = $(this).attr('filename');
 				self.filetype = $(this).attr('filetype');
 				self.filepath = $(this).attr('filepath');
-				// var node;
-				// var list = $(self.dir_tree + ' div.ygtvitem td.ygtvcontent div.fullpath');
-				// var path = $(this).attr('filepath') + '/' + $(this).attr('filename');
-
-				// for (var i = 0; i < list.length; i++) {
-				// 	var item = list[i];
-
-				// 	var dir_path = $(item).html();
-				// 	if ('/' + dir_path === path || dir_path === path) {
-				// 		node = $(item).parent().parent().parent();
-
-				// 		node.find('td').addClass('ygtvfocus');
-				// 		node.find('.ygtvblankdepthcell').removeClass('ygtvfocus');
-				// 		node.find('.ygtvdepthcell').removeClass('ygtvfocus');
-				// 		break;
-				// 	}
-				// }
-
-				// if(node){
-				// 	var dir_top = $(self.dir_tree).offset().top;
-				// 	var current_location = node.offset().top;
-				// 	var scroll_top = $(self.dir_tree).scrollTop();
-
-				// 	$(self.dir_tree).scrollTop(current_location + scroll_top - dir_top);
-				// }
 			});
 
 			file_item.click(function() {
@@ -320,7 +294,6 @@ goorm.core.dialog.explorer.prototype = {
 					$(self.input_file_name).val($(this).attr('filename'));
 				}
 			});
-
 		});
 	},
 
@@ -466,19 +439,24 @@ goorm.core.dialog.explorer.prototype = {
 	},
 
 	set_location_path: function(path) {
-		var self = this;
+		var location = $(this.location_path);
 
 		var path_el_arr = path.split('/');
-		$(self.location_path).empty();
-		if (path_el_arr.length > 0) {
-			$(self.location_path).append('<span><a href="#" action>' + path_el_arr[0] + '</a></span>');
-		}
-		for (var i = 1; i < path_el_arr.length; i++) {
-			$(self.location_path).append('<span class="path_divide_symbol">/</span>');
-			$(self.location_path).append('<span><a href="#" action>' + path_el_arr[i] + '</a></span>');
-			//$(self.location_path).append("<li><a href='#' action>"+path_el_arr[i]+"</a></li>");
+		var str_path = '';
+
+		location.empty();
+
+		if (path_el_arr && path_el_arr.length > 0) {
+			str_path = [
+				'<span><a href="#" action>' + path_el_arr[0] + '</a></span>'
+			];
+
+			for (var i = 1; i < path_el_arr.length; i++) {
+				str_path[i] = '<span class="path_divide_symbol">/</span><span><a href="#" action>' + path_el_arr[i] + '</a></span>';
+			}
 		}
 
+		location.append(str_path.join(''));
 	},
 
 	get_location_path: function(e) {
@@ -490,7 +468,7 @@ goorm.core.dialog.explorer.prototype = {
 			var text = current_path.text();
 
 			if (prev_path.length) {
-				prev_path.reverse().each(function(i) {
+				prev_path.reverse().each(function() {
 					path += $(this).text(); // + "/";
 				});
 			}
@@ -501,7 +479,7 @@ goorm.core.dialog.explorer.prototype = {
 
 			path += current_path.text();
 		} else {
-			$('span', this.location_path).each(function(i) {
+			$('span', this.location_path).each(function() {
 				path += $(this).text();
 			});
 		}

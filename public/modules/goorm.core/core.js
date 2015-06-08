@@ -245,8 +245,6 @@ goorm.core.prototype = {
 			});
 
 			self.module.action.init();
-
-			var goorm_loading_end_time = new Date().getTime();
 			//theme
 			// self.module.theme = goorm.core.theme;
 			// self.module.theme.init();
@@ -325,6 +323,7 @@ goorm.core.prototype = {
 				}
 			});
 		};
+
 		// window.onbeforeunload = function (e) {
 		// 	if (core.module.auth.open_keep_session_dialog) return;
 
@@ -622,47 +621,19 @@ goorm.core.prototype = {
 		notice.init();
 	},
 
-	skin: function(skin_name) {
-		this.get_css(skin_name);
-	},
-
-	get_css: function(url) {
-		$('head').append('<link>');
-		css = $('head').children(':last');
-		css.attr({
-			rel: 'stylesheet',
-			type: 'text/css',
-			href: url
-		});
-	},
-
 	start: function() {
 		var self = this;
 
-		// var goorm_dialog_container = $("#goorm_dialog_container");
-		// goorm_dialog_container_child = "";
-		// goorm_dialog_container_child += "<div id='loading_panel_container'></div>";
-		// goorm_dialog_container_child += "<div id='loading_background'></div>";
-		// goorm_dialog_container.append(goorm_dialog_container_child);
-
 		var loading_panel_container = $('#loading_panel_container');
-		// loading_panel_container_child = "";
-		// loading_panel_container_child += "<div id='main_loading_image'></div>";
-		// loading_panel_container_child += "<div id='loading_message'></div>";
-		// loading_panel_container_child += "<div id='login_box_bg'></div>";
-		// loading_panel_container_child += "<div id='login_box'></div>";
-		// loading_panel_container_child += "<div id='local_login_box'></div>";
-		// loading_panel_container.append(loading_panel_container_child);
 
 		
 
 		//useonly(mode=goorm-oss)
-		// $('#local_login_box').append("<div id='local_login_user_box'><div id='local_user_area'><label id='local_user_label' for='local_user_input'>ID : </label><input id='local_user_input' /></div><div id='local_user_pw_area'><label id='local_user_pw_label' for='local_user_pw_input'>PW : </label><input id='local_user_pw_input' type='password' /></div></div>");
-		// $('#local_login_box').append("<input type='button' id='goorm_local_mode_button' localization_key='private_mode' value='Access Private Mode' />");
 		$('#login_box').remove();
 		
 
 		
+
 		//useonly(mode=goorm-oss)
 		$('#goorm_local_mode_button').click(function() {
 			self.access_local_mode();
@@ -681,7 +652,7 @@ goorm.core.prototype = {
 			}
 		});
 
-		loading_panel_container.css('display', 'none').width(640).height(480).css('position', 'absolute').css('z-index', 1000).css('left', $(window).width() / 2 - 320).css('top', parseInt($(window).height() / 2) - 240).fadeIn(2000);
+		loading_panel_container.css('display', 'none').width(640).height(480).css('position', 'absolute').css('z-index', 1000).css('left', $(window).width() / 2 - 320).css('top', parseInt($(window).height() / 2, 10) - 240).fadeIn(2000);
 	},
 
 	// manage socket connections. Jeong-Min Im.
@@ -736,13 +707,13 @@ goorm.core.prototype = {
 		$('#local_login_box').delay(1500).fadeIn(2000);
 
 		// setTimeout(function() {
-		var temp = $.debounce(function() {
+		$.debounce(function() {
 			$('#local_user_input').focus();
 
 			if ($('#local_user_input').val() !== '') {
 				$('#local_user_pw_input').focus();
 			}
-		}, 2000);
+		}, 2000)();
 	},
 
 	local_complete: function() {
@@ -923,8 +894,10 @@ goorm.core.prototype = {
 			self.init_input_validation(input_wrapper);
 
 			if (text.length) {
+				var test_result = null;
+
 				if (~dialog.attr('id').indexOf('file')) {
-					var test_result = self.module.file.test(text);
+					test_result = self.module.file.test(text);
 
 					if (test_result) { // invalid
 						msg = localization_msg.alert_invalid_folder_name + '<br/>"' + test_result.join(', ') + '"';
@@ -934,10 +907,10 @@ goorm.core.prototype = {
 						success();
 					}
 				} else { // project
-					var test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('[project_detailed_type]').attr('project_detailed_type'));
+					test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('[project_detailed_type]').attr('project_detailed_type'));
 
-					if (test_result && test_result.char) {
-						var char = '<br/>"' + test_result.char.join(', ') + '"';
+					if (test_result && test_result['char']) {
+						var _char = '<br/>"' + test_result['char'].join(', ') + '"';
 
 						if (test_result.code === 1) {
 							msg = localization_msg.alert_allow_character;
@@ -945,7 +918,7 @@ goorm.core.prototype = {
 							msg = localization_msg.alert_allow_character2;
 						}
 
-						msg += char;
+						msg += _char;
 
 						fail();
 					} else {
@@ -953,9 +926,9 @@ goorm.core.prototype = {
 					}
 				}
 			} else { // blank
-				msg = localization_msg.alert_filename_empty;
+				// msg = localization_msg.alert_filename_empty;	// hidden: not necessary
 
-				fail();
+				// fail();
 			}
 		});
 	}

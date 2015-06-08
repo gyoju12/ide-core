@@ -161,8 +161,6 @@ goorm.core.router = {
 		};
 
 		this._$ = function() {
-			var self = this;
-
 			
 
 			//useonly(mode=goorm-standalone,goorm-oss)
@@ -300,7 +298,7 @@ goorm.core.router = {
 			$('#goorm_bottom').find('.disconnect_state').show();
 			$('#disconnected_bar').show();
 
-			$('#disconnected_bar button.close').one('click', function(e) {
+			$('#disconnected_bar button.close').one('click', function() {
 				$('#disconnected_bar').hide();
 			});
 
@@ -378,12 +376,12 @@ goorm.core.router = {
 			alert.show(msg);
 		});
 
-		window.addEventListener('offline', function(e) {
+		window.addEventListener('offline', function() {
 			offline = true;
 			disconnect(socket);
 		});
 
-		window.addEventListener('online', function(e) {
+		window.addEventListener('online', function() {
 			offline = false;
 			reconnect(socket);
 		});

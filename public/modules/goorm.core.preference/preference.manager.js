@@ -16,7 +16,7 @@ goorm.core.preference.manager = {
 	json: {},
 	plugin_data: [],
 
-	init: function(option) {
+	init: function() {
 		this.preferences = [];
 	},
 
@@ -140,7 +140,7 @@ goorm.core.preference.manager = {
 		});
 	},
 
-	plugin: function(plugin_name) {
+	plugin: function() {
 		this.plugin_name = null;
 		this.xml = null;
 		this.version = null;

@@ -10,7 +10,6 @@
 
 var fs = require('fs-extra');
 var rimraf = require('rimraf');
-
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 var xss = require('xss');
@@ -568,8 +567,6 @@ exports.file.do_copy_file_paste = function(req, res) {
 
 exports.file.do_delete = function(req, res) {
 	var evt = new EventEmitter();
-	var user_level = null;
-	var author_level = null;
 
 	evt.once('file_do_delete', function(data) {
 		res.json(data);
@@ -803,17 +800,7 @@ exports.file.check_valid_edit = function(req, res) {
 };
 exports.file.do_move = function(req, res) {
 	var evt = new EventEmitter();
-	var user_level = null;
-	var author_level = null;
 
-	var move_fail = function(msg) {
-		var res_data = {
-			err_code: 20,
-			message: msg,
-			path: req.query
-		};
-		res.json(res_data);
-	};
 	evt.once('file_do_move', function(data) {
 		res.json(data);
 	});
@@ -823,8 +810,6 @@ exports.file.do_move = function(req, res) {
 
 exports.file.do_rename = function(req, res) {
 	var evt = new EventEmitter();
-	var user_level = null;
-	var author_level = null;
 
 	evt.once('file_do_rename', function(data) {
 		res.json(data);
@@ -881,9 +866,6 @@ exports.file.do_export = function(req, res) {
 //useonly(mode=goorm-oss)
 exports.file.do_import = function(req, res) {
 	var evt = new EventEmitter();
-
-	var path = req.body.file_import_location_path.split('/');
-	var project_path = (path[0] !== '') ? path[0] : path[1];
 
 	evt.once('file_do_import', function(data) {
 		res.json(data);
@@ -1057,9 +1039,8 @@ exports.help.send_to_bug_report = function(req, res) {
 
 exports.project.get_contents = function(req, res) { //(2015/04/16) if you want to use, plz remove exec
 	var path = req.query.path;
-	var user = req.query.username;
 
-	var command = exec('cd ' + __workspace + path + ';zip -r ' + __temp_dir + path + '.zip *', function(error, stdout, stderr) {
+	exec('cd ' + __workspace + path + ';zip -r ' + __temp_dir + path + '.zip *', function(error) {
 		if (error === null) {
 			fs.readFile(__temp_dir + path + '.zip', 'base64', function(err, data) {
 				res.send(data);
@@ -1185,12 +1166,12 @@ exports.send_file = function(req, res) {
 		if (err) {
 			console.log(err);
 		}
-		rimraf(__temp_dir + '/' + req.query.file, function(err) {
+		rimraf(__temp_dir + '/' + req.query.file, function() {
 			// 			if (err != null) {} else {
 			// send file remove?????????
 			// 			}
 		});
-	}, function(err) {
+	}, function() {
 		// ...
 	});
 };
