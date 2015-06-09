@@ -575,13 +575,13 @@ goorm.core.shortcut.manager = {
 				////// unbind //////
 				if (old_shortcut != 'None' && this.shortcuts.indexOf(old_shortcut) > -1) { //if old shortcut is null -> no need to unbind
 					this.unbind(action, old_shortcut); //unbind old shortcut event
-					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list
+					// 					this.shortcuts.remove(this.shortcuts.indexOf(old_shortcut)); //remove old shortcut from the total shortcut list
 				}
 
 				////// bind //////
 				if (new_shortcut != 'None') { //if new shortcut is null -> no need to bind
 					this.bind(action, new_shortcut, this.hotkeys_fn[action]); //bind new shortcut event
-					this.shortcuts.push(new_shortcut); //push new shortcut to the list
+					// 					this.shortcuts.push(new_shortcut); //push new shortcut to the list	// hidden: will be done at bind function
 				}
 			}
 
@@ -2241,6 +2241,10 @@ goorm.core.shortcut.manager = {
 
 	bind: function(action, key, fn) {
 		$(document).bind('keydown.' + this.make_namespace(action, key), key, fn);
+
+		if (!~this.shortcuts.indexOf(key)) {
+			this.shortcuts.push(key);
+		}
 	},
 
 	/**
@@ -2253,6 +2257,10 @@ goorm.core.shortcut.manager = {
 	unbind: function(action, key) {
 		$(document).unbind('keydown.' + this.make_namespace(action, key));
 		$(document).unbind('keyup.' + this.make_namespace(action, key));
+
+		if (~this.shortcuts.indexOf(key)) {
+			this.shortcuts.remove(this.shortcuts.indexOf(key));
+		}
 	},
 
 	get_focus: function() {

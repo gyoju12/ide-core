@@ -152,6 +152,8 @@ goorm.core.layout = {
 		//		this.attach_toolbox(this.left_tabview);
 
 		
+		
+		this.attach_navigate(this.left_tabview);
 
 		// Right
 
@@ -181,6 +183,7 @@ goorm.core.layout = {
 		this.workspace.init(container + '_inner_layout_center');
 
 		this.attach_edit_toolbar(this.workspace); //jeongmin: attach edit_toolbar to the workspace
+		
 
 		// Final
 
@@ -588,14 +591,20 @@ goorm.core.layout = {
 		this.edit_toolbar = goorm.core.edit.toolbar; //jeongmin: declare edit toolbar
 		this.edit_toolbar.init(); //jeongmin: initialize edit toolbar
 	},
+	
+	attach_navigate: function(target) {
+		this.navigate = goorm.core.layout.navigate;
+		this.navigate.init();
+	},
 
 	refresh_terminal: function() {},
 
 	resize_all: $.debounce(function() {
 		// -- left --
-		var left_height = $('#goorm_left').height() - $('#west_tab').height() - $('#goorm_left .nav-pills').height() - 7;
+		var left_height = $('#goorm_left').height() - $('#west_tab').height() - $('#goorm_left .nav-pills').height() - 8;
 		$('#project_explorer').height(left_height - $('#project_selector').outerHeight());
 		$('#share_list_group').height(left_height - 3);
+		$('#navigate_tab').outerHeight($('#goorm_left').height() - $('#west_tab').height() - 2);
 		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
 
 		var project_selector_width = $('#project_explorer_tab').width() - 40;

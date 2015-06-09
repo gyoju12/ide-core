@@ -3719,3 +3719,29 @@ div.tooltip {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+#navi_result .item {
+	height: 37px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+#navi_result .item:hover {
+	background-color: #e7f4f9;
+}
+
+#navi_result a {
+	text-decoration: none;
+}
+
+div.item a > span {
+	font-weight: bolder;
+}
+
+#navi_result .description {
+	font-size: 10px;
+	font-weight: normal;
+	color: #aaa;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

@@ -2687,8 +2687,12 @@ Terminal.prototype.keyDown = function(ev) {
       }
       break;
   }
-
-  if (!key || key.length === 1) return true;	// jeongmin: this prevents goorm shortcut
+	
+	var shortcut_manager = core.module.shortcut_manager;
+	var key_string = shortcut_manager.make_shortcut_input(ev); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
+	
+  if (!key || (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1)) return true;	// jeongmin: if goorm shortcut is pressed, just go on
+//   if (!key) return true;	// jeongmin: this prevents goorm shortcut
 
   if (this.prefixMode) {
     this.leavePrefix();

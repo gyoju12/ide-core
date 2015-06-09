@@ -8222,11 +8222,11 @@
 					$(e.currentTarget).closest(".jstree-node").children(".jstree-anchor").first().trigger(tmp).focus();
 				}, this))
 				.on("mouseover.jstree", ".jstree-wholerow, .jstree-icon", $.proxy(function(e) {
-					e.stopImmediatePropagation();
+// 					e.stopImmediatePropagation();	// jeongmin: this cancels mouseenter event in jquery layout
 					if (!this.is_disabled(e.currentTarget)) {
 						this.hover_node(e.currentTarget);
 					}
-					return false;
+// 					return false;
 				}, this))
 				.on("mouseleave.jstree", ".jstree-node", $.proxy(function(e) {
 					this.dehover_node(e.currentTarget);

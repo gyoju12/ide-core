@@ -105,6 +105,11 @@
                      <span id='project_badge' class="badge"></span>
                 </a>
             </li>
+			<li>
+				<a id="gLayoutTab_navigate" href="#navigate_tab" data-toggle="tab">
+					Navigate
+				</a>
+			</li>
             <!--
             <li>
                 <a id='gLayoutTab_Packages' href="#packages" data-toggle="tab">Packages</a>
@@ -176,6 +181,1121 @@
                     <!--  -->
                 </div>
             </div>
+			<div class="tab-pane fade" id="navigate_tab" style="padding:7px; overflow:auto;">
+				<input id="navigate_input" class="form-control input-sm">
+				<div id="navi_result" class="list">
+					<!-- file -->
+					<div class="item action">
+						<a href="#" action="new_project" name="preference.shortcut.file.new_project">
+							<span localization_key="file_new_project">Project</span>
+							<em class="helptext">Alt + Shift + N</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span localization_key="file_new_project"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="new_project_scm">
+							<span>SCM</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span>SCM</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="new_project_import">
+							<span localization_key="project_import">Import</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span localization_key="project_import"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="new_file_file">
+							<span localization_key="file_new_file">File</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span localization_key="file_new_file"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="new_file_folder">
+							<span localization_key="file_new_folder">Folder</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span localization_key="file_new_folder"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="new_file_textfile">
+							<span localization_key="file_new_untitled_text_file">Untitled Text File</span>
+							<div class="description">
+							<span localization_key="file"></span> - <span localization_key="file_new"></span> - <span localization_key="file_new_untitled_text_file"></span>
+						</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="open_project" name="preference.shortcut.file.open_project">
+							<span localization_key="file_open_project">Open Project</span>
+							<em class="helptext">Ctrl + Shift + O</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_open_project"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="open_file" name="preference.shortcut.file.open_file">
+							<span localization_key="file_open_file">Open File</span>
+							<em class="helptext">Ctrl + O</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_open_file"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="close_file" name="preference.shortcut.file.close">
+							<span localization_key="close">Close</span>
+							<em class="helptext">Alt + X</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="close"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="close_all" name="preference.shortcut.file.close_all">
+							<span localization_key="file_close_all">Close All</span>
+							<em class="helptext">Alt + Shift + X</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_close_all"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="save_file" name="preference.shortcut.file.save">
+							<span localization_key="file_save">Save</span>
+							<em class="helptext">Ctrl + S</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_save"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="save_as_file" name="preference.shortcut.file.save_as">
+							<span localization_key="file_save_as">Save As</span>
+							<em class="helptext">Ctrl + Shift + S</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_save_as"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="save_all_file" name="preference.shortcut.file.save_all">
+							<span localization_key="file_save_all">Save All</span>
+							<em class="helptext">Alt + Ctrl + S</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_save_all"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="rename_file" name="preference.shortcut.file.rename">
+							<span localization_key="file_rename">Rename</span>
+							<em class="helptext">Ctrl + Shift + R</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_rename"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="duplicate_file" name="preference.shortcut.file.duplicate">
+							<span localization_key="file_duplicate">Duplicate</span>
+							<em class="helptext">Ctrl + Shift + A</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_duplicate"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="delete_file" name="preference.shortcut.file.delete">
+							<span localization_key="file_delete">Delete</span>
+							<em class="helptext">Alt + Shift + D</em>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_delete"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="import_file">
+							<span localization_key="file_import">Import  File</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_import"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="export_file">
+							<span localization_key="file_export">Export  File</span>
+							<div class="description">
+								<span localization_key="file"></span> - <span localization_key="file_export"></span>
+							</div>
+						</a>
+					</div>
+					<!-- edit -->
+					<div class="item action">
+						<a href="#" action="do_undo" name="preference.shortcut.edit.undo">
+							<span localization_key="edit_undo">Undo</span>
+							<em class="helptext">Ctrl + Z</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_undo"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_redo" name="preference.shortcut.edit.redo">
+							<span localization_key="edit_redo">Redo</span>
+							<em class="helptext">Ctrl + Y</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_redo"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_delete" name="preference.shortcut.edit.delete">
+							<span localization_key="edit_delete">Delete</span>
+							<em class="helptext">Backspace</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_delete"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="delete_line_left">
+							<span localization_key="edit_delete_line_left">Delete Line Left</span>
+							<em class="helptext">Ctrl + K + Backspace</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_delete_line_left"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="delete_line_right">
+							<span localization_key="edit_delete_line_right">Delete Line Right</span>
+							<em class="helptext">Ctrl + K + K</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_delete_line_right"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_downcase_cursor">
+							<span localization_key="edit_downcase_cursor">Downcase at Cursor</span>
+							<em class="helptext">Ctrl + K + L</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_downcase_cursor"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_upcase_cursor">
+							<span localization_key="edit_upcase_cursor">Upcase at Cursor</span>
+							<em class="helptext">Ctrl + K + U</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_upcase_cursor"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_transpose">
+							<span localization_key="edit_transpose">Transpose</span>
+							<em class="helptext">Ctrl + Alt + T</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_text"></span> - <span localization_key="edit_transpose"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_join_lines">
+							<span localization_key="edit_join_lines">Join Lines</span>
+							<em class="helptext">Ctrl + J</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_join_lines"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_duplicate_line">
+							<span localization_key="edit_duplicate_line">Duplicate Line</span>
+							<em class="helptext">Shift + Ctrl + D</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_duplicate_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_delete_line">
+							<span localization_key="edit_delete_line">Delete Line</span>
+							<em class="helptext">Shift + Ctrl + K</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_delete_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="insert_line_before">
+							<span localization_key="edit_insert_line_before">Insert Line Before</span>
+							<em class="helptext">Shift + Ctrl + Enter</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_insert_line_before"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="insert_line_after">
+							<span localization_key="edit_insert_line_after">Insert Line After</span>
+							<em class="helptext">Ctrl + Enter</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_insert_line_after"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="swap_line_down">
+							<span localization_key="edit_swap_line_down">Swap Line Down</span>
+							<em class="helptext">Shift + Ctrl + Down</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_swap_line_down"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="swap_line_up">
+							<span localization_key="edit_swap_line_up">Swap Line Up</span>
+							<em class="helptext">Shift + Ctrl + Up</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_swap_line_up"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="select_all" name="preference.shortcut.edit.select_all">
+							<span localization_key="edit_select_all">Select All</span>
+							<em class="helptext">Ctrl + A</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_all"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="select_word">
+							<span localization_key="edit_select_word">Select Word</span>
+							<em class="helptext">Ctrl + D</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_word"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="select_line">
+							<span localization_key="edit_select_line">Select Line</span>
+							<em class="helptext">Ctrl + L</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="select_scope">
+							<span localization_key="edit_select_scope">Select Scope</span>
+							<em class="helptext">Shift + Ctrl + Space</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_scope"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="select_between_brackets">
+							<span localization_key="edit_select_between_brackets">Select Between Brackets</span>
+							<em class="helptext">Shift + Ctrl + M</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_between_brackets"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_single_selection">
+							<span localization_key="edit_single_selection">Single Selection</span>
+							<em class="helptext">Esc</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_single_selection"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="add_previous_line">
+							<span localization_key="edit_select_add_previous_line">Add Previous Line</span>
+							<em class="helptext">Shift + Alt + Up</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_add_previous_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="add_next_line">
+							<span localization_key="edit_select_add_next_line">Add Next Line</span>
+							<em class="helptext">Shift + Alt + Down</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_select_add_next_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_split_into_lines">
+							<span localization_key="edit_split_into_lines">Split Selection by Line</span>
+							<em class="helptext">Shift + Ctrl + L</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_selection"></span> - <span localization_key="edit_split_into_lines"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_fold">
+							<span localization_key="edit_fold">Fold</span>
+							<em class="helptext">Ctrl + Alt + [</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_codefolding"></span> - <span localization_key="edit_fold"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_unfold">
+							<span localization_key="edit_unfold">Unfold</span>
+							<em class="helptext">Ctrl + Alt + ]</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_codefolding"></span> - <span localization_key="edit_unfold"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_unfold_all">
+							<span localization_key="edit_unfold_all">Unfold All</span>
+							<em class="helptext">Ctrl + K + 0</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_codefolding"></span> - <span localization_key="edit_unfold_all"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_go_to_line" name="preference.shortcut.edit.go_to_line">
+							<span localization_key="edit_go_to_line">Go to Line</span>
+							<em class="helptext">Alt + Ctrl + L</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_go_to_line"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="go_to_bracket">
+							<span localization_key="edit_go_to_bracket">Go to Bracket</span>
+							<em class="helptext">Ctrl + M</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_go_to_bracket"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="go_subword_left">
+							<span localization_key="edit_go_subword_left">Go Subword Left</span>
+							<em class="helptext">Alt + Left</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_go_subword_left"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="go_subword_right">
+							<span localization_key="edit_go_subword_right">Go Subword Right</span>
+							<em class="helptext">Alt + Right</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_go_subword_right"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scroll_line_up">
+							<span localization_key="edit_scroll_line_up">Scroll Line Up</span>
+							<em class="helptext">Ctrl + Up</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_scroll_line_up"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scroll_line_down">
+							<span localization_key="edit_scroll_line_down">Scroll Line Down</span>
+							<em class="helptext">Ctrl + Down</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_scroll_line_down"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="show_in_center">
+							<span localization_key="edit_show_in_center">Show in Center</span>
+							<em class="helptext">Ctrl + K + C</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_goto"></span> - <span localization_key="edit_show_in_center"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="toggle_bookmark" name="preference.shortcut.edit.toggle_bookmark">
+							<span localization_key="edit_toggle_bookmark">Toggle Bookmark</span>
+							<em class="helptext">Ctrl + F2</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_bookmark"></span> - <span localization_key="edit_toggle_bookmark"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="next_bookmark" name="preference.shortcut.edit.next_bookmark">
+							<span localization_key="edit_next_bookmark">Next Bookmark</span>
+							<em class="helptext">F2</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_bookmark"></span> - <span localization_key="edit_next_bookmark"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="prev_bookmark" name="preference.shortcut.edit.prev_bookmark">
+							<span localization_key="edit_prev_bookmark">Previous Bookmark</span>
+							<em class="helptext">Shift + F2</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_bookmark"></span> - <span localization_key="edit_prev_bookmark"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="clear_bookmark" name="preference.shortcut.edit.clear_bookmark">
+							<span localization_key="edit_clear_bookmark">Clear Bookmarks</span>
+							<em class="helptext">Ctrl + Shift + F2</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_bookmark"></span> - <span localization_key="edit_clear_bookmark"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_find" name="preference.shortcut.edit.find_and_replace">
+							<span localization_key="edit_find_and_replace">Find</span>
+							<em class="helptext">Ctrl + F</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_find"></span> - <span localization_key="edit_find_and_replace"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_find_next" name="preference.shortcut.edit.find_next">
+							<span localization_key="edit_find_next">Find Next</span>
+							<em class="helptext">Ctrl + G</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_find"></span> - <span localization_key="edit_find_next"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_find_previous" name="preference.shortcut.edit.find_previous">
+							<span localization_key="edit_find_previous">Find Previous</span>
+							<em class="helptext">Ctrl + Shift + G</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_find"></span> - <span localization_key="edit_fint_previous"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="do_replace" name="preference.shortcut.edit.replace">
+							<span localization_key="edit_replace">Replace</span>
+							<em class="helptext">Alt + Ctrl + F</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_replace"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="search" name="preference.shortcut.edit.search">
+							<span localization_key="edit_search">Search</span>
+							<em class="helptext">Alt + H</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_search"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="sort_lines">
+							<span localization_key="edit_sort_lines">Sort Lines</span>
+							<em class="helptext">F9</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_sort_lines"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="sort_lines_case">
+							<span localization_key="edit_sort_lines_case">Sort Lines in Case sensitive</span>
+							<em class="helptext">Ctrl + F9</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_sort_lines_case"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="comment_selected" name="preference.shortcut.edit.comment_selected">
+							<span localization_key="edit_comment_selected">Toggle Comment Selected</span>
+							<em class="helptext">Ctrl + /</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_comment_selected"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="preference" name="preference.shortcut.edit.preference">
+							<span localization_key="edit_preference">Preference</span>
+							<em class="helptext">Alt + P</em>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_preference"></span>
+							</div>
+						</a>
+					</div>
+					<!-- project -->
+					<div class="item action">
+						<a href="#" action="run" name="preference.shortcut.project.run">
+							<span localization_key="project_run">Run</span>
+							<em class="helptext">Shift + F5</em>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_run"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="stop" name="preference.shortcut.project.stop">
+							<span localization_key="project_stop">Stop</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_stop"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="build_project" name="preference.shortcut.project.build_project">
+							<span localization_key="project_build">Build</span>
+							<em class="helptext">F5</em>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_build"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="build_configuration">
+							<span localization_key="project_build_configuration">Build Configuration</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_build_configuration"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="import_project">
+							<span localization_key="project_import">Import Project</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_import"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="export_project">
+							<span localization_key="project_export">Export  Project</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_export"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="delete_project">
+							<span localization_key="project_delete">Delete  Project</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_delete"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="refresh_project_directory" name="preference.shortcut.project.refresh">
+							<span localization_key="project_refresh">Refresh Project</span>
+							<em class="helptext">Ctrl + R</em>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="project_refresh"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="show_properties">
+							<span localization_key="file_properties">Properties</span>
+							<div class="description">
+								<span localization_key="project"></span> - <span localization_key="file_properties"></span>
+							</div>
+						</a>
+					</div>
+					<!-- debug -->
+					<div class="item action">
+						<a href="#" action="debug" name="preference.shortcut.debug.start">
+							<span localization_key="debug_start">Debug Start</span>
+							<em class="helptext">Alt + F5</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_start"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="debug_continue" name="preference.shortcut.debug.continue">
+							<span localization_key="debug_continue">Continue</span>
+							<em class="helptext">Ctrl + Shift + Y</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_continue"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="debug_terminate" name="preference.shortcut.debug.terminate">
+							<span localization_key="debug_terminate">Terminate</span>
+							<em class="helptext">F4</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_terminate"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="debug_step_over" name="preference.shortcut.debug.step_over">
+							<span localization_key="debug_step_over">Step over</span>
+							<em class="helptext">F6</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_step_over"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="debug_step_in" name="preference.shortcut.debug.step_in">
+							<span localization_key="debug_step_in">Step into</span>
+							<em class="helptext">F7</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_step_in"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="debug_step_out" name="preference.shortcut.debug.step_out">
+							<span localization_key="debug_step_out">Step out</span>
+							<em class="helptext">F8</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_step_out"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="toggle_breakpoint" name="preference.shortcut.debug.toggle_breakpoint">
+							<span localization_key="debug_toggle_breakpoint">Toggle breakpoint</span>
+							<em class="helptext">Ctrl + B</em>
+							<div class="description">
+								<span localization_key="debug"></span> - <span localization_key="debug_toggle_breakpoint"></span>
+							</div>
+						</a>
+					</div>
+					<!-- SCM -->
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Status</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Status</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_add">
+							<span>Add</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Add</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Remove</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Remove</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_commit" name='preference.shortcut.scm.commit'>
+							<span>Commit</span>
+							<em class="helptext">Alt + Shift + C</em>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Commit</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Push</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Push</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_update" name='preference.shortcut.scm.update'>
+							<span>Pull</span>
+							<em class="helptext">Alt + Shift + U</em>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Pull</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Undo</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Undo</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_branch">
+							<span>Create</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Create</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_branch">
+							<span>Delete</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Delete</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_branch">
+							<span>Merge</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Merge</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_branch">
+							<span>Publish</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Publish</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_branch">
+							<span>Checkout</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span>Checkout</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_blame">
+							<span localization_key='dialog_scm_blame'>Blame</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span localization_key="dialog_scm_blame">Blame</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_diff">
+							<span localization_key='dialog_scm_diff'>Diff</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span localization_key="dialog_scm_diff">Diff</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_show_log">
+							<span localization_key='dialog_scm_log'>Show log</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Git</span> - <span localization_key="dialog_scm_log"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Status</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Status</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_add">
+							<span>Add</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Add</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_commit" name='preference.shortcut.scm.commit'>
+							<span>Commit</span>
+							<em class="helptext">Alt + Shift + C</em>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Commit</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_update" name='preference.shortcut.scm.update'>
+							<span>Update</span>
+							<em class="helptext">Alt + Shift + U</em>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Update</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Revert</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Revert</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_lock">
+							<span>Cleanup</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Cleanup</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_lock">
+							<span>Lock</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Lock</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_lock">
+							<span>Unlock</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Unlock</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_resolve">
+							<span>Resolve Conflict</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Resolve Conflict</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_blame">
+							<span>Blame</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Blame</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_diff">
+							<span>Diff</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Diff</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_show_log">
+							<span>Show Log</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Show Log</span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="scm_status">
+							<span>Remove</span>
+							<div class="description">
+								<span localization_key="scm"></span> - <span>Subversion</span> - <span>Remove</span>
+							</div>
+						</a>
+					</div>
+					<!-- Window -->
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="previous_window" name="preference.shortcut.window.previous_window">
+							<span localization_key="window_previous_window">Previous Window</span>
+							<em class="helptext">Alt + Shift + [</em>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_previous_window"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="next_window" name="preference.shortcut.window.next_window">
+							<span localization_key="window_next_window">Next Window</span>
+							<em class="helptext">Alt + Shift + ]</em>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_next_window"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="toggle_full_workspace" name="preference.shortcut.window.toggle_full_workspace">
+							<span localization_key="window_toggle_full_workspace">Full Workspace</span>
+							<em class="helptext">Alt + Shift + W</em>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_toggle_full_workspace"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="tile_left" name="preference.shortcut.window.tile_left">
+							<span localization_key="window_tile_left">Tile Left</span>
+							<em class="helptext">Ctrl + Shift + [</em>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_tile_left"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="tile_right" name="preference.shortcut.window.tile_right">
+							<span localization_key="window_tile_right">Tile Right</span>
+							<em class="helptext">Ctrl + Shift + ]</em>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_tile_right"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="cascade">
+							<span localization_key="window_cascade">Cascade</span>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_cascade"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="tile_vertically">
+							<span localization_key="window_tile_vertically">Tile Vertically</span>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_tile_vertically"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="tile_horizontally">
+							<span localization_key="window_tile_horizontally">Tile Horizontally</span>
+							<div class="description">
+								<span localization_key="window"></span> - <span localization_key="window_tile_horizontally"></span>
+							</div>
+						</a>
+					</div>
+					<!-- Help -->
+					<div class="item action">
+						<a href="#" action="help_contents">
+							<span localization_key="help_help_contents">Help Contents</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_help_contents"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="view_all_shortcuts" name="preference.shortcut.help.view_all_shortcuts">
+							<span localization_key="help_view_all_shortcuts">View All Shortcuts</span>
+							<em class="helptext">Ctrl + H</em>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_view_all_shortcuts"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_tutorial_basic_tour">
+							<span localization_key='help_tutorial_basic_tour'>Basic Tour</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_tutorial"></span> - <span localization_key="help_tutorial_basic_tour"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_tutorial_new_project">
+							<span localization_key='help_tutorial_new_project'>New Project</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_tutorial"></span> - <span localization_key="help_tutorial_new_project"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_tutorial_build_project">
+							<span localization_key='help_tutorial_build_project'>Build Project</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_tutorial"></span> - <span localization_key="help_tutorial_build_project"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_tutorial_debug_project">
+							<span localization_key='help_tutorial_debug_project'>Debug Project</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_tutorial"></span> - <span localization_key="help_tutorial_debug_project"></span>
+							</div>
+						</a>
+					</div>
+					<!--  -->
+					<div class="item action">
+						<a href="#" action="help_about">
+							<span localization_key="help_about_goorm">About goorm</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_about"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_license">
+							<span localization_key="help_license">Open Source License</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_license"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_bug_report">
+							<span localization_key="help_bug_report">Send Bug Report</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_bug_report"></span>
+							</div>
+						</a>
+					</div>
+					<div class="item action">
+						<a href="#" action="help_facebook">
+							<span localization_key="help_facebook">Go to Facebook page</span>
+							<div class="description">
+								<span localization_key="help"></span> - <span localization_key="help_facebook"></span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
             <!--
             <div class="tab-pane fade" id="packages"></div>
             -->
@@ -6442,6 +7562,8 @@
     <!--  -->
     <!--JS : async.js-->
     <script type="text/javascript" src="/lib/js.async.code/async.js"></script>
+	<!-- JS : list.js -->
+	<script type="text/javasciprt" src="/lib/list.min.js"></script>
     <!--JS : goorm-->
     <script type="text/javascript" src="/modules/goorm.core/core.js"></script>
     <script type="text/javascript" src="/modules/goorm.core/core.browser.js"></script>
@@ -6450,6 +7572,7 @@
     <script type="text/javascript" src="/modules/goorm.core/core.user.js"></script>
     <script type="text/javascript" src="/modules/goorm.core/core.router.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.js"></script>
+	<script type="text/javascript" src="/modules/goorm.core.layout/layout.navigate.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.toolbar.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.layout/layout.tab.output_manager.js"></script>
