@@ -2688,7 +2688,7 @@ Terminal.prototype.keyDown = function(ev) {
       break;
   }
 
-  if (!key) return true;
+  if (!key || key.length === 1) return true;	// jeongmin: this prevents goorm shortcut
 
   if (this.prefixMode) {
     this.leavePrefix();

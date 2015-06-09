@@ -217,7 +217,7 @@ goorm.core.layout.tab = {
 			} else {
 				core.module.layout.select(tab.id);
 			}
-			
+
 			fn(e);
 		};
 		// Bind Event
