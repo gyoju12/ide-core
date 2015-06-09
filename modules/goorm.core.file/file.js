@@ -1518,6 +1518,7 @@ module.exports = {
 			case 'psd':
 			case 'py':
 			case 'rb':
+			case 'sh':
 			case 'rule':
 			case 'tar':
 			case 'template':

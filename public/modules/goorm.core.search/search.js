@@ -682,13 +682,7 @@ goorm.core.search = {
 			core._socket.emit('/file/search_and_replace', postdata);
 		};
 
-		var filtering = function(string) {
-			string = ((string.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;');
-			string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').split(/\t/).join('&nbsp;&nbsp;&nbsp;&nbsp;').split(/\s/).join('&nbsp;');
-			return string;
-		};
-
-		var msg = '"' + filtering(keyword) + '" > "' + filtering(replace_word) + '"<br/>' + core.module.localization.msg.confirmation_search_replace;
+		var msg = '"' + this.filtering(keyword) + '" > "' + this.filtering(replace_word) + '"<br/>' + core.module.localization.msg.confirmation_search_replace;
 		var confirm_option = {
 			title: core.module.localization.msg.title_replace_all,
 			message: msg,
@@ -710,5 +704,10 @@ goorm.core.search = {
 		$('#search_query_inputbox').focus().select();
 
 		core.module.toast.show(core.module.localization.msg.alert_cannot_find_word, null);
+	},
+	filtering: function(string) {
+		string = ((string.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;');
+		string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').split(/\t/).join('&nbsp;&nbsp;&nbsp;&nbsp;').split(/\s/).join('&nbsp;');
+		return string;
 	}
 };

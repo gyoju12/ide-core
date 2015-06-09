@@ -228,7 +228,7 @@ goorm.init = function() {
 			if (global.__workspace[global.__workspace.length - 1] !== '/') {
 				global.__workspace = global.__workspace + '/';
 			}
-			
+
 			
 		}
 

@@ -1109,10 +1109,15 @@ goorm.core.window.panel.prototype = {
 		if (this.context_menu) {
 			this.context_menu.hide();
 		}
+		
 		if (this.editor) {
 			this.editor.refresh();
 		}
 
+		if (this.terminal) {
+			this.terminal.resize();
+		}
+		
 		if (!$('#workspace').hasClass('use-scroll')) {
 			$('#workspace').scrollTop(0).scrollLeft(0);
 		}

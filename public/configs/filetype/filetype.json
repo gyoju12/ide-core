@@ -138,5 +138,12 @@
 		"description": "ruby",
 		"type": "Code",
 		"mode": "text/x-ruby"
+	},
+	{
+		"file_extension": "sh",
+		"editor": "Editor",
+		"description": "shell",
+		"type": "Code",
+		"mode": "text/x-sh"
 	}
 ]

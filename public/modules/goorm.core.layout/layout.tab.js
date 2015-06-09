@@ -206,20 +206,23 @@ goorm.core.layout.tab = {
 		var key = this.tab_key[position] + this.tab_index[position]++; // jeongmin: other tabs' shortcut is composed by ctrl, so don't have to change ctrl to meta
 		var html_key = (os === 'mac') ? sm.replace_hotkey(key).replace(/ /g, '') : key;
 		var content = (core.module.localization && core.module.localization.msg && core.module.localization.msg[tab.localization.menu]) ? core.module.localization.msg[tab.localization.menu] : tab.content;
-		// Bind Event
-		//
-		core.module.shortcut_manager.bind(action, key, function(e) {
-			var index = parseInt(e.data.slice(-1));
+		var select_func = function(e) {
+			var index = e.data && parseInt(e.data.slice(-1));
 
 			if (index) { // just toggle nth tab as default
 				core.module.layout.select({
 					'index': index - 1,
 					'position': position
 				});
+			} else {
+				core.module.layout.select(tab.id);
 			}
-
+			
 			fn(e);
-		});
+		};
+		// Bind Event
+		//
+		core.module.shortcut_manager.bind(action, key, select_func);
 
 		// Make UI (MainMenu - Perpectives & All ShortCut)
 		//
@@ -243,7 +246,8 @@ goorm.core.layout.tab = {
 		$('.' + action).off('click');
 		$('.' + action).click(function(e) {
 			$('#child_perspectives_menu').hide();
-			fn.call(this, e);
+
+			select_func(e);
 		});
 	},
 
@@ -304,8 +308,6 @@ goorm.core.layout.tab = {
 				'content': ''
 			},
 			fn: function(e) {
-				// 				core.module.layout.select(tab_id);	// will be done as default
-
 				e.stopPropagation();
 				e.preventDefault();
 				return false;

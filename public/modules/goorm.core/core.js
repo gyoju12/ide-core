@@ -119,12 +119,32 @@ goorm.core = function() {
 	
 
 	this.force_unload = false;
+	this.version = 'oss-150609073523';
 };
 
 goorm.core.prototype = {
 	init: function(container) {
 		var self = this;
 
+		/**
+		* VERSION
+		*/
+		var ymd = this.version.split('-').pop();
+		var date = new Date('20' + ymd.substring(0, 2) + '-' + ymd.substring(2, 4) + '-' + ymd.substring(4, 6) + 'T' + ymd.substring(6, 8) + ':' + ymd.substring(8, 10) + ':' + ymd.substring(10, 12));
+		
+		var month = parseInt(date.getMonth() + 1, 10);
+		var day = date.getDate();
+		
+		if (month < 10) {
+			month = '0' + month;
+		}
+		
+		if (day < 10) {
+			day = '0' + day;
+		}
+		
+		$('#core_build_time').html(date.getFullYear() + '-' + month + '-' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds());
+		
 		this.container = container;
 
 		
