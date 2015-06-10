@@ -93,6 +93,7 @@ goorm.core.project._export = {
 			// localization_key: "title_export_project",
 			id: 'dlg_export_project',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_manage_project_export',
 			success: function() {
 				$('#project_export_datatype1').iCheck('check'); // jeongmin: default
 

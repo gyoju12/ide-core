@@ -57,6 +57,7 @@ goorm.core.file.open = {
 		this.dialog.init({
 			id: 'dlg_open_file',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_open_editor',
 			show: $.proxy(this.after_show, this),
 			success: null
 		});

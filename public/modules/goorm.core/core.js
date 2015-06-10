@@ -81,7 +81,7 @@ goorm.core = function() {
 		search: null,
 		preference: null,
 		project_property: null,
-		help_contents: null,
+		// help_contents: null,
 		help_shortcuts: null,
 		help_about: null,
 		help_license: null,
@@ -119,7 +119,7 @@ goorm.core = function() {
 	
 
 	this.force_unload = false;
-	this.version = 'oss-150609073523';
+	this.version = 'oss-150610103338';
 };
 
 goorm.core.prototype = {
@@ -579,11 +579,6 @@ goorm.core.prototype = {
 		if (goorm.core.project.property) {
 			this.dialog.project_property = goorm.core.project.property;
 			this.dialog.project_property.init();
-		}
-
-		if (goorm.core.help.contents) {
-			this.dialog.help_contents = goorm.core.help.contents;
-			this.dialog.help_contents.init();
 		}
 
 		if (goorm.core.help.shortcuts) {

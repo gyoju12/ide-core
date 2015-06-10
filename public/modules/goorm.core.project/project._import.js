@@ -28,6 +28,7 @@ goorm.core.project._import = {
 			// localization_key: 'title_import_project',
 			id: 'dlg_import_project',
 			handle_ok: self.handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_manage_project_import',
 			success: self.success
 		});
 

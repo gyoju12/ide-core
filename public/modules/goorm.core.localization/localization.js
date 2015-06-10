@@ -301,7 +301,7 @@ goorm.core.localization = {
 					var helptext_parent = helptext.parent();
 					var placeholder = localizations.attr('placeholder');
 					var caret = $('[localization_key="' + key + '"] > .caret')[0];
-					var applied = localizations.find('.menu-applied')[0];
+					var applied = localizations.find('.menu-applied, .menu-show')[0];
 					var badge = $('[localization_key="' + key + '"] > .badge')[0];
 					var badge_parent = $(badge).parent(); // jeongmin: some element doesn't have badge but have same localization key, so differ badge parent.
 

@@ -65,7 +65,7 @@ goorm.core.preference.manager = {
 	// },
 
 	// create treeview structure
-	create_treeview: function(json, change) {
+	create_treeview: function(json, change, _on_select) {
 		var self = this;
 		var on_select = function(e, node) {
 			if (node.type === 'file') {
@@ -74,6 +74,10 @@ goorm.core.preference.manager = {
 				$tabview.find('.nav-tabs > li').hide();
 				$tabview.find('.nav-tabs > li[target="' + id + '"]').show();
 				$tabview.find('.nav-tabs > li[target="' + id + '"] > a').first().click();
+				
+				if (_on_select && typeof(_on_select) === 'function') {
+					_on_select(node);
+				}
 			}
 		};
 

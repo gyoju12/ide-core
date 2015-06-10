@@ -59,6 +59,7 @@ goorm.core.file._import = {
 			// localization_key: "title_import_file",
 			id: 'dlg_import_file',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_manage_import',
 			show: $.proxy(this.after_show, this),
 			// kind: "import",
 			success: function() {

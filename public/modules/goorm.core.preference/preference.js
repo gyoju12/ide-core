@@ -487,6 +487,7 @@ goorm.core.preference = {
 			id: 'dlg_preference',
 			handle_ok: handle_ok,
 			handle_cancel: handle_cancel,
+			help_url: 'http://help.goorm.io/ide#help_editor',
 			success: function() {
 				// create default dialog tree and tabview
 				var json = JSON.parse(external_json['public'].configs.dialogs['goorm.core.preference']['tree.json']);
@@ -519,10 +520,32 @@ goorm.core.preference = {
 					self.preference.workspace_path = data.path;
 				});
 
+				var _on_select = function (node) {
+					var id = node.li_attr.id;
+					
+					switch (id) {
+						case "Editor":
+							self.dialog.change_help_url("http://help.goorm.io/ide#help_editor");
+							break;
+							
+						case "Terminal":
+							self.dialog.change_help_url("http://help.goorm.io/ide#help_terminal_preference");
+							break;
+							
+						case "Language":
+							self.dialog.change_help_url("http://help.goorm.io/ide#help_language");
+							break;
+							
+						case "Shortcut":
+							self.dialog.change_help_url("http://help.goorm.io/ide#help_preference_shortcut");
+							break;
+					}
+				};
+				
 				var load_treeview = function(change) {
 					var lang = core.module.localization.language;
 
-					self.manager.create_treeview(json[lang], change);
+					self.manager.create_treeview(json[lang], change, _on_select);
 
 					$('[id="preference.language.select"]').val(lang);
 					core.preference['preference.language.select'] = lang;

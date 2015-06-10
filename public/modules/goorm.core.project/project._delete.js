@@ -163,6 +163,7 @@ goorm.core.project._delete = {
 		this.dialog.init({
 			// localization_key: 'title_delete_project',
 			id: 'dlg_delete_project',
+			help_url: 'http://help.goorm.io/ide#help_manage_project_delete',
 			handle_ok: function() {
 				if (!self.processing) {
 					var data = self.project_list.get_data();

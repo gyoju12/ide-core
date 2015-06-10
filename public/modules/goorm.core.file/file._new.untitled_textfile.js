@@ -66,6 +66,7 @@ goorm.core.file._new.untitled_textfile = {
 			// localization_key: "title_new_untitled_text_file",
 			id: 'dlg_new_untitled_textfile',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_new_text',
 			success: null,
 			show: $.proxy(this.after_show, this)
 		});

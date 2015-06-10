@@ -117,6 +117,7 @@ goorm.core.file._new = {
 			// localization_key: "title_new_file",
 			id: 'dlg_new_file',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_new_file',
 			// success: function() {
 			// 	$(document).on("click", "li.open.storage", function() {	// hidden: storage is deprecated
 			// 		$("button[localization_key=common_target]").blur();

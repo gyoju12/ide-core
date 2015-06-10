@@ -320,6 +320,8 @@ goorm.plugin.linter = {
 	},
 
 	lint_python: function(__window) {
+		var self = this;
+		
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 
 		core.module.terminal.terminal.send_command('pyflakes ' + path + '\r', function(output) {

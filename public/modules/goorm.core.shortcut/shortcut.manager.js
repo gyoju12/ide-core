@@ -850,7 +850,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.new_project) {
 			//hotkey event handler. Jeong-Min Im.
 			this.hotkeys_fn.new_project = function(e) {
-				$('[action=new_project]').click();
+				$('[action=new_project]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -906,7 +906,7 @@ goorm.core.shortcut.manager = {
 
 				// // window_manager.close_by_index(__window.index, __window.tab.index);
 
-				$('[action=close_file]').click(); // jeongmin
+				$('[action=close_file]:first').click(); // jeongmin
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -953,7 +953,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.new_terminal_window) {
 			this.hotkeys_fn.new_terminal_window = function(e) {
 				if (!core.status.keydown) {
-					$($('a[action=new_terminal_window]').get(0)).trigger('click');
+					$('a[action=new_terminal_window]:first').trigger('click');
 					core.status.keydown = true;
 				}
 
@@ -987,7 +987,7 @@ goorm.core.shortcut.manager = {
 				if (!self.prevent($('a[action="save_file"]').get(0)) && !ctrlsEventLock) {
 					ctrlsEventLock = true;
 
-					$('a[action=save_file]').click();
+					$('a[action=save_file]:first').click();
 
 					$.debounce(function() {
 						ctrlsEventLock = false;
@@ -1055,7 +1055,7 @@ goorm.core.shortcut.manager = {
 		//Rename (Ctrl+Shift+R)
 		if (this.hotkeys.rename_file) {
 			this.hotkeys_fn.rename_file = function(e) {
-				$('[action=rename_file]').click();
+				$('[action=rename_file]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1068,7 +1068,7 @@ goorm.core.shortcut.manager = {
 		//Duplicate (Ctrl+Shift+A)
 		if (this.hotkeys.duplicate_file) {
 			this.hotkeys_fn.duplicate_file = function(e) {
-				$('[action=duplicate_file]').click();
+				$('[action=duplicate_file]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1086,7 +1086,7 @@ goorm.core.shortcut.manager = {
 				}
 
 				if (core.status.selected_file) {
-					$('[action=delete_file]').click();
+					$('[action=delete_file]:first').click();
 				} else {
 					alert.show(core.module.localization.msg.alert_select_file);
 				}
@@ -1236,7 +1236,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.do_find) {
 			this.hotkeys_fn.do_find = function(e) {
 
-				$('a[action=do_find]').click();
+				$('a[action=do_find]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1253,7 +1253,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.do_go_to_line) {
 			this.hotkeys_fn.do_go_to_line = function(e) {
 
-				$('a[action=do_go_to_line]').get(0).click();
+				$('a[action=do_go_to_line]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1266,7 +1266,7 @@ goorm.core.shortcut.manager = {
 		//Toggle Breakpoint (Ctrl+B).
 		if (this.hotkeys.toggle_breakpoint) {
 			this.hotkeys_fn.toggle_breakpoint = function(e) {
-				$('a[action=toggle_breakpoint]').get(0).click();
+				$('a[action=toggle_breakpoint]:first').click();
 
 				e.stopPropagation();
 				e.preventDefault();
@@ -1282,7 +1282,7 @@ goorm.core.shortcut.manager = {
 			//toggle bookmark. Jeong-Min Im.
 			this.hotkeys_fn.toggle_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$('a[action=toggle_bookmark]').get(0).click();
+					$('a[action=toggle_bookmark]:first').click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1297,7 +1297,7 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.next_bookmark) {
 			this.hotkeys_fn.next_bookmark = function(e, editor) {
 				if (editor) {
-					$('a[action=next_bookmark]').get(0).click();
+					$('a[action=next_bookmark]:first').click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1314,7 +1314,7 @@ goorm.core.shortcut.manager = {
 			//go to previous bookmark from current cursor line. Jeong-Min Im.
 			this.hotkeys_fn.prev_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$('a[action=prev_bookmark]').get(0).click();
+					$('a[action=prev_bookmark]:first').click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1330,7 +1330,7 @@ goorm.core.shortcut.manager = {
 			//clear all bookmarks. Jeong-Min Im.
 			this.hotkeys_fn.clear_bookmark = function(e, editor) { //e:event, editor: codemirror, context: edit object
 				if (editor) {
-					$('a[action=clear_bookmark]').get(0).click();
+					$('a[action=clear_bookmark]:first').click();
 
 					e.stopPropagation();
 					e.preventDefault();
@@ -1967,7 +1967,10 @@ goorm.core.shortcut.manager = {
 						case 'js':
 						case 'html':
 						case 'css':
-							core.module.layout.select('outline');
+							var layout = core.module.layout;
+
+							layout.select('outline');
+							layout.tab.show_showing_icon(layout.get_id('outline'));
 							break;
 
 						default:
@@ -1989,7 +1992,10 @@ goorm.core.shortcut.manager = {
 		if (this.hotkeys.right_bookmark_show) {
 			this.hotkeys_fn.right_bookmark_show = function(e) {
 				if (!core.status.keydown) {
-					core.module.layout.select('bookmark');
+					var layout = core.module.layout;
+
+					layout.select('bookmark');
+					layout.tab.show_showing_icon(layout.get_id('bookmark'));
 				}
 
 				e.stopPropagation();
@@ -2027,7 +2033,10 @@ goorm.core.shortcut.manager = {
 					// if (core.module.layout.inner_layout.getUnitByPosition("bottom")._collapsed) {
 					// 	core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
 					// }
-					core.module.layout.select('debug');
+					var layout = core.module.layout;
+
+					layout.select('debug');
+					layout.tab.show_showing_icon(layout.get_id('debug'));
 				}
 
 				e.stopPropagation();
@@ -2044,7 +2053,10 @@ goorm.core.shortcut.manager = {
 					// if (core.module.layout.inner_layout.getUnitByPosition("bottom")._collapsed) {
 					// 	core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
 					// }
-					core.module.layout.select('terminal');
+					var layout = core.module.layout;
+
+					layout.select('terminal');
+					layout.tab.show_showing_icon(layout.get_id('terminal'));
 				}
 
 				e.stopPropagation();
@@ -2062,7 +2074,10 @@ goorm.core.shortcut.manager = {
 					// if (core.module.layout.inner_layout.getUnitByPosition("bottom")._collapsed) {
 					// 	core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
 					// }
-					core.module.layout.select('search');
+					var layout = core.module.layout;
+
+					layout.select('search');
+					layout.tab.show_showing_icon(layout.get_id('search'));
 				}
 
 				e.stopPropagation();

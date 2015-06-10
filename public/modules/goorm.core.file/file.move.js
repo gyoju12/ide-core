@@ -41,6 +41,7 @@ goorm.core.file.move = {
 			// localization_key: "title_move",
 			id: 'dlg_move_file',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_move',
 			show: $.proxy(this.after_show, this),
 			success: function() {
 

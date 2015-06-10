@@ -1044,7 +1044,8 @@ goorm.core.menu.action = {
 		//Main Menu : Help
 		$('[action=help_contents]').off('click').tooltip();
 		$('[action=help_contents]').click(function() {
-			core.dialog.help_contents.show();
+			window.open('http://help.goorm.io/');
+			// core.dialog.help_contents.show();
 		});
 
 		$('[action=view_all_shortcuts]').off('click').tooltip();
@@ -1229,7 +1230,7 @@ goorm.core.menu.action = {
 
 			if (goorm.core.project.is_building === true) {
 				setTimeout(function() {
-					$('[action=run]').click();
+					$('[action=run]:first').click();
 				}, 300);
 				return false;
 			}
@@ -1628,7 +1629,7 @@ goorm.core.menu.action = {
 				if (self.prevent(this)) {
 					return false;
 				}
-				$('[action=delete_file]').click();
+				$('[action=delete_file]:first').click();
 			});
 
 			$('[action=send_file_link]').off('click').tooltip();

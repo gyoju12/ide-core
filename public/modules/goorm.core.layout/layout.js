@@ -152,7 +152,7 @@ goorm.core.layout = {
 		//		this.attach_toolbox(this.left_tabview);
 
 		
-		
+
 		this.attach_navigate(this.left_tabview);
 
 		// Right
@@ -183,7 +183,6 @@ goorm.core.layout = {
 		this.workspace.init(container + '_inner_layout_center');
 
 		this.attach_edit_toolbar(this.workspace); //jeongmin: attach edit_toolbar to the workspace
-		
 
 		// Final
 
@@ -591,7 +590,7 @@ goorm.core.layout = {
 		this.edit_toolbar = goorm.core.edit.toolbar; //jeongmin: declare edit toolbar
 		this.edit_toolbar.init(); //jeongmin: initialize edit toolbar
 	},
-	
+
 	attach_navigate: function(target) {
 		this.navigate = goorm.core.layout.navigate;
 		this.navigate.init();
@@ -719,63 +718,29 @@ goorm.core.layout = {
 
 		if (tab_name) {
 			if (typeof tab_name === 'string') {
+				id = this.get_id(tab_name);
+
 				switch (tab_name) {
 
 					/* west */
 					case 'project':
-						id = 'gLayoutTab_project';
-						pane = 'west';
-						break;
-
 					case 'packages':
-						id = 'gLayoutTab_Packages';
-						pane = 'west';
-						$parent = $('#goorm_left');
-						break;
-
 					case 'cloud':
-						id = 'gLayoutTab_Cloud';
 						pane = 'west';
 						$parent = $('#goorm_left');
 						break;
 
 						/* south */
 					case 'debug':
-						id = 'gLayoutTab_Debug';
-						pane = 'south';
-						$parent = $('#goorm_inner_layout_bottom');
-						break;
-
 					case 'terminal':
-						id = 'gLayoutTab_Terminal';
-						pane = 'south';
-						$parent = $('#goorm_inner_layout_bottom');
-						break;
-
 					case 'search':
-						id = 'gLayoutTab_Search';
 						pane = 'south';
 						$parent = $('#goorm_inner_layout_bottom');
 						break;
 
 						/* east */
 						
-					case 'outline':
-						if (plugin_manager) {
-							if (plugin_manager.outline) {
-								id = 'gLayoutTab_Outline';
-								pane = 'east';
-								$parent = $('#goorm_inner_layout_right');
-							} else {
-
-								return false;
-							}
-						}
-
-						break;
-
 					case 'bookmark':
-						id = 'gLayoutTab_Bookmark';
 						pane = 'east';
 						$parent = $('#goorm_inner_layout_right');
 						break;
@@ -784,22 +749,24 @@ goorm.core.layout = {
 						if (this.tab_manager.list[tab_name]) {
 							id = tab_name;
 							pane = this.tab_manager.list[tab_name].pane;
+
+							if (pane == 'west') {
+								$parent = $('#goorm_left');
+							} else if (pane == 'south') {
+								$parent = $('#goorm_inner_layout_bottom');
+							} else if (pane == 'east') {
+								$parent = $('#goorm_inner_layout_right');
+							}
 						}
-
-						break;
-				}
-
-				if (pane == 'west') {
-					$parent = $('#goorm_left');
-				} else if (pane == 'south') {
-					$parent = $('#goorm_inner_layout_bottom');
-				} else if (pane == 'east') {
-					$parent = $('#goorm_inner_layout_right');
 				}
 
 				if (id && $parent && pane) {
 					var tab = $parent.find('#' + id);
 					if (tab.length) {
+						if (!tab.is(':visible')) {
+							tab.parent().show();
+						}
+
 						tab.click();
 						this.expand(pane);
 						if (tab_name == 'terminal') {
@@ -833,7 +800,16 @@ goorm.core.layout = {
 				if (tab.length) {
 					if (~tab.attr('href').indexOf('outline') && !(plugin_manager && plugin_manager.outline)) {
 						return false;
-					} else if (~tab.attr('href').indexOf('terminal')) {
+					}
+
+					if (!tab.is(':visible')) {
+						tab.parent().show();
+					}
+
+					tab.click();
+					this.expand(pane);
+
+					if (~tab.attr('href').indexOf('terminal')) {
 						var terminal = core.module.layout.terminal.Terminal;
 
 						if (terminal && terminal.focus) {
@@ -842,9 +818,6 @@ goorm.core.layout = {
 
 						$('#terminal').click();
 					}
-
-					tab.click();
-					this.expand(pane);
 				}
 			}
 		}
@@ -1190,6 +1163,36 @@ goorm.core.layout = {
 			$('#bubble_toolbar').css('right', 0);
 		} else {
 			$('#bubble_toolbar').css('right', toolbar_right_margin);
+		}
+	},
+
+	get_id: function(tab_name) {
+		switch (tab_name) {
+			case 'project':
+				return 'gLayoutTab_project';
+
+			case 'packages':
+				return 'gLayoutTab_Packages';
+
+			case 'cloud':
+				return 'gLayoutTab_Cloud';
+
+			case 'debug':
+				return 'gLayoutTab_Debug';
+
+			case 'terminal':
+				return 'gLayoutTab_Terminal';
+
+			case 'search':
+				return 'gLayoutTab_Search';
+
+				
+
+			case 'outline':
+				return 'gLayoutTab_Outline';
+
+			case 'bookmark':
+				return 'gLayoutTab_Bookmark';
 		}
 	}
 };

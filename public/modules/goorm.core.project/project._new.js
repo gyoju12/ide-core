@@ -26,6 +26,7 @@ goorm.core.project._new = {
 			//localization_key: 'title_new_project',
 			id: 'dlg_new_project',
 			// handle_ok: handle_ok,	//jeongmin: there are three ok buttons for each tab, so can't assign one handler
+			help_url: 'http://help.goorm.io/#help_new_project',
 			success: function() {
 				var $next_btn = $('#g_np_btn_next');
 				var	$ok_btn = $('.g_np_btn_ok');

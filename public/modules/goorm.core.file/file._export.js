@@ -104,6 +104,7 @@ goorm.core.file._export = {
 		this.dialog.init({
 			id: 'dlg_export_file',
 			handle_ok: this.handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_manage_export',
 			show: $.proxy(this.after_show, this)
 		});
 

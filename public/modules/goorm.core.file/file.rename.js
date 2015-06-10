@@ -207,6 +207,7 @@ goorm.core.file.rename = {
 			id: 'dlg_rename_file',
 			handle_ok: handle_ok,
 			success: null,
+			help_url: 'http://help.goorm.io/ide#help_file_rename',
 			show: $.proxy(this.after_show, this)
 		});
 

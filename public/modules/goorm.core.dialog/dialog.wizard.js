@@ -23,8 +23,11 @@ goorm.core.dialog.wizard.prototype = {
 		this.next = option.next;
 		this.show = option.show; //jeongmin: define show function
 		this.success = option.success; //jeongmin: forward success function
-
-		var goorm_dialog_container = $('#' + self.id);
+		this.help_url = option.help_url;
+		
+		this.panel = $('#' + self.id);
+		
+		var goorm_dialog_container = this.panel;
 
 		goorm_dialog_container.draggable({});
 		// 		goorm_dialog_container.css("overflow", "hidden");
@@ -78,26 +81,6 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		};
 
-		// move to Center 	//jeongmin: done at dialog.js
-		//
-		// goorm_dialog_container.on("show.bs.modal", function (){
-		// 	setTimeout(function () {
-		// 		goorm_dialog_container.css('top', '0px');
-
-		// 		var container = goorm_dialog_container.find('.modal-dialog');
-
-		// 		var window_height = $(window).height();
-		// 		var container_height = container.height();
-
-		// 		if (window_height > container_height) {
-		// 			container.css('margin-top', ((window_height-container_height)/2) + 'px');
-		// 		}
-		// 		else {
-		// 			container.css('margin-top', '10px');
-		// 		}
-		// 	}, 200); // fade animation: 0.15s -> 150
-		// });
-
 		$(document).on('keydown', 'return', function() {
 			if (confirmation.panel === null || confirmation.panel === undefined) {
 				confirmation.panel = {};
@@ -119,6 +102,10 @@ goorm.core.dialog.wizard.prototype = {
 			}
 		});
 
+		if (this.help_url) {
+			this.insert_help_url(this.help_url);
+		}
+		
 		if (typeof self.success == 'function') {
 			self.success();
 		}
@@ -134,7 +121,7 @@ goorm.core.dialog.wizard.prototype = {
 		self.show_previous_button(false);
 
 		core.input_validation(goorm_dialog_container); // bind validator on input
-
+		
 		return this;
 	},
 
@@ -169,6 +156,19 @@ goorm.core.dialog.wizard.prototype = {
 
 		self.show_previous_button(false);
 		self.show_next_button(next_button);
-	}
-
+	},
+	
+	insert_help_url: function (url) {
+		if (this.panel.find('.close').length) {
+			this.panel.find('.close').after('<a class="question glyphicon glyphicon-question-sign" href="' + url + '" target="_blank"></a>');
+		}
+	},
+	
+	change_help_url: function (url) {
+		if (this.panel.find('.question').length) {
+			this.help_url = url;
+			
+			this.panel.find('.question').attr('href', url);
+		}
+	}	
 };

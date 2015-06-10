@@ -194,6 +194,7 @@ goorm.core.layout.tab = {
 	 * @return Nothing
 	 */
 	set_event: function(tab, position, fn) {
+		var self = this;
 		var sm = core.module.shortcut_manager;
 		var os = sm.getOStype();
 		if (!fn) {
@@ -218,6 +219,8 @@ goorm.core.layout.tab = {
 				core.module.layout.select(tab.id);
 			}
 
+			self.show_showing_icon(tab.id);
+
 			fn(e);
 		};
 		// Bind Event
@@ -227,8 +230,12 @@ goorm.core.layout.tab = {
 		// Make UI (MainMenu - Perpectives & All ShortCut)
 		//
 		var li = '<li class="' + action + '" key="' + key + '">' +
-			'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '">' +
+			'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '" applied>' +
 			content +
+			'<span class="menu-show menu-prepend pull-left">' +
+			'<span class="glyphicon glyphicon-eye-open ' + tab.id + '_showing_icon"></span>' +
+			'<span class="glyphicon glyphicon-eye-close ' + tab.id + '_showing_icon"></span>' +
+			'</span>' +
 			'<em class="helptext">' + html_key + '</em>' +
 			'</a>' +
 			'</li>';
@@ -247,7 +254,9 @@ goorm.core.layout.tab = {
 		$('.' + action).click(function(e) {
 			$('#child_perspectives_menu').hide();
 
-			select_func(e);
+			self.toggle(tab.id, function() {
+				select_func(e);
+			});
 		});
 	},
 
@@ -342,5 +351,27 @@ goorm.core.layout.tab = {
 
 	make_background_tab: function() {
 
+	},
+
+	toggle: function(tab_id, show_func) {
+		var tab_nav = $('#' + tab_id).parent();
+
+		if (tab_nav.is(':visible')) {
+			if (tab_nav.hasClass('active')) {
+				tab_nav.next().length ? tab_nav.next().children().click() : tab_nav.prev().children().click();
+			}
+
+			tab_nav.hide();
+			$('.' + tab_id + '_showing_icon.glyphicon-eye-open').hide();
+			$('.' + tab_id + '_showing_icon.glyphicon-eye-close').show();
+		} else {
+			this.show_showing_icon(tab_id);
+			show_func();
+		}
+	},
+
+	show_showing_icon: function(tab_id) {
+		$('.' + tab_id + '_showing_icon.glyphicon-eye-open').show();
+		$('.' + tab_id + '_showing_icon.glyphicon-eye-close').hide();
 	}
 };

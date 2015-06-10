@@ -88,6 +88,7 @@ goorm.core.file._new.folder = {
 			// localization_key: "title_new_folder",
 			id: 'dlg_new_folder',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_file_new_folder',
 			success: null,
 			show: $.proxy(this.after_show, this)
 		});

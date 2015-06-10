@@ -49,6 +49,7 @@ goorm.core.project.open = {
 			// localization_key: 'title_open_project',
 			id: 'dlg_open_project',
 			handle_ok: this.__handle_open,
+			help_url: 'http://help.goorm.io/ide#help_file_open_project',
 			show: $.proxy(this.after_show, this)
 			// success: function() {	// hidden: storage is deprecated
 			// 	$('#project_open_storage').find('span').html('goormIDE_Storage');

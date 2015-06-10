@@ -60,6 +60,7 @@ goorm.core.help.bug_report = {
 			// localization_key: 'title_send_bug_report',
 			id: 'dlg_help_bug_report',
 			handle_ok: handle_ok,
+			help_url: 'http://help.goorm.io/ide#help_bug_report',
 			success: null
 		});
 

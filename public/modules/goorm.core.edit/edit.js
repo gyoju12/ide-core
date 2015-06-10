@@ -143,13 +143,13 @@ goorm.core.edit.prototype = {
 			'Shift-Ctrl-G': false,
 			'Shift-Cmd-G': false,
 			'Ctrl-K Ctrl-Backspace': function() {
-				$('[action=delete_line_left]').click();
+				$('[action=delete_line_left]:first').click();
 			},
 			'Cmd-K Cmd-Backspace': function() {
-				$('[action=delete_line_left]').click();
+				$('[action=delete_line_left]:first').click();
 			},
 			'Cmd-Backspace': function() {
-				$('[action=delete_line_left]').click();
+				$('[action=delete_line_left]:first').click();
 			}
 		});
 

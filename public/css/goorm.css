@@ -29,7 +29,8 @@ body {
 #goorm-mainmenu .scroll_controller,
 .goorm_layout,
 .next_wizard_step,
-div.goorm_menu_item {
+div.goorm_menu_item,
+.glyphicon-eye-close {
     display: none;
 }
 
@@ -644,6 +645,7 @@ Optimized:Start
 .modal-dialog {
     margin: 0;
 }
+
 #pdf_draw_canvas,
 #slideshare_draw_canvas {
     margin: 5px;
@@ -745,7 +747,9 @@ Optimized:Start
     margin-left: 3px;
     zoom: 0.5;
 }
-
+.menu-show {
+	margin-left: -22px;
+}
 /* debug */
 #debug_left {
     border-right: 1px solid #ccc;
@@ -1852,6 +1856,20 @@ Toolbar CSS
     overflow: auto;
     padding: 0;
 }
+
+.modal-dialog .question {
+	float: right;
+	font-size: 12.5px;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity=20);
+	opacity: .2;
+	margin-right: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
 .project_wizard_first_button img {
     float: left;
     margin-right: 10px;
@@ -1912,6 +1930,11 @@ Toolbar CSS
 #my_friend_list ul,
 #project_selector .dropdown-menu {
     overflow: auto;
+}
+
+#project_selector .checked {
+	margin-left: -15px;
+	margin-right: 5px;
 }
 
 /* to prevent from removing gap chat message (in fire fox) */
@@ -2437,7 +2460,7 @@ Plugin CSS: jeongmin
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#goorm-mainmenu .glyphicon {
+#goorm-mainmenu .menu-applied .glyphicon {
     top: -2px;
 }
 .emoticon-smiley-icon {
@@ -3744,4 +3767,8 @@ div.item a > span {
 	color: #aaa;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.ui-layout-pane .nav-tabs li {
+	margin-left: 5px;
 }

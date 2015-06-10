@@ -249,12 +249,13 @@ goorm.core.project.explorer.prototype = {
 			
 			for (var project_idx = 0; project_idx < this.project_data.length; project_idx++) {
 				var project_item = this.project_data[project_idx];
-
+												
+				
+				//useonly(mode=goorm-oss)
 				if (project_item.name == core.status.current_project_path) {
 					this.select_project_name(project_item.contents.name);
 				}
 				
-				//useonly(mode=goorm-oss)
 				$('#my_projects_header').after('<li class="project_item" project_path="' + project_item.name + '" idx="' + project_idx + '"><a href="#">' + project_item.contents.name + '</a></li>');
 				
 				this.project_idx_data[project_item.name] = project_idx;
@@ -345,24 +346,18 @@ goorm.core.project.explorer.prototype = {
 		
 	},
 
-	on_project_selectbox_change: function(project_idx) {
-		var self = this;
-		// need modify. NullA
-
-		
-
+	on_project_selectbox_change: function(project_idx) {		
 		if (project_idx !== null && project_idx !== undefined && project_idx !== '') {
-			self.current_project.current_project_path = self.project_data[project_idx].name;
-			self.current_project.current_project_name = self.project_data[project_idx].contents.name;
-			self.current_project.current_project_type = self.project_data[project_idx].contents.type;
-			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
+			this.current_project.current_project_path = this.project_data[project_idx].name;
+			this.current_project.current_project_name = this.project_data[project_idx].contents.name;
+			this.current_project.current_project_type = this.project_data[project_idx].contents.type;
 		} else {
-			self.current_project.current_project_path = '';
-			self.current_project.current_project_name = '';
-			self.current_project.current_project_type = '';
-			core.dialog.open_project.open(self.current_project.current_project_path, self.current_project.current_project_name, self.current_project.current_project_type);
+			this.current_project.current_project_path = '';
+			this.current_project.current_project_name = '';
+			this.current_project.current_project_type = '';
 		}
-
+		
+		core.dialog.open_project.open(this.current_project.current_project_path, this.current_project.current_project_name, this.current_project.current_project_type);
 	},
 
 	load_explorer_treeview: function() {
