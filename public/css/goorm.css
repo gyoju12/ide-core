@@ -29,8 +29,7 @@ body {
 #goorm-mainmenu .scroll_controller,
 .goorm_layout,
 .next_wizard_step,
-div.goorm_menu_item,
-.glyphicon-eye-close {
+div.goorm_menu_item {
     display: none;
 }
 
@@ -3780,6 +3779,6 @@ div.item a > span {
 	text-overflow: ellipsis;
 }
 
-.ui-layout-pane .nav-tabs li {
+.ui-layout-pane .nav-tabs li:not(.g_windows_tab_li) {
 	margin-left: 5px;
 }
