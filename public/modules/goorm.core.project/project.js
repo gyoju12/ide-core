@@ -153,6 +153,22 @@ goorm.core.project = {
 						});
 
 						callback(_tab);
+					},
+					terminal: {
+						on_message: function (msg) {
+							if (msg.stdout) {
+								// [H[2J
+								if (encodeURIComponent(msg.stdout).indexOf('%1B%5BH%1B%5B2J') === 0) {
+									msg.stdout = msg.stdout.substring(7, msg.stdout.length); // [H[2J --> Unicode --> 7
+								}
+								
+								if (msg.stdout.indexOf('^C\r\n\r\n') === 0) {
+									msg.stdout = msg.stdout.replace('^C\r\n\r\n', '');
+								 }								
+							}
+							
+							return msg;
+						}
 					}
 				});
 

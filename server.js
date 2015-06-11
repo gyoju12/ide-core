@@ -447,9 +447,23 @@ goorm.routing = function() {
 
 	// connect
 	g_aws.connect(g_auth_project);
-
 	
-
+	
+	
+	goorm.get('/test/*', function (req, res) {
+		var request = require('request');
+		
+		var params = req.params;
+		var query = req.query;
+		
+		console.log('params', params);
+		console.log('query', query);
+		
+		var url = 'ws://ec2-52-68-33-187.ap-northeast-1.compute.amazonaws.com:27432/' + params[0] + '?t=' + query.t;
+		
+		request(url).pipe(res);
+	});	
+	
 	goorm.get('/goorm.plugin.*', function(req, res) {
 		var params = req.params[0].split('/');
 

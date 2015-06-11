@@ -134,9 +134,17 @@ goorm.core.layout = {
 
 		$(window).on('unload', function() {
 			var layout_state = self.layout.readState();
+			var hidden_tabs = $('.ui-layout-pane .nav-tabs li:hidden a');
+
 			layout_state.south.initClosed = false; //seongho.cha : it must be opened. sometimes plugin close it.
 			layout_state.south.initHidden = false;
 			layout_state.north_step = self.north_step || 3;
+			layout_state.hidden_tabs = [];
+
+			for (var i = hidden_tabs.length - 1; 0 <= i; i--) {
+				layout_state.hidden_tabs.push(hidden_tabs[i].id);
+			}
+
 			
 			self.save_layout_tab_activated(layout_state); // add layout tab state
 			localStorage.layout_state = JSON.stringify(layout_state);
@@ -997,6 +1005,10 @@ goorm.core.layout = {
 
 		if (layout_state.north_step) {
 			this.north_layout_toggle(layout_state.north_step);
+		}
+
+		if (layout_state.hidden_tabs) {
+			this.tab.toggle(layout_state.hidden_tabs.join(', #'));
 		}
 	},
 

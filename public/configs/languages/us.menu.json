@@ -345,7 +345,7 @@
 				"value": "Clean"
 			},
 			"project_build_configuration": {
-				"value": "Build Configuration"
+				"value": "Build/Run Configuration"
 			},
 			"project_import": {
 				"value": "Import Project"

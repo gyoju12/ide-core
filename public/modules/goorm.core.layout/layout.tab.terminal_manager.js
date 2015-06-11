@@ -70,7 +70,7 @@ goorm.core.layout.tab.terminal_manager = {
 		return this.create(name, tab_manager, terminal, {
 			'success': options.success,
 			'show': options.show,
-			'hide': options.hide,
+			'hide': options.hide
 		});
 	},
 
@@ -176,7 +176,7 @@ goorm.core.layout.tab.terminal_manager = {
 						if (terminal.on_message) {
 							msg = terminal.on_message(msg);
 						}
-
+						
 						if (/\n/.test(msg.stdout)) {
 							inner.append(msg.stdout.replace(/\n/g, '<br>').replace(/\[\d+m/g, ''));
 

@@ -233,8 +233,7 @@ goorm.core.layout.tab = {
 			'<a href="#" class="goorm_tab_menu" position="' + position + '" action="' + action + '" localization_key="' + tab.localization.menu + '" applied>' +
 			content +
 			'<span class="menu-show menu-prepend pull-left">' +
-			'<span class="glyphicon glyphicon-eye-open ' + tab.id + '_showing_icon"></span>' +
-			'<span class="glyphicon glyphicon-eye-close ' + tab.id + '_showing_icon"></span>' +
+			'<span class="glyphicon glyphicon-ok ' + tab.id + '_showing_icon"></span>' +
 			'</span>' +
 			'<em class="helptext">' + html_key + '</em>' +
 			'</a>' +
@@ -362,16 +361,19 @@ goorm.core.layout.tab = {
 			}
 
 			tab_nav.hide();
-			$('.' + tab_id + '_showing_icon.glyphicon-eye-open').hide();
-			$('.' + tab_id + '_showing_icon.glyphicon-eye-close').show();
+
+			if (~tab_id.indexOf(',')) { // multiple tabs
+				tab_id = tab_id.split(', #').join('_showing_icon, .');
+			}
+
+			$('.' + tab_id + '_showing_icon').hide();
 		} else {
 			this.show_showing_icon(tab_id);
-			show_func();
+			show_func && show_func();
 		}
 	},
 
 	show_showing_icon: function(tab_id) {
-		$('.' + tab_id + '_showing_icon.glyphicon-eye-open').show();
-		$('.' + tab_id + '_showing_icon.glyphicon-eye-close').hide();
+		$('.' + tab_id + '_showing_icon').show();
 	}
 };

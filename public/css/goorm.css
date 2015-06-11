@@ -1933,8 +1933,8 @@ Toolbar CSS
 }
 
 #project_selector .checked {
-	margin-left: -15px;
-	margin-right: 5px;
+    margin-left: -15px;
+    margin-right: 5px;
 }
 
 /* to prevent from removing gap chat message (in fire fox) */
@@ -3749,8 +3749,12 @@ div.tooltip {
 	cursor: pointer;
 }
 
-#navi_result .item:hover {
+#navi_result .action:hover {
 	background-color: #e7f4f9;
+}
+
+#navi_result .file:hover {
+	background-color: #f9f5e7;
 }
 
 #navi_result a {
@@ -3766,6 +3770,13 @@ div.item a > span {
 	font-weight: normal;
 	color: #aaa;
 	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#navi_result a > span {
+	display: block;
+	overflow: hidden;
 	text-overflow: ellipsis;
 }
 

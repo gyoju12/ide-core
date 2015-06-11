@@ -292,5 +292,8 @@
 	},
 	"chat_joined_number": {
 		"value": "접속자"
+	},
+	"navigate": {
+		"value": "탐색"
 	}
 }

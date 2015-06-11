@@ -292,5 +292,8 @@
 	},
 	"chat_joined_number": {
 		"value": "Online"
+	},
+	"navigate": {
+		"value": "Navigate"
 	}
 }

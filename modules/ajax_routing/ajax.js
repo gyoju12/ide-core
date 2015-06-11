@@ -400,6 +400,8 @@ module.exports = {
 			
 
 			socket.on('/project/available', function(msg) {
+				console.log('/project/available');
+				
 				self.get_user_data(socket, function(user_data) {
 					if (user_data.result) {
 						user_data = user_data.data;

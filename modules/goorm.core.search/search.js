@@ -27,7 +27,7 @@ module.exports = {
 		var uid = query.uid;
 		var find_query = query.find_query;
 		var project_path = query.project_path;
-		var folder_path = query.folder_path;
+		var folder_path = this.prevent_duplicate_slash(query.folder_path);
 		var grep_option = query.grep_option || {};
 
 		var make_grep_option = function(options) {
@@ -131,7 +131,7 @@ module.exports = {
 		var find_query = query.find_query;
 		var replace_query = query.replace_query;
 		var project_path = query.project_path;
-		var folder_path = query.folder_path;
+		var folder_path = this.prevent_duplicate_slash(query.folder_path);
 		var grep_option = query.grep_option || {};
 
 		var make_grep_option = function(options) {
@@ -177,6 +177,14 @@ module.exports = {
 
 				return r;
 			};
+			// used as meta character in perl script
+			var meta_chars = ['\\', '$', '^', '*', '(', ')', '/', '?', '|', '.', '+'];
+
+			for (var i = 0; i < meta_chars.length; i++) {
+				old_word = old_word.split(meta_chars[i]).join('\\' + meta_chars[i]);
+				new_word = new_word.split(meta_chars[i]).join('\\' + meta_chars[i]);
+			}
+
 			var xargs = ['-0', 'perl', '-pi', '-e'];
 			var replace_string = 's/' + old_word + '/' + new_word + '/g';
 			if (!is_true(options.match_case)) {
@@ -309,7 +317,6 @@ module.exports = {
 			var saved_filename = '';
 			var whole_line = '';
 			var short_filename = '';
-
 			var make_node = function(arr) {
 				var code = [];
 				var context = '';

@@ -345,7 +345,7 @@
 				"value": "프로젝트 클린"
 			},
 			"project_build_configuration": {
-				"value": "빌드 설정"
+				"value": "빌드/실행 설정"
 			},
 			"project_import": {
 				"value": "프로젝트 가져오기"

@@ -43,16 +43,19 @@ goorm.core.project.property = {
 					case 'ruby':
 						$('[action="build_project"]').css('display', 'none');
 						$('[action="build_clean"]').css('display', 'none');
+						$('[action="build_project"]').parent('div.item').addClass('disabled').hide();
 						// $('[action="help_about_private_url"]').show();
 						break;
 						
 					default:
 						$('[action="build_project"]').css('display', '');
 						$('[action="build_clean"]').css('display', '');
+						$('[action="build_project"]').parent('div.item').addClass('disabled').hide();
 						// $('[action="help_about_private_url"]').hide();
 						break;
 				}
 				$('[action="run"]').show();
+				$('[action="run"]').parent('div.item').removeClass('disabled').show();
 
 				if (!self.property.plugins) {
 					self.property.plugins = {};
@@ -105,6 +108,8 @@ goorm.core.project.property = {
 			if (core.status.current_project_type === '') {
 				$('[action="run"]').css('display', 'none');
 				$('[action="build_project"]').css('display', 'none');
+				$('[action="build_project"]').parent('div.item').addClass('disabled').hide();
+				$('[action="run"]').parent('div.item').addClass('disabled').hide();
 			}
 
 			//output tab empty fix
