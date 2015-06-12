@@ -261,6 +261,18 @@ goorm.core.project.list.prototype = {
 		return data;
 	},
 
+	time_formatter: function(o) {
+		var time = "";
+
+		if (o) {
+			var time_obj = new Date(o);
+			var today_month = time_obj.getMonth() + 1;
+			time = time_obj.getFullYear() + '/' + today_month + '/' + time_obj.getDate() + ' ' + time_obj.getHours() + ':' + time_obj.getMinutes() + ':' + time_obj.getSeconds();
+		}
+
+		return time;
+	},
+
 	add_project_list: function(type, list_callback) {
 		var self = this;
 
@@ -321,9 +333,9 @@ goorm.core.project.list.prototype = {
 					information.find('.project_info_author').html(data[idx].contents.author);
 					information.find('.project_info_name').html(data[idx].contents.name);
 					information.find('.project_info_description').html(description);
-					information.find('.project_info_date').html(data[idx].contents.date);
-
+					information.find('.project_info_date').html(self.time_formatter(data[idx].contents.date));
 				});
+
 				$(self.list + ' .selector_project').dblclick(function() {
 					$(self.list).parents('.modal-content').find('button:last').click(); // jeongmin: we should click button of this list's dialog!
 				});

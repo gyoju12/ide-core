@@ -35,6 +35,7 @@ goorm.core.edit.bookmark.prototype = {
 
 		this.set_modified();
 		this.outline_tab(is_added, line);
+		this.editor.editor.focus();
 	},
 
 	//find next bookmark. Jeong-Min Im.
@@ -104,32 +105,31 @@ goorm.core.edit.bookmark.prototype = {
 
 		this.set_modified();
 		this.outline_tab();
+		this.editor.editor.focus();
 	},
 
 	//move cursor to bookmark. Jeong-Min Im.
 	move: function(linenumber) {
 		var bookmark_rows = $('#bookmark_table').children();
 		var current_row = bookmark_rows.has('#bookmark_line_' + linenumber);
+		var editor = this.editor.editor;
 
 		bookmark_rows.removeClass('current_bookmark_row');
 		current_row.addClass('current_bookmark_row');
 
-		$(document).off('mousedown.bookmark');
-		$(document).one('mousedown.bookmark', function() {
+		$(document).off('mousedown.bookmark').one('mousedown.bookmark', function() {
 			bookmark_rows.removeClass('current_bookmark_row');
 		});
 
 		$('#bookmark_tab_list').scrollTop(current_row[0].offsetTop);
 
-		if (typeof(linenumber) == 'string') { //if linenumber is string type
-			var keyword = linenumber.split('_').pop(); //find real line number from the string
-
-			this.editor.editor.setCursor(parseInt(keyword, 10) - 1, 0); //set cursor to the parsed integer keyword
-			CodeMirror.commands.showInCenter(this.editor.editor);
-		} else { //linenumber is number type
-			this.editor.editor.setCursor(linenumber - 1, 0); //set cursor to the line
-			CodeMirror.commands.showInCenter(this.editor.editor);
+		if (typeof(linenumber) === 'string') { //if linenumber is string type
+			linenumber = parseInt(linenumber.split('_').pop()); //find real line number from the string
 		}
+
+		editor.setCursor(linenumber - 1, 0); //set cursor to the line
+		CodeMirror.commands.showInCenter(editor);
+		editor.focus();
 	},
 
 	//make bookmark list in the outline tab. Jeong-Min Im.

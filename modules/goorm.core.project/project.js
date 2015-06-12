@@ -53,9 +53,9 @@ module.exports = {
 			} else {
 				var project_dir = query.project_author + '_' + query.project_name;
 				var project_name = project_dir;
+
 				
-				
-				
+
 				if (files.hasObject(project_name)) {
 					data.err_code = 20;
 					data.message = 'Same project name is exist.';
@@ -142,7 +142,7 @@ module.exports = {
 													date: date_string,
 													is_user_plugin: false,
 													storage: 'container',
-													storage_name: query.docker_id || ""
+													storage_name: query.docker_id || ''
 												};
 
 												var project_permission_data = {
@@ -150,7 +150,7 @@ module.exports = {
 												};
 
 												
-												
+
 												
 											}
 										});
@@ -163,17 +163,17 @@ module.exports = {
 					self.count_project_by_id(query.project_author, evt_check);
 				}
 			}
-		});		
+		});
 	},
-	
+
 	create_to_s3: function(query, evt) {
 		var self = this;
 		var data = {};
 		data.err_code = 0;
 		data.message = 'Process Done';
-		
+
 		var project_dir = query.project_author + '_' + query.project_name;
-		
+
 		g_auth_project.get_owner_list({
 			'author_id': query.project_author
 		}, function(project_list) {
@@ -304,7 +304,7 @@ module.exports = {
 			}
 		});
 	},
-	
+
 	do_new: function(query, evt) {
 		var data = {};
 		data.err_code = 0;
@@ -1331,7 +1331,7 @@ module.exports = {
 
 	count_project_by_id: function(author_id, evt) {
 		var __evt = new EventEmitter();
-		
+
 		__evt.once('project_get_list', function(projects) {
 			if (!projects) {
 				projects = [];

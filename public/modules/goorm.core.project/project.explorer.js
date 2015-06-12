@@ -249,13 +249,13 @@ goorm.core.project.explorer.prototype = {
 			
 			for (var project_idx = 0; project_idx < this.project_data.length; project_idx++) {
 				var project_item = this.project_data[project_idx];
-												
+
 				
 				//useonly(mode=goorm-oss)
 				if (project_item.name == core.status.current_project_path) {
 					this.select_project_name(project_item.contents.name);
 				}
-				
+
 				$('#my_projects_header').after('<li class="project_item" project_path="' + project_item.name + '" idx="' + project_idx + '"><a href="#">' + project_item.contents.name + '</a></li>');
 				
 				this.project_idx_data[project_item.name] = project_idx;
@@ -346,7 +346,7 @@ goorm.core.project.explorer.prototype = {
 		
 	},
 
-	on_project_selectbox_change: function(project_idx) {		
+	on_project_selectbox_change: function(project_idx) {
 		if (project_idx !== null && project_idx !== undefined && project_idx !== '') {
 			this.current_project.current_project_path = this.project_data[project_idx].name;
 			this.current_project.current_project_name = this.project_data[project_idx].contents.name;
@@ -356,7 +356,7 @@ goorm.core.project.explorer.prototype = {
 			this.current_project.current_project_name = '';
 			this.current_project.current_project_type = '';
 		}
-		
+
 		core.dialog.open_project.open(this.current_project.current_project_path, this.current_project.current_project_name, this.current_project.current_project_type);
 	},
 
@@ -647,9 +647,9 @@ goorm.core.project.explorer.prototype = {
 
 			if (project_data && project_data.type && project_data.name && project_data.author) {
 				if (project_data.author == core.user.id) {
-					my_project_list.push([project_data.type, project_data.name, project_data.author]);
+					my_project_list.push([project_data.type, project_data.name, project_data.author_email, p]);
 				} else {
-					shared_project_list.push([project_data.type, project_data.name, project_data.author]);
+					shared_project_list.push([project_data.type, project_data.name, project_data.author_email, p]);
 				}
 			}
 		}
@@ -664,8 +664,9 @@ goorm.core.project.explorer.prototype = {
 					'sTitle': '<span localization_key="dictionary_name">' + core.module.localization.msg.dictionary_name + '</span>'
 				}, {
 					'sTitle': '<span localization_key="dictionary_author">' + core.module.localization.msg.dictionary_author + '</span>'
+				}, {
+					'bVisible': false
 				}
-
 			],
 			'sDom': '<"H"f>rt',
 			'iDisplayLength': -1,
@@ -691,10 +692,7 @@ goorm.core.project.explorer.prototype = {
 		$('#project_list_table td').click(function() {
 			var aPos = self.table.fnGetPosition(this);
 			var snapshot = self.table.fnGetData(aPos[0]);
-
-			var selected_project_name = snapshot[2] + '_' + snapshot[1];
-
-			var idx = self.project_idx_data[selected_project_name];
+			var idx = self.project_idx_data[snapshot[3]];
 
 			self.on_project_selectbox_change(idx);
 

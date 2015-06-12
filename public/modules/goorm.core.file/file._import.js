@@ -38,7 +38,7 @@ goorm.core.file._import = {
 
 			$('#file_import_location_path_hidden').val(data.path);
 
-			self.file_valid_check(document.getElementById('file_import_file').files, 'dialog', function(res) {
+			self.file_valid_check(document.getElementById('file_import_file').files, data.path, 'dialog', function(res) {
 				if (res) {
 					self.progress_elements = core.module.loading_bar.start({
 						str: core.module.localization.msg.processing
@@ -162,7 +162,7 @@ goorm.core.file._import = {
 		});
 	},
 
-	file_valid_check: function(file_list, where, callback) {
+	file_valid_check: function(file_list, path, where, callback) {
 		var self = this;
 		var ret_val = false;
 		var large_files = [];
@@ -213,16 +213,8 @@ goorm.core.file._import = {
 				}
 			});
 
-			var _path;
-
-			if (where === 'dialog') {
-				_path = self.dialog_explorer.get_data().path;
-			} else {
-				_path = core.status.current_project_path;
-			}
-
 			core._socket.emit('/file/exist', {
-				ori_path: _path,
+				ori_path: path,
 				dst_name: __file.name
 			});
 
@@ -383,7 +375,7 @@ goorm.core.file._import = {
 		var localization_msg = core.module.localization.msg;
 		var current_project = path ? path : core.status.current_project_path;
 
-		self.file_valid_check(files, 'dnd', function(res) {
+		self.file_valid_check(files, path, 'dnd', function(res) {
 			if (res) {
 				var send_url = 'file/import';
 				var fd = new FormData();

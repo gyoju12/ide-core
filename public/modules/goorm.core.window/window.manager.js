@@ -1192,12 +1192,16 @@ goorm.core.window.manager = {
 					var path = file_path.split('/')[0];
 					var title = file_name;
 
-					if (typeof current_project_path == 'string' && path != current_project_path) {
-						title += ' - ' + file_path.split(core.user.id + '_').pop();
+					// merge window does not have filepath
+					if (file_path && path) {
+						if (typeof current_project_path == 'string' && path != current_project_path) {
+							title += ' - ' + file_path.split(core.user.id + '_').pop();
+						}
+
+						temp.html(title);
+						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);	
 					}
 
-					temp.html(title);
-					$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);
 				} else if (cnt > 1) {
 					temp.each(function() {
 						var path = $(this).attr('filepath');

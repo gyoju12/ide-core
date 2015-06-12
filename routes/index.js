@@ -14,6 +14,7 @@ var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 var xss = require('xss');
 var EventEmitter = require('events').EventEmitter;
+var async = require('async');
 
 var g_file = require('../modules/goorm.core.file/file');
 var g_preference = require('../modules/goorm.core.preference/preference');

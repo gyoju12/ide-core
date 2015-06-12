@@ -70,6 +70,7 @@ goorm.core.window.tab.prototype = {
 
 			tooltip_contents = chunks.join('\n');
 		}
+
 		if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
 			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
 			if (__options.filepath === '/' && __options.filename.indexOf('terminal') != -1 && __options.title && __options.title.indexOf('terminal') != -1) {
@@ -90,7 +91,10 @@ goorm.core.window.tab.prototype = {
 
 		var window_manager = core.module.layout.workspace.window_manager;
 
-		window_manager.refresh_title(core.status.current_project_path, this.filename, core.status.current_opened_list[this.filename]);
+		// merger panel does not have filepath
+		if (this.filepath) {
+			window_manager.refresh_title(core.status.current_project_path, this.filename, core.status.current_opened_list[this.filename]);
+		}
 
 		//bootstrap end
 

@@ -977,6 +977,8 @@ goorm.core.edit.prototype = {
 		} else {
 			this.clear_rulers();
 		}
+
+		this.editor.focus();
 	},
 
 	

@@ -547,14 +547,10 @@ Optimized:Start
 #slideshare_url_input li.slideshare_url_item {
     text-align: left;
 }
-#slideshare_url_input li.slideshare_url_item a {
-    -epub-word-break: break-all;
-    -ms-word-break: break-all;
-    white-space: -moz-pre-wrap;
-    white-space: -o-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+li.slideshare_url_item a > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #slideshare_url_input li.slideshare_url_item .slideshare_close {
     float: right;
@@ -1686,6 +1682,11 @@ Toolbar CSS
     top: 7px;
 }
 
+pre.code {
+	text-align: left;
+	border-radius: 5px;
+}
+
 .talk .triangle-border {
     padding: 4px 0px;
 }
@@ -1854,6 +1855,10 @@ Toolbar CSS
     height: 290px;
     overflow: auto;
     padding: 0;
+}
+
+.project_informations dd {
+    margin-bottom: 8px;
 }
 
 .modal-dialog .question {
@@ -2768,7 +2773,7 @@ Plugin CSS: jeongmin
 }
 
 #export_project_type .btn-group {
-    padding-left: 25px;
+    padding: 0px 10px 0px 10px;
 }
 
 #git_log_tab .panel-body {
