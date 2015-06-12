@@ -434,17 +434,20 @@ goorm.core.debug.prototype = {
 		$('#main_debug_toolbar').removeClass('disabled'); // for more toolbar
 		$('#bubble_debug_toolbar').show();
 		$('#bubble_debug_toolbar').removeClass('disabled'); // for more toolbar
-		$('[href="#debug_tab"]').show();
+		$('.goorm_tab_menu[action=bottom_debug_show]').parent().removeClass('disabled'); // prevent show/hide debug tab
+
+		if ($('.goorm_tab_menu[action=bottom_debug_show] .glyphicon-ok').css('display') !== 'none') { // only if user hide debug tab
+			$('[href="#debug_tab"]').show();
+		}
 
 		core.module.layout.set_more_toolbar();
 	},
 
 	hide_menu: function() {
 		$('#main-menu-debug').hide();
-		$('#main_debug_toolbar').hide();
-		$('#main_debug_toolbar').addClass('disabled'); // for more toolbar
-		$('#bubble_debug_toolbar').hide();
-		$('#bubble_debug_toolbar').addClass('disabled'); // for more toolbar
+		$('#main_debug_toolbar').hide().addClass('disabled'); // for more toolbar
+		$('#bubble_debug_toolbar').hide().addClass('disabled'); // for more toolbar
+		$('.goorm_tab_menu[action=bottom_debug_show]').parent().addClass('disabled'); // prevent show/hide debug tab
 		$('[href="#debug_tab"]').hide();
 		$('[href="#terminal"]').click();
 

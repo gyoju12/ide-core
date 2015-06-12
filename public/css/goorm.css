@@ -3787,3 +3787,38 @@ div.item a > span {
 .ui-layout-pane .nav-tabs li:not(.g_windows_tab_li) {
 	margin-left: 5px;
 }
+
+.cm-searching.cm-underline-error {
+	background: url(../images/goorm.core.edit/underline.png) repeat-x bottom, rgba(255, 255, 0, 0.4);
+	padding-bottom: 1px;
+	text-decoration: none;
+}
+.cm-searching.cm-underline-warning {
+	background: url(../images/goorm.core.edit/warning.png) repeat-x bottom, rgba(255, 255, 0, 0.4);
+	padding-bottom: 1px;
+	text-decoration: none;
+}
+
+.cm-matchhighlight.cm-underline-error {
+	background: url(../images/goorm.core.edit/underline.png) repeat-x bottom, rgba(255, 255, 0, 0.4);
+	padding-bottom: 1px;
+	text-decoration: none;
+	color: black;
+}
+.cm-matchhighlight.cm-underline-warning {
+	background: url(../images/goorm.core.edit/warning.png) repeat-x bottom, rgba(255, 255, 0, 0.4);
+	padding-bottom: 1px;
+	text-decoration: none;
+	color: black;
+}
+
+.highlight_line.cm-underline-error {
+    background: url(../images/goorm.core.edit/underline.png) repeat-x bottom, #FF9;
+	padding-bottom: 1px;
+	text-decoration: none;
+}
+.highlight_line.cm-underline-warning {
+    background: url(../images/goorm.core.edit/warning.png) repeat-x bottom, #FF9;
+	padding-bottom: 1px;
+	text-decoration: none;
+}

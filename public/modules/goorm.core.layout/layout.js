@@ -134,7 +134,7 @@ goorm.core.layout = {
 
 		$(window).on('unload', function() {
 			var layout_state = self.layout.readState();
-			var hidden_tabs = $('.ui-layout-pane .nav-tabs li:hidden a');
+			var hidden_tabs = $('.ui-layout-pane .nav-tabs li[style*=none] a');
 
 			layout_state.south.initClosed = false; //seongho.cha : it must be opened. sometimes plugin close it.
 			layout_state.south.initHidden = false;
@@ -771,7 +771,7 @@ goorm.core.layout = {
 				if (id && $parent && pane) {
 					var tab = $parent.find('#' + id);
 					if (tab.length) {
-						if (!tab.is(':visible')) {
+						if (tab.parent().css('display') === 'none') {
 							tab.parent().show();
 						}
 
@@ -810,7 +810,7 @@ goorm.core.layout = {
 						return false;
 					}
 
-					if (!tab.is(':visible')) {
+					if (tab.parent().css('display') === 'none') {
 						tab.parent().show();
 					}
 

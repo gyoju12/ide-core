@@ -2029,10 +2029,7 @@ goorm.core.shortcut.manager = {
 		//Bottom Layout Toggle Debug (Alt+Shift+8)
 		if (this.hotkeys.bottom_debug_show) {
 			this.hotkeys_fn.bottom_debug_show = function(e) {
-				if (!core.status.keydown) {
-					// if (core.module.layout.inner_layout.getUnitByPosition("bottom")._collapsed) {
-					// 	core.module.layout.inner_layout.getUnitByPosition("bottom").expand();
-					// }
+				if (!core.status.keydown && !self.prevent($('.goorm_tab_menu[action=bottom_debug_show]')[0])) {
 					var layout = core.module.layout;
 
 					layout.select('debug');
