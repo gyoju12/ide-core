@@ -26,6 +26,25 @@ goorm.core.window.tab = function() {
 	this.title = null;
 	this.filename = null;
 	this.filepath = null;
+	this.template = [
+		'<li class="g_windows_tab_li"><a id="g_window_tab_[MORPHED_TITLE]" href="#g_wndw_tab_ctnt_[MORPHED_TITLE]" data-toggle="tooltip tab" data-placement="top" data-original-title="[TOOLTIP_CONTENTS]" data-container="body" class="goorm_tab_menu">',
+			'<span class="tab_option"></span>',
+			'<div class="panel_image window_tab-toolbar-disconnect" tabindex="-1">',
+				'<i class="fa fa-share-alt"></i>',
+			'</div>',
+			'<span class="tab_title" id="tab_title_[MORPHED_TITLE]" filename="[FILENAME]" filepath="[FILEPATH]">[TITLE]</span>',
+			'<button class="tab_restore_button" type="button">',
+				'<i class="fa fa-square-o"></i>',
+			'</button>',
+			'<button class="close tab_close_button" id="close_tab_[MORPHED_TITLE]" type="button">',
+				'<i class="fa fa-times"></i>',
+			'</button>',
+			'<button class="tab_modified_button tab_close_button" type="button">',
+				'<i class="fa fa-circle"></i>',
+			'</button>',
+			'</a>',
+		'</li>'
+	].join('');
 };
 
 goorm.core.window.tab.prototype = {
@@ -56,7 +75,7 @@ goorm.core.window.tab.prototype = {
 		var tooltip_contents = this.title.split(core.user.id + '_').pop(); // remove user id in project name
 		var chunks = [];
 		var chunkSize = 40;
-
+				
 		if (tooltip_contents.length > chunkSize) {
 			while (tooltip_contents) {
 				if (tooltip_contents.length < chunkSize) {
@@ -71,8 +90,14 @@ goorm.core.window.tab.prototype = {
 			tooltip_contents = chunks.join('\n');
 		}
 
+		var template = this.template.replace(/\[MORPHED_TITLE\]/g, morphed_title)
+								   .replace(/\[TOOLTIP_CONTENTS\]/, tooltip_contents)
+								   .replace(/\[FILENAME\]/, this.filename)
+								   .replace(/\[FILEPATH\]/, this.filepath);
+
 		if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
-			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
+			$('#g_window_tab_list').append(template.replace(/\[TITLE\]/, this.filename));
+			
 			if (__options.filepath === '/' && __options.filename.indexOf('terminal') != -1 && __options.title && __options.title.indexOf('terminal') != -1) {
 				// not to count terminal window
 				core.status.current_opened_list[this.filename] = -1;
@@ -80,8 +105,9 @@ goorm.core.window.tab.prototype = {
 				core.status.current_opened_list[this.filename] = 1;
 			}
 		} else {
-			$('#g_window_tab_list').append('<li class="g_windows_tab_li"><a id="g_window_tab_' + morphed_title + '" href="#g_wndw_tab_ctnt_' + morphed_title + '" data-toggle="tooltip tab" data-placement="top" data-original-title="' + tooltip_contents + '" data-container="body" class="goorm_tab_menu"><span class="tab_option"></span><div class="panel_image window_tab-toolbar-disconnect" tabindex="-1"><i class="fa fa-share-alt"></i></div><span class="tab_title" id="tab_title_' + morphed_title + '" filename="' + this.filename + '" filepath="' + this.filepath + '">' + this.filename + ' - ' + this.filepath.split(core.user.id + '_').pop() + '</span><button class="tab_restore_button" type="button"><i class="fa fa-square-o"></i></button><button class="close tab_close_button" id="close_tab_' + morphed_title + '" type="button"><i class="fa fa-times"></i></button><button class="tab_modified_button tab_close_button" type="button"><i class="fa fa-circle"></i></button></a></li>'); // jeongmin: put tab_option before file_name
-			core.status.current_opened_list[this.filename] ++;
+			$('#g_window_tab_list').append(template.replace(/\[TITLE\]/, this.filename + ' - ' + this.filepath.split(core.user.id + '_').pop()));
+			
+			core.status.current_opened_list[this.filename]++;
 		}
 
 		$('#g_window_tab_contents').append('<div class="tab-pane" id="g_wndw_tab_ctnt_' + morphed_title + '"></div>');

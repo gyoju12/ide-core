@@ -428,10 +428,6 @@ goorm.core.window.manager = {
 		var window_index = -1;
 		var empty_windows = [];
 
-		if (filepath.indexOf(core.user.id) !== 0) {
-			filepath = core.user.id + '_' + filepath;
-		}
-
 		$(this.window).each(function(i) {
 			if (this.filepath === null && this.filename === null) {
 				empty_windows.push(i);
@@ -445,6 +441,11 @@ goorm.core.window.manager = {
 		$(this.window).each(function(i) {
 			var base_path = this.filepath;
 			var base_name = this.filename;
+			
+			if (this.filetype !== 'url' && filepath.indexOf(core.user.id) !== 0) {
+				filepath = core.user.id + '_' + filepath;
+			}
+			
 			var target_path = filepath;
 			var target_name = filename;
 
@@ -1192,15 +1193,17 @@ goorm.core.window.manager = {
 					var path = file_path.split('/')[0];
 					var title = file_name;
 
-					// merge window does not have filepath
-					if (file_path && path) {
+					if (/(^http:\/\/|^https:\/\/)/.test(file_path)) { // url
+						temp.html(title);
+						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);	
+					} else if (file_path && path) { // merge window does not have filepath
 						if (typeof current_project_path == 'string' && path != current_project_path) {
 							title += ' - ' + file_path.split(core.user.id + '_').pop();
 						}
 
 						temp.html(title);
 						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);	
-					}
+					} 
 
 				} else if (cnt > 1) {
 					temp.each(function() {

@@ -1063,9 +1063,9 @@ goorm.core.window.panel.prototype = {
 		var wm = core.module.layout.workspace.window_manager;
 		where = where || 'resized';
 
-		var width = parseInt((wm.maximized) ? this.workspace.width() : this.panel.parent().width());
-		var height = parseInt((wm.maximized) ? this.workspace.height() : this.panel.parent().height());
-		var content_height = parseInt((wm.maximized) ? height : height - this.panel.siblings('.ui-dialog-titlebar').outerHeight());
+		var width = parseInt((wm.maximized) ? this.workspace.width() : this.panel.parent().width(), 10);
+		var height = parseInt((wm.maximized) ? this.workspace.height() : this.panel.parent().height(), 10);
+		var content_height = parseInt((wm.maximized) ? height : height - this.panel.siblings('.ui-dialog-titlebar').outerHeight(), 10);
 
 		//Terminal has 10px padding and 2px border
 		if (this.type === 'Terminal') {

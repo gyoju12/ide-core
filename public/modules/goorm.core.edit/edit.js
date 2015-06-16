@@ -1124,82 +1124,85 @@ goorm.core.edit.prototype = {
 		$('#goorm_bottom').find('.breadcrumb #editor_saving').show(); // 'Saving...'
 
 		var linter_timer = null;
-		//$.post('file/check_valid_edit',send_data,function(res){
-		core._socket.once('/file/check_valid_edit', function(res) {
-			var localization_msg = core.module.localization.msg;
+		
+		if (this.filetype === 'url') {
+			$('[action=save_as_file]:first').click();
+		} else {
+			core._socket.once('/file/check_valid_edit', function(res) {
+				var localization_msg = core.module.localization.msg;
+				var put_contents = function() {
+					//$.post(url, send_data, function(data) {
+					core._socket.once(url, function(data) {
 
-			function put_contents() {
-				//$.post(url, send_data, function(data) {
-				core._socket.once(url, function(data) {
+						
 
-					
+						if (data.err_code !== 0) {
+							//fail
+							alert.show(localization_msg.alert_save_file_fail);
+							return false;
+						}
 
-					if (data.err_code !== 0) {
-						//fail
-						alert.show(localization_msg.alert_save_file_fail);
-						return false;
-					}
+						__window.set_saved();
+						__window.tab.set_saved();
 
-					__window.set_saved();
-					__window.tab.set_saved();
+						$('#goorm_bottom').find('.breadcrumb #editor_saving').hide();
+						$('#goorm_bottom').find('.breadcrumb #editor_saved').show();
 
-					$('#goorm_bottom').find('.breadcrumb #editor_saving').hide();
-					$('#goorm_bottom').find('.breadcrumb #editor_saved').show();
+						if (option == 'close') {
+							__window.tab.close(); // jeongmin: tab should be closed before window close. Because tab accesses window.
+							__window.close();
+						}
 
-					if (option == 'close') {
-						__window.tab.close(); // jeongmin: tab should be closed before window close. Because tab accesses window.
-						__window.close();
-					}
+						linter_timer = $.debounce(function() {
+							core.module.plugin_linter.lint(self.parent);
+						}, 500);
 
-					linter_timer = $.debounce(function() {
-						core.module.plugin_linter.lint(self.parent);
-					}, 500);
+						if (option !== 'refresh') {
+							linter_timer();
+						}
 
-					if (option !== 'refresh') {
-						linter_timer();
-					}
+						//to change latest build status once it is true --heeje
+						if (tmpdata[send_data.project_path].is_latest_build) {
+							tmpdata[send_data.project_path].is_latest_build = false;
+							core.module.project.property.save_property(send_data.project_path, tmpdata[send_data.project_path]);
+						}
 
-					//to change latest build status once it is true --heeje
-					if (tmpdata[send_data.project_path].is_latest_build) {
-						tmpdata[send_data.project_path].is_latest_build = false;
-						core.module.project.property.save_property(send_data.project_path, tmpdata[send_data.project_path]);
-					}
+						
 
-					
+						if (callback && typeof(callback) == 'function') {
+							callback();
+						}
 
-					if (callback && typeof(callback) == 'function') {
-						callback();
-					}
+						
 
-					
+						goorm.core.edit.bookmark_list.list[self.title] = self.bookmark.bookmarks;
+					});
+					core._socket.emit(url, send_data);
+				};
 
-					goorm.core.edit.bookmark_list.list[self.title] = self.bookmark.bookmarks;
-				});
-				core._socket.emit(url, send_data);
-			}
+				if (!res || !res.result) {
+					alert.show(localization_msg.alert_save_file_fail);
+					return false;
+				} else if (res.exists === false) { // jeongmin: file is deleted
+					confirmation.init({
+						message: localization_msg.confirmation_save_deleted_file,
+						yes_text: localization_msg.yes,
+						no_text: localization_msg.no,
+						title: localization_msg.confirmation_title,
 
-			if (!res || !res.result) {
-				alert.show(localization_msg.alert_save_file_fail);
-				return false;
-			} else if (res.exists === false) { // jeongmin: file is deleted
-				confirmation.init({
-					message: localization_msg.confirmation_save_deleted_file,
-					yes_text: localization_msg.yes,
-					no_text: localization_msg.no,
-					title: localization_msg.confirmation_title,
+						yes: function() { // jeongmin: make new file
+							put_contents();
+						},
+						no: function() {} // jeongmin; don't save
+					});
 
-					yes: function() { // jeongmin: make new file
-						put_contents();
-					},
-					no: function() {} // jeongmin; don't save
-				});
-
-				confirmation.show();
-			} else { // jeongmin: file exists
-				put_contents();
-			}
-		});
-		core._socket.emit('/file/check_valid_edit', send_data);
+					confirmation.show();
+				} else { // jeongmin: file exists
+					put_contents();
+				}
+			});
+			core._socket.emit('/file/check_valid_edit', send_data);			
+		}
 	},
 
 	get_contents: function() {

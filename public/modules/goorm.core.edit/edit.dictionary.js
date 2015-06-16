@@ -85,8 +85,9 @@ goorm.core.edit.dictionary.prototype = {
 	},
 
 	complete: function() {
-		var cursor = this.editor.getCursor();
-		var token = this.editor.getTokenAt(cursor);
+		var cursor = {};
+		var token = {};
+		var cursors = this.editor.listSelections();
 
 		if (this.result[0].is_not_data) {
 			this.result.pop();
@@ -94,20 +95,26 @@ goorm.core.edit.dictionary.prototype = {
 		if (this.result.length > 0) {
 			var string = this.result[this.index].keyword;
 
-			var from = {
-				line: cursor.line,
-				ch: token.start
-			};
-			var to = {
-				line: cursor.line,
-				ch: token.end
-			};
-			if (token.string == '.') {
-				from.ch += 1;
-				to.ch += 1;
-			}
+			for (var i = 0; i < cursors.length; i++) {
+				cursors = this.editor.listSelections();
+				cursor = cursors[i].anchor;
+				token = this.editor.getTokenAt(cursor);
+				var from = {
+					line: cursor.line,
+					ch: token.start
+				};
+				var to = {
+					line: cursor.line,
+					ch: token.end
+				};
 
-			this.editor.replaceRange(string, from, to);
+				if (token.string == '.') {
+					from.ch += 1;
+					to.ch += 1;
+				}
+
+				this.editor.replaceRange(string, from, to);
+			}
 		}
 
 		this.hide();
