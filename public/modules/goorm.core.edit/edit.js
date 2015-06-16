@@ -152,6 +152,10 @@ goorm.core.edit.prototype = {
 				$('[action=delete_line_left]:first').click();
 			}
 		});
+		
+		this.editor.setOption('foldOptions', {
+			scanUp: true
+		});
 
 		
 
