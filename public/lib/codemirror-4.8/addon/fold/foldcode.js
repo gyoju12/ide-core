@@ -38,10 +38,19 @@
     var range = getRange(true);
     if (getOption(cm, options, "scanUp")) while (!range && pos.line > cm.firstLine()) {
       pos = CodeMirror.Pos(pos.line - 1, 0);
-      range = getRange(false);
+      // goorm: unfold from the range
+      if (force === 'unfold') {
+         range = getRange(true);
+	  } else {
+         range = getRange(false);
+	  }
     }
     if (!range || range.cleared || force === "unfold") return;
 
+    // goorm: not to fold last line of the range
+    range.to.ch = cm.getLine(range.to.line - 1).length;
+    range.to.line = range.to.line - 1;
+    
     var myWidget = makeWidget(cm, options);
     CodeMirror.on(myWidget, "mousedown", function(e) {
       myRange.clear();
@@ -53,6 +62,7 @@
       __isFold: true
     });
     myRange.on("clear", function(from, to) {
+      cm.setCursor(cm.getCursor());	// goorm: when unfold, move cursor to the end of the range
       CodeMirror.signal(cm, "unfold", cm, from, to);
     });
     CodeMirror.signal(cm, "fold", cm, range.from, range.to);

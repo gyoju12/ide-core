@@ -718,6 +718,7 @@ li.slideshare_url_item a > div {
 #slideshare_url_select_btn,
 #slideshare_url_top,
 #svn_diff_table,
+#collaboration_file_table,
 .common_pw_input {
     width: 100%;
 }
@@ -3821,4 +3822,19 @@ div.item a > span {
     background: url(../images/goorm.core.edit/warning.png) repeat-x bottom, #FF9;
 	padding-bottom: 1px;
 	text-decoration: none;
+}
+
+#collaboration .panel-heading {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-top: 0;
+    padding: 10px;
+}
+
+#collaboration, #collaboration .panel {
+	height: 100%;
+}
+
+.nav-tabs > li > a {
+	white-space: nowrap;
 }

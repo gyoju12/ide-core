@@ -19,6 +19,10 @@ var express = require('express');
 var fs = require('fs');
 
 var socketio = require('socket.io');
+var socket_options = {
+	'heartbeat interval': 10,
+	'heartbeat timeout': 40
+};
 var http = require('http');
 var redis = require('socket.io/node_modules/redis');
 var cookie = require('express/node_modules/cookie');
@@ -742,9 +746,7 @@ goorm.load = function() {
 
 		} else {
 			var set_io = function() {
-				io = socketio.listen(server, {
-					'heartbeatTimeout': 30 * 1000
-				});
+				io = socketio.listen(server, socket_options);
 
 				if (global.__redis_mode) {
 					io.configure(function() {
@@ -818,9 +820,7 @@ goorm.load = function() {
 
 		//useonly(mode=goorm-oss)
 		var set_io = function() {
-			io = socketio.listen(server, {
-				'heartbeatTimeout': 30 * 1000
-			});
+			io = socketio.listen(server, socket_options);
 
 			if (global.__redis_mode) {
 				io.configure(function() {

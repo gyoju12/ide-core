@@ -152,7 +152,7 @@ goorm.core.edit.prototype = {
 				$('[action=delete_line_left]:first').click();
 			}
 		});
-		
+
 		this.editor.setOption('foldOptions', {
 			scanUp: true
 		});
@@ -900,10 +900,12 @@ goorm.core.edit.prototype = {
 			this.editor.setOption('indentUnit', this.indent_unit);
 			this.editor.setOption('tabSize', this.indent_unit);
 		}
-		if (this.indent_with_tabs) {
-			if (this.indent_with_tabs === 'false') {
-				this.indent_with_tabs = false;
+
+		if (this.indent_with_tabs !== undefined && this.indent_with_tabs !== null) {
+			if (typeof(this.indent_with_tabs) === 'string') {
+				this.indent_with_tabs = JSON.parse(this.indent_with_tabs);
 			}
+
 			this.editor.setOption('indentWithTabs', this.indent_with_tabs);
 		}
 
@@ -982,7 +984,9 @@ goorm.core.edit.prototype = {
 			this.clear_rulers();
 		}
 
-		this.editor.focus();
+		if (core.module.layout.workspace.window_manager.active_window === this.parent.index) { // only if it is activated
+			this.editor.focus();
+		}
 	},
 
 	
@@ -1124,7 +1128,7 @@ goorm.core.edit.prototype = {
 		$('#goorm_bottom').find('.breadcrumb #editor_saving').show(); // 'Saving...'
 
 		var linter_timer = null;
-		
+
 		if (this.filetype === 'url') {
 			$('[action=save_as_file]:first').click();
 		} else {
@@ -1201,7 +1205,7 @@ goorm.core.edit.prototype = {
 					put_contents();
 				}
 			});
-			core._socket.emit('/file/check_valid_edit', send_data);			
+			core._socket.emit('/file/check_valid_edit', send_data);
 		}
 	},
 

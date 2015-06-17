@@ -658,7 +658,11 @@ goorm.core.terminal.prototype = {
 			this.command_queue = [];
 			return;
 		}
-
+// if (this.terminal_name == 'debug') {
+// console.group('work_queue');
+// console.log('work_queue:', this.stdout);
+// console.log('command_queue:', this.command_queue);
+// console.groupEnd();}
 		if (this.running_queue) {
 			return;
 		} else {

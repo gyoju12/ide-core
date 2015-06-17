@@ -380,5 +380,29 @@ goorm.core.layout.tab = {
 
 	show_showing_icon: function(tab_id) {
 		$('.' + tab_id + '_showing_icon').show();
+	},
+	
+	make_tab_move: function() {
+		$('#east_tab').sortable({
+			axis: 'x',
+			containment: 'parent',
+			tolerance: 'pointer',
+			distance: 20,
+			delay: 100
+		});
+		$('#west_tab').sortable({
+			axis: 'x',
+			containment: 'parent',
+			tolerance: 'pointer',
+			distance: 20,
+			delay: 100
+		});
+		$('#south_tab').sortable({
+			axis: 'x',
+			containment: 'parent',
+			tolerance: 'pointer',
+			distance: 20,
+			delay: 100
+		});
 	}
 };

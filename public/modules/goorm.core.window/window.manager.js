@@ -304,6 +304,7 @@ goorm.core.window.manager = {
 				self.add(filepath, filename, filetype, editor, options);
 
 				$(core).one(filepath + '/' + filename + '.window_loaded', function(e, __window) { // remove index: no need
+					
 					if (callback && typeof(callback) === 'function') {
 						callback(__window);
 					}

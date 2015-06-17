@@ -382,6 +382,7 @@ goorm.core.layout = {
 		});
 
 		this.tab_manager.update();
+		this.tab_manager.make_tab_move();
 
 		//stop button disabled
 		$('button[action="stop"]').addClass('debug_inactive');

@@ -47,96 +47,102 @@ module.exports = {
 		io.sockets.on('connection', function(socket) {
 			// join to goorm. Jeong-Min Im.
 			socket.on('access', function(raw_msg) {
-				try {
-					var msg_obj = JSON.parse(raw_msg);
-					var channel = '';
-					if (msg_obj.channel !== undefined) {
-						channel = msg_obj.channel;
-					}
-
-					if (channel == 'join') {
-						if (socket.handshake && socket.handshake.sessionID) {
-							var sessionID = socket.handshake.sessionID;
-							store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
-							store.client.sadd('sockets_' + global.__local_ip + '_' + sessionID, socket.id);
-
-							// only goorm-client
-							if (msg_obj.goorm_server_ip) {
-								store.client.set('ip_' + sessionID, msg_obj.goorm_server_ip);
+				self.get_user_data(socket, function(user_data) {
+					if (user_data.result) {
+						try {
+							var msg_obj = JSON.parse(raw_msg);
+							var channel = '';
+							if (msg_obj.channel !== undefined) {
+								channel = msg_obj.channel;
 							}
-						}
 
-						if (msg_obj.version) {
-							socket.set('version', msg_obj.version.toString());
-						}
+							if (channel == 'join') {
+								if (socket.handshake && socket.handshake.sessionID) {
+									var sessionID = socket.handshake.sessionID;
+									store.client.set('socket_' + sessionID, socket.id); //seongho.cha: this key will be removed later, I'm making to use sockets for multi windows
+									store.client.sadd('sockets_' + global.__local_ip + '_' + sessionID, socket.id);
 
-						// only goorm-server
-						if (!msg_obj.reconnect) {
-							socket.to().emit('user_access', global.__local_ip);
-						}
-
-						
-
-						if (msg_obj.fs_express_id && msg_obj.fs_socket_id) {
-							
-
-							var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
-							var fs_access = false;
-
-							self.get_user_data(socket, function(user_data) {
-								if (user_data.result) {
-									fs_access = true;
-
-									user_data = user_data.data;
-
-									var id = user_data.id;
-
-									fs_socket.set('fs_id', JSON.stringify({
-										'id': id,
-										'sessionID': msg_obj.fs_express_id
-									}));
-
-									if (msg_obj.version) {
-										fs_socket.set('version', msg_obj.version.toString());
+									// only goorm-client
+									if (msg_obj.goorm_server_ip) {
+										store.client.set('ip_' + sessionID, msg_obj.goorm_server_ip);
 									}
-
-									store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
-								}
-								socket.to().emit('fs_access', fs_access);
-							});
-						}
-
-						if (msg_obj.project_express_id && msg_obj.project_socket_id) {
-							var project_socket = io.sockets.socket(msg_obj.project_socket_id);
-							var project_access = false;
-
-							self.get_user_data(socket, function(user_data) {
-								if (user_data.result) {
-									project_access = true;
-
-									user_data = user_data.data;
-
-									var id = user_data.id;
-
-									project_socket.set('project_id', JSON.stringify({
-										'id': id,
-										'sessionID': msg_obj.project_express_id
-									}));
-
-									if (msg_obj.version) {
-										project_socket.set('version', msg_obj.version.toString());
-									}
-
-									store.client.set(msg_obj.project_express_id, JSON.stringify(user_data));
 								}
 
-								socket.to().emit('project_access', project_access);
-							});
-						}
+								if (msg_obj.version) {
+									socket.set('version', msg_obj.version.toString());
+								}
+
+								// only goorm-server
+								if (!msg_obj.reconnect) {
+									socket.to().emit('user_access', global.__local_ip);
+								}
+
+								
+
+								if (msg_obj.fs_express_id && msg_obj.fs_socket_id) {
+									
+
+									var fs_socket = io.sockets.socket(msg_obj.fs_socket_id);
+									var fs_access = false;
+
+									self.get_user_data(socket, function(user_data) {
+										if (user_data.result) {
+											fs_access = true;
+
+											user_data = user_data.data;
+
+											var id = user_data.id;
+
+											fs_socket.set('fs_id', JSON.stringify({
+												'id': id,
+												'sessionID': msg_obj.fs_express_id
+											}));
+
+											if (msg_obj.version) {
+												fs_socket.set('version', msg_obj.version.toString());
+											}
+
+											store.client.set(msg_obj.fs_express_id, JSON.stringify(user_data));
+										}
+										socket.to().emit('fs_access', fs_access);
+									});
+								}
+
+								if (msg_obj.project_express_id && msg_obj.project_socket_id) {
+									var project_socket = io.sockets.socket(msg_obj.project_socket_id);
+									var project_access = false;
+
+									self.get_user_data(socket, function(user_data) {
+										if (user_data.result) {
+											project_access = true;
+
+											user_data = user_data.data;
+
+											var id = user_data.id;
+
+											project_socket.set('project_id', JSON.stringify({
+												'id': id,
+												'sessionID': msg_obj.project_express_id
+											}));
+
+											if (msg_obj.version) {
+												project_socket.set('version', msg_obj.version.toString());
+											}
+
+											store.client.set(msg_obj.project_express_id, JSON.stringify(user_data));
+										}
+
+										socket.to().emit('project_access', project_access);
+									});
+								}
+							}
+						} catch (e) {
+							console.log('socket access error in ajax:', e);
+						}						
+					} else {
+						socket.to().emit('logout_disconnect');
 					}
-				} catch (e) {
-					console.log('socket access error in ajax:', e);
-				}
+				});
 			});
 
 			////////

@@ -417,6 +417,14 @@
 						</a>
 					</div>
 					<div class="item action">
+						<a href="#" action="do_convert_indentation">
+							<span localization_key="edit_convert_indentation">Convert Indentation</span>
+							<div class="description">
+								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_convert_indentation"></span>
+							</div>
+						</a>
+					</div>					
+					<div class="item action">
 						<a href="#" action="do_join_lines">
 							<span localization_key="edit_join_lines">Join Lines</span>
 							<em class="helptext">Ctrl + J</em>
@@ -1375,9 +1383,9 @@
 
                             <div class="search_buttons">
                                 <div class="btn-group btn-group-sm" style="margin-bottom: 2px;">
-                                    <button id="search_match_case" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="Match Case" data-container="body" tabindex="-1">Aa</button>
-                                    <button id="search_whole_word" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="Whole Word" data-container="body" tabindex="-1">"  "</button>
-                                    <button id="search_use_regexp" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Use Regular Expression" tooltip="Use Regular Expression" data-container="body" tabindex="-1">Exp</button>
+                                    <button id="search_match_case" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Case Sensitive" tooltip="msg_project_match_case_guide" data-container="body" tabindex="-1">Aa</button>
+                                    <button id="search_whole_word" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Whole Word" tooltip="msg_project_whole_word_guide" data-container="body" tabindex="-1">"  "</button>
+                                    <button id="search_use_regexp" class="btn btn-primary" data-toggle="button" data-placement="top" title="" data-original-title="Use Regular Expression" tooltip="msg_project_use_regular_expression_guide" data-container="body" tabindex="-1">Exp</button>
                                 </div>
                                 <button id="g_far_btn_search" class="btn btn-default" localization_key="search">Search</button>
                             </div>
@@ -1427,6 +1435,7 @@
                 <li>
                     <a href="#bookmark" data-toggle="tab" id='gLayoutTab_Bookmark' localization_key='edit_bookmark'>Bookmark</a>
                 </li>
+                <!--  -->
             </ul>
 
             <!-- Tab panes -->
@@ -1445,8 +1454,6 @@
                             <div class="panel-heading">
                                 <span class="panel-title" localization_key="edit_bookmark">
                                     Bookmarks
-
-
                                 </span>
                             </div>
                             <div id="bookmark_contents">
@@ -1463,6 +1470,7 @@
                         </div>
                     </div>
                 </div>
+                <!--  -->
             </div>
         </div>
         <div id="goorm_inner_layout_bottom" class="ui-layout-south">
@@ -1799,6 +1807,11 @@
                                             </span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#" action="do_convert_indentation" localization_key="edit_convert_indentation">
+                                            Convert Indentation
+                                        </a>
+                                    </li>									
                                     <li class="divider"></li>
                                     <li>
                                         <a href="#" action="do_join_lines" localization_key="edit_join_lines">
@@ -2768,6 +2781,9 @@
                 </li>
                 <li>
                     <a action="do_find" localization_key='edit_find_and_replace'>Find</a>
+                </li>
+                <li>
+                    <a action="do_convert_indentation" localization_key='edit_convert_indentation'>Convert Indentation</a>
                 </li>
                 <li>
                     <a href="#" action="select_all" localization_key="edit_select_all">
@@ -6255,9 +6271,17 @@
                                                 <table class="table table-hover table-condensed" id="svn_status_files">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
-                                                            <th localization_key='dialog_scm_status'>Status</th>
-                                                            <th localization_key='dialog_scm_path'>Path</th>
+                                                            <th>
+															<span class="glyphicon glyphicon-sort pull-right" index="1"></span>
+														</th>
+                                                            <th>Status
+															<span localization_key='dialog_scm_status'>Status</span>
+															<span class="glyphicon glyphicon-sort pull-right" index="2" name="scm_type"></span>
+														</th>
+                                                            <th>
+															<span localization_key='dialog_scm_path'>Path</span>
+															<span class="glyphicon glyphicon-sort pull-right" index="3" name="name"></span>
+														</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -6349,9 +6373,17 @@
                                                 <table class="table table-hover table-condensed" id="svn_lock_files">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
-                                                            <th localization_key='dialog_scm_status'>Status</th>
-                                                            <th localization_key='dialog_scm_path'>Path</th>
+                                                            <th>
+															<span class="glyphicon glyphicon-sort pull-right" index="1"></span>
+														</th>
+                                                            <th>
+															<span localization_key='dialog_scm_status'>Status</span>
+															<span class="glyphicon glyphicon-sort pull-right" index="2" name="scm_type"></span>
+														</th>
+                                                            <th>
+															<span localization_key='dialog_scm_path'>Path</span>
+															<span class="glyphicon glyphicon-sort pull-right" index="3" name="name"></span>
+														</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -7597,6 +7629,7 @@
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_manager.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.edit/edit.error_message_box.js"></script>
     <!--  -->
+    <script type="text/javascript" src="/modules/goorm.core.edit/edit.indentation.js"></script>
 
     <script type="text/javascript" src="/modules/goorm.core.help/help.js"></script>
     <script type="text/javascript" src="/modules/goorm.core.help/help.about.js"></script>

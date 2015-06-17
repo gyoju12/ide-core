@@ -125,6 +125,9 @@
 			"edit_line": {
 				"value": "줄",
 				"children": {
+					"edit_convert_indentation": {
+						"value": "인덴팅 바꾸기"
+					},
 					"edit_join_lines": {
 						"value": "줄 합치기"
 					},

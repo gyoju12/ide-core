@@ -81,7 +81,7 @@ goorm.core.file._new = {
 					self.panel.modal('hide');
 					core.module.layout.project_explorer.treeview.refresh_node(data.path);
 					core.module.layout.project_explorer.treeview.open_path(data.path);
-					core.module.layout.workspace.window_manager.open(data.path + '/', data.name);
+					core.module.layout.workspace.window_manager.open(data.path + '/', data.name, data.name.split('.').pop());
 					if (self.is_new_anyway) { // jeongmin: if exists and opened, close created file
 						var window_manager = core.module.layout.workspace.window_manager;
 						var windows = window_manager.window;

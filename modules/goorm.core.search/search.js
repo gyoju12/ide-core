@@ -298,10 +298,6 @@ module.exports = {
 
 			if (stdout) {
 				matched_files_list = stdout.trim().split(/\n/);
-
-				matched_files_list = matched_files_list.map(function(o) {
-					return self.prevent_duplicate_slash(o);
-				});
 			}
 
 			return matched_files_list;

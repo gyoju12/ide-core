@@ -131,6 +131,9 @@
 			"edit_line": {
 				"value": "Line",
 				"children": {
+					"edit_convert_indentation": {
+						"value": "Convert Indentation"
+					},
 					"edit_join_lines": {
 						"value": "Join Lines"
 					},

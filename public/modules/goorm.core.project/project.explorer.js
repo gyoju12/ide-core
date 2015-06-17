@@ -298,6 +298,7 @@ goorm.core.project.explorer.prototype = {
 			core.module.localization.local_apply('#project_selector', 'dict');
 			self.on_project_selectbox_change('');
 			document.title = 'goorm - cloud coding service';
+			
 		});
 
 		$(document).on('click', 'li.project_item', function() {
