@@ -265,7 +265,6 @@ goorm.core.window.manager = {
 	},
 	
 	
-	
 	open: function(filepath, filename, filetype, editor, __options, callback) {
 		var self = this;
 		var options = __options || {};
@@ -442,11 +441,11 @@ goorm.core.window.manager = {
 		$(this.window).each(function(i) {
 			var base_path = this.filepath;
 			var base_name = this.filename;
-			
+
 			if (this.filetype !== 'url' && filepath.indexOf(core.user.id) !== 0) {
 				filepath = core.user.id + '_' + filepath;
 			}
-			
+
 			var target_path = filepath;
 			var target_name = filename;
 
@@ -655,6 +654,7 @@ goorm.core.window.manager = {
 				target_window.move(top, left);
 				target_window.bind_width(each_width);
 				target_window.bind_height(each_height);
+				target_window.refresh(); // for terminal resizing
 				if (target_window.type == 'Editor') {
 					target_window.editor.editor.refresh();
 					target_window.editor.refresh();
@@ -700,6 +700,7 @@ goorm.core.window.manager = {
 				target_window.move(top, left);
 				target_window.bind_width(each_width);
 				target_window.bind_height(each_height);
+				target_window.refresh();
 				if (target_window.type == 'Editor') {
 					target_window.editor.editor.refresh();
 					target_window.editor.refresh();
@@ -883,7 +884,7 @@ goorm.core.window.manager = {
 					$(modified).each(function() {
 						this.editor.save('close');
 					});
-					$(not_modifed).each(function(i) {
+					$(not_modifed).each(function() {
 						this.close();
 						this.tab.close();
 					});
@@ -922,14 +923,13 @@ goorm.core.window.manager = {
 
 	close_others: function() {
 		var self = this;
-		var are_saved = true;
 		var modified = [];
 		var not_modifed = [];
 		var msg = '';
 		var clicked_windows = core.module.layout.workspace.window_manager.tab_manager.clicked_window;
 		var clicked_title = clicked_windows.title;
 
-		$(this.window).each(function(i) {
+		$(this.window).each(function() {
 			if (this.title != clicked_title) {
 				if (!this.is_saved) {
 					modified.push(this);
@@ -1116,7 +1116,6 @@ goorm.core.window.manager = {
 				}
 
 				for (i = 0; i < new_window_list.length; i++) {
-					var target_window = new_window_list[i];
 					// var index = target_window.index;
 
 					// $("#" + parent.workspace_container).find("#filewindow" + index + '_h').parent().attr("id", 'filewindow' + index);
@@ -1196,15 +1195,15 @@ goorm.core.window.manager = {
 
 					if (/(^http:\/\/|^https:\/\/)/.test(file_path)) { // url
 						temp.html(title);
-						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);	
+						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);
 					} else if (file_path && path) { // merge window does not have filepath
 						if (typeof current_project_path == 'string' && path != current_project_path) {
 							title += ' - ' + file_path.split(core.user.id + '_').pop();
 						}
 
 						temp.html(title);
-						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);	
-					} 
+						$('.ui-dialog').find('[path="' + file_path + file_name + '"]').parent().find('.ui-dialog-title').html(title);
+					}
 
 				} else if (cnt > 1) {
 					temp.each(function() {
