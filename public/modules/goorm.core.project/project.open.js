@@ -261,7 +261,7 @@ goorm.core.project.open = {
 			this.handler[core.status.current_project_type].before();
 		} else {
 			$(core).one('on_project_open', function() {
-				core.module.layout.select('gLayoutTab_Terminal');
+				core.module.layout.select('terminal');
 				setTimeout(function() {
 					var output_list = core.module.plugin_linter.output_tab_list;
 					var output_index = output_list.indexOf(core.status.current_project_type);

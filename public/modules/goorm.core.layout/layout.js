@@ -600,7 +600,7 @@ goorm.core.layout = {
 		this.edit_toolbar.init(); //jeongmin: initialize edit toolbar
 	},
 
-	attach_navigate: function(target) {
+	attach_navigate: function() {
 		this.navigate = goorm.core.layout.navigate;
 		this.navigate.init();
 	},
@@ -722,8 +722,8 @@ goorm.core.layout = {
 		var $parent = null;
 		var pane = '';
 		var id = '';
-
 		var plugin_manager = core.module.plugin_manager.plugins['goorm.plugin.' + core.status.current_project_type];
+		var tab;
 
 		if (tab_name) {
 			if (typeof tab_name === 'string') {
@@ -770,10 +770,11 @@ goorm.core.layout = {
 				}
 
 				if (id && $parent && pane) {
-					var tab = $parent.find('#' + id);
+					tab = $parent.find('#' + id);
 					if (tab.length) {
 						if (tab.parent().css('display') === 'none') {
 							tab.parent().show();
+							this.tab.show_showing_icon(id);
 						}
 
 						tab.click();
@@ -804,7 +805,7 @@ goorm.core.layout = {
 						pane = 'east';
 				}
 
-				var tab = $parent.find('.nav-tabs a:eq(' + tab_name.index + ')');
+				tab = $parent.find('.nav-tabs a:eq(' + tab_name.index + ')');
 
 				if (tab.length) {
 					if (~tab.attr('href').indexOf('outline') && !(plugin_manager && plugin_manager.outline)) {
@@ -813,6 +814,7 @@ goorm.core.layout = {
 
 					if (tab.parent().css('display') === 'none') {
 						tab.parent().show();
+						this.tab.show_showing_icon(id);
 					}
 
 					tab.click();

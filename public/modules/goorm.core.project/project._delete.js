@@ -44,6 +44,8 @@ goorm.core.project._delete = {
 			// if (storage == 'goormIDE Storage') {
 			var do_delete = function() {
 				core._socket.once('/project/delete', function(data) {
+					var layout = core.module.layout;
+
 					$('#project_delete_list').empty();
 
 					var received_data = data;
@@ -59,7 +61,7 @@ goorm.core.project._delete = {
 
 						goorm.core.edit.bookmark_list.delete_project_bookmarks(delete_project_path);
 
-						var wm = core.module.layout.workspace.window_manager;
+						var wm = layout.workspace.window_manager;
 
 						for (var i = wm.window.length - 1; i >= 0; i--) {
 							var w = wm.window[i];
@@ -76,8 +78,8 @@ goorm.core.project._delete = {
 						$('#project_delete_list .selected_button').blur();
 						notice.show(core.module.localization.msg.notice_project_delete_done);
 
-						if (core.module.layout.project_explorer.treeview) {
-							core.module.layout.project_explorer.remove_explorer_treeview(delete_project_path);
+						if (layout.project_explorer.treeview) {
+							layout.project_explorer.remove_explorer_treeview(delete_project_path);
 						}
 						// project list focusing is needed for enable key event. Jeong-Min Im.
 						// notice.panel.one('hidden.bs.modal', function() {
@@ -91,7 +93,7 @@ goorm.core.project._delete = {
 						// 	$('#project_delete_list').focus();
 						// });
 					}
-					var tab_manager = core.module.layout.tab_manager;
+					var tab_manager = layout.tab_manager;
 
 					$.each(tab_manager.list, function(key, value) {
 						if (~key.indexOf('gLayoutServer_') && ~key.indexOf(delete_project_type) && $('#' + value.id + ' .badge').length > 0) {
@@ -102,7 +104,7 @@ goorm.core.project._delete = {
 					if (core.status.current_project_path === '' || core.status.current_project_path == data.path) {
 						tab_manager.del_by_tab_name('south', 'tab_title_build');
 						tab_manager.del_by_tab_name('south', 'tab_title_run');
-						core.module.layout.project_explorer.refresh();
+						layout.project_explorer.refresh();
 						document.title = 'goorm - cloud coding service';
 					} else {
 						switch (core.status.current_project_type) {
@@ -118,14 +120,14 @@ goorm.core.project._delete = {
 								tab_manager.del_by_tab_name('south', 'tab_title_build');
 								break;
 						}
-						core.module.layout.project_explorer.refresh_project_selectbox();
+						layout.project_explorer.refresh_project_selectbox();
 					}
 
-					$('#gLayoutTab_Terminal').click();
+					layout.select('terminal');
 					$('#south_tab + div.tab-content div.tab-pane').removeClass('active').removeClass('in');
 					$('#south_tab + div.tab-content div.terminal').addClass('active').addClass('in');
 
-					core.module.layout.terminal.resize();
+					layout.terminal.resize();
 
 					self.project_list = new goorm.core.project.list();
 					self.project_list.init('#project_delete', function() {
