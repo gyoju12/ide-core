@@ -119,7 +119,7 @@ goorm.core.edit.prototype = {
 
 		this.editor = CodeMirror.fromTextArea($(target).find('.code_editor')[0], {
 			/* CODEMIRROR 3.x IMPLEMENT */
-			gutters: ['exception_error', 'breakpoint', 'bookmark', 'CodeMirror-linenumbers', 'fold'],
+			gutters: ['modified', 'exception_error', 'breakpoint', 'bookmark', 'CodeMirror-linenumbers', 'fold'],
 			foldGutter: {
 				gutter: 'fold'
 			},
@@ -439,6 +439,8 @@ goorm.core.edit.prototype = {
 			if (!find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
+
+			self.set_modify_mark(e.from.line, e.user || core.user.id); // set user's modification mark
 		});
 
 		cm_editor.on('cursorActivity', function(cm) { // cm: CodeMirror
@@ -761,6 +763,35 @@ goorm.core.edit.prototype = {
 			}
 
 			cm.setGutterMarker(linenumber, gutter, marker);
+		}
+	},
+
+	// show modified line. Jeong-Min Im.
+	// line (Number) : modified line
+	// user (String) : user's id
+	set_modify_mark: function(line, user) {
+		var self = this;
+		var gutter = this.editor.getLineHandle(line).gutterMarkers;
+		var set = function() {
+			var marker = document.createElement('div');
+			var color = core.module.layout.chat.user.boxcolors[user];
+
+			marker.className = 'modified_line';
+			marker.style.zoom = self.font_manager.now_zoom;
+			marker.style.borderColor = ~self.dark_themes.indexOf(self.preference['preference.editor.theme']) ? color.light_color : color.color;
+			marker.setAttribute('user', user);
+
+			self.editor.setGutterMarker(line, 'modified', marker);
+		};
+
+		if (gutter && gutter.modified) {
+			if ($(gutter.modified).attr('user') !== user) { // new user
+				set();
+			}
+		} else { // non-modified
+			if (line !== 0) { // except setting value on loading
+				set();
+			}
 		}
 	},
 
@@ -1535,6 +1566,58 @@ goorm.core.edit.prototype = {
 		if (this.editor_loaded) {
 			$(core).trigger('bookmark_table_refresh'); //jeongmin: refresh bookmark table in outline tab
 		}
+		
+
+		// var active_file = self.filepath + self.filename;
+		// var workspace = active_file.split('/')[0];
+		// var path = active_file.split('/');
+		// path.shift();
+		// path = path.join('/');
+
+		// core._socket.set_url('/edit/get_outline' + path, true);
+
+		// //start object explorer tab refresh when open file
+		// switch (self.filename.split('.').pop()) {
+		// 	case 'c':
+		// 	case 'cpp':
+		// 	case 'java':
+		// 	case 'py':
+		// 	case 'html':
+		// 	case 'css':
+		// 	case 'js':
+		// 		core._socket.once('/edit/get_outline' + path, function(data) { // jeongmin: outline once differ by file's path
+		// 			// console.log(data);
+		// 			if (!data) {
+		// 				core.module.layout.outline.clear();
+		// 			} else {
+		// 				if (data.err_code) {
+		// 					switch (data.err_code) {
+		// 						case 0:
+		// 							console.log('Object explorer parsing error');
+		// 							break;
+		// 					}
+
+		// 					core.module.layout.outline.clear();
+		// 				} else {
+		// 					core.module.layout.outline.refresh('object_tree', data, self.editor.lineCount()); // jeongmin: line is needed for checking threshold which is needed for preventing goorm stopped
+		// 				}
+		// 			}
+		// 		});
+		// 		core._socket.emit('/edit/get_outline', {
+		// 			'path': path,
+		// 			'workspace': workspace
+		// 		});
+		// 		break;
+		// 	default:
+		// 		core.module.layout.outline.clear();
+		// }
+
+		//		 this.collaboration.update_editor({
+		//			 filename: self.filename
+		//		 });
+
+		// this.collaboration.clear_other_user_cursor();
+		// this.collaboration.load_other_user_cursor();
 		
 	},
 

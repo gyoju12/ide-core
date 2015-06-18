@@ -3835,6 +3835,19 @@ div.item a > span {
 	height: 100%;
 }
 
+#collaboration_file_table td{
+	padding: 5px;
+}
+
+.collaboration_activate{
+	font-weight: bold;
+}
+
 .nav-tabs > li > a {
 	white-space: nowrap;
+}
+
+.modified_line {
+	border-left: 5px solid;
+	height: 15px;
 }

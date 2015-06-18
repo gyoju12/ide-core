@@ -82,12 +82,18 @@ goorm.core.edit.font_manager.prototype = {
 			var container = $(self.target);
 			var __target = container.find(target);
 
-			if (__target.length !== 0) {
-				self.now_zoom = 1 + (0.05 * delta);
-				self.now_margin_top = -2 + (0.1 * delta);
-				self.now_margin_left = -3 + (0.1 * delta);
+			self.now_zoom = 1 + (0.08928572 * delta); // average increasing rate
 
-				__target.css('zoom', self.now_zoom).css('margin-top', self.now_margin_top + 'px').css('margin-left', self.now_margin_left + 'px');
+			if (__target.length !== 0) {
+				if (~target.indexOf('modified')) {
+					__target.css('zoom', self.now_zoom);
+				} else {
+					self.now_zoom = 1 + (0.05 * delta);
+					self.now_margin_top = -2 + (0.1 * delta);
+					self.now_margin_left = -3 + (0.1 * delta);
+
+					__target.css('zoom', self.now_zoom).css('margin-top', self.now_margin_top + 'px').css('margin-left', self.now_margin_left + 'px');
+				}
 			}
 		};
 
@@ -114,6 +120,7 @@ goorm.core.edit.font_manager.prototype = {
 		resize_background_image('div.folding_icon_minus');
 		resize_background_image('div.folding_icon');
 		resize_background_image('div.bookmark_icon');
+		resize_background_image('div.modified_line');
 
 		resize_timer();
 

@@ -136,6 +136,7 @@ module.exports = {
 													project_author: query.project_author,
 													project_name: query.project_name,
 													project_path: project_dir,
+													project_dir: project_dir,
 													project_type: query.project_type,
 													detailedtype: query.project_detailed_type,
 													description: query.project_desc,
