@@ -1,15 +1,9 @@
 {
-	"previous": {
-		"value": "이전"
-	},
 	"next": {
 		"value": "다음"
 	},
 	"ok": {
 		"value": "확인"
-	},
-	"cancel": {
-		"value": "취소"
 	},
 	"find_info": {
 		"value": "계정정보찾기"
@@ -19,21 +13,6 @@
 	},
 	"forgot_pw": {
 		"value": "비밀번호 찾기"
-	},
-	"send": {
-		"value": "보내기"
-	},
-	"close": {
-		"value": "닫기"
-	},
-	"delete": {
-		"value": "삭제"
-	},
-	"history": {
-		"value": "작업 내역"
-	},
-	"speed": {
-		"value": "속도"
 	},
 	"history_speed_normal": {
 		"value": "보통속도"
@@ -47,92 +26,29 @@
 	"history_speed_slow": {
 		"value": "천천히"
 	},
-	"history_speed_veryslow": {
-		"value": "매우 천천히"
-	},
 	"history_show_current": {
 		"value": "현재 상태 보기"
 	},
-	"terminal": {
-		"value": "터미널"
-	},
-	"search": {
-		"value": "검색"
-	},
-	"chat": {
-		"value": "채팅"
-	},
-	"debug": {
-		"value": "디버그"
-	},
-	"outline": {
-		"value": "아웃라인"
-	},
-	"project": {
-		"value": "프로젝트"
+	"history_speed_veryslow": {
+		"value": "매우 천천히"
 	},
 	"yes": {
 		"value": "네"
 	},
-	"no": {
-		"value": "아니오"
-	},
-	"logout": {
-		"value": "로그아웃"
-	},
 	"account_change": {
 		"value": "정보 변경"
-	},
-	"signup": {
-		"value": "회원 가입"
-	},
-	"change": {
-		"value": "변경"
-	},
-	"apply": {
-		"value": "적용"
-	},
-	"default": {
-		"value": "기본 설정"
-	},
-	"login": {
-		"value": "로그인"
 	},
 	"information": {
 		"value": "정보"
 	},
-	"scm": {
-		"value": "소스 코드 관리"
-	},
 	"libraries": {
 		"value": "라이브러리"
-	},
-	"setting": {
-		"value": "설정"
-	},
-	"theme": {
-		"value": "테마"
 	},
 	"filetype": {
 		"value": "파일 타입"
 	},
-	"language": {
-		"value": "언어"
-	},
-	"shortcut": {
-		"value": "단축키"
-	},
 	"scm_configuration": {
 		"value": "SCM 설정"
-	},
-	"cloud": {
-		"value": "클라우드"
-	},
-	"refresh": {
-		"value": "새로고침"
-	},
-	"upload": {
-		"value": "업로드"
 	},
 	"private_mode": {
 		"value": "개인 사용자용 접속"
@@ -146,35 +62,14 @@
 	"pdf_Viewer": {
 		"value": "PDF 뷰어"
 	},
-	"profile": {
-		"value": "프로필"
-	},
 	"toggle_selection": {
 		"value": "선택 도구 열기/닫기"
-	},
-	"editor": {
-		"value": "에디터"
-	},
-	"save": {
-		"value": "저장"
 	},
 	"add": {
 		"value": "추가"
 	},
-	"number": {
-		"value": "번호"
-	},
-	"thread": {
-		"value": "쓰레드"
-	},
-	"variable": {
-		"value": "변수"
-	},
 	"value": {
 		"value": "값"
-	},
-	"summary": {
-		"value": "요약"
 	},
 	"code_highlight": {
 		"value": "코드 강조"
@@ -194,38 +89,11 @@
 	"cloud_projects": {
 		"value": "클라우드 프로젝트"
 	},
-	"chats": {
-		"value": "채팅"
-	},
-	"friends": {
-		"value": "친구들"
-	},
 	"add_friends": {
 		"value": "친구 추가"
 	},
-	"modify": {
-		"value": "수정"
-	},
-	"crop": {
-		"value": "자르기"
-	},
-	"output": {
-		"value": "아웃풋"
-	},
-	"back": {
-		"value": "돌아가기"
-	},
-	"id": {
-		"value": "아이디"
-	},
-	"email": {
-		"value": "이메일"
-	},
 	"password": {
 		"value": "비밀번호"
-	},
-	"type_name_or_email": {
-		"value": "이름 또는 이메일을 입력해 주세요..."
 	},
 	"type_message": {
 		"value": "메세지를 입력해주세요..."
@@ -236,26 +104,11 @@
 	"repository_path": {
 		"value": "저장소 경로"
 	},
-	"shortcut_edit": {
-		"value": "편집"
-	},
 	"recent_empty": {
 		"value": "최근목록 없음"
 	},
 	"recent_clear": {
 		"value": "최근목록 삭제"
-	},
-	"storage": {
-		"value": "저장소"
-	},
-	"hide": {
-		"value": "숨기기"
-	},
-	"create": {
-		"value": "생성"
-	},
-	"replace": {
-		"value": "바꾸기"
 	},
 	"replace_and_find": {
 		"value": "바꾸고 찾기"
@@ -278,11 +131,158 @@
 	"features": {
 		"value": "기능 소개"
 	},
+	"collaboration": {
+		"value": "협업"
+	},
+	"chats": {
+		"value": "채팅"
+	},
+	"friends": {
+		"value": "친구들"
+	},
+	"modify": {
+		"value": "수정"
+	},
+	"crop": {
+		"value": "자르기"
+	},
+	"output": {
+		"value": "아웃풋"
+	},
+	"back": {
+		"value": "돌아가기"
+	},
+	"id": {
+		"value": "아이디"
+	},
+	"email": {
+		"value": "이메일"
+	},
+	"shortcut_edit": {
+		"value": "편집"
+	},
+	"storage": {
+		"value": "저장소"
+	},
+	"hide": {
+		"value": "숨기기"
+	},
+	"create": {
+		"value": "생성"
+	},
+	"replace": {
+		"value": "바꾸기"
+	},
 	"license": {
 		"value": "라이센스"
 	},
-	"collaboration": {
-		"value": "협업"
+	"previous": {
+		"value": "이전"
+	},
+	"cancel": {
+		"value": "취소"
+	},
+	"send": {
+		"value": "보내기"
+	},
+	"close": {
+		"value": "닫기"
+	},
+	"delete": {
+		"value": "삭제"
+	},
+	"speed": {
+		"value": "속도"
+	},
+	"search": {
+		"value": "검색"
+	},
+	"terminal": {
+		"value": "터미널"
+	},
+	"chat": {
+		"value": "채팅"
+	},
+	"debug": {
+		"value": "디버그"
+	},
+	"outline": {
+		"value": "아웃라인"
+	},
+	"project": {
+		"value": "프로젝트"
+	},
+	"no": {
+		"value": "아니오"
+	},
+	"logout": {
+		"value": "로그아웃"
+	},
+	"signup": {
+		"value": "회원 가입"
+	},
+	"apply": {
+		"value": "적용"
+	},
+	"change": {
+		"value": "변경"
+	},
+	"default": {
+		"value": "기본 설정"
+	},
+	"login": {
+		"value": "로그인"
+	},
+	"scm": {
+		"value": "소스 코드 관리"
+	},
+	"setting": {
+		"value": "설정"
+	},
+	"theme": {
+		"value": "테마"
+	},
+	"shortcut": {
+		"value": "단축키"
+	},
+	"language": {
+		"value": "언어"
+	},
+	"refresh": {
+		"value": "새로고침"
+	},
+	"cloud": {
+		"value": "클라우드"
+	},
+	"upload": {
+		"value": "업로드"
+	},
+	"profile": {
+		"value": "프로필"
+	},
+	"editor": {
+		"value": "에디터"
+	},
+	"save": {
+		"value": "저장"
+	},
+	"number": {
+		"value": "번호"
+	},
+	"thread": {
+		"value": "쓰레드"
+	},
+	"variable": {
+		"value": "변수"
+	},
+	"summary": {
+		"value": "요약"
+	},
+	"history": {
+		"value": "작업 내역"
+	},
+	"type_name_or_email": {
+		"value": "이름 또는 이메일을 입력해 주세요..."
 	},
 	"keyword": {
 		"value": "검색어"
@@ -295,5 +295,8 @@
 	},
 	"navigate": {
 		"value": "탐색"
+	},
+	"collaboration_users": {
+		"value": "협업 유저"
 	}
 }

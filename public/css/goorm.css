@@ -678,7 +678,7 @@ li.slideshare_url_item a > div {
     font-family: 'Open Sans', 'Nanum Barun Gothic', sans-serif;
     font-size: 30px;
     left: 50%;
-    margin-left: -30px;
+    margin-left: -50px;
     margin-top: -70px;
     position: fixed;
     text-align: center;
@@ -700,11 +700,11 @@ li.slideshare_url_item a > div {
 .common_login_box {
     display: none;
     left: 50%;
-    margin-left: -180px;
+    margin-left: -260px;
     margin-top: 40px;
     position: fixed;
     top: 50%;
-    width: 360px;
+    width: 520px;
 }
 .common_id_input {
     margin-bottom: 15px;
@@ -718,7 +718,7 @@ li.slideshare_url_item a > div {
 #slideshare_url_select_btn,
 #slideshare_url_top,
 #svn_diff_table,
-#collaboration_file_table,
+#collaboration_user_table,
 .common_pw_input {
     width: 100%;
 }
@@ -3835,7 +3835,7 @@ div.item a > span {
 	height: 100%;
 }
 
-#collaboration_file_table td{
+#collaboration_user_table td{
 	padding: 5px;
 }
 

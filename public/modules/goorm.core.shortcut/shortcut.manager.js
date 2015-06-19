@@ -2005,6 +2005,23 @@ goorm.core.shortcut.manager = {
 
 			doc_obj.bind('keydown.' + this.make_namespace('right_bookmark_show', this.hotkeys.right_bookmark_show), this.hotkeys.right_bookmark_show, this.hotkeys_fn.right_bookmark_show);
 		}
+		//Right Layout Collaboration (Alt+6)
+		if (this.hotkeys.right_collaboration_show) {
+			this.hotkeys_fn.right_collaboration_show = function(e) {
+				if (!core.status.keydown) {
+					var layout = core.module.layout;
+
+					layout.select('collaboration');
+					layout.tab.show_showing_icon(layout.get_id('collaboration'));
+				}
+
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
+			};
+
+			doc_obj.bind('keydown.' + this.make_namespace('right_collaboration_show', this.hotkeys.right_collaboration_show), this.hotkeys.right_collaboration_show, this.hotkeys_fn.right_collaboration_show);
+		}
 
 		//Bottom Layout Show/Hide (Alt+Shift+B)
 		if (this.hotkeys.bottom_layout_toggle) {

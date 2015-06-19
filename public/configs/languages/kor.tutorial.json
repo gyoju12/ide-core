@@ -1,182 +1,179 @@
 {
-    "title_basic": {
-        "value": "화면 구성 알아보기"
-    },
-    "title_new_project": {
-        "value": "새 프로젝트 만들기"
-    },
-    "title_build_project": {
-        "value": "프로젝트 빌드하기"
-    },
-    "title_debug_project": {
-        "value": "프로젝트 디버깅하기"
-    },
-    "title_share_project": {
-        "value": "프로젝트 공유하기"
-    },
-    "title_add_friends": {
-        "value": "친구 추가하기"
-    },
-    "goorm_main_menu": {
-        "value": "이것은 메인 메뉴 입니다. 마우스 커서를 올리면 서브메뉴가 보입니다."
-    },
-    "goorm_main_toolbar": {
-        "value": "이것은 메인 툴바 입니다. 간단한 버튼 클릭으로 여러 작업을 할 수 있습니다."
-    },
-    "main_file_toolbar": {
-        "value": "이것은 파일 툴바 입니다. 프로젝트 혹은 파일 생성, 삭제, 열기 등 작업을 할 수 있습니다."
-    },
-    "main_edit_toolbar": {
-        "value": "이것은 에디터 툴바 입니다. 코드 폰트 사이즈 조절 및 검색하기 등 코드 에디터 관련 작업을 할 수 있습니다."
-    },
-    "main_project_toolbar": {
-        "value": "이것은 프로젝트 툴바 입니다. 프로젝트 빌드, 실행, 공유하기 등 작업을 할 수 있습니다."
-    },
-    "main_debug_toolbar": {
-        "value": "이것은 디버그 툴바 입니다. 프로젝트 디버그 관련 작업을 할 수 있습니다."
-    },
-    "main_window_toolbar": {
-        "value": "이것은 윈도우 툴바 입니다. 윈도우를 여러 방법으로 워크스페이스에 배치할 수 있습니다."
-    },
-    "main_help_toolbar": {
-        "value": "이것은 도움말 툴바 입니다. 구름 IDE 관련 도움을 받을 수 있습니다."
-    },
-    "project_table_tut": {
-        "value": "이것은 프로젝트 테이블 입니다. 프로젝트 내 파일 트리, 프로젝트 목록, 공유하고 있는 프로젝트 목록들을 관리할 수 있습니다."
-    },
-    "workspace": {
-        "value": "이것은 워크스페이스 입니다. 여기서 당신은 파일을 편집할 수 있습니다!"
-    },
-    "chat_tab": {
-        "value": "이것은 채팅 탭 입니다. 이걸로 당신은 다른사람들과 같이 대화 할 수 있습니다."
-    },
-    "document_viewer_tab": {
-        "value": "이것은 문서 뷰어 탭 입니다. PDF파일이나 slideshare.net 슬라이드를 볼 수 있습니다."
-    },
-    "history_table_tab": {
-        "value": "이것은 작업 내역 탭 입니다. 이 탭을 이용하여 당신의 파일을 되돌리거나 누가 파일을 만들었는지 알 수 있습니다."
-    },
-    "outline_tab": {
-        "value": "이것은 아웃라인 탭 입니다. 당신이 만들고 있는 파일의 아웃라인을 볼 수 있습니다."
-    },
-    "quiz_tab": {
-        "value": "이것은 퀴즈 탭 입니다. 현재 수강하고 있는 과목에 대한 문제를 볼 수 있습니다."
-    },
-    "debug_tab": {
-        "value": "이것은 디버그 탭 입니다. 프로젝트 디버깅 상태를 보여줍니다."
-    },
-    "terminal_tab": {
-        "value": "이것은 터미널 탭 입니다. 빌드 결과, 프로젝트 실행 결과 등을 보여줍니다."
-    },
-    "search_tab": {
-        "value": "이것은 검색 탭 입니다. 검색한 결과에 대한 값들을 보여줍니다."
-    },
-    "output_tab": {
-        "value": "이것은 아웃풋 탭 입니다. 저장 시에 문법적인 에러사항을 표시합니다."
-    },
-    "bookmark_tab": {
-        "value": "이것은 북마크 탭 입니다. 에디터 별로 라인을 저장하고, 코멘트를 달 수 있습니다."
-    },
-    "new_project": {
-        "value": "버튼을 클릭하여 새 프로젝트 생성하기를 시작합니다."
-    },
-    "new_project_wizard": {
-        "value": "이것은 새 프로젝트 마법사입니다. 프로젝트를 생성하기 위해 여러 정보를 입력하는 다이얼로그 입니다."
-    },
-    "project_type": {
-        "value": "프로젝트 유형을 고릅니다."
-    },
-    "project_dtype": {
-        "value": "프로젝트의 세부 유형을 고릅니다."
-    },
-    "project_select_dtype": {
-        "value": "이 튜토리얼에서는 가장 첫번째 세부 유형을 선택하여 진행하겠습니다."
-    },
-    "nextbutton": {
-        "value": "다음 버튼을 눌러주세요."
-    },
-    "storage_field": {
-        "value": "프로젝트가 저장될 저장소를 선택해주세요. AWS S3와 현재 컨테이너를 저장소로 사용할 수 있습니다."
-    },
-    "new_project_infomation": {
-        "value": "프로젝트 정보에 들어갑니다."
-    },
-    "input_project_name": {
-        "value": "프로젝트 이름이 필요합니다."
-    },
-    "new_project_finish": {
-        "value": "새 프로젝트 마법사를 마치기위해 Create 버튼을 누릅니다."
-    },
-    "build_project_start": {
-        "value": "버튼을 클릭하여 프로젝트 빌드를 시작합니다."
-    },
-    "build_project_select": {
-        "value": "'프로젝트' 메뉴란에서 '빌드'를 선택하여도 빌드를 하실 수 있습니다."
-    },
-    "build_project_result": {
-        "value": "이것은 빌드 탭으로써, 빌드한 결과를 보여줍니다. 성공하면 'Build Success', 실패하면 'Build Fail'이라는 문구가 뜹니다."
-    },
-    "run_project": {
-        "value": "'Build Success'인 경우에 Run 버튼을 누르면 빌드한 프로젝트를 실행할 수 있습니다. 실행 결과는 터미널에 출력됩니다."
-    },
-    "debug_project_start": {
-        "value": "디버그 버튼을 클릭하여 디버깅을 시작합니다. <div><div class='toolbar-build' style='float: left; margin-right: 5px;'></div>프로젝트 빌드를 했는지 브레이크 포인트를 찍었는지 확인 후 디버깅을 시작합니다.</div> 디버깅은 C, C++, Java 프로젝트에서 가능합니다."
-    },
-    "debug_project_continue": {
-        "value": "프로젝트 디버그가 시작되고 다음 브레이크 포인트로 넘어갑니다."
-    },
-    "debug_project_terminate": {
-        "value": "프로젝트 디버그를 종료합니다."
-    },
-    "debug_project_step_over": {
-        "value": "현재 진행 중인 함수 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. Step In 과 비슷한 기능이지만 Step Over은 라인내의 Function Call을 멈추지 않습니다. gdb에서 next 기능과 같습니다."
-    },
-    "debug_project_step_in": {
-        "value": "현재 진행 중인 소스 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. step over 과 비슷한 기능입니다. gdb에서 step 기능과 같습니다. "
-    },
-    "debug_project_step_out": {
-        "value": "선택된 스택이 리턴할 때까지 진행합니다. 리턴 값이 출력됩니다. gdb에서 finish 기능과 같습니다."
-    },
-    "share_project_start": {
-        "value": "버튼을 클릭하여 프로젝트 공유를 시작합니다."
-    },
-    "share_project_dialog": {
-        "value": "이것은 공유 프로젝트 관리 창입니다."
-    },
-    "share_project_project_select": {
-        "value": "다른 개발자들과 공유하고 싶은 프로젝트를 선택합니다."
-    },
-    "share_project_current_list": {
-        "value": "이것은 현재 공유하고 있는 프로젝트의 리스트를 보여줍니다. 개발자마다 Read-Only, Editable 등 옵션을 설정할 수 있습니다."
-    },
-    "share_project_search_user": {
-        "value": "여기에 다른 유저의 ID, 이름 혹은 닉네임을 입력하여 공유하려는 유저를 선택합니다."
-    },
-    "share_project_finish": {
-        "value": "확인 버튼을 눌러 프로젝트 공유를 완료합니다."
-    },
-    "share_project_shared_tab": {
-        "value": "이것은 공유 탭입니다. 다른 개발자들과 공유하고 있는 프로젝트에 대한 정보를 볼 수 있습니다."
-    },
-    "share_project_shared_project_list": {
-        "value": "여기에 공유한 프로젝트들의 목록이나 다른 사람이 공유 요청한 메시지 등을 볼 수 있습니다."
-    },
-    "add_friends_start": {
-        "value": "친구 추가하기 튜토리얼을 시작합니다."
-    },
-    "add_friends_user_list": {
-        "value": "여기서 유저 목록을 볼 수 있습니다."
-    },
-    "add_friends_search_user": {
-        "value": "이름, E-mail으로 유저를 검색할 수 있습니다."
-    },
-    "add_friends_add_friend": {
-        "value": "검색한 유저목록에서 우측에 '친구 요청' 버튼을 누르면 상대방에게 친구 요청을 합니다. 요청하면 상대방의 친구 수락 응답을 기다립니다."
-    },
-    "add_friends_friend_list": {
-        "value": "현재 친구 목록, 친구 수락 메시지 등을 표시해줍니다."
-    },
-    "alert_select_project_can_build": {
-        "value": "빌드할 수 있는 프로젝트를 선택해야 합니다."
-    }
+	"title_basic": {
+		"value": "화면 구성 알아보기"
+	},
+	"title_build_project": {
+		"value": "프로젝트 빌드하기"
+	},
+	"title_add_friends": {
+		"value": "친구 추가하기"
+	},
+	"goorm_main_toolbar": {
+		"value": "이것은 메인 툴바 입니다. 간단한 버튼 클릭으로 여러 작업을 할 수 있습니다."
+	},
+	"goorm_main_menu": {
+		"value": "이것은 메인 메뉴 입니다. 마우스 커서를 올리면 서브메뉴가 보입니다."
+	},
+	"main_project_toolbar": {
+		"value": "이것은 프로젝트 툴바 입니다. 프로젝트 빌드, 실행, 공유하기 등 작업을 할 수 있습니다."
+	},
+	"workspace": {
+		"value": "이것은 워크스페이스 입니다. 여기서 당신은 파일을 편집할 수 있습니다!"
+	},
+	"main_window_toolbar": {
+		"value": "이것은 윈도우 툴바 입니다. 윈도우를 여러 방법으로 워크스페이스에 배치할 수 있습니다."
+	},
+	"main_debug_toolbar": {
+		"value": "이것은 디버그 툴바 입니다. 프로젝트 디버그 관련 작업을 할 수 있습니다."
+	},
+	"title_share_project": {
+		"value": "프로젝트 공유하기"
+	},
+	"quiz_tab": {
+		"value": "이것은 퀴즈 탭 입니다. 현재 수강하고 있는 과목에 대한 문제를 볼 수 있습니다."
+	},
+	"document_viewer_tab": {
+		"value": "이것은 문서 뷰어 탭 입니다. PDF파일이나 slideshare.net 슬라이드를 볼 수 있습니다."
+	},
+	"chat_tab": {
+		"value": "이것은 채팅 탭 입니다. 이걸로 당신은 다른사람들과 같이 대화 할 수 있습니다."
+	},
+	"title_debug_project": {
+		"value": "프로젝트 디버깅하기"
+	},
+	"bookmark_tab": {
+		"value": "이것은 북마크 탭 입니다. 에디터 별로 라인을 저장하고, 코멘트를 달 수 있습니다."
+	},
+	"terminal_tab": {
+		"value": "이것은 터미널 탭 입니다. 빌드 결과, 프로젝트 실행 결과 등을 보여줍니다."
+	},
+	"main_file_toolbar": {
+		"value": "이것은 파일 툴바 입니다. 프로젝트 혹은 파일 생성, 삭제, 열기 등 작업을 할 수 있습니다."
+	},
+	"project_select_dtype": {
+		"value": "이 튜토리얼에서는 가장 첫번째 세부 유형을 선택하여 진행하겠습니다."
+	},
+	"outline_tab": {
+		"value": "이것은 아웃라인 탭 입니다. 당신이 만들고 있는 파일의 아웃라인을 볼 수 있습니다."
+	},
+	"main_help_toolbar": {
+		"value": "이것은 도움말 툴바 입니다. 구름 IDE 관련 도움을 받을 수 있습니다."
+	},
+	"nextbutton": {
+		"value": "다음 버튼을 눌러주세요."
+	},
+	"output_tab": {
+		"value": "이것은 아웃풋 탭 입니다. 저장 시에 문법적인 에러사항을 표시합니다."
+	},
+	"debug_project_continue": {
+		"value": "프로젝트 디버그가 시작되고 다음 브레이크 포인트로 넘어갑니다."
+	},
+	"debug_project_step_out": {
+		"value": "선택된 스택이 리턴할 때까지 진행합니다. 리턴 값이 출력됩니다. gdb에서 finish 기능과 같습니다."
+	},
+	"project_dtype": {
+		"value": "프로젝트의 세부 유형을 고릅니다."
+	},
+	"project_type": {
+		"value": "프로젝트 유형을 고릅니다."
+	},
+	"share_project_search_user": {
+		"value": "여기에 다른 유저의 ID, 이름 혹은 닉네임을 입력하여 공유하려는 유저를 선택합니다."
+	},
+	"input_project_name": {
+		"value": "프로젝트 이름이 필요합니다."
+	},
+	"new_project_infomation": {
+		"value": "프로젝트 정보에 들어갑니다."
+	},
+	"share_project_shared_tab": {
+		"value": "이것은 공유 탭입니다. 다른 개발자들과 공유하고 있는 프로젝트에 대한 정보를 볼 수 있습니다."
+	},
+	"debug_project_step_over": {
+		"value": "현재 진행 중인 함수 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. Step In 과 비슷한 기능이지만 Step Over은 라인내의 Function Call을 멈추지 않습니다. gdb에서 next 기능과 같습니다."
+	},
+	"share_project_shared_project_list": {
+		"value": "여기에 공유한 프로젝트들의 목록이나 다른 사람이 공유 요청한 메시지 등을 볼 수 있습니다."
+	},
+	"add_friends_friend_list": {
+		"value": "현재 친구 목록, 친구 수락 메시지 등을 표시해줍니다."
+	},
+	"debug_tab": {
+		"value": "이것은 디버그 탭 입니다. 프로젝트 디버깅 상태를 보여줍니다."
+	},
+	"new_project": {
+		"value": "버튼을 클릭하여 새 프로젝트 생성하기를 시작합니다."
+	},
+	"new_project_finish": {
+		"value": "새 프로젝트 마법사를 마치기위해 Create 버튼을 누릅니다."
+	},
+	"build_project_select": {
+		"value": "'프로젝트' 메뉴란에서 '빌드'를 선택하여도 빌드를 하실 수 있습니다."
+	},
+	"build_project_start": {
+		"value": "버튼을 클릭하여 프로젝트 빌드를 시작합니다."
+	},
+	"search_tab": {
+		"value": "이것은 검색 탭 입니다. 검색한 결과에 대한 값들을 보여줍니다."
+	},
+	"debug_project_terminate": {
+		"value": "프로젝트 디버그를 종료합니다."
+	},
+	"add_friends_search_user": {
+		"value": "이름, E-mail으로 유저를 검색할 수 있습니다."
+	},
+	"share_project_project_select": {
+		"value": "다른 개발자들과 공유하고 싶은 프로젝트를 선택합니다."
+	},
+	"add_friends_start": {
+		"value": "친구 추가하기 튜토리얼을 시작합니다."
+	},
+	"alert_select_project_can_build": {
+		"value": "빌드할 수 있는 프로젝트를 선택해야 합니다."
+	},
+	"main_edit_toolbar": {
+		"value": "이것은 에디터 툴바 입니다. 코드 폰트 사이즈 조절 및 검색하기 등 코드 에디터 관련 작업을 할 수 있습니다."
+	},
+	"project_table_tut": {
+		"value": "이것은 프로젝트 테이블 입니다. 프로젝트 내 파일 트리, 프로젝트 목록, 공유하고 있는 프로젝트 목록들을 관리할 수 있습니다."
+	},
+	"new_project_wizard": {
+		"value": "이것은 새 프로젝트 마법사입니다. 프로젝트를 생성하기 위해 여러 정보를 입력하는 다이얼로그 입니다."
+	},
+	"storage_field": {
+		"value": "프로젝트가 저장될 저장소를 선택해주세요. AWS S3와 현재 컨테이너를 저장소로 사용할 수 있습니다."
+	},
+	"history_table_tab": {
+		"value": "이것은 작업 내역 탭 입니다. 이 탭을 이용하여 당신의 파일을 되돌리거나 누가 파일을 만들었는지 알 수 있습니다."
+	},
+	"debug_project_start": {
+		"value": "디버그 버튼을 클릭하여 디버깅을 시작합니다. <div><div class='toolbar-build' style='float: left; margin-right: 5px;'></div>프로젝트 빌드를 했는지 브레이크 포인트를 찍었는지 확인 후 디버깅을 시작합니다.</div> 디버깅은 C, C++, Java 프로젝트에서 가능합니다."
+	},
+	"share_project_start": {
+		"value": "버튼을 클릭하여 프로젝트 공유를 시작합니다."
+	},
+	"share_project_dialog": {
+		"value": "이것은 공유 프로젝트 관리 창입니다."
+	},
+	"share_project_finish": {
+		"value": "확인 버튼을 눌러 프로젝트 공유를 완료합니다."
+	},
+	"add_friends_user_list": {
+		"value": "여기서 유저 목록을 볼 수 있습니다."
+	},
+	"run_project": {
+		"value": "'Build Success'인 경우에 Run 버튼을 누르면 빌드한 프로젝트를 실행할 수 있습니다. 실행 결과는 터미널에 출력됩니다."
+	},
+	"build_project_result": {
+		"value": "이것은 빌드 탭으로써, 빌드한 결과를 보여줍니다. 성공하면 'Build Success', 실패하면 'Build Fail'이라는 문구가 뜹니다."
+	},
+	"add_friends_add_friend": {
+		"value": "검색한 유저목록에서 우측에 '친구 요청' 버튼을 누르면 상대방에게 친구 요청을 합니다. 요청하면 상대방의 친구 수락 응답을 기다립니다."
+	},
+	"debug_project_step_in": {
+		"value": "현재 진행 중인 소스 내에서 다음 소스 라인으로 이동합니다. 같은 함수 내의 다른 코드 라인에 도착하면 멈춥니다. step over 과 비슷한 기능입니다. gdb에서 step 기능과 같습니다. "
+	},
+	"share_project_current_list": {
+		"value": "이것은 현재 공유하고 있는 프로젝트의 리스트를 보여줍니다. 개발자마다 Read-Only, Editable 등 옵션을 설정할 수 있습니다."
+	}
 }

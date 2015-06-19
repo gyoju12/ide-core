@@ -21,410 +21,295 @@
 		"value": "파일 업로드"
 	},
 	"dialog_file_export": {
-		"value": "파일 내보내기",
-		"children": {
-			"dialog_file_export_guide": {
-				"value": "내보낼 파일을 선택해주세요."
-			},
-			"dialog_file_export_file": {
-				"value": "선택된 파일"
-			},
-			"dialog_file_export_exporttype": {
-				"value": "파일 형식"
-			}
-		}
+		"value": "파일 내보내기"
+	},
+	"dialog_file_export_file": {
+		"value": "선택된 파일"
+	},
+	"dialog_file_export_exporttype": {
+		"value": "파일 형식"
 	},
 	"dialog_file_import": {
-		"value": "파일 불러오기",
-		"children": {
-			"dialog_file_import_guide": {
-				"value": "가져오고 싶은 파일을 선택해주세요."
-			},
-			"dialog_file_import_file": {
-				"value": "업로드 할 파일을 선택해주세요."
-			}
-		}
+		"value": "파일 불러오기"
 	},
 	"dialog_upload_folder": {
-		"value": "폴더 불러오기",
-		"children": {
-			"dialog_folder_import_guide": {
-				"value": "가져오고 싶은 폴더를 선택해주세요."
-			},
-			"dialog_folder_import_folder": {
-				"value": "업로드 할 폴더를 선택해 주세요.<br/>빈 폴더는 업로드되지 않습니다."
-			}
-		}
+		"value": "폴더 불러오기"
+	},
+	"dialog_folder_import_folder": {
+		"value": "업로드 할 폴더를 선택해 주세요.<br/>빈 폴더는 업로드되지 않습니다."
 	},
 	"dialog_file_new_folder": {
-		"value": "새 폴더",
-		"children": {
-			"dialog_file_new_folder_guide": {
-				"value": "새 폴더 만들기"
-			},
-			"dialog_file_new_folder_foldername": {
-				"value": "폴더 이름"
-			}
-		}
+		"value": "새 폴더"
+	},
+	"dialog_file_new_folder_guide": {
+		"value": "새 폴더 만들기"
+	},
+	"dialog_file_new_folder_foldername": {
+		"value": "폴더 이름"
 	},
 	"dialog_file_new_file": {
-		"value": "새 파일",
-		"children": {
-			"dialog_file_new_file_guide": {
-				"value": "새 파일 만들기"
-			}
-		}
+		"value": "새 파일"
+	},
+	"dialog_file_new_file_guide": {
+		"value": "새 파일 만들기"
 	},
 	"dialog_file_new_other_file": {
-		"value": "새 기타 파일",
-		"children": {
-			"dialog_file_new_other_file_guide": {
-				"value": "생성할 파일 타입을 정하세요."
-			}
-		}
+		"value": "새 기타 파일"
 	},
 	"dialog_file_new_untitled_textfile": {
-		"value": "제목없는 새 텍스트 파일",
-		"children": {
-			"dialog_file_new_untitled_textfile_guide": {
-				"value": "제목없는 새 텍스트 파일 만들기"
-			}
-		}
+		"value": "제목없는 새 텍스트 파일"
 	},
 	"dialog_file_move_file": {
-		"value": "파일 이동",
-		"children": {
-			"dialog_file_move_file_guide": {
-				"value": "파일을 이동할 위치를 선택하세요."
-			}
-		}
+		"value": "파일 이동"
 	},
 	"dialog_file_open_file": {
-		"value": "파일 열기",
-		"children": {
-			"dialog_file_open_file_guide": {
-				"value": "열어볼 파일을 선택하세요."
-			}
-		}
+		"value": "파일 열기"
+	},
+	"dialog_file_open_file_guide": {
+		"value": "열어볼 파일을 선택하세요."
 	},
 	"dialog_file_open_url": {
-		"value": "URL 열기",
-		"children": {
-			"dialog_file_open_url_guide": {
-				"value": "열어볼 URL을 입력하세요."
-			}
-		}
+		"value": "URL 열기"
+	},
+	"dialog_file_open_url_guide": {
+		"value": "열어볼 URL을 입력하세요."
 	},
 	"dialog_file_properties": {
-		"value": "파일 속성",
-		"children": {
-			"dialog_file_properties_file_location": {
-				"value": "파일 위치"
-			},
-			"dialog_file_properties_file_size": {
-				"value": "파일 크기"
-			},
-			"dialog_file_properties_last_access_time": {
-				"value": "최근 접속일"
-			},
-			"dialog_file_properties_Last_modification_time": {
-				"value": "최근 수정일"
-			}
-		}
+		"value": "파일 속성"
+	},
+	"dialog_file_properties_file_location": {
+		"value": "파일 위치"
+	},
+	"dialog_file_properties_file_size": {
+		"value": "파일 크기"
+	},
+	"dialog_file_properties_last_access_time": {
+		"value": "최근 접속일"
+	},
+	"dialog_file_properties_Last_modification_time": {
+		"value": "최근 수정일"
 	},
 	"dialog_file_rename": {
-		"value": "파일 이름 변경",
-		"children": {
-			"dialog_file_rename_new_name": {
-				"value": "새 이름"
-			}
-		}
+		"value": "파일 이름 변경"
+	},
+	"dialog_file_rename_new_name": {
+		"value": "새 이름"
 	},
 	"dialog_file_save_as_file": {
-		"value": "다른 이름으로 저장",
-		"children": {
-			"dialog_file_save_as_file_guide": {
-				"value": "저장할 파일을 선택하세요."
-			}
-		}
+		"value": "다른 이름으로 저장"
+	},
+	"dialog_file_save_as_file_guide": {
+		"value": "저장할 파일을 선택하세요."
 	},
 	"dialog_file_print": {
-		"value": "프린트",
-		"children": {
-			"dialog_file_print_guide": {
-				"value": "해당 파일을 프린트 할 수 있습니다."
-			}
-		}
+		"value": "프린트"
 	},
 	"dialog_help_bug_report": {
-		"value": "버그 리포트",
-		"children": {
-			"dialog_help_bug_report_title": {
-				"value": "제목"
-			},
-			"dialog_help_bug_report_author": {
-				"value": "작성자"
-			},
-			"dialog_help_bug_report_email": {
-				"value": "이메일 주소"
-			},
-			"dialog_help_bug_report_current_version": {
-				"value": "현재 버젼"
-			},
-			"dialog_help_bug_report_module": {
-				"value": "모듈"
-			},
-			"dialog_help_bug_report_detailed": {
-				"value": "자세한 설명"
-			}
-		}
+		"value": "버그 리포트"
+	},
+	"dialog_help_bug_report_title": {
+		"value": "제목"
+	},
+	"dialog_help_bug_report_author": {
+		"value": "작성자"
+	},
+	"dialog_help_bug_report_email": {
+		"value": "이메일 주소"
+	},
+	"dialog_help_bug_report_current_version": {
+		"value": "현재 버젼"
+	},
+	"dialog_help_bug_report_module": {
+		"value": "모듈"
+	},
+	"dialog_help_bug_report_detailed": {
+		"value": "자세한 설명"
 	},
 	"dialog_new_project": {
-		"value": "새 프로젝트",
-		"children": {
-			"dialog_new_project_guide1": {
-				"value": "새 프로젝트 유형을 선택하세요."
-			},
-			"dialog_new_project_description": {
-				"value": "프로젝트 설명"
-			},
-			"dialog_new_project_guide2": {
-				"value": "새 프로젝트의 내용을 추가하세요."
-			},
-			"dialog_new_project_author_name": {
-				"value": "생성자 이름"
-			},
-			"dialog_new_project_name": {
-				"value": "프로젝트 이름"
-			},
-			"dialog_new_project_desc": {
-				"value": "프로젝트 내용"
-			},
-			"dialog_new_project_import_message": {
-				"value": "ZIP 혹은 TAR 파일을 선택해 주세요."
-			},
-			"dialog_new_project_view_all": {
-				"value": "전체"
-			},
-			"dialog_new_project_view_all_description": {
-				"value": "가능한 모든 프로젝트 요소들을 확인합니다."
-			},
-			"dialog_new_project_template": {
-				"value": "템플릿"
-			},
-			"dialog_new_project_scm": {
-				"value": "소스 코드 관리"
-			},
-			"dialog_new_project_import": {
-				"value": "가져오기"
-			},
-			"dialog_new_project_storage": {
-				"value": "스토리지"
-			},
-			"dialog_project_storage_s3": {
-				"value": "AWS S3 (협업 가능 & 모든 컨테이너 - 조금 느린 파일시스템)"
-			},
-			"dialog_project_storage_container": {
-				"value": "Container (협업 불가능 & 현재 컨테이너 - 매우 빠른 파일시스템)"
-			}
-		}
+		"value": "새 프로젝트"
+	},
+	"dialog_new_project_description": {
+		"value": "프로젝트 설명"
+	},
+	"dialog_new_project_author_name": {
+		"value": "생성자 이름"
+	},
+	"dialog_new_project_name": {
+		"value": "프로젝트 이름"
+	},
+	"dialog_new_project_desc": {
+		"value": "프로젝트 내용"
+	},
+	"dialog_new_project_view_all": {
+		"value": "전체"
+	},
+	"dialog_new_project_template": {
+		"value": "템플릿"
+	},
+	"dialog_new_project_scm": {
+		"value": "소스 코드 관리"
+	},
+	"dialog_new_project_import": {
+		"value": "가져오기"
 	},
 	"dialog_project_open": {
-		"value": "프로젝트 열기",
-		"children": {
-			"dialog_project_open_guide": {
-				"value": "열고 싶은 프로젝트를 선택해주세요."
-			}
-		}
+		"value": "프로젝트 열기"
 	},
 	"dialog_project_clean": {
 		"value": "프로젝트 클린"
 	},
 	"dialog_project_build_all": {
-		"value": "모두 빌드",
-		"children": {
-			"dialog_project_build_all_guide": {
-				"value": "아래의 프로젝트들을 빌드합니다."
-			}
-		}
+		"value": "모두 빌드"
 	},
 	"dialog_project_export": {
-		"value": "프로젝트 내보내기",
-		"children": {
-			"dialog_project_export_guide": {
-				"value": "내보내고자 하는 프로젝트를 선택해주세요."
-			},
-			"dialog_project_export_msg": {
-				"value": "프로젝트 내보내기 형식"
-			}
-		}
+		"value": "프로젝트 내보내기"
+	},
+	"dialog_project_export_msg": {
+		"value": "프로젝트 내보내기 형식"
 	},
 	"dialog_project_delete": {
-		"value": "프로젝트 삭제",
-		"children": {
-			"dialog_project_delete_guide": {
-				"value": "삭제할 프로젝트를 선택해주세요."
-			}
-		}
+		"value": "프로젝트 삭제"
 	},
 	"dialog_project_share": {
-		"value": "프로젝트 공유",
-		"children": {
-			"dialog_project_share_send_email": {
-				"value": "협업 초대 메일 보내기"
-			},
-			"dialog_project_share_link": {
-				"value": "공유 링크"
-			},
-			"dialog_project_share_authority_setting": {
-				"value": "권한 설정"
-			}
-		}
+		"value": "프로젝트 공유"
+	},
+	"dialog_project_share_send_email": {
+		"value": "협업 초대 메일 보내기"
+	},
+	"dialog_project_share_link": {
+		"value": "공유 링크"
+	},
+	"dialog_project_share_authority_setting": {
+		"value": "권한 설정"
 	},
 	"dialog_project_go_to_line": {
-		"value": "라인으로 이동",
-		"children": {
-			"dialog_project_line_guide": {
-				"value": "줄 :"
-			}
-		}
+		"value": "라인으로 이동"
+	},
+	"dialog_project_option_guide": {
+		"value": "옵션"
 	},
 	"dialog_project_find_and_replace": {
-		"value": "찾기/바꾸기",
-		"children": {
-			"dialog_project_site_guide": {
-				"value": "범위 :"
-			},
-			"dialog_project_find_guide": {
-				"value": "찾기"
-			},
-			"dialog_project_option_guide": {
-				"value": "옵션"
-			},
-			"dialog_project_match_case_guide": {
-				"value": "대/소문자 일치"
-			},
-			"dialog_project_whole_word_guide": {
-				"value": "단어 전체 일치"
-			},
-			"dialog_project_use_regular_expression_guide": {
-				"value": "정규식 표현 사용하기"
-			}
-		}
+		"value": "찾기/바꾸기"
+	},
+	"dialog_project_site_guide": {
+		"value": "범위 :"
+	},
+	"dialog_project_find_guide": {
+		"value": "찾기"
+	},
+	"dialog_project_line_guide": {
+		"value": "줄 :"
+	},
+	"dialog_preference_editor_font_family": {
+		"value": "폰트"
+	},
+	"dialog_project_whole_word_guide": {
+		"value": "단어 전체 일치"
+	},
+	"dialog_project_use_regular_expression_guide": {
+		"value": "정규식 표현 사용하기"
 	},
 	"dialog_preferences_preference": {
-		"value": "기본 설정",
-		"children": {
-			"dialog_preference_editor_font_family": {
-				"value": "폰트"
-			},
-			"dialog_preference_editor_font_size": {
-				"value": "폰트 크기"
-			},
-			"dialog_preference_editor_line_spacing": {
-				"value": "줄 간격"
-			},
-			"dialog_preference_editor_indent_unit": {
-				"value": "인덴트 단위"
-			},
-			"dialog_preference_editor_first_undo_depth": {
-				"value": "되돌리기 깊이"
-			},
-			"dialog_preference_editor_indent_with_tabs": {
-				"value": "탭으로 인덴팅"
-			},
-			"dialog_preference_editor_show_line_numbers": {
-				"value": "줄 번호 보이기"
-			},
-			"dialog_preference_editor_highlight_current_cursor_line": {
-				"value": "현재 라인 하이라이팅"
-			},
-			"dialog_preference_editor_auto_close_brackets": {
-				"value": "자동 괄호(',\",(,[) 닫기 사용"
-			},
-			"dialog_preference_editor_line_wrapping": {
-				"value": "자동 줄바꿈"
-			},
-			"dialog_preference_editor_rulers": {
-				"value": "격자선 보이기"
-			},
-			"dialog_preference_theme_select_guide": {
-				"value": "테마를 선택하세요."
-			},
-			"dialog_preference_terminal_font_color": {
-				"value": "폰트 색"
-			},
-			"dialog_preference_shortcut_cloud_guide": {
-				"value": "클라우드 메뉴 단축키 변경"
-			},
-			"dialog_preference_theme_keymap": {
-				"value": "키 맵"
-			}
-		}
+		"value": "기본 설정"
+	},
+	"dialog_project_match_case_guide": {
+		"value": "대/소문자 일치"
+	},
+	"dialog_preference_editor_indent_with_tabs": {
+		"value": "탭으로 인덴팅"
+	},
+	"dialog_preference_editor_line_spacing": {
+		"value": "줄 간격"
+	},
+	"dialog_project_property_scm_revision": {
+		"value": "리비전"
+	},
+	"dialog_preference_editor_indent_unit": {
+		"value": "인덴트 단위"
+	},
+	"dialog_preference_editor_first_undo_depth": {
+		"value": "되돌리기 깊이"
+	},
+	"dialog_preference_editor_font_size": {
+		"value": "폰트 크기"
+	},
+	"dialog_preference_editor_rulers": {
+		"value": "격자선 보이기"
+	},
+	"dialog_preference_editor_highlight_current_cursor_line": {
+		"value": "현재 라인 하이라이팅"
+	},
+	"dialog_preference_editor_auto_close_brackets": {
+		"value": "자동 괄호(',(,[) 닫기 사용"
+	},
+	"dialog_preference_editor_line_wrapping": {
+		"value": "자동 줄바꿈"
+	},
+	"dialog_preference_editor_show_line_numbers": {
+		"value": "줄 번호 보이기"
 	},
 	"dialog_project_property": {
-		"value": "프로젝트 속성",
-		"children": {
-			"dialog_project_property_project_type": {
-				"value": "프로젝트 유형"
-			},
-			"dialog_project_property_project_detail": {
-				"value": "프로젝트 세부 유형"
-			},
-			"dialog_project_property_project_author": {
-				"value": "프로젝트 작성자"
-			},
-			"dialog_project_property_project_date": {
-				"value": "프로젝트 작성일"
-			},
-			"dialog_project_property_project_storage": {
-				"value": "프로젝트 스토리지"	
-			},
-			"dialog_project_property_scm_type": {
-				"value": "유형"
-			},
-			"dialog_project_property_repository_url": {
-				"value": "저장소 URL"
-			},
-			"dialog_project_property_auth_guide": {
-				"value": "인증"
-			},
-			"dialog_project_property_auth_user": {
-				"value": "유저"
-			},
-			"dialog_project_property_auth_password": {
-				"value": "패스워드"
-			},
-			"dialog_project_property_checkout": {
-				"value": "체크아웃"
-			},
-			"dialog_project_property_change_scm_account": {
-				"value": "계정 변경"
-			}
-		}
+		"value": "프로젝트 속성"
 	},
-	"dialog_goorm_profile": {
-		"value": "",
-		"children": {
-			"dialog_goorm_profile_id": {
-				"value": " 아이디"
-			},
-			"dialog_goorm_profile_name": {
-				"value": " 이름"
-			},
-			"dialog_goorm_profile_password": {
-				"value": " 새 비밀번호"
-			},
-			"dialog_goorm_profile_password_confirm": {
-				"value": " 새 비밀번호(확인)"
-			},
-			"dialog_goorm_profile_email": {
-				"value": " 이메일"
-			},
-			"dialog_goorm_profile_comment": {
-				"value": " 코멘트"
-			}
-		}
+	"dialog_preference_terminal_font_color": {
+		"value": "폰트 색"
+	},
+	"dialog_preference_theme_keymap": {
+		"value": "키 맵"
+	},
+	"dialog_preference_theme_select_guide": {
+		"value": "테마를 선택하세요."
+	},
+	"dialog_project_property_scm_type": {
+		"value": "유형"
+	},
+	"dialog_project_property_project_detail": {
+		"value": "프로젝트 세부 유형"
+	},
+	"dialog_project_property_project_author": {
+		"value": "프로젝트 작성자"
+	},
+	"dialog_project_property_project_date": {
+		"value": "프로젝트 작성일"
+	},
+	"dialog_project_property_project_type": {
+		"value": "프로젝트 유형"
+	},
+	"dialog_project_property_checkout": {
+		"value": "체크아웃"
+	},
+	"dialog_project_property_auth_guide": {
+		"value": "인증"
+	},
+	"dialog_project_property_auth_user": {
+		"value": "유저"
+	},
+	"dialog_project_property_auth_password": {
+		"value": "패스워드"
+	},
+	"dialog_project_property_repository_url": {
+		"value": "저장소 URL"
+	},
+	"dialog_goorm_profile_password_confirm": {
+		"value": " 새 비밀번호(확인)"
+	},
+	"dialog_goorm_profile_id": {
+		"value": " 아이디"
+	},
+	"dialog_goorm_profile_name": {
+		"value": " 이름"
+	},
+	"dialog_goorm_profile_password": {
+		"value": " 새 비밀번호"
+	},
+	"dialog_project_property_change_scm_account": {
+		"value": "계정 변경"
+	},
+	"dialog_scm_status_guide": {
+		"value": "파일의 버전 컨트롤 상태를 확인하고, 원하는 작업을 합니다."
+	},
+	"dialog_goorm_profile_comment": {
+		"value": " 코멘트"
 	},
 	"dialog_scm_auth_guide": {
 		"value": "이 과정은 당신이 SCM 저장소에 쓰기 권한이 있는지 여부를 알기 위한 것입니다."
@@ -432,157 +317,101 @@
 	"dialog_scm_cmd_log": {
 		"value": "명령어 로그"
 	},
-	"dialog_scm_status_guide": {
-		"value": "파일의 버전 컨트롤 상태를 확인하고, 원하는 작업을 합니다."
-	},
-	"dialog_scm_status": {
-		"value": "상태"
-	},
-	"dialog_scm_path": {
-		"value": "파일 경로"
-	},
-	"dialog_scm_update_guide": {
-		"value": "특정 리비전 또는 특정 날짜로 업데이트를 받습니다."
-	},
-	"dialog_scm_date": {
-		"value": "날짜"
+	"dialog_goorm_profile_email": {
+		"value": " 이메일"
 	},
 	"dialog_scm_lock_guide": {
 		"value": "파일을 잠그거나 풉니다."
 	},
-	"dialog_scm_resolve_guide": {
-		"value": "아래 병합 옵션으로 충돌을 해결합니다."
+	"dialog_scm_path": {
+		"value": "파일 경로"
 	},
-	"dialog_svn_blame_guide": {
-		"value": "특정 리비전에 대해 Blame을 수행합니다."
-	},
-	"dialog_svn_diff_guide": {
-		"value": "특정 리비전 사이의 다른 점을 살펴봅니다."
-	},
-	"dialog_svn_log_guide": {
-		"value": "특정 리비전의 Commit 로그를 살펴봅니다."
+	"dialog_scm_status": {
+		"value": "상태"
 	},
 	"dialog_scm_message": {
 		"value": "메세지"
 	},
-	"dialog_svn_cmd_log_guide": {
-		"value": "Subversion의 명령어 로그를 살펴봅니다."
-	},
 	"dialog_scm_last_commit": {
 		"value": "마지막 Commit"
-	},
-	"dialog_scm_last_push": {
-		"value": "마지막 Push"
-	},
-	"dialog_scm_branch_guide": {
-		"value": "브랜치 목록을 살펴보고 브랜치를 관리합니다."
 	},
 	"dialog_scm_branch": {
 		"value": "브랜치"
 	},
-	"dialog_scm_current": {
-		"value": "현재"
-	},
-	"dialog_git_blame_guide": {
-		"value": "특정 Commit에 대해 Blame을 수행합니다."
-	},
-	"dialog_git_diff_guide": {
-		"value": "특정 Commit 사이의 다른 점을 살펴봅니다."
-	},
-	"dialog_git_log_guide": {
-		"value": "특정 Commit의 로그를 살펴봅니다."
-	},
 	"dialog_scm_email": {
 		"value": "이메일"
 	},
-	"dialog_scm_commit_date": {
-		"value": "Commit 날짜"
+	"dialog_scm_last_push": {
+		"value": "마지막 Push"
 	},
 	"dialog_git_cmd_log_guide": {
 		"value": "Git의 명령어 로그를 살펴봅니다."
 	},
-	"dialog_push_guide": {
-		"value": "아직 Push되지 않은 Commit"
+	"dialog_git_log_guide": {
+		"value": "특정 Commit의 로그를 살펴봅니다."
+	},
+	"dialog_scm_current": {
+		"value": "현재"
 	},
 	"dialog_branch_create": {
 		"value": "브랜치 생성 - 이름"
 	},
-	"dialog_branch_create_guide": {
-		"value": "새로운 브랜치 이름을 입력하세요."
-	},
-	"dialog_merge": {
-		"value": "코드 병합 - 파일 선택"
-	},
-	"dialog_merge_guide": {
-		"value": "현재 열린 파일에 병합할 파일을 선택하세요."
-	},
-	"dialog_help_private_url": {
-		"value": "",
-		"children": {
-			"help_about_private_url": {
-				"value": "Private URL에 대하여"
-			}
-		}
-	},
-	"dialog_scm_anonymous": {
-		"value": "익명"
+	"dialog_scm_commit_date": {
+		"value": "Commit 날짜"
 	},
 	"dialog_scm_authorized_user": {
 		"value": "인증된 사용자"
 	},
-	"import_dialog_message": {
-		"value": "프로젝트 가져오기를 위한 정보를 입력해주세요."
+	"dialog_push_guide": {
+		"value": "아직 Push되지 않은 Commit"
 	},
-	"dialog_npm_title": {
-		"value": "NPM"
+	"dialog_scm_anonymous": {
+		"value": "익명"
 	},
-	"dialog_npm_install_guide": {
-		"value": "패키지 설치하기 (글로벌)"
-	},
-	"dialog_npm_pkg_name_guide": {
-		"value": "패키지 이름"
+	"dialog_merge": {
+		"value": "코드 병합 - 파일 선택"
 	},
 	"dialog_npm_pkg_version_guide": {
 		"value": "패키지 버전"
 	},
-	"dialog_npm_pkg_version_latest_guide": {
-		"value": "최신 버전"
+	"help_about_private_url": {
+		"value": "Private URL에 대하여"
 	},
 	"dialog_npm_pkg_version_specific_guide": {
 		"value": "특정 버전"
 	},
-	"dialog_npm_pkg_version_name_guide": {
-		"value": "버전 이름"
-	},
-	"dialog_npm_pkg_list_guide": {
-		"value": "유저의 NPM 리스트"
+	"dialog_npm_pkg_name_guide": {
+		"value": "패키지 이름"
 	},
 	"dialog_npm_pkg_list_name_guide": {
 		"value": "이름"
 	},
-	"dialog_npm_pkg_list_version_guide": {
-		"value": "버전"
+	"dialog_npm_install_guide": {
+		"value": "패키지 설치하기 (글로벌)"
 	},
-	"property": {
-		"value": "속성"
+	"dialog_npm_pkg_list_guide": {
+		"value": "유저의 NPM 리스트"
 	},
-	"plugin": {
-		"value": "플러그인"
+	"dialog_npm_pkg_version_latest_guide": {
+		"value": "최신 버전"
 	},
-	"dialog_rename_file": {
-		"value": "이름 변경"
-	},
-	"dialog_search": {
-		"value": "검색"
-	},
-	"dialog_build_project": {
-		"value": "여러 프로젝트 빌드"
+	"dialog_npm_pkg_version_name_guide": {
+		"value": "버전 이름"
 	},
 	"dialog_help_contents": {
 		"value": "도움말 컨텐츠"
 	},
-	"dialog_help_shortcuts": {
-		"value": "구름 단축키"
+	"dialog_rename_file": {
+		"value": "이름 변경"
+	},
+	"dialog_npm_pkg_list_version_guide": {
+		"value": "버전"
+	},
+	"dialog_build_project": {
+		"value": "여러 프로젝트 빌드"
+	},
+	"dialog_scm_selected_path": {
+		"value": "경로: "
 	},
 	"dialog_help_about": {
 		"value": "구름에 대하여"
@@ -593,14 +422,128 @@
 	"dialog_new_untitled_textfile": {
 		"value": "새 텍스트 파일"
 	},
-	"dialog_scm_selected_path": {
-		"value": "경로: "
+	"dialog_help_shortcuts": {
+		"value": "구름 단축키"
 	},
 	"dialog_scm_ignore_title": {
 		"value": "Ignore 설정"
 	},
+	"dialog_scm_date": {
+		"value": "날짜"
+	},
+	"dialog_npm_title": {
+		"value": "NPM"
+	},
+	"property": {
+		"value": "속성"
+	},
+	"dialog_search": {
+		"value": "검색"
+	},
+	"plugin": {
+		"value": "플러그인"
+	},
+	"dialog_file_export_guide": {
+		"value": "내보낼 파일을 선택해주세요."
+	},
+	"dialog_file_import_guide": {
+		"value": "가져오고 싶은 파일을 선택해주세요."
+	},
+	"dialog_file_import_file": {
+		"value": "업로드 할 파일을 선택해주세요."
+	},
+	"dialog_folder_import_guide": {
+		"value": "가져오고 싶은 폴더를 선택해주세요."
+	},
+	"dialog_file_new_other_file_guide": {
+		"value": "생성할 파일 타입을 정하세요."
+	},
+	"dialog_file_new_untitled_textfile_guide": {
+		"value": "제목없는 새 텍스트 파일 만들기"
+	},
+	"dialog_file_move_file_guide": {
+		"value": "파일을 이동시킬 위치를 선택하세요."
+	},
+	"dialog_file_print_guide": {
+		"value": "해당 파일을 프린트 할 수 있습니다."
+	},
+	"dialog_new_project_guide1": {
+		"value": "새 프로젝트 유형을 선택하세요."
+	},
+	"dialog_new_project_guide2": {
+		"value": "새 프로젝트의 내용을 추가하세요."
+	},
+	"dialog_new_project_import_message": {
+		"value": "ZIP 혹은 TAR 파일을 선택해 주세요."
+	},
+	"dialog_new_project_view_all_description": {
+		"value": "가능한 모든 프로젝트 요소들을 확인합니다."
+	},
+	"dialog_project_open_guide": {
+		"value": "열고 싶은 프로젝트를 선택해주세요."
+	},
+	"dialog_project_build_all_guide": {
+		"value": "아래의 프로젝트들을 빌드합니다."
+	},
+	"dialog_project_export_guide": {
+		"value": "내보내고자 하는 프로젝트를 선택해주세요."
+	},
+	"dialog_project_delete_guide": {
+		"value": "삭제할 프로젝트를 선택해주세요."
+	},
+	"dialog_preference_shortcut_cloud_guide": {
+		"value": "클라우드 메뉴 단축키 변경"
+	},
+	"dialog_svn_blame_guide": {
+		"value": "특정 리비전에 대해 Blame을 수행합니다."
+	},
+	"dialog_scm_update_guide": {
+		"value": "특정 리비전 또는 특정 날짜로 업데이트를 받습니다."
+	},
+	"dialog_svn_log_guide": {
+		"value": "특정 리비전의 Commit 로그를 살펴봅니다."
+	},
+	"dialog_scm_resolve_guide": {
+		"value": "아래 병합 옵션으로 충돌을 해결합니다."
+	},
+	"dialog_svn_diff_guide": {
+		"value": "특정 리비전 사이의 다른 점을 살펴봅니다."
+	},
+	"dialog_git_blame_guide": {
+		"value": "특정 Commit에 대해 Blame을 수행합니다."
+	},
+	"dialog_scm_branch_guide": {
+		"value": "브랜치 목록을 살펴보고 브랜치를 관리합니다."
+	},
+	"dialog_svn_cmd_log_guide": {
+		"value": "Subversion의 명령어 로그를 살펴봅니다."
+	},
+	"dialog_branch_create_guide": {
+		"value": "새로운 브랜치 이름을 입력하세요."
+	},
+	"dialog_git_diff_guide": {
+		"value": "특정 Commit 사이의 다른 점을 살펴봅니다."
+	},
+	"dialog_merge_guide": {
+		"value": "현재 열린 파일에 병합할 파일을 선택하세요."
+	},
+	"import_dialog_message": {
+		"value": "프로젝트 가져오기를 위한 정보를 입력해주세요."
+	},
 	"dialog_scm_ignore_guide": {
 		"value": "Ignore 목록을 살펴보고 관리합니다."
+	},
+	"dialog_new_project_storage": {
+		"value": "스토리지"
+	},
+	"dialog_project_storage_s3": {
+		"value": "AWS S3 (협업 가능 & 모든 컨테이너 - 조금 느린 파일시스템)"
+	},
+	"dialog_project_storage_container": {
+		"value": "CONTAINER (협업 불가능 & 현재 컨테이너 - 매우 빠른 파일시스템)"
+	},
+	"dialog_project_property_project_storage": {
+		"value": "프로젝트 스토리지"
 	},
 	"dialog_auth_profile_image": {
 		"value": "프로필 이미지 수정"
@@ -615,7 +558,7 @@
 		"value": "파일 이동"
 	},
 	"dialog_auth_find_info_pw": {
-		"value": "비밀번호 찾기"
+		"value": "비밀번호 재설정"
 	},
 	"dialog_search_project": {
 		"value": "프로젝트"

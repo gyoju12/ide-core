@@ -58,5 +58,35 @@
 			"id": "Plugin",
 			"localization_key": "plugin"
 		}
+	},
+	"jp": {
+		"core": {
+			"label": "デフォルト設定",
+			"id": "Preference",
+			"localization_key": "preferences",
+			"expanded": true,
+			"child": [{
+				"label": "エディタ",
+				"id": "Editor",
+				"localization_key": "editor"
+			}, {
+				"label": "ターミナル",
+				"id": "Terminal",
+				"localization_key": "terminal"
+			}, {
+				"label": "言語",
+				"id": "Language",
+				"localization_key": "language"
+			}, {
+				"label": "ショートカット",
+				"id": "Shortcut",
+				"localization_key": "shortcut"
+			}]
+		},
+		"plugin": {
+			"label": "プラグイン",
+			"id": "Plugin",
+			"localization_key": "plugin"
+		}
 	}
 }

@@ -1,680 +1,492 @@
 {
-	"file": {
-		"value": "File",
-		"children": {
-			"file_new": {
-				"value": "New",
-				"children": {
-					"file_new_project": {
-						"value": "Project"
-					},
-					"file_new_file": {
-						"value": "New File"
-					},
-					"file_new_folder": {
-						"value": "New Folder"
-					},
-					"file_new_untitled_text_file": {
-						"value": "Untitled Text File"
-					},
-					"file_new_other": {
-						"value": "Other"
-					}
-				}
-			},
-			"emoticon": {
-				"value": "Emoticon"
-			},
-			"code_highlight": {
-				"value": "Code Highlight"
-			},
-			"file_open_project": {
-				"value": "Open Project"
-			},
-			"file_open_file": {
-				"value": "Open File"
-			},
-			"open_recent_projects": {
-				"value": "Open Recent Projects"
-			},
-			"open_recent_files": {
-				"value": "Open Recent Files"
-			},
-			"file_open_url": {
-				"value": "Open Url"
-			},
-			"file_close_all": {
-				"value": "Close All"
-			},
-			"file_save": {
-				"value": "Save"
-			},
-			"file_save_as": {
-				"value": "Save As"
-			},
-			"file_save_all": {
-				"value": "Save All"
-			},
-			"file_rename": {
-				"value": "Rename"
-			},
-			"file_delete": {
-				"value": "Delete"
-			},
-			"file_duplicate": {
-				"value": "Duplicate"
-			},
-			"file_print": {
-				"value": "Print"
-			},
-			"file_import": {
-				"value": "Import/Upload File"
-			},
-			"folder_upload": {
-				"value": "Upload Folder"
-			},
-			"file_export": {
-				"value": "Export File"
-			},
-			"file_properties": {
-				"value": "Properties"
-			}
-		}
+	"file_new_project": {
+		"value": "Project"
 	},
-	"edit": {
-		"value": "Edit",
-		"children": {
-			"edit_undo": {
-				"value": "Undo"
-			},
-			"edit_redo": {
-				"value": "Redo"
-			},
-			"edit_cut": {
-				"value": "Cut"
-			},
-			"edit_copy": {
-				"value": "Copy"
-			},
-			"edit_paste": {
-				"value": "Paste"
-			},
-			"edit_text": {
-				"value": "Text",
-				"children": {
-					"edit_delete": {
-						"value": "Delete"
-					},
-					"edit_delete_line_left": {
-						"value": "Delete Line Left"
-					},
-					"edit_delete_line_right": {
-						"value": "Delete Line Right"
-					},
-					"edit_insert_line_before": {
-						"value": "Insert Line Before"
-					},
-					"edit_insert_line_after": {
-						"value": "Insert Line After"
-					},
-					"edit_downcase_cursor": {
-						"value": "Downcase at Cursor"
-					},
-					"edit_upcase_cursor": {
-						"value": "Upcase at Cursor"
-					},
-					"edit_transpose": {
-						"value": "Transpose"
-					}
-				}
-			},
-			"edit_line": {
-				"value": "Line",
-				"children": {
-					"edit_convert_indentation": {
-						"value": "Convert Indentation"
-					},
-					"edit_join_lines": {
-						"value": "Join Lines"
-					},
-					"edit_duplicate_line": {
-						"value": "Duplicate Line"
-					},
-					"edit_delete_line": {
-						"value": "Delete Line"
-					},
-					"edit_swap_line_down": {
-						"value": "Swap Line Down"
-					},
-					"edit_swap_line_up": {
-						"value": "Swap Line Up"
-					}
-				}
-			},
-			"edit_selection": {
-				"value": "Selection",
-				"children": {
-					"edit_select_all": {
-						"value": "Select All"
-					},
-					"edit_select_word": {
-						"value": "Select Word"
-					},
-					"edit_select_line": {
-						"value": "Select Line"
-					},
-					"edit_select_scope": {
-						"value": "Select Scope"
-					},
-					"edit_select_between_brackets": {
-						"value": "Select Between Brackets"
-					},
-					"edit_select_add_previous_line": {
-						"value": "Add Previous Line"
-					},
-					"edit_select_add_next_line": {
-						"value": "Add Next Line"
-					},
-					"edit_single_selection": {
-						"value": "Single Selection"
-					},
-					"edit_split_into_lines": {
-						"value": "Split Selection by Line"
-					}
-				}
-			},
-			"edit_codefolding": {
-				"value": "Code Folding",
-				"children": {
-					"edit_fold": {
-						"value": "Fold"
-					},
-					"edit_unfold": {
-						"value": "Unfold"
-					},
-					"edit_unfold_all": {
-						"value": "Unfold All"
-					}
-				}
-			},
-			"edit_goto": {
-				"value": "Goto",
-				"children": {
-					"edit_go_to_line": {
-						"value": "Go to Line"
-					},
-					"edit_go_to_bracket": {
-						"value": "Go to Bracket"
-					},
-					"edit_go_subword_left": {
-						"value": "Go Subword Left"
-					},
-					"edit_go_subword_right": {
-						"value": "Go Subword Right"
-					},
-					"edit_scroll_line_up": {
-						"value": "Scroll Line Up"
-					},
-					"edit_scroll_line_down": {
-						"value": "Scroll Line Down"
-					},
-					"edit_show_in_center": {
-						"value": "Show in Center"
-					}
-				}
-			},
-			"edit_bookmark": {
-				"value": "Bookmarks",
-				"children": {
-					"edit_toggle_bookmark": {
-						"value": "Toggle Bookmark"
-					},
-					"edit_next_bookmark": {
-						"value": "Next Bookmark"
-					},
-					"edit_prev_bookmark": {
-						"value": "Previous Bookmark"
-					},
-					"edit_clear_bookmark": {
-						"value": "Clear Bookmarks"
-					}
-				}
-			},
-			"edit_find": {
-				"value": "Find",
-				"children": {
-					"edit_find_and_replace": {
-						"value": "Find"
-					},
-					"edit_find_next": {
-						"value": "Find Next"
-					},
-					"edit_find_previous": {
-						"value": "Find Previous"
-					}
-				}
-			},
-			"edit_replace": {
-				"value": "Replace"
-			},
-			"edit_search": {
-				"value": "Search"
-			},
-			"edit_sort_lines": {
-				"value": "Sort Lines"
-			},
-			"edit_sort_lines_case": {
-				"value": "Sort Lines in Case sensitive"
-			},
-			"edit_font": {
-				"value": "Font Size",
-				"children": {
-					"edit_magnify_font": {
-						"value": "Magnify Font Size"
-					},
-					"edit_minify_font": {
-						"value": "Minify Font Size"
-					},
-					"edit_default_font": {
-						"value": "Default Font Size"
-					}
-				}
-			},
-			"edit_auto_formatting": {
-				"value": "Auto Formatting"
-			},
-			"edit_comment_selected": {
-				"value": "Toggle Comment Selected"
-			},
-			"edit_preference": {
-				"value": "Preference"
-			},
-			"edit_share_cursor": {
-				"value": "Toggle Cursor Sharing"
-			},
-			"edit_realtime_lint": {
-				"value": "Toggle Real-time Lint"
-			},
-			"edit_merge": {
-				"value": "Merge",
-				"children": {
-					"edit_merge_view": {
-						"value": "Merge View"
-					},
-					"edit_next_diff": {
-						"value": "Next Diff"
-					},
-					"edit_prev_diff": {
-						"value": "Previous Diff"
-					},
-					"edit_merge_diff": {
-						"value": "Merge Diff"
-					}
-				}
-			},
-			"edit_refactor": {
-				"value": "Refactor"
-			},
-			"edit_safe_delete": {
-				"value": "Safe Delete"
-			},
-			"edit_extract_var": {
-				"value": "Extract Variable"
-			},
-			"edit_bookmark_delete_comment": {
-				"value": "Delete Comment"
-			}
-		}
+	"emoticon": {
+		"value": "Emoticon"
 	},
-	"project": {
-		"value": "Project",
-		"children": {
-			"project_run": {
-				"value": "Run"
-			},
-			"project_stop": {
-				"value": "Stop"
-			},
-			"project_build_dialog": {
-				"value": "Build Projects"
-			},
-			"project_build": {
-				"value": "Build"
-			},
-			"project_build_all": {
-				"value": "Build All"
-			},
-			"project_clean": {
-				"value": "Clean"
-			},
-			"project_build_configuration": {
-				"value": "Build/Run Configuration"
-			},
-			"project_import": {
-				"value": "Import Project"
-			},
-			"project_export": {
-				"value": "Export Project"
-			},
-			"project_delete": {
-				"value": "Delete Project"
-			},
-			"project_refresh": {
-				"value": "Refresh"
-			},
-			"project_share": {
-				"value": "Share the Project"
-			}
-		}
+	"file_new_untitled_text_file": {
+		"value": "Untitled Text File"
 	},
-	"debug": {
-		"value": "Debug",
-		"children": {
-			"debug_start": {
-				"value": "Debug Start"
-			},
-			"debug_continue": {
-				"value": "Continue"
-			},
-			"debug_terminate": {
-				"value": "Terminate"
-			},
-			"debug_step_over": {
-				"value": "Step Over"
-			},
-			"debug_step_in": {
-				"value": "Step In"
-			},
-			"debug_step_out": {
-				"value": "Step Out"
-			},
-			"debug_toggle_breakpoint": {
-				"value": "Toggle breakpoint"
-			}
-		}
+	"file_new_file": {
+		"value": "New File"
 	},
-	"window": {
-		"value": "Window",
-		"children": {
-			"window_new_main_window": {
-				"value": "New Main Window"
-			},
-			"window_new_terminal_window": {
-				"value": "New Terminal Window"
-			},
-			"window_previous_window": {
-				"value": "Previous Window"
-			},
-			"window_next_window": {
-				"value": "Next Window"
-			},
-			"perspectives": {
-				"value": "Perspectives",
-				"children": {
-					"window_default_layout": {
-						"value": "Default Layout"
-					},
-					"window_left_layout_show_hide": {
-						"value": "Left Pane Show/Hide"
-					},
-					"window_left_layout_toggle_cloud_explorer": {
-						"value": "Show Cloud Explorer"
-					},
-					"window_right_layout_show_hide": {
-						"value": "Right Pane Show/Hide"
-					},
-					"window_right_layout_toggle_chat": {
-						"value": "Show Chat"
-					},
-					"window_right_layout_toggle_slide": {
-						"value": "Show Docs"
-					},
-					"window_right_layout_toggle_history": {
-						"value": "Show Histroy"
-					},
-					"window_right_layout_toggle_outline": {
-						"value": "Show Outline"
-					},
-					"window_right_layout_toggle_bookmark": {
-						"value": "Show Bookmarks"
-					},
-					"window_bottom_layout_show_hide": {
-						"value": "Bottom Pane Show/Hide"
-					},
-					"window_bottom_layout_debug": {
-						"value": "Show Debug"
-					},
-					"window_bottom_layout_console": {
-						"value": "Show Terminal"
-					},
-					"window_bottom_layout_search": {
-						"value": "Show Search"
-					},
-					"window_bottom_layout_output": {
-						"value": "Show Output"
-					}
-				}
-			},
-			"window_toggle_full_workspace": {
-				"value": "Toggle Workspace"
-			},
-			"window_hide_all_window": {
-				"value": "Hide All Window"
-			},
-			"window_show_specific_window": {
-				"value": "Show Specific Window"
-			},
-			"window_show_all_window": {
-				"value": "Show All Window"
-			},
-			"window_cascade": {
-				"value": "Cascade"
-			},
-			"window_tile_vertically": {
-				"value": "Tile Vertically"
-			},
-			"window_tile_horizontally": {
-				"value": "Tile Horizontally"
-			},
-			"window_tile_left": {
-				"value": "Tile Left"
-			},
-			"window_tile_right": {
-				"value": "Tile Right"
-			}
-		}
+	"file_open_url": {
+		"value": "Open Url"
 	},
-	"help": {
-		"value": "Help",
-		"children": {
-			"help_help_contents": {
-				"value": "Help Contents"
-			},
-			"help_view_all_shortcuts": {
-				"value": "View All Shortcuts"
-			},
-			"help_bug_report": {
-				"value": "Send Bug Report"
-			},
-			"help_facebook": {
-				"value": "Go to Facebook page"
-			},
-			"help_about_goorm": {
-				"value": "About goorm"
-			},
-			"help_license": {
-				"value": "Open Source License"
-			},
-			"help_tutorial": {
-				"value": "Tutorial"
-			},
-			"help_tutorial_basic_tour": {
-				"value": "Basic Tour"
-			},
-			"help_tutorial_new_project": {
-				"value": "New Project"
-			},
-			"help_tutorial_build_project": {
-				"value": "Build Project"
-			},
-			"help_tutorial_debug_project": {
-				"value": "Debug Project"
-			},
-			"help_tutorial_share_project": {
-				"value": "Share Project"
-			},
-			"help_tutorial_add_friends": {
-				"value": "Add Friends"
-			}
-		}
+	"file_open_file": {
+		"value": "Open File"
 	},
-	"account": {
-		"value": "Account",
-		"children": {
-			"account_profile": {
-				"value": "Profile"
-			},
-			"account_logout": {
-				"value": "Logout"
-			},
-			"account_go_mygoorm": {
-				"value": "Go to my.goorm.io"
-			}
-		}
+	"file_rename": {
+		"value": "Rename"
 	},
-	"file_open_context": {
-		"value": "Open"
+	"open_recent_projects": {
+		"value": "Open Recent Projects"
+	},
+	"folder_upload": {
+		"value": "Upload Folder"
+	},
+	"file_open_project": {
+		"value": "Open Project"
+	},
+	"file_duplicate": {
+		"value": "Duplicate"
+	},
+	"file_save_as": {
+		"value": "Save As"
+	},
+	"open_recent_files": {
+		"value": "Open Recent Files"
+	},
+	"file_close_all": {
+		"value": "Close All"
+	},
+	"file_properties": {
+		"value": "Properties"
+	},
+	"file_save_all": {
+		"value": "Save All"
+	},
+	"edit_transpose": {
+		"value": "Transpose"
+	},
+	"file_export": {
+		"value": "Export File"
+	},
+	"edit_delete_line_right": {
+		"value": "Delete Line Right"
+	},
+	"file_import": {
+		"value": "Import/Upload File"
+	},
+	"edit_downcase_cursor": {
+		"value": "Downcase at Cursor"
+	},
+	"edit_insert_line_before": {
+		"value": "Insert Line Before"
+	},
+	"edit_join_lines": {
+		"value": "Join Lines"
+	},
+	"edit_duplicate_line": {
+		"value": "Duplicate Line"
+	},
+	"edit_select_all": {
+		"value": "Select All"
+	},
+	"edit_delete_line_left": {
+		"value": "Delete Line Left"
+	},
+	"edit_swap_line_down": {
+		"value": "Swap Line Down"
+	},
+	"edit_swap_line_up": {
+		"value": "Swap Line Up"
+	},
+	"edit_select_add_previous_line": {
+		"value": "Add Previous Line"
+	},
+	"edit_select_line": {
+		"value": "Select Line"
+	},
+	"edit_upcase_cursor": {
+		"value": "Upcase at Cursor"
+	},
+	"edit_select_scope": {
+		"value": "Select Scope"
+	},
+	"edit_insert_line_after": {
+		"value": "Insert Line After"
+	},
+	"edit_single_selection": {
+		"value": "Single Selection"
+	},
+	"edit_delete_line": {
+		"value": "Delete Line"
+	},
+	"edit_split_into_lines": {
+		"value": "Split Selection by Line"
+	},
+	"edit_go_to_bracket": {
+		"value": "Go to Bracket"
+	},
+	"edit_select_word": {
+		"value": "Select Word"
+	},
+	"edit_unfold_all": {
+		"value": "Unfold All"
+	},
+	"edit_selection": {
+		"value": "Selection"
+	},
+	"edit_show_in_center": {
+		"value": "Show in Center"
+	},
+	"edit_select_add_next_line": {
+		"value": "Add Next Line"
+	},
+	"edit_go_subword_right": {
+		"value": "Go Subword Right"
+	},
+	"edit_select_between_brackets": {
+		"value": "Select Between Brackets"
+	},
+	"edit_scroll_line_up": {
+		"value": "Scroll Line Up"
+	},
+	"edit_next_bookmark": {
+		"value": "Next Bookmark"
+	},
+	"edit_toggle_bookmark": {
+		"value": "Toggle Bookmark"
+	},
+	"edit_codefolding": {
+		"value": "Code Folding"
+	},
+	"edit_clear_bookmark": {
+		"value": "Clear Bookmarks"
+	},
+	"edit_find_next": {
+		"value": "Find Next"
+	},
+	"edit_go_subword_left": {
+		"value": "Go Subword Left"
+	},
+	"edit_find_and_replace": {
+		"value": "Find"
+	},
+	"edit_go_to_line": {
+		"value": "Go to Line"
+	},
+	"edit_bookmark": {
+		"value": "Bookmarks"
+	},
+	"edit_scroll_line_down": {
+		"value": "Scroll Line Down"
+	},
+	"edit_font": {
+		"value": "Font Size"
+	},
+	"edit_minify_font": {
+		"value": "Minify Font Size"
+	},
+	"edit_auto_formatting": {
+		"value": "Auto Formatting"
+	},
+	"edit_prev_bookmark": {
+		"value": "Previous Bookmark"
+	},
+	"edit_comment_selected": {
+		"value": "Toggle Comment Selected"
+	},
+	"edit_share_cursor": {
+		"value": "Toggle Cursor Sharing"
+	},
+	"edit_sort_lines": {
+		"value": "Sort Lines"
+	},
+	"edit_merge": {
+		"value": "Merge"
+	},
+	"edit_find_previous": {
+		"value": "Find Previous"
+	},
+	"edit_merge_view": {
+		"value": "Merge View"
+	},
+	"edit_prev_diff": {
+		"value": "Previous Diff"
+	},
+	"edit_default_font": {
+		"value": "Default Font Size"
+	},
+	"edit_refactor": {
+		"value": "Refactor"
+	},
+	"edit_magnify_font": {
+		"value": "Magnify Font Size"
+	},
+	"edit_safe_delete": {
+		"value": "Safe Delete"
+	},
+	"edit_bookmark_delete_comment": {
+		"value": "Delete Comment"
+	},
+	"edit_realtime_lint": {
+		"value": "Toggle Real-time Lint"
+	},
+	"edit_preference": {
+		"value": "Preference"
+	},
+	"edit_next_diff": {
+		"value": "Next Diff"
+	},
+	"project_build_all": {
+		"value": "Build All"
+	},
+	"edit_merge_diff": {
+		"value": "Merge Diff"
+	},
+	"project_build_configuration": {
+		"value": "Build/Run Configuration"
+	},
+	"project_build_dialog": {
+		"value": "Build Projects"
+	},
+	"edit_extract_var": {
+		"value": "Extract Variable"
+	},
+	"project_delete": {
+		"value": "Delete Project"
+	},
+	"project_share": {
+		"value": "Share the Project"
+	},
+	"project_import": {
+		"value": "Import Project"
+	},
+	"project_build_project": {
+		"value": "Build"
+	},
+	"debug_terminate": {
+		"value": "Terminate"
+	},
+	"project_clean": {
+		"value": "Clean"
+	},
+	"debug_step_in": {
+		"value": "Step In"
+	},
+	"debug_start": {
+		"value": "Debug Start"
+	},
+	"project_export": {
+		"value": "Export Project"
+	},
+	"project_refresh": {
+		"value": "Refresh"
+	},
+	"window_new_terminal_window": {
+		"value": "New Terminal Window"
+	},
+	"debug_step_out": {
+		"value": "Step Out"
+	},
+	"debug_continue": {
+		"value": "Continue"
+	},
+	"perspectives": {
+		"value": "Perspectives"
+	},
+	"debug_step_over": {
+		"value": "Step Over"
+	},
+	"window_left_layout_show_hide": {
+		"value": "Left Pane Show/Hide"
+	},
+	"window_previous_window": {
+		"value": "Previous Window"
+	},
+	"debug_toggle_breakpoint": {
+		"value": "Toggle breakpoint"
+	},
+	"window_right_layout_toggle_chat": {
+		"value": "Show Chat"
+	},
+	"window_new_main_window": {
+		"value": "New Main Window"
+	},
+	"window_right_layout_toggle_history": {
+		"value": "Show History"
+	},
+	"window_next_window": {
+		"value": "Next Window"
+	},
+	"window_bottom_layout_debug": {
+		"value": "Show Debug"
+	},
+	"window_default_layout": {
+		"value": "Default Layout"
+	},
+	"window_right_layout_toggle_slide": {
+		"value": "Show Docs"
+	},
+	"window_right_layout_toggle_outline": {
+		"value": "Show Outline"
+	},
+	"window_right_layout_show_hide": {
+		"value": "Right Pane Show/Hide"
+	},
+	"window_hide_all_window": {
+		"value": "Hide All Window"
+	},
+	"window_bottom_layout_search": {
+		"value": "Show Search"
+	},
+	"window_bottom_layout_console": {
+		"value": "Show Terminal"
+	},
+	"window_bottom_layout_output": {
+		"value": "Show Output"
+	},
+	"window_bottom_layout_show_hide": {
+		"value": "Bottom Pane Show/Hide"
+	},
+	"window_tile_left": {
+		"value": "Tile Left"
+	},
+	"window_show_all_window": {
+		"value": "Show All Window"
+	},
+	"window_show_specific_window": {
+		"value": "Show Specific Window"
+	},
+	"window_cascade": {
+		"value": "Cascade"
+	},
+	"window_toggle_full_workspace": {
+		"value": "Toggle Workspace"
+	},
+	"help_view_all_shortcuts": {
+		"value": "View All Shortcuts"
+	},
+	"window_tile_horizontally": {
+		"value": "Tile Horizontally"
+	},
+	"window_tile_right": {
+		"value": "Tile Right"
+	},
+	"window_tile_vertically": {
+		"value": "Tile Vertically"
+	},
+	"help_tutorial": {
+		"value": "Tutorial"
+	},
+	"help_facebook": {
+		"value": "Go to Facebook page"
+	},
+	"help_bug_report": {
+		"value": "Send Bug Report"
+	},
+	"help_about_goorm": {
+		"value": "About goorm"
+	},
+	"help_help_contents": {
+		"value": "Help Contents"
+	},
+	"help_tutorial_share_project": {
+		"value": "Share Project"
+	},
+	"help_tutorial_new_project": {
+		"value": "New Project"
+	},
+	"help_tutorial_basic_tour": {
+		"value": "Basic Tour"
+	},
+	"help_tutorial_build_project": {
+		"value": "Build Project"
+	},
+	"help_license": {
+		"value": "Open Source License"
+	},
+	"account_go_mygoorm": {
+		"value": "Go to my.goorm.io"
+	},
+	"help_tutorial_add_friends": {
+		"value": "Add Friends"
+	},
+	"help_tutorial_debug_project": {
+		"value": "Debug Project"
+	},
+	"file_open_as_text_editor_context": {
+		"value": "Text Editor"
 	},
 	"file_download_context": {
 		"value": "Download"
 	},
-	"file_open_as_context": {
-		"value": "Open As",
-		"children": {
-			"file_open_as_default_editor_context": {
-				"value": "Default Editor"
-			},
-			"file_open_as_text_editor_context": {
-				"value": "Text Editor"
-			},
-			"file_open_as_vim_editor_context": {
-				"value": "Vim Editor"
-			}
-		}
+	"account_profile": {
+		"value": "Profile"
 	},
-	"decompress_file": {
-		"value": "Unzip / Untar "
+	"file_open_as_vim_editor_context": {
+		"value": "Vim Editor"
 	},
-	"open_terminal_here": {
-		"value": "Open Terminal Here"
-	},
-	"file_move_context": {
-		"value": "Move"
+	"account_logout": {
+		"value": "Logout"
 	},
 	"find_in_folder_context": {
 		"value": "Find in This Directory"
 	},
-	"file_new_project_context": {
-		"value": "New Project"
+	"decompress_file": {
+		"value": "Unzip / Untar "
 	},
-	"file_new_folder_context": {
-		"value": "New Folder"
+	"file_open_as_context": {
+		"value": "Open As"
 	},
-	"file_new_untitled_text_file_context": {
-		"value": "New Untitled Text File"
+	"delete_all_context": {
+		"value": "Delete All"
+	},
+	"file_open_as_default_editor_context": {
+		"value": "Default Editor"
 	},
 	"cloud_upload_context": {
 		"value": "Upload"
 	},
+	"file_new_project_context": {
+		"value": "New Project"
+	},
+	"open_terminal_here": {
+		"value": "Open Terminal Here"
+	},
 	"project_properties_context": {
 		"value": "Project Properties"
-	},
-	"window_toggle_full_workspace_context": {
-		"value": "Toggle Full Workspace"
-	},
-	"maximize": {
-		"value": "Maximize"
-	},
-	"minimize": {
-		"value": "Minimize"
 	},
 	"show_and_hide": {
 		"value": "Show / Hide"
 	},
-	"close": {
-		"value": "Close"
+	"window_toggle_full_workspace_context": {
+		"value": "Toggle Full Workspace"
+	},
+	"file_new_folder_context": {
+		"value": "New Folder"
 	},
 	"close_others": {
 		"value": "Close Others"
 	},
+	"file_new_untitled_text_file_context": {
+		"value": "New Untitled Text File"
+	},
 	"edit_autocomplete_edit_context": {
 		"value": "Auto Complete"
-	},
-	"edit_definition_edit_context": {
-		"value": "Jump to Definition"
-	},
-	"eval_in_repl": {
-		"value": "EVAL in REPL"
-	},
-	"edit_no_bookmark": {
-		"value": "No Bookmarks"
 	},
 	"help_npm_list_guide": {
 		"value": "List..."
 	},
-	"open_goorm_edu_lecture": {
-		"value": "Open goormEDU Lectures"
-	},
-	"Previous": {
-		"value": "Previous"
-	},
-	"Play": {
-		"value": "Play"
-	},
 	"Next": {
 		"value": "Next"
 	},
-	"Palette": {
-		"value": "Palette"
+	"open_goorm_edu_lecture": {
+		"value": "Open goormEDU Lectures"
 	},
 	"Connect with co-developers": {
 		"value": "Connect"
 	},
-	"Pencil": {
-		"value": "Pencil"
-	},
-	"Erase": {
-		"value": "Erase"
+	"eval_in_repl": {
+		"value": "EVAL in REPL"
 	},
 	"Color Wheel": {
 		"value": "Color Wheel"
 	},
-	"Size Slider": {
-		"value": "Size Slider"
+	"edit_definition_edit_context": {
+		"value": "Jump to Definition"
 	},
 	"Erase All": {
 		"value": "Erase All"
 	},
-	"Magnify": {
-		"value": "Magnify"
-	},
-	"Minify": {
-		"value": "Minify"
+	"Size Slider": {
+		"value": "Size Slider"
 	},
 	"Connect/Disconnect": {
 		"value": "Connect/Disconnect"
-	},
-	"New Window": {
-		"value": "New Window"
-	},
-	"Pause": {
-		"value": "Pause"
-	},
-	"Stop": {
-		"value": "Stop"
-	},
-	"History Rollback": {
-		"value": "History Rollback"
 	},
 	"History Delete": {
 		"value": "History Delete"
@@ -682,14 +494,86 @@
 	"History Delete All": {
 		"value": "History Delete All"
 	},
-	"scm_commit": {
-		"value": "Commit"
+	"History Rollback": {
+		"value": "History Rollback"
 	},
 	"scm_update": {
 		"value": "Update"
 	},
+	"edit_find": {
+		"value": "Find"
+	},
+	"window": {
+		"value": "Window"
+	},
+	"help": {
+		"value": "Help"
+	},
+	"account": {
+		"value": "Account"
+	},
+	"file_open_context": {
+		"value": "Open"
+	},
+	"file_move_context": {
+		"value": "Move"
+	},
+	"maximize": {
+		"value": "Maximize"
+	},
+	"minimize": {
+		"value": "Minimize"
+	},
+	"Palette": {
+		"value": "Palette"
+	},
+	"Play": {
+		"value": "Play"
+	},
+	"Previous": {
+		"value": "Previous"
+	},
+	"Pause": {
+		"value": "Pause"
+	},
+	"New Window": {
+		"value": "New Window"
+	},
+	"Erase": {
+		"value": "Erase"
+	},
+	"Pencil": {
+		"value": "Pencil"
+	},
+	"scm_commit": {
+		"value": "Commit"
+	},
+	"Minify": {
+		"value": "Minify"
+	},
+	"Magnify": {
+		"value": "Magnify"
+	},
+	"Stop": {
+		"value": "Stop"
+	},
 	"scm_pull": {
 		"value": "Pull"
+	},
+	"file_new_folder": {
+		"value": "New Folder"
+	},
+	"edit_convert_indentation": {
+		"value": "Convert Indentation"
+	},
+	"edit_replace": {
+		"value": "Replace"
+	},
+	"project_build": {
+		"value": "Build"
+	},
+	"window_right_layout_toggle_bookmark": {
+		"value": "Show Bookmarks"
 	},
 	"chat_remove_all": {
 		"value": "Delete All Log"
@@ -705,5 +589,71 @@
 	},
 	"file_send_link": {
 		"value": "Send File Link to Chat"
+	},
+	"file": {
+		"value": "File"
+	},
+	"file_new": {
+		"value": "New"
+	},
+	"file_new_other": {
+		"value": "Other"
+	},
+	"file_save": {
+		"value": "Save"
+	},
+	"edit_redo": {
+		"value": "Redo"
+	},
+	"file_print": {
+		"value": "Print"
+	},
+	"edit_delete": {
+		"value": "Delete"
+	},
+	"file_delete": {
+		"value": "Delete"
+	},
+	"edit_copy": {
+		"value": "Copy"
+	},
+	"edit": {
+		"value": "Edit"
+	},
+	"edit_paste": {
+		"value": "Paste"
+	},
+	"edit_cut": {
+		"value": "Cut"
+	},
+	"edit_undo": {
+		"value": "Undo"
+	},
+	"edit_text": {
+		"value": "Text"
+	},
+	"edit_line": {
+		"value": "Line"
+	},
+	"edit_fold": {
+		"value": "Fold"
+	},
+	"edit_goto": {
+		"value": "Goto"
+	},
+	"edit_unfold": {
+		"value": "Unfold"
+	},
+	"edit_search": {
+		"value": "Search"
+	},
+	"edit_sort_lines_case": {
+		"value": "Sort Lines in Case sensitive"
+	},
+	"project_stop": {
+		"value": "Stop"
+	},
+	"project_run": {
+		"value": "Run"
 	}
 }

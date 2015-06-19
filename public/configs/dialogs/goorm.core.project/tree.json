@@ -52,5 +52,32 @@
 			"localization_key": "plugin",
 			"child": []
 		}
+	},
+	"jp": {
+		"core": {
+			"label": "プロパティ",
+			"id": "Property",
+			"localization_key": "property",
+			"expanded": true,
+			"child": [{
+					"label": "情報",
+					"id": "Information",
+					"localization_key": "information",
+					"tab": [{
+						"label": "情報",
+						"id": "Information",
+						"localization_key": "information",
+						"html": "configs/project/default/project.general.html"
+					}]
+				}
+				
+			]
+		},
+		"plugin": {
+			"label": "プラグイン",
+			"id": "Plugin",
+			"localization_key": "plugin",
+			"child": []
+		}
 	}
 }

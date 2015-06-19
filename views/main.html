@@ -80,6 +80,10 @@
                     <input type="radio" name="select_language_on_start" value="us">
                     English
                 </label>
+                <label class="radio-inline left_padding_zero">
+                    <input type="radio" name="select_language_on_start" value="jp">
+                    日本語
+                </label>
             </div>
             <!-- <div id='local_login_user_box'>
                 <div id='local_user_area'>
@@ -423,7 +427,7 @@
 								<span localization_key="edit"></span> - <span localization_key="edit_line"></span> - <span localization_key="edit_convert_indentation"></span>
 							</div>
 						</a>
-					</div>					
+					</div>
 					<div class="item action">
 						<a href="#" action="do_join_lines">
 							<span localization_key="edit_join_lines">Join Lines</span>
@@ -1811,7 +1815,7 @@
                                         <a href="#" action="do_convert_indentation" localization_key="edit_convert_indentation">
                                             Convert Indentation
                                         </a>
-                                    </li>									
+                                    </li>
                                     <li class="divider"></li>
                                     <li>
                                         <a href="#" action="do_join_lines" localization_key="edit_join_lines">
@@ -5483,6 +5487,7 @@
                                             <select class="form-control" id="preference.language.select" name="preference.language.select">
                                                 <option value="kor">한국어</option>
                                                 <option value="us">English</option>
+                                                <option value="jp">日本語</option>
                                             </select>
                                         </div>
                                     </div>
@@ -7359,6 +7364,10 @@
 							<span name="preference.shortcut.window.right_layout_toggle_bookmark" localization_key="window_right_layout_toggle_bookmark">
                                 Show Bookmark
                                 <em class="helptext">Alt + 5</em>
+                            </span>
+                            <span name="preference.shortcut.window.right_layout_toggle_outline" localization_key="window_right_layout_toggle_collaboraion">
+                                Show Collaboration User
+                                <em class="helptext">Alt + 6</em>
                             </span>
                             <span style="display:none;" class="goorm_perspectives_menu_end" position="right"></span>
                             <span name="preference.shortcut.window.bottom_layout_show_hide" localization_key="window_bottom_layout_show_hide">

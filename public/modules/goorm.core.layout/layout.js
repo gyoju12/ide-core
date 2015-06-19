@@ -83,7 +83,7 @@ goorm.core.layout = {
 						inner_layout.state.south.closing = true;
 						inner_layout.state.south._size = inner_layout.state.south.size;
 						inner_layout.sizePane('south', '1');
-						return false;
+						// 						return false;	// hidden: this prevents closing.
 					}
 				},
 				south__onclose_end: function() {
@@ -718,7 +718,8 @@ goorm.core.layout = {
 
 	// select tab in layout. Jeong-Min Im.
 	// tab_name (String || Object) : tab's name or nth tab in which layout
-	select: function(tab_name) {
+	// close (Bool) : Leave layout closed
+	select: function(tab_name, close) {
 		var $parent = null;
 		var pane = '';
 		var id = '';
@@ -778,7 +779,11 @@ goorm.core.layout = {
 						}
 
 						tab.click();
-						this.expand(pane);
+
+						if (!close) {
+							this.expand(pane);
+						}
+
 						if (tab_name == 'terminal') {
 							if (core.module.layout.terminal.Terminal && core.module.layout.terminal.Terminal.focus) {
 								core.module.layout.terminal.Terminal.focus();
@@ -818,7 +823,10 @@ goorm.core.layout = {
 					}
 
 					tab.click();
-					this.expand(pane);
+
+					if (!close) {
+						this.expand(pane);
+					}
 
 					if (~tab.attr('href').indexOf('terminal')) {
 						var terminal = core.module.layout.terminal.Terminal;
@@ -958,17 +966,23 @@ goorm.core.layout = {
 			var west_tab = layout_state.activated_tab.west_tab;
 			var east_tab = layout_state.activated_tab.east_tab;
 			var south_tab = layout_state.activated_tab.south_tab;
+			var layout = core.module.layout.layout;
+			var center_state = layout.center.children.layout1.state;
+			var close;
+
 			// west tab activate
 			if (west_tab.tab) {
+				close = layout.west.state.isClosed;
+
 				switch (west_tab.tab) {
 					case 'gLayoutTab_project':
-						this.select('project');
+						this.select('project', close);
 						break;
 					case 'gLayoutTab_Packages':
-						this.select('packages');
+						this.select('packages', close);
 						break;
 					case 'gLayoutTab_Cloud':
-						this.select('cloud');
+						this.select('cloud', close);
 						break;
 
 				}
@@ -979,10 +993,12 @@ goorm.core.layout = {
 
 			// east tab activate
 			if (east_tab.tab) {
+				close = center_state.east.isClosed;
+
 				switch (east_tab.tab) {
 					
 					case 'gLayoutTab_Outline':
-						this.select('outline');
+						this.select('outline', close);
 						break;
 				}
 			}
@@ -992,15 +1008,17 @@ goorm.core.layout = {
 
 			// south tab activate
 			if (south_tab) {
+				close = center_state.south.isClosed;
+
 				switch (south_tab) {
 					case 'gLayoutTab_Debug':
-						this.select('debug');
+						this.select('debug', close);
 						break;
 					case 'gLayoutTab_Terminal':
-						this.select('terminal');
+						this.select('terminal', close);
 						break;
 					case 'gLayoutTab_Search':
-						this.select('search');
+						this.select('search', close);
 						break;
 				}
 			}

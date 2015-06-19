@@ -66,7 +66,7 @@ goorm.core.project.property.manager = {
 	// create treeview structure
 	create_treeview: function(json, change, _on_select) {
 		var self = this;
-		
+
 		var on_select = function(e, node) {
 			if (node.type === 'file' && !node.state.disabled) {
 				var id = node.li_attr.id;
@@ -74,7 +74,7 @@ goorm.core.project.property.manager = {
 				$tabview.find('.nav-tabs > li').hide();
 				$tabview.find('.nav-tabs > li[target="' + id + '"]').show();
 				$tabview.find('.nav-tabs > li[target="' + id + '"] > a').first().click();
-				
+
 				if (_on_select && typeof(_on_select) === 'function') {
 					_on_select(node);
 				}

@@ -1,15 +1,9 @@
 {
-	"previous": {
-		"value": "Previous"
-	},
 	"next": {
 		"value": "Next"
 	},
 	"ok": {
 		"value": "OK"
-	},
-	"cancel": {
-		"value": "Cancel"
 	},
 	"find_info": {
 		"value": "Find ID/PW"
@@ -19,21 +13,6 @@
 	},
 	"forgot_pw": {
 		"value": "Find PW"
-	},
-	"send": {
-		"value": "Send"
-	},
-	"close": {
-		"value": "Close"
-	},
-	"delete": {
-		"value": "Delete"
-	},
-	"history": {
-		"value": "History"
-	},
-	"speed": {
-		"value": "Speed"
 	},
 	"history_speed_normal": {
 		"value": "Normal"
@@ -47,92 +26,29 @@
 	"history_speed_slow": {
 		"value": "Slow"
 	},
-	"history_speed_veryslow": {
-		"value": "Very Slow"
-	},
 	"history_show_current": {
 		"value": "Show current state"
 	},
-	"terminal": {
-		"value": "Terminal"
-	},
-	"search": {
-		"value": "Search"
-	},
-	"chat": {
-		"value": "Chat"
-	},
-	"debug": {
-		"value": "Debug"
-	},
-	"outline": {
-		"value": "Outline"
-	},
-	"project": {
-		"value": "Project"
+	"history_speed_veryslow": {
+		"value": "Very Slow"
 	},
 	"yes": {
 		"value": "Yes"
 	},
-	"no": {
-		"value": "No"
-	},
-	"logout": {
-		"value": "Logout"
-	},
 	"account_change": {
 		"value": "Modify Account"
-	},
-	"signup": {
-		"value": "Sign-up"
-	},
-	"change": {
-		"value": "Modify"
-	},
-	"apply": {
-		"value": "Apply"
-	},
-	"default": {
-		"value": "Default"
-	},
-	"login": {
-		"value": "Login"
 	},
 	"information": {
 		"value": "Information"
 	},
-	"scm": {
-		"value": "SCM"
-	},
 	"libraries": {
 		"value": "Libraries"
-	},
-	"setting": {
-		"value": "Setting"
-	},
-	"theme": {
-		"value": "Theme"
 	},
 	"filetype": {
 		"value": "File Type"
 	},
-	"language": {
-		"value": "Language"
-	},
-	"shortcut": {
-		"value": "Shortcut"
-	},
 	"scm_configuration": {
 		"value": "SCM Configuration"
-	},
-	"cloud": {
-		"value": "Cloud"
-	},
-	"refresh": {
-		"value": "Refresh"
-	},
-	"upload": {
-		"value": "Upload"
 	},
 	"private_mode": {
 		"value": "Access Private Mode"
@@ -146,35 +62,14 @@
 	"pdf_Viewer": {
 		"value": "PDF Viewer"
 	},
-	"profile": {
-		"value": "Profile"
-	},
 	"toggle_selection": {
 		"value": "Toggle Selection"
-	},
-	"editor": {
-		"value": "Editor"
-	},
-	"save": {
-		"value": "Save"
 	},
 	"add": {
 		"value": "Add"
 	},
-	"number": {
-		"value": "No"
-	},
-	"thread": {
-		"value": "Thread"
-	},
-	"variable": {
-		"value": "Variable"
-	},
 	"value": {
 		"value": "Value"
-	},
-	"summary": {
-		"value": "Summary"
 	},
 	"code_highlight": {
 		"value": "Code Highlight"
@@ -194,14 +89,56 @@
 	"cloud_projects": {
 		"value": "Cloud Projects"
 	},
+	"add_friends": {
+		"value": "Add Friends"
+	},
+	"password": {
+		"value": "PASSWORD"
+	},
+	"type_message": {
+		"value": "Type your message..."
+	},
+	"invitation_type_message": {
+		"value": "Type your invitation message..."
+	},
+	"repository_path": {
+		"value": "Repository Path"
+	},
+	"recent_empty": {
+		"value": "Empty"
+	},
+	"recent_clear": {
+		"value": "Clear"
+	},
+	"replace_and_find": {
+		"value": "Replace/Find"
+	},
+	"replace_all": {
+		"value": "Replace All"
+	},
+	"installation": {
+		"value": "Installation"
+	},
+	"getting_started": {
+		"value": "Getting Started"
+	},
+	"official_site": {
+		"value": "Official Site"
+	},
+	"open_source": {
+		"value": "Open Source Project"
+	},
+	"features": {
+		"value": "Features"
+	},
+	"collaboration": {
+		"value": "Collaboration"
+	},
 	"chats": {
 		"value": "Chats"
 	},
 	"friends": {
 		"value": "Friends"
-	},
-	"add_friends": {
-		"value": "Add Friends"
 	},
 	"modify": {
 		"value": "Edit"
@@ -221,29 +158,8 @@
 	"email": {
 		"value": "EMAIL"
 	},
-	"password": {
-		"value": "PASSWORD"
-	},
-	"type_name_or_email": {
-		"value": "Type name or email..."
-	},
-	"type_message": {
-		"value": "Type your message..."
-	},
-	"invitation_type_message": {
-		"value": "Type your invitation message..."
-	},
-	"repository_path": {
-		"value": "Repository Path"
-	},
 	"shortcut_edit": {
 		"value": "Edit"
-	},
-	"recent_empty": {
-		"value": "Empty"
-	},
-	"recent_clear": {
-		"value": "Clear"
 	},
 	"storage": {
 		"value": "Storage"
@@ -257,32 +173,116 @@
 	"replace": {
 		"value": "Replace"
 	},
-	"replace_and_find": {
-		"value": "Replace/Find"
-	},
-	"replace_all": {
-		"value": "Replace All"
-	},
-	"installation": {
-		"value": "Installation"
-	},
-	"getting_started": {
-		"value": "Getting Started"
-	},
-	"official_site": {
-		"value": "Official Site"
-	},
-	"features": {
-		"value": "Features"
-	},
 	"license": {
 		"value": "License"
 	},
-	"open_source": {
-		"value": "Open Source Project"
+	"previous": {
+		"value": "Previous"
 	},
-	"collaboration": {
-		"value": "Collaboration"
+	"cancel": {
+		"value": "Cancel"
+	},
+	"send": {
+		"value": "Send"
+	},
+	"close": {
+		"value": "Close"
+	},
+	"delete": {
+		"value": "Delete"
+	},
+	"speed": {
+		"value": "Speed"
+	},
+	"search": {
+		"value": "Search"
+	},
+	"terminal": {
+		"value": "Terminal"
+	},
+	"chat": {
+		"value": "Chat"
+	},
+	"debug": {
+		"value": "Debug"
+	},
+	"outline": {
+		"value": "Outline"
+	},
+	"project": {
+		"value": "Project"
+	},
+	"no": {
+		"value": "No"
+	},
+	"logout": {
+		"value": "Logout"
+	},
+	"signup": {
+		"value": "Sign-up"
+	},
+	"apply": {
+		"value": "Apply"
+	},
+	"change": {
+		"value": "Modify"
+	},
+	"default": {
+		"value": "Default"
+	},
+	"login": {
+		"value": "Login"
+	},
+	"scm": {
+		"value": "SCM"
+	},
+	"setting": {
+		"value": "Setting"
+	},
+	"theme": {
+		"value": "Theme"
+	},
+	"shortcut": {
+		"value": "Shortcut"
+	},
+	"language": {
+		"value": "Language"
+	},
+	"refresh": {
+		"value": "Refresh"
+	},
+	"cloud": {
+		"value": "Cloud"
+	},
+	"upload": {
+		"value": "Upload"
+	},
+	"profile": {
+		"value": "Profile"
+	},
+	"editor": {
+		"value": "Editor"
+	},
+	"save": {
+		"value": "Save"
+	},
+	"number": {
+		"value": "No"
+	},
+	"thread": {
+		"value": "Thread"
+	},
+	"variable": {
+		"value": "Variable"
+	},
+	"summary": {
+		"value": "Summary"
+	},
+	"history": {
+		"value": "History"
+	},
+	"type_name_or_email": {
+		"value": "Type name or email..."
 	},
 	"keyword": {
 		"value": "Keyword"
@@ -295,5 +295,8 @@
 	},
 	"navigate": {
 		"value": "Navigate"
+	},
+	"collaboration_users": {
+		"value": "Collaboration Users"
 	}
 }

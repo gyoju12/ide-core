@@ -261,17 +261,20 @@ goorm.core.project.open = {
 			this.handler[core.status.current_project_type].before();
 		} else {
 			$(core).one('on_project_open', function() {
-				core.module.layout.select('terminal');
+				var layout = core.module.layout;
+
+				layout.select('terminal', layout.layout.center.children.layout1.state.south.isClosed);
+
 				setTimeout(function() {
 					var output_list = core.module.plugin_linter.output_tab_list;
 					var output_index = output_list.indexOf(core.status.current_project_type);
 
-					core.module.layout.tab_manager.del_by_tab_name('south', 'output');
+					layout.tab_manager.del_by_tab_name('south', 'output');
 					if (output_index >= 0) {
-						core.module.layout.tab_manager.make_output_tab(output_list[output_index]);
+						layout.tab_manager.make_output_tab(output_list[output_index]);
 					}
 
-					if (core.module.layout.workspace.window_manager.window.length === 0) {
+					if (layout.workspace.window_manager.window.length === 0) {
 						if (core.status.current_project_name === '') {
 							document.title = 'goorm - cloud coding service';
 						} else {

@@ -1,92 +1,92 @@
 {
-    "title_new_project": {
-        "value": "New Project"
-    },
-    "title_profile": {
-        "value": "Profile"
-    },
-    "title_register": {
-        "value": "Register"
-    },
-    "title_open_project": {
-        "value": "Open Project"
-    },
-    "title_project_property": {
-        "value": "Project Property"
-    },
-    "title_search": {
-        "value": "Search"
-    },
-    "title_find_replace": {
-        "value": "Find/Replace"
-    },
-    "title_import_file": {
-        "value": "Import/Upload File"
-    },
-    "title_export_file": {
-        "value": "Export File"
-    },
-    "title_preference": {
-        "value": "Preference"
-    },
-    "title_new_folder": {
-        "value": "New Folder"
-    },
-    "title_new_file": {
-        "value": "New File"
-    },
-    "title_new_other_file": {
-        "value": "New Other File"
-    },
-    "title_new_untitled_text_file": {
-        "value": "New Untitled Text File"
-    },
-    "title_about_goorm": {
-        "value": "About goorm"
-    },
-    "title_move": {
-        "value": "Move"
-    },
-    "title_send_bug_report": {
-        "value": "Send Bug Report"
-    },
-    "title_help_contents": {
-        "value": "Help Contents"
-    },
-    "title_save_as": {
-        "value": "Save as"
-    },
-    "title_print": {
-        "value": "Print"
-    },
-    "title_delete_project": {
-        "value": "Delete Project"
-    },
-    "title_export_project": {
-        "value": "Export Project"
-    },
-    "title_import_project": {
-        "value": "Import Project"
-    },
-    "title_project_share": {
-        "value": "Share the Project"
-    },
-    "project_info_type": {
-        "value": "Project Type : "
-    },
-    "project_info_detail": {
-        "value": "Project Detail : "
-    },
-    "project_info_author": {
-        "value": "Project Author : "
-    },
-    "project_info_name": {
-        "value": "Project Name : "
-    },
-    "project_info_description": {
-        "value": "Project Description : "
-    },
-    "project_info_date": {
-        "value": "Project Date : "
-    }
+	"title_new_project": {
+		"value": "New Project"
+	},
+	"title_profile": {
+		"value": "Profile"
+	},
+	"title_register": {
+		"value": "Register"
+	},
+	"title_find_replace": {
+		"value": "Find/Replace"
+	},
+	"title_open_project": {
+		"value": "Open Project"
+	},
+	"title_import_file": {
+		"value": "Import/Upload File"
+	},
+	"title_new_file": {
+		"value": "New File"
+	},
+	"title_export_file": {
+		"value": "Export File"
+	},
+	"title_new_other_file": {
+		"value": "New Other File"
+	},
+	"title_send_bug_report": {
+		"value": "Send Bug Report"
+	},
+	"title_new_untitled_text_file": {
+		"value": "New Untitled Text File"
+	},
+	"title_help_contents": {
+		"value": "Help Contents"
+	},
+	"title_export_project": {
+		"value": "Export Project"
+	},
+	"title_save_as": {
+		"value": "Save as"
+	},
+	"title_import_project": {
+		"value": "Import Project"
+	},
+	"title_project_property": {
+		"value": "Project Property"
+	},
+	"project_info_author": {
+		"value": "Project Author : "
+	},
+	"title_project_share": {
+		"value": "Share the Project"
+	},
+	"title_new_folder": {
+		"value": "New Folder"
+	},
+	"project_info_name": {
+		"value": "Project Name : "
+	},
+	"title_preference": {
+		"value": "Preference"
+	},
+	"project_info_description": {
+		"value": "Project Description : "
+	},
+	"title_about_goorm": {
+		"value": "About goorm"
+	},
+	"title_delete_project": {
+		"value": "Delete Project"
+	},
+	"project_info_detail": {
+		"value": "Project Detail : "
+	},
+	"project_info_type": {
+		"value": "Project Type : "
+	},
+	"project_info_date": {
+		"value": "Project Date : "
+	},
+	"title_search": {
+		"value": "Search"
+	},
+	"title_move": {
+		"value": "Move"
+	},
+	"title_print": {
+		"value": "Print"
+	}
 }
