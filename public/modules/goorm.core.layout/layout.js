@@ -997,9 +997,9 @@ goorm.core.layout = {
 
 				switch (east_tab.tab) {
 					
-					case 'gLayoutTab_Outline':
-						this.select('outline', close);
-						break;
+
+					case 'gLayoutTab_Bookmark':
+						this.select('bookmark', close);
 				}
 			}
 			if (east_tab.detail_tab) {
@@ -1220,9 +1220,6 @@ goorm.core.layout = {
 				return 'gLayoutTab_Search';
 
 				
-
-			case 'outline':
-				return 'gLayoutTab_Outline';
 
 			case 'bookmark':
 				return 'gLayoutTab_Bookmark';
