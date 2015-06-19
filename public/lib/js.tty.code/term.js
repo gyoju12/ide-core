@@ -2691,8 +2691,8 @@ Terminal.prototype.keyDown = function(ev) {
 	var shortcut_manager = core.module.shortcut_manager;
 	var key_string = shortcut_manager.make_shortcut_input(ev); // key -> string (e.g. ctrl+s), because 'shortcuts' is string array
 	
-  if (!key || (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1)) return true;	// jeongmin: if goorm shortcut is pressed, just go on
-//   if (!key) return true;	// jeongmin: this prevents goorm shortcut
+  if (!key || (key_string !== 'Esc' && (shortcut_manager.shortcuts.indexOf(key_string) > -1 || shortcut_manager.fixed_shortcut.indexOf(key_string) > -1))) return true;	// goorm: if goorm shortcut is pressed, just go on. ESC prevents vim hotkey.
+//   if (!key) return true;	// goorm: this prevents goorm shortcut
 
   if (this.prefixMode) {
     this.leavePrefix();
