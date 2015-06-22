@@ -160,77 +160,57 @@ goorm.core.project._delete = {
 			// }
 		}, 400, true); // jeongmin: true means invokeAsap
 
+		self.show_delete_confirm = function() {
+			if (!self.processing && $('.modal:visible').length === 1) {
+				var data = self.project_list.get_data();
+				if (data.path === '') {
+					alert.show(core.module.localization.msg.alert_project_not_selected);
+				} else {
+					if (typeof core.status.current_running_server[data.path] !== 'undefined') {
+						confirmation.init({
+							title: core.module.localization.msg.confirmation_title,
+							message: core.module.localization.msg.confirmation_server_running_delete_msg,
+							yes_text: core.module.localization.msg.yes,
+							no_text: core.module.localization.msg.no,
+							yes: function() {
+								core.module.layout.tab.toggle('gLayoutServer_' + core.status.current_running_server[data.path]);
+								$('#gLayoutServer_' + core.status.current_running_server[data.path]).find('.server_btn').click();
+								self.processing = true;
+								self.__handle_delete();
+							},
+							no: function() {
+								$('#project_delete_list').focus();
+							}
+						});
+
+						confirmation.show();
+					} else {
+						confirmation.init({
+							title: core.module.localization.msg.confirmation_delete_title,
+							message: core.module.localization.msg.confirmation_delete_project,
+							yes_text: core.module.localization.msg.yes,
+							no_text: core.module.localization.msg.no,
+							yes: function() {
+								self.processing = true;
+								self.__handle_delete();
+							},
+							no: function() {
+								$('#project_delete_list').focus();
+							}
+						});
+						confirmation.show();
+					}
+				}
+			}
+		};
+
 		this.project_list = new goorm.core.project.list();
 		this.dialog = new goorm.core.dialog();
 		this.dialog.init({
 			// localization_key: 'title_delete_project',
 			id: 'dlg_delete_project',
 			help_url: 'http://help.goorm.io/ide#help_manage_project_delete',
-			handle_ok: function() {
-				if (!self.processing) {
-					var data = self.project_list.get_data();
-
-					if (data.path === '') {
-						alert.show(core.module.localization.msg.alert_project_not_selected);
-					} else {
-						if (typeof core.status.current_running_server[data.path] !== 'undefined') {
-							confirmation.init({
-								title: core.module.localization.msg.confirmation_title,
-								message: core.module.localization.msg.confirmation_server_running_delete_msg,
-								yes_text: core.module.localization.msg.yes,
-								no_text: core.module.localization.msg.no,
-								yes: function() {
-									$('#gLayoutServer_' + core.status.current_running_server[data.path]).find('.hide_tab').click();
-									$('#gLayoutServer_' + core.status.current_running_server[data.path]).find('.server_btn').click();
-									self.processing = true;
-									self.__handle_delete();
-								},
-								no: function() {
-									$('#project_delete_list').focus();
-								}
-							});
-
-							confirmation.show();
-						} else {
-							confirmation.init({
-								title: core.module.localization.msg.confirmation_delete_title,
-								message: core.module.localization.msg.confirmation_delete_project,
-								yes_text: core.module.localization.msg.yes,
-								no_text: core.module.localization.msg.no,
-								yes: function() {
-									self.processing = true;
-									self.__handle_delete();
-								},
-								no: function() {
-									$('#project_delete_list').focus();
-								}
-							});
-							confirmation.show();
-						}
-						// if(delete_server) {
-						// 	confirmation.init({
-						// 		title: core.module.localization.msg.confirmation_title,
-						// 		message: core.module.localization.msg.confirmation_server_running_delete_msg,
-						// 		yes_text: core.module.localization.msg.confirmation_yes,
-						// 		no_text: core.module.localization.msg.confirmation_no,
-						// 		yes: function() {
-						// 			$('#gLayoutServer_'+delete_server).find('.hide_tab').click()
-						// 			self.processing = true;
-						// 			self.__handle_delete();
-						// 		},
-						// 		no: function() {
-						// 			$('#project_delete_list').focus();
-						// 		}
-						// 	});
-
-						// 	confirmation.show();
-						// } else {
-						// 	confirmation.show();
-						// }
-					}
-				}
-
-			},
+			handle_ok: self.show_delete_confirm,
 
 			// success: function() {	// hidden: storage is deprecated
 			// 	$('#project_delete_storage').find('span').html('goormIDE_Storage');
@@ -264,28 +244,7 @@ goorm.core.project._delete = {
 
 		this.project_list.set_keydown_event({
 			'handler': function() {
-				if (!self.processing && $('.modal:visible').length === 1) { // only when there is delete project dialog
-					var data = self.project_list.get_data();
-					if (data.path === '') {
-						alert.show(core.module.localization.msg.alert_project_not_selected);
-					} else {
-						confirmation.init({
-							title: core.module.localization.msg.confirmation_delete_title,
-							message: core.module.localization.msg.confirmation_delete_project,
-							yes_text: core.module.localization.msg.yes,
-							no_text: core.module.localization.msg.no,
-							yes: function() {
-								self.processing = true;
-								self.__handle_delete();
-							},
-							no: function() {
-								$('#project_delete_list').focus();
-							}
-						});
-
-						confirmation.show();
-					}
-				}
+				self.show_delete_confirm();
 			}
 		});
 

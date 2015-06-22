@@ -441,9 +441,13 @@ goorm.core.window.manager = {
 		$(this.window).each(function(i) {
 			var base_path = this.filepath;
 			var base_name = this.filename;
-
-			if (this.filetype !== 'url' && filepath.indexOf(core.user.id) !== 0) {
-				filepath = core.user.id + '_' + filepath;
+			
+			
+			if (this.filetype !== 'url') {
+				var index = filepath.indexOf('/');
+				var project_name = (index > -1)? filepath.substring(0, index) : filepath;
+				project_name = core.module.project.get_project_path(project_name) + '/';
+				filepath = (index > -1)? project_name + filepath.substring(index + 1) : project_name;
 			}
 
 			var target_path = filepath;

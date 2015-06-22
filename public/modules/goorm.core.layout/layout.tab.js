@@ -357,7 +357,9 @@ goorm.core.layout.tab = {
 
 		if (tab_nav.css('display') !== 'none') {
 			if (tab_nav.hasClass('active')) {
-				tab_nav.next().length ? tab_nav.next().children().click() : tab_nav.prev().children().click();
+				var next = tab_nav.next(':not([style*=none])'); // show non-hidden tab
+
+				next.length ? next.children().click() : tab_nav.prev(':not([style*=none])').children().click();
 			}
 
 			tab_nav.hide();
@@ -381,7 +383,7 @@ goorm.core.layout.tab = {
 	show_showing_icon: function(tab_id) {
 		$('.' + tab_id + '_showing_icon').show();
 	},
-	
+
 	make_tab_move: function() {
 		$('#east_tab').sortable({
 			axis: 'x',

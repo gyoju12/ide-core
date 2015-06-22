@@ -123,11 +123,9 @@ goorm.core.layout.tab.terminal_manager = {
 			this.list[name].tab.on('click', '.hide_tab', function() {
 				hide = true;
 
-				if (self.list[name].tab.parent().hasClass('active')) { // --> show another tab
-					core.module.layout.select('terminal');
-				} else {
-					self.list[name].tab.hide();
+				core.module.layout.tab.toggle(self.list[name].tab[0].id);
 
+				if (!self.list[name].tab.parent().hasClass('active')) { // --> show another tab
 					if (fn_hide && typeof(fn_hide) === 'function') {
 						fn_hide(self.list[name]);
 					}
@@ -176,7 +174,7 @@ goorm.core.layout.tab.terminal_manager = {
 						if (terminal.on_message) {
 							msg = terminal.on_message(msg);
 						}
-						
+
 						if (/\n/.test(msg.stdout)) {
 							inner.append(msg.stdout.replace(/\n/g, '<br>').replace(/\[\d+m/g, ''));
 
