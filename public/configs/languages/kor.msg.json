@@ -1402,5 +1402,8 @@
 	},
 	"alert_need_change_name": {
 		"value": "파일 이름을 변경하세요."
+	},
+	"output": {
+		"value": "아웃풋"
 	}
 }

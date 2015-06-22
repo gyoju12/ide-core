@@ -64,7 +64,12 @@ goorm.core.dialog.explorer.prototype = {
 
 		var scroll_to_selected = function() {
 			var node = self.treeview.tree.jstree('get_selected');
-			$('[id="' + node[0] + '"]')[0].scrollIntoView(true);
+			if (node[0]) {
+				node = $('[id="' + node[0] + '"]')[0];
+				if (node) {
+					node.scrollIntoView(false);
+				}
+			}
 		};
 
 		if (!self.has_fileview) {

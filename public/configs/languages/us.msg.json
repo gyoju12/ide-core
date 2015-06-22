@@ -1402,5 +1402,8 @@
 	},
 	"alert_need_change_name": {
 		"value": "Please change the name."
+	},
+	"output": {
+		"value": "Output"
 	}
 }

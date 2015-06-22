@@ -101,8 +101,6 @@ goorm.core.layout.tab.terminal_manager = {
 			this.list[name].tab.click(function() {
 				hide = false;
 
-				self.list[name].tab.show();
-
 				if (fn_show && typeof(fn_show) === 'function') {
 					fn_show(self.list[name]);
 				}
@@ -111,8 +109,6 @@ goorm.core.layout.tab.terminal_manager = {
 			// hide
 			this.list[name].tab.on('hidden.bs.tab', function() {
 				if (hide) {
-					self.list[name].tab.hide();
-
 					if (fn_hide && typeof(fn_hide) === 'function') {
 						fn_hide(self.list[name]);
 					}

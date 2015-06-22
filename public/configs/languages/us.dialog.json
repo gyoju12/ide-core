@@ -537,10 +537,10 @@
 		"value": "Storage"
 	},
 	"dialog_project_storage_s3": {
-		"value": "AWS S3 (Collaboration & All Container - Little Slow FileSystem)"
+		"value": "Collaboration Storage (Collaboration & All Container - Little Slow FileSystem)"
 	},
 	"dialog_project_storage_container": {
-		"value": "CONTAINER (No Collaboration & Current Container - Very Fast FileSystem)"
+		"value": "Container Storage (No Collaboration & Current Container - Very Fast FileSystem)"
 	},
 	"dialog_project_property_project_storage": {
 		"value": "Project Storage"

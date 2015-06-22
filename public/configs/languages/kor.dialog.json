@@ -537,10 +537,10 @@
 		"value": "스토리지"
 	},
 	"dialog_project_storage_s3": {
-		"value": "AWS S3 (협업 가능 & 모든 컨테이너 - 조금 느린 파일시스템)"
+		"value": "협업용 스토리지 (협업 가능 & 모든 컨테이너 - 조금 느린 파일시스템)"
 	},
 	"dialog_project_storage_container": {
-		"value": "CONTAINER (협업 불가능 & 현재 컨테이너 - 매우 빠른 파일시스템)"
+		"value": "컨테이너 스토리지 (협업 불가능 & 현재 컨테이너 - 매우 빠른 파일시스템)"
 	},
 	"dialog_project_property_project_storage": {
 		"value": "프로젝트 스토리지"

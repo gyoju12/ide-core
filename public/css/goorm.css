@@ -3748,19 +3748,27 @@ div.tooltip {
 	white-space: nowrap;
 }
 
+#navigate_tab {
+	position: relative;
+}
+
 #navi_result .item {
 	height: 37px;
 	padding: 5px;
 	cursor: pointer;
 }
 
-#navi_result .action:hover {
+#navi_result .action:hover,
+#navi_result .action.focused{
 	background-color: #e7f4f9;
 }
 
-#navi_result .file:hover {
+#navi_result .file:hover,
+#navi_result .file.focused
+{
 	background-color: #f9f5e7;
 }
+
 
 #navi_result a {
 	text-decoration: none;
@@ -3850,4 +3858,18 @@ div.item a > span {
 .modified_line {
 	border-left: 5px solid;
 	height: 15px;
+}
+
+.CodeMirror-gutters .modified {
+	width: 5px;
+}
+
+.hide_tab {
+	background-color: transparent;
+	color: #000;
+	padding: 2px 4px;
+	opacity: 0.2;
+}
+.hide_tab:hover {
+	opacity: 0.5;
 }

@@ -95,7 +95,7 @@ goorm.core.project = {
 				core.module.project.display_error_message(result, 'alert');
 			}
 		} else if (this.tab[name]) {
-			this.tab[name].tab.click();
+			core.module.layout.select(this.tab[name].tab[0].id);
 		}
 	},
 
@@ -155,18 +155,18 @@ goorm.core.project = {
 						callback(_tab);
 					},
 					terminal: {
-						on_message: function (msg) {
+						on_message: function(msg) {
 							if (msg.stdout) {
 								// [H[2J
 								if (encodeURIComponent(msg.stdout).indexOf('%1B%5BH%1B%5B2J') === 0) {
 									msg.stdout = msg.stdout.substring(7, msg.stdout.length); // [H[2J --> Unicode --> 7
 								}
-								
+
 								if (msg.stdout.indexOf('^C\r\n\r\n') === 0) {
 									msg.stdout = msg.stdout.replace('^C\r\n\r\n', '');
-								 }								
+								}
 							}
-							
+
 							return msg;
 						}
 					}
