@@ -70,7 +70,8 @@ goorm.core.layout.tab.terminal_manager = {
 		return this.create(name, tab_manager, terminal, {
 			'success': options.success,
 			'show': options.show,
-			'hide': options.hide
+			'hide': options.hide,
+			'before_hide': options.before_hide
 		});
 	},
 
@@ -80,6 +81,7 @@ goorm.core.layout.tab.terminal_manager = {
 		var fn_success = fn.success;
 		var fn_show = fn.show;
 		var fn_hide = fn.hide;
+		var fn_before_hide = fn.before_hide;
 
 		if (!this.list[name]) {
 			var position = tab_manager.position;
@@ -115,8 +117,7 @@ goorm.core.layout.tab.terminal_manager = {
 				}
 				return false;
 			});
-
-			this.list[name].tab.on('click', '.hide_tab', function() {
+			var hide_tab = function() {
 				hide = true;
 
 				core.module.layout.tab.toggle(self.list[name].tab[0].id);
@@ -128,6 +129,13 @@ goorm.core.layout.tab.terminal_manager = {
 				}
 
 				return false;
+			};
+			this.list[name].tab.on('click', '.hide_tab', function() {
+				if (fn_before_hide && typeof(fn_before_hide) === 'function') {
+					fn_before_hide(self.list[name], hide_tab);
+				} else {
+					hide_tab();
+				}
 			});
 
 			if (terminal.type === 'background') {

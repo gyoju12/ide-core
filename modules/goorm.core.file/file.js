@@ -34,7 +34,6 @@ var check_valid_path = function(str) {
 module.exports = {
 	
 	do_new: function(query, evt) {
-
 		var data = {};
 		data.err_code = 0;
 		data.message = 'Process Done';
@@ -46,6 +45,8 @@ module.exports = {
 
 			// make new file. Jeong-Min Im.
 			var create_file = function() {
+console.log('file.do_new:', path);
+
 				fs.writeFile(global.__workspace + '/' + path, '', function(err) {
 					if (err !== null) {
 						data.err_code = 40;
@@ -101,6 +102,8 @@ module.exports = {
 					data.err_code = 20;
 					evt.emit('file_do_new_folder', data);
 				} else {
+console.log('file.do_new_folder:', query.current_path + '/' + query.folder_name);
+
 					fs.mkdir(global.__workspace + '/' + query.current_path + '/' + query.folder_name, '0777', function(err) {
 						if (err !== null) {
 							data.err_code = 30;
@@ -141,6 +144,7 @@ module.exports = {
 						}
 						i++;
 					}
+console.log('file.do_new_text:', query.current_path + '/' + temp_file_name + i + '.txt');
 
 					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + temp_file_name + i + '.txt', '', function(err) {
 						if (err !== null) {
@@ -177,6 +181,8 @@ module.exports = {
 
 					evt.emit('file_do_new_other', data);
 				} else {
+console.log('file.do_new_other:', query.current_path + '/' + query.file_name);
+
 					fs.writeFile(global.__workspace + '/' + query.current_path + '/' + query.file_name, '', function(err) {
 						if (err !== null) {
 							data.err_code = 40;
@@ -325,6 +331,8 @@ module.exports = {
 		var file_del_func = [];
 
 		for (var i = files.length - 1; 0 <= i; i--) {
+console.log('file.do_delete:', files[i]);
+
 			file_del_func.push(function(callback) {
 				rimraf(path.join(global.__workspace, files[++i]), function(err) {
 					if (!err) {
@@ -365,6 +373,10 @@ module.exports = {
 		if (query.ori_path !== null && query.ori_name !== null && query.dst_name !== null) {
 			var path = global.__workspace + '/' + query.ori_path;
 
+console.log('file.do_rename:', query.ori_path + query.ori_name);
+console.log('file.do_rename:', query.ori_path + query.dst_name);
+g_project_watch.ignore_watch(query.ori_path + query.ori_name);
+g_project_watch.ignore_watch(query.ori_path + query.dst_name);
 			fs.rename(path + query.ori_name, path + query.dst_name, function(err) {
 				if (err) {
 					data.err_code = 11;
@@ -400,6 +412,10 @@ module.exports = {
 			var ori_full = global.__workspace + '/' + file_data.ori_path + '/' + file_data.ori_file;
 			var dst_full = global.__workspace + '/' + file_data.dst_path + '/' + file_data.dst_file;
 
+console.log('file.do_move:', file_data.ori_path + '/' + file_data.ori_file);
+console.log('file.do_move:', file_data.dst_path + '/' + file_data.dst_file);
+g_project_watch.ignore_watch(file_data.ori_path + '/' + file_data.ori_file);
+g_project_watch.ignore_watch(file_data.dst_path + '/' + file_data.dst_file);
 			fs.rename(ori_full, dst_full, function(err) {
 				if (err !== null) {
 					console.log('ERROR [fs.rename fails - do_move() in file.js]:', err);

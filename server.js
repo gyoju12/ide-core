@@ -87,6 +87,8 @@ USE_SSO = false;
 COOKIE_NAME = 'express.sid';
 COOKIE_DOMAIN = '.goorm.io';
 
+GOORM_USER = '';
+
 // Local Variables
 //
 var home = null;

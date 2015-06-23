@@ -675,7 +675,13 @@
 		"value": "Do you want to pull from HEAD?"
 	},
 	"confirmation_server_running_delete_msg": {
-		"value": "Server is running.<br/>Do you want to delete project after closing current server."
+		"value": "Server is running.<br/>Do you want to delete project after closing current server?"
+	},
+	"confirmation_program_running_close_tab": {
+		"value": "Program is running.<br/>Do you want to close tab after closing current program?"
+	},
+	"confirmation_server_running_close_tab": {
+		"value": "Server is running.<br/>Do you want to close tab after closing current server?"
 	},
 	"shared_project_unshare": {
 		"value": "Unshare"

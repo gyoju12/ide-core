@@ -221,6 +221,23 @@ goorm.core.project = {
 						});
 
 						callback(_tab);
+					},
+					before_hide: function(_tab, cb) {
+						if (self.is_running) {
+								confirmation.init({
+									title: core.module.localization.msg.confirmation_exit_title,
+									message: core.module.localization.msg.confirmation_program_running_close_tab,
+									yes_text: core.module.localization.msg.yes,
+									no_text: core.module.localization.msg.no,
+									yes: cb,
+									no: function() {
+										return false;
+									}
+								});
+								confirmation.show();
+						} else {
+							cb();
+						}
 					}
 				});
 
@@ -426,6 +443,7 @@ goorm.core.project = {
 			terminal.send_command('\x03\r', function() {
 				terminal.send_command(cmd + '\r', options, function(result) {
 					terminal.flush_command_queue();
+					self.is_running = false;
 
 					if (callback && typeof(callback) === 'function') {
 						callback(result);

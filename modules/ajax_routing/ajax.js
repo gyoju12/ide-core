@@ -18,6 +18,7 @@ var path = require('path');
 var g_file = require('../goorm.core.file/file');
 var g_project = require('../goorm.core.project/project');
 var g_project_workspace = require('../goorm.core.project/project.workspace');
+var g_project_watch = require('../goorm.core.project/project.watch');
 var g_search = require('../goorm.core.search/search');
 var g_edit = require('../goorm.core.edit/edit');
 var g_secure = require('../goorm.core.secure/secure');
@@ -138,7 +139,7 @@ module.exports = {
 							}
 						} catch (e) {
 							console.log('socket access error in ajax:', e);
-						}						
+						}
 					} else {
 						socket.to().emit('logout_disconnect');
 					}
@@ -440,7 +441,8 @@ module.exports = {
 										if (list.indexOf(plugin_name) > -1) {
 
 											
-
+console.log('/project/available - project_get:', project_path);
+											
 											socket.to().emit('/project/available', {
 												'result': true
 											});
@@ -472,7 +474,7 @@ module.exports = {
 						} else {
 
 							
-
+console.log('/project/available - 2');
 							socket.to().emit('/project/available', {
 								'result': true
 							});
@@ -1288,6 +1290,13 @@ module.exports = {
 
 			
 
+			
+				if (socket.handshake && socket.handshake.sessionID) {
+					store.client.srem('sockets_' + global.__local_ip + '_' + socket.handshake.sessionID, socket.id);
+				}
+
+				g_auth_monitor.disconnect(socket);
+			});
 			
 
 			
