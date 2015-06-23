@@ -668,14 +668,14 @@ goorm.core.menu.action = {
 			if (self.prevent(this)) {
 				return false;
 			}
-			
+
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
 			if (active_window > -1 && window_manager.window[active_window] && window_manager.window[active_window].editor && window_manager.window[active_window].editor.editor) {
 				var editor = window_manager.window[active_window].editor;
 				var cm = editor.editor;
 				var list_selections = cm.listSelections();
-				
+
 				editor.save('convert_intentation', function() {
 					if (list_selections.length === 1 && list_selections[0].anchor === list_selections[0].head) {
 						goorm.core.edit.indentation.indent(cm);
@@ -685,7 +685,6 @@ goorm.core.menu.action = {
 							var to_line = list_selections[i].anchor.line;
 
 							if (from_line > to_line) {
-								var t = from_line;
 								from_line = to_line;
 								to_line = from_line;
 							}
@@ -703,7 +702,7 @@ goorm.core.menu.action = {
 				});
 			}
 		});
-		
+
 		$('[action=do_join_lines]').off('click').tooltip();
 		$('[action=do_join_lines]').click(function() {
 			if (self.prevent(this)) {
@@ -1504,14 +1503,14 @@ goorm.core.menu.action = {
 			if (self.prevent(this)) {
 				return false;
 			}
-			
+
 			var window_manager = core.module.layout.workspace.window_manager;
 			var active_window = window_manager.active_window;
 			if (active_window > -1 && window_manager.window[active_window] && window_manager.window[active_window].editor && window_manager.window[active_window].editor.editor) {
 				var editor = window_manager.window[active_window].editor;
 				var cm = editor.editor;
 				var list_selections = cm.listSelections();
-				
+
 				editor.save('convert_intentation', function() {
 					if (list_selections.length === 1 && list_selections[0].anchor === list_selections[0].head) {
 						goorm.core.edit.indentation.indent(cm);
@@ -1539,7 +1538,7 @@ goorm.core.menu.action = {
 				});
 			}
 		});
-		
+
 		$('[action=select_all]').off('click').tooltip();
 		$('[action=select_all]').click(function() {
 			var window_manager = core.module.layout.workspace.window_manager;
