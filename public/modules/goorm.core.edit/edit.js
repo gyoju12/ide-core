@@ -439,8 +439,15 @@ goorm.core.edit.prototype = {
 			if (!find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
-
-			self.set_modify_mark(e.from.line, e.user || core.user.id); // set user's modification mark
+			
+			if(e.origin !== 'setValue') {
+				var user = e.user || core.user.id;
+				var from_line = e.from.line;
+				
+				for(var i = e.text.length - 1; 0 <= i; i--) {
+					self.set_modify_mark(from_line + i, user); // set user's modification mark		
+				}
+			}
 		});
 
 		cm_editor.on('cursorActivity', function(cm) { // cm: CodeMirror
@@ -789,9 +796,7 @@ goorm.core.edit.prototype = {
 				set();
 			}
 		} else { // non-modified
-			if (line !== 0) { // except setting value on loading
-				set();
-			}
+			set();
 		}
 	},
 
