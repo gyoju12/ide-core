@@ -119,7 +119,7 @@ goorm.core = function() {
 	
 
 	this.force_unload = false;
-	this.version = 'oss-150610103338';
+	this.version = 'oss-150624030905';
 };
 
 goorm.core.prototype = {
@@ -127,24 +127,24 @@ goorm.core.prototype = {
 		var self = this;
 
 		/**
-		* VERSION
-		*/
+		 * VERSION
+		 */
 		var ymd = this.version.split('-').pop();
 		var date = new Date('20' + ymd.substring(0, 2) + '-' + ymd.substring(2, 4) + '-' + ymd.substring(4, 6) + 'T' + ymd.substring(6, 8) + ':' + ymd.substring(8, 10) + ':' + ymd.substring(10, 12));
-		
+
 		var month = parseInt(date.getMonth() + 1, 10);
 		var day = date.getDate();
-		
+
 		if (month < 10) {
 			month = '0' + month;
 		}
-		
+
 		if (day < 10) {
 			day = '0' + day;
 		}
-		
+
 		$('#core_build_time').html(date.getFullYear() + '-' + month + '-' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds());
-		
+
 		this.container = container;
 
 		
@@ -922,7 +922,7 @@ goorm.core.prototype = {
 						success();
 					}
 				} else { // project
-					test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('[project_detailed_type]').attr('project_detailed_type'));
+					test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('.selected_button').attr('detail_type'));
 
 					if (test_result && test_result['char']) {
 						var _char = '<br/>"' + test_result['char'].join(', ') + '"';
@@ -934,6 +934,10 @@ goorm.core.prototype = {
 						}
 
 						msg += _char;
+
+						fail();
+					} else if (test_result === false) {
+						msg = localization_msg.alert_allow_django;
 
 						fail();
 					} else {

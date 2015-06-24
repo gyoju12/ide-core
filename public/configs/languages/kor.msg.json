@@ -147,7 +147,7 @@
 		"value": "자동 로그아웃"
 	},
 	"alert_allow_django": {
-		"value": "Django 프로젝트에서는 django와 test라는 프로젝트 생성이 불가능합니다."
+		"value": "Django 프로젝트에서는 django와 test라는 이름의 프로젝트 생성이 불가능합니다."
 	},
 	"alert_contents_empty": {
 		"value": "컨텐츠를 입력해주세요."
