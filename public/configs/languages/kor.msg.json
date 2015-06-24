@@ -1,4 +1,10 @@
 {
+	"output": {
+		"value": "아웃풋"
+	},
+	"window_bottom_layout_output": {
+		"value": "아웃풋 보기"
+	},
 	"edit_no_bookmark": {
 		"value": "북마크가 없습니다."
 	},
@@ -676,12 +682,6 @@
 	},
 	"confirmation_server_running_delete_msg": {
 		"value": "서버가 실행중입니다.<br/>서버 종료 후 프로젝트를 삭제하시겠습니까?"
-	},
-	"confirmation_program_running_close_tab": {
-		"value": "프로그램이 실행중입니다.<br/>프로그램 종료 후 탭을 닫으시겠습니까?"
-	},
-	"confirmation_server_running_close_tab": {
-		"value": "서버가 실행중입니다.<br/>서버 종료 후 탭을 닫으시겠습니까?"
 	},
 	"shared_project_unshare": {
 		"value": "공유 취소"
@@ -1409,8 +1409,10 @@
 	"alert_need_change_name": {
 		"value": "파일 이름을 변경하세요."
 	},
-	"output": {
-		"value": "아웃풋"
+	"confirmation_program_running_close_tab": {
+		"value": "프로그램이 실행중입니다.<br/>프로그램 종료 후 탭을 닫으시겠습니까?"
+	},
+	"confirmation_server_running_close_tab": {
+		"value": "서버가 실행중입니다.<br/>서버 종료 후 탭을 닫으시겠습니까?"
 	}
-	
 }

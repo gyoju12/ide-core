@@ -326,9 +326,6 @@
 	"window_bottom_layout_console": {
 		"value": "터미널 보기"
 	},
-	"window_bottom_layout_output": {
-		"value": "아웃풋 보기"
-	},
 	"window_bottom_layout_show_hide": {
 		"value": "아래쪽 영역 보이기/숨기기"
 	},

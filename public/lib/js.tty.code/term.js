@@ -1195,9 +1195,9 @@ Terminal.prototype.bindMouse = function() {
     if (self.mouseEvents) return;
     if (self.applicationKeypad) return;
     if (ev.type === 'DOMMouseScroll') {
-      self.scrollDisp(ev.detail < 0 ? -2 : 2);
+      self.scrollDisp(ev.detail < 0 ? -1 : 1);
     } else {
-      self.scrollDisp(ev.wheelDeltaY > 0 ? -2 : 2);
+      self.scrollDisp(ev.wheelDeltaY > 0 ? -1 : 1);
     }
     return cancel(ev);
   });
@@ -1575,7 +1575,9 @@ Terminal.prototype.write = function(data) {
                   this.scroll();
                 }
               }
-
+              if (this.insertMode) {
+                this.insertChars([1]);
+              }
               this.lines[this.y + this.ybase].chs[this.x] = [this.curAttr, ch];
               this.x++;
               this.updateRange(this.y);

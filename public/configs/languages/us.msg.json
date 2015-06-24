@@ -1,4 +1,10 @@
 {
+	"output": {
+		"value": "Output"
+	},
+	"window_bottom_layout_output": {
+		"value": "Show Output"
+	},
 	"edit_no_bookmark": {
 		"value": "No Bookmarks"
 	},
@@ -675,13 +681,7 @@
 		"value": "Do you want to pull from HEAD?"
 	},
 	"confirmation_server_running_delete_msg": {
-		"value": "Server is running.<br/>Do you want to delete project after closing current server?"
-	},
-	"confirmation_program_running_close_tab": {
-		"value": "Program is running.<br/>Do you want to close tab after closing current program?"
-	},
-	"confirmation_server_running_close_tab": {
-		"value": "Server is running.<br/>Do you want to close tab after closing current server?"
+		"value": "Server is running.<br/>Do you want to delete project after closing current server."
 	},
 	"shared_project_unshare": {
 		"value": "Unshare"
@@ -1409,7 +1409,10 @@
 	"alert_need_change_name": {
 		"value": "Please change the name."
 	},
-	"output": {
-		"value": "Output"
+	"confirmation_program_running_close_tab": {
+		"value": "Program is running.<br/>Do you want to close tab after closing current program?"
+	},
+	"confirmation_server_running_close_tab": {
+		"value": "Server is running.<br/>Do you want to close tab after closing current server?"
 	}
 }

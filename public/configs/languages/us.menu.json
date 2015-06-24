@@ -326,9 +326,6 @@
 	"window_bottom_layout_console": {
 		"value": "Show Terminal"
 	},
-	"window_bottom_layout_output": {
-		"value": "Show Output"
-	},
 	"window_bottom_layout_show_hide": {
 		"value": "Bottom Pane Show/Hide"
 	},
