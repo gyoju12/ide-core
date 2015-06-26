@@ -173,6 +173,9 @@
 	"license": {
 		"value": "라이센스"
 	},
+	"eclipse": {
+		"value": "이클립스"
+	},
 	"previous": {
 		"value": "이전"
 	},
@@ -295,5 +298,8 @@
 	},
 	"collaboration_users": {
 		"value": "협업 유저"
+	},
+	"visual_studio": {
+		"value": "비주얼 스튜디오"
 	}
 }

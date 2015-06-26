@@ -548,6 +548,7 @@ Terminal.bindPaste = function(document) {
     }
     // Not necessary. Do it anyway for good measure.
     term.element.contentEditable = 'inherit';
+	term.focus();
     return cancel(ev);
   });
 };
@@ -833,9 +834,28 @@ Terminal.prototype.open = function(parent, target, extra, fn) {
       if (button !== 2) return;
 
       self.element.contentEditable = 'true';
-      setTimeout(function() {
-        self.element.contentEditable = 'inherit'; // 'false';
-      }, 1);
+
+      if (goorm.core.browser.name !== 'Firefox') {	
+        setTimeout(function() {
+          self.element.contentEditable = 'inherit'; // 'false';
+        }, 1);
+      } else {
+        var document = $(window.document);
+        var term = Terminal.focus;
+        document.unbind('mousedown.terminal_editable keydown.terminal_editable');
+        $(self.element).unbind('input.terminal_editable');
+        $(self.element).one('contextmenu', function(ev) {
+	      $(self.element).one('input.terminal_editable', function(ev) {
+	        term.refresh(0, term.rows - 1);
+            self.element.contentEditable = 'inherit';
+	      });
+          document.one('mousedown.terminal_editable keydown.terminal_editable', function(ev) {
+            $(self.element).unbind('input.terminal_editable');
+            document.unbind('mousedown.terminal_editable keydown.terminal_editable');
+	        self.element.contentEditable = 'inherit';
+          });
+	    });
+	  }
     }, true);
   }
 

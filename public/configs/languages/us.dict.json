@@ -173,6 +173,9 @@
 	"license": {
 		"value": "License"
 	},
+	"eclipse": {
+		"value": "Eclipse"
+	},
 	"previous": {
 		"value": "Previous"
 	},
@@ -295,5 +298,8 @@
 	},
 	"collaboration_users": {
 		"value": "Collaboration Users"
+	},
+	"visual_studio": {
+		"value": "Visual Studio"
 	}
 }

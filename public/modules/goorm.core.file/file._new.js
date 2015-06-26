@@ -61,6 +61,9 @@ goorm.core.file._new = {
 			//$.get("file/new", postdata, function (data) {
 			core._socket.once('/file/new', function(check_data) {
 				var msg;
+				if (data.type != '') {
+					data.name += '.' + data.type;
+				}
 
 				if (check_data.err_code == 99) {
 					confirmation.init({

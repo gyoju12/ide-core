@@ -20,6 +20,7 @@ goorm.core.shortcut.manager = {
 	is_theme_key_pressed: false, // jeongmin: sublime has special shortcut that trigger other shortcut, so we need to know whether this shortcut is pressed or not.
 	special_shortcut: {}, // jeongmin: shortcuts that have special letters. e.g. ctrl+shift+[
 	fixed_shortcut: [], // jeongmin: shortcut that can't be customized
+	keymap: {}, // theme keymaps
 
 	getOStype: function() {
 		var os = 'windows';
@@ -96,10 +97,17 @@ goorm.core.shortcut.manager = {
 	},
 
 	make_namespace: function(action, key) {
+		// when binding, namespace get into regex. So, escape special character in advance. Jeong-Min Im.
+		// str (String) : namespace
+		// Return : escaped namespace
+		var escape_regex = function(str) {
+			return str.replace('[', '\\[').replace(']', '\\]');
+		};
+
 		if (key && typeof(key) == 'string' && action && typeof(action) == 'string') {
-			return action.toLowerCase() + '_' + key.toLowerCase().replace(/\s+/g, '').replace(/\+/g, '_');
+			return escape_regex(action.toLowerCase() + '_' + key.toLowerCase().replace(/\s+/g, '').replace(/\+/g, '_'));
 		} else {
-			return key;
+			return escape_regex(key);
 		}
 	},
 
@@ -189,6 +197,8 @@ goorm.core.shortcut.manager = {
 			if (changed) {
 				$(core).trigger('on_preference_shortcut_apply');
 			}
+
+			self.select_theme(core.preference['preference.shortcut.theme']);
 		});
 
 		//when user closed preference modal, current modified shortcuts are initialized. Jeong-Min Im.
@@ -532,29 +542,31 @@ goorm.core.shortcut.manager = {
 	},
 
 	//change current shortcut. Jeong-Min Im.
-	change_shortcut: function(name, new_shortcut, old_shortcut) { //name: changing shortcut's name, shortcut: new shortcut
+	change_shortcut: function(name, new_shortcut, old_shortcut, theme) { //name: changing shortcut's name, shortcut: new shortcut
 		////// unbind/bind shortcut event //////
 		var action = this.change_event(name, new_shortcut, old_shortcut);
 
 		if (action) {
-			// if (!theme) { ////// set custom shortcut array //////
-			if (this.hotkeys[action] == new_shortcut) { //custom shortcut is back to default
-				delete this.custom_shortcut[name]; //this shortcut isn't custom anymore
-			} else { //completely new shortcut
-				this.custom_shortcut[name] = new_shortcut; //save new shortcut to custom shortcut list
+			if (!theme) { ////// set custom shortcut array //////
+				if (this.hotkeys[action] == new_shortcut) { //custom shortcut is back to default
+					delete this.custom_shortcut[name]; //this shortcut isn't custom anymore
+				} else { //completely new shortcut
+					this.custom_shortcut[name] = new_shortcut; //save new shortcut to custom shortcut list
+				}
+
+				localStorage.setItem('shortcut', JSON.stringify(this.custom_shortcut)); //set shortcut in the localStorage
+			} else { ////// set theme shortcut array //////
+				if (this.hotkeys[action] == new_shortcut) { //theme shortcut is back to default
+					delete this.theme_shortcut[name]; //this shortcut isn't theme anymore
+				} else { //completely new shortcut
+					this.theme_shortcut[name] = new_shortcut; //save new shortcut to theme shortcut list
+				}
 			}
-			// } else { ////// set theme shortcut array //////
-			// 	if (this.hotkeys[action] == new_shortcut) //theme shortcut is back to default
-			// 		delete this.theme_shortcut[name]; //this shortcut isn't theme anymore
-			// 	else //completely new shortcut
-			// 		this.theme_shortcut[name] = new_shortcut; //save new shortcut to theme shortcut list
-			// }
+
+			core.preference[name] = new_shortcut;
 		} else {
 			console.log('change_shortcut error:', arguments);
 		}
-
-		localStorage.setItem('shortcut', JSON.stringify(this.custom_shortcut)); //set shortcut in the localStorage
-		core.preference[name] = new_shortcut;
 	},
 
 	//unbind/bind shortcut key event. Jeong-Min Im.
@@ -615,6 +627,8 @@ goorm.core.shortcut.manager = {
 				console.log('load_shortcut error:', name, this.custom_shortcut[name], this.hotkeys[action]);
 			}
 		}
+
+		this.select_theme((localStorage.getItem('theme_shortcut') && localStorage.getItem('theme_shortcut') != 'null' && localStorage.getItem('theme_shortcut') != 'undefined') ? localStorage.getItem('theme_shortcut') : '');
 	},
 
 	////// shortcut theme //////
@@ -633,31 +647,45 @@ goorm.core.shortcut.manager = {
 				this.theme = theme;
 				break;
 
+			case 'eclipse':
+			case 'visual_studio':
+				this.set_theme(theme);
+				this.theme = theme;
+				break;
+
 			default:
 				this.theme = 'default';
 				$('#shortcut_theme_keymap').hide();
 		}
+
+		localStorage.setItem('theme_shortcut', this.theme); //set shortcut in the localStorage
 	},
 
 	// goorm default shortcut. Jeong-Min Im.
 	set_default: function() {
+		var name;
+		var action;
+		
 		// restore custom shortcut
 		if (Object.keys(this.custom_shortcut).length > 0) {
-			for (var name in this.custom_shortcut) {
-				var action = $('a[name="' + name + '"]').attr('action');
+			for (name in this.custom_shortcut) {
+				action = $('a[name="' + name + '"]').attr('action');
 
-				this.change_shortcut(name, this.hotkeys[action], this.custom_shortcut[name]);
+				this.change_shortcut(name, this.hotkeys[action].replace('meta', 'Meta'), this.custom_shortcut[name]);
 			}
+
+			this.custom_shortcut = {}; // initialize
 		}
 		// restore theme shortcut
-		// if (this.theme_shortcut != {}) {
-		// 	console.log("theme_shortcut is not empty:", this.theme_shortcut);
-		// 	for (var name in this.theme_shortcut) {
-		// 		var action = $('a[name="' + name + '"]').attr('action');
+		if (Object.keys(this.theme_shortcut).length) {
+			for (name in this.theme_shortcut) {
+				action = $('a[name="' + name + '"]').attr('action');
 
-		// 		this.change_shortcut(name, this.hotkeys[action], this.theme_shortcut[name], true);
-		// 	}
-		// }
+				this.change_shortcut(name, this.hotkeys[action].replace('meta', 'Meta'), this.theme_shortcut[name], true);
+			}
+
+			this.theme_shortcut = {};
+		}
 	},
 
 	// sublime shortcut. Jeong-Min Im.
@@ -692,6 +720,42 @@ goorm.core.shortcut.manager = {
 
 		$('#shortcut_theme_keymap').show();
 
+	},
+
+	// set theme shortcuts. Jeong-Min Im.
+	// theme (String) : shortcut theme name
+	set_theme: function(theme) {
+		var self = this;
+		var os = this.getOStype();
+
+		// change shortcut and show keymap. Jeong-Min Im.
+		// keymap (Object) : theme keymap
+		var change = function(keymap) {
+			var keymap_str = '';
+
+			for (var key in keymap) {
+				var os_key = os === 'mac' ? keymap[key].replace('Ctrl', 'Meta') : keymap[key]; // change key binding as os
+
+				if (~self.shortcuts.indexOf(os_key)) {
+					self.change_shortcut($('[value="' + os_key + '"]').attr('name'), 'None', os_key);
+				}
+
+				self.change_shortcut(key, os_key, $('.shortcut_input[name="' + key + '"]').attr('value'), true); // apply theme shortcut
+				keymap_str += '<tr><td>' + key.replace('preference.shortcut.', '') + '</td><td>' + os_key + '</td></tr>';
+			}
+
+			$('#shortcut_theme_keymap_table tbody').empty().append(keymap_str);
+			$('#shortcut_theme_keymap').show();
+		};
+
+		if (!this.keymap[theme]) {
+			$.getJSON('configs/preferences/' + theme + '.json', function(data) {
+				self.keymap[theme] = data;
+				change(data);
+			});
+		} else {
+			change(this.keymap[theme]);
+		}
 	},
 
 	init: function() {
@@ -758,7 +822,10 @@ goorm.core.shortcut.manager = {
 
 				}
 
-				self.shortcuts.push(self.hotkeys[action].replace(/meta/g, 'Meta')); //jeongmin: set total shortcuts list
+				var key = self.hotkeys[action].replace(/meta/g, 'Meta');
+				if (!~self.shortcuts.indexOf(key)) {
+					self.shortcuts.push(key); //jeongmin: set total shortcuts list
+				}
 			} else if ($(this).text() == 'Ctrl+#Num' && os == 'mac') { // jeongmin: change shortcuts that is only in view all shortcuts dialog
 				$(this).html(self.replace_hotkey($(this).text().replace(/Ctrl/g, 'meta').replace(/	/g, '').split(' ').join('').trim()));
 			} else { // for help shortcut dialog
@@ -1838,36 +1905,34 @@ goorm.core.shortcut.manager = {
 
 		//Previous window (Alt+Shift+[)
 		if (this.hotkeys.previous_window) {
-			this.hotkeys_fn.previous_window = function(e) {
-				if (e.keyCode == 219 && e.shiftKey && e.altKey) {
-					if (!core.status.keydown) {
-						core.module.layout.workspace.window_manager.previous_window();
-						core.status.keydown = true;
-					}
+			this.hotkeys_fn.previous_window = $.debounce(function(e) {
+				var key = self.make_shortcut_input(e);
+
+				if (key === self.hotkeys.previous_window || key === self.custom_shortcut['preference.shortcut.window.previous_window'] || key === self.theme_shortcut['preference.shortcut.window.previous_window']) {
+					core.module.layout.workspace.window_manager.previous_window();
 
 					e.stopPropagation();
 					e.preventDefault();
 					return false;
 				}
-			};
+			}, 50);
 
 			doc_obj.bind('keydown.' + this.make_namespace('previous_window', this.hotkeys.previous_window), this.hotkeys_fn.previous_window);
 		}
 
 		//Next window (Alt+Shift+])
 		if (this.hotkeys.next_window) {
-			this.hotkeys_fn.next_window = function(e) {
-				if (e.keyCode == 221 && e.shiftKey && e.altKey) {
-					if (!core.status.keydown) {
-						core.module.layout.workspace.window_manager.next_window();
-						core.status.keydown = true;
-					}
+			this.hotkeys_fn.next_window = $.debounce(function(e) {
+				var key = self.make_shortcut_input(e);
+
+				if (key === self.hotkeys.next_window || key === self.custom_shortcut['preference.shortcut.window.next_window'] || key === self.theme_shortcut['preference.shortcut.window.next_window']) { // event is called every keydown, so check keydown input
+					core.module.layout.workspace.window_manager.next_window();
 
 					e.stopPropagation();
 					e.preventDefault();
 					return false;
 				}
-			};
+			}, 50);
 
 			doc_obj.bind('keydown.' + this.make_namespace('next_window', this.hotkeys.next_window), this.hotkeys_fn.next_window);
 		}

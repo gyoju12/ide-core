@@ -327,7 +327,6 @@ goorm.core.project.list.prototype = {
 					$(self.type).val(data[idx].contents.type);
 
 					var description = data[idx].contents.description || 'No Description';
-
 					information.find('.project_info_type').html($('.project_wizard_first_button[project_type=' + data[idx].contents.type + '] h4.list-group-item-heading').text());
 					information.find('.project_info_detail').html($('.project_wizard_second_button[project_type=' + data[idx].contents.type + '][detail_type=' + data[idx].contents.detailedtype.replace(' ', '_') + '] .caption p').text()); // jeongmin; remove blank in detailedtype
 					information.find('.project_info_author').html(data[idx].contents.author);

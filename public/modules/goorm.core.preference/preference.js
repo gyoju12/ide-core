@@ -174,6 +174,7 @@ goorm.core.preference = {
 		var language = localStorage.getItem('language');
 		var _preference = core.preference;
 		var shortcut = localStorage.getItem('shortcut'); //jeongmin: get shortcut object from localStorage
+		var theme_shortcut = localStorage.getItem('theme_shortcut');
 		
 		var postdata = {
 			'preference': {}
@@ -194,6 +195,9 @@ goorm.core.preference = {
 		}
 		if (shortcut && (shortcut.length > 2)) {
 			postdata.preference.shortcut = shortcut; //jeongmin: save shortcut at postdata
+		}
+		if (theme_shortcut) {
+			postdata.preference.theme_shortcut = theme_shortcut;
 		}
 		
 		postdata.preference = JSON.stringify(postdata.preference);
@@ -520,28 +524,28 @@ goorm.core.preference = {
 					self.preference.workspace_path = data.path;
 				});
 
-				var _on_select = function (node) {
+				var _on_select = function(node) {
 					var id = node.li_attr.id;
-					
+
 					switch (id) {
-						case "Editor":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_editor");
+						case 'Editor':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_editor');
 							break;
-							
-						case "Terminal":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_terminal_preference");
+
+						case 'Terminal':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_terminal_preference');
 							break;
-							
-						case "Language":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_language");
+
+						case 'Language':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_language');
 							break;
-							
-						case "Shortcut":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_preference_shortcut");
+
+						case 'Shortcut':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_preference_shortcut');
 							break;
 					}
 				};
-				
+
 				var load_treeview = function(change) {
 					var lang = core.module.localization.language;
 

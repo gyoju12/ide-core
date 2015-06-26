@@ -441,8 +441,6 @@ module.exports = {
 										if (list.indexOf(plugin_name) > -1) {
 
 											
-console.log('/project/available - project_get:', project_path);
-											
 											socket.to().emit('/project/available', {
 												'result': true
 											});
@@ -474,7 +472,6 @@ console.log('/project/available - project_get:', project_path);
 						} else {
 
 							
-console.log('/project/available - 2');
 							socket.to().emit('/project/available', {
 								'result': true
 							});
@@ -487,6 +484,7 @@ console.log('/project/available - 2');
 					}
 				});
 			});
+			
 
 			socket.on('/plugin/create', function(msg) {
 				self.get_user_data(socket, function(user_data) {
@@ -1290,13 +1288,6 @@ console.log('/project/available - 2');
 
 			
 
-			
-				if (socket.handshake && socket.handshake.sessionID) {
-					store.client.srem('sockets_' + global.__local_ip + '_' + socket.handshake.sessionID, socket.id);
-				}
-
-				g_auth_monitor.disconnect(socket);
-			});
 			
 
 			
