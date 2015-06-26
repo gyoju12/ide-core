@@ -1,0 +1,179 @@
+{
+	"title_basic": {
+		"value": "画面の構成"
+	},
+	"title_build_project": {
+		"value": "プロジェクトをビルドする"
+	},
+	"title_add_friends": {
+		"value": "友達を追加"
+	},
+	"goorm_main_toolbar": {
+		"value": "これはメインツールバーです。 簡単なボタンクリックで複数の作業をすることができます。"
+	},
+	"goorm_main_menu": {
+		"value": "これはメインメニューです。 マウスカーソルを引き上げれば、サブメニューが見えます。"
+	},
+	"main_project_toolbar": {
+		"value": "これはプロジェクトツールバーです。 プロジェクトビルド、実行、共有することなどの作業ができます"
+	},
+	"workspace": {
+		"value": "これはワークスペースです。 ここであなたはファイルを編集することができます"
+	},
+	"main_window_toolbar": {
+		"value": "これはウィンドウツールバーです。 ウィンドウを様々な方法でワークスペースに配置することができます"
+	},
+	"main_debug_toolbar": {
+		"value": "これはデバッグツールバーです。 プロジェクトデバッグ関連の作業ができます。"
+	},
+	"title_share_project": {
+		"value": "プロジェクトを共有する"
+	},
+	"quiz_tab": {
+		"value": "これはクイズタブです。 現在受講している科目に対する問題を見ることができます"
+	},
+	"document_viewer_tab": {
+		"value": "これは文書ビューアータブです。 PDFファイルやslideshare.net、スライドを見ることができます"
+	},
+	"chat_tab": {
+		"value": "これはチャットタブです。 これであなたは他の人たちと一緒に対話することができます"
+	},
+	"title_debug_project": {
+		"value": "プロジェクトのデバッグ"
+	},
+	"bookmark_tab": {
+		"value": "これはブックマークタブです。 エディター別にラインを保存して、コメントすることができます"
+	},
+	"terminal_tab": {
+		"value": "これはターミナルタブです。 ビルド結果、プロジェクト実行結果などを見ることができます"
+	},
+	"main_file_toolbar": {
+		"value": "これはファイルのツールバーです。 プロジェクトまたはファイル生成、削除、開くなど、作業をすることができます。"
+	},
+	"project_select_dtype": {
+		"value": "このテュートリアルでは真っ先の細部の類型を選択して進行します"
+	},
+	"outline_tab": {
+		"value": "これはアウトラインタブです。 あなたが作っているファイルのアウトラインを見ることができます"
+	},
+	"main_help_toolbar": {
+		"value": "これはアドバイスツールバーです。 グルムIDE関連支援を受けることができます。"
+	},
+	"nextbutton": {
+		"value": "次ボタンを押してください。"
+	},
+	"output_tab": {
+		"value": "これはアウトプットタブです。 保存時に文法的なエラー事項を表示します"
+	},
+	"debug_project_continue": {
+		"value": "プロジェクトデバッグが開始されて次のブレークポイントに進行します"
+	},
+	"debug_project_step_out": {
+		"value": "選択されたスタックがリターンするまで進行します。 リターン値が出力されます。 gdbのfinish機能と同じです"
+	},
+	"project_dtype": {
+		"value": "プロジェクトの細部の類型を選びます"
+	},
+	"project_type": {
+		"value": "プロジェクトの類型を選びます"
+	},
+	"share_project_search_user": {
+		"value": "ここに他のユーザーのID、名前もしくはニックネームを入力して共有しようとするユーザを選択します"
+	},
+	"input_project_name": {
+		"value": "プロジェクト名が必要です"
+	},
+	"new_project_infomation": {
+		"value": "プロジェクト情報に入ります"
+	},
+	"share_project_shared_tab": {
+		"value": "これは共有タブです。 他の開発者達と共有しているプロジェクトに対する情報を見ることができます"
+	},
+	"debug_project_step_over": {
+		"value": "現在進行中の関数内で次のソースラインに移動します。 同じ関数内の他のコードラインに着いたら止まります。 Step Inと似た機能だが、Step Overは、ライン内のFunction Callを止まりません。 gdbでnext機能と同じです"
+	},
+	"share_project_shared_project_list": {
+		"value": "ここに共有したプロジェクトのリストや他の人が共有要請したメッセージなどを見ることができます"
+	},
+	"add_friends_friend_list": {
+		"value": "現在の友達リスト、友達の受諾のメッセージなどを表示してくれます。"
+	},
+	"debug_tab": {
+		"value": "これはデバッグタブです。 プロジェクトのデバッグの状態を見ることができます"
+	},
+	"new_project": {
+		"value": "ボタンをクリックして新しいプロジェクト生成することを始めます"
+	},
+	"new_project_finish": {
+		"value": "新しいプロジェクトウィザードを終えため、Createボタンを押します"
+	},
+	"build_project_select": {
+		"value": "'プロジェクト'メニュー欄で'ビルド'を選択してもビルドをすることができます。"
+	},
+	"build_project_start": {
+		"value": "ボタンをクリックしてプロジェクトビルドを開始します"
+	},
+	"search_tab": {
+		"value": "これは検索タブです。 検索した結果に対する値を見ることができます"
+	},
+	"debug_project_terminate": {
+		"value": "プロジェクトデバッグを終了します"
+	},
+	"add_friends_search_user": {
+		"value": "名前、電子メールでユーザーを検索することができます。"
+	},
+	"share_project_project_select": {
+		"value": "他の開発者達と共有したいプロジェクトを選択します"
+	},
+	"add_friends_start": {
+		"value": "友達追加のテュートリアルを開始します。"
+	},
+	"alert_select_project_can_build": {
+		"value": "ビルドできるプロジェクトを選択しなければなりません"
+	},
+	"main_edit_toolbar": {
+		"value": "これはエディタツールバーです。 コードフォントサイズの調節および検索することなど、コードエディタの関連作業をすることができます"
+	},
+	"project_table_tut": {
+		"value": "これはプロジェクトテーブルです。 プロジェクト内のファイルツリー、プロジェクトのリスト、共有しているプロジェクトらのリストを管理することができます。"
+	},
+	"new_project_wizard": {
+		"value": "これは新しいプロジェクトウィザードです。 プロジェクトを生成するため、さまざまな情報を入力するダイアログです。"
+	},
+	"storage_field": {
+		"value": "プロジェクトが保存されるストーリッジを選択してください。 AWS S3と現在のコンテナをストレージとして使用することができます。"
+	},
+	"history_table_tab": {
+		"value": "これはヒストリータブです。 このタブを利用してあなたのファイルを戻したり、だれがファイルを作ったのか知ることができます。"
+	},
+	"debug_project_start": {
+		"value": "デバッグボタンをクリックしてデバッグを開始します。 <div><div class='toolbar-build'style='float:left;margin-right:5px;'></div>プロジェクトビルドをしたのかブレイクポイントを打ったかを確認後、デバッグを開始します。</div> デバッグはC、C++、Javaプロジェクトで可能です。"
+	},
+	"share_project_start": {
+		"value": "ボタンをクリックしてプロジェクトの共有を開始します"
+	},
+	"share_project_dialog": {
+		"value": "これは共有プロジェクト管理タブです"
+	},
+	"share_project_finish": {
+		"value": "確認ボタンを押してプロジェクトの共有を完了します"
+	},
+	"add_friends_user_list": {
+		"value": "ここでユーザリストを見ることができます"
+	},
+	"run_project": {
+		"value": "'Build Success'の場合にRunボタンを押すと、ビルドしたプロジェクトを実行することができます。 実行結果はターミナルに出力されます"
+	},
+	"build_project_result": {
+		"value": "これはビルドタブであり、ビルドした結果を見せます。 成功すれば'Build Success'、失敗すれば、'Build Fail'という文句が表示されます"
+	},
+	"add_friends_add_friend": {
+		"value": "検索したユーザーリストから右側に'友達要請'ボタンを押すと、相手に友達要請をします。 要請したら相手の友達受諾回答を待ちます"
+	},
+	"debug_project_step_in": {
+		"value": "現在進行中のソース内で次のソースラインに移動します。 同じ関数内の他のコードラインに着いたら止まります。 step overと似た機能です。 gdbでstep機能と同じです。"
+	},
+	"share_project_current_list": {
+		"value": "これは現在共有しているプロジェクトのリストを見せます。 開発者はRead-Only、Editableなどオプションを設定することができます"
+	}
+}

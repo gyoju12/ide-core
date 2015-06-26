@@ -1,0 +1,305 @@
+{
+	"next": {
+		"value": "次"
+	},
+	"ok": {
+		"value": "確認"
+	},
+	"find_info": {
+		"value": "ID/ PWを探します"
+	},
+	"forgot_id": {
+		"value": "ユーザ名検索"
+	},
+	"forgot_pw": {
+		"value": "パスワードの再設定"
+	},
+	"history_speed_normal": {
+		"value": "通常速度"
+	},
+	"history_speed_fast": {
+		"value": "高速"
+	},
+	"history_speed_veryfast": {
+		"value": "超高速"
+	},
+	"history_speed_slow": {
+		"value": "ゆっくり"
+	},
+	"history_show_current": {
+		"value": "現在の状態を表示"
+	},
+	"history_speed_veryslow": {
+		"value": "非常にゆっくり"
+	},
+	"yes": {
+		"value": "はい"
+	},
+	"account_change": {
+		"value": "情報の変更"
+	},
+	"information": {
+		"value": "情報"
+	},
+	"libraries": {
+		"value": "ライブラリ"
+	},
+	"filetype": {
+		"value": "ファイルタイプ"
+	},
+	"scm_configuration": {
+		"value": "SCMの設定"
+	},
+	"private_mode": {
+		"value": "個人ユーザー用接続"
+	},
+	"document_viewer": {
+		"value": "ドキュメント"
+	},
+	"slideshare_Viewer": {
+		"value": "Slideshare.netビューア"
+	},
+	"pdf_Viewer": {
+		"value": "PDFビューア"
+	},
+	"toggle_selection": {
+		"value": "選択ツールを開く/閉じる"
+	},
+	"add": {
+		"value": "追加"
+	},
+	"value": {
+		"value": "値"
+	},
+	"code_highlight": {
+		"value": "コードハイライト"
+	},
+	"my_project": {
+		"value": "私のプロジェクト"
+	},
+	"share_project": {
+		"value": "共有プロジェクト"
+	},
+	"project_table": {
+		"value": "プロジェクトテーブル"
+	},
+	"project_list": {
+		"value": "プロジェクトリスト"
+	},
+	"cloud_projects": {
+		"value": "クラウドプロジェクト"
+	},
+	"add_friends": {
+		"value": "友達を追加"
+	},
+	"password": {
+		"value": "パスワード"
+	},
+	"type_message": {
+		"value": "メッセージを入力してください..."
+	},
+	"invitation_type_message": {
+		"value": "招待メッセージを入力してください..."
+	},
+	"repository_path": {
+		"value": "リポジトリのパス"
+	},
+	"recent_empty": {
+		"value": "最近リストなし"
+	},
+	"recent_clear": {
+		"value": "最近リストの削除"
+	},
+	"replace_and_find": {
+		"value": "置換した後、再検索"
+	},
+	"replace_all": {
+		"value": "すべて置換"
+	},
+	"installation": {
+		"value": "インストール"
+	},
+	"getting_started": {
+		"value": "開始する"
+	},
+	"official_site": {
+		"value": "公式サイト"
+	},
+	"open_source": {
+		"value": "オープンソースプロジェクト"
+	},
+	"features": {
+		"value": "機能紹介"
+	},
+	"collaboration": {
+		"value": "コラボレーション"
+	},
+	"chats": {
+		"value": "チャット"
+	},
+	"friends": {
+		"value": "友達"
+	},
+	"modify": {
+		"value": "修正"
+	},
+	"crop": {
+		"value": "切る"
+	},
+	"back": {
+		"value": "戻る"
+	},
+	"id": {
+		"value": "ユーザ名"
+	},
+	"email": {
+		"value": "メール"
+	},
+	"shortcut_edit": {
+		"value": "編集"
+	},
+	"storage": {
+		"value": "ストレージ"
+	},
+	"hide": {
+		"value": "隠す"
+	},
+	"create": {
+		"value": "作成"
+	},
+	"replace": {
+		"value": "置換"
+	},
+	"license": {
+		"value": "ライセンス"
+	},
+	"eclipse": {
+		"value": ""
+	},
+	"previous": {
+		"value": "以前"
+	},
+	"cancel": {
+		"value": "キャンセル"
+	},
+	"send": {
+		"value": "送信"
+	},
+	"close": {
+		"value": "閉じる"
+	},
+	"delete": {
+		"value": "削除"
+	},
+	"speed": {
+		"value": "速度"
+	},
+	"search": {
+		"value": "サーチ"
+	},
+	"terminal": {
+		"value": "ターミナル"
+	},
+	"chat": {
+		"value": "チャット"
+	},
+	"debug": {
+		"value": "デバッグ"
+	},
+	"outline": {
+		"value": "アウトライン"
+	},
+	"project": {
+		"value": "プロジェクト"
+	},
+	"no": {
+		"value": "いいえ"
+	},
+	"logout": {
+		"value": "ログアウト"
+	},
+	"signup": {
+		"value": "会員登録"
+	},
+	"apply": {
+		"value": "適用"
+	},
+	"change": {
+		"value": "変更"
+	},
+	"default": {
+		"value": "デフォルトの設定"
+	},
+	"login": {
+		"value": "ログイン"
+	},
+	"scm": {
+		"value": "ソースコード管理"
+	},
+	"setting": {
+		"value": "設定"
+	},
+	"theme": {
+		"value": "テーマ"
+	},
+	"shortcut": {
+		"value": "ショートカット"
+	},
+	"language": {
+		"value": "言語"
+	},
+	"refresh": {
+		"value": "リフレッシュ"
+	},
+	"cloud": {
+		"value": "クラウド"
+	},
+	"upload": {
+		"value": "アップロード"
+	},
+	"profile": {
+		"value": "プロフィール"
+	},
+	"editor": {
+		"value": "エディタ"
+	},
+	"save": {
+		"value": "保存"
+	},
+	"number": {
+		"value": "番号"
+	},
+	"thread": {
+		"value": "スレッド"
+	},
+	"variable": {
+		"value": "変数"
+	},
+	"summary": {
+		"value": "サマリー"
+	},
+	"history": {
+		"value": "ヒストリー"
+	},
+	"type_name_or_email": {
+		"value": "名前またはメールアドレスを入力してください"
+	},
+	"keyword": {
+		"value": "キーワード"
+	},
+	"resize_image": {
+		"value": "画像のサイズを変更"
+	},
+	"chat_joined_number": {
+		"value": "接続者"
+	},
+	"navigate": {
+		"value": "ナビゲーション"
+	},
+	"collaboration_users": {
+		"value": "コラボレーションユーザ"
+	},
+	"visual_studio": {
+		"value": ""
+	}
+}

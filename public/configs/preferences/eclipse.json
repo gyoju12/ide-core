@@ -1,0 +1,13 @@
+{
+	"preference.shortcut.file.close": "Ctrl+F4",
+	"preference.shortcut.file.close_all": "Ctrl+Shift+F4",
+	"preference.shortcut.file.save_all": "Ctrl+Shift+S",
+	"preference.shortcut.edit.search": "Ctrl+H",
+	"preference.shortcut.debug.start": "F11",
+	"preference.shortcut.project.run": "Ctrl+U",
+	"preference.shortcut.debug.step_in": "F5",
+	"preference.shortcut.debug.step_out": "F7",
+	"preference.shortcut.debug.toggle_breakpoint": "Ctrl+Shift+B",
+	"preference.shortcut.window.next_window": "Ctrl+F6",
+	"preference.shortcut.window.previous_window": "Ctrl+Shift+F6"
+}

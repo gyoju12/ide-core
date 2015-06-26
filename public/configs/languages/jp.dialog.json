@@ -1,0 +1,581 @@
+{
+	"common_target": {
+		"value": "対象"
+	},
+	"common_filename": {
+		"value": "ファイル名"
+	},
+	"common_filetype": {
+		"value": "ファイルの種類"
+	},
+	"common_select_all": {
+		"value": "すべてを選択"
+	},
+	"common_deselect_all": {
+		"value": "すべての選択を解除"
+	},
+	"show_hide_all_cursor": {
+		"value": "すべてのカーソルを見せ/隠蔽する"
+	},
+	"dialog_file_cloud_upload": {
+		"value": "ファイルのアップロード"
+	},
+	"dialog_file_export": {
+		"value": "ファイルをエクスポート"
+	},
+	"dialog_file_export_file": {
+		"value": "選択されたファイル"
+	},
+	"dialog_file_export_exporttype": {
+		"value": "ファイル形式"
+	},
+	"dialog_file_import": {
+		"value": "ファイルのインポート/アップロード"
+	},
+	"dialog_upload_folder": {
+		"value": "フォルダーのアップロード"
+	},
+	"dialog_folder_import_folder": {
+		"value": "アップロードするファイルを選択してください。"
+	},
+	"dialog_file_new_folder": {
+		"value": "新しいフォルダー"
+	},
+	"dialog_file_new_folder_guide": {
+		"value": "新しいフォルダーの作成"
+	},
+	"dialog_file_new_folder_foldername": {
+		"value": "フォルダー名"
+	},
+	"dialog_file_new_file": {
+		"value": "新規ファイル"
+	},
+	"dialog_file_new_file_guide": {
+		"value": "新しいファイルを作成"
+	},
+	"dialog_file_new_other_file": {
+		"value": "新規その他のファイル"
+	},
+	"dialog_file_new_untitled_textfile": {
+		"value": "タイトルのない新しいテキストファイル"
+	},
+	"dialog_file_move_file": {
+		"value": "ファイルの移動"
+	},
+	"dialog_file_open_file": {
+		"value": "ファイルを開く"
+	},
+	"dialog_file_open_file_guide": {
+		"value": "開くファイルを選択してください。"
+	},
+	"dialog_file_open_url": {
+		"value": "URLを開く"
+	},
+	"dialog_file_open_url_guide": {
+		"value": "開くURLを入力してください。"
+	},
+	"dialog_file_properties": {
+		"value": "ファイルのプロパティ"
+	},
+	"dialog_file_properties_file_location": {
+		"value": "ファイルの位置"
+	},
+	"dialog_file_properties_file_size": {
+		"value": "ファイルサイズ"
+	},
+	"dialog_file_properties_last_access_time": {
+		"value": "最終アクセス日時"
+	},
+	"dialog_file_properties_Last_modification_time": {
+		"value": "最終の変更日時"
+	},
+	"dialog_file_rename": {
+		"value": "ファイル名の変更"
+	},
+	"dialog_file_rename_new_name": {
+		"value": "新しい名前"
+	},
+	"dialog_file_save_as_file": {
+		"value": "名前を付けて保存"
+	},
+	"dialog_file_save_as_file_guide": {
+		"value": "保存するファイルを選択してください"
+	},
+	"dialog_file_print": {
+		"value": "印刷"
+	},
+	"dialog_help_bug_report": {
+		"value": "バグレポート"
+	},
+	"dialog_help_bug_report_title": {
+		"value": "タイトル"
+	},
+	"dialog_help_bug_report_author": {
+		"value": "作成者"
+	},
+	"dialog_help_bug_report_email": {
+		"value": "電子メールアドレス"
+	},
+	"dialog_help_bug_report_current_version": {
+		"value": "現バージョン"
+	},
+	"dialog_help_bug_report_module": {
+		"value": "モジュール"
+	},
+	"dialog_help_bug_report_detailed": {
+		"value": "詳細な説明"
+	},
+	"dialog_new_project": {
+		"value": "新規プロジェクト"
+	},
+	"dialog_new_project_description": {
+		"value": "プロジェクトの説明"
+	},
+	"dialog_new_project_author_name": {
+		"value": "著者名"
+	},
+	"dialog_new_project_name": {
+		"value": "プロジェクト名"
+	},
+	"dialog_new_project_desc": {
+		"value": "プロジェクトの内容"
+	},
+	"dialog_new_project_view_all": {
+		"value": "全体"
+	},
+	"dialog_new_project_template": {
+		"value": "テンプレート"
+	},
+	"dialog_new_project_scm": {
+		"value": "ソースコード管理"
+	},
+	"dialog_new_project_import": {
+		"value": "インポート"
+	},
+	"dialog_project_open": {
+		"value": "プロジェクトを開く"
+	},
+	"dialog_project_clean": {
+		"value": "プロジェクトのクリーン"
+	},
+	"dialog_project_build_all": {
+		"value": "すべてをビルド"
+	},
+	"dialog_project_export": {
+		"value": "プロジェクトのエクスポート"
+	},
+	"dialog_project_export_msg": {
+		"value": "プロジェクトのエクスポート形式"
+	},
+	"dialog_project_delete": {
+		"value": "プロジェクトの削除"
+	},
+	"dialog_project_share": {
+		"value": "プロジェクトを共有"
+	},
+	"dialog_project_share_send_email": {
+		"value": "招待メールを送信"
+	},
+	"dialog_project_share_link": {
+		"value": "共有リンク"
+	},
+	"dialog_project_share_authority_setting": {
+		"value": "共有権限設定"
+	},
+	"dialog_project_go_to_line": {
+		"value": "ラインに移動"
+	},
+	"dialog_project_option_guide": {
+		"value": "オプション"
+	},
+	"dialog_project_find_and_replace": {
+		"value": "検索/置換"
+	},
+	"dialog_project_site_guide": {
+		"value": "サイト"
+	},
+	"dialog_project_find_guide": {
+		"value": "検索"
+	},
+	"dialog_project_line_guide": {
+		"value": "ライン"
+	},
+	"dialog_preference_editor_font_family": {
+		"value": "フォント"
+	},
+	"dialog_project_whole_word_guide": {
+		"value": "単語全体の一致"
+	},
+	"dialog_project_use_regular_expression_guide": {
+		"value": "正規表現を使用"
+	},
+	"dialog_preferences_preference": {
+		"value": "基本設定"
+	},
+	"dialog_project_match_case_guide": {
+		"value": "大/小文字一致"
+	},
+	"dialog_preference_editor_indent_with_tabs": {
+		"value": "タブにインデント"
+	},
+	"dialog_preference_editor_line_spacing": {
+		"value": "ラインの間隔"
+	},
+	"dialog_project_property_scm_revision": {
+		"value": "リビジョン"
+	},
+	"dialog_preference_editor_indent_unit": {
+		"value": "インデント単位"
+	},
+	"dialog_preference_editor_first_undo_depth": {
+		"value": "元に戻すの深み"
+	},
+	"dialog_preference_editor_font_size": {
+		"value": "フォントサイズ"
+	},
+	"dialog_preference_editor_rulers": {
+		"value": "ルーラを表示"
+	},
+	"dialog_preference_editor_highlight_current_cursor_line": {
+		"value": "現在ラインをハイライティン"
+	},
+	"dialog_preference_editor_auto_close_brackets": {
+		"value": "自動括弧を閉じる(',(,[)"
+	},
+	"dialog_preference_editor_line_wrapping": {
+		"value": "自動改行"
+	},
+	"dialog_preference_editor_show_line_numbers": {
+		"value": "ラインの番号を見せる"
+	},
+	"dialog_project_property": {
+		"value": "プロジェクトのプロパティ"
+	},
+	"dialog_preference_terminal_font_color": {
+		"value": "フォント色"
+	},
+	"dialog_preference_theme_keymap": {
+		"value": "キーマップ"
+	},
+	"dialog_preference_theme_select_guide": {
+		"value": "テーマを選択してください"
+	},
+	"dialog_project_property_scm_type": {
+		"value": "タイプ"
+	},
+	"dialog_project_property_project_detail": {
+		"value": "プロジェクトの細部のタイプ"
+	},
+	"dialog_project_property_project_author": {
+		"value": "プロジェクトの作成者"
+	},
+	"dialog_project_property_project_date": {
+		"value": "プロジェクトの作成日"
+	},
+	"dialog_project_property_project_type": {
+		"value": "プロジェクトのタイプ"
+	},
+	"dialog_project_property_checkout": {
+		"value": "チェックアウト"
+	},
+	"dialog_project_property_auth_guide": {
+		"value": "認証"
+	},
+	"dialog_project_property_auth_user": {
+		"value": "ユーザー"
+	},
+	"dialog_project_property_auth_password": {
+		"value": "パスワード"
+	},
+	"dialog_project_property_repository_url": {
+		"value": "リポジトリURL"
+	},
+	"dialog_goorm_profile_password_confirm": {
+		"value": "新規パスワード(確認)"
+	},
+	"dialog_goorm_profile_id": {
+		"value": "ID"
+	},
+	"dialog_goorm_profile_name": {
+		"value": "お名前"
+	},
+	"dialog_goorm_profile_password": {
+		"value": "新規パスワード"
+	},
+	"dialog_project_property_change_scm_account": {
+		"value": "アカウントを変更"
+	},
+	"dialog_scm_status_guide": {
+		"value": "ファイルのバージョンコントロール状態を確認して、希望する作業をします。"
+	},
+	"dialog_goorm_profile_comment": {
+		"value": "コメント"
+	},
+	"dialog_scm_auth_guide": {
+		"value": "この過程はあなたがSCMストーリッジに書き権限があるかを知るためのものです。"
+	},
+	"dialog_scm_cmd_log": {
+		"value": "コマンドをログ"
+	},
+	"dialog_goorm_profile_email": {
+		"value": "電子メール"
+	},
+	"dialog_scm_lock_guide": {
+		"value": "ファイルをロックしたり解除します。"
+	},
+	"dialog_scm_path": {
+		"value": "ファイル経路"
+	},
+	"dialog_scm_status": {
+		"value": "ステータス"
+	},
+	"dialog_scm_message": {
+		"value": "メッセージ"
+	},
+	"dialog_scm_last_commit": {
+		"value": "最終コミット"
+	},
+	"dialog_scm_branch": {
+		"value": "ブランチ"
+	},
+	"dialog_scm_email": {
+		"value": "電子メール"
+	},
+	"dialog_scm_last_push": {
+		"value": "最終のPush"
+	},
+	"dialog_git_cmd_log_guide": {
+		"value": "Gitのコマンドのログを確認します"
+	},
+	"dialog_git_log_guide": {
+		"value": "特定Commitのログをみます"
+	},
+	"dialog_scm_current": {
+		"value": "現在"
+	},
+	"dialog_branch_create": {
+		"value": "ブランチ生成-名前"
+	},
+	"dialog_scm_commit_date": {
+		"value": "Commit日付"
+	},
+	"dialog_scm_authorized_user": {
+		"value": "認証されたユーザー"
+	},
+	"dialog_push_guide": {
+		"value": "まだPushされていないCommit"
+	},
+	"dialog_scm_anonymous": {
+		"value": "匿名"
+	},
+	"dialog_merge": {
+		"value": "コード併合-ファイル選択"
+	},
+	"dialog_npm_pkg_version_guide": {
+		"value": "パッケージのバージョン"
+	},
+	"help_about_private_url": {
+		"value": "Private URLについて"
+	},
+	"dialog_npm_pkg_version_specific_guide": {
+		"value": "特定のバージョン"
+	},
+	"dialog_npm_pkg_name_guide": {
+		"value": "パッケージの名前"
+	},
+	"dialog_npm_pkg_list_name_guide": {
+		"value": "お名前"
+	},
+	"dialog_npm_install_guide": {
+		"value": "パッケージをインストール（グローバル）"
+	},
+	"dialog_npm_pkg_list_guide": {
+		"value": "ユーザーのNPMのリスト"
+	},
+	"dialog_npm_pkg_version_latest_guide": {
+		"value": "最新バージョン"
+	},
+	"dialog_npm_pkg_version_name_guide": {
+		"value": "バージョン名"
+	},
+	"dialog_help_contents": {
+		"value": "ヘルプコンテンツ"
+	},
+	"dialog_rename_file": {
+		"value": "名前の変更"
+	},
+	"dialog_npm_pkg_list_version_guide": {
+		"value": "バージョン"
+	},
+	"dialog_build_project": {
+		"value": "様々なプロジェクトビルド"
+	},
+	"dialog_scm_selected_path": {
+		"value": "経路:"
+	},
+	"dialog_help_about": {
+		"value": "goormについて"
+	},
+	"dialog_help_license": {
+		"value": "オープンソースライセンス"
+	},
+	"dialog_new_untitled_textfile": {
+		"value": "新しいテキストファイル"
+	},
+	"dialog_help_shortcuts": {
+		"value": "グルムのショートカット‐キー"
+	},
+	"dialog_scm_ignore_title": {
+		"value": "Ignore設定"
+	},
+	"dialog_scm_date": {
+		"value": "日付"
+	},
+	"dialog_npm_title": {
+		"value": "NPM"
+	},
+	"property": {
+		"value": "属性"
+	},
+	"dialog_search": {
+		"value": "検索"
+	},
+	"plugin": {
+		"value": "プラグイン"
+	},
+	"dialog_file_export_guide": {
+		"value": "エクスポートするファイルを選択してください。"
+	},
+	"dialog_file_import_guide": {
+		"value": "インポートするファイルを選択してください。"
+	},
+	"dialog_file_import_file": {
+		"value": "アップロードするファイルを選択してください。"
+	},
+	"dialog_folder_import_guide": {
+		"value": "インポートするフォルダを選択してください。"
+	},
+	"dialog_file_new_other_file_guide": {
+		"value": "生成するファイルタイプを指定してください。"
+	},
+	"dialog_file_new_untitled_textfile_guide": {
+		"value": "タイトルのない新しいテキストファイルを作成"
+	},
+	"dialog_file_move_file_guide": {
+		"value": "ファイルを移動させる位置を選択してください。"
+	},
+	"dialog_file_print_guide": {
+		"value": "現在のファイルを印刷することができます。"
+	},
+	"dialog_new_project_guide1": {
+		"value": "プロジェクトのタイプを選択してください。"
+	},
+	"dialog_new_project_guide2": {
+		"value": "新規プロジェクトの内容を追加してください。"
+	},
+	"dialog_new_project_import_message": {
+		"value": "ZIPまたはTARファイルを選択してください。"
+	},
+	"dialog_new_project_view_all_description": {
+		"value": "可能なすべてのプロジェクトの要素を確認します。"
+	},
+	"dialog_project_open_guide": {
+		"value": "開きたいプロジェクトを選択してください。"
+	},
+	"dialog_project_build_all_guide": {
+		"value": "下のプロジェクトをビルドします。"
+	},
+	"dialog_project_export_guide": {
+		"value": "エクスポートしたいプロジェクトを選択してください。"
+	},
+	"dialog_project_delete_guide": {
+		"value": "削除するプロジェクトを選択してください。"
+	},
+	"dialog_preference_shortcut_cloud_guide": {
+		"value": "クラウドメニューのショートカットキー変更"
+	},
+	"dialog_svn_blame_guide": {
+		"value": "特定リビジョンについてBlameを実行します"
+	},
+	"dialog_scm_update_guide": {
+		"value": "特定リビジョンまたは特定の日に更新を受けます"
+	},
+	"dialog_svn_log_guide": {
+		"value": "特定リビジョンのCommitログをみます。"
+	},
+	"dialog_scm_resolve_guide": {
+		"value": "下の併合オプションで衝突を解決します。"
+	},
+	"dialog_svn_diff_guide": {
+		"value": "特定リビジョンの間の違い点をみます"
+	},
+	"dialog_git_blame_guide": {
+		"value": "特定CommitについてBlameを実行します。"
+	},
+	"dialog_scm_branch_guide": {
+		"value": "ブランチの一覧を見てブランチを管理します。"
+	},
+	"dialog_svn_cmd_log_guide": {
+		"value": "Subversionのコマンドのログをみます"
+	},
+	"dialog_branch_create_guide": {
+		"value": "新しいブランチの名前を入力してください"
+	},
+	"dialog_git_diff_guide": {
+		"value": "特定Commitの間の違い点をみます"
+	},
+	"dialog_merge_guide": {
+		"value": "現在開かれたファイルに併合するファイルを選択してください。"
+	},
+	"import_dialog_message": {
+		"value": "プロジェクトを読み込むための情報を入力してください"
+	},
+	"dialog_scm_ignore_guide": {
+		"value": "Ignoreリストを見て管理します"
+	},
+	"dialog_new_project_storage": {
+		"value": "ストレージ"
+	},
+	"dialog_project_storage_s3": {
+		"value": "コラボレーション ストレージ（コラボレーション可能＆すべてのコンテナ - 少し遅いファイルシステム）"
+	},
+	"dialog_project_storage_container": {
+		"value": "コンテナストレージ（コラボレーション不可能＆現在のコンテナ - 非常に高速なファイルシステム）"
+	},
+	"dialog_project_property_project_storage": {
+		"value": "プロジェクトストレージ"
+	},
+	"dialog_auth_profile_image": {
+		"value": "プロフィール画像を変更"
+	},
+	"dialog_auth_profile_image_width": {
+		"value": "幅:"
+	},
+	"dialog_auth_profile_image_height": {
+		"value": "高さ:"
+	},
+	"dialog_move_file": {
+		"value": "ファイルの移動"
+	},
+	"dialog_auth_find_info_pw": {
+		"value": "パスワード再設定"
+	},
+	"dialog_search_project": {
+		"value": "プロジェクト"
+	},
+	"dialog_search_dir": {
+		"value": "ディレクトリパス"
+	},
+	"dialog_svn_info_title": {
+		"value": "サーバー証明書の確認"
+	},
+	"dialog_svn_info_permanent": {
+		"value": "今後も信頼"
+	},
+	"dialog_search_files": {
+		"value": "検索するファイル"
+	},
+	"dialog_chat_history": {
+		"value": "チャットの履歴"
+	}
+}

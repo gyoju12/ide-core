@@ -1,0 +1,21 @@
+{
+	"preference.shortcut.project.build_project": "Ctrl+F7",
+	"preference.shortcut.debug.toggle_breakpoint": "F9",
+	"preference.shortcut.debug.start": "F5",
+	"preference.shortcut.debug.step_in": "F11",
+	"preference.shortcut.debug.step_out": "Shift+F11",
+	"preference.shortcut.debug.step_over": "F10",
+	"preference.shortcut.debug.terminate": "Shift+F5",
+	"preference.shortcut.edit.next_diff": "F8",
+	"preference.shortcut.edit.prev_diff": "Shift+F8",
+	"preference.shortcut.edit.search": "Ctrl+Shift+F",
+	"preference.shortcut.edit.find_next": "F3",
+	"preference.shortcut.edit.find_previous": "Shift+F3",
+	"preference.shortcut.edit.go_to_line": "Ctrl+G",
+	"preference.shortcut.project.run": "Alt+Ctrl+F5",
+	"preference.shortcut.file.rename": "F2",
+	"preference.shortcut.file.save_all": "Ctrl+Shift+S",
+	"preference.shortcut.window.show_all_window": "Alt+Shift+M",
+	"preference.shortcut.window.next_window": "Alt+F6",
+	"preference.shortcut.window.previous_window": "Alt+Shift+F6"
+}

@@ -1,0 +1,656 @@
+{
+	"file_new_project": {
+		"value": "プロジェクト"
+	},
+	"emoticon": {
+		"value": "顔文字"
+	},
+	"file_new_untitled_text_file": {
+		"value": "テキストファイル"
+	},
+	"file_new_file": {
+		"value": "新しいファイル"
+	},
+	"file_open_url": {
+		"value": "URLで開く"
+	},
+	"file_open_file": {
+		"value": "ファイルを開く"
+	},
+	"file_rename": {
+		"value": "名前の変更"
+	},
+	"open_recent_projects": {
+		"value": "最近のプロジェクトを開く"
+	},
+	"folder_upload": {
+		"value": "フォルダのアップロード"
+	},
+	"file_open_project": {
+		"value": "プロジェクトを開く"
+	},
+	"file_duplicate": {
+		"value": "複製"
+	},
+	"file_save_as": {
+		"value": "名前を付けて保存"
+	},
+	"open_recent_files": {
+		"value": "最近ファイルを開く"
+	},
+	"file_close_all": {
+		"value": "すべて閉じる"
+	},
+	"file_properties": {
+		"value": "プロパティ"
+	},
+	"file_save_all": {
+		"value": "すべて保存"
+	},
+	"edit_transpose": {
+		"value": "左右の位置を変更"
+	},
+	"file_export": {
+		"value": "ファイルのエクスポート"
+	},
+	"edit_delete_line_right": {
+		"value": "カーソルの右側の削除"
+	},
+	"file_import": {
+		"value": "ファイルのインポート/アップロード"
+	},
+	"edit_downcase_cursor": {
+		"value": "小文字に変更"
+	},
+	"edit_insert_line_before": {
+		"value": "上にラインを挿入"
+	},
+	"edit_join_lines": {
+		"value": "一つのラインに作成"
+	},
+	"edit_duplicate_line": {
+		"value": "ラインの複製"
+	},
+	"edit_select_all": {
+		"value": "すべて選択"
+	},
+	"edit_delete_line_left": {
+		"value": "カーソルの左の削除"
+	},
+	"edit_swap_line_down": {
+		"value": "現在のラインと下のラインを変更"
+	},
+	"edit_swap_line_up": {
+		"value": "現在のラインと上のラインを変更"
+	},
+	"edit_select_add_previous_line": {
+		"value": "上のラインを追加選択"
+	},
+	"edit_select_line": {
+		"value": "ライン選択"
+	},
+	"edit_upcase_cursor": {
+		"value": "大文字に変更"
+	},
+	"edit_select_scope": {
+		"value": "エリア選択"
+	},
+	"edit_insert_line_after": {
+		"value": "下にラインを挿入"
+	},
+	"edit_single_selection": {
+		"value": "複数のカーソルを解除"
+	},
+	"edit_delete_line": {
+		"value": "ラインの削除"
+	},
+	"edit_split_into_lines": {
+		"value": "選択範囲のライン単位で分割"
+	},
+	"edit_go_to_bracket": {
+		"value": "反対側の括弧に移動"
+	},
+	"edit_select_word": {
+		"value": "単語を選択"
+	},
+	"edit_unfold_all": {
+		"value": "すべて展開"
+	},
+	"edit_selection": {
+		"value": "選択"
+	},
+	"edit_show_in_center": {
+		"value": "現在のラインを中央に表示"
+	},
+	"edit_select_add_next_line": {
+		"value": "下段さらに選択"
+	},
+	"edit_go_subword_right": {
+		"value": "単語右に移動"
+	},
+	"edit_select_between_brackets": {
+		"value": "括弧の間の選択"
+	},
+	"edit_scroll_line_up": {
+		"value": "1ライン上にスクロール"
+	},
+	"edit_next_bookmark": {
+		"value": "次のブックマーク"
+	},
+	"edit_toggle_bookmark": {
+		"value": "ブックマークの追加/削除"
+	},
+	"edit_codefolding": {
+		"value": "コードの折りたたみ"
+	},
+	"edit_clear_bookmark": {
+		"value": "すべてのブックマークを削除"
+	},
+	"edit_find_next": {
+		"value": "次を検索"
+	},
+	"edit_go_subword_left": {
+		"value": "単語左に移動"
+	},
+	"edit_find_and_replace": {
+		"value": "検索"
+	},
+	"edit_go_to_line": {
+		"value": "ライン番号に移動"
+	},
+	"edit_bookmark": {
+		"value": "ブックマーク"
+	},
+	"edit_scroll_line_down": {
+		"value": "1ライン下にスクロール"
+	},
+	"edit_font": {
+		"value": "文字サイズ"
+	},
+	"edit_minify_font": {
+		"value": "文字サイズ縮小"
+	},
+	"edit_auto_formatting": {
+		"value": "オートフォーマット"
+	},
+	"edit_prev_bookmark": {
+		"value": "前のブックマーク"
+	},
+	"edit_comment_selected": {
+		"value": "選択範囲のコメントを設定/解除"
+	},
+	"edit_share_cursor": {
+		"value": "カーソル共有トグル"
+	},
+	"edit_sort_lines": {
+		"value": "ライン全体並べ替え"
+	},
+	"edit_merge": {
+		"value": "コードのマージ"
+	},
+	"edit_find_previous": {
+		"value": "前を検索"
+	},
+	"edit_merge_view": {
+		"value": "マージウィンドウを表示"
+	},
+	"edit_prev_diff": {
+		"value": "以前の違い"
+	},
+	"edit_default_font": {
+		"value": "基本文字サイズ"
+	},
+	"edit_refactor": {
+		"value": "リファクタリング"
+	},
+	"edit_magnify_font": {
+		"value": "文字サイズを大きく"
+	},
+	"edit_safe_delete": {
+		"value": "安全に削除"
+	},
+	"edit_bookmark_delete_comment": {
+		"value": "コメントの削除"
+	},
+	"edit_realtime_lint": {
+		"value": "リアルタイムリントトグル"
+	},
+	"edit_preference": {
+		"value": "デフォルト設定"
+	},
+	"edit_next_diff": {
+		"value": "次の違い"
+	},
+	"project_build_all": {
+		"value": "すべてのビルド"
+	},
+	"edit_merge_diff": {
+		"value": "違いマージ"
+	},
+	"project_build_configuration": {
+		"value": "ビルド/実行の設定"
+	},
+	"project_build_dialog": {
+		"value": "複数のプロジェクトのビルド"
+	},
+	"edit_extract_var": {
+		"value": "変数の抽出"
+	},
+	"project_delete": {
+		"value": "プロジェクトの削除"
+	},
+	"project_share": {
+		"value": "プロジェクト共有"
+	},
+	"project_import": {
+		"value": "プロジェクトのインポート"
+	},
+	"project_build_project": {
+		"value": "ビルド"
+	},
+	"debug_terminate": {
+		"value": "デバッグ終了"
+	},
+	"project_clean": {
+		"value": "プロジェクトクリーン"
+	},
+	"debug_step_in": {
+		"value": "ステップイン"
+	},
+	"debug_start": {
+		"value": "デバッグ開始"
+	},
+	"project_export": {
+		"value": "プロジェクトのエクスポート"
+	},
+	"project_refresh": {
+		"value": "リフレッシュ"
+	},
+	"window_new_terminal_window": {
+		"value": "新しいターミナルウィンドウ"
+	},
+	"debug_step_out": {
+		"value": "ステップアウト"
+	},
+	"debug_continue": {
+		"value": "デバッグを続行"
+	},
+	"perspectives": {
+		"value": "画面構成"
+	},
+	"debug_step_over": {
+		"value": "ステップオーバー"
+	},
+	"window_left_layout_show_hide": {
+		"value": "左側の領域の表示/非表示"
+	},
+	"window_previous_window": {
+		"value": "前のウィンドウ"
+	},
+	"debug_toggle_breakpoint": {
+		"value": "ブレークポイントの設定/削除"
+	},
+	"window_right_layout_toggle_chat": {
+		"value": "チャット表示"
+	},
+	"window_new_main_window": {
+		"value": "新しいメインウィンドウ"
+	},
+	"window_right_layout_toggle_history": {
+		"value": "ヒストリー表示"
+	},
+	"window_next_window": {
+		"value": "次のウィンドウ"
+	},
+	"window_bottom_layout_debug": {
+		"value": "デバッグ表示"
+	},
+	"window_default_layout": {
+		"value": "デフォルトのレイアウト"
+	},
+	"window_right_layout_toggle_slide": {
+		"value": "ドキュメント表示"
+	},
+	"window_right_layout_toggle_outline": {
+		"value": "アウトライン表示"
+	},
+	"window_right_layout_show_hide": {
+		"value": "右側の領域の表示/非表示"
+	},
+	"window_hide_all_window": {
+		"value": "すべてのウィンドウを非表示"
+	},
+	"window_bottom_layout_search": {
+		"value": "サーチ表示"
+	},
+	"window_bottom_layout_console": {
+		"value": "ターミナル表示"
+	},
+	"window_bottom_layout_show_hide": {
+		"value": "下の領域の表示/非表示"
+	},
+	"window_tile_left": {
+		"value": "左揃え"
+	},
+	"window_show_all_window": {
+		"value": "すべてのウィンドウを表示"
+	},
+	"window_show_specific_window": {
+		"value": "特定のウィンドウを表示"
+	},
+	"window_cascade": {
+		"value": "カスケード並べ替え"
+	},
+	"window_toggle_full_workspace": {
+		"value": "ワークスペースの切り替え"
+	},
+	"help_view_all_shortcuts": {
+		"value": "すべてのショートカットを表示"
+	},
+	"window_tile_horizontally": {
+		"value": "横方向の配置"
+	},
+	"window_tile_right": {
+		"value": "右揃え"
+	},
+	"window_tile_vertically": {
+		"value": "縦方向の配置"
+	},
+	"help_tutorial": {
+		"value": "チュートリアル"
+	},
+	"help_facebook": {
+		"value": "Facebookページに"
+	},
+	"help_bug_report": {
+		"value": "バグレポート送信"
+	},
+	"help_about_goorm": {
+		"value": "goormについて"
+	},
+	"help_help_contents": {
+		"value": "ヘルプコンテンツ"
+	},
+	"help_tutorial_share_project": {
+		"value": "プロジェクトを共有する"
+	},
+	"help_tutorial_new_project": {
+		"value": "新しいプロジェクトの作成"
+	},
+	"help_tutorial_basic_tour": {
+		"value": "画面構成のチュートリアル"
+	},
+	"help_tutorial_build_project": {
+		"value": "プロジェクトビルドチュートリアル"
+	},
+	"help_license": {
+		"value": "オープンソースライセンス"
+	},
+	"account_go_mygoorm": {
+		"value": "my.goorm.ioに移動"
+	},
+	"help_tutorial_add_friends": {
+		"value": "友達に追加する"
+	},
+	"help_tutorial_debug_project": {
+		"value": "プロジェクトデバッグチュートリアル"
+	},
+	"file_open_as_text_editor_context": {
+		"value": "テキストエディタ"
+	},
+	"file_download_context": {
+		"value": "ダウンロード"
+	},
+	"account_profile": {
+		"value": "アカウント情報"
+	},
+	"file_open_as_vim_editor_context": {
+		"value": "Vimエディタ"
+	},
+	"account_logout": {
+		"value": "ログアウト"
+	},
+	"find_in_folder_context": {
+		"value": "現在のディレクトリから検索"
+	},
+	"decompress_file": {
+		"value": "ZIP/ TAR解凍"
+	},
+	"file_open_as_context": {
+		"value": "次の形態でオープン"
+	},
+	"delete_all_context": {
+		"value": "すべて削除"
+	},
+	"file_open_as_default_editor_context": {
+		"value": "基本エディタ"
+	},
+	"cloud_upload_context": {
+		"value": "アップロード"
+	},
+	"file_new_project_context": {
+		"value": "新しいプロジェクト"
+	},
+	"open_terminal_here": {
+		"value": "そのディレクトリでターミナルを開く"
+	},
+	"project_properties_context": {
+		"value": "プロジェクトのプロパティ"
+	},
+	"show_and_hide": {
+		"value": "表示/非表示"
+	},
+	"window_toggle_full_workspace_context": {
+		"value": "ワークスペースの切り替え"
+	},
+	"file_new_folder_context": {
+		"value": "新しいフォルダ"
+	},
+	"close_others": {
+		"value": "他のタブをすべて閉じる"
+	},
+	"file_new_untitled_text_file_context": {
+		"value": "新しいテキストファイル"
+	},
+	"edit_autocomplete_edit_context": {
+		"value": "オートコンプリート"
+	},
+	"help_npm_list_guide": {
+		"value": "リスト..."
+	},
+	"Next": {
+		"value": "次"
+	},
+	"open_goorm_edu_lecture": {
+		"value": "goormEDU講座を展開される"
+	},
+	"Connect with co-developers": {
+		"value": "接続"
+	},
+	"eval_in_repl": {
+		"value": "その領域をシェルから実行する"
+	},
+	"Color Wheel": {
+		"value": "カラーホイール"
+	},
+	"edit_definition_edit_context": {
+		"value": "定義された場所に移動する"
+	},
+	"Erase All": {
+		"value": "すべてクリア"
+	},
+	"Size Slider": {
+		"value": "鉛筆の太さ"
+	},
+	"Connect/Disconnect": {
+		"value": "接続/切断"
+	},
+	"History Delete": {
+		"value": "ヒストリー削除"
+	},
+	"History Delete All": {
+		"value": "ヒストリーすべて削除"
+	},
+	"History Rollback": {
+		"value": "ヒストリーロールバック"
+	},
+	"scm_update": {
+		"value": "アップデート"
+	},
+	"edit_find": {
+		"value": "検索"
+	},
+	"window": {
+		"value": "ウィンドウ"
+	},
+	"help": {
+		"value": "ヘルプ"
+	},
+	"account": {
+		"value": "アカウント"
+	},
+	"file_open_context": {
+		"value": "オープン"
+	},
+	"file_move_context": {
+		"value": "移動"
+	},
+	"maximize": {
+		"value": "最大化"
+	},
+	"minimize": {
+		"value": "最小化"
+	},
+	"Palette": {
+		"value": "パレット"
+	},
+	"Play": {
+		"value": "プレイ"
+	},
+	"Previous": {
+		"value": "以前"
+	},
+	"Pause": {
+		"value": "一時停止"
+	},
+	"New Window": {
+		"value": "新しいウィンドウ"
+	},
+	"Erase": {
+		"value": "消しゴム"
+	},
+	"Pencil": {
+		"value": "鉛筆"
+	},
+	"scm_commit": {
+		"value": "コミット"
+	},
+	"Minify": {
+		"value": "縮小"
+	},
+	"Magnify": {
+		"value": "拡大"
+	},
+	"Stop": {
+		"value": "停止"
+	},
+	"scm_pull": {
+		"value": "プル"
+	},
+	"file_new_folder": {
+		"value": "新しいフォルダ"
+	},
+	"edit_convert_indentation": {
+		"value": "インデントの変換"
+	},
+	"edit_replace": {
+		"value": "置換"
+	},
+	"project_build": {
+		"value": "ビルド"
+	},
+	"window_right_layout_toggle_bookmark": {
+		"value": "ブックマークを見る"
+	},
+	"chat_remove_all": {
+		"value": "すべての会話の内容を削除"
+	},
+	"chat_remove_selected": {
+		"value": "選択された会話の内容を削除"
+	},
+	"chat_cancel_selected": {
+		"value": "選択を解除"
+	},
+	"file_new_context_new_folder": {
+		"value": "フォルダ"
+	},
+	"file_send_link": {
+		"value": "チャットでファイルのリンク送信"
+	},
+	"file": {
+		"value": "ファイル"
+	},
+	"file_new": {
+		"value": "新たに作成"
+	},
+	"file_new_other": {
+		"value": "その他"
+	},
+	"file_save": {
+		"value": "保存"
+	},
+	"edit_redo": {
+		"value": "やり直し"
+	},
+	"file_print": {
+		"value": "印刷"
+	},
+	"edit_delete": {
+		"value": "削除"
+	},
+	"file_delete": {
+		"value": "削除"
+	},
+	"edit_copy": {
+		"value": "コピー"
+	},
+	"edit": {
+		"value": "編集"
+	},
+	"edit_paste": {
+		"value": "ペースト"
+	},
+	"edit_cut": {
+		"value": "カット"
+	},
+	"edit_undo": {
+		"value": "元に戻す"
+	},
+	"edit_text": {
+		"value": "テキスト"
+	},
+	"edit_line": {
+		"value": "ライン"
+	},
+	"edit_fold": {
+		"value": "折り畳み"
+	},
+	"edit_goto": {
+		"value": "移動"
+	},
+	"edit_unfold": {
+		"value": "展開"
+	},
+	"edit_search": {
+		"value": "サーチ"
+	},
+	"edit_sort_lines_case": {
+		"value": "ライン全体並べ替え(大/小区別)"
+	},
+	"project_stop": {
+		"value": "停止"
+	},
+	"project_run": {
+		"value": "実行"
+	}
+}

@@ -1,0 +1,92 @@
+{
+	"title_new_project": {
+		"value": "新しいプロジェクト"
+	},
+	"title_profile": {
+		"value": "登録情報"
+	},
+	"title_register": {
+		"value": "新規取得"
+	},
+	"title_find_replace": {
+		"value": "検索/置換"
+	},
+	"title_open_project": {
+		"value": "プロジェクトを開く"
+	},
+	"title_import_file": {
+		"value": "ファイルのインポート/アップロード"
+	},
+	"title_new_file": {
+		"value": "新しいファイル"
+	},
+	"title_export_file": {
+		"value": "ファイルのエクスポート"
+	},
+	"title_new_other_file": {
+		"value": "新規その他のファイル"
+	},
+	"title_send_bug_report": {
+		"value": "バグレポートを送信"
+	},
+	"title_new_untitled_text_file": {
+		"value": "新しい無題テキストファイル"
+	},
+	"title_help_contents": {
+		"value": "ヘルプ コンテンツ"
+	},
+	"title_export_project": {
+		"value": "プロジェクトをエクスポート"
+	},
+	"title_save_as": {
+		"value": "名前を付けて保存"
+	},
+	"title_import_project": {
+		"value": "プロジェクトのインポート"
+	},
+	"title_project_property": {
+		"value": "プロジェクトのプロパティ"
+	},
+	"project_info_author": {
+		"value": "プロジェクトの作成者"
+	},
+	"title_project_share": {
+		"value": "プロジェクトの共有"
+	},
+	"title_new_folder": {
+		"value": "新しいフォルダー"
+	},
+	"project_info_name": {
+		"value": "プロジェクト名"
+	},
+	"title_preference": {
+		"value": "基本設定"
+	},
+	"project_info_description": {
+		"value": "プロジェクト説明"
+	},
+	"title_about_goorm": {
+		"value": "goormについて"
+	},
+	"title_delete_project": {
+		"value": "プロジェクトの削除"
+	},
+	"project_info_detail": {
+		"value": "プロジェクトの細部のタイプ"
+	},
+	"project_info_type": {
+		"value": "プロジェクトのタイプ"
+	},
+	"project_info_date": {
+		"value": "プロジェクト作成日"
+	},
+	"title_search": {
+		"value": "検索"
+	},
+	"title_move": {
+		"value": "移動"
+	},
+	"title_print": {
+		"value": "印刷"
+	}
+}

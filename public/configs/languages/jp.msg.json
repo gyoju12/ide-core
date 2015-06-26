@@ -1,0 +1,1418 @@
+{
+	"output": {
+		"value": "アウトプット"
+	},
+	"window_bottom_layout_output": {
+		"value": "アウトプット表示"
+	},
+	"edit_no_bookmark": {
+		"value": "ブックマークがありません。"
+	},
+	"alert_file_size_too_big": {
+		"value": "警告！ファイルの大きさがとても大きいです!<br/>エディターは10MB以下の大きさのファイルだけを開くことができます"
+	},
+	"alert_file_size_too_big_to_upload": {
+		"value": "警告！ファイルの大きさがとても大きいです!<br/>総サイズが20MB以下でなければなりません"
+	},
+	"alert_shortcut_modified": {
+		"value": "変更が完了しました"
+	},
+	"alert_project_copy": {
+		"value": "プロジェクトはコピーできません"
+	},
+	"alert_scm_permission": {
+		"value": "SCMに接近する権限がありません"
+	},
+	"alert_find_id_notexist": {
+		"value": "該当IDが存在しません"
+	},
+	"alert_file_not_opened": {
+		"value": "開かれているファイルがありません"
+	},
+	"alert_find_id_exist": {
+		"value": "該当IDの情報は"
+	},
+	"alert_file_name_illegal": {
+		"value": "ファイル名に誤った値があります"
+	},
+	"alert_print_file_error": {
+		"value": "開かれているファイルがありません"
+	},
+	"alert_project_not_selected": {
+		"value": "プロジェクトを選択してください"
+	},
+	"alert_filename_empty": {
+		"value": "ファイル名は空いています"
+	},
+	"alert_unsupported_file_type": {
+		"value": "支援しないファイル形式です"
+	},
+	"alert_plugin_not_while_running": {
+		"value": "ユーザーが作ったプログラムがすでに実行中です。<br/>プログラムの実行を終えて試してください"
+	},
+	"alert_folder_duplicate_error": {
+		"value": "フォルダは複製できません"
+	},
+	"alert_cannot_find_word": {
+		"value": "単語を見つけられません"
+	},
+	"alert_collaboration_chat_unfriend": {
+		"value": "あなたと友達ではありません"
+	},
+	"alert_file_not_select": {
+		"value": "ファイルを選択していません"
+	},
+	"alert_forgot_info": {
+		"value": "ID/ PWを探します"
+	},
+	"alert_collaboration_previous_chat": {
+		"value": "以前のメッセージ"
+	},
+	"alert_plugin_check_terminal": {
+		"value": "ターミナルを確認してください"
+	},
+	"alert_collaboration_chat_change2": {
+		"value": "に変えました"
+	},
+	"confirmation_decompress_title": {
+		"value": "圧縮解除"
+	},
+	"confirmation_title": {
+		"value": "確認"
+	},
+	"confirmation_delete_title": {
+		"value": "削除"
+	},
+	"save_and_close": {
+		"value": "すべて保存して閉じる"
+	},
+	"alert_collaboration_chat_change": {
+		"value": "様が名前を"
+	},
+	"confirmation_exit_title": {
+		"value": "終了"
+	},
+	"confirmation_language_message_no": {
+		"value": "No"
+	},
+	"confirmation_project_close_and_save": {
+		"value": "開けるプロジェクトの数を超過しました。 最も古いプロジェクトを閉めますか"
+	},
+	"confirmation_cancel": {
+		"value": "キャンセル"
+	},
+	"confirmation_build": {
+		"value": "ビルド"
+	},
+	"confirmation_save_run": {
+		"value": "保存して実行"
+	},
+	"confirmation_not_save_msg": {
+		"value": "ファイルを保存してから実行しますか?<br>[保存して実行]ボタンや[実行]ボタンを押してください"
+	},
+	"confirmation_language_message_yes": {
+		"value": "Yes"
+	},
+	"confirmation_save": {
+		"value": "保存するかどうか"
+	},
+	"confirmation_auto_logout_warning": {
+		"value": "秒後に自動ログアウトされます"
+	},
+	"confirmation_not_saved": {
+		"value": "ファイルが保存されませんでした"
+	},
+	"dont_save_and_close": {
+		"value": "保存しないで閉じる"
+	},
+	"confirmation_logout": {
+		"value": "ログアウト"
+	},
+	"tutorial_guide": {
+		"value": "テュートリアルを開始しますか?<br/>(キーボードカーソルキーとESCでも操作できます。)"
+	},
+	"confirmation_logout_save": {
+		"value": "保存してからログアウト"
+	},
+	"confirmation_auto_logout_keep_using": {
+		"value": "引き続き使用します"
+	},
+	"confirmation_delete_file": {
+		"value": "本当にこのファイルを消しますか"
+	},
+	"alert_title_empty": {
+		"value": "タイトルを入力してください"
+	},
+	"confirmation_auto_logout": {
+		"value": "自動ログアウト"
+	},
+	"alert_allow_django": {
+		"value": "Djangoプロジェクトではdjangoとtestというプロジェクトの生成が不可能です"
+	},
+	"alert_contents_empty": {
+		"value": "コンテンツを入力してください"
+	},
+	"alert_project_name": {
+		"value": "プロジェクト名を作成してください"
+	},
+	"confirmation_exit": {
+		"value": "本当に終了しますか"
+	},
+	"alert_version_empty": {
+		"value": "バージョンを入力してください"
+	},
+	"notice_modified_profile": {
+		"value": "プロフィールが修正されました"
+	},
+	"notice_file_import_done": {
+		"value": "ファイルのインポートを完了しました。"
+	},
+	"notice_write_done": {
+		"value": "書き作業を完了しました"
+	},
+	"alert_user_undefined_id": {
+		"value": "IDを入力してください"
+	},
+	"alert_email_empty": {
+		"value": "電子メールを入力してください"
+	},
+	"alert_no_have_data": {
+		"value": "データがありません"
+	},
+	"alert_module_empty": {
+		"value": "モジュールを入力してください"
+	},
+	"alert_user_unmatched_id": {
+		"value": "該当メンバーではありません"
+	},
+	"alert_author_empty": {
+		"value": "製作者を入力してください"
+	},
+	"alert_cannot_write": {
+		"value": "書き作業を実行することができません"
+	},
+	"alert_user_duplicate_email": {
+		"value": "電子メールが重複しています"
+	},
+	"notice_project_delete_done": {
+		"value": "プロジェクトが削除されました"
+	},
+	"alert_user_undefined_email": {
+		"value": "電子メールを入力してください"
+	},
+	"alert_collaboration_server_notconnected": {
+		"value": "サーバーとの接続が切られました"
+	},
+	"alert_no_have_project": {
+		"value": "プロジェクトがありません"
+	},
+	"alert_user_undefined_student_id": {
+		"value": "学生番号を入力してください"
+	},
+	"alert_user_duplicate_student_id": {
+		"value": "同一の学生番号が存在します"
+	},
+	"alert_file_permission": {
+		"value": "ファイルを修正する権限がありません"
+	},
+	"alert_error": {
+		"value": "エラー"
+	},
+	"confirmation_down_file": {
+		"value": "圧縮をすぐ解決できない拡張子です。 ダウンロードしますか"
+	},
+	"confirmation_delete_project": {
+		"value": "本当にこのプロジェクトを削除しますか"
+	},
+	"alert_user_unfit_reg_id": {
+		"value": "IDの形式が正しくありません(4~15字、アルファベット+数字)。"
+	},
+	"alert_user_unfit_name": {
+		"value": "名前の形式が正しくありません(3~15字、ハングル/アルファベット/数字/特殊文字(/_/.//))"
+	},
+	"alert_user_duplicate_id": {
+		"value": "同一のIDが存在します"
+	},
+	"alert_user_undefined_password": {
+		"value": "パスワードをご入力ください"
+	},
+	"alert_login_not_match_password": {
+		"value": "パスワードが一致しません。"
+	},
+	"alert_user_unfit_req_password": {
+		"value": "パスワードの形式が正しくありません(8~15字、アルファベットや特殊文字、数字の組み合わせ)"
+	},
+	"alert_cannot_connect_db": {
+		"value": "Databaseにアクセスできません"
+	},
+	"alert_user_unfit_email": {
+		"value": "電子mailの形式が正しくない様式です。 (例:goorm@goorm.io)"
+	},
+	"alert_too_many_editors": {
+		"value": "Editorがとても多く開かれています。 <br/>不要なEditorを消してください。"
+	},
+	"alert_user_undefined_name": {
+		"value": "名前を入力してください"
+	},
+	"alert_login_no_id": {
+		"value": "存在しない会員です"
+	},
+	"alert_cannot_project_debug": {
+		"value": "デバッグが開始されなかったり、デバッグできないプロジェクトです"
+	},
+	"alert_confirm_logout": {
+		"value": "本当にログアウトをしますか"
+	},
+	"notice_welcome_goorm": {
+		"value": "グルム IDEによこそ"
+	},
+	"alert_no_display_to_data": {
+		"value": "登録された開発者がありません"
+	},
+	"alert_npm_version": {
+		"value": "該当バージョンが存在しません"
+	},
+	"alert_cannot_project_generate": {
+		"value": "プロジェクトが生成できません。 適切なプロジェクトを選択してください。"
+	},
+	"alert_cannot_project_run": {
+		"value": "プロジェクトを実行することはできません。 適切なプロジェクトを選択してください"
+	},
+	"toast_filetype_save_complete": {
+		"value": "ファイルタイプを保存しました"
+	},
+	"alert_login_not_service_account": {
+		"value": "サービスモードのアカウントではありません。 新しく会員加入をしてください。"
+	},
+	"notice_search_select_project": {
+		"value": "プロジェクトを選択してください"
+	},
+	"alert_not_compressed_file": {
+		"value": "圧縮ファイルはありません。"
+	},
+	"alert_cannot_project_build": {
+		"value": "プロジェクトがビルドできません。 適切なプロジェクトを選択してください。"
+	},
+	"survey_not_send": {
+		"value": "伝送しない"
+	},
+	"alert_cannot_project_remote_run": {
+		"value": "プロジェクトを実行することはできません。 適切なプロジェクトを選択してください。"
+	},
+	"alert_confirm_duplicate_login": {
+		"value": "重複ログインが発生しました。 ログインしますか。"
+	},
+	"survey_message": {
+		"value": "ぐるムを使用して不便な点はなかったんですか? 不便な点があれば意見を送ってください!"
+	},
+	"dictionary_collaboration_project": {
+		"value": "協業プロジェクト"
+	},
+	"alert_force_logout": {
+		"value": "ログアウトされます"
+	},
+	"alert_select_project": {
+		"value": "プロジェクトを選択してください。"
+	},
+	"dictionary_project_list": {
+		"value": "プロジェクトの一覧"
+	},
+	"dictionary_history_time": {
+		"value": "保存時間"
+	},
+	"dialog_survey": {
+		"value": "ぐるムIDE望むところ"
+	},
+	"dictionary_author": {
+		"value": "作成者"
+	},
+	"dictionary_file": {
+		"value": "ファイル名"
+	},
+	"survey_title": {
+		"value": "ユーザーご意見"
+	},
+	"alert_open_file_fail": {
+		"value": "読めないファイルです。"
+	},
+	"dictionary_line": {
+		"value": "ライン番号"
+	},
+	"dictionary_unfriend": {
+		"value": "友達削除"
+	},
+	"dictionary_friend_cancel": {
+		"value": "要請取消"
+	},
+	"alert_save_file_fail": {
+		"value": "ファイルの保存失敗"
+	},
+	"dictionary_my_project": {
+		"value": "私のプロジェクト"
+	},
+	"dictionary_package": {
+		"value": "パッケージ生成"
+	},
+	"dictionary_interface": {
+		"value": "インタフェース生成"
+	},
+	"dictionary_history_delay": {
+		"value": "遅延（秒）"
+	},
+	"dictionary_userid": {
+		"value": "ID"
+	},
+	"npm_no_libraries": {
+		"value": "設置されたライブラリが存在しません"
+	},
+	"alert_type_is_empty": {
+		"value": "タイプ名が空いています"
+	},
+	"dictionary_event": {
+		"value": "イベント"
+	},
+	"dictionary_chat": {
+		"value": "チャットする"
+	},
+	"dictionary_content": {
+		"value": "内容"
+	},
+	"alert_check_package": {
+		"value": "パッケージフォルダが存在しません。<br/>パッケージを先に確認してください。"
+	},
+	"dictionary_add_friend": {
+		"value": "友達追加"
+	},
+	"dictionary_accept": {
+		"value": "受け入れます"
+	},
+	"dictionary_friend_request": {
+		"value": "友達要請"
+	},
+	"alert_version_required": {
+		"value": "バージョン名が必要です"
+	},
+	"dictionary_install": {
+		"value": "インストール"
+	},
+	"dictionary_class": {
+		"value": "クラス生成"
+	},
+	"confirmation_replace_all_end": {
+		"value": "の単語を替えますか?"
+	},
+	"dictionary_reject": {
+		"value": "拒絶"
+	},
+	"notice_update_message": {
+		"value": "ぐるムIDEチームは持続的にバグ修正や機能追加をしています。 <br/>(最後のアップデート:"
+	},
+	"alert_check_package_name": {
+		"value": "パッケージ名を確認してください。"
+	},
+	"dictionary_uninstall": {
+		"value": "アンインストール"
+	},
+	"alert_cannot_paste_in_darwin": {
+		"value": "貼り付け作業は'編集'メニューでは不可能だが、⌘Vキーを使用すれば可能です。"
+	},
+	"confirmation_not_latest_build_run_msg": {
+		"value": "最新のビルドの状態ではありません。<br/>[ビルド後実行]ボタンを押してビルドを先に進行してください。"
+	},
+	"confirmation_build_and_debug": {
+		"value": "ビルドの後デバッグ"
+	},
+	"alert_package_name_required": {
+		"value": "パッケージ名が必要です。"
+	},
+	"alert_cannot_paste_in_not_darwin": {
+		"value": "貼り付け作業は'編集'メニューでは不可能だが、Ctrl+Vキーを使用すれば可能です。"
+	},
+	"someones_typing_message": {
+		"value": "様が入力中"
+	},
+	"confirmation_del_friend": {
+		"value": "友達を削除しますか"
+	},
+	"confirmation_replace_all_none": {
+		"value": "一致する単語が存在しません。"
+	},
+	"confirmation_history_play": {
+		"value": "様がPlayイベントの共有を提案しました。<br/>実行しますか。"
+	},
+	"title_replace_all": {
+		"value": "すべて置換"
+	},
+	"confirmation_not_latest_build": {
+		"value": "最新のビルドの状態ではありません。"
+	},
+	"confirmation_history_merge": {
+		"value": "前のスナップショットと合わされて、、当該スナップショットは削除されます。<br/>よろしいでしょうか。"
+	},
+	"confirmation_not_latest_build_debug": {
+		"value": "最新のビルドの状態ではありません。<br/>ビルド後にデバッグをしてください。"
+	},
+	"confirmation_do_you_want_to_remove_git": {
+		"value": "除去しますか?<br/>このファイルはファイルシステムでも除去されて、戻すことができません。"
+	},
+	"confirmation_not_save": {
+		"value": "最新コードではありません。"
+	},
+	"confirmation_shortcut_conflict": {
+		"value": "入力したショートカットキーがすでに存在します。<br/>被せますか。"
+	},
+	"confirmation_build_and_run": {
+		"value": "ビルド後実行"
+	},
+	"server_reconnect_fail": {
+		"value": "サーバーとの接続が切られました。 再び接続してください。"
+	},
+	"confirmation_do_you_want_to_unlock": {
+		"value": "このファイルのロックを解きますか"
+	},
+	"confirmation_share_history_play": {
+		"value": "Playイベントを他の協業の開発者たちと共有しますか。"
+	},
+	"confirmation_revert_to_head": {
+		"value": "HEADリビジョンに戻しますか?<br/>修正された内容は消え去って、戻すことができません。"
+	},
+	"someone_typing_message": {
+		"value": "様が入力中.."
+	},
+	"confirmation_accept_friend": {
+		"value": "友達要請を受諾しますか。"
+	},
+	"confirmation_change_profile_image": {
+		"value": "プロフィールイメージを変更しますか?<br>パスワードを入力してください"
+	},
+	"confirmation_add_friend": {
+		"value": "友達を追加しますか。"
+	},
+	"confirmation_reject_friend": {
+		"value": "友達要請を拒否しますか。"
+	},
+	"reject_friend": {
+		"value": "友達要請を拒否"
+	},
+	"notice_invite_project": {
+		"value": "様がプロジェクトに招待しました。"
+	},
+	"del_profile_image": {
+		"value": "プロフィールイメージを削除"
+	},
+	"confirmation_do_you_want_to_remove_svn": {
+		"value": "除去しますか。"
+	},
+	"confirmation_do_you_want_to_commit": {
+		"value": "コミットしますか"
+	},
+	"accept_project": {
+		"value": "プロジェクト共有を受諾"
+	},
+	"confirmation_do_you_want_to_add": {
+		"value": "追加しますか"
+	},
+	"confirmation_do_you_want_to_lock": {
+		"value": "このファイルをロックしますか"
+	},
+	"project_share_manager": {
+		"value": "このユーザーはファイル、プロジェクトについて修正が可能で、プロジェクト共有権限も可能です。"
+	},
+	"confirmation_do_you_want_to_cleanup": {
+		"value": "クリーンアップしますか。"
+	},
+	"editor_saved": {
+		"value": "変更事項を保存しました"
+	},
+	"confirmation_del_profile_image": {
+		"value": "プロフィールイメージを消しますか?<br>パスワードを入力してください"
+	},
+	"shared_project_open": {
+		"value": "オプン"
+	},
+	"confirmation_close_tab": {
+		"value": "ぐるムを終了しますか。"
+	},
+	"confirmation_do_you_want_to_update": {
+		"value": "アップデートしますか。"
+	},
+	"shared_project_manage": {
+		"value": "管理"
+	},
+	"profile_comment": {
+		"value": "コメント..."
+	},
+	"accept_friend": {
+		"value": "友達要請"
+	},
+	"confirmation_do_you_want_to_project_update": {
+		"value": "他の雲IDEに同じ名前のプロジェクト情報が存在します。被せますか。"
+	},
+	"leave_project": {
+		"value": "プロジェクト共有をキャンセル"
+	},
+	"tutorial_prev": {
+		"value": "«前へ"
+	},
+	"project_empty": {
+		"value": "プロジェクトが存在しません。"
+	},
+	"change_profile_image": {
+		"value": "プロフィールイメージを変更"
+	},
+	"tutorial_end": {
+		"value": "終了"
+	},
+	"window_right_layout_quiz": {
+		"value": "クイズを見る"
+	},
+	"editor_saving": {
+		"value": "保存中.."
+	},
+	"shared_project_leave": {
+		"value": "出る"
+	},
+	"alert_wrong_tab": {
+		"value": "誤ったタブです。"
+	},
+	"disconnect_state": {
+		"value": "連結が切れました。"
+	},
+	"reject_project": {
+		"value": "プロジェクト共有を拒絶"
+	},
+	"profile_password": {
+		"value": "(8~15)、アルファベット+数字+特殊文字"
+	},
+	"alert_nothing_checked": {
+		"value": "何も選択されていないです。"
+	},
+	"invitation_accept_open": {
+		"value": "受諾の後オープン"
+	},
+	"tutorial_next": {
+		"value": "次»"
+	},
+	"alert_nothing_selected": {
+		"value": "何も選択されていません。"
+	},
+	"connect_state": {
+		"value": "連結されました"
+	},
+	"alert_only_for_file": {
+		"value": "は、ファイルのための命令です。"
+	},
+	"invitation_waiting": {
+		"value": "待機中.."
+	},
+	"alert_auth_fail": {
+		"value": "認証に失敗しました。"
+	},
+	"alert_input_repo_url": {
+		"value": "ストーリッジURLを入力してください!"
+	},
+	"alert_input_branch_name": {
+		"value": "ブランチの名前を入力してください。"
+	},
+	"signup_id": {
+		"value": "IDを入力してください。"
+	},
+	"alert_input_right_revision": {
+		"value": "適当なリビジョンを入力してください。"
+	},
+	"confirmation_scm_want_to_undo_add": {
+		"value": "追加したのをキャンセルしますか。"
+	},
+	"alert_select_scm_type": {
+		"value": "SCMタイプを選択してください"
+	},
+	"alert_only_for_folder": {
+		"value": "はフォルダのための命令です。"
+	},
+	"alert_pull_fail": {
+		"value": "あるファイル(達)はPullされていません。<br/>'命令語のログ'タブを確認してください。"
+	},
+	"alert_scm_branch_move_fail": {
+		"value": "移動されていません。<br/>"
+	},
+	"alert_input_right_date": {
+		"value": "適当な日付を入力してください。"
+	},
+	"checkout_in_progress": {
+		"value": "チェックアウトの進行中"
+	},
+	"property_loading": {
+		"value": "プロジェクト属性ローディング中.."
+	},
+	"more_friends": {
+		"value": "もっと"
+	},
+	"error_chat_msg_occur": {
+		"value": "様がエラーメッセージを送りました。"
+	},
+	"please_wait": {
+		"value": "少々お待ちください。"
+	},
+	"placeholder_editor": {
+		"value": "ここにコードを作成してください。"
+	},
+	"not_friend_title": {
+		"value": "友達ではありません"
+	},
+	"friend_empty": {
+		"value": "友達リストが存在しません。"
+	},
+	"check_search_tab": {
+		"value": "下の検索タブを確認してください。"
+	},
+	"alert_select_string": {
+		"value": "文字列を選択してください。"
+	},
+	"log_loading": {
+		"value": "ログローディング中.."
+	},
+	"alert_project_rename": {
+		"value": "プロジェクト名は変えられません。"
+	},
+	"import_in_progress": {
+		"value": "プロジェクトアップロードを進行"
+	},
+	"confirmation_scm_want_to_pull": {
+		"value": "HEADからPullしますか。"
+	},
+	"confirmation_server_running_delete_msg": {
+		"value": "サーバーが実行中です。<br/>サーバー終了後プロジェクトを削除しますか"
+	},
+	"shared_project_unshare": {
+		"value": "共有キャンセル"
+	},
+	"status_loading": {
+		"value": "ステータスローディング中.."
+	},
+	"alert_invalide_query": {
+		"value": "無効な命令です。"
+	},
+	"confirmation_server_running": {
+		"value": "サーバーが実行中です"
+	},
+	"shared_project_empty": {
+		"value": "共有中のプロジェクトがありません。"
+	},
+	"open_project_in_progess": {
+		"value": "プロジェクトを開いています..."
+	},
+	"notice_process_done": {
+		"value": "完了しました。"
+	},
+	"safe_delete": {
+		"value": "安全に削除"
+	},
+	"msg_project_use_regular_expression_guide": {
+		"value": "正規式表現の使用"
+	},
+	"dialog_storage": {
+		"value": "ストレージ"
+	},
+	"msg_project_match_case_guide": {
+		"value": "大/小文字を一致"
+	},
+	"history_empty": {
+		"value": "記録が存在しません。"
+	},
+	"alert_invalid_folder_name": {
+		"value": "アルファベット、数字、余白、そして一部の特殊文字(_,-,(,)、[、]、。)だけ入力可能です。"
+	},
+	"alert_invalid_zip_file": {
+		"value": "無効なzipファイルです"
+	},
+	"processing": {
+		"value": "インポート処理中..."
+	},
+	"import_sync_to_file_system": {
+		"value": "ファイルシステム同期中.."
+	},
+	"alert_not_directory": {
+		"value": "ディレクトリではありません。"
+	},
+	"alert_cannot_make_directory": {
+		"value": "ディレクトリを作成することはできません"
+	},
+	"alert_invalid_project_file": {
+		"value": "無効なプロジェクトファイルです"
+	},
+	"user_plg_cleaned": {
+		"value": "のユーザプラグインが削除されました!\\nツールバーとメニュー、ダイアログはリロード後完全に削除されます。"
+	},
+	"msg_project_whole_word_guide": {
+		"value": "単語全体を一致"
+	},
+	"alert_positive_value_only": {
+		"value": "正値 だけ入力可能です。"
+	},
+	"msg_project_replace_guide": {
+		"value": "置換"
+	},
+	"msg_find_previous": {
+		"value": "前のページを検索"
+	},
+	"alert_permission_denied": {
+		"value": "権限がありません。"
+	},
+	"check_property_source": {
+		"value": "プロジェクトプロパティで、ソースディレクトリの位置を確認してください。"
+	},
+	"alert_invalid_compressed_file": {
+		"value": "問題ある圧縮ファイル"
+	},
+	"alert_cannot_export_file": {
+		"value": "ファイルをエクスポートすることはできません"
+	},
+	"confirmation_save_deleted_file": {
+		"value": "このファイルは削除されました。 新規ファイルを作りますか。"
+	},
+	"editable": {
+		"value": "編集可能"
+	},
+	"msg_project_find_guide": {
+		"value": "検索"
+	},
+	"alert_project_plugin_not_loaded": {
+		"value": "現在[PLUGIN]プラグインはロードされていません。 [PLUGIN]プラグインを追加でロードして再起動しますか。 (プラグインがたくさんロードされているほど、グルムがやや遅くなる可能性があります。)"
+	},
+	"loading_bar_export": {
+		"value": "エクスポート処理中..."
+	},
+	"same_folder_exist_title": {
+		"value": "同一のファイル/フォルダが存在"
+	},
+	"readonly": {
+		"value": "読み取り専用"
+	},
+	"msg_find_next": {
+		"value": "次を検索"
+	},
+	"alert_invalid_tar_file": {
+		"value": "無効なtarファイルです"
+	},
+	"alert_wrong_command": {
+		"value": "誤った命令です。"
+	},
+	"loading_bar_folder_upload": {
+		"value": "フォルダのアップロード処理中..."
+	},
+	"alert_same_name_folder": {
+		"value": "同じ名前のフォルダが存在します。"
+	},
+	"editable_sharable": {
+		"value": "修正および共有可能"
+	},
+	"output_tab_no_error": {
+		"value": "エラーが存在しません"
+	},
+	"shortcut_conflict": {
+		"value": "ショートカットキー衝突"
+	},
+	"loading_bar_decompress": {
+		"value": "圧縮解除中.."
+	},
+	"select_project": {
+		"value": "プロジェクトを選択"
+	},
+	"project_duplicate": {
+		"value": "重複されたプロジェクト"
+	},
+	"alert_move_error": {
+		"value": "移動できません。"
+	},
+	"loading_bar_search": {
+		"value": "検索中"
+	},
+	"alert_input_search_keyword": {
+		"value": "検索語を入力してください。"
+	},
+	"alert_select_auth": {
+		"value": "認証方法を選択してください。"
+	},
+	"upload_folder": {
+		"value": "フォルダをアップロード"
+	},
+	"alert_no_html_file": {
+		"value": "HTMLファイルを見つけられませんでした!"
+	},
+	"alert_folder_upload_is_not_allowed": {
+		"value": "フォルダはアップロードできません。 ファイルだけ可能です。"
+	},
+	"confirmation_go_mygoorm_save": {
+		"value": "保存して移動"
+	},
+	"alert_cannot_overwrite_itself": {
+		"value": "自分での上書きはできません。"
+	},
+	"import_file": {
+		"value": "ファイルのアップロード"
+	},
+	"alert_unknown_error": {
+		"value": "不明なエラーが発生しました！"
+	},
+	"ignore_pattern_list": {
+		"value": "無視パターンのリスト"
+	},
+	"alert_parent_folder_cannot_be_moved_to_its_child_folder": {
+		"value": "親フォルダーが子フォルダには移動できません。"
+	},
+	"alert_not_valid_user": {
+		"value": "ID/PWが違います。"
+	},
+	"update_in_progress": {
+		"value": "アップデートが進行中..."
+	},
+	"notice_scm_account_changed": {
+		"value": "SCMアカウントを変更しました。"
+	},
+	"alert_cannot_overwrite_parent_folder": {
+		"value": "同じ名前を持った親フォルダーを上書きできません。"
+	},
+	"alert_upload_folder_not_selected": {
+		"value": "アップロードするフォルダを選択してください。<br/>空フォルダはアップロードされません。"
+	},
+	"search_result_refresh": {
+		"value": "リフレッシュ"
+	},
+	"confirmation_go_mygoorm_title": {
+		"value": "my.goorm.ioに移動"
+	},
+	"confirmation_do_you_want_overwrite": {
+		"value": "上書きしますか。"
+	},
+	"ignored_files": {
+		"value": "無視されたファイル"
+	},
+	"in_progress": {
+		"value": "進行中。"
+	},
+	"making_template_in_progress": {
+		"value": "テンプレート生成中..."
+	},
+	"confirmation_commit_merged_files": {
+		"value": "何も選択されませんでした。 併合された状態をコミットしますか?"
+	},
+	"not_joined_yet": {
+		"value": "未加入"
+	},
+	"alert_duplicate_shortcut_sublime": {
+		"value": "このホットキーはSublimeホットキーテーマで使われているため、使用できません。"
+	},
+	"confirmation_go_mygoorm": {
+		"value": "移動"
+	},
+	"ignore_pattern": {
+		"value": "無視パターン"
+	},
+	"do_safe_delete": {
+		"value": "削除"
+	},
+	"send_invitation_mail_to_join": {
+		"value": "グルム加入メールを送る"
+	},
+	"font_color_yellow": {
+		"value": "黄色"
+	},
+	"alert_move_not_empty_directory": {
+		"value": "目的地が空フォルダではないため移動できません。"
+	},
+	"search_clear_result": {
+		"value": "検索結果の初期化"
+	},
+	"do_safe_go_to_line": {
+		"value": "ラインに移動"
+	},
+	"alert_plugin_run_success": {
+		"value": "成功的に実行されました。<br/>ターミナルを確認してください"
+	},
+	"alert_no_imported_file": {
+		"value": "もたらすプロジェクトファイルが存在しません"
+	},
+	"alert_find_pw_exist": {
+		"value": "臨時パスワードがメールで発送されました"
+	},
+	"alert_collaboration_chat_join": {
+		"value": "あなたは現在ワークスペースに接続しました"
+	},
+	"alert_collaboration_chat_leave": {
+		"value": "あなたは現在ワークスペースで出かけました"
+	},
+	"alert_plugin_build_failed": {
+		"value": "ビルド失敗!、ミスを確認してください"
+	},
+	"alert_filetype_same_name": {
+		"value": "同じ拡張子を持ったファイルタイプが存在します"
+	},
+	"alert_find_pw_notexist": {
+		"value": "当該情報が存在しません"
+	},
+	"alert_deny_rename_folder_in_workspace_root": {
+		"value": "ワークスペースのrootでは、フォルダ名を変更することはできません"
+	},
+	"alert_open_editor_more_two": {
+		"value": "エディタウィンドウを2つ以上開けてください"
+	},
+	"alert_merge_menu_for_editor": {
+		"value": "コード併合メニューはエディターのためのメニューです"
+	},
+	"alert_project_not_opened": {
+		"value": "当該プロジェクトは、オープンされていません"
+	},
+	"alert_deny_make_folder_in_workspace_root": {
+		"value": "workspaceのrootでは新しいフォルダを作ることができません"
+	},
+	"confirmation_restore_unsaved_data": {
+		"value": "復旧するデータがあります。 復旧しますか"
+	},
+	"alert_deny_make_file_in_workspace_root": {
+		"value": "workspaceのrootでは新しいファイルをすることはできません"
+	},
+	"confirmation_language_message": {
+		"value": "言語設定を韓国語に変更しますか"
+	},
+	"confirmation_save_message": {
+		"value": "は修正されました。 保存しますか"
+	},
+	"alert_project_detailed_type": {
+		"value": "プロジェクトの詳細タイプを選択してください"
+	},
+	"alert_allow_character2": {
+		"value": "アルファベットと数字、_だけ入力ができます"
+	},
+	"alert_upload_fail": {
+		"value": "アップロードに失敗しました。 再び試みてください"
+	},
+	"confirmation_decompress_file": {
+		"value": "本当にこのファイルの圧縮を解除しますか"
+	},
+	"alert_allow_character": {
+		"value": "アルファベットと数字、_,-だけ入力できます"
+	},
+	"confirmation_new_message": {
+		"value": "同じ名前のファイルがすでに存在します。 そのまま進行しますか?<br/>(もともとファイルの内容はなくなります。)"
+	},
+	"confirmation_delete_all": {
+		"value": "本当にこのファイルとディレクトリを消しますか"
+	},
+	"confirmation_rename_message": {
+		"value": "同じ名前のファイルがすでに存在します。 引き続き進行しますか？<br/>'はい'を押すと、既存のファイルは削除されます"
+	},
+	"alert_cannot_project_delete": {
+		"value": "プロジェクトの削除を実行することができません"
+	},
+	"alert_user_undefined_password_not_match": {
+		"value": "パスワードを再確認してください"
+	},
+	"alert_select_project_item": {
+		"value": "必ずプロジェクトを1つ以上選択しなければなりません"
+	},
+	"alert_login_undefined_id_or_password": {
+		"value": "IDやパスワードが入力されていません"
+	},
+	"alert_user_undefined_re_password": {
+		"value": "パスワードの再確認のために、入力してください。"
+	},
+	"alert_user_unfit_student_id": {
+		"value": "学生番号の形式が正しくありません(10桁の数字)"
+	},
+	"alert_user_limit_comment": {
+		"value": "コメントの長さがとても長いです。(最大20字)"
+	},
+	"notice_no_matched_fild": {
+		"value": "検索語と一致するファイルを探すことができません"
+	},
+	"alert_npm_limit": {
+		"value": "NPMライブラリをこれ以上設置することができません。<br/>の制限:"
+	},
+	"confirmation_delete_filetype": {
+		"value": "本当にこのファイルタイプを削除しますか"
+	},
+	"confirmation_change_profile": {
+		"value": "引き続き進めるためにはパスワードを入力してください。"
+	},
+	"alert_confirm_delete_co_developer": {
+		"value": "本当にプロジェクトの共有をキャンセルしますか"
+	},
+	"alert_confirm_invite_co_developer": {
+		"value": "本当にプロジェクトを共有しますか。"
+	},
+	"alert_quiz_is_ended": {
+		"value": "クイズが終了または開始されていません"
+	},
+	"alert_select_file": {
+		"value": "左側プロジェクトエクスプローラで、ファイルを選択してください。"
+	},
+	"survey_send": {
+		"value": "伝送"
+	},
+	"dictionary_type": {
+		"value": "種類"
+	},
+	"dictionary_name": {
+		"value": "お名前"
+	},
+	"alert_same_file_at_created_class": {
+		"value": "同じ名前のファイルがすでに存在します"
+	},
+	"alert_cannot_exist_editor": {
+		"value": "使用可能なエディタが存在しません"
+	},
+	"alert_cannot_template_folder": {
+		"value": "ソースフォルダで作業を実行してください。"
+	},
+	"confirmation_history_delete_all": {
+		"value": "すべてのヒストリーの内容を削除します。"
+	},
+	"alert_same_file_at_created_interface": {
+		"value": "同じ名前のファイルがすでに存在します。"
+	},
+	"alert_same_file_at_created_package": {
+		"value": "同じ名前のファイルがすでにパッケージに存在します。"
+	},
+	"alert_project_over_limit": {
+		"value": "プロジェクトをさらに生成することができません。<br/>の制限:"
+	},
+	"confirmation_run": {
+		"value": "実行"
+	},
+	"alert_project_exist": {
+		"value": "同じ名前のプロジェクトが既に存在します。"
+	},
+	"confirmation_leave_project": {
+		"value": "プロジェクトの共有をキャンセルしますか。"
+	},
+	"confirmation_cancel_friend": {
+		"value": "友達要請をキャンセルしますか。"
+	},
+	"confirmation_do_you_want_to_resolve_conflict": {
+		"value": "この衝突を解決しますか。"
+	},
+	"confirmation_reject_project": {
+		"value": "プロジェクトの共有を拒絶しますか。"
+	},
+	"confirmation_accept_project": {
+		"value": "プロジェクトの共有を受諾しますか。"
+	},
+	"tutorial": {
+		"value": "チュートリアル"
+	},
+	"project_share_none": {
+		"value": "このユーザーは、プロジェクトにアクセスできません。"
+	},
+	"there_is_not_repository": {
+		"value": "正しいGit/Subversionストーリッジではありません"
+	},
+	"profile_password_confirm": {
+		"value": "確認のためパスワードを再度入力してください。"
+	},
+	"project_share_editable": {
+		"value": "このユーザーはファイル、プロジェクトについて修正が可能です。"
+	},
+	"alert_scm_test_fail": {
+		"value": "URLが有効でないか、認証に失敗しました。"
+	},
+	"alert_scm_comment_required": {
+		"value": "メッセージは必ず作成しなければなりません。"
+	},
+	"project_share_readonly": {
+		"value": "このユーザーはファイルを読むことだけ可能です。"
+	},
+	"alert_scm_push_fail": {
+		"value": "あるファイル(達)はPushされていません。<br/>原因:<br/>"
+	},
+	"signup_name": {
+		"value": "2~15字、ハングル/アルファベット/数字/(/_/.//)"
+	},
+	"quiz": {
+		"value": "クイズ"
+	},
+	"alert_scm_lock_fail": {
+		"value": "あるファイル(達)はロックされていません。<br/>原因:<br/>"
+	},
+	"webview": {
+		"value": "ウェプビュ>"
+	},
+	"alert_scm_checkout_fail": {
+		"value": "チェックアウトに失敗しました。 再び試みてください。"
+	},
+	"alert_scm_commit_fail": {
+		"value": "あるファイル(達)はCommitされていません。<br/>原因:<br/>"
+	},
+	"alert_scm_branch_merge_fail": {
+		"value": "は併合されていません。<br/>原因:<br/>"
+	},
+	"alert_scm_remove_fail": {
+		"value": "あるファイル(達)は除去されていません。<br/>原因:<br/>"
+	},
+	"alert_scm_input_right_value": {
+		"value": "正しい値を入力してください。<br/>正しくない値："
+	},
+	"server": {
+		"value": "サーバー"
+	},
+	"alert_scm_update_fail": {
+		"value": "アップデートに失敗しました。<br/>原因:<br/>"
+	},
+	"confirmation_scm_commit_fail_out_date": {
+		"value": "<br/>Commitに失敗しました。<br/>原因:最新バージョンではありません。<br/>このファイルをアップデートしますか?<br/>追加説明:<br/>"
+	},
+	"confirmation_scm_want_to_undo_push": {
+		"value": "最後のPushをキャンセルしますか。"
+	},
+	"alert_scm_cleanup_fail": {
+		"value": "あるファイル(達)はClean Upされていません。<br/>原因:<br/>"
+	},
+	"alert_scm_add_fail": {
+		"value": "あるファイル(達)は、追加されていません。<br/>原因:<br/>"
+	},
+	"alert_scm_branch_delete_fail": {
+		"value": "は削除されていません。<br/>原因:<br/>"
+	},
+	"confirmation_scm_want_to_publish_branch": {
+		"value": "遠隔貯蔵施設にブランチをPublishしますか?<br/>"
+	},
+	"confirmation_scm_want_to_delete_branch": {
+		"value": "ブランチを削除しますか?<br/>"
+	},
+	"alert_not_version_control": {
+		"value": "このファイル/フォルダはバージョンコントロールの対象ではありません。"
+	},
+	"new_project_scm_dialog": {
+		"value": "新しいプロジェクトのscmの貯蔵庫を入力してください"
+	},
+	"confirmation_scm_want_to_undo_change": {
+		"value": "この修正されたローカルファイルを元に復旧しますか。 あなたはすべての修正事項を失うことであり、これは戻すことができません。"
+	},
+	"alert_scm_unlock_fail": {
+		"value": "あるファイル(達)はアンロックされていませんでした。<br/>原因:<br/>"
+	},
+	"confirmation_scm_want_to_undo_commit": {
+		"value": "最後のCommitをキャンセルしますか。"
+	},
+	"study": {
+		"value": "学習"
+	},
+	"confirmation_scm_want_to_create_branch": {
+		"value": "新しいブランチを生成しますか?<br/>"
+	},
+	"alert_undo_fail": {
+		"value": "あるファイル(達)はキャンセルされていません。<br/>原因:<br/>"
+	},
+	"confirmation_scm_want_to_merge_branch": {
+		"value": "Masterとブランチを併合しますか?<br/>"
+	},
+	"alert_scm_branch_publish_fail": {
+		"value": "はPublishされていません。<br/>原因:<br/>"
+	},
+	"confirmation_refactor_want_to_safe_delete": {
+		"value": "選択された文字列を安全に削除しますか"
+	},
+	"confirmation_scm_want_to_push": {
+		"value": "CommitされたファイルをPushしますか。"
+	},
+	"not_friend_message": {
+		"value": "友達ではありません。<br/>友達要請しますか。"
+	},
+	"send_error_chat": {
+		"value": "該当エラーをワークスペースのチャットルームに送る"
+	},
+	"confirmation_scm_want_to_move_branch": {
+		"value": "ブランチを移動させますか?<br/>"
+	},
+	"places": {
+		"value": "場所"
+	},
+	"imported_file_exist_single": {
+		"value": "ファイルがすでに存在します。<br/>かぶせますか。"
+	},
+	"alert_duplicate_dir": {
+		"value": "同じファイル名のディレクトリが存在します"
+	},
+	"alert_eval_not_supported": {
+		"value": "該当ファイルには支援されない機能です。"
+	},
+	"alert_limit_file_size": {
+		"value": "50MBより大きいサイズのファイルはアップロードできません。"
+	},
+	"imported_file_exist_multiple": {
+		"value": "ファイルがすでに存在します。<br/>かぶせますか。"
+	},
+	"alert_delete_shared_file": {
+		"value": "ファイルを削除することはできません。 このファイルは現在協業中です。"
+	},
+	"check_property_main": {
+		"value": "プロジェクトプロパティで、mainファイルの位置を確認してください。"
+	},
+	"search_user_placeholder": {
+		"value": "名前と電子メールで使用者を探すことができます。"
+	},
+	"alert_drop_on_editor": {
+		"value": "エディターの上にファイルを上げることができません。"
+	},
+	"alert_project_not_found": {
+		"value": "すでに削除されたり、検索できないプロジェクトです。"
+	},
+	"scm_check_repository": {
+		"value": "SCMストレージTestを先に遂行してください。"
+	},
+	"alert_project_permission_denied": {
+		"value": "プロジェクトに接近する権限がありません。"
+	},
+	"alert_dialog_id_used": {
+		"value": "이미 이 다이얼로그 ID를 이용하고 있습니다!"
+	},
+	"same_folder_exist": {
+		"value": "同一のファイル/フォルダ名が存在します。 ファイルの場合、当該ファイルは削除されて、フォルダの場合は合併することになります。 行いますか。"
+	},
+	"font_color_green": {
+		"value": "緑"
+	},
+	"font_color_red": {
+		"value": "赤"
+	},
+	"font_color_white": {
+		"value": "白"
+	},
+	"font_color_blue": {
+		"value": "青"
+	},
+	"alert_select_scm_revision": {
+		"value": "チェックアウトを受けるリビジョンを選択してください!"
+	},
+	"alert_root_folder_cannot_be_moved": {
+		"value": "ルートフォルダは移動できません。"
+	},
+	"folder_dnd_error": {
+		"value": "フォルダはドラッグでアップロードできません!"
+	},
+	"alert_allow_file_has_valid_name": {
+		"value": "ファイル/フォルダ名はアルファベット、数字、空白、そして一部の特殊文字(_,-,(,)、[、]、。)だけ可能です。"
+	},
+	"alert_move_is_directory": {
+		"value": "目的地がフォルダであるため、移動できません。"
+	},
+	"confirmation_reload_window": {
+		"value": "ファイルの内容が更新されました。 ファイルを再びロードしますか?<br/>(修正された内容は消えるかもしれません。<br/>"
+	},
+	"alert_scm_ignore_import_fail": {
+		"value": "ファイルのアップロードやIgnore設定に失敗しました。\\n"
+	},
+	"alert_rename_exist_folder": {
+		"value": "同じ名前のフォルダが存在するため、変更できません。"
+	},
+	"only_chrome_allowed": {
+		"value": "該当機能はクローム・ブラウザでのみ可能です。"
+	},
+	"alert_input_ignore_pattern": {
+		"value": "パターンを入力したり、ファイルを選択してください。"
+	},
+	"confirmation_do_you_want_move": {
+		"value": "移動させますか?<br/>上書きが可能な場合ならできますが、正しくない移動なら移動されません。"
+	},
+	"alert_move_not_directory": {
+		"value": "目的地がフォルダではないため移動できません。"
+	},
+	"alert_git_clone_non_empty_repository": {
+		"value": "空いていないディレクトリにはクローン受けません。"
+	},
+	"alert_folder_not_duplicated": {
+		"value": "フォルダは複製することができないため、除外しました。"
+	},
+	"alert_plugin_run_fail": {
+		"value": "実行に失敗しました。<br/>ターミナルを確認してください。"
+	},
+	"notice_no_matched_file": {
+		"value": "検索条件に一致するファイルが見つかりません。"
+	},
+	"alert_delete_file_fail": {
+		"value": "ファイルを削除できません。"
+	},
+	"confirmation_upload_image": {
+		"value": "画像をアップロードしますか？"
+	},
+	"tab_title_build": {
+		"value": "ビルド"
+	},
+	"tab_title_run": {
+		"value": "実行"
+	},
+	"window_bottom_layout_run": {
+		"value": "実行タブを表示"
+	},
+	"window_bottom_layout_build": {
+		"value": "ビルドタブを表示"
+	},
+	"window_right_layout_toggle_collaboration": {
+		"value": "コラボレーションユーザー"
+	},
+	"tab_title_rebuild": {
+		"value": "再ビルド"
+	},
+	"tab_title_restart": {
+		"value": "再実行"
+	},
+	"tab_button_clear": {
+		"value": "初期化"
+	},
+	"tab_button_stop_server": {
+		"value": "サーバー停止"
+	},
+	"tab_msg_sever_running": {
+		"value": "現在 "
+	},
+	"tab_msg_server_running": {
+		"value": "現在 "
+	},
+	"tab_msg_server_running2": {
+		"value": "でサーバへの接続が可能です。"
+	},
+	"alert_outline_parse_err": {
+		"value": "ファイルを分析することができません。エラーを確認してください。"
+	},
+	"alert_text_file_only": {
+		"value": "テキストファイルをアップロードしてください。"
+	},
+	"alert_paste_fail": {
+		"value": "コピーを失敗しました。"
+	},
+	"alert_paste_child": {
+		"value": "ペーストする位置が同じか、自分の中の方のノードです。"
+	},
+	"confirm_file_export": {
+		"value": "このファイルをエクスポートしますか？"
+	},
+	"alert_scm_revert": {
+		"value": "いくつかのファイルは元に戻されませんでした。<br/>原因：<br/>"
+	},
+	"alert_file_too_many_ignore_pattern": {
+		"value": "パターンが多すぎます。最大100行のパターンをアップロードしてください。"
+	},
+	"confirmation_file_rename_collaboration": {
+		"value": "同僚がこのファイルの名前を変更しました。再読み込みしますか？<br/>変更は失われることがあります。<br/>"
+	},
+	"confirmation_file_delete_collaboration": {
+		"value": "同僚がこのファイルを削除しました。再読み込みしますか？<br/>変更された内容を失う可能性があります。"
+	},
+	"confirmation_search_replace": {
+		"value": "プロジェクト内の単語をすべて変更しますか？"
+	},
+	"notice_search_replace_changed": {
+		"value": "個のファイルが変更されました。"
+	},
+	"msg_project_search": {
+		"value": "検索"
+	},
+	"alert_need_change_name": {
+		"value": "ファイル名を変更してください。"
+	},
+	"confirmation_program_running_close_tab": {
+		"value": ""
+	},
+	"confirmation_server_running_close_tab": {
+		"value": ""
+	}
+}
