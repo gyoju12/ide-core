@@ -100,7 +100,11 @@ goorm.core.layout.tab.terminal_manager = {
 			var hide = false;
 
 			// show
-			this.list[name].tab.click(function() {
+			this.list[name].tab.click(function(e) {
+				if ($(e.target).hasClass('glyphicon-remove')) {
+					return false;
+				}
+
 				hide = false;
 
 				if (fn_show && typeof(fn_show) === 'function') {
