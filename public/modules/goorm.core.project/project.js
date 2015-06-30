@@ -807,6 +807,8 @@ goorm.core.project = {
 
 		if (core.status.current_project_type == 'dart') {
 			run_file_path = core.status.current_project_path + '/' + build_main + '.dart.js';
+		} else if (core.status.current_project_type == '_net') {
+			run_file_path += '.exe';
 		}
 
 		// console.log(run_file_path, core.status.current_project_path);

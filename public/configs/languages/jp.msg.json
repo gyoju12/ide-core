@@ -1364,9 +1364,6 @@
 	"tab_msg_sever_running": {
 		"value": "現在 "
 	},
-	"tab_msg_server_running": {
-		"value": "現在 "
-	},
 	"tab_msg_server_running2": {
 		"value": "でサーバへの接続が可能です。"
 	},

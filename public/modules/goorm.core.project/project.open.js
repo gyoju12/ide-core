@@ -218,12 +218,63 @@ goorm.core.project.open = {
 	open: function(current_project_path, current_project_name, current_project_type, storage) {
 		var self = this;
 
+		// open available project. Jeong-Min Im.
+		// 		available (Object) = {
+		// 			result (Bool) : available or not
+		// 			err_code (Number) : reason for not available
+		// 		}
+		var callback = function(available) {
+			if (available.result) {
+				// refresh project. Jeong-Min Im.
+				var refresh = function() {
+					localStorage.current_project = JSON.stringify({
+						current_project_path: current_project_path,
+						current_project_name: current_project_name,
+						current_project_type: current_project_type
+					});
+
+					core.module.layout.project_explorer.refresh();
+					core.module.layout.project_explorer.refresh_project_selectbox();
+
+					core.module.layout.chat.user.join();
+
+					core.module.layout.workspace.window_manager.refresh_all_title(current_project_path);
+				};
+
+				recent_project_temp = {};
+				recent_project_temp.current_project_path = current_project_path;
+				recent_project_temp.current_project_name = current_project_name;
+				recent_project_temp.current_project_type = current_project_type;
+
+				self.display_recent_project(recent_project_temp);
+				localStorage.setItem('recent_projects', JSON.stringify(self.recent_project));
+
+				core.module.layout.chat.user.leave();
+
+				core.status.current_project_path = current_project_path;
+				core.status.current_project_name = current_project_name;
+				core.status.current_project_type = current_project_type;
+
+				
+				
+			} else {
+				switch (available.err_code) {
+					case 20:
+						alert.show(core.module.localization.msg.alert_project_permission_denied);
+						break;
+					case 404:
+						alert.show(core.module.localization.msg.alert_project_not_found);
+						break;
+						
+				}
+			}
+		};
+
 		//$(core).trigger('on_project_binding');
 
 		//set once-open trigger every call of open so that can get the message of nodejs project --heeje
 		$(core).one('do_open', $.throttle(function() {
 			
-
 			
 
 			//useonly(mode=goorm-oss)

@@ -29,7 +29,8 @@ var initial_list = {
 	'jsp': ['goorm.plugin.jsp'],
 	'php': ['goorm.plugin.php'],
 	'android': ['goorm.plugin.android'],
-	'phonegap': ['goorm.plugin.phonegap']
+	'phonegap': ['goorm.plugin.phonegap'],
+	'_net': ['goorm.plugin._net']
 };
 
 var resource_list = [

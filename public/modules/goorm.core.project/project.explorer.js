@@ -352,6 +352,9 @@ goorm.core.project.explorer.prototype = {
 			this.current_project.current_project_path = this.project_data[project_idx].name;
 			this.current_project.current_project_name = this.project_data[project_idx].contents.name;
 			this.current_project.current_project_type = this.project_data[project_idx].contents.type;
+			if (this.current_project.current_project_type === '.net') {
+				this.current_project.current_project_type = '_net';
+			}
 		} else {
 			this.current_project.current_project_path = '';
 			this.current_project.current_project_name = '';
@@ -647,6 +650,9 @@ goorm.core.project.explorer.prototype = {
 			var project_data = core.workspace[p];
 
 			if (project_data && project_data.type && project_data.name && project_data.author) {
+				if (project_data.type === '_net') {
+					project_data.type = '.net';
+				}
 				if (project_data.author == core.user.id) {
 					my_project_list.push([project_data.type, project_data.name, project_data.author_email, p]);
 				} else {

@@ -29,7 +29,7 @@ goorm.core.project.property.manager = {
 				obj.id = obj.label;
 			}
 			var d = {};
-			d.text = obj.label;
+			d.text = (obj.label !== '_NET')? obj.label : '.NET';
 			d.id = parent + '/' + obj.id;
 			d.type = 'file';
 			d.parent = parent;
@@ -80,7 +80,6 @@ goorm.core.project.property.manager = {
 				}
 			}
 		};
-
 		var project_root = [{
 			text: json.core.label, // for localization
 			state: {
