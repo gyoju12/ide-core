@@ -84,7 +84,7 @@ goorm.core.file._import = {
 						self.files_upload(data, function() { // jeongmin: overwrite function
 							$('#myForm').attr('action', 'file/import?is_overwrite=true');
 							self.progress_elements = core.module.loading_bar.start({
-								str: core.module.localization.msg.import_in_progress
+								str: core.module.localization.msg.processing
 							});
 
 							$('#myForm').submit();
@@ -173,7 +173,11 @@ goorm.core.file._import = {
 			for (i = 0; i < file_list.length; i++) {
 				if (core.module.file.test(file_list[i].name)) {
 					alert.show(core.module.localization.msg.alert_allow_file_has_valid_name);
-					callback(false);
+
+					if (callback) {
+						callback(ret_val);
+					}
+
 					return;
 				}
 			}
@@ -192,7 +196,11 @@ goorm.core.file._import = {
 		}
 		if (large_files.length > 0) {
 			alert.show('[' + large_files.join(', ') + ']<br/>' + core.module.localization.msg.alert_limit_file_size);
-			callback(false);
+
+			if (callback) {
+				callback(ret_val);
+			}
+
 			return;
 		} else {
 			ret_val = true;
@@ -256,7 +264,10 @@ goorm.core.file._import = {
 							$('#myForm').attr('action', 'file/import');
 
 						}
-						callback(ret_val);
+
+						if (callback) {
+							callback(ret_val);
+						}
 					},
 					no: function() {
 						if (where === 'dialog') {
@@ -269,7 +280,10 @@ goorm.core.file._import = {
 						} else if (where === 'dnd' && dup_list.length === 1) {
 							ret_val = false;
 						}
-						callback(ret_val);
+
+						if (callback) {
+							callback(ret_val);
+						}
 					}
 				});
 
@@ -278,7 +292,9 @@ goorm.core.file._import = {
 				}
 				confirmation.show();
 			} else {
-				callback(ret_val);
+				if (callback) {
+					callback(ret_val);
+				}
 			}
 		});
 	},
@@ -386,7 +402,7 @@ goorm.core.file._import = {
 
 				self.upload_file_path = current_project + '/'; // jeongmin: for reopening windows
 				self.progress_elements = core.module.loading_bar.start({
-					str: localization_msg.import_in_progress
+					str: localization_msg.processing
 				});
 
 				if ($('#myForm').attr('action') == 'file/import?is_overwrite=true') {
@@ -421,7 +437,7 @@ goorm.core.file._import = {
 						success: function(data) {
 							self.files_upload(data, function() { // jeongmin: overwrite function
 								self.progress_elements = core.module.loading_bar.start({
-									str: core.module.localization.msg.import_in_progress
+									str: core.module.localization.msg.processing
 								});
 
 								send('file/import?is_overwrite=true');

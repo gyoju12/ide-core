@@ -139,7 +139,6 @@ goorm.core.menu.action = {
 			if (window_manager.window[window_manager.active_window]) {
 				var active_window_title = window_manager.window[window_manager.active_window].title;
 				window_manager.close_by_title(active_window_title);
-				console.log(active_window_title + ' close...');
 			}
 		});
 

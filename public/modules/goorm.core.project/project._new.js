@@ -29,8 +29,8 @@ goorm.core.project._new = {
 			help_url: 'http://help.goorm.io/#help_new_project',
 			success: function() {
 				var $next_btn = $('#g_np_btn_next');
-				var	$ok_btn = $('.g_np_btn_ok');
-				var	_import = core.module.project._import;
+				var $ok_btn = $('.g_np_btn_ok');
+				var _import = core.module.project._import;
 
 				$ok_btn.hide();
 				////// show/hide buttons for each tab. Jeong-Min Im. //////
@@ -206,7 +206,7 @@ goorm.core.project._new = {
 						type: $('#input_project_type').attr('value'),
 						detailed_type: $('#input_project_detailed_type').attr('value'),
 						plugins: plugin,
-						storage: $("#select_new_project_storage").val()
+						storage: $('#select_new_project_storage').val()
 					};
 
 					// var selected_storage = $("#new_project_storage").val().toString();	// hidden: storage is deprecated
@@ -281,7 +281,7 @@ goorm.core.project._new = {
 			},
 
 			show: function() { //jeongmin: the modal has been made visible to the user!
-				if (typeof(self.callback) == 'function') {//jeongmin: check if callback is not null
+				if (typeof(self.callback) == 'function') { //jeongmin: check if callback is not null
 					self.callback.call(); //jeongmin: let's go to the plug.js to calculate scrollTop
 				}
 				//$('a[href='#new_project_template']').click(); // hidden by jeongmin: menu.action.js will do
@@ -588,7 +588,7 @@ goorm.core.project._new = {
 				$('#g_np_btn_next').focus();
 			} else if (e.which === 9) {
 				var flag = true;
-				var	temp_value;
+				var temp_value;
 				$.each($('#dlg_new_project').find('.btn-primary.g_np_btn_ok'), function(index, value) {
 					if ($(value).css('display') !== 'none') {
 						flag = false;

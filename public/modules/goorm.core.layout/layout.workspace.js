@@ -67,7 +67,7 @@ goorm.core.layout.workspace = {
 			// Make File Description
 			//
 			if (files) {
-				goorm.core.file._import.upload_file_drag(files);
+				goorm.core.file._import.upload_file_drag(files, core.status.current_project_path);
 			}
 		});
 
