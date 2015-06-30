@@ -458,7 +458,7 @@ goorm.core.edit.dictionary.prototype = {
 		var gutter = cm.getGutterElement();
 		// 		var gutter_width = $(gutter).width() + parseInt(core.preference["preference.editor.font_size"]);
 
-		var left = cursor_pos.left + $(gutter).width(); // + parseInt(core.preference["preference.editor.font_size"], 10);
+		var left = cursor_pos.left + $(gutter).width() - scroll.left; // consider scroll position
 		var top = cursor_pos.top - scroll.top + parseInt(core.preference['preference.editor.font_size'], 10);
 
 		var wrapper = $(cm.getWrapperElement());
