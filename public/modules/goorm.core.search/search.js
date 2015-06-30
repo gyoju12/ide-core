@@ -406,8 +406,6 @@ goorm.core.search = {
 			indent: 5
 		}, true);
 
-		core.module.layout.select('search');
-
 		$('#search_result').off('scroll');
 		$('#search_result').on('scroll', $.throttle(function() {
 			if (self.unload_data.length > 0) {
@@ -430,6 +428,8 @@ goorm.core.search = {
 
 				self.show_no_word_toast();
 			} else {
+				core.module.layout.select('search');
+
 				if (res.data) {
 					// self.unload_data.push(res);
 					self.convert_data_to_table(res.data.nodes);
