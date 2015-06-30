@@ -173,8 +173,9 @@ goorm.core.project._delete = {
 							yes_text: core.module.localization.msg.yes,
 							no_text: core.module.localization.msg.no,
 							yes: function() {
-								core.module.layout.tab.toggle('gLayoutServer_' + core.status.current_running_server[data.path]);
-								$('#gLayoutServer_' + core.status.current_running_server[data.path]).find('.server_btn').click();
+								var running = core.status.current_running_server[data.path];
+								$('#server_tab_' + running + ' .server_btn').click();
+								core.module.layout.tab.toggle('gLayoutServer_' + running);
 								self.processing = true;
 								self.__handle_delete();
 							},

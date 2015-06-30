@@ -1825,7 +1825,8 @@ pre.code {
     border: 0;
     padding: 10px;
 }
-#dlg_help_shortcuts .modal-body {
+#dlg_help_shortcuts .modal-body,
+#my_friend_list .media {
     padding: 10px;
 }
 #dlg_help_shortcuts .helptext {
@@ -3873,4 +3874,15 @@ div.item a > span {
 }
 .hide_tab:hover {
 	opacity: 0.5;
+}
+
+#friends .btn {
+	border-color: transparent;
+	border-bottom-color: #ccc;
+	border-bottom-style: dashed;
+	width: 100%;
+}
+
+#add_friend_list .media-list {
+	height: 250px;
 }

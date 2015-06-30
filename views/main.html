@@ -1434,9 +1434,6 @@
             <ul id="east_tab" class="nav nav-tabs">
                 <!--  -->
                 <li>
-                    <a href="#outline" data-toggle="tab" id='gLayoutTab_Outline' localization_key='outline'>Outline</a>
-                </li>
-                <li>
                     <a href="#bookmark" data-toggle="tab" id='gLayoutTab_Bookmark' localization_key='edit_bookmark'>Bookmark</a>
                 </li>
                 <!--  -->
@@ -1447,11 +1444,9 @@
                 <!--  -->
                 <!--  -->
                 <!--  -->
-                <div class="tab-pane fade" id="outline">
-                    <div id="outline_wrapper">
-                        <!--  -->
                     </div>
                 </div>
+				<!--  -->
                 <div class="tab-pane fade" id="bookmark">
                     <div class="panel-group" id="bookmark_tab">
                         <div class="panel panel-default">
@@ -1474,7 +1469,6 @@
                         </div>
                     </div>
                 </div>
-                <!--  -->
             </div>
         </div>
         <div id="goorm_inner_layout_bottom" class="ui-layout-south">
@@ -3122,7 +3116,31 @@
     </div>
 
     <div id="goorm_dialog_container">
-
+		<div class="modal fade" id="dlg_add_friends" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" localization_key='add_friends'>Add Friends</h4>
+                    </div>
+                    <div class="modal-body row padding-10px">
+						<div id="search_friend_container" class="margin-8px">
+							<div class="input-group">
+							  <span class="input-group-addon" localization_key="search">Search</span>
+							  <input id="search_friend_input" type="text" class="form-control" placeholder="ID, name, or email..." localization_key="type_name_or_email">
+							</div>
+						</div>
+						<div id="add_friend_list" class="friend_list">
+							<ul class="media-list"></ul>
+						</div>
+					</div>
+                    <div class="modal-footer">
+						<button class="btn btn-default" data-dismiss="modal" localization_key='close'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
         <!--
          DIALOG : Alert
         -->
@@ -5547,6 +5565,12 @@
                                                     <input class="shortcut_input form-control" name="preference.shortcut.file.rename" id="preference.shortcut.file.rename" value="Ctrl+Shift+R"/>
                                                 </div>
                                             </div>
+											<div class="row">
+                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.duplicate" localization_key="file_duplicate">Duplicate</label>
+                                                <div class="col-md-8">
+                                                    <input class="shortcut_input form-control" name="preference.shortcut.file.duplicate" id="preference.shortcut.file.duplicate" value="Ctrl+Shift+A"/>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.delete" localization_key="file_delete">Delete</label>
                                                 <div class="col-md-8">
@@ -5590,12 +5614,6 @@
                                                 <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.edit.paste" localization_key="edit_paste">Paste</label>
                                                 <div class="col-md-8">
                                                     <input class="shortcut_input form-control" name="preference.shortcut.edit.paste" id="preference.shortcut.edit.paste" value="Ctrl+V"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <label class="shortcut_menu col-md-4 control-label" name="preference.shortcut.file.duplicate" localization_key="file_duplicate">Duplicate</label>
-                                                <div class="col-md-8">
-                                                    <input class="shortcut_input form-control" name="preference.shortcut.file.duplicate" id="preference.shortcut.file.duplicate" value="Ctrl+Shift+A"/>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -7077,7 +7095,7 @@
                                 Copy
                                 <em class="helptext">Ctrl + C</em>
                             </span>
-                            <span name="preference.shortcut.edit.duplicate" localization_key="file_duplicate">
+                            <span name="preference.shortcut.file.duplicate" localization_key="file_duplicate">
                                 Duplicate
                                 <em class="helptext">Ctrl + Shift + A</em>
                             </span>
@@ -7366,10 +7384,10 @@
                                 Show Bookmark
                                 <em class="helptext">Alt + 5</em>
                             </span>
-                            <span name="preference.shortcut.window.right_layout_toggle_outline" localization_key="window_right_layout_toggle_collaboraion">
+<!--                             <span name="preference.shortcut.window.right_layout_toggle_outline" localization_key="window_right_layout_toggle_collaboraion">
                                 Show Collaboration User
                                 <em class="helptext">Alt + 6</em>
-                            </span>
+                            </span> -->
                             <span style="display:none;" class="goorm_perspectives_menu_end" position="right"></span>
                             <span name="preference.shortcut.window.bottom_layout_show_hide" localization_key="window_bottom_layout_show_hide">
                                 Bottom Pane Show/Hide
