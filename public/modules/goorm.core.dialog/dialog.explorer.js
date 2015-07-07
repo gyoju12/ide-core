@@ -67,7 +67,7 @@ goorm.core.dialog.explorer.prototype = {
 			if (node[0]) {
 				node = $('[id="' + node[0] + '"]')[0];
 				if (node) {
-					node.scrollIntoView(false);
+					node.scrollIntoView(true); // true means 'show in top(alignWithTop)'
 				}
 			}
 		};
