@@ -736,6 +736,7 @@ goorm.core.layout = {
 					case 'project':
 					case 'packages':
 					case 'cloud':
+					case 'navigate':
 						pane = 'west';
 						$parent = $('#goorm_left');
 						break;
@@ -1209,6 +1210,9 @@ goorm.core.layout = {
 
 			case 'cloud':
 				return 'gLayoutTab_Cloud';
+
+			case 'navigate':
+				return 'gLayoutTab_navigate';
 
 			case 'debug':
 				return 'gLayoutTab_Debug';

@@ -392,6 +392,14 @@ goorm.core.tutorial = {
 					layout.select('project');
 				}
 			}, {
+				element: '#goorm_left',
+				title: '',
+				content: core.module.localization.tutorial.navigate_tut,
+				placement: 'right',
+				onShow: function() {
+					layout.select('navigate');
+				}
+			}, {
 				element: '#goorm_inner_layout_center',
 				title: '',
 				placement: 'left',

@@ -181,5 +181,8 @@
 	},
 	"click_add_friends_button": {
 		"value": "Click 'Add Friends' button in 'Friends' tab."
+	},
+	"navigate_tut": {
+		"value": "This is the 'Navigate' tab. You can easily navigate through the various functions in the 'goormIDE' and files in the current project."
 	}
 }
