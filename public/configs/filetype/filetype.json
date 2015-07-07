@@ -35,6 +35,13 @@
 		"mode": "text/x-c++src"
 	},
 	{
+		"file_extension": "cs",
+		"editor": "Editor",
+		"description": "cs",
+		"type": "Code",
+		"mode": "text/x-csharp"
+	},
+	{
 		"file_extension": "java",
 		"editor": "Editor",
 		"description": "java file",

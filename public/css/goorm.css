@@ -769,12 +769,13 @@ li.slideshare_url_item a > div {
 
 /* outline */
 #outline_wrapper {
-    display: table;
-    height: 100%;
+    height: inherit;
+    width:100%;
+    position: absolute;
 }
 #object_tree_wrapper {
-    display: table-row;
-    height: 100%;
+    position: relative;
+    top: 36px;
 }
 #object_tree {
     height: 100%;
@@ -783,12 +784,13 @@ li.slideshare_url_item a > div {
 #current_outline_wrapper {
     background-color: #fff;
     border-bottom: 1px solid #eee;
+    position: absolute;
+    width: 100%;
 }
 #current_outline {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    width:200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* project_share_container */
@@ -3170,6 +3172,14 @@ Plugin CSS: jeongmin
 }
 .chat_toolbar_cpp {
     background: transparent url(../images/icons/filetype/c++.png) no-repeat;
+    cursor: hand;
+    cursor: pointer;
+    height: 16px;
+    margin-bottom: 0.5px;
+    width: 16px;
+}
+.chat_toolbar_cs {
+    background: transparent url(../images/icons/filetype/c%23.png) no-repeat;
     cursor: hand;
     cursor: pointer;
     height: 16px;

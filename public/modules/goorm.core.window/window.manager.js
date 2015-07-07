@@ -465,7 +465,6 @@ goorm.core.window.manager = {
 		var self = this;
 		var options = __options || {};
 		this.active_window = this.index; // jeongmin: no need -> Donguk : need (using eduView)
-
 		if (!options.title) {
 			options.title = filepath + filename;
 		}

@@ -1508,6 +1508,7 @@ module.exports = {
 			case 'bmp':
 			case 'c':
 			case 'c#':
+			case 'cs':
 			case 'c++':
 			case 'class':
 			case 'config':

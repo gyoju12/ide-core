@@ -665,7 +665,7 @@ goorm.core.shortcut.manager = {
 	set_default: function() {
 		var name;
 		var action;
-		
+
 		// restore custom shortcut
 		if (Object.keys(this.custom_shortcut).length > 0) {
 			for (name in this.custom_shortcut) {
@@ -2023,26 +2023,26 @@ goorm.core.shortcut.manager = {
 					// 	core.module.layout.inner_layout.getUnitByPosition("right").expand();
 					// }
 					// core.module.layout.inner_right_tabview.selectTab(3);
-					var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();
-					switch (current_file_type) {
-						case 'c':
-						case 'cpp':
-						case 'java':
-						case 'py':
-						case 'js':
-						case 'html':
-						case 'css':
-							var layout = core.module.layout;
+					// 					var current_file_type = core.module.layout.workspace.window_manager.active_filename.split('.').pop();	// hidden: always can activate outline tab
+					// 					switch (current_file_type) {
+					// 						case 'c':
+					// 						case 'cpp':
+					// 						case 'java':
+					// 						case 'py':
+					// 						case 'js':
+					// 						case 'html':
+					// 						case 'css':
+					var layout = core.module.layout;
 
-							layout.select('outline');
-							layout.tab.show_showing_icon(layout.get_id('outline'));
-							break;
+					layout.select('outline');
+					layout.tab.show_showing_icon(layout.get_id('outline'));
+					// 							break;
 
-						default:
+					// 						default:
 
-							break;
+					// 							break;
 
-					}
+					// 					}
 				}
 
 				e.stopPropagation();
