@@ -426,12 +426,11 @@ goorm.core.terminal.prototype = {
 
 		// seongho : I calculate the pixels. floor(font_size * 0.625) is real width of pixels
 		var font_width = Math.floor(font_size * 0.5818079); // jeongmin: changed number -> it's statistical!!
+		var parent = $(this.target).parents('.tab-content');
 		// if (font_width == 6) // but font_size:11px is exception. Calculation value is 6px, but in real, 7px
 		// 	font_width = 7;	// hidden by jeongmin: more accurate column will be calculated below, anyway
 
 		if (!this.in_panel) {
-			var parent = $(this.target).parents('.tab-content');
-
 			// for target space
 			height = parseInt(parent.height() - 10, 10); // 10 for leaving margins
 			width = parseInt(parent.width() - 10, 10); // 10 for leaving margins
@@ -462,7 +461,7 @@ goorm.core.terminal.prototype = {
 		////// jeongmin: sometimes, width is much smaller than it is. So, reset its width as its parent's width //////
 
 		$(this.target).width(width);
-		$(this.target).height(height);
+		$(this.target).outerHeight(parent.height() - $(this.target).siblings('.clr_view').length ? $(this.target).siblings('.clr_view').outerHeight() : 0); // full terminal height
 
 		if (geometry.cols <= 0 || geometry.rows <= 0 || isNaN(geometry.cols)) { //it can be NaN - divide by 0
 			geometry.cols = 1000;
