@@ -1,4 +1,7 @@
 {
+	"yes": {
+		"value": "Yes"
+	},
 	"output": {
 		"value": "Output"
 	},
@@ -114,7 +117,7 @@
 		"value": ""
 	},
 	"confirmation_save": {
-		"value": "Close..."
+		"value": "Confirmation Save"
 	},
 	"confirmation_auto_logout_warning": {
 		"value": "Second later Auto Logout"
@@ -223,6 +226,9 @@
 	},
 	"confirmation_delete_project": {
 		"value": "Do you want to delete this project?"
+	},
+	"no": {
+		"value": "No"
 	},
 	"alert_user_unfit_reg_id": {
 		"value": "The format of the ID is not valid. (4~15 digits, Alphabet+Number)."
@@ -1362,6 +1368,9 @@
 		"value": "Stop Server"
 	},
 	"tab_msg_sever_running": {
+		"value": "Server is running on "
+	},
+	"tab_msg_server_running": {
 		"value": "Server is running on "
 	},
 	"tab_msg_server_running2": {

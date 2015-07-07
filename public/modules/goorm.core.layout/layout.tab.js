@@ -331,7 +331,7 @@ goorm.core.layout.tab = {
 					content: core.module.localization.msg.tutorial_output_tab,
 					placement: 'top',
 					onShow: function() {
-						$('#south_tab #' + tab_id).tab('show');
+						core.module.layout.select(tab_id);
 					}
 				}
 			},
@@ -359,7 +359,11 @@ goorm.core.layout.tab = {
 			if (tab_nav.hasClass('active')) {
 				var next = tab_nav.next(':not([style*=none])'); // show non-hidden tab
 
-				next.length ? next.children().click() : tab_nav.prev(':not([style*=none])').children().click();
+				if (next.length) {
+					next.children().click();
+				} else {
+					tab_nav.prev(':not([style*=none])').children().click();
+				}
 			}
 
 			tab_nav.hide();
@@ -376,7 +380,10 @@ goorm.core.layout.tab = {
 		} else {
 			tab_nav.parent().siblings('.tab-content').show();
 			this.show_showing_icon(tab_id);
-			show_func && show_func();
+
+			if (show_func) {
+				show_func();
+			}
 		}
 	},
 

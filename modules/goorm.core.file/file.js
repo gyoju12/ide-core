@@ -1512,6 +1512,7 @@ module.exports = {
 			case 'class':
 			case 'config':
 			case 'cpp':
+			case 'cs':
 			case 'css':
 			case 'doc':
 			case 'docx':

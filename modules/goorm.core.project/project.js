@@ -918,20 +918,6 @@ module.exports = {
 							data.message = 'Invalid query';
 							evt.emit('set_property', data);
 						} else {
-							var invalid_query = [];
-							// jeongmin: prevent invalid build path
-							for (var plugin_type in new_property.plugins) {
-								for (var items in new_property.plugins[plugin_type]) {
-									if (items.indexOf('compiler_type') > -1) { // jeongmin: compiler type has special character -> can be filtered, so skip
-										continue;
-									}
-									if (new_property.plugins[plugin_type][items] != g_secure.command_filter(new_property.plugins[plugin_type][items])) {
-										invalid_query.push(new_property.plugins[plugin_type][items]);
-										new_property.plugins[plugin_type][items] = cur_manifest.plugins[plugin_type][items]; // set back to valid property
-									}
-								}
-							}
-
 							// jeongmin: remove scm property -> scm property should be not saved in goorm.manifest
 							for (var key in new_property) {
 								if (key.indexOf('scm') > -1) {
@@ -944,13 +930,7 @@ module.exports = {
 									encoding: 'utf-8',
 									mode: 0700
 								}, function(err) {
-									if (!err) {
-										if (invalid_query.length) {
-											data.err_code = 10;
-											data.message = 'Invalid query<br/>' + invalid_query.join(', ');
-											data.property = new_property; // final saved property(real property)
-										}
-									} else {
+									if (err) {
 										data.err_code = 20;
 										data.message = 'Can not write project file.';
 									}

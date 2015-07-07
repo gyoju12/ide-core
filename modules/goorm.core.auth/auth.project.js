@@ -236,8 +236,9 @@ module.exports = {
 
 		fs.readFile(email_content_path, 'utf8', function(err, data) {
 			var protocol = (global.__secure) ? 'https' : 'http';
+			var host = (IDE_PORT === -1) ? IDE_HOST : IDE_HOST + ":" + IDE_PORT;
 
-			data = data.replace(/\[DEMO_URL\]/gi, protocol + '://' + IDE_HOST + '/user/project/collaboration/invitation/push/email?project_path=' + project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
+			data = data.replace(/\[DEMO_URL\]/gi, protocol + '://' + host + '/user/project/collaboration/invitation/push/email?project_path=' + project_path).replace(/\[HOST_USER\]/gi, user_data.invite_user).replace(/\[CLIENT_USER\]/gi, user_data.name).replace(/\[PROJECT_NAME\]/gi, user_data.project_name).replace(/\[PROJECT_TYPE\]/gi, user_data.project_type).replace(/\[PROJECT_PERMISSION\]/gi, permission).replace(/\[PROJECT_DATE\]/gi, user_data.project_date).replace(/\[INVITATION_MESSAGE\]/gi, user_data.invitation_msg);
 
 			// this part must be changed to follow localization data....
 			var subject = '';

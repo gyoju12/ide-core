@@ -3876,7 +3876,7 @@ div.item a > span {
 	opacity: 0.5;
 }
 
-#friends .btn {
+#friends > .btn {
 	border-color: transparent;
 	border-bottom-color: #ccc;
 	border-bottom-style: dashed;

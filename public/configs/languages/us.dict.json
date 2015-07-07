@@ -32,9 +32,6 @@
 	"history_speed_veryslow": {
 		"value": "Very Slow"
 	},
-	"yes": {
-		"value": "Yes"
-	},
 	"account_change": {
 		"value": "Modify Account"
 	},
@@ -212,9 +209,6 @@
 	"project": {
 		"value": "Project"
 	},
-	"no": {
-		"value": "No"
-	},
 	"logout": {
 		"value": "Logout"
 	},
@@ -301,5 +295,8 @@
 	},
 	"visual_studio": {
 		"value": "Visual Studio"
+	},
+	"room": {
+		"value": "Room"
 	}
 }

@@ -175,5 +175,11 @@
 	},
 	"share_project_current_list": {
 		"value": "これは現在共有しているプロジェクトのリストを見せます。 開発者はRead-Only、Editableなどオプションを設定することができます"
+	},
+	"main_scm_toolbar": {
+		"value": ""
+	},
+	"click_add_friends_button": {
+		"value": ""
 	}
 }

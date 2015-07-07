@@ -408,13 +408,47 @@ goorm.core.project = {
 
 			terminal.flush_command_queue();
 			terminal.send_command('\x03\r', function() {
-				terminal.send_command(cmd + '\r', options, function(result) {
-					terminal.flush_command_queue();
+				if (typeof(cmd) === 'string') {
+					var prompt_callback = (options && options.prompt_callback) ? options.prompt_callback : undefined;
 
-					if (callback && typeof(callback) === 'function') {
-						callback(result);
+					terminal.send_command(cmd + '\r', options, function(result) {
+						terminal.flush_command_queue();
+
+						if (callback && typeof(callback) === 'function') {
+							callback(result);
+						}
+					}, prompt_callback);
+				} else if (Array.isArray(cmd) && cmd.length > 0) {
+					var send = function (_cmd, next) {
+						var inner_cmd = _cmd.cmd;
+						var inner_option = _cmd.options;
+						var inner_prompt_callback = (inner_option && inner_option.prompt_callback) ? inner_option.prompt_callback : undefined;
+
+						terminal.send_command(inner_cmd + '\r', inner_option, function(result) {
+							setTimeout(function() {
+								next();
+							}, 200);
+						}, inner_prompt_callback);
+					};
+
+					var last_cmd = cmd.pop();
+
+					if (cmd.length > 0) {
+						async.map(cmd, send, function() {
+							var inner_cmd = last_cmd.cmd;
+							var inner_option = last_cmd.options;
+							var inner_prompt_callback = (inner_option && inner_option.prompt_callback) ? inner_option.prompt_callback : undefined;
+
+							terminal.send_command(inner_cmd + '\r', inner_option, function(result) {
+								if (callback && typeof(callback) === 'function') {
+									callback(result);
+								}
+							}, inner_prompt_callback);
+						});
+					} else {
+						self._build(last_cmd.cmd, last_cmd.options, callback);
 					}
-				});
+				}
 			});
 		});
 	},
@@ -1022,5 +1056,13 @@ goorm.core.project = {
 				};
 			}
 		}
+	},
+
+	on: function(event_name, callback) {
+		$(core).on(event_name, callback);
+	},
+
+	one: function(event_name, callback) {
+		$(core).one(event_name, callback);
 	}
 };

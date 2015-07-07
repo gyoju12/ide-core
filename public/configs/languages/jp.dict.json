@@ -32,9 +32,6 @@
 	"history_speed_veryslow": {
 		"value": "非常にゆっくり"
 	},
-	"yes": {
-		"value": "はい"
-	},
 	"account_change": {
 		"value": "情報の変更"
 	},
@@ -212,9 +209,6 @@
 	"project": {
 		"value": "プロジェクト"
 	},
-	"no": {
-		"value": "いいえ"
-	},
 	"logout": {
 		"value": "ログアウト"
 	},
@@ -301,5 +295,8 @@
 	},
 	"visual_studio": {
 		"value": ""
+	},
+	"room": {
+		"value": "チャットルーム"
 	}
 }

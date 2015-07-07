@@ -197,27 +197,7 @@ goorm.init = function() {
 
 		
 
-		if (!home) {
-			home = process.env.HOME;
-		}
-		if (fs.existsSync(home + '/.goorm/config.json')) {
-			var data = fs.readFileSync(home + '/.goorm/config.json', 'utf8');
-			if (data !== '') {
-				config_data = JSON.parse(data);
-			}
-
-			if (config_data) {
-				for (var attr in config_data) {
-					if ((attr === 'workspace' && workspace) || (attr === 'home' && home)) {
-						continue;
-					}
-
-					if (config_data[attr] && config_data[attr] !== 'undefined') {
-						global[attr] = config_data[attr];
-					}
-				}
-			}
-		}
+		
 	};
 
 	set_global();

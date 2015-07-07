@@ -36,7 +36,7 @@
 		"value": "This is document viewer tab. You can view PDF file or slideshare.net slides."
 	},
 	"chat_tab": {
-		"value": "This is chat tab. You can communicate other people or your colleagues."
+		"value": "This is Collaboration tab. You can communicate other people or your colleagues."
 	},
 	"title_debug_project": {
 		"value": "Debug project tutorial"
@@ -175,5 +175,11 @@
 	},
 	"share_project_current_list": {
 		"value": "This is project list that shows shared projects currently. You can set options such as 'read-only', 'editable' etc."
+	},
+	"main_scm_toolbar": {
+		"value": "This is SCM toolbar. You can easily run the SCM main functions."
+	},
+	"click_add_friends_button": {
+		"value": "Click 'Add Friends' button in 'Friends' tab."
 	}
 }

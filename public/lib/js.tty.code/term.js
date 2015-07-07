@@ -2657,6 +2657,7 @@ Terminal.prototype.keyDown = function(ev) {
       key = '\x1b[24~';
       break;
     default:
+      this.scrollDisp(this.ybase);
       // a-z and space
       if (ev.ctrlKey) {
         if (ev.keyCode >= 65 && ev.keyCode <= 90) {

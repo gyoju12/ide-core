@@ -1,4 +1,7 @@
 {
+	"yes": {
+		"value": "예"
+	},
 	"output": {
 		"value": "아웃풋"
 	},
@@ -223,6 +226,9 @@
 	},
 	"confirmation_delete_project": {
 		"value": "정말로 이 프로젝트를 삭제하시겠습니까?"
+	},
+	"no": {
+		"value": "아니오"
 	},
 	"alert_user_unfit_reg_id": {
 		"value": "ID의 형식이 올바르지 않습니다(4~15자리, 알파벳+숫자)."
@@ -1362,6 +1368,9 @@
 		"value": "서버 종료"
 	},
 	"tab_msg_sever_running": {
+		"value": "현재 "
+	},
+	"tab_msg_server_running": {
 		"value": "현재 "
 	},
 	"tab_msg_server_running2": {

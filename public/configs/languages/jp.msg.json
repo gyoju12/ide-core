@@ -1,4 +1,7 @@
 {
+	"yes": {
+		"value": "はい"
+	},
 	"output": {
 		"value": "アウトプット"
 	},
@@ -223,6 +226,9 @@
 	},
 	"confirmation_delete_project": {
 		"value": "本当にこのプロジェクトを削除しますか"
+	},
+	"no": {
+		"value": "いいえ"
 	},
 	"alert_user_unfit_reg_id": {
 		"value": "IDの形式が正しくありません(4~15字、アルファベット+数字)。"
@@ -1362,6 +1368,9 @@
 		"value": "サーバー停止"
 	},
 	"tab_msg_sever_running": {
+		"value": "現在 "
+	},
+	"tab_msg_server_running": {
 		"value": "現在 "
 	},
 	"tab_msg_server_running2": {

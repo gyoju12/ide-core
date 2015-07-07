@@ -12,7 +12,7 @@ var fs = require('fs');
 var encryptor = require('file-encryptor');
 var execFile = require('child_process').execFile;
 
-var regexp_filter = /^([가-힣0-9a-zA-Z \\\/._-{-}\=\[\]\(\)\/\/]|\:)*/g; // jeongmin: add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}).
+var regexp_filter = /^([가-힣0-9a-zA-Z \\\/._-{-}\=\[\]\(\)\/\/']|\:)*/g; // add '/'. Add ' ' (Some commands have blanks). Add '{-}' for svn update by date({2014-01-01}). Add "'" for commit message(e.g. window's height...)
 var ecrypt_key = 'cordlfrwk)!(@';
 
 module.exports = {

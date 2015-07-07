@@ -28,17 +28,18 @@ goorm.core.tutorial = {
 		var self = this;
 		var default_template = [
 			'<div class="popover" style="z-index: 10000">',
-				'<div class="arrow"></div>',
-				'<h3 class="popover-title"></h3>',
-				'<div class="popover-content"></div>',
-				'<div class="popover-navigation">',
-					'<div class="btn-group" id="tutorial_button_set">',
-						'<button class="btn btn-sm btn-primary" data-role="prev" localization_key="tutorial_prev">' + core.module.localization.msg.tutorial_prev + '</button>',
-						'<button class="btn btn-sm btn-primary" data-role="next" localization_key="tutorial_next">' + core.module.localization.msg.tutorial_next + '</button>',
-						'<button class="btn btn-sm btn-primary" data-role="end" localization_key="tutorial_end">' + core.module.localization.msg.tutorial_end + '</button>',
-					'</div>',
-				'</div>',
-			'</div>'].join('');
+			'<div class="arrow"></div>',
+			'<h3 class="popover-title"></h3>',
+			'<div class="popover-content"></div>',
+			'<div class="popover-navigation">',
+			'<div class="btn-group" id="tutorial_button_set">',
+			'<button class="btn btn-sm btn-primary" data-role="prev" localization_key="tutorial_prev">' + core.module.localization.msg.tutorial_prev + '</button>',
+			'<button class="btn btn-sm btn-primary" data-role="next" localization_key="tutorial_next">' + core.module.localization.msg.tutorial_next + '</button>',
+			'<button class="btn btn-sm btn-primary" data-role="end" localization_key="tutorial_end">' + core.module.localization.msg.tutorial_end + '</button>',
+			'</div>',
+			'</div>',
+			'</div>'
+		].join('');
 
 		this.tutorial = new Tour({
 			name: 'basic',
@@ -277,6 +278,7 @@ goorm.core.tutorial = {
 
 	// tutorial chapter "basic" step setting...
 	get_basic_steps: function() {
+		var layout = core.module.layout;
 		var steps = [
 			// layout top (menu...)
 			{
@@ -318,6 +320,11 @@ goorm.core.tutorial = {
 				element: '#main_help_toolbar',
 				title: '',
 				content: core.module.localization.tutorial.main_help_toolbar,
+				placement: 'bottom'
+			}, {
+				element: '#main_scm_toolbar',
+				title: '',
+				content: core.module.localization.tutorial.main_scm_toolbar,
 				placement: 'bottom'
 			}, {
 				element: '#bubble_file_toolbar',
@@ -367,6 +374,11 @@ goorm.core.tutorial = {
 				onShow: function() {
 					$('#bubble_toolbar').css('display', 'block');
 				}
+			}, {
+				element: '#bubble_scm_toolbar',
+				title: '',
+				content: core.module.localization.tutorial.main_scm_toolbar,
+				placement: 'bottom'
 			},
 			// layout left (project, packages, cloud tab)
 			{
@@ -376,10 +388,9 @@ goorm.core.tutorial = {
 				placement: 'right',
 				onShow: function() {
 					$('#bubble_toolbar').css('display', 'none');
-					core.module.layout.expand('west');
-					$('#west_tab #gLayoutTab_project').tab('show');
-				},
-				onShown: function() {}
+
+					layout.select('project');
+				}
 			}, {
 				element: '#goorm_inner_layout_center',
 				title: '',
@@ -391,21 +402,11 @@ goorm.core.tutorial = {
 			{
 				element: '#goorm_inner_layout_right',
 				title: '',
-				content: core.module.localization.tutorial.outline_tab,
-				placement: 'left',
-				detailed_case: 'left_outline',
-				onShown: function() {
-					$('#east_tab #gLayoutTab_Outline').tab('show');
-				}
-			},
-			{
-				element: '#goorm_inner_layout_right',
-				title: '',
 				content: core.module.localization.tutorial.bookmark_tab,
 				placement: 'left',
 				detailed_case: 'left_bookmark',
 				onShown: function() {
-					$('#east_tab #gLayoutTab_Bookmark').tab('show');
+					layout.select('bookmark');
 				}
 			},
 			// layout bottom (debug, terminal, search tab);
@@ -415,10 +416,7 @@ goorm.core.tutorial = {
 				content: core.module.localization.tutorial.debug_tab,
 				placement: 'top',
 				onShow: function() {
-					core.module.layout.expand('south');
-				},
-				onShown: function() {
-					$('#south_tab #gLayoutTab_Debug').tab('show');
+					layout.select('debug');
 				}
 			}, {
 				element: '#gLayoutTab_Terminal',
@@ -426,7 +424,7 @@ goorm.core.tutorial = {
 				content: core.module.localization.tutorial.terminal_tab,
 				placement: 'top',
 				onShown: function() {
-					$('#south_tab #gLayoutTab_Terminal').tab('show');
+					layout.select('terminal');
 				}
 			}, {
 				element: '#gLayoutTab_Search',
@@ -434,7 +432,7 @@ goorm.core.tutorial = {
 				content: core.module.localization.tutorial.search_tab,
 				placement: 'top',
 				onShown: function() {
-					$('#south_tab #gLayoutTab_Search').tab('show');
+					layout.select('search');
 				}
 			}
 			// need to append output tab...
@@ -528,8 +526,7 @@ goorm.core.tutorial = {
 				onPrev: function() {
 					$('#g_np_btn_previous').click();
 				}
-			},
-			{
+			}, {
 				element: '#project_new #input_project_name',
 				title: '',
 				content: core.module.localization.tutorial.input_project_name,
@@ -684,7 +681,6 @@ goorm.core.tutorial = {
 	},
 	
 	get_output_step: function() {
-		var self = this;
 		var output_step = this.tab_steps.output_step;
 		// if current project has output tab
 		// return output tab step.
@@ -751,7 +747,6 @@ goorm.core.tutorial = {
 	// when resize window layout or show dialog,
 	// tutorial highlighting layout doesn't match the element layout.
 	rearrange_tutorial_backdrop: function() {
-		var self = this;
 		var current_step = this.tutorial._current;
 		var current_element = $(this.tutorial._options.steps[current_step].element);
 		var backdrop = $('.tour-step-background');

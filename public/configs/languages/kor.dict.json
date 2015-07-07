@@ -32,9 +32,6 @@
 	"history_speed_veryslow": {
 		"value": "매우 천천히"
 	},
-	"yes": {
-		"value": "네"
-	},
 	"account_change": {
 		"value": "정보 변경"
 	},
@@ -212,9 +209,6 @@
 	"project": {
 		"value": "프로젝트"
 	},
-	"no": {
-		"value": "아니오"
-	},
 	"logout": {
 		"value": "로그아웃"
 	},
@@ -301,5 +295,8 @@
 	},
 	"visual_studio": {
 		"value": "비주얼 스튜디오"
+	},
+	"room": {
+		"value": "채팅방"
 	}
 }

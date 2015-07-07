@@ -530,24 +530,24 @@ goorm.core.project.property = {
 				// construct basic tree structure
 				// self.manager.create_treeview(json);
 
-				var _on_select = function (node) {
+				var _on_select = function(node) {
 					var id = node.li_attr.id;
-					
+
 					switch (id) {
-						case "Information":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_file_property");
+						case 'Information':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_file_property');
 							break;
-							
-						case "SCM":
-							self.dialog.change_help_url("http://help.goorm.io/ide#help_scm");
+
+						case 'SCM':
+							self.dialog.change_help_url('http://help.goorm.io/ide#help_scm');
 							break;
-							
+
 						default:
-							self.dialog.change_help_url("http://help.goorm.io/#help_do_project_build_option");
+							self.dialog.change_help_url('http://help.goorm.io/#help_do_project_build_option');
 							break;
 					}
 				};
-				
+
 				$(core).on('language_loaded', function(event, change) {
 					self.manager.create_treeview(json[core.module.localization.language], change, _on_select);
 				});

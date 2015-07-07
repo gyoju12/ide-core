@@ -247,7 +247,6 @@ goorm.core.project.open = {
 				recent_project_temp.current_project_type = current_project_type;
 
 				self.display_recent_project(recent_project_temp);
-				localStorage.setItem('recent_projects', JSON.stringify(self.recent_project));
 
 				core.module.layout.chat.user.leave();
 
