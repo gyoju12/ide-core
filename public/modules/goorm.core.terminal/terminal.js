@@ -461,7 +461,7 @@ goorm.core.terminal.prototype = {
 		////// jeongmin: sometimes, width is much smaller than it is. So, reset its width as its parent's width //////
 
 		$(this.target).width(width);
-		$(this.target).outerHeight(parent.height() - $(this.target).siblings('.clr_view').length ? $(this.target).siblings('.clr_view').outerHeight() : 0); // full terminal height
+		$(this.target).outerHeight(parent.height() - ($(this.target).siblings('.clr_view').length ? $(this.target).siblings('.clr_view').outerHeight() : 0)); // full terminal height
 
 		if (geometry.cols <= 0 || geometry.rows <= 0 || isNaN(geometry.cols)) { //it can be NaN - divide by 0
 			geometry.cols = 1000;

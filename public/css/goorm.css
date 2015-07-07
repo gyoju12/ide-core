@@ -3847,11 +3847,15 @@ div.item a > span {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     margin-top: 0;
-    padding: 10px;
+    padding-left: 10px;
 }
 
 #collaboration, #collaboration .panel {
 	height: 100%;
+}
+
+#collaboration_tab_container {
+    overflow: auto;
 }
 
 #collaboration_user_table td{
