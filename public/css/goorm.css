@@ -3850,7 +3850,7 @@ div.item a > span {
     padding-left: 10px;
 }
 
-#collaboration, #collaboration .panel {
+#collaboration, #collaboration > .panel {
 	height: 100%;
 }
 

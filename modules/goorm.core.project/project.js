@@ -1227,6 +1227,60 @@ module.exports = {
 					}
 				});
 				break;
+			case 'jsp':
+				fs.exists(source_path, function(exist) {
+					if (!exist) {
+						evt.emit('check_valid_property', {
+							result: false,
+							code: 1
+						});
+						return false;
+					} else {
+						fs.exists(__workspace + query.project_path + '/' + query.class_name, function(exist) {
+							if (!exist) {
+								evt.emit('check_valid_property', {
+									result: false,
+									code: 2
+								});
+								return false;
+							} else {
+								evt.emit('check_valid_property', {
+									result: true
+								});
+								return true;
+							}
+						});
+					}
+				});
+				break;
+			case '_net':
+				fs.exists(source_path, function(exist) {
+					if (!exist) {
+						evt.emit('check_valid_property', {
+							result: false,
+							code: 1
+						});
+						return false;
+					} else {
+						source_file += '.cs';
+
+						fs.exists(source_file, function(exist) {
+							if (!exist) {
+								evt.emit('check_valid_property', {
+									result: false,
+									code: 2
+								});
+								return false;
+							} else {
+								evt.emit('check_valid_property', {
+									result: true
+								});
+								return true;
+							}
+						});
+					}
+				});
+				break;
 			default:
 				break;
 		}

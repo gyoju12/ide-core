@@ -119,7 +119,7 @@ goorm.core = function() {
 	
 
 	this.force_unload = false;
-	this.version = 'oss-150624030905';
+	this.version = 'oss-150713063719';
 };
 
 goorm.core.prototype = {
@@ -924,18 +924,25 @@ goorm.core.prototype = {
 				} else { // project
 					test_result = self.module.project.name_test(text, $(this).parents('.modal-body').find('.selected_button').attr('detail_type'));
 
-					if (test_result && test_result['char']) {
-						var _char = '<br/>"' + test_result['char'].join(', ') + '"';
+					if (test_result) {
+						if (test_result['char']) {
+							var _char = '<br/>"' + test_result['char'].join(', ') + '"';
 
-						if (test_result.code === 1) {
-							msg = localization_msg.alert_allow_character;
-						} else { // django
-							msg = localization_msg.alert_allow_character2;
+							if (test_result.code === 1) {
+								msg = localization_msg.alert_allow_character;
+							} else { // django
+								msg = localization_msg.alert_allow_character2;
+							}
+
+							msg += _char;
+
+							fail();
+						} else if (test_result.code == 3) { //already exist name
+							msg = localization_msg.alert_project_exist;
+							fail();
+						} else {
+							success();
 						}
-
-						msg += _char;
-
-						fail();
 					} else if (test_result === false) {
 						msg = localization_msg.alert_allow_django;
 

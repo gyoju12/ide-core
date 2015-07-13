@@ -127,5 +127,12 @@ goorm.core.terminal.background.prototype = {
 		}
 
 		this.configs.on_message = on_message;
+	},
+
+	// set server terminal's height. Jeong-Min Im.
+	resize: function() {
+		if (this.target) {
+			this.target.outerHeight(this.target.parent().innerHeight() - (this.target.siblings('.clr_view').length ? this.target.siblings('.clr_view').outerHeight() : 0));
+		}
 	}
 };

@@ -11,6 +11,7 @@
 goorm.core.layout.tab.output_manager = {
 	context: null,
 	table: null,
+	unloaded_data: [],
 
 	
 
@@ -46,6 +47,9 @@ goorm.core.layout.tab.output_manager = {
 			}
 		});
 
+		if (this.unloaded_data && Array.isArray(this.unloaded_data) && this.unloaded_data.length > 0) {
+			this.push(this.unloaded_data);
+		}
 		//$('[id="' + this.context + '_table"]').dataTable().fnSettings().oLanguage.sEmptyTable = ;
 		this.set_event();
 	},
@@ -340,6 +344,9 @@ goorm.core.layout.tab.output_manager = {
 			});
 
 			this.table.fnAddData(data);
+			this.unloaded_data = [];
+		} else {
+			this.unloaded_data = data;
 		}
 	},
 

@@ -539,11 +539,12 @@ goorm.core.project = {
 						property = property['goorm.plugin.' + project_type];
 
 						//query: project_path, project_type, class_name, source_path --heeje
+						var class_name = (project_type !== 'jsp')? '.main' : '.index';
 						query = {
 							project_path: options.project_path,
 							project_type: options.project_type,
 							detail_type: project_data.detailedtype,
-							class_name: property['plugin.' + options.project_type + '.main'],
+							class_name: property['plugin.' + options.project_type + class_name],
 							source_path: property['plugin.' + options.project_type + '.source_path']
 						};
 					} else {
@@ -584,6 +585,8 @@ goorm.core.project = {
 						case 'java_examples':
 						case 'c_examples':
 						case 'cpp':
+						case 'jsp':
+						case '_net':
 							// $.get("project/check_valid_property", query, function(data){
 							// 	if(data && data.result) {
 							// 		build();
@@ -1041,6 +1044,16 @@ goorm.core.project = {
 	// detailed_type (String) : project's detailed type
 	// return (Object || Bool) : test result
 	name_test: function(str, detailed_type) {
+
+		var projects = core.module.layout.project_explorer.project_data;
+		for (var i = 0; i < projects.length; i++) {
+			if (projects[i].contents.author === core.user.id && projects[i].contents.name === str) {
+				return {
+					'code' : 3
+				};
+			}
+		}
+
 		if (detailed_type !== 'django') {
 			return {
 				'char': str.match(/[^\w\-_]/g),

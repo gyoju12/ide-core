@@ -12,7 +12,7 @@
 goorm.plugin.linter = {
 
 	output_tab_list: [],
-	flag:null,
+	flag: null,
 
 	init: function(plugin_name) {
 		var self = this;
@@ -250,13 +250,14 @@ goorm.plugin.linter = {
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 		var property = core.property.plugins['goorm.plugin.' + type];
 
-		var complier_type = '';
+		var complier_type = 'gcc';
 
 		if (property) {
 			complier_type = property['plugin.' + type + '.compiler_type'] || 'gcc';
 		}
 
 		core.module.terminal.terminal.send_command('/usr/share/clang/scan-build/scan-build ' + complier_type + ' -c ' + path + '\r', function(output) {
+
 			var wm = core.module.layout.workspace.window_manager;
 			var om = core.module.layout.tab_manager.output_manager;
 
@@ -264,53 +265,50 @@ goorm.plugin.linter = {
 			var error_manager = editor.error_manager;
 
 			self.flag = 0;
-			output = output.split('\n');
-			output.pop();
-			output.shift();
-			output.shift();
-			output = output.join('\n');
-
-			var index = output.indexOf('scan-build');
-			if (index > -1) {
-				output = output.substring(0, index);
-			}
-
-			output = output.split(path);
-
 			om.clear();
 			wm.all_clear();
 
 			var table = [];
+			
+			var regex = new RegExp('^(' + path.replace(/\//g, '\\/').replace(/\./g, '\\.') + '):(\\d+):\\d+?:? (.+)');
+			var lines = output.split('\n');
+			var matches, line_num, err_type, content, msg, file_path;
+			var split_path = __window.editor.filepath.split('/');
+			split_path[0] = core.module.project.get_name(split_path[0]);
+			file_path = split_path.join('/') + __window.editor.filename;
 
 			error_manager.error_message_box.add(editor.target);
-			for (var i = 0; i < output.length; i++) {
-				var line = output[i].split(':');
-				if (isNaN(line[1])) {
-					continue;
-				}
-				if (line[3].trim() === 'warning') {
-					__window.editor.warn_count++;
-				} else {
-					__window.editor.err_count++;
-				}
-				var error_data = {
-					'line_number': parseInt(line[1], 10) - 1,
-					'error_syntax': '',
-					'error_message': line.slice(4).join(':').split('\r\n')[0],
-					'error_type': line[3].trim()
-				};
+			for (var i = 0; i < lines.length; i++) {
+				matches = lines[i].match(regex);
+				if (matches && matches.length >= 4) {
+					line_num = parseInt(matches[2], 10);
+					msg = matches[3].split(':');
+					err_type = msg.shift();
+					content = msg.join(':');
 
-				error_manager.add_line(error_data);
-				error_manager.init_event();
+					if (err_type == 'warning') {
+						__window.editor.warn_count++;
+					} else {
+						__window.editor.err_count++;
+					}
 
-				table.push({
-					line: error_data.line_number + 1,
-					content: error_data.error_message.split('<br />').shift(),
-					file: editor.filepath + editor.filename,
-					type: line[3].trim()
-				});
-				self.flag = 1;
+					error_manager.add_line({
+						line_number: line_num - 1,
+						error_syntax: '',
+						error_message: content,
+						error_type: err_type
+					});
+					table.push({
+						line: line_num,
+						content: content,
+						type: err_type,
+						file: file_path
+					});
+					self.flag = 1;
+				}
 			}
+
+			error_manager.init_event();
 			om.push(table);
 			if (self.flag) {
 				core.module.layout.select('gLayoutOutput_cpp');
@@ -321,7 +319,7 @@ goorm.plugin.linter = {
 
 	lint_python: function(__window) {
 		var self = this;
-		
+
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 
 		core.module.terminal.terminal.send_command('pyflakes ' + path + '\r', function(output) {
@@ -443,39 +441,49 @@ goorm.plugin.linter = {
 
 		var path = core.module.project.get_realpath(__window.editor.filepath, __window.editor.filename);
 
-		core.module.terminal.terminal.send_command('phpcs --severity=5 --report=json ' + path + '\r', function(output) {
+		// 		core.module.terminal.terminal.send_command('phpcs --severity=5 --report=json ' + path + '\r', function(output) {
+		core.module.terminal.terminal.send_command('php -l ' + path + '\r', function(output) {
 			om.clear();
 			wm.all_clear();
 
-			var result = JSON.parse(output.split('\n')[1].replace('<bg$>', ''));
-			var message = result.files[path].messages;
+			var e = __window.editor;
+			var e_m = e.error_manager;
+
+			// 			var result = JSON.parse(output.split('\n')[1].replace('<bg$>', ''));
+			// 			var message = result.files[path].messages;
+			var message = output.replace(/<bg\$>/g, '').split('\n');
 			var output_data = [];
 
-			for (var i = 0; i < message.length; i++) {
-				var line = message[i].line;
-
-				e = __window.editor;
-				e_m = e.error_manager;
-
+			for (var i = 0, len = message.length; i < len; i++) {
 				// handle special case temporarily...igonore
-				if (message[i].message === 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.') {
+				if (message[i] === 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.' || !~message[i].indexOf('line')) { // parse error message only (error message has line information)
 					continue;
 				}
 
-				if (message[i].type.toLowerCase() === 'warning') {
+				// 				var line = message[i].line;
+				// error e.g) PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting ',' or ';' in index.php on line 9
+				var msg = message[i].match(/:.*/)[0].match(/\w.*/)[0].split(' in ' + path); // extract message only
+				var line = msg[1].match(/\d$/)[0]; // extract number. (msg[1] == on line 9)
+				var type;
+
+				msg = msg[0];
+
+				// 				if (message[i].type.toLowerCase() === 'warning') {
+				if (~message[i].indexOf('warning')) {
 					__window.editor.warn_count++;
+					type = 'WARNING';
 				} else {
 					__window.editor.err_count++;
+					type = 'ERROR';
 				}
 
-				var error_data = {
+				e_m.add_line({
 					'line_number': line - 1,
 					'error_syntax': '',
-					'error_message': message[i].message,
-					'error_type': message[i].type
-				};
+					'error_message': msg,
+					'error_type': type
+				});
 
-				e_m.add_line(error_data);
 				if (i === 0) {
 					e.error_manager.error_message_box.add(e.target);
 				}
@@ -484,8 +492,8 @@ goorm.plugin.linter = {
 				output_data.push({
 					'file': __window.editor.filepath + __window.editor.filename,
 					'line': line,
-					'content': message[i].message,
-					'type': message[i].type
+					'content': msg,
+					'type': type
 				});
 				self.flag = 1;
 			}
