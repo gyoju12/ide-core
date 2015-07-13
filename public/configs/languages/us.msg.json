@@ -747,7 +747,7 @@
 		"value": "Invalid project file"
 	},
 	"user_plg_cleaned": {
-		"value": "user plugins are deleted!\\nToolbar, menu and dialog will be deleted after refresh"
+		"value": "user plugins are deleted!<br/>Toolbar, menu and dialog will be deleted<br/>after refresh"
 	},
 	"msg_project_whole_word_guide": {
 		"value": "Whole Word"
@@ -1305,7 +1305,7 @@
 		"value": "File's content is updated. Do you want to reload these files?<br/>(Modified contents can be gone.)<br/>"
 	},
 	"alert_scm_ignore_import_fail": {
-		"value": "Fail to import file and set ignore property\\n"
+		"value": "Fail to import file and set ignore property<br/>"
 	},
 	"alert_rename_exist_folder": {
 		"value": "Same folder name exists."
@@ -1317,7 +1317,7 @@
 		"value": "Input pattern or select file."
 	},
 	"confirmation_do_you_want_move": {
-		"value": "Do you want to move?<br/>If it is valid overwriting, they will be overwritted,but it is abnormal action, they will be not moved."
+		"value": "Do you want to move?<br/>If it is valid overwriting, they will be overwritted,<br/>but it is abnormal action, they will be not moved."
 	},
 	"alert_move_not_directory": {
 		"value": "Cannot move, because the destination isn't directory."

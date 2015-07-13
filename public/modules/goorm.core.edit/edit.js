@@ -439,13 +439,13 @@ goorm.core.edit.prototype = {
 			if (!find_and_replace.is_visible() && !self.parent.searching) { // jeongmin: if doing find and replace, don't remove
 				CodeMirror.commands.clearSearch(self.editor);
 			}
-			
+
 			if(e.origin !== 'setValue') {
 				var user = e.user || core.user.id;
 				var from_line = e.from.line;
-				
+
 				for(var i = e.text.length - 1; 0 <= i; i--) {
-					self.set_modify_mark(from_line + i, user); // set user's modification mark		
+					self.set_modify_mark(from_line + i, user); // set user's modification mark
 				}
 			}
 		});
@@ -1742,7 +1742,7 @@ goorm.core.edit.prototype = {
 		var self = this;
 		$('#editor_status span.line').html('Line: ' + line);
 		$('#editor_status span.coloumn').html('Col: ' + ch);
-		$('#goorm_bottom').find('.breadcrumb .zoom_percent').text(self.font_manager.font_percent + '%');
+		$('#font_size_bottom > button > span.value').text(this.font_size + 'px ');
 	},
 
 	add_vim_excommand: function(name, prefix, func) {

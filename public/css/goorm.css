@@ -1803,7 +1803,7 @@ pre.code {
  *  show both borders when the resizer is 'dragging'
  */
 .ui-layout-resizer-south-closed, .ui-layout-resizer-south-open {
-    z-index: 10 !important;
+    /*z-index: 10 !important;*/
 }
 .helptext {
     color: #AAA;
@@ -1904,7 +1904,7 @@ pre.code {
 .ui-layout-resizer {
     background-color: #f4f4f4;
     overflow: visible !important;
-    z-index: 10 !important;
+    /*z-index: 10 !important;*/
 }
 
 .ui-layout-toggler {
@@ -2644,7 +2644,6 @@ Plugin CSS: jeongmin
 #goorm_bottom nav {
     height: 16px;
     min-height: 16px;
-    overflow: hidden;
 }
 .output_tab .dataTables_wrapper {
     height: inherit;
@@ -3899,4 +3898,18 @@ div.item a > span {
 
 #add_friend_list .media-list {
 	height: 250px;
+}
+
+#font_size_bottom > button {
+    border: none;
+}
+
+#font_size_bottom li span.checked {
+    margin-left: -15px;
+    margin-right: 5px;
+}
+
+#font_size_bottom ul.dropdown-menu {
+    max-height: 186px;
+    overflow: auto;
 }

@@ -45,6 +45,26 @@ goorm.core.edit.font_manager.prototype = {
 			goorm.core.edit.font_manager.prototype.font_family = (core.preference['preference.editor.font_family']) ? core.preference['preference.editor.font_family'] : 'inherit';
 			$('.CodeMirror-lines').css('font-family', self.font_family);
 		});
+
+		$('#font_size_bottom').on('show.bs.dropdown', function() {
+			$(this).find('span.checked').remove();
+			$(this).find('li > a[data-size="' + self.parent.font_size + '"]').prepend('<span class="checked glyphicon glyphicon-ok"></span>');
+		}).on('shown.bs.dropdown', function() {
+			var HEIGHT_OF_ITEM = 21;
+			var scroll_top = (self.parent.font_size - self.min_font_size) * HEIGHT_OF_ITEM;
+			$(this).find('ul.dropdown-menu').scrollTop(scroll_top);
+		});
+
+		$('#font_size_bottom .dropdown-menu a').on('click', function(e) {
+			var current_size = parseInt($(this).data('size'), 10);
+
+			self.parent.font_size = self.refresh(current_size);
+			core.preference['preference.editor.font_size'] = self.parent.font_size.toString();
+			core.dialog.preference.fill_dialog(core.preference, 'editor_setting_tab');
+
+			$('#font_size_bottom ul.dropdown-menu').find('span.checked').remove();
+			$(this).prepend('<span class="checked glyphicon glyphicon-ok"></span>');
+		})
 	},
 	
 
@@ -101,8 +121,7 @@ goorm.core.edit.font_manager.prototype = {
 			self.user_cursor_resize(delta);
 			//        var percent = (self.font_size * 100 / 11).toFixed(1);
 			self.font_percent = (self.font_size * 100 / 12).toFixed(1);
-			//        __target.parent().parent().find('span.zoom_percent').text(percent+'%');
-			$('#goorm_bottom').find('.breadcrumb .zoom_percent').text(self.font_percent + '%');
+			$('#font_size_bottom > button > span.value').text(self.parent.font_size + 'px ');
 		}, 100);
 
 		resize_target('.CodeMirror', 'font-size', 12);
