@@ -16,6 +16,7 @@ goorm.core.edit.dictionary = function() {
 	this.contents = [];
 	this.result = [];
 	this.index = 0;
+	this.type = null;
 	this.max_item_count = 4;
 	this.completable = false;
 };
@@ -63,9 +64,11 @@ goorm.core.edit.dictionary.prototype = {
 
 		if (t_arr.length > 1) {
 			this.load(active_filename_type);
+			this.type = active_filename_type;
 		} else {
 			//console.log('odd',filetype);
 			this.load(filetype);
+			this.type = filetype;
 		}
 
 		var stored_data = localStorage.getItem('edit.dictionary');
@@ -93,7 +96,7 @@ goorm.core.edit.dictionary.prototype = {
 			this.result.pop();
 		}
 		if (this.result.length > 0) {
-			var string = this.result[this.index].keyword;
+			var string = this.result[this.index].value || this.result[this.index].keyword;
 
 			for (var i = 0; i < cursors.length; i++) {
 				cursors = this.editor.listSelections();
@@ -132,10 +135,18 @@ goorm.core.edit.dictionary.prototype = {
 		var data;
 
 		if (filetype && list_data[filetype]) {
-			type = filetype + '.json';
-			data = JSON.parse(external_json['public'].configs.dictionary[type]);
+			switch (filetype) {
+					case 'java':
+						self.contents = goorm.plugin['java'].dictionary;
+						break;
+					default:
+							type = filetype + '.json';
+							data = JSON.parse(external_json['public'].configs.dictionary[type]);
 
-			self.contents = data;
+							self.contents = data;
+						break;
+					
+			}
 		} else {
 			type = 'etc.json';
 			data = JSON.parse(external_json['public'].configs.dictionary[type]);
@@ -300,8 +311,9 @@ goorm.core.edit.dictionary.prototype = {
 				}
 
 				var ele_html = '';
+				var title = this.value || this.keyword;
 				ele_html += '<tr class="dictionary_element" id="' + ele_id + '">';
-				ele_html += '<td width="20px" style="font-size:11px;" >' + get_element_image(this.type) + '</td><td style="font-size:11px; font-family: ' + core.preference['preference.editor.font_family'] + ', monospace;">' + print_key + '</td>';
+				ele_html += '<td width="20px" style="font-size:11px;" >' + get_element_image(this.type) + '</td><td style="font-size:11px; font-family: ' + core.preference['preference.editor.font_family'] + ', monospace;" title="' + title + '">' + print_key + '</td>';
 				ele_html += '</tr>';
 
 				dictionary_list_table_array.push(ele_html);
@@ -556,11 +568,17 @@ goorm.core.edit.dictionary.prototype = {
 		// 		keyword_object.keyword = keyword + "";
 		// 		keyword_object.line_content = line_content + "";
 
-		$(self.contents).each(function() {
-			if (reg_exp.test(this.keyword)) {
-				self.result.push(this);
-			}
-		});
+		switch (this.type) {
+			case 'java':
+				self.result = goorm.plugin[this.type].autocomplete(this.editor, keyword);
+				break;
+			default:
+				$(self.contents).each(function() {
+					if (reg_exp.test(this.keyword)) {
+						self.result.push(this);
+					}
+				});
+		}
 
 		self.set(keyword);
 

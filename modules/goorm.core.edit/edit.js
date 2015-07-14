@@ -261,6 +261,59 @@ module.exports = {
 			}
 
 			callback(response);
+		} else if (type == 'php') {
+			var response = {};
+			var line = 0;
+			var length = data.length
+
+			// data was split by tab
+			if (length > 5) {
+				data[2] = data.slice(2, length - 2).join('\t');
+				data[3] = data[length - 2];
+				data[4] = data[length - 1];
+			}
+			if (data[4]) {
+				line = parseInt(data[4].substring(5, data[4].length), 10);
+			}
+
+			switch (data[3]) {
+				case 'v':
+					response = {
+						name: data[0],
+						'use_detailed': false,
+						filetype: 'php',
+						type: 'variable',
+						line: line,
+						query: data[2]
+					};
+					break;
+				case 'c':
+					response = {
+						name: data[0],
+						'use_detailed': false,
+						filetype: 'php',
+						children: [],
+						type: 'class',
+						line: line,
+						query: data[2]
+					};
+					break;
+				case 'f':
+					response = {
+						name: data[0],
+						'use_detailed': false,
+						filetype: 'php',
+						type: 'function',
+						line: line,
+						query: data[2]
+					};
+					break;
+				default:
+					break;
+			}
+
+			callback(response);
+
 		} else {
 			callback(false);
 		}

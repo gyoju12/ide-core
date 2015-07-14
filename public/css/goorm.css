@@ -978,6 +978,7 @@ li.slideshare_url_item a > div {
     border-top: 1px solid #ddd;
     font-size: 11px;
     padding: 7px;
+	z-index: 11 !important;	/* put font dropdown menu above resizer */
 }
 
 /* window - user cursor */
@@ -1803,7 +1804,7 @@ pre.code {
  *  show both borders when the resizer is 'dragging'
  */
 .ui-layout-resizer-south-closed, .ui-layout-resizer-south-open {
-    /*z-index: 10 !important;*/
+    z-index: 10 !important;
 }
 .helptext {
     color: #AAA;
@@ -1904,7 +1905,7 @@ pre.code {
 .ui-layout-resizer {
     background-color: #f4f4f4;
     overflow: visible !important;
-    /*z-index: 10 !important;*/
+    z-index: 10 !important;
 }
 
 .ui-layout-toggler {

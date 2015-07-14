@@ -75,7 +75,7 @@ goorm.core.window.tab.prototype = {
 		var tooltip_contents = this.title.split(core.user.id + '_').pop(); // remove user id in project name
 		var chunks = [];
 		var chunkSize = 40;
-				
+
 		if (tooltip_contents.length > chunkSize) {
 			while (tooltip_contents) {
 				if (tooltip_contents.length < chunkSize) {
@@ -97,7 +97,7 @@ goorm.core.window.tab.prototype = {
 
 		if (typeof core.status.current_opened_list[this.filename] === 'undefined') {
 			$('#g_window_tab_list').append(template.replace(/\[TITLE\]/, this.filename));
-			
+
 			if (__options.filepath === '/' && __options.filename.indexOf('terminal') != -1 && __options.title && __options.title.indexOf('terminal') != -1) {
 				// not to count terminal window
 				core.status.current_opened_list[this.filename] = -1;
@@ -106,7 +106,7 @@ goorm.core.window.tab.prototype = {
 			}
 		} else {
 			$('#g_window_tab_list').append(template.replace(/\[TITLE\]/, this.filename + ' - ' + this.filepath.split(core.user.id + '_').pop()));
-			
+
 			core.status.current_opened_list[this.filename]++;
 		}
 
@@ -359,7 +359,7 @@ goorm.core.window.tab.prototype = {
 				$('#gLayoutTab_Outline').show();
 				$('a[action="right_outline_show"]').parent().show();
 				break;
-
+			case 'php':
 			case 'html':
 			case 'css':
 				$('[action=do_jump_to_definition]').parent().hide();
