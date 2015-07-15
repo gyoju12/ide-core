@@ -18,29 +18,6 @@ goorm.core.edit.bookmark_list = { //initialize bookmark. Jeong-Min Im.
 		this.load_json();
 		this.window_manager = core.module.layout.workspace.window_manager;
 
-		//when bookmark hover, load bookmark of current active window. Jeong-Min Im.
-
-		$(core).on('bookmark_hover', function() {
-
-			self.remove(); //first, remove all bookmarks from main menu
-			var editor = self.get_active_editor();
-			if (editor !== null) {
-				$('#child_bookmark_menu li[class=disabled]').remove(); //remove default bookmark list
-				var keys = Object.keys(editor.bookmark.bookmarks);
-				if (keys.length > 0) {
-					for (var i = keys.length - 1; i >= 0; i--) {
-						self.add(keys[i]);
-					}
-				} else {
-					// $("#bookmark_list").after("<li class='disabled'><a href=\"#\" localization_key='edit_no_bookmark'>(No Bookmarks)</a></li>"); //attach default bookmark list
-					core.module.localization.local_apply('#child_bookmark_menu', 'menu');
-				}
-			} else {
-				// $("#bookmark_list").after("<li class='disabled'><a href=\"#\" localization_key='edit_no_bookmark'>(No Bookmarks)</a></li>"); //attach default bookmark list
-				core.module.localization.local_apply('#child_bookmark_menu', 'menu');
-			}
-		});
-
 		$(window).on('unload', function() {
 			localStorage.setItem('bookmark', JSON.stringify(self.list)); //set bookmark in the localStorage
 		});
@@ -112,34 +89,6 @@ goorm.core.edit.bookmark_list = { //initialize bookmark. Jeong-Min Im.
 			// bookmark_contents.css('height', container_height - bookmark_tab.find('.panel-heading').outerHeight());
 			self.resize();
 		});
-
-		$('#main-submenu-bookmark').hover(function() {
-			$(core).trigger('bookmark_hover');
-		});
-	},
-	//add bookmark on mainmenu. Jeong-Min Im.
-	add: function(linenumber) {
-		var self = this;
-		// $("#bookmark_list").after("<li><a href=\"#\" action=\"bookmark_" + linenumber + "\">Line " + linenumber + "</a></li>");
-
-		$('[action=bookmark_' + linenumber + ']').unbind('click');
-		$('[action=bookmark_' + linenumber + ']').click(function() {
-			var editor = self.get_active_editor();
-			if (editor !== null) {
-				editor.bookmark.move($(this).attr('action'));
-			}
-		});
-	},
-
-	//remove bookmark from mainmenu. Jeong-Min Im.
-	remove: function(linenumber) {
-		if (!linenumber) { //if linenumber is not selected exactly
-			$('[action^=bookmark_]').unbind('click'); //remove all bookmark actions
-			$('[action^=bookmark_]').parent().remove(); //remove all bookmarks from main menu
-		} else { //if linenumber is selected exactly
-			$('[action=bookmark_' + linenumber + ']').unbind('click'); //remove that bookmark action
-			$('[action=bookmark_' + linenumber + ']').parent().remove(); //remove that bookmark action
-		}
 	},
 	//load bookmark json file. Jeong-Min Im.
 	load_json: function() {
