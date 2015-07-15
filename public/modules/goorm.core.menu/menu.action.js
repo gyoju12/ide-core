@@ -897,6 +897,19 @@ goorm.core.menu.action = {
 			}
 		});
 
+		$('[action=do_fold_all]').off('click').tooltip();
+		$('[action=do_fold_all]').click(function() {
+			if (self.prevent(this)) {
+				return false;
+			}
+			var window_manager = core.module.layout.workspace.window_manager;
+			var active_window = window_manager.active_window;
+			if (active_window > -1) {
+				CodeMirror.commands.foldAll(window_manager.window[active_window].editor.editor);
+				window_manager.window[active_window].editor.focus();
+			}
+		});
+
 		$('[action=do_unfold_all]').off('click').tooltip();
 		$('[action=do_unfold_all]').click(function() {
 			if (self.prevent(this)) {

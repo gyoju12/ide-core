@@ -585,7 +585,7 @@ goorm.core.project = {
 						case 'java_examples':
 						case 'c_examples':
 						case 'cpp':
-						case 'jsp':
+						// case 'jsp':
 						case '_net':
 							// $.get("project/check_valid_property", query, function(data){
 							// 	if(data && data.result) {

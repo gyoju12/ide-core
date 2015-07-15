@@ -154,7 +154,8 @@ goorm.core.edit.prototype = {
 		});
 
 		this.editor.setOption('foldOptions', {
-			scanUp: true
+			scanUp: true,
+			minFoldSize: 1 // fold at least multiline
 		});
 
 		
@@ -440,12 +441,12 @@ goorm.core.edit.prototype = {
 				CodeMirror.commands.clearSearch(self.editor);
 			}
 
-			if(e.origin !== 'setValue') {
+			if (e.origin !== 'setValue') {
 				var user = e.user || core.user.id;
 				var from_line = e.from.line;
 
-				for(var i = e.text.length - 1; 0 <= i; i--) {
-					self.set_modify_mark(from_line + i, user); // set user's modification mark
+				for (var j = e.text.length - 1; 0 <= j; j--) {
+					self.set_modify_mark(from_line + j, user); // set user's modification mark
 				}
 			}
 		});
@@ -1739,7 +1740,6 @@ goorm.core.edit.prototype = {
 	// },
 
 	update_editor_status: function(line, ch) {
-		var self = this;
 		$('#editor_status span.line').html('Line: ' + line);
 		$('#editor_status span.coloumn').html('Col: ' + ch);
 		$('#font_size_bottom > button > span.value').text(this.font_size + 'px ');

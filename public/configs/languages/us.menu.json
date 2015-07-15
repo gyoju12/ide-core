@@ -652,5 +652,8 @@
 	},
 	"project_run": {
 		"value": "Run"
+	},
+	"edit_fold_all": {
+		"value": "Fold All"
 	}
 }

@@ -1767,21 +1767,6 @@ goorm.core.shortcut.manager = {
 			doc_obj.bind('keydown.' + this.make_namespace('build_clean', this.hotkeys.build_clean), this.hotkeys.build_clean, this.hotkeys_fn.build_clean);
 		}
 
-		//Editor Fold (Ctrl+Q)
-		//fold codes. This function is called from editor. Jeong-Min Im.
-		this.hotkeys_fn.editor_fold = function(e, editor, context) { //e: event, editor: codemirror, context: edit object
-			if (editor) {
-				editor.foldCode(editor.getCursor());
-				context.reset_breakpoints();
-
-				e.stopPropagation();
-				e.preventDefault();
-				return false;
-			}
-		};
-		doc_obj.bind('keydown.' + this.make_namespace('editor_fold', 'Ctrl+Q'), 'Ctrl+Q', this.hotkeys_fn.editor_fold);
-		this.fixed_shortcut.push('Ctrl+Q');
-
 		//Editor Hint (Ctrl+Space)
 		//show codes' hint. This function is called from editor. Jeong-Min Im.
 		this.hotkeys_fn.editor_hint = function(e, editor, context) { //e: event, editor: codemirror, context: edit object

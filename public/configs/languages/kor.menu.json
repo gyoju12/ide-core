@@ -652,5 +652,8 @@
 	},
 	"project_run": {
 		"value": "실행"
+	},
+	"edit_fold_all": {
+		"value": "모두 접기"
 	}
 }

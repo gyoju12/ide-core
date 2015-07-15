@@ -652,5 +652,8 @@
 	},
 	"project_run": {
 		"value": "実行"
+	},
+	"edit_fold_all": {
+		"value": ""
 	}
 }

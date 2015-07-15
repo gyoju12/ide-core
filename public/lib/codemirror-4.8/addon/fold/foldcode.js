@@ -48,8 +48,10 @@
     if (!range || range.cleared || force === "unfold") return;
 
     // goorm: not to fold last line of the range
-    range.to.ch = cm.getLine(range.to.line - 1).length;
-    range.to.line = range.to.line - 1;
+	if(range.to.line > 0) {
+		range.to.ch = cm.getLine(range.to.line - 1).length;
+    	range.to.line = range.to.line - 1;	
+	}
     
     var myWidget = makeWidget(cm, options);
     CodeMirror.on(myWidget, "mousedown", function(e) {

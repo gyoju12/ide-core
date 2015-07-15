@@ -541,6 +541,7 @@
 
   map[ctrl + "Alt-["] = "fold";    // changed from original (Shift+Ctrl+[) : KW
   map[ctrl + "Alt-]"] = "unfold";  // changed from original (Shift+Ctrl+]) : KW
+	map[cK + ctrl + "1"] = map[cK + ctrl + "h"] = "foldAll";	// goorm
   map[cK + ctrl + "0"] = map[cK + ctrl + "j"] = "unfoldAll";
 
   map[ctrl + "I"] = "findIncremental";
