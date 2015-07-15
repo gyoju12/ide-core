@@ -1154,6 +1154,11 @@
   function setSelection(doc, sel, options) {
     setSelectionNoUndo(doc, sel, options);
     addSelectionToHistory(doc, doc.sel, doc.cm ? doc.cm.curOp.id : NaN, options);
+	  
+	if(doc && doc.cm && doc.cm.display && doc.cm.display.input) {	// goorm: update input's selection
+		doc.cm.display.input.value = doc.getSelection();
+		doc.cm.display.input.select();
+	}
   }
 
   function setSelectionNoUndo(doc, sel, options) {

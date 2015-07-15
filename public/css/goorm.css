@@ -978,6 +978,7 @@ li.slideshare_url_item a > div {
     border-top: 1px solid #ddd;
     font-size: 11px;
     padding: 7px;
+    background-color: white;
 	z-index: 11 !important;	/* put font dropdown menu above resizer */
 }
 
@@ -1944,6 +1945,10 @@ pre.code {
 #project_selector .checked {
     margin-left: -15px;
     margin-right: 5px;
+}
+
+#project_selector {
+    width: 100%;
 }
 
 /* to prevent from removing gap chat message (in fire fox) */
@@ -3573,6 +3578,10 @@ div.tooltip {
 #project_selectbox,
 #project_explorer_refresh_tool {
     border: none;
+}
+
+#project_selectbox {
+    width: 100%;
 }
 
 #dlg_svn_info .modal-dialog {

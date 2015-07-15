@@ -615,10 +615,10 @@ goorm.core.layout = {
 		$('#navigate_tab').outerHeight($('#goorm_left').height() - $('#west_tab').height() - 2);
 		//  - parseInt($('#project_explorer').css('padding-top')) * 2);
 
-		var project_selector_width = $('#project_explorer_tab').width() - 40;
+		// var project_selector_width = $('#project_explorer_tab').width() - 40;
 		// if (project_selector_width < 190) project_selector_width = 190;
 
-		$('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool
+		// $('#project_selectbox').css('width', project_selector_width); // for margin & refresh tool
 
 		// -- right --
 		var layout_right_height = $('div.ui-layout-east').height() - $('#east_tab').height();
