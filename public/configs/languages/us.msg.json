@@ -1254,7 +1254,7 @@
 		"value": "Check the location of your main file on your project property."
 	},
 	"search_user_placeholder": {
-		"value": "Search user by name or email ..."
+		"value": "Search user by email ..."
 	},
 	"alert_drop_on_editor": {
 		"value": "Can't drop files on editor"

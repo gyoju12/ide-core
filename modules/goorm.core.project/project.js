@@ -142,7 +142,7 @@ module.exports = {
 													description: query.project_desc,
 													date: date_string,
 													is_user_plugin: false,
-													storage: 'container',
+													
 													storage_name: query.docker_id || ''
 												};
 

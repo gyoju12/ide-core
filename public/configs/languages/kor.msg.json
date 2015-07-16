@@ -1254,7 +1254,7 @@
 		"value": "프로젝트 속성에서 main 파일의 위치를 확인해주세요."
 	},
 	"search_user_placeholder": {
-		"value": "이름이나 이메일로 사용자를 찾을 수 있습니다."
+		"value": "이메일로 사용자를 찾을 수 있습니다."
 	},
 	"alert_drop_on_editor": {
 		"value": "에디터 위에 파일을 올릴 수 없습니다."
