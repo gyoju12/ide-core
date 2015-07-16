@@ -269,10 +269,15 @@ goorm.plugin.linter = {
 			wm.all_clear();
 
 			var table = [];
-			
+
 			var regex = new RegExp('^(' + path.replace(/\//g, '\\/').replace(/\./g, '\\.') + '):(\\d+):\\d+?:? (.+)');
 			var lines = output.split('\n');
-			var matches, line_num, err_type, content, msg, file_path;
+			var matches;
+			var line_num;
+			var err_type;
+			var content;
+			var msg;
+			var file_path;
 			var split_path = __window.editor.filepath.split('/');
 			split_path[0] = core.module.project.get_name(split_path[0]);
 			file_path = split_path.join('/') + __window.editor.filename;
@@ -463,7 +468,7 @@ goorm.plugin.linter = {
 				// 				var line = message[i].line;
 				// error e.g) PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting ',' or ';' in index.php on line 9
 				var msg = message[i].match(/:.*/)[0].match(/\w.*/)[0].split(' in ' + path); // extract message only
-				var line = msg[1].match(/\d$/)[0]; // extract number. (msg[1] == on line 9)
+				var line = msg[1].match(/\d+$/)[0]; // extract number. (msg[1] == on line 9)
 				var type;
 
 				msg = msg[0];
