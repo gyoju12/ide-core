@@ -1155,9 +1155,10 @@
     setSelectionNoUndo(doc, sel, options);
     addSelectionToHistory(doc, doc.sel, doc.cm ? doc.cm.curOp.id : NaN, options);
 	  
-	if(doc && doc.cm && doc.cm.display && doc.cm.display.input) {	// goorm: update input's selection
+	// goorm: update input's selection
+	if(doc.getSelection().length && doc && doc.cm && doc.cm.display && doc.cm.display.input) {	// select only if there is selection
 		doc.cm.display.input.value = doc.getSelection();
-		doc.cm.display.input.select();
+		doc.cm.display.input.selectionStart = 0;	// select input text without giving focus
 	}
   }
 

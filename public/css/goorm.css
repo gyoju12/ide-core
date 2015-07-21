@@ -3852,11 +3852,30 @@ div.item a > span {
 	text-decoration: none;
 }
 
+#collaboration_tab_container > div.panel {
+    border-top: 1px dashed #ddd;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+#collaboration_tab_container > div.panel:last-of-type {
+    border-bottom: 1px dashed #ddd;
+}
+#collaboration_tab_container div.panel-body{
+    padding: 5px;
+}
+#collaboration_tab_container a {
+    text-decoration: none;
+}
+#collaboration_tab_container td {
+    padding: 2px 0px;
+}
 #collaboration .panel-heading {
-    background-color: #fff;
+    /*background-color: #fff;
     border-bottom: 1px solid #ddd;
     margin-top: 0;
-    padding-left: 10px;
+    padding-left: 10px;*/
+    border: none;
 }
 
 #collaboration, #collaboration > .panel {
@@ -3864,6 +3883,7 @@ div.item a > span {
 }
 
 #collaboration_tab_container {
+    height: 100%;
     overflow: auto;
 }
 
@@ -3922,4 +3942,8 @@ div.item a > span {
 #font_size_bottom ul.dropdown-menu {
     max-height: 186px;
     overflow: auto;
+}
+
+#goorm {
+    overflow: initial !important;   /* prevent ide view to go up */
 }
